@@ -10,7 +10,7 @@
 
 # idea
 *.iml
-*.idea
+.idea/
 
 # eclipse
 *.project
