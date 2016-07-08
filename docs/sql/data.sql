@@ -1,10 +1,17 @@
 
 /*
+-- Query: SELECT * FROM bank.admin_role
+-- Date: 2016-07-08 18:08
+*/
+INSERT INTO `admin_role` (`role_id`,`role_name`) VALUES (2,'分总');
+INSERT INTO `admin_role` (`role_id`,`role_name`) VALUES (1,'区总');
+
+/*
 -- Query: SELECT * FROM bank.admin
 -- Date: 2016-07-08 16:31
 */
-INSERT INTO `admin` (`id`,`login`,`password`,`role`,`login_ip`) VALUES (1,'admin','098f6bcd4621d373cade4e832627b4f6',NULL,NULL);
-INSERT INTO `admin` (`id`,`login`,`password`,`role`,`login_ip`) VALUES (2,'test','098f6bcd4621d373cade4e832627b4f6',NULL,NULL);
+INSERT INTO `admin` (`id`,`login`,`password`,`role`,`login_ip`) VALUES (1,'admin','098f6bcd4621d373cade4e832627b4f6',1,NULL);
+INSERT INTO `admin` (`id`,`login`,`password`,`role`,`login_ip`) VALUES (2,'test','098f6bcd4621d373cade4e832627b4f6',1,NULL);
 
 
 /*
