@@ -53,27 +53,6 @@
             <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
         </table>
 
-        <table tableName="admin_role"
-               delimitAllColumns="true"
-               delimitIdentifiers="true"
-               domainObjectName="AdminRole">
-            <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
-        </table>
-
-        <table tableName="system_admin_module"
-               delimitAllColumns="true"
-               delimitIdentifiers="true"
-               domainObjectName="SystemAdminModule">
-            <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
-        </table>
-
-        <table tableName="system_module"
-               delimitAllColumns="true"
-               delimitIdentifiers="true"
-               domainObjectName="SystemModule">
-            <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
-        </table>
-
 
     </context>
 </generatorConfiguration>

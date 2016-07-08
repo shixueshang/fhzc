@@ -72,8 +72,11 @@
                     <shiro:hasPermission name="/organization/manage"><li>
                         <a href="#"><i class="fa fa-wrench fa-fw"></i> 组织架构管理<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <shiro:hasPermission name="/areaDept/manage"><li class="active">
-                                <a href="/areaDept/manage"> 区总管理</a>
+                            <shiro:hasPermission name="/organization/areaDept"><li class="active">
+                                <a href="/organization/areaDept"> 区总管理</a>
+                            </li></shiro:hasPermission>
+                            <shiro:hasPermission name="/organization/resource"><li class="active">
+                                <a href="/organization/resource"> 权限管理</a>
                             </li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>

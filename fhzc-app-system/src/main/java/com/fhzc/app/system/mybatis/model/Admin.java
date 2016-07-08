@@ -1,6 +1,7 @@
 package com.fhzc.app.system.mybatis.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Admin implements Serializable{
     private Integer id;
@@ -9,9 +10,13 @@ public class Admin implements Serializable{
 
     private String password;
 
+    private String realname;
+
     private Integer role;
 
     private String loginIp;
+
+    private Date lastLoginTime;
 
     public Integer getId() {
         return id;
@@ -37,6 +42,14 @@ public class Admin implements Serializable{
         this.password = password == null ? null : password.trim();
     }
 
+    public String getRealname() {
+        return realname;
+    }
+
+    public void setRealname(String realname) {
+        this.realname = realname == null ? null : realname.trim();
+    }
+
     public Integer getRole() {
         return role;
     }
@@ -51,5 +64,13 @@ public class Admin implements Serializable{
 
     public void setLoginIp(String loginIp) {
         this.loginIp = loginIp == null ? null : loginIp.trim();
+    }
+
+    public Date getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public void setLastLoginTime(Date lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
     }
 }

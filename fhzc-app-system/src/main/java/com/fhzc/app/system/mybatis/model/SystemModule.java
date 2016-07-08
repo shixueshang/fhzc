@@ -3,11 +3,17 @@ package com.fhzc.app.system.mybatis.model;
 public class SystemModule {
     private Integer id;
 
-    private String name;
+    private String url;
+
+    private String desc;
 
     private Integer parentModuleId;
 
-    private String url;
+    private Integer level;
+
+    private Boolean isValid;
+
+    private String name;
 
     public Integer getId() {
         return id;
@@ -17,12 +23,20 @@ public class SystemModule {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUrl() {
+        return url;
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public void setUrl(String url) {
+        this.url = url == null ? null : url.trim();
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc == null ? null : desc.trim();
     }
 
     public Integer getParentModuleId() {
@@ -33,11 +47,27 @@ public class SystemModule {
         this.parentModuleId = parentModuleId;
     }
 
-    public String getUrl() {
-        return url;
+    public Integer getLevel() {
+        return level;
     }
 
-    public void setUrl(String url) {
-        this.url = url == null ? null : url.trim();
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public Boolean getIsValid() {
+        return isValid;
+    }
+
+    public void setIsValid(Boolean isValid) {
+        this.isValid = isValid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 }

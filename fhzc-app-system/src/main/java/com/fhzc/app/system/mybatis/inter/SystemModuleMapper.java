@@ -17,6 +17,10 @@ public interface SystemModuleMapper {
 
     int insertSelective(SystemModule record);
 
+    List<SystemModule> selectByExampleWithBLOBsWithRowbounds(SystemModuleExample example, RowBounds rowBounds);
+
+    List<SystemModule> selectByExampleWithBLOBs(SystemModuleExample example);
+
     List<SystemModule> selectByExampleWithRowbounds(SystemModuleExample example, RowBounds rowBounds);
 
     List<SystemModule> selectByExample(SystemModuleExample example);
@@ -25,9 +29,13 @@ public interface SystemModuleMapper {
 
     int updateByExampleSelective(@Param("record") SystemModule record, @Param("example") SystemModuleExample example);
 
+    int updateByExampleWithBLOBs(@Param("record") SystemModule record, @Param("example") SystemModuleExample example);
+
     int updateByExample(@Param("record") SystemModule record, @Param("example") SystemModuleExample example);
 
     int updateByPrimaryKeySelective(SystemModule record);
+
+    int updateByPrimaryKeyWithBLOBs(SystemModule record);
 
     int updateByPrimaryKey(SystemModule record);
 }
