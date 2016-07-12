@@ -14,7 +14,7 @@ public class BadRequestException extends RuntimeException {
 		super(message);
 		this.result = new ApiJsonResult();
 		this.result.setCode(APIConstants.API_JSON_RESULT.BAD_REQUEST);
-		this.result.setMsg(message);
+		this.result.setMessage(message);
 	}
 
 	public ApiJsonResult getResult() {

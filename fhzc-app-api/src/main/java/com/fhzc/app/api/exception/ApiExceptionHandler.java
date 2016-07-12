@@ -46,7 +46,7 @@ public class ApiExceptionHandler {
 		logger.error("handleInvalidRequestError RuntimeException :" + ex.getMessage(), ex);
 		ApiJsonResult result = new ApiJsonResult();
 		result.setCode(APIConstants.API_JSON_RESULT.SERVER_ERROR);
-		result.setMsg("server error");
+		result.setMessage("server error");
 		return result;
     } 
 	
@@ -57,7 +57,7 @@ public class ApiExceptionHandler {
 		logger.error("handleInvalidRequestError  inteface not found :" + ex.getMessage());
 		ApiJsonResult result = new ApiJsonResult();
 		result.setCode(APIConstants.API_JSON_RESULT.NOT_FOUND);
-		result.setMsg("inteface not found error");
+		result.setMessage("inteface not found error");
 		return result;
     } 
 }

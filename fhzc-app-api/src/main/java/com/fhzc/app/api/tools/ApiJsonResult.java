@@ -59,7 +59,7 @@ public class ApiJsonResult {
 		return message;
 	}
 
-	public void setMsg(String message) {
+	public void setMessage(String message) {
 		this.message = message;
 	}
 

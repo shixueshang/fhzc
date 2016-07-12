@@ -15,7 +15,7 @@ public class NotFoundRequestException extends RuntimeException {
 		super(message);
 		this.result = new ApiJsonResult();
 		this.result.setCode(APIConstants.API_JSON_RESULT.NOT_FOUND);
-		this.result.setMsg(message);
+		this.result.setMessage(message);
 	}
 
 	public ApiJsonResult getResult() {
