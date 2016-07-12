@@ -8,7 +8,7 @@ public class ApiJsonResult {
 	private int code ;
 	private List<Map<String, Object>> list;
 	private Map<String, Object> map;
-	private String msg;
+	private String message = "";
 	private Object data;
 	
 	public ApiJsonResult(){
@@ -29,9 +29,9 @@ public class ApiJsonResult {
         this.map = map;
     }
 	
-	public ApiJsonResult(int code, String msg) {
+	public ApiJsonResult(int code, String message) {
         this.code = code;
-        this.msg = msg;
+        this.message = message;
     }
 	
 	public ApiJsonResult(int code, Object data) {
@@ -55,12 +55,12 @@ public class ApiJsonResult {
 		this.data = data;
 	}
 
-	public String getMsg() {
-		return msg;
+	public String getMesage() {
+		return message;
 	}
 
-	public void setMsg(String msg) {
-		this.msg = msg;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 	public List<Map<String, Object>> getList() {

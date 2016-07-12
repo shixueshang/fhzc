@@ -1,6 +1,7 @@
+# HEAD
 *.class
 
-# Mobile Tools for Java (J2ME)
+# Java
 .mtj.tmp/
 
 # Package Files #
@@ -15,4 +16,5 @@
 # eclipse
 *.project
 *.classpath
+.settings/
 

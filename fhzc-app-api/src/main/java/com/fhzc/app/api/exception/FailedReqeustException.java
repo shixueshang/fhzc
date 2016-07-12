@@ -14,7 +14,7 @@ public class FailedReqeustException extends RuntimeException {
 	private ApiJsonResult result;
 
 	public FailedReqeustException(ApiJsonResult result) {
-		super(result.getMsg());
+		super(result.getMesage());
 		this.result = result;
 	}
 

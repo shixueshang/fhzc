@@ -23,15 +23,15 @@ INSERT INTO `admin` (`id`,`login`,`password`,`realname`,`role`,`login_ip`,`last_
 -- Query: SELECT * FROM bank.system_module
 -- Date: 2016-07-08 16:28
 */
-INSERT INTO `system_module` (`id`,`name`,`parent_module_id`,`url`) VALUES (1,'顶级节点',0,'/');
-INSERT INTO `system_module` (`id`,`name`,`parent_module_id`,`url`) VALUES (2,'业务管理',1,'/business/manage');
-INSERT INTO `system_module` (`id`,`name`,`parent_module_id`,`url`) VALUES (3,'业绩管理',1,'/performance/manage');
-INSERT INTO `system_module` (`id`,`name`,`parent_module_id`,`url`) VALUES (4,'订单管理',1,'/order/manage');
-INSERT INTO `system_module` (`id`,`name`,`parent_module_id`,`url`) VALUES (5,'理财师管理',1,'/financial/manage');
-INSERT INTO `system_module` (`id`,`name`,`parent_module_id`,`url`) VALUES (6,'组织架构管理',1,'/organization/manage');
-INSERT INTO `system_module` (`id`,`name`,`parent_module_id`,`url`) VALUES (7,'客户管理',1,'/user/manage');
-INSERT INTO `system_module` (`id`,`name`,`parent_module_id`,`url`) VALUES (8,'产品管理',2,'/business/product');
-INSERT INTO `system_module` (`id`,`name`,`parent_module_id`,`url`) VALUES (9,'产品列表',8,'/business/product/list');
+INSERT INTO `system_module` (`id`,`name`,`parent_module_id`,`is_valid`,`url`) VALUES (1,'顶级节点',0,1,'/');
+INSERT INTO `system_module` (`id`,`name`,`parent_module_id`,`is_valid`,`url`) VALUES (2,'业务管理',1,1,'/business/manage');
+INSERT INTO `system_module` (`id`,`name`,`parent_module_id`,`is_valid`,`url`) VALUES (3,'业绩管理',1,1,'/performance/manage');
+INSERT INTO `system_module` (`id`,`name`,`parent_module_id`,`is_valid`,`url`) VALUES (4,'订单管理',1,1,'/order/manage');
+INSERT INTO `system_module` (`id`,`name`,`parent_module_id`,`is_valid`,`url`) VALUES (5,'理财师管理',1,1,'/financial/manage');
+INSERT INTO `system_module` (`id`,`name`,`parent_module_id`,`is_valid`,`url`) VALUES (6,'组织架构管理',1,1,'/organization/manage');
+INSERT INTO `system_module` (`id`,`name`,`parent_module_id`,`is_valid`,`url`) VALUES (7,'客户管理',1,1,'/user/manage');
+INSERT INTO `system_module` (`id`,`name`,`parent_module_id`,`is_valid`,`url`) VALUES (8,'产品管理',2,1,'/business/product');
+INSERT INTO `system_module` (`id`,`name`,`parent_module_id`,`is_valid`,`url`) VALUES (9,'产品列表',8,1,'/business/product/list');
 
 /*
 -- Query: select * FROM bank.system_admin_module
