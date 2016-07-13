@@ -17,6 +17,10 @@ public interface ProductMapper {
 
     int insertSelective(Product record);
 
+    List<Product> selectByExampleWithBLOBsWithRowbounds(ProductExample example, RowBounds rowBounds);
+
+    List<Product> selectByExampleWithBLOBs(ProductExample example);
+
     List<Product> selectByExampleWithRowbounds(ProductExample example, RowBounds rowBounds);
 
     List<Product> selectByExample(ProductExample example);
@@ -25,9 +29,13 @@ public interface ProductMapper {
 
     int updateByExampleSelective(@Param("record") Product record, @Param("example") ProductExample example);
 
+    int updateByExampleWithBLOBs(@Param("record") Product record, @Param("example") ProductExample example);
+
     int updateByExample(@Param("record") Product record, @Param("example") ProductExample example);
 
     int updateByPrimaryKeySelective(Product record);
+
+    int updateByPrimaryKeyWithBLOBs(Product record);
 
     int updateByPrimaryKey(Product record);
 }

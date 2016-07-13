@@ -16,6 +16,11 @@ public class APIConstants {
 	public static String CONFIG_KEY_NEED_CHECK_ACCESS_TOKEN = "need_check_access_token";
 
     /**
+     * 聊天图片存放地址
+     */
+    public static String CONFIG_KEY_IMAGE_SAVE_PATH =  "image_save_path";
+
+    /**
      * 服务器返回状态
      * @author lihongde
      *
@@ -52,6 +57,16 @@ public class APIConstants {
         public static int SERVER_ERROR = 500;
 
     }
-	
-	
+
+    /**
+     * 消息类型
+     * @author lihongde
+     */
+    public static class Message_Type{
+        public static final String Text = "text";
+
+        public static final String Audio = "audio";
+
+        public static final String Image = "image";
+    }
 }

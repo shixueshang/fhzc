@@ -30,7 +30,6 @@ public class LoginController extends BaseController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    @ResponseBody
     public ModelAndView loginPost(String username, String password) {
         ModelAndView mav = new ModelAndView();
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {

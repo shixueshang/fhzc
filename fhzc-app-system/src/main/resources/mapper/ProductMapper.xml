@@ -3,16 +3,43 @@
 <mapper namespace="com.fhzc.app.system.mybatis.inter.ProductMapper" >
   <resultMap id="BaseResultMap" type="com.fhzc.app.system.mybatis.model.Product" >
     <id column="pid" property="pid" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="TINYINT" />
     <result column="code" property="code" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="status" property="status" jdbcType="CHAR" />
-    <result column="value_day" property="valueDay" jdbcType="INTEGER" />
-    <result column="expiry_day" property="expiryDay" jdbcType="INTEGER" />
-    <result column="dividend_day" property="dividendDay" jdbcType="INTEGER" />
-    <result column="ctime" property="ctime" jdbcType="INTEGER" />
-    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="found_day" property="foundDay" jdbcType="DATE" />
+    <result column="value_day" property="valueDay" jdbcType="DATE" />
+    <result column="expiry_day" property="expiryDay" jdbcType="DATE" />
+    <result column="issue_type" property="issueType" jdbcType="DATE" />
+    <result column="product_type" property="productType" jdbcType="VARCHAR" />
+    <result column="renew_deadline" property="renewDeadline" jdbcType="VARCHAR" />
+    <result column="dividend_day" property="dividendDay" jdbcType="DATE" />
+    <result column="annual_yield" property="annualYield" jdbcType="VARCHAR" />
+    <result column="income_distribution_type" property="incomeDistributionType" jdbcType="VARCHAR" />
+    <result column="investment_orientation" property="investmentOrientation" jdbcType="VARCHAR" />
+    <result column="increase_trust" property="increaseTrust" jdbcType="VARCHAR" />
+    <result column="highlights" property="highlights" jdbcType="VARCHAR" />
+    <result column="fund_management_fee" property="fundManagementFee" jdbcType="VARCHAR" />
+    <result column="fund_subscription_fee" property="fundSubscriptionFee" jdbcType="VARCHAR" />
+    <result column="fund_manager" property="fundManager" jdbcType="VARCHAR" />
+    <result column="custodian" property="custodian" jdbcType="VARCHAR" />
+    <result column="investment_type" property="investmentType" jdbcType="VARCHAR" />
+    <result column="project_source" property="projectSource" jdbcType="VARCHAR" />
+    <result column="issuer" property="issuer" jdbcType="VARCHAR" />
+    <result column="is_record" property="isRecord" jdbcType="VARCHAR" />
+    <result column="prove_url" property="proveUrl" jdbcType="VARCHAR" />
+    <result column="display_order" property="displayOrder" jdbcType="INTEGER" />
     <result column="level" property="level" jdbcType="INTEGER" />
     <result column="risk" property="risk" jdbcType="INTEGER" />
+    <result column="cover" property="cover" jdbcType="VARCHAR" />
+    <result column="notice" property="notice" jdbcType="VARCHAR" />
+    <result column="score_factor" property="scoreFactor" jdbcType="TINYINT" />
+    <result column="is_ recommend" property="isRecommend" jdbcType="TINYINT" />
+    <result column="is_display" property="isDisplay" jdbcType="TINYINT" />
+    <result column="is_renew" property="isRenew" jdbcType="TINYINT" />
+    <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.fhzc.app.system.mybatis.model.Product" extends="BaseResultMap" >
+    <result column="desc" property="desc" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -73,9 +100,32 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    `pid`, `code`, `name`, `status`, `value_day`, `expiry_day`, `dividend_day`, `ctime`, 
-    `sort`, `level`, `risk`
+    `pid`, `status`, `code`, `name`, `found_day`, `value_day`, `expiry_day`, `issue_type`, 
+    `product_type`, `renew_deadline`, `dividend_day`, `annual_yield`, `income_distribution_type`, 
+    `investment_orientation`, `increase_trust`, `highlights`, `fund_management_fee`, 
+    `fund_subscription_fee`, `fund_manager`, `custodian`, `investment_type`, `project_source`, 
+    `issuer`, `is_record`, `prove_url`, `display_order`, `level`, `risk`, `cover`, `notice`, 
+    `score_factor`, `is_ recommend`, `is_display`, `is_renew`, `ctime`
   </sql>
+  <sql id="Blob_Column_List" >
+    `desc`
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.system.mybatis.model.ProductExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from `product`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.system.mybatis.model.ProductExample" >
     select
     <if test="distinct" >
@@ -90,9 +140,11 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from `product`
     where `pid` = #{pid,jdbcType=INTEGER}
   </select>
@@ -107,32 +159,50 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.fhzc.app.system.mybatis.model.Product" >
-    <selectKey resultType="java.lang.Integer" keyProperty="pid" order="AFTER" >
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into `product` (`code`, `name`, `status`, 
-      `value_day`, `expiry_day`, `dividend_day`, 
-      `ctime`, `sort`, `level`, 
-      `risk`)
-    values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
-      #{valueDay,jdbcType=INTEGER}, #{expiryDay,jdbcType=INTEGER}, #{dividendDay,jdbcType=INTEGER}, 
-      #{ctime,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, #{level,jdbcType=INTEGER}, 
-      #{risk,jdbcType=INTEGER})
+    insert into `product` (`pid`, `status`, `code`, 
+      `name`, `found_day`, `value_day`, 
+      `expiry_day`, `issue_type`, `product_type`, 
+      `renew_deadline`, `dividend_day`, `annual_yield`, 
+      `income_distribution_type`, `investment_orientation`, 
+      `increase_trust`, `highlights`, `fund_management_fee`, 
+      `fund_subscription_fee`, `fund_manager`, `custodian`, 
+      `investment_type`, `project_source`, `issuer`, 
+      `is_record`, `prove_url`, `display_order`, 
+      `level`, `risk`, `cover`, 
+      `notice`, `score_factor`, `is_ recommend`, 
+      `is_display`, `is_renew`, `ctime`, 
+      `desc`)
+    values (#{pid,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{code,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{foundDay,jdbcType=DATE}, #{valueDay,jdbcType=DATE}, 
+      #{expiryDay,jdbcType=DATE}, #{issueType,jdbcType=DATE}, #{productType,jdbcType=VARCHAR}, 
+      #{renewDeadline,jdbcType=VARCHAR}, #{dividendDay,jdbcType=DATE}, #{annualYield,jdbcType=VARCHAR}, 
+      #{incomeDistributionType,jdbcType=VARCHAR}, #{investmentOrientation,jdbcType=VARCHAR}, 
+      #{increaseTrust,jdbcType=VARCHAR}, #{highlights,jdbcType=VARCHAR}, #{fundManagementFee,jdbcType=VARCHAR}, 
+      #{fundSubscriptionFee,jdbcType=VARCHAR}, #{fundManager,jdbcType=VARCHAR}, #{custodian,jdbcType=VARCHAR}, 
+      #{investmentType,jdbcType=VARCHAR}, #{projectSource,jdbcType=VARCHAR}, #{issuer,jdbcType=VARCHAR}, 
+      #{isRecord,jdbcType=VARCHAR}, #{proveUrl,jdbcType=VARCHAR}, #{displayOrder,jdbcType=INTEGER}, 
+      #{level,jdbcType=INTEGER}, #{risk,jdbcType=INTEGER}, #{cover,jdbcType=VARCHAR}, 
+      #{notice,jdbcType=VARCHAR}, #{scoreFactor,jdbcType=TINYINT}, #{isRecommend,jdbcType=TINYINT}, 
+      #{isDisplay,jdbcType=TINYINT}, #{isRenew,jdbcType=TINYINT}, #{ctime,jdbcType=TIMESTAMP}, 
+      #{desc,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.system.mybatis.model.Product" >
-    <selectKey resultType="java.lang.Integer" keyProperty="pid" order="AFTER" >
-      SELECT LAST_INSERT_ID()
-    </selectKey>
     insert into `product`
     <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        `pid`,
+      </if>
+      <if test="status != null" >
+        `status`,
+      </if>
       <if test="code != null" >
         `code`,
       </if>
       <if test="name != null" >
         `name`,
       </if>
-      <if test="status != null" >
-        `status`,
+      <if test="foundDay != null" >
+        `found_day`,
       </if>
       <if test="valueDay != null" >
         `value_day`,
@@ -140,14 +210,62 @@
       <if test="expiryDay != null" >
         `expiry_day`,
       </if>
+      <if test="issueType != null" >
+        `issue_type`,
+      </if>
+      <if test="productType != null" >
+        `product_type`,
+      </if>
+      <if test="renewDeadline != null" >
+        `renew_deadline`,
+      </if>
       <if test="dividendDay != null" >
         `dividend_day`,
       </if>
-      <if test="ctime != null" >
-        `ctime`,
+      <if test="annualYield != null" >
+        `annual_yield`,
       </if>
-      <if test="sort != null" >
-        `sort`,
+      <if test="incomeDistributionType != null" >
+        `income_distribution_type`,
+      </if>
+      <if test="investmentOrientation != null" >
+        `investment_orientation`,
+      </if>
+      <if test="increaseTrust != null" >
+        `increase_trust`,
+      </if>
+      <if test="highlights != null" >
+        `highlights`,
+      </if>
+      <if test="fundManagementFee != null" >
+        `fund_management_fee`,
+      </if>
+      <if test="fundSubscriptionFee != null" >
+        `fund_subscription_fee`,
+      </if>
+      <if test="fundManager != null" >
+        `fund_manager`,
+      </if>
+      <if test="custodian != null" >
+        `custodian`,
+      </if>
+      <if test="investmentType != null" >
+        `investment_type`,
+      </if>
+      <if test="projectSource != null" >
+        `project_source`,
+      </if>
+      <if test="issuer != null" >
+        `issuer`,
+      </if>
+      <if test="isRecord != null" >
+        `is_record`,
+      </if>
+      <if test="proveUrl != null" >
+        `prove_url`,
+      </if>
+      <if test="displayOrder != null" >
+        `display_order`,
       </if>
       <if test="level != null" >
         `level`,
@@ -155,37 +273,139 @@
       <if test="risk != null" >
         `risk`,
       </if>
+      <if test="cover != null" >
+        `cover`,
+      </if>
+      <if test="notice != null" >
+        `notice`,
+      </if>
+      <if test="scoreFactor != null" >
+        `score_factor`,
+      </if>
+      <if test="isRecommend != null" >
+        `is_ recommend`,
+      </if>
+      <if test="isDisplay != null" >
+        `is_display`,
+      </if>
+      <if test="isRenew != null" >
+        `is_renew`,
+      </if>
+      <if test="ctime != null" >
+        `ctime`,
+      </if>
+      <if test="desc != null" >
+        `desc`,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
       <if test="code != null" >
         #{code,jdbcType=VARCHAR},
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="status != null" >
-        #{status,jdbcType=CHAR},
+      <if test="foundDay != null" >
+        #{foundDay,jdbcType=DATE},
       </if>
       <if test="valueDay != null" >
-        #{valueDay,jdbcType=INTEGER},
+        #{valueDay,jdbcType=DATE},
       </if>
       <if test="expiryDay != null" >
-        #{expiryDay,jdbcType=INTEGER},
+        #{expiryDay,jdbcType=DATE},
+      </if>
+      <if test="issueType != null" >
+        #{issueType,jdbcType=DATE},
+      </if>
+      <if test="productType != null" >
+        #{productType,jdbcType=VARCHAR},
+      </if>
+      <if test="renewDeadline != null" >
+        #{renewDeadline,jdbcType=VARCHAR},
       </if>
       <if test="dividendDay != null" >
-        #{dividendDay,jdbcType=INTEGER},
+        #{dividendDay,jdbcType=DATE},
       </if>
-      <if test="ctime != null" >
-        #{ctime,jdbcType=INTEGER},
+      <if test="annualYield != null" >
+        #{annualYield,jdbcType=VARCHAR},
       </if>
-      <if test="sort != null" >
-        #{sort,jdbcType=INTEGER},
+      <if test="incomeDistributionType != null" >
+        #{incomeDistributionType,jdbcType=VARCHAR},
+      </if>
+      <if test="investmentOrientation != null" >
+        #{investmentOrientation,jdbcType=VARCHAR},
+      </if>
+      <if test="increaseTrust != null" >
+        #{increaseTrust,jdbcType=VARCHAR},
+      </if>
+      <if test="highlights != null" >
+        #{highlights,jdbcType=VARCHAR},
+      </if>
+      <if test="fundManagementFee != null" >
+        #{fundManagementFee,jdbcType=VARCHAR},
+      </if>
+      <if test="fundSubscriptionFee != null" >
+        #{fundSubscriptionFee,jdbcType=VARCHAR},
+      </if>
+      <if test="fundManager != null" >
+        #{fundManager,jdbcType=VARCHAR},
+      </if>
+      <if test="custodian != null" >
+        #{custodian,jdbcType=VARCHAR},
+      </if>
+      <if test="investmentType != null" >
+        #{investmentType,jdbcType=VARCHAR},
+      </if>
+      <if test="projectSource != null" >
+        #{projectSource,jdbcType=VARCHAR},
+      </if>
+      <if test="issuer != null" >
+        #{issuer,jdbcType=VARCHAR},
+      </if>
+      <if test="isRecord != null" >
+        #{isRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="proveUrl != null" >
+        #{proveUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null" >
+        #{displayOrder,jdbcType=INTEGER},
       </if>
       <if test="level != null" >
         #{level,jdbcType=INTEGER},
       </if>
       <if test="risk != null" >
         #{risk,jdbcType=INTEGER},
+      </if>
+      <if test="cover != null" >
+        #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="notice != null" >
+        #{notice,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreFactor != null" >
+        #{scoreFactor,jdbcType=TINYINT},
+      </if>
+      <if test="isRecommend != null" >
+        #{isRecommend,jdbcType=TINYINT},
+      </if>
+      <if test="isDisplay != null" >
+        #{isDisplay,jdbcType=TINYINT},
+      </if>
+      <if test="isRenew != null" >
+        #{isRenew,jdbcType=TINYINT},
+      </if>
+      <if test="ctime != null" >
+        #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="desc != null" >
+        #{desc,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -201,29 +421,80 @@
       <if test="record.pid != null" >
         `pid` = #{record.pid,jdbcType=INTEGER},
       </if>
+      <if test="record.status != null" >
+        `status` = #{record.status,jdbcType=TINYINT},
+      </if>
       <if test="record.code != null" >
         `code` = #{record.code,jdbcType=VARCHAR},
       </if>
       <if test="record.name != null" >
         `name` = #{record.name,jdbcType=VARCHAR},
       </if>
-      <if test="record.status != null" >
-        `status` = #{record.status,jdbcType=CHAR},
+      <if test="record.foundDay != null" >
+        `found_day` = #{record.foundDay,jdbcType=DATE},
       </if>
       <if test="record.valueDay != null" >
-        `value_day` = #{record.valueDay,jdbcType=INTEGER},
+        `value_day` = #{record.valueDay,jdbcType=DATE},
       </if>
       <if test="record.expiryDay != null" >
-        `expiry_day` = #{record.expiryDay,jdbcType=INTEGER},
+        `expiry_day` = #{record.expiryDay,jdbcType=DATE},
+      </if>
+      <if test="record.issueType != null" >
+        `issue_type` = #{record.issueType,jdbcType=DATE},
+      </if>
+      <if test="record.productType != null" >
+        `product_type` = #{record.productType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.renewDeadline != null" >
+        `renew_deadline` = #{record.renewDeadline,jdbcType=VARCHAR},
       </if>
       <if test="record.dividendDay != null" >
-        `dividend_day` = #{record.dividendDay,jdbcType=INTEGER},
+        `dividend_day` = #{record.dividendDay,jdbcType=DATE},
       </if>
-      <if test="record.ctime != null" >
-        `ctime` = #{record.ctime,jdbcType=INTEGER},
+      <if test="record.annualYield != null" >
+        `annual_yield` = #{record.annualYield,jdbcType=VARCHAR},
       </if>
-      <if test="record.sort != null" >
-        `sort` = #{record.sort,jdbcType=INTEGER},
+      <if test="record.incomeDistributionType != null" >
+        `income_distribution_type` = #{record.incomeDistributionType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.investmentOrientation != null" >
+        `investment_orientation` = #{record.investmentOrientation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.increaseTrust != null" >
+        `increase_trust` = #{record.increaseTrust,jdbcType=VARCHAR},
+      </if>
+      <if test="record.highlights != null" >
+        `highlights` = #{record.highlights,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fundManagementFee != null" >
+        `fund_management_fee` = #{record.fundManagementFee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fundSubscriptionFee != null" >
+        `fund_subscription_fee` = #{record.fundSubscriptionFee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fundManager != null" >
+        `fund_manager` = #{record.fundManager,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custodian != null" >
+        `custodian` = #{record.custodian,jdbcType=VARCHAR},
+      </if>
+      <if test="record.investmentType != null" >
+        `investment_type` = #{record.investmentType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectSource != null" >
+        `project_source` = #{record.projectSource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.issuer != null" >
+        `issuer` = #{record.issuer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isRecord != null" >
+        `is_record` = #{record.isRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="record.proveUrl != null" >
+        `prove_url` = #{record.proveUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.displayOrder != null" >
+        `display_order` = #{record.displayOrder,jdbcType=INTEGER},
       </if>
       <if test="record.level != null" >
         `level` = #{record.level,jdbcType=INTEGER},
@@ -231,7 +502,73 @@
       <if test="record.risk != null" >
         `risk` = #{record.risk,jdbcType=INTEGER},
       </if>
+      <if test="record.cover != null" >
+        `cover` = #{record.cover,jdbcType=VARCHAR},
+      </if>
+      <if test="record.notice != null" >
+        `notice` = #{record.notice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scoreFactor != null" >
+        `score_factor` = #{record.scoreFactor,jdbcType=TINYINT},
+      </if>
+      <if test="record.isRecommend != null" >
+        `is_ recommend` = #{record.isRecommend,jdbcType=TINYINT},
+      </if>
+      <if test="record.isDisplay != null" >
+        `is_display` = #{record.isDisplay,jdbcType=TINYINT},
+      </if>
+      <if test="record.isRenew != null" >
+        `is_renew` = #{record.isRenew,jdbcType=TINYINT},
+      </if>
+      <if test="record.ctime != null" >
+        `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.desc != null" >
+        `desc` = #{record.desc,jdbcType=LONGVARCHAR},
+      </if>
     </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update `product`
+    set `pid` = #{record.pid,jdbcType=INTEGER},
+      `status` = #{record.status,jdbcType=TINYINT},
+      `code` = #{record.code,jdbcType=VARCHAR},
+      `name` = #{record.name,jdbcType=VARCHAR},
+      `found_day` = #{record.foundDay,jdbcType=DATE},
+      `value_day` = #{record.valueDay,jdbcType=DATE},
+      `expiry_day` = #{record.expiryDay,jdbcType=DATE},
+      `issue_type` = #{record.issueType,jdbcType=DATE},
+      `product_type` = #{record.productType,jdbcType=VARCHAR},
+      `renew_deadline` = #{record.renewDeadline,jdbcType=VARCHAR},
+      `dividend_day` = #{record.dividendDay,jdbcType=DATE},
+      `annual_yield` = #{record.annualYield,jdbcType=VARCHAR},
+      `income_distribution_type` = #{record.incomeDistributionType,jdbcType=VARCHAR},
+      `investment_orientation` = #{record.investmentOrientation,jdbcType=VARCHAR},
+      `increase_trust` = #{record.increaseTrust,jdbcType=VARCHAR},
+      `highlights` = #{record.highlights,jdbcType=VARCHAR},
+      `fund_management_fee` = #{record.fundManagementFee,jdbcType=VARCHAR},
+      `fund_subscription_fee` = #{record.fundSubscriptionFee,jdbcType=VARCHAR},
+      `fund_manager` = #{record.fundManager,jdbcType=VARCHAR},
+      `custodian` = #{record.custodian,jdbcType=VARCHAR},
+      `investment_type` = #{record.investmentType,jdbcType=VARCHAR},
+      `project_source` = #{record.projectSource,jdbcType=VARCHAR},
+      `issuer` = #{record.issuer,jdbcType=VARCHAR},
+      `is_record` = #{record.isRecord,jdbcType=VARCHAR},
+      `prove_url` = #{record.proveUrl,jdbcType=VARCHAR},
+      `display_order` = #{record.displayOrder,jdbcType=INTEGER},
+      `level` = #{record.level,jdbcType=INTEGER},
+      `risk` = #{record.risk,jdbcType=INTEGER},
+      `cover` = #{record.cover,jdbcType=VARCHAR},
+      `notice` = #{record.notice,jdbcType=VARCHAR},
+      `score_factor` = #{record.scoreFactor,jdbcType=TINYINT},
+      `is_ recommend` = #{record.isRecommend,jdbcType=TINYINT},
+      `is_display` = #{record.isDisplay,jdbcType=TINYINT},
+      `is_renew` = #{record.isRenew,jdbcType=TINYINT},
+      `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
+      `desc` = #{record.desc,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -239,16 +576,40 @@
   <update id="updateByExample" parameterType="map" >
     update `product`
     set `pid` = #{record.pid,jdbcType=INTEGER},
+      `status` = #{record.status,jdbcType=TINYINT},
       `code` = #{record.code,jdbcType=VARCHAR},
       `name` = #{record.name,jdbcType=VARCHAR},
-      `status` = #{record.status,jdbcType=CHAR},
-      `value_day` = #{record.valueDay,jdbcType=INTEGER},
-      `expiry_day` = #{record.expiryDay,jdbcType=INTEGER},
-      `dividend_day` = #{record.dividendDay,jdbcType=INTEGER},
-      `ctime` = #{record.ctime,jdbcType=INTEGER},
-      `sort` = #{record.sort,jdbcType=INTEGER},
+      `found_day` = #{record.foundDay,jdbcType=DATE},
+      `value_day` = #{record.valueDay,jdbcType=DATE},
+      `expiry_day` = #{record.expiryDay,jdbcType=DATE},
+      `issue_type` = #{record.issueType,jdbcType=DATE},
+      `product_type` = #{record.productType,jdbcType=VARCHAR},
+      `renew_deadline` = #{record.renewDeadline,jdbcType=VARCHAR},
+      `dividend_day` = #{record.dividendDay,jdbcType=DATE},
+      `annual_yield` = #{record.annualYield,jdbcType=VARCHAR},
+      `income_distribution_type` = #{record.incomeDistributionType,jdbcType=VARCHAR},
+      `investment_orientation` = #{record.investmentOrientation,jdbcType=VARCHAR},
+      `increase_trust` = #{record.increaseTrust,jdbcType=VARCHAR},
+      `highlights` = #{record.highlights,jdbcType=VARCHAR},
+      `fund_management_fee` = #{record.fundManagementFee,jdbcType=VARCHAR},
+      `fund_subscription_fee` = #{record.fundSubscriptionFee,jdbcType=VARCHAR},
+      `fund_manager` = #{record.fundManager,jdbcType=VARCHAR},
+      `custodian` = #{record.custodian,jdbcType=VARCHAR},
+      `investment_type` = #{record.investmentType,jdbcType=VARCHAR},
+      `project_source` = #{record.projectSource,jdbcType=VARCHAR},
+      `issuer` = #{record.issuer,jdbcType=VARCHAR},
+      `is_record` = #{record.isRecord,jdbcType=VARCHAR},
+      `prove_url` = #{record.proveUrl,jdbcType=VARCHAR},
+      `display_order` = #{record.displayOrder,jdbcType=INTEGER},
       `level` = #{record.level,jdbcType=INTEGER},
-      `risk` = #{record.risk,jdbcType=INTEGER}
+      `risk` = #{record.risk,jdbcType=INTEGER},
+      `cover` = #{record.cover,jdbcType=VARCHAR},
+      `notice` = #{record.notice,jdbcType=VARCHAR},
+      `score_factor` = #{record.scoreFactor,jdbcType=TINYINT},
+      `is_ recommend` = #{record.isRecommend,jdbcType=TINYINT},
+      `is_display` = #{record.isDisplay,jdbcType=TINYINT},
+      `is_renew` = #{record.isRenew,jdbcType=TINYINT},
+      `ctime` = #{record.ctime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -256,29 +617,80 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.fhzc.app.system.mybatis.model.Product" >
     update `product`
     <set >
+      <if test="status != null" >
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
       <if test="code != null" >
         `code` = #{code,jdbcType=VARCHAR},
       </if>
       <if test="name != null" >
         `name` = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="status != null" >
-        `status` = #{status,jdbcType=CHAR},
+      <if test="foundDay != null" >
+        `found_day` = #{foundDay,jdbcType=DATE},
       </if>
       <if test="valueDay != null" >
-        `value_day` = #{valueDay,jdbcType=INTEGER},
+        `value_day` = #{valueDay,jdbcType=DATE},
       </if>
       <if test="expiryDay != null" >
-        `expiry_day` = #{expiryDay,jdbcType=INTEGER},
+        `expiry_day` = #{expiryDay,jdbcType=DATE},
+      </if>
+      <if test="issueType != null" >
+        `issue_type` = #{issueType,jdbcType=DATE},
+      </if>
+      <if test="productType != null" >
+        `product_type` = #{productType,jdbcType=VARCHAR},
+      </if>
+      <if test="renewDeadline != null" >
+        `renew_deadline` = #{renewDeadline,jdbcType=VARCHAR},
       </if>
       <if test="dividendDay != null" >
-        `dividend_day` = #{dividendDay,jdbcType=INTEGER},
+        `dividend_day` = #{dividendDay,jdbcType=DATE},
       </if>
-      <if test="ctime != null" >
-        `ctime` = #{ctime,jdbcType=INTEGER},
+      <if test="annualYield != null" >
+        `annual_yield` = #{annualYield,jdbcType=VARCHAR},
       </if>
-      <if test="sort != null" >
-        `sort` = #{sort,jdbcType=INTEGER},
+      <if test="incomeDistributionType != null" >
+        `income_distribution_type` = #{incomeDistributionType,jdbcType=VARCHAR},
+      </if>
+      <if test="investmentOrientation != null" >
+        `investment_orientation` = #{investmentOrientation,jdbcType=VARCHAR},
+      </if>
+      <if test="increaseTrust != null" >
+        `increase_trust` = #{increaseTrust,jdbcType=VARCHAR},
+      </if>
+      <if test="highlights != null" >
+        `highlights` = #{highlights,jdbcType=VARCHAR},
+      </if>
+      <if test="fundManagementFee != null" >
+        `fund_management_fee` = #{fundManagementFee,jdbcType=VARCHAR},
+      </if>
+      <if test="fundSubscriptionFee != null" >
+        `fund_subscription_fee` = #{fundSubscriptionFee,jdbcType=VARCHAR},
+      </if>
+      <if test="fundManager != null" >
+        `fund_manager` = #{fundManager,jdbcType=VARCHAR},
+      </if>
+      <if test="custodian != null" >
+        `custodian` = #{custodian,jdbcType=VARCHAR},
+      </if>
+      <if test="investmentType != null" >
+        `investment_type` = #{investmentType,jdbcType=VARCHAR},
+      </if>
+      <if test="projectSource != null" >
+        `project_source` = #{projectSource,jdbcType=VARCHAR},
+      </if>
+      <if test="issuer != null" >
+        `issuer` = #{issuer,jdbcType=VARCHAR},
+      </if>
+      <if test="isRecord != null" >
+        `is_record` = #{isRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="proveUrl != null" >
+        `prove_url` = #{proveUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null" >
+        `display_order` = #{displayOrder,jdbcType=INTEGER},
       </if>
       <if test="level != null" >
         `level` = #{level,jdbcType=INTEGER},
@@ -286,23 +698,126 @@
       <if test="risk != null" >
         `risk` = #{risk,jdbcType=INTEGER},
       </if>
+      <if test="cover != null" >
+        `cover` = #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="notice != null" >
+        `notice` = #{notice,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreFactor != null" >
+        `score_factor` = #{scoreFactor,jdbcType=TINYINT},
+      </if>
+      <if test="isRecommend != null" >
+        `is_ recommend` = #{isRecommend,jdbcType=TINYINT},
+      </if>
+      <if test="isDisplay != null" >
+        `is_display` = #{isDisplay,jdbcType=TINYINT},
+      </if>
+      <if test="isRenew != null" >
+        `is_renew` = #{isRenew,jdbcType=TINYINT},
+      </if>
+      <if test="ctime != null" >
+        `ctime` = #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="desc != null" >
+        `desc` = #{desc,jdbcType=LONGVARCHAR},
+      </if>
     </set>
+    where `pid` = #{pid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.fhzc.app.system.mybatis.model.Product" >
+    update `product`
+    set `status` = #{status,jdbcType=TINYINT},
+      `code` = #{code,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR},
+      `found_day` = #{foundDay,jdbcType=DATE},
+      `value_day` = #{valueDay,jdbcType=DATE},
+      `expiry_day` = #{expiryDay,jdbcType=DATE},
+      `issue_type` = #{issueType,jdbcType=DATE},
+      `product_type` = #{productType,jdbcType=VARCHAR},
+      `renew_deadline` = #{renewDeadline,jdbcType=VARCHAR},
+      `dividend_day` = #{dividendDay,jdbcType=DATE},
+      `annual_yield` = #{annualYield,jdbcType=VARCHAR},
+      `income_distribution_type` = #{incomeDistributionType,jdbcType=VARCHAR},
+      `investment_orientation` = #{investmentOrientation,jdbcType=VARCHAR},
+      `increase_trust` = #{increaseTrust,jdbcType=VARCHAR},
+      `highlights` = #{highlights,jdbcType=VARCHAR},
+      `fund_management_fee` = #{fundManagementFee,jdbcType=VARCHAR},
+      `fund_subscription_fee` = #{fundSubscriptionFee,jdbcType=VARCHAR},
+      `fund_manager` = #{fundManager,jdbcType=VARCHAR},
+      `custodian` = #{custodian,jdbcType=VARCHAR},
+      `investment_type` = #{investmentType,jdbcType=VARCHAR},
+      `project_source` = #{projectSource,jdbcType=VARCHAR},
+      `issuer` = #{issuer,jdbcType=VARCHAR},
+      `is_record` = #{isRecord,jdbcType=VARCHAR},
+      `prove_url` = #{proveUrl,jdbcType=VARCHAR},
+      `display_order` = #{displayOrder,jdbcType=INTEGER},
+      `level` = #{level,jdbcType=INTEGER},
+      `risk` = #{risk,jdbcType=INTEGER},
+      `cover` = #{cover,jdbcType=VARCHAR},
+      `notice` = #{notice,jdbcType=VARCHAR},
+      `score_factor` = #{scoreFactor,jdbcType=TINYINT},
+      `is_ recommend` = #{isRecommend,jdbcType=TINYINT},
+      `is_display` = #{isDisplay,jdbcType=TINYINT},
+      `is_renew` = #{isRenew,jdbcType=TINYINT},
+      `ctime` = #{ctime,jdbcType=TIMESTAMP},
+      `desc` = #{desc,jdbcType=LONGVARCHAR}
     where `pid` = #{pid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.fhzc.app.system.mybatis.model.Product" >
     update `product`
-    set `code` = #{code,jdbcType=VARCHAR},
+    set `status` = #{status,jdbcType=TINYINT},
+      `code` = #{code,jdbcType=VARCHAR},
       `name` = #{name,jdbcType=VARCHAR},
-      `status` = #{status,jdbcType=CHAR},
-      `value_day` = #{valueDay,jdbcType=INTEGER},
-      `expiry_day` = #{expiryDay,jdbcType=INTEGER},
-      `dividend_day` = #{dividendDay,jdbcType=INTEGER},
-      `ctime` = #{ctime,jdbcType=INTEGER},
-      `sort` = #{sort,jdbcType=INTEGER},
+      `found_day` = #{foundDay,jdbcType=DATE},
+      `value_day` = #{valueDay,jdbcType=DATE},
+      `expiry_day` = #{expiryDay,jdbcType=DATE},
+      `issue_type` = #{issueType,jdbcType=DATE},
+      `product_type` = #{productType,jdbcType=VARCHAR},
+      `renew_deadline` = #{renewDeadline,jdbcType=VARCHAR},
+      `dividend_day` = #{dividendDay,jdbcType=DATE},
+      `annual_yield` = #{annualYield,jdbcType=VARCHAR},
+      `income_distribution_type` = #{incomeDistributionType,jdbcType=VARCHAR},
+      `investment_orientation` = #{investmentOrientation,jdbcType=VARCHAR},
+      `increase_trust` = #{increaseTrust,jdbcType=VARCHAR},
+      `highlights` = #{highlights,jdbcType=VARCHAR},
+      `fund_management_fee` = #{fundManagementFee,jdbcType=VARCHAR},
+      `fund_subscription_fee` = #{fundSubscriptionFee,jdbcType=VARCHAR},
+      `fund_manager` = #{fundManager,jdbcType=VARCHAR},
+      `custodian` = #{custodian,jdbcType=VARCHAR},
+      `investment_type` = #{investmentType,jdbcType=VARCHAR},
+      `project_source` = #{projectSource,jdbcType=VARCHAR},
+      `issuer` = #{issuer,jdbcType=VARCHAR},
+      `is_record` = #{isRecord,jdbcType=VARCHAR},
+      `prove_url` = #{proveUrl,jdbcType=VARCHAR},
+      `display_order` = #{displayOrder,jdbcType=INTEGER},
       `level` = #{level,jdbcType=INTEGER},
-      `risk` = #{risk,jdbcType=INTEGER}
+      `risk` = #{risk,jdbcType=INTEGER},
+      `cover` = #{cover,jdbcType=VARCHAR},
+      `notice` = #{notice,jdbcType=VARCHAR},
+      `score_factor` = #{scoreFactor,jdbcType=TINYINT},
+      `is_ recommend` = #{isRecommend,jdbcType=TINYINT},
+      `is_display` = #{isDisplay,jdbcType=TINYINT},
+      `is_renew` = #{isRenew,jdbcType=TINYINT},
+      `ctime` = #{ctime,jdbcType=TIMESTAMP}
     where `pid` = #{pid,jdbcType=INTEGER}
   </update>
+  <select resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.system.mybatis.model.ProductExample" id="selectByExampleWithBLOBsWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from `product`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
   <select resultMap="BaseResultMap" parameterType="com.fhzc.app.system.mybatis.model.ProductExample" id="selectByExampleWithRowbounds" >
     select
     <if test="distinct" >
