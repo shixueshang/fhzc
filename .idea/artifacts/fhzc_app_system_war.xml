@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="fhzc-app-system:war">
+    <output-path>$PROJECT_DIR$/fhzc-app-system/target</output-path>
+    <root id="archive" name="fhzc-app-system-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="fhzc-app-system:war exploded" />
+    </root>
+  </artifact>
+</component>
