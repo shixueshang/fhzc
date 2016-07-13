@@ -46,10 +46,10 @@
 
         <!--生成对应表及类名 -->
 
-        <table tableName="product"
+        <table tableName="admin"
                delimitAllColumns="true"
                delimitIdentifiers="true"
-               domainObjectName="Product">
+               domainObjectName="Admin">
             <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
         </table>
 

@@ -71,14 +71,18 @@ public class MessageController extends BaseController {
         Date lastSyncDate = new Date(version * 1000L);
 
         List<Map<String ,Object>> newMessages = newMessages(userId, lastSyncDate);
-
+        result.put("groups", newMessages);
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
     }
 
     private List<Map<String ,Object>> newMessages(Integer userId, Date lastSyncDate){
         List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
         List<ImMessage> messages = messageService.getUnreadMessages(userId, lastSyncDate);
+        //找出有多少组
+        List<ImMessage> groups = new ArrayList<ImMessage>();
+        for(ImMessage message : messages){
 
+        }
         return list;
     }
 }
