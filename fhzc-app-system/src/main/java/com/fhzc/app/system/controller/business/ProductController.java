@@ -35,6 +35,15 @@ public class ProductController extends BaseController {
         return mav;
     }
 
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    public ModelAndView addProduct(){
+        ModelAndView mav = new ModelAndView("business/product/add");
+        PageableResult<Product> pageableResult = productService.findPageProducts(page, size);
+        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
+        mav.addObject("products", pageableResult.getItems());
+        return mav;
+    }
+
     /**
      * excel导入
      * @param multiFile
