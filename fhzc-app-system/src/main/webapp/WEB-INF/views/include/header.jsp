@@ -3,44 +3,27 @@
 <%
 	String contextPath = request.getContextPath();
 %>
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
 
-<html>
+<!-- BEGIN HEAD -->
 <head>
-	<meta charset="utf-8">
-	<title>复华资产</title>
-    <link rel="icon" href="/static/image/favicon.ico" type="image/x-icon" />
-	<link rel="shortcut icon" href="/static/image/favicon.ico" type="image/x-icon">
-	<!-- css -->
-	<link rel="stylesheet" href="<%=contextPath%>/static/css/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="<%=contextPath%>/static/css/bootstrap/bootstrap-fileupload.css">
-    <link rel="stylesheet" href="<%=contextPath%>/static/css/smart/timeline.css" rel="stylesheet">
-    <link rel="stylesheet" href="<%=contextPath%>/static/css/smart/sb-admin-2.css" rel="stylesheet">
-    <link rel="stylesheet" href="<%=contextPath%>/static/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="<%=contextPath%>/static/css/main.css" rel="stylesheet">
-    <link rel="stylesheet" href="<%=contextPath%>/static/css/jqueryui/jquery-ui-1.9.2.custom.css" />
-    <link rel="stylesheet" href="<%=contextPath%>/static/js/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+    <meta charset="utf-8" />
+    <title>复华资产</title>
+    <link rel="shortcut icon" href="/static/image/favicon.ico" type="image/x-icon">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
 
-	<!-- js-core -->
-	<script src="<%=contextPath%>/static/js/jquery/jquery-2.1.1.min.js"></script>
-    <script src="<%=contextPath%>/static/js/jqueryui/jquery-ui-1.9.2.custom.min.js"></script>
-    <script src="<%=contextPath%>/static/js/jquery/jquery.form.js"></script>
-    <script src="<%=contextPath%>/static/js/bootstrap/bootstrap.min.js"></script>
-    <script src="<%=contextPath%>/static/js/bootstrap/bootstrap-typeahead.min.js"></script>
-    <script src="<%=contextPath%>/static/js/bootstrap/bootstrap-fileupload.js"></script>
-    <script src="<%=contextPath%>/static/js/bootstrap/bootstrap-dialog.js"></script>
-    <script src="<%=contextPath%>/static/js/jquery/validate/jquery.validate.min.js"></script>
-
-    <script src="<%=contextPath%>/static/js/metisMenu/dist/metisMenu.min.js"></script>
-    <script src="<%=contextPath%>/static/js/raphael/raphael-min.js"></script>
-
-    <script src="<%=contextPath%>/static/js/smart/sb-admin-2.js"></script>
-
-	<style>
-		/*覆盖导航栏原有的bootstrap样式*/
-		.topBanner_nav > li > a:hover, .topBanner_nav > li > a:focus {
-			text-decoration: none;
-			background-color: #656565
-		}
-	</style>
+    <link href="<%=contextPath%>/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" /> <!-- bootstrap默认css -->
+    <link href="<%=contextPath%>/assets/css/metro.css" rel="stylesheet" /> <!-- 控制button的显示样式，如果不引入的话，则为bootstrap默认样式 -->
+    <link href="<%=contextPath%>/assets/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" /> <!-- bootstrap导航菜单样式 -->
+    <link href="<%=contextPath%>/assets/font-awesome/css/admin-font-awesome.css" rel="stylesheet" />  <!-- 导航菜单图标 -->
+    <link href="<%=contextPath%>/assets/css/admin-style.css" rel="stylesheet" /> <!-- 整体样式控制，网页字体 -->
+    <link href="<%=contextPath%>/assets/css/style_responsive.css" rel="stylesheet" /> <!-- 本框架导航菜单样式 -->
+    <link href="<%=contextPath%>/assets/css/style_blue.css" rel="stylesheet" id="style_color" /> <!-- 本框架皮肤样式 -->
 </head>
-<body class="container-fluid">
+
+

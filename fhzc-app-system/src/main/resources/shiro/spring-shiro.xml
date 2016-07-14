@@ -29,6 +29,7 @@
         <property name="filterChainDefinitions">
             <value>
                 /static/** = anon
+                /assets/** = anon
                 /login = anon
                 /logout = anon
                 /** = authc <!-- 需要认证 -->
