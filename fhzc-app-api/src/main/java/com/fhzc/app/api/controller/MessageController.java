@@ -1,12 +1,14 @@
 package com.fhzc.app.api.controller;
 
 import com.fhzc.app.api.service.MessageService;
+import com.fhzc.app.api.service.UserService;
 import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
 import com.fhzc.app.api.tools.FileUtils;
 import com.fhzc.app.api.tools.TextUtils;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.mybatis.model.ImMessage;
+import com.fhzc.app.system.mybatis.model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,6 +27,9 @@ public class MessageController extends BaseController {
     @Resource
     private MessageService messageService;
 
+    @Resource
+    private UserService userService;
+
     /**
      * 发送消息
      * @param toUserId  接收人
@@ -35,9 +40,8 @@ public class MessageController extends BaseController {
      */
     @RequestMapping(value = "/api/message/publish", method = RequestMethod.POST)
     @ResponseBody
-    public ApiJsonResult publishMessage(Integer toUserId, String text, String type, String duration){
+    public ApiJsonResult publishMessage(Integer userId , Integer toUserId, String text, String type, String duration){
 
-        Integer userId = 1;
             ImMessage message = new ImMessage();
             message.setUserId(userId);
             message.setToUserId(toUserId);
@@ -50,11 +54,21 @@ public class MessageController extends BaseController {
             }else if(type.equals(APIConstants.Message_Type.Audio)){
                 message.setDuration(duration);
             }
-            message.setSessionId(UUID.randomUUID().toString());
+
+            //查询对话历史,确定sessionId
+            String sessionId = messageService.hasChatHistory(userId, toUserId);
+            if(sessionId == null){
+                sessionId = UUID.randomUUID().toString();
+            }
+            message.setSessionId(sessionId);
             message.setMessageType(type);
             message.setContent(text);
             message.setSendTime(new Date());
-        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, message);
+
+            ImMessage result = messageService.sendMessgeToSession(message);
+
+            result.setSendTimeStamp(message.getSendTime().getTime() / 1000);
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
     }
 
     /**
@@ -67,22 +81,73 @@ public class MessageController extends BaseController {
     public ApiJsonResult yapull(long version){
         Integer userId = 1;
         Map<String, Object> result = new ConcurrentHashMap<String, Object>();
-        result.put("version", new Date().getTime());
+        result.put("version", new Date().getTime() /1000);
         Date lastSyncDate = new Date(version * 1000L);
 
         List<Map<String ,Object>> newMessages = newMessages(userId, lastSyncDate);
         result.put("groups", newMessages);
-        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
     }
 
     private List<Map<String ,Object>> newMessages(Integer userId, Date lastSyncDate){
         List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
         List<ImMessage> messages = messageService.getUnreadMessages(userId, lastSyncDate);
-        //找出有多少组
-        List<ImMessage> groups = new ArrayList<ImMessage>();
-        for(ImMessage message : messages){
-
+        //找出有多少组,数据格式 sessionId=List<ImMessage>
+        Map<String, List<ImMessage>> sessionMap = new ConcurrentHashMap<String, List<ImMessage>>();
+        for(int i = 0; i < messages.size(); i++){
+            String sessionId = messages.get(i).getSessionId();
+            if(sessionMap.get(sessionId) != null){
+                sessionMap.get(sessionId).add(messages.get(i));
+            }else{
+                List<ImMessage> lis = new ArrayList<ImMessage>();
+                lis.add(messages.get(i));
+                sessionMap.put(sessionId, lis);
+            }
         }
+
+        for(Map.Entry<String, List<ImMessage>> entry : sessionMap.entrySet()){
+            Map<String, Object> groupMap = new ConcurrentHashMap<String, Object>();
+            groupMap.put("sessionId", entry.getKey());
+            List<ImMessage> msgInsession = entry.getValue();
+            Integer[] party = new Integer[2];
+            party[0] = msgInsession.get(0).getUserId();
+            party[1] = msgInsession.get(0).getToUserId();
+            groupMap.put("party", party);
+
+            List<Map<String, Object>> groupInfo = new ArrayList<Map<String, Object>>();
+            for(Integer uid : party){
+                Map<String, Object> userMap = new ConcurrentHashMap<String, Object>();
+                User user = userService.getUser(uid);
+                userMap.put("uid", uid);
+                userMap.put("name", user.getRealname());
+                userMap.put("avatar", basePath + user.getAvatar());
+                groupInfo.add(userMap);
+            }
+            groupMap.put("groupInfo", groupInfo);
+
+            groupMap.put("messages", msgInsession);
+            list.add(groupMap);
+        }
+
         return list;
+    }
+
+    /**
+     * 获得历史消息
+     * @param sessionId 群组id
+     * @param mid 小于mid的记录
+     * @param count 获取记录数
+     * @return
+     */
+    @RequestMapping(value = "/api/message/history", method = RequestMethod.GET)
+    @ResponseBody
+    public ApiJsonResult messageHistory(String sessionId, Integer mid, Integer count){
+        List<ImMessage> result = new ArrayList<ImMessage>();
+        List<ImMessage> messages = messageService.findHistoryMessages(sessionId, mid, count);
+        for(ImMessage message : messages){
+            message.setSendTimeStamp(message.getSendTime().getTime() / 1000);
+            result.add(message);
+        }
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
     }
 }

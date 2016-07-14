@@ -25,6 +25,8 @@ public class ImMessage {
 
     private String content;
 
+    private Long  sendTimeStamp;
+
     public Integer getId() {
         return id;
     }
@@ -111,5 +113,13 @@ public class ImMessage {
 
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
+    }
+
+    public Long getSendTimeStamp() {
+        return sendTimeStamp;
+    }
+
+    public void setSendTimeStamp(Long sendTimeStamp) {
+        this.sendTimeStamp = sendTimeStamp;
     }
 }
