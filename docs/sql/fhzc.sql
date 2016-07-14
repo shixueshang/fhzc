@@ -783,12 +783,12 @@ CREATE TABLE IF NOT EXISTS `im_message` (
   `session_id` varchar(50) NOT NULL COMMENT '聊天组唯一标识',
   `message_type` varchar(20) NOT NULL COMMENT '消息类型',
   `to_user_id` int(11) NOT NULL COMMENT '消息接收人',
-  `is_read` tinyint(1) COMMENT '是否已读',
+  `is_read` tinyint(1) DEFAULT 0 COMMENT '是否已读',
   `duration` varchar(10) DEFAULT NULL COMMENT '语音长度',
   `mid` int(1) DEFAULT 0 COMMENT '每个聊天组每条信息的唯一标识',
   `status` varchar(20) DEFAULT NULL COMMENT '状态',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT '消息表'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT '消息表';
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
