@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS `bank`.`user` (
   `realname` VARCHAR(45) NULL COMMENT '姓名',
   `gender` ENUM('male','female') NULL DEFAULT 'male' COMMENT '性别',
   `birthday` DATE NULL COMMENT '生日',
+  `avatar` VARCHAR(255) NULL COMMENT '用户图像',
   `passport_type_id` INT NULL COMMENT '证件类型',
   `passport_code` VARCHAR(45) NULL COMMENT '证件号码（加密）',
   `passport_agent` VARCHAR(45) NULL COMMENT '发证机关（加密）',

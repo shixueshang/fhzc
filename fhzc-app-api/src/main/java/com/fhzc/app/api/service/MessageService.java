@@ -14,7 +14,7 @@ public interface MessageService {
      * 发送消息
      * @param message
      */
-    public void sendMessgeToSession(ImMessage message);
+     ImMessage sendMessgeToSession(ImMessage message);
 
     /**
      * 获得在指定之间之后所有发给我的未读消息
@@ -22,5 +22,22 @@ public interface MessageService {
      * @param lastSyncDate
      * @return
      */
-    public List<ImMessage> getUnreadMessages(Integer userId, Date lastSyncDate);
+     List<ImMessage> getUnreadMessages(Integer userId, Date lastSyncDate);
+
+    /**
+     * 获得指定mid之前的历史消息
+     * @param sessionId 群组id
+     * @param mid
+     * @param limit 条数
+     * @return
+     */
+    List<ImMessage> findHistoryMessages(String sessionId, Integer mid, Integer limit);
+
+    /**
+     * 判断是否有聊天记录,如果有则返回sessionId
+     * @param sendUserId
+     * @param toUserId
+     * @return
+     */
+    String hasChatHistory(Integer sendUserId, Integer toUserId);
 }
