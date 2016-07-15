@@ -1912,6 +1912,7 @@ var App = function () {
         $('#tags_2').tagsInput({
             width: 240
         });
+
     }
 
     var handleDateTimePickers = function () {
