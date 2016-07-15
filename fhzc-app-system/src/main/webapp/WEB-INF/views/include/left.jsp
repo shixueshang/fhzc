@@ -22,7 +22,7 @@
                                 <a href="/business/product/list">产品列表</a>
                             </li>
                             <li>
-                                <a href="/business/product/add">新增产品</a>
+                                <a href="/business/product/pub">新增产品</a>
                             </li>
                             <li>
                                 <a href="/business/product/importor">导入产品</a>
@@ -56,10 +56,10 @@
 
                         <ul class="sub">
                             <li>
-                                <a href="#">报告列表</a>
+                                <a href="/business/report/list">报告列表</a>
                             </li>
                             <li>
-                                <a href="#">新增报告</a>
+                                <a href="/business/report/add">新增报告</a>
                             </li>
                         </ul>
                     </li>

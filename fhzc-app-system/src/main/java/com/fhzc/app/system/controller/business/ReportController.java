@@ -22,9 +22,9 @@ public class ReportController extends BaseController {
         return mav;
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
     public ModelAndView addReport(Report report){
-        ModelAndView mav = new ModelAndView("business/report/list");
+        ModelAndView mav = new ModelAndView("business/report/add");
         return mav;
     }
 }

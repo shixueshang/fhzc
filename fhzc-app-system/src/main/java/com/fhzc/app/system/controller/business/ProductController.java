@@ -41,24 +41,36 @@ public class ProductController extends BaseController {
     }
 
     /**
+     * 产品发布页面
+     * @return
+     */
+    @RequestMapping(value = "/pub", method = RequestMethod.GET)
+    public ModelAndView pubProduct(){
+        ModelAndView mav = new ModelAndView("business/product/pub");
+        return mav;
+    }
+
+    /**
+     * 产品导入页面
+     * @return
+     */
+    @RequestMapping(value = "/importor", method = RequestMethod.GET)
+    public ModelAndView importorProduct(){
+        ModelAndView mav = new ModelAndView("business/product/importor");
+        return mav;
+    }
+
+    /**
      * 产品发布
      * @return
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ModelAndView addProduct(Product product){
-        ModelAndView mav = new ModelAndView("business/product/list");
+        ModelAndView mav = new ModelAndView("business/product/add");
         productService.addProduct(product);
         PageableResult<Product> pageableResult = productService.findPageProducts(page, size);
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("products", pageableResult.getItems());
-        return mav;
-    }
-
-
-    @RequestMapping(value = "/importor", method = RequestMethod.GET)
-    public ModelAndView importorProduct(){
-        ModelAndView mav = new ModelAndView("business/product/importor");
-
         return mav;
     }
 
