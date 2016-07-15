@@ -14,7 +14,8 @@ import javax.annotation.Resource;
 
 @ContextConfiguration(locations = {"classpath:spring-mvc.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
-@Rollback
+@Rollback(false)
+
 @Transactional(transactionManager = "transactionManager")
 public class Base extends Assert{
 	protected Logger logger = Logger.getLogger(getClass());
