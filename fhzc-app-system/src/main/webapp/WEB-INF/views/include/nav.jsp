@@ -39,7 +39,7 @@
                             <ul class="dropdown-menu">
                                 <li><a href="#" ><i class="icon-user"></i> 个人信息</a></li>
                                 <li class="divider"></li>
-                                <li><a href="#"><i class="icon-key"></i> 退出</a></li>
+                                <li><a href="/logout"><i class="icon-key"></i> 退出</a></li>
                             </ul>
                         </li>
 

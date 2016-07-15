@@ -9,7 +9,14 @@
                         <div class="sidebar-toggler hidden-phone" style="margin-bottom:5px;"></div>
                         <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
                     </li>
-                    <li class="has-sub active">
+                    <li class="start active ">
+                        <a href="/system/home">
+                            <i class="icon-home"></i>
+                            <span class="title">Dashboard</span>
+                            <span class="selected"></span>
+                        </a>
+                    </li>
+                    <li class="has-sub">
                         <a href="javascript:;">
                             <i class="icon-money"></i>
                             <span class="title">产品管理</span>
