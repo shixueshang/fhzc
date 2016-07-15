@@ -8,117 +8,95 @@
 %>
 
 <jsp:include page="../../include/header.jsp"/>
-<jsp:include page="../../include/left.jsp"/>
+<!-- BEGIN BODY -->
+<body class="fixed-top">
+<jsp:include page="../../include/nav.jsp"/>
 
+<!--扩展样式-->
+<link href="<%=contextPath%>/assets/fancybox/source/jquery.fancybox.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/uniform/css/uniform.default.css" />
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/chosen-bootstrap/chosen/chosen.css" />
+<link rel="stylesheet" href="<%=contextPath%>/assets/data-tables/DT_bootstrap.css" />
+<link href="<%=contextPath%>/assets/bootstrap-fileupload/bootstrap-fileupload.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/jquery-tags-input/jquery.tagsinput.css" />
+<link rel="stylesheet" href="<%=contextPath%>/assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" />
 
-<div id="page-wrapper">
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/bootstrap-datepicker/css/datepicker.css">
 
-    <!-- 导入结果提示 -->
-    <div class="modal fade in" id="import_result" tabindex="-1" role="dialog"
-         aria-labelledby="myModalLabel" style="display: none;top:20%">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">导入结果</h4>
-                </div>
-                <div class="modal-body">
-                    <ul>
-                        <li>本次导入表格共<span id="totalRows"></span>条</li>
-                        <li>创建deal成功数量<span id="successRows"></span></li>
-                        <li>创建失败数量<span id="failRows"></span></li>
+<!-- BEGIN CONTAINER -->
+<div class="page-container row-fluid">
+    <jsp:include page="../../include/left.jsp"/>
+    <!-- BEGIN PAGE -->
+    <div class="page-content">
+
+        <!-- BEGIN PAGE CONTAINER 主体内容 -->
+        <div class="container-fluid">
+            <!-- BEGIN PAGE HEADER 面包屑导航 -->
+            <div class="row-fluid">
+                <div class="span12">
+
+                    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+                    <h4 class="page-title"></h4>
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="icon-home"></i>
+                            <a href="javascript:void(0);">产品管理</a>
+                            <i class="icon-angle-right"></i>
+                        </li>
+                        <li class="active"><a href="javascript:void(0);">产品列表</a></li>
                     </ul>
-                </div>
-                <div class="modal-footer">
-                    <button id="confirm_button" type="button" class="btn btn-primary">确定</button>
+                    <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
             </div>
-        </div>
-    </div>
 
+            <!--页面操作详细内容 开始-->
+            <div class="row-fluid">
+                <div class="span12">
 
-    <div class="col-lg-12" style="margin: 5px"></div>
-
-    <div class="row">
-        <form action="business/product/import" enctype="multipart/form-data" method="post" id="form">
-            <div class="col-lg-12" >
-                <span class="modal-title">请选择Excel文件:</span>
-                <input type="file" name="multiFile" id="multiFile" class="file-loading" style="display: inline;"/>
+                    <div class="portlet box yellow">
+                        <div class="portlet-title">
+                            <h4><i class="icon-reorder"></i></h4>
+                        </div>
+                        <div class="portlet-body">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <td><input type="checkbox" id="checkAll"/>全选</td>
+                                    <td>产品名称</td>
+                                    <td>状态</td>
+                                    <td>起息日</td>
+                                    <td>到期日</td>
+                                    <td>派息日</td>
+                                    <td>添加时间</td>
+                                    <td>客户等级</td>
+                                    <td>客户风险等级</td>
+                                    <td>编辑</td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach items="${products}" var="product">
+                                    <tr>
+                                        <td>${product.name}</td>
+                                        <td>${product.status}</td>
+                                        <td>${data.website}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>${data.title}</td>
+                                        <td>${fn:substring(data.createTime, 0, 10)}</td>
+                                        <td>${fn:substring(data.expireTime, 0, 10)}</td>
+                                        <td><a href="business/product/detail/${data.id}">编辑</a></td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </form>
-    </div>
+            <!--页面操作详细内容 开始-->
 
-    <div class="col-lg-12" style="margin: 10px"></div>
-
-    <div class="row">
-        <div class="col-lg-12">
-            <table class="table table-bordered table-hover table-condensed" style="font-size:12px;">
-                <thead>
-                <tr>
-                    <td><input type="checkbox" id="checkAll"/>全选</td>
-                    <td>产品名称</td>
-                    <td>状态</td>
-                    <td>起息日</td>
-                    <td>到期日</td>
-                    <td>派息日</td>
-                    <td>添加时间</td>
-                    <td>客户等级</td>
-                    <td>客户风险等级</td>
-                    <td>编辑</td>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach items="${products}" var="product">
-                    <tr>
-                        <td>${product.name}</td>
-                        <td>${product.status}</td>
-                        <td>${data.website}</td>
-                        <td></td>
-                        <td></td>
-                        <td>${data.title}</td>
-                        <td>${fn:substring(data.createTime, 0, 10)}</td>
-                        <td>${fn:substring(data.expireTime, 0, 10)}</td>
-                        <td><a href="business/product/detail/${data.id}">编辑</a></td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
         </div>
-        <jsp:include page="../../include/page.jsp"/>
     </div>
+</div>
 
-    <script>
-        $(function(){
-            $('#multiFile').change(function(){
-                $("#form").ajaxSubmit({
-                    //定义返回JSON数据，还包括xml和script格式
-                    dataType:'json',
-                    beforeSend: function() {
-                        //表单提交前做表单验证
-                    },
-                    success: function(data) {
-                        if(data.success){
-                            $("#totalRows").html(data.totalRows);
-                            $("#successRows").html(data.successRows);
-                            $("#failRows").html(data.failRows);
-                            $('#import_result').modal('show');
-                            $("#confirm_button").click(function(){
-                                $('#import_result').modal('hide');
-                                window.location.reload();
-                            });
-                        }else{
-                            BootstrapDialog.show({
-                                title: '导入失败',
-                                message: '请检查Excel格式，重新导入!'
-                            });
-                        }
-
-
-                    }
-                });
-            });
-
-        });
-
-
-    </script>
-    <jsp:include page="../../include/footer.jsp"/>
+<jsp:include page="../../include/footer.jsp"/>

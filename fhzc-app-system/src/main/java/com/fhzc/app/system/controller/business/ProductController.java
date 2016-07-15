@@ -54,6 +54,14 @@ public class ProductController extends BaseController {
         return mav;
     }
 
+
+    @RequestMapping(value = "/importor", method = RequestMethod.GET)
+    public ModelAndView importorProduct(){
+        ModelAndView mav = new ModelAndView("business/product/importor");
+
+        return mav;
+    }
+
     /**
      * excel导入
      * @param multiFile

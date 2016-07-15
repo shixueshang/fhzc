@@ -11,18 +11,127 @@
                     </li>
                     <li class="has-sub active">
                         <a href="javascript:;">
-                            <i class="icon-file"></i>
-                            <span class="title">业务管理</span>
+                            <i class="icon-money"></i>
+                            <span class="title">产品管理</span>
                             <span class="selected"></span>
                             <span class="arrow open"></span>
                         </a>
 
                         <ul class="sub">
-                            <%--<li class="active">--%>
-                                <%--<a href="/business/product/list">产品列表</a>--%>
-                            <%--</li>--%>
+                            <li class="active">
+                                <a href="/business/product/list">产品列表</a>
+                            </li>
                             <li>
                                 <a href="/business/product/add">新增产品</a>
+                            </li>
+                            <li>
+                                <a href="/business/product/importor">导入产品</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="has-sub">
+                        <a href="javascript:;">
+                            <i class="icon-flag"></i>
+                            <span class="title">活动管理</span>
+                            <span class="selected"></span>
+                            <span class="arrow open"></span>
+                        </a>
+
+                        <ul class="sub">
+                            <li>
+                                <a href="#">活动列表</a>
+                            </li>
+                            <li>
+                                <a href="#">新增活动</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="has-sub">
+                        <a href="javascript:;">
+                            <i class="icon-book"></i>
+                            <span class="title">投研报告管理</span>
+                            <span class="selected"></span>
+                            <span class="arrow open"></span>
+                        </a>
+
+                        <ul class="sub">
+                            <li>
+                                <a href="#">报告列表</a>
+                            </li>
+                            <li>
+                                <a href="#">新增报告</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="has-sub">
+                        <a href="javascript:;">
+                            <i class="icon-credit-card"></i>
+                            <span class="title">权益管理</span>
+                            <span class="selected"></span>
+                            <span class="arrow open"></span>
+                        </a>
+
+                        <ul class="sub">
+                            <li>
+                                <a href="#">权益列表</a>
+                            </li>
+                            <li>
+                                <a href="#">新增权益</a>
+                            </li>
+                            <li>
+                                <a href="#">供应商列表</a>
+                            </li>
+                            <li>
+                                <a href="#">新增供应商</a>
+                            </li>
+                            <li>
+                                <a href="#">预约列表</a>
+                            </li>
+                            <li>
+                                <a href="#">新增预约</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="has-sub">
+                        <a href="javascript:;">
+                            <i class="icon-user"></i>
+                            <span class="title">客户管理</span>
+                            <span class="selected"></span>
+                            <span class="arrow open"></span>
+                        </a>
+
+                        <ul class="sub">
+                            <li>
+                                <a href="#">客户列表</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="has-sub">
+                        <a href="javascript:;">
+                            <i class="icon-group"></i>
+                            <span class="title">理财师管理</span>
+                            <span class="selected"></span>
+                            <span class="arrow open"></span>
+                        </a>
+
+                        <ul class="sub">
+                            <li>
+                                <a href="#">理财师列表</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="has-sub">
+                        <a href="javascript:;">
+                            <i class="icon-sitemap"></i>
+                            <span class="title">组织管理</span>
+                            <span class="selected"></span>
+                            <span class="arrow open"></span>
+                        </a>
+
+                        <ul class="sub">
+                            <li>
+                                <a href="/organization/resource">组织架构配置</a>
                             </li>
                         </ul>
                     </li>
