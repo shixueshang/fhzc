@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 产品管理
  * Created by lihongde on 2016/7/7 15:22
  */
 @Controller
@@ -26,6 +27,10 @@ public class ProductController extends BaseController {
     @Resource
     private ProductService productService;
 
+    /**
+     * 产品列表
+     * @return
+     */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView listProduct(){
         ModelAndView mav = new ModelAndView("business/product/list");
@@ -35,9 +40,14 @@ public class ProductController extends BaseController {
         return mav;
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public ModelAndView addProduct(){
-        ModelAndView mav = new ModelAndView("business/product/add");
+    /**
+     * 产品发布
+     * @return
+     */
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public ModelAndView addProduct(Product product){
+        ModelAndView mav = new ModelAndView("business/product/list");
+        productService.addProduct(product);
         PageableResult<Product> pageableResult = productService.findPageProducts(page, size);
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("products", pageableResult.getItems());

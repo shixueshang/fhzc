@@ -41,7 +41,7 @@ public class MessageServiceImpl implements MessageService {
     public List<ImMessage> getUnreadMessages(Integer userId, Date lastSyncDate) {
         ImMessageExample example = new ImMessageExample();
         ImMessageExample.Criteria criteria  = example.createCriteria();
-        criteria.andUserIdEqualTo(userId);
+        criteria.andToUserIdEqualTo(userId);
         criteria.andSendTimeGreaterThanOrEqualTo(lastSyncDate);
         example.setOrderByClause("id desc");
         return imMessageMapper.selectByExampleWithBLOBs(example);
@@ -75,5 +75,10 @@ public class MessageServiceImpl implements MessageService {
             return imMessageMapper.selectByExample(example).get(0).getSessionId();
         }
         return null;
+    }
+
+    @Override
+    public ImMessage getMessage(Integer messageId) {
+        return imMessageMapper.selectByPrimaryKey(messageId);
     }
 }

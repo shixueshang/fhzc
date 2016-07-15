@@ -66,37 +66,37 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="portlet_tab1">
                                         <!-- BEGIN FORM-->
-                                        <form action="#" class="form-horizontal">
+                                        <form action="business/product/add" method="POST" class="form-horizontal">
                                             <div class="control-group">
                                             </div>
                                             <div class="control-group">
                                                 <label class="control-label">产品名</label>
                                                 <div class="controls">
-                                                    <input type="text" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="name" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
                                             <div class="control-group">
                                                 <label class="control-label">简称</label>
                                                 <div class="controls">
-                                                    <input type="text" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
                                             <div class="control-group">
                                                 <label class="control-label">产品类型</label>
                                                 <div class="controls">
-                                                    <select class="large m-wrap" tabindex="1">
-                                                        <option value="Category 1">鑫丰母基金(开放式契约型)</option>
-                                                        <option value="Category 2">封闭式有限合伙私募基金</option>
-                                                        <option value="Category 3">封闭式契约型私募基金</option>
+                                                    <select class="large m-wrap" name="productType" tabindex="1">
+                                                        <option  value="1">鑫丰母基金(开放式契约型)</option>
+                                                        <option  value="2">封闭式有限合伙私募基金</option>
+                                                        <option  value="3">封闭式契约型私募基金</option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="control-group">
                                                 <label class="control-label">基金状态</label>
                                                 <div class="controls">
-                                                    <select class="large m-wrap" tabindex="1">
+                                                    <select  class="large m-wrap" name="status" tabindex="1">
                                                         <option value="-1">未知</option>
                                                         <option value="0">产品预热</option>
                                                         <option value="1">募集中</option>

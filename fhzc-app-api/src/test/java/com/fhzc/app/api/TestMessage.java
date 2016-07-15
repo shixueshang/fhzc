@@ -42,9 +42,6 @@ public class TestMessage extends Base {
 
         ImMessage result = messageService.sendMessgeToSession(message);
 
-        result.setSendTimeStamp(message.getSendTime().getTime() / 1000);
-
-
     }
 
     @Test

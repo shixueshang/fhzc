@@ -41,6 +41,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public void addProduct(Product product) {
+        productMapper.insert(product);
+    }
+
+    @Override
     public Map<String, Object> importExcelFile(MultipartFile multipartFile) throws Exception {
        Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
         @Override

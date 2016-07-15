@@ -40,4 +40,11 @@ public interface MessageService {
      * @return
      */
     String hasChatHistory(Integer sendUserId, Integer toUserId);
+
+    /**
+     * 根据id获得消息记录
+     * @param messageId
+     * @return
+     */
+    ImMessage getMessage(Integer messageId);
 }

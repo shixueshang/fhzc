@@ -45,6 +45,7 @@ public class MessageController extends BaseController {
             ImMessage message = new ImMessage();
             message.setUserId(userId);
             message.setToUserId(toUserId);
+            message.setContent(text);
             if(type.equals(APIConstants.Message_Type.Image)){
                 String savePath = TextUtils.getConfig(APIConstants.CONFIG_KEY_IMAGE_SAVE_PATH, this);
                 List<String> imageList = FileUtils.saveFilesToDisk(request, savePath);
@@ -53,21 +54,19 @@ public class MessageController extends BaseController {
                 }
             }else if(type.equals(APIConstants.Message_Type.Audio)){
                 message.setDuration(duration);
+                message.setContent("");
             }
 
             //查询对话历史,确定sessionId
             String sessionId = messageService.hasChatHistory(userId, toUserId);
             if(sessionId == null){
-                sessionId = UUID.randomUUID().toString();
-            }
+                    sessionId = UUID.randomUUID().toString();
+                }
             message.setSessionId(sessionId);
             message.setMessageType(type);
-            message.setContent(text);
             message.setSendTime(new Date());
 
             ImMessage result = messageService.sendMessgeToSession(message);
-
-            result.setSendTimeStamp(message.getSendTime().getTime() / 1000);
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
     }
 
@@ -78,8 +77,7 @@ public class MessageController extends BaseController {
      */
     @RequestMapping(value = "/api/message/yapull",  method = RequestMethod.GET)
     @ResponseBody
-    public ApiJsonResult yapull(long version){
-        Integer userId = 1;
+    public ApiJsonResult yapull(long version, Integer userId){
         Map<String, Object> result = new ConcurrentHashMap<String, Object>();
         result.put("version", new Date().getTime() /1000);
         Date lastSyncDate = new Date(version * 1000L);
@@ -142,12 +140,18 @@ public class MessageController extends BaseController {
     @RequestMapping(value = "/api/message/history", method = RequestMethod.GET)
     @ResponseBody
     public ApiJsonResult messageHistory(String sessionId, Integer mid, Integer count){
-        List<ImMessage> result = new ArrayList<ImMessage>();
-        List<ImMessage> messages = messageService.findHistoryMessages(sessionId, mid, count);
-        for(ImMessage message : messages){
-            message.setSendTimeStamp(message.getSendTime().getTime() / 1000);
-            result.add(message);
-        }
-        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, messageService.findHistoryMessages(sessionId, mid, count));
+    }
+
+    /**
+     * 获得语音内容
+     * @param messageId
+     * @return
+     */
+    @RequestMapping(value = "/api/messge/audioContent", method = RequestMethod.GET)
+    @ResponseBody
+    public ApiJsonResult getAudioContent(Integer messageId){
+        ImMessage message = messageService.getMessage(messageId);
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, message.getContent());
     }
 }
