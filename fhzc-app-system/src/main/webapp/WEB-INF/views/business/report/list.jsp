@@ -72,7 +72,19 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-
+                                <c:forEach items="${reports}" var="report">
+                                    <tr>
+                                        <td>${report.id}</td>
+                                        <td>${report.name}</td>
+                                        <td>${report.cover}</td>
+                                        <td>${report.cid}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td><a href="business/report/detail/${report.id}">编辑</a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
                                 </tbody>
                             </table>
                         </div>

@@ -47,3 +47,37 @@ INSERT INTO `system_admin_module` (`id`,`admin_id`,`module_id`,`mode`) VALUES (7
 INSERT INTO `system_admin_module` (`id`,`admin_id`,`module_id`,`mode`) VALUES (8,2,2,'r');
 INSERT INTO `system_admin_module` (`id`,`admin_id`,`module_id`,`mode`) VALUES (9,2,3,'r');
 
+
+
+##2016-07-15 改表，增加初始数据
+ALTER TABLE bank.report_category
+CHANGE COLUMN cid cid INT(11) NOT NULL AUTO_INCREMENT ;
+INSERT INTO bank.report_category (name) VALUES ('每周点评');
+INSERT INTO bank.report_category (name) VALUES ('复华财经新视点');
+INSERT INTO bank.report_category (name) VALUES ('复华资产研究报告');
+
+ALTER TABLE bank.report
+ADD COLUMN is_display TINYINT(3) UNSIGNED NOT NULL DEFAULT '0' COMMENT '是否显示 1显示|0不显示' AFTER is_del;
+ALTER TABLE bank.product
+ADD COLUMN buy_day DATE NULL COMMENT '开放申购日' AFTER found_day;
+ALTER TABLE bank.product
+ADD COLUMN redeem_day DATE NULL COMMENT '赎回日' AFTER buy_day;
+ALTER TABLE bank.product
+ADD COLUMN credit VARCHAR(255) NULL COMMENT '增信措施' AFTER income_distribution_type;
+ALTER TABLE bank.product_areas
+CHANGE COLUMN area_id area_id INT NULL DEFAULT NULL ,
+ADD COLUMN department_id INT NULL COMMENT '分公司ID' AFTER area_id;
+ALTER TABLE bank.product
+ADD COLUMN detail_content TEXT NULL COMMENT '详细内容' AFTER ctime,
+ADD COLUMN detail_url VARCHAR(255) NULL COMMENT '详情链接' AFTER detail_content;
+ALTER TABLE bank.product
+ADD COLUMN invest_term INT NULL COMMENT '投资期限' AFTER detail_url,
+ADD COLUMN invest_threshold INT NULL COMMENT '起投金额' AFTER invest_term;
+ALTER TABLE bank.product
+CHANGE COLUMN invest_term invest_term_min INT(11) NULL DEFAULT NULL COMMENT '最少投资期限' ,
+ADD COLUMN invest_term_max INT NULL COMMENT '最大投资期限' AFTER invest_term_min;
+
+
+#2016-07-16
+ALTER TABLE `product` MODIFY invest_threshold DECIMAL(12,2) COMMENT '起投金额';
+alter table product modify issue_type tinyint(1) not null comment '发行模式';

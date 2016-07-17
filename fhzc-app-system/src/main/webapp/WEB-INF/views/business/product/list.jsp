@@ -62,29 +62,40 @@
                                 <thead>
                                 <tr>
                                     <td><input type="checkbox" id="checkAll"/>全选</td>
+                                    <td>产品代码</td>
                                     <td>产品名称</td>
-                                    <td>状态</td>
-                                    <td>起息日</td>
-                                    <td>到期日</td>
-                                    <td>派息日</td>
-                                    <td>添加时间</td>
-                                    <td>客户等级</td>
-                                    <td>客户风险等级</td>
-                                    <td>编辑</td>
+                                    <td>产品类型</td>
+                                    <td>产品状态</td>
+                                    <td>投放分公司</td>
+                                    <td>成立日</td>
+                                    <td>是否推荐</td>
+                                    <td>是否展示</td>
+                                    <td>关注人数</td>
+                                    <td>预约人数</td>
+                                    <td>预约金额</td>
+                                    <td>操作</td>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <c:forEach items="${products}" var="product">
                                     <tr>
+                                        <td><input type="checkbox" id="checkOne"/></td>
+                                        <td>${product.code}</td>
                                         <td>${product.name}</td>
+                                        <td>${product.productType}</td>
                                         <td>${product.status}</td>
-                                        <td>${data.website}</td>
+                                        <td></td>
+                                        <td>${product.foundDay}</td>
+                                        <td>${product.isRecommend}</td>
+                                        <td>${product.isDisplay}</td>
                                         <td></td>
                                         <td></td>
-                                        <td>${data.title}</td>
-                                        <td>${fn:substring(data.createTime, 0, 10)}</td>
-                                        <td>${fn:substring(data.expireTime, 0, 10)}</td>
-                                        <td><a href="business/product/detail/${data.id}">编辑</a></td>
+                                        <td></td>
+                                        <td><a href="business/product/detail/${product.pid}">编辑</a>
+                                            <a href="business/product/detail/${product.pid}">推荐</a>
+                                            <a href="business/product/detail/${product.pid}">展示</a>
+                                            <a href="business/product/detail/${product.pid}">预约</a>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>
@@ -92,10 +103,15 @@
                         </div>
                     </div>
                 </div>
+
             </div>
             <!--页面操作详细内容 开始-->
 
+            <div class="row-fluid">
+                <jsp:include page="../../include/page.jsp"/>
+            </div>
         </div>
+
     </div>
 </div>
 

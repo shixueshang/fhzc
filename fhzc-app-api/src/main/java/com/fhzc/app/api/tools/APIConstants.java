@@ -15,10 +15,6 @@ public class APIConstants {
 	
 	public static String CONFIG_KEY_NEED_CHECK_ACCESS_TOKEN = "need_check_access_token";
 
-    /**
-     * 聊天图片存放地址
-     */
-    public static String CONFIG_KEY_IMAGE_SAVE_PATH =  "image_save_path";
 
     /**
      * 服务器返回状态

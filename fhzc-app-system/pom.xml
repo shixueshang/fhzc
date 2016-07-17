@@ -13,5 +13,7 @@
     <artifactId>fhzc-app-system</artifactId>
     <packaging>war</packaging>
 
-
+    <build>
+        <finalName>fhzcas</finalName>
+    </build>
 </project>

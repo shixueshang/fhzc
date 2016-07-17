@@ -1,7 +1,11 @@
 package com.fhzc.app.system.controller.business;
 
+import com.alibaba.fastjson.JSON;
 import com.fhzc.app.system.commons.page.PageHelper;
 import com.fhzc.app.system.commons.page.PageableResult;
+import com.fhzc.app.system.commons.util.Const;
+import com.fhzc.app.system.commons.util.FileUtil;
+import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.mybatis.model.Product;
 import com.fhzc.app.system.service.ProductService;
@@ -13,6 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,6 +43,7 @@ public class ProductController extends BaseController {
         PageableResult<Product> pageableResult = productService.findPageProducts(page, size);
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("products", pageableResult.getItems());
+        logger.info("##@##@# : " +  JSON.toJSONString(pageableResult.getItems().get(0)));
         return mav;
     }
 
@@ -44,10 +51,9 @@ public class ProductController extends BaseController {
      * 产品发布页面
      * @return
      */
-    @RequestMapping(value = "/pub", method = RequestMethod.GET)
-    public ModelAndView pubProduct(){
-        ModelAndView mav = new ModelAndView("business/product/pub");
-        return mav;
+    @RequestMapping(value = "/pub")
+    public String pubProduct(){
+        return "business/product/pub";
     }
 
     /**
@@ -62,12 +68,29 @@ public class ProductController extends BaseController {
 
     /**
      * 产品发布
+     * @param product 产品信息
+     * @param coverFile 产品封面
+     * @param proveFile 备案证明
      * @return
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ModelAndView addProduct(Product product){
-        ModelAndView mav = new ModelAndView("business/product/add");
+    public ModelAndView addProduct(Product product, MultipartFile coverFile, MultipartFile proveFile){
+        ModelAndView mav = new ModelAndView("business/product/list");
+        String coverName = FileUtil.generatePictureName(coverFile);
+        String coverPath = TextUtils.getConfig(Const.CONFIG_KEY_SYSTEM_IMAGE_SAVE_PATH, this);
+        FileUtil.transferFile(coverPath, coverName, coverFile);
+        product.setCover(coverPath + coverName);
+
+        String proveUrlName = FileUtil.generatePictureName(proveFile);
+        String proveUrlPath = TextUtils.getConfig(Const.CONFIG_KEY_SYSTEM_IMAGE_SAVE_PATH, this);
+        FileUtil.transferFile(proveUrlPath, proveUrlName, proveFile);
+        product.setProveUrl(proveUrlPath + proveUrlName);
+
+        product.setInvestThreshold(product.getInvestThreshold().multiply(new BigDecimal(10000)));
+        product.setCtime(new Date());
+
         productService.addProduct(product);
+
         PageableResult<Product> pageableResult = productService.findPageProducts(page, size);
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("products", pageableResult.getItems());

@@ -1,4 +1,4 @@
-package com.fhzc.app.api.tools;
+package com.fhzc.app.system.commons.util;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,7 +17,7 @@ public class TextUtils {
 	 * @return
 	 */
 	public static String getConfig(String key,Object object){
-		 InputStream inputStream = object.getClass().getClassLoader().getResourceAsStream("api.properties");
+		 InputStream inputStream = object.getClass().getClassLoader().getResourceAsStream("system.properties");
 		  Properties p = new Properties();
 		  try {
 			  p.load(inputStream);

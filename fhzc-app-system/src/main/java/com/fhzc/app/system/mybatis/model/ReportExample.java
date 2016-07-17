@@ -554,6 +554,66 @@ public class ReportExample {
             addCriterion("`is_del` not between", value1, value2, "isDel");
             return (Criteria) this;
         }
+
+        public Criteria andIsDisplayIsNull() {
+            addCriterion("`is_display` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDisplayIsNotNull() {
+            addCriterion("`is_display` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDisplayEqualTo(Byte value) {
+            addCriterion("`is_display` =", value, "isDisplay");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDisplayNotEqualTo(Byte value) {
+            addCriterion("`is_display` <>", value, "isDisplay");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDisplayGreaterThan(Byte value) {
+            addCriterion("`is_display` >", value, "isDisplay");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDisplayGreaterThanOrEqualTo(Byte value) {
+            addCriterion("`is_display` >=", value, "isDisplay");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDisplayLessThan(Byte value) {
+            addCriterion("`is_display` <", value, "isDisplay");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDisplayLessThanOrEqualTo(Byte value) {
+            addCriterion("`is_display` <=", value, "isDisplay");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDisplayIn(List<Byte> values) {
+            addCriterion("`is_display` in", values, "isDisplay");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDisplayNotIn(List<Byte> values) {
+            addCriterion("`is_display` not in", values, "isDisplay");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDisplayBetween(Byte value1, Byte value2) {
+            addCriterion("`is_display` between", value1, value2, "isDisplay");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDisplayNotBetween(Byte value1, Byte value2) {
+            addCriterion("`is_display` not between", value1, value2, "isDisplay");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

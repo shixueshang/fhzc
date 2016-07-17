@@ -66,7 +66,7 @@
                                 <a href="/business/report/list">报告列表</a>
                             </li>
                             <li>
-                                <a href="/business/report/add">新增报告</a>
+                                <a href="/business/report/pub">新增报告</a>
                             </li>
                         </ul>
                     </li>

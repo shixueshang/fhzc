@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%
     String contextPath = request.getContextPath();
 %>
@@ -33,7 +34,7 @@
                         <li class="dropdown user">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img alt="" width="29" height="29" src="<%=contextPath%>/assets/images/avatar.png" />
-                                <span class="username">admin</span>
+                                <span class="username"><shiro:principal property="login"></shiro:principal></span>
                                 <i class="icon-angle-down"></i>
                             </a>
                             <ul class="dropdown-menu">

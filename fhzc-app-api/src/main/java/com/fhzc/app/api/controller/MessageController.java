@@ -5,13 +5,15 @@ import com.fhzc.app.api.service.UserService;
 import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
 import com.fhzc.app.api.tools.FileUtils;
-import com.fhzc.app.api.tools.TextUtils;
+import com.fhzc.app.system.commons.util.Const;
+import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.mybatis.model.ImMessage;
 import com.fhzc.app.system.mybatis.model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -40,23 +42,21 @@ public class MessageController extends BaseController {
      */
     @RequestMapping(value = "/api/message/publish", method = RequestMethod.POST)
     @ResponseBody
-    public ApiJsonResult publishMessage(Integer userId , Integer toUserId, String text, String type, String duration){
+    public ApiJsonResult publishMessage(Integer userId , Integer toUserId, @RequestParam(required = false) String text, String type, @RequestParam(required = false) String duration){
 
             ImMessage message = new ImMessage();
             message.setUserId(userId);
             message.setToUserId(toUserId);
-            message.setContent(text);
             if(type.equals(APIConstants.Message_Type.Image)){
-                String savePath = TextUtils.getConfig(APIConstants.CONFIG_KEY_IMAGE_SAVE_PATH, this);
+                String savePath = TextUtils.getConfig(Const.CONFIG_KEY_IMAGE_SAVE_PATH, this);
                 List<String> imageList = FileUtils.saveFilesToDisk(request, savePath);
                 if (imageList.size() > 0) {
                     text = basePath + savePath +  imageList.get(0);
                 }
             }else if(type.equals(APIConstants.Message_Type.Audio)){
                 message.setDuration(duration);
-                message.setContent("");
             }
-
+            message.setContent(text);
             //查询对话历史,确定sessionId
             String sessionId = messageService.hasChatHistory(userId, toUserId);
             if(sessionId == null){
@@ -67,6 +67,9 @@ public class MessageController extends BaseController {
             message.setSendTime(new Date());
 
             ImMessage result = messageService.sendMessgeToSession(message);
+            if(type.equals(APIConstants.Message_Type.Audio)){
+                result.setContent("");
+            }
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
     }
 
@@ -92,13 +95,16 @@ public class MessageController extends BaseController {
         List<ImMessage> messages = messageService.getUnreadMessages(userId, lastSyncDate);
         //找出有多少组,数据格式 sessionId=List<ImMessage>
         Map<String, List<ImMessage>> sessionMap = new ConcurrentHashMap<String, List<ImMessage>>();
-        for(int i = 0; i < messages.size(); i++){
-            String sessionId = messages.get(i).getSessionId();
+        for(ImMessage message : messages){
+            if(message.getMessageType().equals(APIConstants.Message_Type.Audio)){
+                message.setContent("");
+            }
+            String sessionId = message.getSessionId();
             if(sessionMap.get(sessionId) != null){
-                sessionMap.get(sessionId).add(messages.get(i));
+                sessionMap.get(sessionId).add(message);
             }else{
                 List<ImMessage> lis = new ArrayList<ImMessage>();
-                lis.add(messages.get(i));
+                lis.add(message);
                 sessionMap.put(sessionId, lis);
             }
         }
@@ -148,7 +154,7 @@ public class MessageController extends BaseController {
      * @param messageId
      * @return
      */
-    @RequestMapping(value = "/api/messge/audioContent", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/message/audioContent", method = RequestMethod.GET)
     @ResponseBody
     public ApiJsonResult getAudioContent(Integer messageId){
         ImMessage message = messageService.getMessage(messageId);

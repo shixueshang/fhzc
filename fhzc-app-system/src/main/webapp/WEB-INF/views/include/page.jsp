@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <c:if test="${page.pageCount > 1}">
-	<div class="row">
+	<div class="row-fluid">
 		<div class="col-lg-12">
 			<nav>
 				<ul class="pagination">

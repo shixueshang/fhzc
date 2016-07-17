@@ -1,8 +1,9 @@
 package com.fhzc.app.system.mybatis.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Admin {
+public class Admin implements Serializable{
     private Integer id;
 
     private String login;

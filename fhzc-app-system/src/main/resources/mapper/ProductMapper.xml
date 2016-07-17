@@ -7,14 +7,17 @@
     <result column="code" property="code" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="found_day" property="foundDay" jdbcType="DATE" />
+    <result column="buy_day" property="buyDay" jdbcType="DATE" />
+    <result column="redeem_day" property="redeemDay" jdbcType="DATE" />
     <result column="value_day" property="valueDay" jdbcType="DATE" />
     <result column="expiry_day" property="expiryDay" jdbcType="DATE" />
-    <result column="issue_type" property="issueType" jdbcType="DATE" />
+    <result column="issue_type" property="issueType" jdbcType="BIT" />
     <result column="product_type" property="productType" jdbcType="VARCHAR" />
     <result column="renew_deadline" property="renewDeadline" jdbcType="VARCHAR" />
     <result column="dividend_day" property="dividendDay" jdbcType="DATE" />
     <result column="annual_yield" property="annualYield" jdbcType="VARCHAR" />
     <result column="income_distribution_type" property="incomeDistributionType" jdbcType="VARCHAR" />
+    <result column="credit" property="credit" jdbcType="VARCHAR" />
     <result column="investment_orientation" property="investmentOrientation" jdbcType="VARCHAR" />
     <result column="increase_trust" property="increaseTrust" jdbcType="VARCHAR" />
     <result column="highlights" property="highlights" jdbcType="VARCHAR" />
@@ -37,9 +40,14 @@
     <result column="is_display" property="isDisplay" jdbcType="TINYINT" />
     <result column="is_renew" property="isRenew" jdbcType="TINYINT" />
     <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
+    <result column="detail_url" property="detailUrl" jdbcType="VARCHAR" />
+    <result column="invest_term_min" property="investTermMin" jdbcType="INTEGER" />
+    <result column="invest_term_max" property="investTermMax" jdbcType="INTEGER" />
+    <result column="invest_threshold" property="investThreshold" jdbcType="DECIMAL" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.fhzc.app.system.mybatis.model.Product" extends="BaseResultMap" >
     <result column="desc" property="desc" jdbcType="LONGVARCHAR" />
+    <result column="detail_content" property="detailContent" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -100,15 +108,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    `pid`, `status`, `code`, `name`, `found_day`, `value_day`, `expiry_day`, `issue_type`, 
-    `product_type`, `renew_deadline`, `dividend_day`, `annual_yield`, `income_distribution_type`, 
-    `investment_orientation`, `increase_trust`, `highlights`, `fund_management_fee`, 
-    `fund_subscription_fee`, `fund_manager`, `custodian`, `investment_type`, `project_source`, 
-    `issuer`, `is_record`, `prove_url`, `display_order`, `level`, `risk`, `cover`, `notice`, 
-    `score_factor`, `is_ recommend`, `is_display`, `is_renew`, `ctime`
+    `pid`, `status`, `code`, `name`, `found_day`, `buy_day`, `redeem_day`, `value_day`, 
+    `expiry_day`, `issue_type`, `product_type`, `renew_deadline`, `dividend_day`, `annual_yield`, 
+    `income_distribution_type`, `credit`, `investment_orientation`, `increase_trust`, 
+    `highlights`, `fund_management_fee`, `fund_subscription_fee`, `fund_manager`, `custodian`, 
+    `investment_type`, `project_source`, `issuer`, `is_record`, `prove_url`, `display_order`, 
+    `level`, `risk`, `cover`, `notice`, `score_factor`, `is_ recommend`, `is_display`, 
+    `is_renew`, `ctime`, `detail_url`, `invest_term_min`, `invest_term_max`, `invest_threshold`
   </sql>
   <sql id="Blob_Column_List" >
-    `desc`
+    `desc`, `detail_content`
   </sql>
   <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.system.mybatis.model.ProductExample" >
     select
@@ -160,31 +169,35 @@
   </delete>
   <insert id="insert" parameterType="com.fhzc.app.system.mybatis.model.Product" >
     insert into `product` (`pid`, `status`, `code`, 
-      `name`, `found_day`, `value_day`, 
-      `expiry_day`, `issue_type`, `product_type`, 
-      `renew_deadline`, `dividend_day`, `annual_yield`, 
-      `income_distribution_type`, `investment_orientation`, 
-      `increase_trust`, `highlights`, `fund_management_fee`, 
-      `fund_subscription_fee`, `fund_manager`, `custodian`, 
-      `investment_type`, `project_source`, `issuer`, 
-      `is_record`, `prove_url`, `display_order`, 
-      `level`, `risk`, `cover`, 
-      `notice`, `score_factor`, `is_ recommend`, 
-      `is_display`, `is_renew`, `ctime`, 
-      `desc`)
+      `name`, `found_day`, `buy_day`, `redeem_day`, 
+      `value_day`, `expiry_day`, `issue_type`, 
+      `product_type`, `renew_deadline`, `dividend_day`, 
+      `annual_yield`, `income_distribution_type`, `credit`, 
+      `investment_orientation`, `increase_trust`, `highlights`, 
+      `fund_management_fee`, `fund_subscription_fee`, 
+      `fund_manager`, `custodian`, `investment_type`, 
+      `project_source`, `issuer`, `is_record`, 
+      `prove_url`, `display_order`, `level`, 
+      `risk`, `cover`, `notice`, 
+      `score_factor`, `is_ recommend`, `is_display`, 
+      `is_renew`, `ctime`, `detail_url`, 
+      `invest_term_min`, `invest_term_max`, `invest_threshold`, 
+      `desc`, `detail_content`)
     values (#{pid,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{code,jdbcType=VARCHAR}, 
-      #{name,jdbcType=VARCHAR}, #{foundDay,jdbcType=DATE}, #{valueDay,jdbcType=DATE}, 
-      #{expiryDay,jdbcType=DATE}, #{issueType,jdbcType=DATE}, #{productType,jdbcType=VARCHAR}, 
-      #{renewDeadline,jdbcType=VARCHAR}, #{dividendDay,jdbcType=DATE}, #{annualYield,jdbcType=VARCHAR}, 
-      #{incomeDistributionType,jdbcType=VARCHAR}, #{investmentOrientation,jdbcType=VARCHAR}, 
-      #{increaseTrust,jdbcType=VARCHAR}, #{highlights,jdbcType=VARCHAR}, #{fundManagementFee,jdbcType=VARCHAR}, 
-      #{fundSubscriptionFee,jdbcType=VARCHAR}, #{fundManager,jdbcType=VARCHAR}, #{custodian,jdbcType=VARCHAR}, 
-      #{investmentType,jdbcType=VARCHAR}, #{projectSource,jdbcType=VARCHAR}, #{issuer,jdbcType=VARCHAR}, 
-      #{isRecord,jdbcType=VARCHAR}, #{proveUrl,jdbcType=VARCHAR}, #{displayOrder,jdbcType=INTEGER}, 
-      #{level,jdbcType=INTEGER}, #{risk,jdbcType=INTEGER}, #{cover,jdbcType=VARCHAR}, 
-      #{notice,jdbcType=VARCHAR}, #{scoreFactor,jdbcType=TINYINT}, #{isRecommend,jdbcType=TINYINT}, 
-      #{isDisplay,jdbcType=TINYINT}, #{isRenew,jdbcType=TINYINT}, #{ctime,jdbcType=TIMESTAMP}, 
-      #{desc,jdbcType=LONGVARCHAR})
+      #{name,jdbcType=VARCHAR}, #{foundDay,jdbcType=DATE}, #{buyDay,jdbcType=DATE}, #{redeemDay,jdbcType=DATE}, 
+      #{valueDay,jdbcType=DATE}, #{expiryDay,jdbcType=DATE}, #{issueType,jdbcType=BIT}, 
+      #{productType,jdbcType=VARCHAR}, #{renewDeadline,jdbcType=VARCHAR}, #{dividendDay,jdbcType=DATE}, 
+      #{annualYield,jdbcType=VARCHAR}, #{incomeDistributionType,jdbcType=VARCHAR}, #{credit,jdbcType=VARCHAR}, 
+      #{investmentOrientation,jdbcType=VARCHAR}, #{increaseTrust,jdbcType=VARCHAR}, #{highlights,jdbcType=VARCHAR}, 
+      #{fundManagementFee,jdbcType=VARCHAR}, #{fundSubscriptionFee,jdbcType=VARCHAR}, 
+      #{fundManager,jdbcType=VARCHAR}, #{custodian,jdbcType=VARCHAR}, #{investmentType,jdbcType=VARCHAR}, 
+      #{projectSource,jdbcType=VARCHAR}, #{issuer,jdbcType=VARCHAR}, #{isRecord,jdbcType=VARCHAR}, 
+      #{proveUrl,jdbcType=VARCHAR}, #{displayOrder,jdbcType=INTEGER}, #{level,jdbcType=INTEGER}, 
+      #{risk,jdbcType=INTEGER}, #{cover,jdbcType=VARCHAR}, #{notice,jdbcType=VARCHAR}, 
+      #{scoreFactor,jdbcType=TINYINT}, #{isRecommend,jdbcType=TINYINT}, #{isDisplay,jdbcType=TINYINT}, 
+      #{isRenew,jdbcType=TINYINT}, #{ctime,jdbcType=TIMESTAMP}, #{detailUrl,jdbcType=VARCHAR}, 
+      #{investTermMin,jdbcType=INTEGER}, #{investTermMax,jdbcType=INTEGER}, #{investThreshold,jdbcType=DECIMAL}, 
+      #{desc,jdbcType=LONGVARCHAR}, #{detailContent,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.system.mybatis.model.Product" >
     insert into `product`
@@ -203,6 +216,12 @@
       </if>
       <if test="foundDay != null" >
         `found_day`,
+      </if>
+      <if test="buyDay != null" >
+        `buy_day`,
+      </if>
+      <if test="redeemDay != null" >
+        `redeem_day`,
       </if>
       <if test="valueDay != null" >
         `value_day`,
@@ -227,6 +246,9 @@
       </if>
       <if test="incomeDistributionType != null" >
         `income_distribution_type`,
+      </if>
+      <if test="credit != null" >
+        `credit`,
       </if>
       <if test="investmentOrientation != null" >
         `investment_orientation`,
@@ -294,8 +316,23 @@
       <if test="ctime != null" >
         `ctime`,
       </if>
+      <if test="detailUrl != null" >
+        `detail_url`,
+      </if>
+      <if test="investTermMin != null" >
+        `invest_term_min`,
+      </if>
+      <if test="investTermMax != null" >
+        `invest_term_max`,
+      </if>
+      <if test="investThreshold != null" >
+        `invest_threshold`,
+      </if>
       <if test="desc != null" >
         `desc`,
+      </if>
+      <if test="detailContent != null" >
+        `detail_content`,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -314,6 +351,12 @@
       <if test="foundDay != null" >
         #{foundDay,jdbcType=DATE},
       </if>
+      <if test="buyDay != null" >
+        #{buyDay,jdbcType=DATE},
+      </if>
+      <if test="redeemDay != null" >
+        #{redeemDay,jdbcType=DATE},
+      </if>
       <if test="valueDay != null" >
         #{valueDay,jdbcType=DATE},
       </if>
@@ -321,7 +364,7 @@
         #{expiryDay,jdbcType=DATE},
       </if>
       <if test="issueType != null" >
-        #{issueType,jdbcType=DATE},
+        #{issueType,jdbcType=BIT},
       </if>
       <if test="productType != null" >
         #{productType,jdbcType=VARCHAR},
@@ -337,6 +380,9 @@
       </if>
       <if test="incomeDistributionType != null" >
         #{incomeDistributionType,jdbcType=VARCHAR},
+      </if>
+      <if test="credit != null" >
+        #{credit,jdbcType=VARCHAR},
       </if>
       <if test="investmentOrientation != null" >
         #{investmentOrientation,jdbcType=VARCHAR},
@@ -404,8 +450,23 @@
       <if test="ctime != null" >
         #{ctime,jdbcType=TIMESTAMP},
       </if>
+      <if test="detailUrl != null" >
+        #{detailUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="investTermMin != null" >
+        #{investTermMin,jdbcType=INTEGER},
+      </if>
+      <if test="investTermMax != null" >
+        #{investTermMax,jdbcType=INTEGER},
+      </if>
+      <if test="investThreshold != null" >
+        #{investThreshold,jdbcType=DECIMAL},
+      </if>
       <if test="desc != null" >
         #{desc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="detailContent != null" >
+        #{detailContent,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -433,6 +494,12 @@
       <if test="record.foundDay != null" >
         `found_day` = #{record.foundDay,jdbcType=DATE},
       </if>
+      <if test="record.buyDay != null" >
+        `buy_day` = #{record.buyDay,jdbcType=DATE},
+      </if>
+      <if test="record.redeemDay != null" >
+        `redeem_day` = #{record.redeemDay,jdbcType=DATE},
+      </if>
       <if test="record.valueDay != null" >
         `value_day` = #{record.valueDay,jdbcType=DATE},
       </if>
@@ -440,7 +507,7 @@
         `expiry_day` = #{record.expiryDay,jdbcType=DATE},
       </if>
       <if test="record.issueType != null" >
-        `issue_type` = #{record.issueType,jdbcType=DATE},
+        `issue_type` = #{record.issueType,jdbcType=BIT},
       </if>
       <if test="record.productType != null" >
         `product_type` = #{record.productType,jdbcType=VARCHAR},
@@ -456,6 +523,9 @@
       </if>
       <if test="record.incomeDistributionType != null" >
         `income_distribution_type` = #{record.incomeDistributionType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.credit != null" >
+        `credit` = #{record.credit,jdbcType=VARCHAR},
       </if>
       <if test="record.investmentOrientation != null" >
         `investment_orientation` = #{record.investmentOrientation,jdbcType=VARCHAR},
@@ -523,8 +593,23 @@
       <if test="record.ctime != null" >
         `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.detailUrl != null" >
+        `detail_url` = #{record.detailUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.investTermMin != null" >
+        `invest_term_min` = #{record.investTermMin,jdbcType=INTEGER},
+      </if>
+      <if test="record.investTermMax != null" >
+        `invest_term_max` = #{record.investTermMax,jdbcType=INTEGER},
+      </if>
+      <if test="record.investThreshold != null" >
+        `invest_threshold` = #{record.investThreshold,jdbcType=DECIMAL},
+      </if>
       <if test="record.desc != null" >
         `desc` = #{record.desc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.detailContent != null" >
+        `detail_content` = #{record.detailContent,jdbcType=LONGVARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -538,14 +623,17 @@
       `code` = #{record.code,jdbcType=VARCHAR},
       `name` = #{record.name,jdbcType=VARCHAR},
       `found_day` = #{record.foundDay,jdbcType=DATE},
+      `buy_day` = #{record.buyDay,jdbcType=DATE},
+      `redeem_day` = #{record.redeemDay,jdbcType=DATE},
       `value_day` = #{record.valueDay,jdbcType=DATE},
       `expiry_day` = #{record.expiryDay,jdbcType=DATE},
-      `issue_type` = #{record.issueType,jdbcType=DATE},
+      `issue_type` = #{record.issueType,jdbcType=BIT},
       `product_type` = #{record.productType,jdbcType=VARCHAR},
       `renew_deadline` = #{record.renewDeadline,jdbcType=VARCHAR},
       `dividend_day` = #{record.dividendDay,jdbcType=DATE},
       `annual_yield` = #{record.annualYield,jdbcType=VARCHAR},
       `income_distribution_type` = #{record.incomeDistributionType,jdbcType=VARCHAR},
+      `credit` = #{record.credit,jdbcType=VARCHAR},
       `investment_orientation` = #{record.investmentOrientation,jdbcType=VARCHAR},
       `increase_trust` = #{record.increaseTrust,jdbcType=VARCHAR},
       `highlights` = #{record.highlights,jdbcType=VARCHAR},
@@ -568,7 +656,12 @@
       `is_display` = #{record.isDisplay,jdbcType=TINYINT},
       `is_renew` = #{record.isRenew,jdbcType=TINYINT},
       `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
-      `desc` = #{record.desc,jdbcType=LONGVARCHAR}
+      `detail_url` = #{record.detailUrl,jdbcType=VARCHAR},
+      `invest_term_min` = #{record.investTermMin,jdbcType=INTEGER},
+      `invest_term_max` = #{record.investTermMax,jdbcType=INTEGER},
+      `invest_threshold` = #{record.investThreshold,jdbcType=DECIMAL},
+      `desc` = #{record.desc,jdbcType=LONGVARCHAR},
+      `detail_content` = #{record.detailContent,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -580,14 +673,17 @@
       `code` = #{record.code,jdbcType=VARCHAR},
       `name` = #{record.name,jdbcType=VARCHAR},
       `found_day` = #{record.foundDay,jdbcType=DATE},
+      `buy_day` = #{record.buyDay,jdbcType=DATE},
+      `redeem_day` = #{record.redeemDay,jdbcType=DATE},
       `value_day` = #{record.valueDay,jdbcType=DATE},
       `expiry_day` = #{record.expiryDay,jdbcType=DATE},
-      `issue_type` = #{record.issueType,jdbcType=DATE},
+      `issue_type` = #{record.issueType,jdbcType=BIT},
       `product_type` = #{record.productType,jdbcType=VARCHAR},
       `renew_deadline` = #{record.renewDeadline,jdbcType=VARCHAR},
       `dividend_day` = #{record.dividendDay,jdbcType=DATE},
       `annual_yield` = #{record.annualYield,jdbcType=VARCHAR},
       `income_distribution_type` = #{record.incomeDistributionType,jdbcType=VARCHAR},
+      `credit` = #{record.credit,jdbcType=VARCHAR},
       `investment_orientation` = #{record.investmentOrientation,jdbcType=VARCHAR},
       `increase_trust` = #{record.increaseTrust,jdbcType=VARCHAR},
       `highlights` = #{record.highlights,jdbcType=VARCHAR},
@@ -609,7 +705,11 @@
       `is_ recommend` = #{record.isRecommend,jdbcType=TINYINT},
       `is_display` = #{record.isDisplay,jdbcType=TINYINT},
       `is_renew` = #{record.isRenew,jdbcType=TINYINT},
-      `ctime` = #{record.ctime,jdbcType=TIMESTAMP}
+      `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
+      `detail_url` = #{record.detailUrl,jdbcType=VARCHAR},
+      `invest_term_min` = #{record.investTermMin,jdbcType=INTEGER},
+      `invest_term_max` = #{record.investTermMax,jdbcType=INTEGER},
+      `invest_threshold` = #{record.investThreshold,jdbcType=DECIMAL}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -629,6 +729,12 @@
       <if test="foundDay != null" >
         `found_day` = #{foundDay,jdbcType=DATE},
       </if>
+      <if test="buyDay != null" >
+        `buy_day` = #{buyDay,jdbcType=DATE},
+      </if>
+      <if test="redeemDay != null" >
+        `redeem_day` = #{redeemDay,jdbcType=DATE},
+      </if>
       <if test="valueDay != null" >
         `value_day` = #{valueDay,jdbcType=DATE},
       </if>
@@ -636,7 +742,7 @@
         `expiry_day` = #{expiryDay,jdbcType=DATE},
       </if>
       <if test="issueType != null" >
-        `issue_type` = #{issueType,jdbcType=DATE},
+        `issue_type` = #{issueType,jdbcType=BIT},
       </if>
       <if test="productType != null" >
         `product_type` = #{productType,jdbcType=VARCHAR},
@@ -652,6 +758,9 @@
       </if>
       <if test="incomeDistributionType != null" >
         `income_distribution_type` = #{incomeDistributionType,jdbcType=VARCHAR},
+      </if>
+      <if test="credit != null" >
+        `credit` = #{credit,jdbcType=VARCHAR},
       </if>
       <if test="investmentOrientation != null" >
         `investment_orientation` = #{investmentOrientation,jdbcType=VARCHAR},
@@ -719,8 +828,23 @@
       <if test="ctime != null" >
         `ctime` = #{ctime,jdbcType=TIMESTAMP},
       </if>
+      <if test="detailUrl != null" >
+        `detail_url` = #{detailUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="investTermMin != null" >
+        `invest_term_min` = #{investTermMin,jdbcType=INTEGER},
+      </if>
+      <if test="investTermMax != null" >
+        `invest_term_max` = #{investTermMax,jdbcType=INTEGER},
+      </if>
+      <if test="investThreshold != null" >
+        `invest_threshold` = #{investThreshold,jdbcType=DECIMAL},
+      </if>
       <if test="desc != null" >
         `desc` = #{desc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="detailContent != null" >
+        `detail_content` = #{detailContent,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where `pid` = #{pid,jdbcType=INTEGER}
@@ -731,14 +855,17 @@
       `code` = #{code,jdbcType=VARCHAR},
       `name` = #{name,jdbcType=VARCHAR},
       `found_day` = #{foundDay,jdbcType=DATE},
+      `buy_day` = #{buyDay,jdbcType=DATE},
+      `redeem_day` = #{redeemDay,jdbcType=DATE},
       `value_day` = #{valueDay,jdbcType=DATE},
       `expiry_day` = #{expiryDay,jdbcType=DATE},
-      `issue_type` = #{issueType,jdbcType=DATE},
+      `issue_type` = #{issueType,jdbcType=BIT},
       `product_type` = #{productType,jdbcType=VARCHAR},
       `renew_deadline` = #{renewDeadline,jdbcType=VARCHAR},
       `dividend_day` = #{dividendDay,jdbcType=DATE},
       `annual_yield` = #{annualYield,jdbcType=VARCHAR},
       `income_distribution_type` = #{incomeDistributionType,jdbcType=VARCHAR},
+      `credit` = #{credit,jdbcType=VARCHAR},
       `investment_orientation` = #{investmentOrientation,jdbcType=VARCHAR},
       `increase_trust` = #{increaseTrust,jdbcType=VARCHAR},
       `highlights` = #{highlights,jdbcType=VARCHAR},
@@ -761,7 +888,12 @@
       `is_display` = #{isDisplay,jdbcType=TINYINT},
       `is_renew` = #{isRenew,jdbcType=TINYINT},
       `ctime` = #{ctime,jdbcType=TIMESTAMP},
-      `desc` = #{desc,jdbcType=LONGVARCHAR}
+      `detail_url` = #{detailUrl,jdbcType=VARCHAR},
+      `invest_term_min` = #{investTermMin,jdbcType=INTEGER},
+      `invest_term_max` = #{investTermMax,jdbcType=INTEGER},
+      `invest_threshold` = #{investThreshold,jdbcType=DECIMAL},
+      `desc` = #{desc,jdbcType=LONGVARCHAR},
+      `detail_content` = #{detailContent,jdbcType=LONGVARCHAR}
     where `pid` = #{pid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.fhzc.app.system.mybatis.model.Product" >
@@ -770,14 +902,17 @@
       `code` = #{code,jdbcType=VARCHAR},
       `name` = #{name,jdbcType=VARCHAR},
       `found_day` = #{foundDay,jdbcType=DATE},
+      `buy_day` = #{buyDay,jdbcType=DATE},
+      `redeem_day` = #{redeemDay,jdbcType=DATE},
       `value_day` = #{valueDay,jdbcType=DATE},
       `expiry_day` = #{expiryDay,jdbcType=DATE},
-      `issue_type` = #{issueType,jdbcType=DATE},
+      `issue_type` = #{issueType,jdbcType=BIT},
       `product_type` = #{productType,jdbcType=VARCHAR},
       `renew_deadline` = #{renewDeadline,jdbcType=VARCHAR},
       `dividend_day` = #{dividendDay,jdbcType=DATE},
       `annual_yield` = #{annualYield,jdbcType=VARCHAR},
       `income_distribution_type` = #{incomeDistributionType,jdbcType=VARCHAR},
+      `credit` = #{credit,jdbcType=VARCHAR},
       `investment_orientation` = #{investmentOrientation,jdbcType=VARCHAR},
       `increase_trust` = #{increaseTrust,jdbcType=VARCHAR},
       `highlights` = #{highlights,jdbcType=VARCHAR},
@@ -799,7 +934,11 @@
       `is_ recommend` = #{isRecommend,jdbcType=TINYINT},
       `is_display` = #{isDisplay,jdbcType=TINYINT},
       `is_renew` = #{isRenew,jdbcType=TINYINT},
-      `ctime` = #{ctime,jdbcType=TIMESTAMP}
+      `ctime` = #{ctime,jdbcType=TIMESTAMP},
+      `detail_url` = #{detailUrl,jdbcType=VARCHAR},
+      `invest_term_min` = #{investTermMin,jdbcType=INTEGER},
+      `invest_term_max` = #{investTermMax,jdbcType=INTEGER},
+      `invest_threshold` = #{investThreshold,jdbcType=DECIMAL}
     where `pid` = #{pid,jdbcType=INTEGER}
   </update>
   <select resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.system.mybatis.model.ProductExample" id="selectByExampleWithBLOBsWithRowbounds" >

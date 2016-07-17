@@ -66,7 +66,7 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="portlet_tab1">
                                         <!-- BEGIN FORM-->
-                                        <form action="business/product/add" method="POST" class="form-horizontal">
+                                        <form action="add" enctype="multipart/form-data"  method="POST" class="form-horizontal">
                                             <div class="control-group">
                                             </div>
                                             <div class="control-group">
@@ -125,7 +125,7 @@
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">起投金额</label>
+                                                <label class="control-label">起投金额（万元）</label>
                                                 <div class="controls">
                                                     <input type="number" name="investThreshold" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
@@ -144,6 +144,14 @@
                                                 <label class="control-label">成立日</label>
                                                 <div class="controls">
                                                     <input type="text" name="foundDay" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="2016-08-01">
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">起息日</label>
+                                                <div class="controls">
+                                                    <input type="text" name="valueDay" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="2016-08-01">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -275,7 +283,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">客户等级要求</label>
                                                 <div class="controls">
-                                                    <select name="level" class="large m-wrap" name="productType" tabindex="1">
+                                                    <select name="level" class="large m-wrap" tabindex="1">
                                                         <option  value="3">金卡客户</option>
                                                         <option  value="2">客户</option>
                                                         <option  value="1">准客户</option>
@@ -286,7 +294,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">风险评级要求</label>
                                                 <div class="controls">
-                                                    <select name="risk" class="large m-wrap" name="productType" tabindex="1">
+                                                    <select name="risk" class="large m-wrap" tabindex="1">
                                                         <option  value="3">A</option>
                                                         <option  value="2">B</option>
                                                         <option  value="1">C</option>
@@ -321,10 +329,9 @@
                                                         <div>
                                                        <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
                                                        <span class="fileupload-exists">更换</span>
-                                                       <input type="file" class="default" /></span>
+                                                       <input type="file" name="coverFile" class="default" /></span>
                                                             <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
                                                         </div>
-                                                        <input type="hidden" name="cover">
                                                     </div>
                                                     <span class="label label-important">注意!</span>
                                                  <span>
@@ -341,6 +348,18 @@
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
+
+
+                                            <div class="control-group">
+                                                <label class="control-label">备案与否</label>
+                                                <div class="controls">
+                                                    <select class="large m-wrap" name="isRecord" tabindex="1">
+                                                        <option  value="0">否</option>
+                                                        <option  value="1">是</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
                                             <div class="control-group">
                                                 <label class="control-label">备案证明</label>
                                                 <div class="controls">
@@ -353,9 +372,8 @@
                                                            <span class="btn btn-file">
                                                            <span class="fileupload-new">选择文件</span>
                                                            <span class="fileupload-exists">更换</span>
-                                                           <input type="file" class="default" />
+                                                           <input type="file" name="proveFile" class="default" />
                                                            </span>
-                                                            <input type="hidden" name="proveUrl">
                                                             <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
                                                         </div>
                                                     </div>
@@ -408,7 +426,7 @@ $(function(){
                 $(this).removeTag(tag);
             }
 
-        },
+        }
     });
 })
 </script>

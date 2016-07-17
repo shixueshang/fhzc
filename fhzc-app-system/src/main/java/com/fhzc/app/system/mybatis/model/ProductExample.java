@@ -1,5 +1,6 @@
 package com.fhzc.app.system.mybatis.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -452,6 +453,126 @@ public class ProductExample {
             return (Criteria) this;
         }
 
+        public Criteria andBuyDayIsNull() {
+            addCriterion("`buy_day` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyDayIsNotNull() {
+            addCriterion("`buy_day` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyDayEqualTo(Date value) {
+            addCriterionForJDBCDate("`buy_day` =", value, "buyDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyDayNotEqualTo(Date value) {
+            addCriterionForJDBCDate("`buy_day` <>", value, "buyDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyDayGreaterThan(Date value) {
+            addCriterionForJDBCDate("`buy_day` >", value, "buyDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyDayGreaterThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("`buy_day` >=", value, "buyDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyDayLessThan(Date value) {
+            addCriterionForJDBCDate("`buy_day` <", value, "buyDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyDayLessThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("`buy_day` <=", value, "buyDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyDayIn(List<Date> values) {
+            addCriterionForJDBCDate("`buy_day` in", values, "buyDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyDayNotIn(List<Date> values) {
+            addCriterionForJDBCDate("`buy_day` not in", values, "buyDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyDayBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("`buy_day` between", value1, value2, "buyDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyDayNotBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("`buy_day` not between", value1, value2, "buyDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andRedeemDayIsNull() {
+            addCriterion("`redeem_day` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRedeemDayIsNotNull() {
+            addCriterion("`redeem_day` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRedeemDayEqualTo(Date value) {
+            addCriterionForJDBCDate("`redeem_day` =", value, "redeemDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andRedeemDayNotEqualTo(Date value) {
+            addCriterionForJDBCDate("`redeem_day` <>", value, "redeemDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andRedeemDayGreaterThan(Date value) {
+            addCriterionForJDBCDate("`redeem_day` >", value, "redeemDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andRedeemDayGreaterThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("`redeem_day` >=", value, "redeemDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andRedeemDayLessThan(Date value) {
+            addCriterionForJDBCDate("`redeem_day` <", value, "redeemDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andRedeemDayLessThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("`redeem_day` <=", value, "redeemDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andRedeemDayIn(List<Date> values) {
+            addCriterionForJDBCDate("`redeem_day` in", values, "redeemDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andRedeemDayNotIn(List<Date> values) {
+            addCriterionForJDBCDate("`redeem_day` not in", values, "redeemDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andRedeemDayBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("`redeem_day` between", value1, value2, "redeemDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andRedeemDayNotBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("`redeem_day` not between", value1, value2, "redeemDay");
+            return (Criteria) this;
+        }
+
         public Criteria andValueDayIsNull() {
             addCriterion("`value_day` is null");
             return (Criteria) this;
@@ -582,53 +703,53 @@ public class ProductExample {
             return (Criteria) this;
         }
 
-        public Criteria andIssueTypeEqualTo(Date value) {
-            addCriterionForJDBCDate("`issue_type` =", value, "issueType");
+        public Criteria andIssueTypeEqualTo(Boolean value) {
+            addCriterion("`issue_type` =", value, "issueType");
             return (Criteria) this;
         }
 
-        public Criteria andIssueTypeNotEqualTo(Date value) {
-            addCriterionForJDBCDate("`issue_type` <>", value, "issueType");
+        public Criteria andIssueTypeNotEqualTo(Boolean value) {
+            addCriterion("`issue_type` <>", value, "issueType");
             return (Criteria) this;
         }
 
-        public Criteria andIssueTypeGreaterThan(Date value) {
-            addCriterionForJDBCDate("`issue_type` >", value, "issueType");
+        public Criteria andIssueTypeGreaterThan(Boolean value) {
+            addCriterion("`issue_type` >", value, "issueType");
             return (Criteria) this;
         }
 
-        public Criteria andIssueTypeGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("`issue_type` >=", value, "issueType");
+        public Criteria andIssueTypeGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("`issue_type` >=", value, "issueType");
             return (Criteria) this;
         }
 
-        public Criteria andIssueTypeLessThan(Date value) {
-            addCriterionForJDBCDate("`issue_type` <", value, "issueType");
+        public Criteria andIssueTypeLessThan(Boolean value) {
+            addCriterion("`issue_type` <", value, "issueType");
             return (Criteria) this;
         }
 
-        public Criteria andIssueTypeLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("`issue_type` <=", value, "issueType");
+        public Criteria andIssueTypeLessThanOrEqualTo(Boolean value) {
+            addCriterion("`issue_type` <=", value, "issueType");
             return (Criteria) this;
         }
 
-        public Criteria andIssueTypeIn(List<Date> values) {
-            addCriterionForJDBCDate("`issue_type` in", values, "issueType");
+        public Criteria andIssueTypeIn(List<Boolean> values) {
+            addCriterion("`issue_type` in", values, "issueType");
             return (Criteria) this;
         }
 
-        public Criteria andIssueTypeNotIn(List<Date> values) {
-            addCriterionForJDBCDate("`issue_type` not in", values, "issueType");
+        public Criteria andIssueTypeNotIn(List<Boolean> values) {
+            addCriterion("`issue_type` not in", values, "issueType");
             return (Criteria) this;
         }
 
-        public Criteria andIssueTypeBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("`issue_type` between", value1, value2, "issueType");
+        public Criteria andIssueTypeBetween(Boolean value1, Boolean value2) {
+            addCriterion("`issue_type` between", value1, value2, "issueType");
             return (Criteria) this;
         }
 
-        public Criteria andIssueTypeNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("`issue_type` not between", value1, value2, "issueType");
+        public Criteria andIssueTypeNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("`issue_type` not between", value1, value2, "issueType");
             return (Criteria) this;
         }
 
@@ -969,6 +1090,76 @@ public class ProductExample {
 
         public Criteria andIncomeDistributionTypeNotBetween(String value1, String value2) {
             addCriterion("`income_distribution_type` not between", value1, value2, "incomeDistributionType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditIsNull() {
+            addCriterion("`credit` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditIsNotNull() {
+            addCriterion("`credit` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditEqualTo(String value) {
+            addCriterion("`credit` =", value, "credit");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditNotEqualTo(String value) {
+            addCriterion("`credit` <>", value, "credit");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditGreaterThan(String value) {
+            addCriterion("`credit` >", value, "credit");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditGreaterThanOrEqualTo(String value) {
+            addCriterion("`credit` >=", value, "credit");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditLessThan(String value) {
+            addCriterion("`credit` <", value, "credit");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditLessThanOrEqualTo(String value) {
+            addCriterion("`credit` <=", value, "credit");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditLike(String value) {
+            addCriterion("`credit` like", value, "credit");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditNotLike(String value) {
+            addCriterion("`credit` not like", value, "credit");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditIn(List<String> values) {
+            addCriterion("`credit` in", values, "credit");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditNotIn(List<String> values) {
+            addCriterion("`credit` not in", values, "credit");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditBetween(String value1, String value2) {
+            addCriterion("`credit` between", value1, value2, "credit");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditNotBetween(String value1, String value2) {
+            addCriterion("`credit` not between", value1, value2, "credit");
             return (Criteria) this;
         }
 
@@ -2429,6 +2620,256 @@ public class ProductExample {
 
         public Criteria andCtimeNotBetween(Date value1, Date value2) {
             addCriterion("`ctime` not between", value1, value2, "ctime");
+            return (Criteria) this;
+        }
+
+        public Criteria andDetailUrlIsNull() {
+            addCriterion("`detail_url` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDetailUrlIsNotNull() {
+            addCriterion("`detail_url` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDetailUrlEqualTo(String value) {
+            addCriterion("`detail_url` =", value, "detailUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andDetailUrlNotEqualTo(String value) {
+            addCriterion("`detail_url` <>", value, "detailUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andDetailUrlGreaterThan(String value) {
+            addCriterion("`detail_url` >", value, "detailUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andDetailUrlGreaterThanOrEqualTo(String value) {
+            addCriterion("`detail_url` >=", value, "detailUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andDetailUrlLessThan(String value) {
+            addCriterion("`detail_url` <", value, "detailUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andDetailUrlLessThanOrEqualTo(String value) {
+            addCriterion("`detail_url` <=", value, "detailUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andDetailUrlLike(String value) {
+            addCriterion("`detail_url` like", value, "detailUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andDetailUrlNotLike(String value) {
+            addCriterion("`detail_url` not like", value, "detailUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andDetailUrlIn(List<String> values) {
+            addCriterion("`detail_url` in", values, "detailUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andDetailUrlNotIn(List<String> values) {
+            addCriterion("`detail_url` not in", values, "detailUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andDetailUrlBetween(String value1, String value2) {
+            addCriterion("`detail_url` between", value1, value2, "detailUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andDetailUrlNotBetween(String value1, String value2) {
+            addCriterion("`detail_url` not between", value1, value2, "detailUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermMinIsNull() {
+            addCriterion("`invest_term_min` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermMinIsNotNull() {
+            addCriterion("`invest_term_min` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermMinEqualTo(Integer value) {
+            addCriterion("`invest_term_min` =", value, "investTermMin");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermMinNotEqualTo(Integer value) {
+            addCriterion("`invest_term_min` <>", value, "investTermMin");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermMinGreaterThan(Integer value) {
+            addCriterion("`invest_term_min` >", value, "investTermMin");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermMinGreaterThanOrEqualTo(Integer value) {
+            addCriterion("`invest_term_min` >=", value, "investTermMin");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermMinLessThan(Integer value) {
+            addCriterion("`invest_term_min` <", value, "investTermMin");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermMinLessThanOrEqualTo(Integer value) {
+            addCriterion("`invest_term_min` <=", value, "investTermMin");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermMinIn(List<Integer> values) {
+            addCriterion("`invest_term_min` in", values, "investTermMin");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermMinNotIn(List<Integer> values) {
+            addCriterion("`invest_term_min` not in", values, "investTermMin");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermMinBetween(Integer value1, Integer value2) {
+            addCriterion("`invest_term_min` between", value1, value2, "investTermMin");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermMinNotBetween(Integer value1, Integer value2) {
+            addCriterion("`invest_term_min` not between", value1, value2, "investTermMin");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermMaxIsNull() {
+            addCriterion("`invest_term_max` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermMaxIsNotNull() {
+            addCriterion("`invest_term_max` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermMaxEqualTo(Integer value) {
+            addCriterion("`invest_term_max` =", value, "investTermMax");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermMaxNotEqualTo(Integer value) {
+            addCriterion("`invest_term_max` <>", value, "investTermMax");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermMaxGreaterThan(Integer value) {
+            addCriterion("`invest_term_max` >", value, "investTermMax");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermMaxGreaterThanOrEqualTo(Integer value) {
+            addCriterion("`invest_term_max` >=", value, "investTermMax");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermMaxLessThan(Integer value) {
+            addCriterion("`invest_term_max` <", value, "investTermMax");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermMaxLessThanOrEqualTo(Integer value) {
+            addCriterion("`invest_term_max` <=", value, "investTermMax");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermMaxIn(List<Integer> values) {
+            addCriterion("`invest_term_max` in", values, "investTermMax");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermMaxNotIn(List<Integer> values) {
+            addCriterion("`invest_term_max` not in", values, "investTermMax");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermMaxBetween(Integer value1, Integer value2) {
+            addCriterion("`invest_term_max` between", value1, value2, "investTermMax");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermMaxNotBetween(Integer value1, Integer value2) {
+            addCriterion("`invest_term_max` not between", value1, value2, "investTermMax");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestThresholdIsNull() {
+            addCriterion("`invest_threshold` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestThresholdIsNotNull() {
+            addCriterion("`invest_threshold` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestThresholdEqualTo(BigDecimal value) {
+            addCriterion("`invest_threshold` =", value, "investThreshold");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestThresholdNotEqualTo(BigDecimal value) {
+            addCriterion("`invest_threshold` <>", value, "investThreshold");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestThresholdGreaterThan(BigDecimal value) {
+            addCriterion("`invest_threshold` >", value, "investThreshold");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestThresholdGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("`invest_threshold` >=", value, "investThreshold");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestThresholdLessThan(BigDecimal value) {
+            addCriterion("`invest_threshold` <", value, "investThreshold");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestThresholdLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("`invest_threshold` <=", value, "investThreshold");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestThresholdIn(List<BigDecimal> values) {
+            addCriterion("`invest_threshold` in", values, "investThreshold");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestThresholdNotIn(List<BigDecimal> values) {
+            addCriterion("`invest_threshold` not in", values, "investThreshold");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestThresholdBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("`invest_threshold` between", value1, value2, "investThreshold");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestThresholdNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("`invest_threshold` not between", value1, value2, "investThreshold");
             return (Criteria) this;
         }
     }

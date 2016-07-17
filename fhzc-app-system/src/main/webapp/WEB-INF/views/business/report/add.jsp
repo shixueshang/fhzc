@@ -66,7 +66,7 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="portlet_tab1">
                                         <!-- BEGIN FORM-->
-                                        <form action="#" class="form-horizontal">
+                                        <form action="add" enctype="multipart/form-data" method="POST" class="form-horizontal">
                                             <div class="control-group">
                                             </div>
                                             <div class="control-group">
@@ -89,7 +89,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">报告状态</label>
                                                 <div class="controls">
-                                                    <select class="large m-wrap" name="is_display" tabindex="1">
+                                                    <select class="large m-wrap" name="isDisplay" tabindex="1">
                                                         <option  value="1">显示</option>
                                                         <option  value="0">不显示</option>
                                                     </select>
@@ -113,7 +113,7 @@
                                                     <div>
                                                        <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
                                                        <span class="fileupload-exists">更换</span>
-                                                       <input type="file" class="default" /></span>
+                                                       <input type="file" name="coverFile" class="default" /></span>
                                                        <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
                                                     </div>
                                                  </div>

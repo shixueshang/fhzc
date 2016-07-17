@@ -17,6 +17,8 @@ public class Report {
 
     private Byte isDel;
 
+    private Byte isDisplay;
+
     private String summary;
 
     public Integer getId() {
@@ -73,6 +75,14 @@ public class Report {
 
     public void setIsDel(Byte isDel) {
         this.isDel = isDel;
+    }
+
+    public Byte getIsDisplay() {
+        return isDisplay;
+    }
+
+    public void setIsDisplay(Byte isDisplay) {
+        this.isDisplay = isDisplay;
     }
 
     public String getSummary() {

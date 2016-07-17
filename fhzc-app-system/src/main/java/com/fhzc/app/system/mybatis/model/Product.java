@@ -1,5 +1,9 @@
 package com.fhzc.app.system.mybatis.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Product {
@@ -13,11 +17,15 @@ public class Product {
 
     private Date foundDay;
 
+    private Date buyDay;
+
+    private Date redeemDay;
+
     private Date valueDay;
 
     private Date expiryDay;
 
-    private Date issueType;
+    private Boolean issueType;
 
     private String productType;
 
@@ -28,6 +36,8 @@ public class Product {
     private String annualYield;
 
     private String incomeDistributionType;
+
+    private String credit;
 
     private String investmentOrientation;
 
@@ -73,7 +83,17 @@ public class Product {
 
     private Date ctime;
 
+    private String detailUrl;
+
+    private Integer investTermMin;
+
+    private Integer investTermMax;
+
+    private BigDecimal investThreshold;
+
     private String desc;
+
+    private String detailContent;
 
     public Integer getPid() {
         return pid;
@@ -115,6 +135,22 @@ public class Product {
         this.foundDay = foundDay;
     }
 
+    public Date getBuyDay() {
+        return buyDay;
+    }
+
+    public void setBuyDay(Date buyDay) {
+        this.buyDay = buyDay;
+    }
+
+    public Date getRedeemDay() {
+        return redeemDay;
+    }
+
+    public void setRedeemDay(Date redeemDay) {
+        this.redeemDay = redeemDay;
+    }
+
     public Date getValueDay() {
         return valueDay;
     }
@@ -131,11 +167,11 @@ public class Product {
         this.expiryDay = expiryDay;
     }
 
-    public Date getIssueType() {
+    public Boolean getIssueType() {
         return issueType;
     }
 
-    public void setIssueType(Date issueType) {
+    public void setIssueType(Boolean issueType) {
         this.issueType = issueType;
     }
 
@@ -177,6 +213,14 @@ public class Product {
 
     public void setIncomeDistributionType(String incomeDistributionType) {
         this.incomeDistributionType = incomeDistributionType == null ? null : incomeDistributionType.trim();
+    }
+
+    public String getCredit() {
+        return credit;
+    }
+
+    public void setCredit(String credit) {
+        this.credit = credit == null ? null : credit.trim();
     }
 
     public String getInvestmentOrientation() {
@@ -355,11 +399,51 @@ public class Product {
         this.ctime = ctime;
     }
 
+    public String getDetailUrl() {
+        return detailUrl;
+    }
+
+    public void setDetailUrl(String detailUrl) {
+        this.detailUrl = detailUrl == null ? null : detailUrl.trim();
+    }
+
+    public Integer getInvestTermMin() {
+        return investTermMin;
+    }
+
+    public void setInvestTermMin(Integer investTermMin) {
+        this.investTermMin = investTermMin;
+    }
+
+    public Integer getInvestTermMax() {
+        return investTermMax;
+    }
+
+    public void setInvestTermMax(Integer investTermMax) {
+        this.investTermMax = investTermMax;
+    }
+
+    public BigDecimal getInvestThreshold() {
+        return investThreshold;
+    }
+
+    public void setInvestThreshold(BigDecimal investThreshold) {
+        this.investThreshold = investThreshold;
+    }
+
     public String getDesc() {
         return desc;
     }
 
     public void setDesc(String desc) {
         this.desc = desc == null ? null : desc.trim();
+    }
+
+    public String getDetailContent() {
+        return detailContent;
+    }
+
+    public void setDetailContent(String detailContent) {
+        this.detailContent = detailContent == null ? null : detailContent.trim();
     }
 }

@@ -9,6 +9,7 @@
     <result column="url" property="url" jdbcType="VARCHAR" />
     <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
     <result column="is_del" property="isDel" jdbcType="TINYINT" />
+    <result column="is_display" property="isDisplay" jdbcType="TINYINT" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.fhzc.app.system.mybatis.model.Report" extends="BaseResultMap" >
     <result column="summary" property="summary" jdbcType="LONGVARCHAR" />
@@ -72,7 +73,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    `id`, `cid`, `name`, `cover`, `url`, `ctime`, `is_del`
+    `id`, `cid`, `name`, `cover`, `url`, `ctime`, `is_del`, `is_display`
   </sql>
   <sql id="Blob_Column_List" >
     `summary`
@@ -131,10 +132,10 @@
     </selectKey>
     insert into `report` (`cid`, `name`, `cover`, 
       `url`, `ctime`, `is_del`, 
-      `summary`)
+      `is_display`, `summary`)
     values (#{cid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{cover,jdbcType=VARCHAR}, 
       #{url,jdbcType=VARCHAR}, #{ctime,jdbcType=TIMESTAMP}, #{isDel,jdbcType=TINYINT}, 
-      #{summary,jdbcType=LONGVARCHAR})
+      #{isDisplay,jdbcType=TINYINT}, #{summary,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.system.mybatis.model.Report" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
@@ -160,6 +161,9 @@
       <if test="isDel != null" >
         `is_del`,
       </if>
+      <if test="isDisplay != null" >
+        `is_display`,
+      </if>
       <if test="summary != null" >
         `summary`,
       </if>
@@ -182,6 +186,9 @@
       </if>
       <if test="isDel != null" >
         #{isDel,jdbcType=TINYINT},
+      </if>
+      <if test="isDisplay != null" >
+        #{isDisplay,jdbcType=TINYINT},
       </if>
       <if test="summary != null" >
         #{summary,jdbcType=LONGVARCHAR},
@@ -218,6 +225,9 @@
       <if test="record.isDel != null" >
         `is_del` = #{record.isDel,jdbcType=TINYINT},
       </if>
+      <if test="record.isDisplay != null" >
+        `is_display` = #{record.isDisplay,jdbcType=TINYINT},
+      </if>
       <if test="record.summary != null" >
         `summary` = #{record.summary,jdbcType=LONGVARCHAR},
       </if>
@@ -235,6 +245,7 @@
       `url` = #{record.url,jdbcType=VARCHAR},
       `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
       `is_del` = #{record.isDel,jdbcType=TINYINT},
+      `is_display` = #{record.isDisplay,jdbcType=TINYINT},
       `summary` = #{record.summary,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -248,7 +259,8 @@
       `cover` = #{record.cover,jdbcType=VARCHAR},
       `url` = #{record.url,jdbcType=VARCHAR},
       `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
-      `is_del` = #{record.isDel,jdbcType=TINYINT}
+      `is_del` = #{record.isDel,jdbcType=TINYINT},
+      `is_display` = #{record.isDisplay,jdbcType=TINYINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -274,6 +286,9 @@
       <if test="isDel != null" >
         `is_del` = #{isDel,jdbcType=TINYINT},
       </if>
+      <if test="isDisplay != null" >
+        `is_display` = #{isDisplay,jdbcType=TINYINT},
+      </if>
       <if test="summary != null" >
         `summary` = #{summary,jdbcType=LONGVARCHAR},
       </if>
@@ -288,6 +303,7 @@
       `url` = #{url,jdbcType=VARCHAR},
       `ctime` = #{ctime,jdbcType=TIMESTAMP},
       `is_del` = #{isDel,jdbcType=TINYINT},
+      `is_display` = #{isDisplay,jdbcType=TINYINT},
       `summary` = #{summary,jdbcType=LONGVARCHAR}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
@@ -298,7 +314,8 @@
       `cover` = #{cover,jdbcType=VARCHAR},
       `url` = #{url,jdbcType=VARCHAR},
       `ctime` = #{ctime,jdbcType=TIMESTAMP},
-      `is_del` = #{isDel,jdbcType=TINYINT}
+      `is_del` = #{isDel,jdbcType=TINYINT},
+      `is_display` = #{isDisplay,jdbcType=TINYINT}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
   <select resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.system.mybatis.model.ReportExample" id="selectByExampleWithBLOBsWithRowbounds" >
