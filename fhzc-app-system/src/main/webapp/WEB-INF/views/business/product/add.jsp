@@ -443,20 +443,26 @@ $(function(){
             },
             investTermMin: {
                 required: true,
-                number: true
+                number: true,
+                min:0
             },
             investTermMax: {
                 required: true,
-                number: true
+                number: true,
+                min:1
             },
             detailUrl: {
                 url: true
             },
             fundManagementFee: {
-                required: true
+                required: true,
+                number: true,
+                min:0
             },
             fundSubscriptionFee: {
-                required: true
+                required: true,
+                number: true,
+                min:0
             },
             fundManager: {
                 required: true
