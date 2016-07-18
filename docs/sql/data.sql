@@ -115,3 +115,41 @@ CREATE TABLE `bank`.`product_dividend_day` (
   `day` DATE NOT NULL COMMENT '派息日',
   PRIMARY KEY (`id`))
 COMMENT = '产品派息日';
+
+INSERT INTO `bank`.`rights_category` (`name`) VALUES ('健康管理');
+INSERT INTO `bank`.`rights_category` (`name`) VALUES ('旅行家');
+INSERT INTO `bank`.`rights_category` (`name`) VALUES ('艺术家');
+INSERT INTO `bank`.`rights_category` (`name`) VALUES ('商旅通');
+INSERT INTO `bank`.`rights_category` (`name`) VALUES ('奢生活');
+INSERT INTO `bank`.`rights_category` (`name`) VALUES ('爱体育');
+INSERT INTO `bank`.`rights_category` (`name`) VALUES ('商学院');
+INSERT INTO `bank`.`rights_category` (`name`) VALUES ('俱乐部');
+
+CREATE TABLE `bank`.`activity_category` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NULL COMMENT '活动名称',
+  PRIMARY KEY (`id`))
+COMMENT = '活动分类';
+INSERT INTO `bank`.`activity_category` (`name`) VALUES ('生命管理俱乐部');
+INSERT INTO `bank`.`activity_category` (`name`) VALUES ('高尔夫俱乐部');
+INSERT INTO `bank`.`activity_category` (`name`) VALUES ('教育传承俱乐部');
+INSERT INTO `bank`.`activity_category` (`name`) VALUES ('商旅俱乐部');
+INSERT INTO `bank`.`activity_category` (`name`) VALUES ('投资者俱乐部');
+
+ALTER TABLE `bank`.`activity`
+ADD COLUMN `summary` VARCHAR(255) NULL COMMENT '活动摘要' AFTER `is_display`;
+ALTER TABLE `bank`.`activity`
+ADD COLUMN `cid` TINYINT NULL COMMENT '活动类型' AFTER `summary`;
+ALTER TABLE `bank`.`activity`
+ADD COLUMN `cover` VARCHAR(45) NULL DEFAULT NULL COMMENT '封面' AFTER `cid`;
+ALTER TABLE `bank`.`activity`
+ADD COLUMN `department_id` TINYINT NULL COMMENT '活动发布角色部门' AFTER `dead_time`;
+ALTER TABLE `bank`.`rights`
+ADD COLUMN `supply` VARCHAR(255) NULL AFTER `ctime`,
+ADD COLUMN `summary` TEXT NULL COMMENT '简介' AFTER `supply`;
+ALTER TABLE `bank`.`rights`
+ADD COLUMN `cover` VARCHAR(255) NULL COMMENT '封面' AFTER `summary`;
+ALTER TABLE `bank`.`rights`
+CHANGE COLUMN `spend_type` `spend_type` ENUM('var','static') NULL DEFAULT 'static' COMMENT '兑换积分是否固定' ,
+CHANGE COLUMN `level` `level` TINYINT(3) UNSIGNED NULL COMMENT '需要的客户等级' ;
+DROP TABLE `bank`.`rights_provider`;
