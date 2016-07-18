@@ -79,7 +79,7 @@
                                             <div class="control-group">
                                             </div>
                                             <div class="control-group">
-                                                <label class="control-label">产品名</label>
+                                                <label class="control-label">产品名<span class="required">*</span></label>
                                                 <div class="controls">
                                                     <input type="text" name="name" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
@@ -126,7 +126,7 @@
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">投资期限（月）</label>
+                                                <label class="control-label">投资期限（月）<span class="required">*</span></label>
                                                 <div class="controls">
                                                     <input type="number" name="investTermMin"  data-required="1" placeholder="" class="m-wrap small"> ~ <input type="number" name="investTermMax"  data-required="1" placeholder="" class="m-wrap small">
                                                     <span class="help-inline"></span>
@@ -203,14 +203,14 @@
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">基金管理费</label>
+                                                <label class="control-label">基金管理费<span class="required">*</span></label>
                                                 <div class="controls">
                                                     <input type="text" name="fundManagementFee"  data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
                                             <div class="control-group">
-                                                <label class="control-label">基金认购费</label>
+                                                <label class="control-label">基金认购费<span class="required">*</span></label>
                                                 <div class="controls">
                                                     <input type="text" name="fundSubscriptionFee"   data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
@@ -218,7 +218,7 @@
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">基金管理人</label>
+                                                <label class="control-label">基金管理人<span class="required">*</span></label>
                                                 <div class="controls">
                                                     <input type="text" name="fundManager"  data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
@@ -226,7 +226,7 @@
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">基金托管人</label>
+                                                <label class="control-label">基金托管人<span class="required">*</span></label>
                                                 <div class="controls">
                                                     <input type="text" name="custodian"  data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
@@ -496,7 +496,6 @@ $(function(){
             success1.hide();
             error1.show();
             App.scrollTo(error1, -200);
-            return false;
         },
 
         highlight: function (element) { // hightlight error inputs
@@ -520,6 +519,7 @@ $(function(){
         submitHandler: function (form) {
             success1.show();
             error1.hide();
+            form.submit();
         }
     });
 
