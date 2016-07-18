@@ -46,8 +46,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void addProduct(Product product) {
-        productMapper.insertSelective(product);
+    public void addOrUpdateProduct(Product product) {
+        Integer pid = product.getPid();
+        if(pid == null){
+            productMapper.insertSelective(product);
+        }else{
+            productMapper.updateByPrimaryKeySelective(product);
+        }
     }
 
     @Override
@@ -90,7 +95,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void addProductDividendDay(ProductDividendDay pdd) {
-        productDividendDayMapper.insert(pdd);
+    public void addOrUpdateProductDividendDay(ProductDividendDay pdd) {
+        Integer id = pdd.getId();
+        if(id == null){
+            productDividendDayMapper.insert(pdd);
+        }else{
+            productDividendDayMapper.updateByPrimaryKey(pdd);
+        }
+    }
+
+    @Override
+    public Product getProduct(Integer pid) {
+        return productMapper.selectByPrimaryKey(pid);
     }
 }

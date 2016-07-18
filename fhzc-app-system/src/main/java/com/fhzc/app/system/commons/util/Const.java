@@ -19,6 +19,14 @@ public class Const {
      */
     public static final Integer DEFAULT_PAGE_SIZE = 25;
 
+    /**
+     * 是否
+     */
+    public static class YES_OR_NO{
+        public static final Integer YES = 1;
 
+        public static final Integer NO = 0;
+
+    }
 
 }

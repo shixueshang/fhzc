@@ -24,7 +24,7 @@ public interface ProductService {
      * 添加产品
      * @param product
      */
-    void addProduct(Product product);
+    void addOrUpdateProduct(Product product);
 
     /**
      * 产品导入
@@ -38,5 +38,12 @@ public interface ProductService {
      * 添加产品派息日
      * @param pdd
      */
-    void addProductDividendDay(ProductDividendDay pdd);
+    void addOrUpdateProductDividendDay(ProductDividendDay pdd);
+
+    /**
+     * 获得产品信息
+     * @param pid
+     * @return
+     */
+    Product getProduct(Integer pid);
 }

@@ -81,14 +81,14 @@
                                             <div class="control-group">
                                                 <label class="control-label">产品名<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <input type="text" name="name" data-required="1" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="name" value="${product.name}" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
                                             <div class="control-group">
                                                 <label class="control-label">产品代码</label>
                                                 <div class="controls">
-                                                    <input type="text" name="code" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="code" value="${product.code}" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -120,7 +120,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">预期年化收益率（单位：%）</label>
                                                 <div class="controls">
-                                                    <input type="number" name="expectedMin" placeholder="" class="m-wrap small"> ~ <input type="number" name="expectedMax" placeholder="" class="m-wrap small">
+                                                    <input type="number" name="expectedMin" value="${product.expectedMin}" placeholder="" class="m-wrap small"> ~ <input type="number" name="expectedMax" value="${product.expectedMax}" placeholder="" class="m-wrap small">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -128,7 +128,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">投资期限（月）<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <input type="number" name="investTermMin"  data-required="1" placeholder="" class="m-wrap small"> ~ <input type="number" name="investTermMax"  data-required="1" placeholder="" class="m-wrap small">
+                                                    <input type="number" name="investTermMin" value="${product.investTermMin}" data-required="1" placeholder="" class="m-wrap small"> ~ <input type="number" name="investTermMax" value="${product.investTermMax}" data-required="1" placeholder="" class="m-wrap small">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -136,7 +136,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">起投金额</label>
                                                 <div class="controls">
-                                                    <input type="number" name="investThreshold" placeholder="" class="m-wrap large">
+                                                    <input type="number" name="investThreshold" value="${product.investThreshold / 10000}" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -144,7 +144,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">存续期限</label>
                                                 <div class="controls">
-                                                    <input type="text" name="renewDeadline" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="renewDeadline" value="${product.renewDeadline}" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -152,7 +152,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">成立日</label>
                                                 <div class="controls">
-                                                    <input type="text" name="foundDay" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="">
+                                                    <input type="text" name="foundDay"  placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="${product.foundDay}">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -160,14 +160,14 @@
                                             <div class="control-group">
                                                 <label class="control-label">派息日</label>
                                                 <div class="controls">
-                                                    <input id="dividend_day_tags" name="dividendDay" type="text" data-default="添加一个派息日" class="m-wra tags medium" value="2016-08-01,2016-09-01" />
+                                                    <input id="dividend_day_tags" name="dividendDay" type="text" data-default="添加一个派息日" class="m-wra tags medium" value="${product.valueDay}" />
                                                 </div>
                                             </div>
 
                                             <div class="control-group">
                                                 <label class="control-label">开放申购日</label>
                                                 <div class="controls">
-                                                    <input type="text" name="buyDay" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="">
+                                                    <input type="text" name="buyDay" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="${product.buyDay}">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -175,7 +175,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">赎回日</label>
                                                 <div class="controls">
-                                                    <input type="text" name="redeemDay" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="">
+                                                    <input type="text" name="redeemDay" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="${product.redeemDay}">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -183,7 +183,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">到期日</label>
                                                 <div class="controls">
-                                                    <input type="text" name="expiryDay" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="">
+                                                    <input type="text" name="expiryDay" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="${product.expiryDay}">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -205,14 +205,14 @@
                                             <div class="control-group">
                                                 <label class="control-label">基金管理费<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <input type="text" name="fundManagementFee"  data-required="1" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="fundManagementFee" value="${product.fundManagementFee}" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
                                             <div class="control-group">
                                                 <label class="control-label">基金认购费<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <input type="text" name="fundSubscriptionFee"   data-required="1" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="fundSubscriptionFee" value="${product.fundSubscriptionFee}"  data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -220,7 +220,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">基金管理人<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <input type="text" name="fundManager"  data-required="1" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="fundManager"  value="${product.fundManager}" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -228,7 +228,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">基金托管人<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <input type="text" name="custodian"  data-required="1" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="custodian" value="${product.custodian}" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -236,7 +236,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">投资方向</label>
                                                 <div class="controls">
-                                                    <input type="text" name="investmentOrientation" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="investmentOrientation" value="${product.investmentOrientation}" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -244,7 +244,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">收益分配方式</label>
                                                 <div class="controls">
-                                                    <input type="text" name="incomeDistributionType" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="incomeDistributionType" value="${product.incomeDistributionType}" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -252,7 +252,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">增信措施</label>
                                                 <div class="controls">
-                                                    <input type="text" name="credit" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="credit" value="${product.credit}" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -260,7 +260,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">产品亮点</label>
                                                 <div class="controls">
-                                                    <input type="text" name="highlisghts" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="highlisghts" value="${product.highlisghts}" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -312,7 +312,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">积分系数</label>
                                                 <div class="controls">
-                                                    <input type="text" name="scoreFactor" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="scoreFactor" value="${product.scoreFactor}" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -320,7 +320,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">产品简介</label>
                                                 <div class="controls">
-                                                    <textarea name="desc" class="span6 m-wrap" rows="3"></textarea>
+                                                    <textarea name="desc"  class="span6 m-wrap" rows="3"></textarea>
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>

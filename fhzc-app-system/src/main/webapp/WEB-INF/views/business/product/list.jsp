@@ -82,19 +82,76 @@
                                         <td><input type="checkbox" id="checkOne"/></td>
                                         <td>${product.code}</td>
                                         <td>${product.name}</td>
-                                        <td>${product.productType}</td>
-                                        <td>${product.status}</td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${product.productType == '1'}">
+                                                    鑫丰母基金(开放式契约型)
+                                                </c:when>
+                                                <c:when test="${product.productType == '2'}">
+                                                    封闭式有限合伙私募基金
+                                                </c:when>
+                                                <c:when test="${product.productType == '3'}">
+                                                    封闭式契约型私募基金
+                                                </c:when>
+                                            </c:choose>
+                                        </td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${product.status == '-1'}">
+                                                    未知
+                                                </c:when>
+                                                <c:when test="${product.status == '0'}">
+                                                    产品预热
+                                                </c:when>
+                                                <c:when test="${product.status == '1'}">
+                                                    募集中
+                                                </c:when>
+                                                <c:when test="${product.status == '2'}">
+                                                    募集结束
+                                                </c:when>
+                                                <c:when test="${product.status == '3'}">
+                                                    募集失败
+                                                </c:when>
+                                                <c:when test="${product.status == '4'}">
+                                                    产品成立
+                                                </c:when>
+                                                <c:when test="${product.status == '5'}">
+                                                    产品到期
+                                                </c:when>
+                                                <c:when test="${product.status == '6'}">
+                                                    提前结束
+                                                </c:when>
+                                            </c:choose>
+                                        </td>
                                         <td></td>
                                         <td><fmt:formatDate value="${product.foundDay}" pattern="yyyy-MM-dd"/></td>
-                                        <td>${product.isRecommend}</td>
-                                        <td>${product.isDisplay}</td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${product.isRecommend == '1'}">
+                                                    是
+                                                </c:when>
+                                                <c:when test="${data.isRecommend == '0'}">
+                                                    否
+                                                </c:when>
+                                            </c:choose>
+                                        </td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${product.isDisplay == '1'}">
+                                                    是
+                                                </c:when>
+                                                <c:when test="${data.isDisplay == '0'}">
+                                                    否
+                                                </c:when>
+                                            </c:choose>
+                                        </td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td><a href="business/product/detail/${product.pid}">编辑</a>
-                                            <a href="business/product/detail/${product.pid}">推荐</a>
-                                            <a href="business/product/detail/${product.pid}">展示</a>
-                                            <a href="business/product/detail/${product.pid}">预约</a>
+                                        <td><a href="detail/${product.pid}">编辑</a>
+                                            <a href="#">推荐</a>
+                                            <a href="#">展示</a>
+                                            <a href="#">预约</a>
                                         </td>
                                     </tr>
                                 </c:forEach>

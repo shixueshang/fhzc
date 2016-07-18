@@ -80,7 +80,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">报告名</label>
                                                 <div class="controls">
-                                                    <input type="text" name="name" data-required="1" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="name" value="${report.name}" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -121,7 +121,7 @@
                                                     <div>
                                                        <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
                                                        <span class="fileupload-exists">更换</span>
-                                                       <input type="file" name="cover" class="default" /></span>
+                                                       <input type="file" name="coverFile" class="default" /></span>
                                                        <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
                                                     </div>
                                                  </div>
@@ -135,7 +135,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">详情链接</label>
                                                 <div class="controls">
-                                                    <input type="text" name="url" data-required="1" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="url" value="${report.url}" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>

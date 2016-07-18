@@ -11,6 +11,7 @@ import com.fhzc.app.system.mybatis.model.Product;
 import com.fhzc.app.system.mybatis.model.ProductDividendDay;
 import com.fhzc.app.system.service.ProductService;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -73,7 +74,7 @@ public class ProductController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ModelAndView addProduct(Product product, MultipartFile coverFile, MultipartFile proveFile, MultipartFile noticeFile){
+    public ModelAndView addOrUpdateProduct(Product product, MultipartFile coverFile, MultipartFile proveFile, MultipartFile noticeFile){
         ModelAndView mav = new ModelAndView("business/product/list");
 
         if(!coverFile.isEmpty()){
@@ -95,7 +96,7 @@ public class ProductController extends BaseController {
         }
         product.setCtime(new Date());
 
-        productService.addProduct(product);
+        productService.addOrUpdateProduct(product);
 
         if(product.getDividendDay() != null){
             String[] dividendDays = product.getDividendDay().split(",");
@@ -103,13 +104,25 @@ public class ProductController extends BaseController {
                 ProductDividendDay pdd = new ProductDividendDay();
                 pdd.setDay(DateUtil.parseDate(dividendDay, "yyyy-MM-dd"));
                 pdd.setPid(product.getPid());
-                productService.addProductDividendDay(pdd);
+                productService.addOrUpdateProductDividendDay(pdd);
             }
         }
 
         PageableResult<Product> pageableResult = productService.findPageProducts(page, size);
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("products", pageableResult.getItems());
+        return mav;
+    }
+
+    /**
+     * 产品编辑
+     * @param pid
+     * @return
+     */
+    @RequestMapping(value="/detail/{pid}", method = RequestMethod.GET)
+    public ModelAndView detail(@PathVariable(value = "pid") Integer pid){
+        ModelAndView mav = new ModelAndView("/business/product/add");
+        mav.addObject("product", productService.getProduct(pid));
         return mav;
     }
 
