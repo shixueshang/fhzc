@@ -191,10 +191,6 @@
                                             <div class="control-group">
                                                 <label class="control-label">发行模式</label>
                                                 <div class="controls">
-                                                    <input type="text" name="issueType" placeholder="契约型基金" class="m-wrap large">
-                                                    <span class="help-inline"></span>
-                                                </div>
-                                                <div class="controls">
                                                     <select  class="large m-wrap" name="issueType"  tabindex="1">
                                                         <option value="0">其他</option>
                                                         <option value="1">契约型基金</option>
