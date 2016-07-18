@@ -31,6 +31,30 @@
         <property name="suffix" value=".jsp"></property>
     </bean>
 
+    <bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>text/html;charset=UTF-8</value>
+                <value>application/json;charset=UTF-8</value>
+            </list>
+        </property>
+        <property name="objectMapper" ref="objectMapper" />
+    </bean>
+
+    <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper">
+        <property name="timeZone">
+            <bean class="java.util.TimeZone" factory-method="getTimeZone" >
+                <constructor-arg value="GMT+08"/>
+            </bean>
+        </property>
+        <property name="dateFormat">
+            <bean class="java.text.SimpleDateFormat">
+                <constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss"/>
+            </bean>
+        </property>
+    </bean>
+
+    <!-- 文件上传 -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="defaultEncoding" value="utf-8" />
         <property name="maxUploadSize" value="104857600"/>

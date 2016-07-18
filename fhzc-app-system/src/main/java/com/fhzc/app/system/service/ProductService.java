@@ -2,6 +2,7 @@ package com.fhzc.app.system.service;
 
 import com.fhzc.app.system.commons.page.PageableResult;
 import com.fhzc.app.system.mybatis.model.Product;
+import com.fhzc.app.system.mybatis.model.ProductDividendDay;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
@@ -32,4 +33,10 @@ public interface ProductService {
      * @throws Exception
      */
     Map<String, Object> importExcelFile(MultipartFile multipartFile) throws Exception;
+
+    /**
+     * 添加产品派息日
+     * @param pdd
+     */
+    void addProductDividendDay(ProductDividendDay pdd);
 }

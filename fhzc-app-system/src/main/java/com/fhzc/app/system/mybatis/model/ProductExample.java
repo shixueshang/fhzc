@@ -703,53 +703,53 @@ public class ProductExample {
             return (Criteria) this;
         }
 
-        public Criteria andIssueTypeEqualTo(Date value) {
-            addCriterionForJDBCDate("`issue_type` =", value, "issueType");
+        public Criteria andIssueTypeEqualTo(Integer value) {
+            addCriterion("`issue_type` =", value, "issueType");
             return (Criteria) this;
         }
 
-        public Criteria andIssueTypeNotEqualTo(Date value) {
-            addCriterionForJDBCDate("`issue_type` <>", value, "issueType");
+        public Criteria andIssueTypeNotEqualTo(Integer value) {
+            addCriterion("`issue_type` <>", value, "issueType");
             return (Criteria) this;
         }
 
-        public Criteria andIssueTypeGreaterThan(Date value) {
-            addCriterionForJDBCDate("`issue_type` >", value, "issueType");
+        public Criteria andIssueTypeGreaterThan(Integer value) {
+            addCriterion("`issue_type` >", value, "issueType");
             return (Criteria) this;
         }
 
-        public Criteria andIssueTypeGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("`issue_type` >=", value, "issueType");
+        public Criteria andIssueTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("`issue_type` >=", value, "issueType");
             return (Criteria) this;
         }
 
-        public Criteria andIssueTypeLessThan(Date value) {
-            addCriterionForJDBCDate("`issue_type` <", value, "issueType");
+        public Criteria andIssueTypeLessThan(Integer value) {
+            addCriterion("`issue_type` <", value, "issueType");
             return (Criteria) this;
         }
 
-        public Criteria andIssueTypeLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("`issue_type` <=", value, "issueType");
+        public Criteria andIssueTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("`issue_type` <=", value, "issueType");
             return (Criteria) this;
         }
 
-        public Criteria andIssueTypeIn(List<Date> values) {
-            addCriterionForJDBCDate("`issue_type` in", values, "issueType");
+        public Criteria andIssueTypeIn(List<Integer> values) {
+            addCriterion("`issue_type` in", values, "issueType");
             return (Criteria) this;
         }
 
-        public Criteria andIssueTypeNotIn(List<Date> values) {
-            addCriterionForJDBCDate("`issue_type` not in", values, "issueType");
+        public Criteria andIssueTypeNotIn(List<Integer> values) {
+            addCriterion("`issue_type` not in", values, "issueType");
             return (Criteria) this;
         }
 
-        public Criteria andIssueTypeBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("`issue_type` between", value1, value2, "issueType");
+        public Criteria andIssueTypeBetween(Integer value1, Integer value2) {
+            addCriterion("`issue_type` between", value1, value2, "issueType");
             return (Criteria) this;
         }
 
-        public Criteria andIssueTypeNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("`issue_type` not between", value1, value2, "issueType");
+        public Criteria andIssueTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("`issue_type` not between", value1, value2, "issueType");
             return (Criteria) this;
         }
 
@@ -903,53 +903,63 @@ public class ProductExample {
             return (Criteria) this;
         }
 
-        public Criteria andDividendDayEqualTo(Date value) {
-            addCriterionForJDBCDate("`dividend_day` =", value, "dividendDay");
+        public Criteria andDividendDayEqualTo(String value) {
+            addCriterion("`dividend_day` =", value, "dividendDay");
             return (Criteria) this;
         }
 
-        public Criteria andDividendDayNotEqualTo(Date value) {
-            addCriterionForJDBCDate("`dividend_day` <>", value, "dividendDay");
+        public Criteria andDividendDayNotEqualTo(String value) {
+            addCriterion("`dividend_day` <>", value, "dividendDay");
             return (Criteria) this;
         }
 
-        public Criteria andDividendDayGreaterThan(Date value) {
-            addCriterionForJDBCDate("`dividend_day` >", value, "dividendDay");
+        public Criteria andDividendDayGreaterThan(String value) {
+            addCriterion("`dividend_day` >", value, "dividendDay");
             return (Criteria) this;
         }
 
-        public Criteria andDividendDayGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("`dividend_day` >=", value, "dividendDay");
+        public Criteria andDividendDayGreaterThanOrEqualTo(String value) {
+            addCriterion("`dividend_day` >=", value, "dividendDay");
             return (Criteria) this;
         }
 
-        public Criteria andDividendDayLessThan(Date value) {
-            addCriterionForJDBCDate("`dividend_day` <", value, "dividendDay");
+        public Criteria andDividendDayLessThan(String value) {
+            addCriterion("`dividend_day` <", value, "dividendDay");
             return (Criteria) this;
         }
 
-        public Criteria andDividendDayLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("`dividend_day` <=", value, "dividendDay");
+        public Criteria andDividendDayLessThanOrEqualTo(String value) {
+            addCriterion("`dividend_day` <=", value, "dividendDay");
             return (Criteria) this;
         }
 
-        public Criteria andDividendDayIn(List<Date> values) {
-            addCriterionForJDBCDate("`dividend_day` in", values, "dividendDay");
+        public Criteria andDividendDayLike(String value) {
+            addCriterion("`dividend_day` like", value, "dividendDay");
             return (Criteria) this;
         }
 
-        public Criteria andDividendDayNotIn(List<Date> values) {
-            addCriterionForJDBCDate("`dividend_day` not in", values, "dividendDay");
+        public Criteria andDividendDayNotLike(String value) {
+            addCriterion("`dividend_day` not like", value, "dividendDay");
             return (Criteria) this;
         }
 
-        public Criteria andDividendDayBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("`dividend_day` between", value1, value2, "dividendDay");
+        public Criteria andDividendDayIn(List<String> values) {
+            addCriterion("`dividend_day` in", values, "dividendDay");
             return (Criteria) this;
         }
 
-        public Criteria andDividendDayNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("`dividend_day` not between", value1, value2, "dividendDay");
+        public Criteria andDividendDayNotIn(List<String> values) {
+            addCriterion("`dividend_day` not in", values, "dividendDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andDividendDayBetween(String value1, String value2) {
+            addCriterion("`dividend_day` between", value1, value2, "dividendDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andDividendDayNotBetween(String value1, String value2) {
+            addCriterion("`dividend_day` not between", value1, value2, "dividendDay");
             return (Criteria) this;
         }
 

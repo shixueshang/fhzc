@@ -11,10 +11,10 @@
     <result column="redeem_day" property="redeemDay" jdbcType="DATE" />
     <result column="value_day" property="valueDay" jdbcType="DATE" />
     <result column="expiry_day" property="expiryDay" jdbcType="DATE" />
-    <result column="issue_type" property="issueType" jdbcType="DATE" />
+    <result column="issue_type" property="issueType" jdbcType="INTEGER" />
     <result column="product_type" property="productType" jdbcType="VARCHAR" />
     <result column="renew_deadline" property="renewDeadline" jdbcType="VARCHAR" />
-    <result column="dividend_day" property="dividendDay" jdbcType="DATE" />
+    <result column="dividend_day" property="dividendDay" jdbcType="VARCHAR" />
     <result column="annual_yield" property="annualYield" jdbcType="VARCHAR" />
     <result column="income_distribution_type" property="incomeDistributionType" jdbcType="VARCHAR" />
     <result column="credit" property="credit" jdbcType="VARCHAR" />
@@ -171,8 +171,11 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.fhzc.app.system.mybatis.model.Product" >
-    insert into `product` (`pid`, `status`, `code`, 
-      `name`, `found_day`, `buy_day`, `redeem_day`, 
+    <selectKey resultType="java.lang.Integer" keyProperty="pid" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `product` (`status`, `code`, `name`, 
+      `found_day`, `buy_day`, `redeem_day`, 
       `value_day`, `expiry_day`, `issue_type`, 
       `product_type`, `renew_deadline`, `dividend_day`, 
       `annual_yield`, `income_distribution_type`, `credit`, 
@@ -187,10 +190,10 @@
       `invest_term_min`, `invest_term_max`, `invest_threshold`, 
       `expected_min`, `expected_max`, `desc`, 
       `detail_content`)
-    values (#{pid,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{code,jdbcType=VARCHAR}, 
-      #{name,jdbcType=VARCHAR}, #{foundDay,jdbcType=DATE}, #{buyDay,jdbcType=DATE}, #{redeemDay,jdbcType=DATE}, 
-      #{valueDay,jdbcType=DATE}, #{expiryDay,jdbcType=DATE}, #{issueType,jdbcType=DATE}, 
-      #{productType,jdbcType=VARCHAR}, #{renewDeadline,jdbcType=VARCHAR}, #{dividendDay,jdbcType=DATE}, 
+    values (#{status,jdbcType=TINYINT}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{foundDay,jdbcType=DATE}, #{buyDay,jdbcType=DATE}, #{redeemDay,jdbcType=DATE}, 
+      #{valueDay,jdbcType=DATE}, #{expiryDay,jdbcType=DATE}, #{issueType,jdbcType=INTEGER}, 
+      #{productType,jdbcType=VARCHAR}, #{renewDeadline,jdbcType=VARCHAR}, #{dividendDay,jdbcType=VARCHAR}, 
       #{annualYield,jdbcType=VARCHAR}, #{incomeDistributionType,jdbcType=VARCHAR}, #{credit,jdbcType=VARCHAR}, 
       #{investmentOrientation,jdbcType=VARCHAR}, #{increaseTrust,jdbcType=VARCHAR}, #{highlights,jdbcType=VARCHAR}, 
       #{fundManagementFee,jdbcType=VARCHAR}, #{fundSubscriptionFee,jdbcType=VARCHAR}, 
@@ -205,11 +208,11 @@
       #{detailContent,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.system.mybatis.model.Product" >
+    <selectKey resultType="java.lang.Integer" keyProperty="pid" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into `product`
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="pid != null" >
-        `pid`,
-      </if>
       <if test="status != null" >
         `status`,
       </if>
@@ -347,9 +350,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="pid != null" >
-        #{pid,jdbcType=INTEGER},
-      </if>
       <if test="status != null" >
         #{status,jdbcType=TINYINT},
       </if>
@@ -375,7 +375,7 @@
         #{expiryDay,jdbcType=DATE},
       </if>
       <if test="issueType != null" >
-        #{issueType,jdbcType=DATE},
+        #{issueType,jdbcType=INTEGER},
       </if>
       <if test="productType != null" >
         #{productType,jdbcType=VARCHAR},
@@ -384,7 +384,7 @@
         #{renewDeadline,jdbcType=VARCHAR},
       </if>
       <if test="dividendDay != null" >
-        #{dividendDay,jdbcType=DATE},
+        #{dividendDay,jdbcType=VARCHAR},
       </if>
       <if test="annualYield != null" >
         #{annualYield,jdbcType=VARCHAR},
@@ -524,7 +524,7 @@
         `expiry_day` = #{record.expiryDay,jdbcType=DATE},
       </if>
       <if test="record.issueType != null" >
-        `issue_type` = #{record.issueType,jdbcType=DATE},
+        `issue_type` = #{record.issueType,jdbcType=INTEGER},
       </if>
       <if test="record.productType != null" >
         `product_type` = #{record.productType,jdbcType=VARCHAR},
@@ -533,7 +533,7 @@
         `renew_deadline` = #{record.renewDeadline,jdbcType=VARCHAR},
       </if>
       <if test="record.dividendDay != null" >
-        `dividend_day` = #{record.dividendDay,jdbcType=DATE},
+        `dividend_day` = #{record.dividendDay,jdbcType=VARCHAR},
       </if>
       <if test="record.annualYield != null" >
         `annual_yield` = #{record.annualYield,jdbcType=VARCHAR},
@@ -650,10 +650,10 @@
       `redeem_day` = #{record.redeemDay,jdbcType=DATE},
       `value_day` = #{record.valueDay,jdbcType=DATE},
       `expiry_day` = #{record.expiryDay,jdbcType=DATE},
-      `issue_type` = #{record.issueType,jdbcType=DATE},
+      `issue_type` = #{record.issueType,jdbcType=INTEGER},
       `product_type` = #{record.productType,jdbcType=VARCHAR},
       `renew_deadline` = #{record.renewDeadline,jdbcType=VARCHAR},
-      `dividend_day` = #{record.dividendDay,jdbcType=DATE},
+      `dividend_day` = #{record.dividendDay,jdbcType=VARCHAR},
       `annual_yield` = #{record.annualYield,jdbcType=VARCHAR},
       `income_distribution_type` = #{record.incomeDistributionType,jdbcType=VARCHAR},
       `credit` = #{record.credit,jdbcType=VARCHAR},
@@ -702,10 +702,10 @@
       `redeem_day` = #{record.redeemDay,jdbcType=DATE},
       `value_day` = #{record.valueDay,jdbcType=DATE},
       `expiry_day` = #{record.expiryDay,jdbcType=DATE},
-      `issue_type` = #{record.issueType,jdbcType=DATE},
+      `issue_type` = #{record.issueType,jdbcType=INTEGER},
       `product_type` = #{record.productType,jdbcType=VARCHAR},
       `renew_deadline` = #{record.renewDeadline,jdbcType=VARCHAR},
-      `dividend_day` = #{record.dividendDay,jdbcType=DATE},
+      `dividend_day` = #{record.dividendDay,jdbcType=VARCHAR},
       `annual_yield` = #{record.annualYield,jdbcType=VARCHAR},
       `income_distribution_type` = #{record.incomeDistributionType,jdbcType=VARCHAR},
       `credit` = #{record.credit,jdbcType=VARCHAR},
@@ -769,7 +769,7 @@
         `expiry_day` = #{expiryDay,jdbcType=DATE},
       </if>
       <if test="issueType != null" >
-        `issue_type` = #{issueType,jdbcType=DATE},
+        `issue_type` = #{issueType,jdbcType=INTEGER},
       </if>
       <if test="productType != null" >
         `product_type` = #{productType,jdbcType=VARCHAR},
@@ -778,7 +778,7 @@
         `renew_deadline` = #{renewDeadline,jdbcType=VARCHAR},
       </if>
       <if test="dividendDay != null" >
-        `dividend_day` = #{dividendDay,jdbcType=DATE},
+        `dividend_day` = #{dividendDay,jdbcType=VARCHAR},
       </if>
       <if test="annualYield != null" >
         `annual_yield` = #{annualYield,jdbcType=VARCHAR},
@@ -892,10 +892,10 @@
       `redeem_day` = #{redeemDay,jdbcType=DATE},
       `value_day` = #{valueDay,jdbcType=DATE},
       `expiry_day` = #{expiryDay,jdbcType=DATE},
-      `issue_type` = #{issueType,jdbcType=DATE},
+      `issue_type` = #{issueType,jdbcType=INTEGER},
       `product_type` = #{productType,jdbcType=VARCHAR},
       `renew_deadline` = #{renewDeadline,jdbcType=VARCHAR},
-      `dividend_day` = #{dividendDay,jdbcType=DATE},
+      `dividend_day` = #{dividendDay,jdbcType=VARCHAR},
       `annual_yield` = #{annualYield,jdbcType=VARCHAR},
       `income_distribution_type` = #{incomeDistributionType,jdbcType=VARCHAR},
       `credit` = #{credit,jdbcType=VARCHAR},
@@ -941,10 +941,10 @@
       `redeem_day` = #{redeemDay,jdbcType=DATE},
       `value_day` = #{valueDay,jdbcType=DATE},
       `expiry_day` = #{expiryDay,jdbcType=DATE},
-      `issue_type` = #{issueType,jdbcType=DATE},
+      `issue_type` = #{issueType,jdbcType=INTEGER},
       `product_type` = #{productType,jdbcType=VARCHAR},
       `renew_deadline` = #{renewDeadline,jdbcType=VARCHAR},
-      `dividend_day` = #{dividendDay,jdbcType=DATE},
+      `dividend_day` = #{dividendDay,jdbcType=VARCHAR},
       `annual_yield` = #{annualYield,jdbcType=VARCHAR},
       `income_distribution_type` = #{incomeDistributionType,jdbcType=VARCHAR},
       `credit` = #{credit,jdbcType=VARCHAR},

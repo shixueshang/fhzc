@@ -66,7 +66,7 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="portlet_tab1">
                                         <!-- BEGIN FORM-->
-                                        <form action="business/product/add" id="form_sample_1" method="POST" class="form-horizontal">
+                                        <form action="add" id="form_sample_1" enctype="multipart/form-data" method="POST" class="form-horizontal">
                                             <div class="alert alert-error hide">
                                                 <button class="close" data-dismiss="alert"></button>
                                                 您的表单有未完成的必填项,请检查.
@@ -336,10 +336,9 @@
                                                         <div>
                                                        <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
                                                        <span class="fileupload-exists">更换</span>
-                                                       <input type="file" class="default" /></span>
+                                                       <input type="file" name="coverFile" class="default" /></span>
                                                             <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
                                                         </div>
-                                                        <input type="hidden" name="cover">
                                                     </div>
                                                     <span class="label label-important">注意!</span>
                                                  <span>
@@ -361,9 +360,8 @@
                                                            <span class="btn btn-file">
                                                            <span class="fileupload-new">选择文件</span>
                                                            <span class="fileupload-exists">更换</span>
-                                                           <input type="file" class="default" />
+                                                           <input type="file" name="noticeFile" class="default" />
                                                            </span>
-                                                            <input type="hidden" name="notice">
                                                             <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
                                                         </div>
                                                     </div>
@@ -381,9 +379,8 @@
                                                            <span class="btn btn-file">
                                                            <span class="fileupload-new">选择文件</span>
                                                            <span class="fileupload-exists">更换</span>
-                                                           <input type="file" class="default" />
+                                                           <input type="file" name="proveFile" class="default" />
                                                            </span>
-                                                            <input type="hidden" name="proveUrl">
                                                             <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
                                                         </div>
                                                     </div>
@@ -533,7 +530,7 @@ $(function(){
                 $(this).removeTag(tag);
             }
 
-        },
+        }
     });
 })
 </script>

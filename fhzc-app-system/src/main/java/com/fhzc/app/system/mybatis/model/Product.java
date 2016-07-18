@@ -22,13 +22,13 @@ public class Product {
 
     private Date expiryDay;
 
-    private Date issueType;
+    private Integer issueType;
 
     private String productType;
 
     private String renewDeadline;
 
-    private Date dividendDay;
+    private String dividendDay;
 
     private String annualYield;
 
@@ -168,11 +168,11 @@ public class Product {
         this.expiryDay = expiryDay;
     }
 
-    public Date getIssueType() {
+    public Integer getIssueType() {
         return issueType;
     }
 
-    public void setIssueType(Date issueType) {
+    public void setIssueType(Integer issueType) {
         this.issueType = issueType;
     }
 
@@ -192,12 +192,12 @@ public class Product {
         this.renewDeadline = renewDeadline == null ? null : renewDeadline.trim();
     }
 
-    public Date getDividendDay() {
+    public String getDividendDay() {
         return dividendDay;
     }
 
-    public void setDividendDay(Date dividendDay) {
-        this.dividendDay = dividendDay;
+    public void setDividendDay(String dividendDay) {
+        this.dividendDay = dividendDay == null ? null : dividendDay.trim();
     }
 
     public String getAnnualYield() {

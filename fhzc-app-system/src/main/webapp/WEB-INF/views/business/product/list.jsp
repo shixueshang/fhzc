@@ -85,7 +85,7 @@
                                         <td>${product.productType}</td>
                                         <td>${product.status}</td>
                                         <td></td>
-                                        <td>${product.foundDay}</td>
+                                        <td><fmt:formatDate value="${product.foundDay}" pattern="yyyy-MM-dd"/></td>
                                         <td>${product.isRecommend}</td>
                                         <td>${product.isDisplay}</td>
                                         <td></td>
