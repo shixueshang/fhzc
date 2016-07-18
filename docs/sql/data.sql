@@ -108,3 +108,10 @@ DROP INDEX `code_UNIQUE` ;
 ALTER TABLE `bank`.`product`
 ADD COLUMN `expected_min` TINYINT NULL COMMENT '预期年化收益率min' AFTER `invest_threshold`,
 ADD COLUMN `expected_max` TINYINT NULL COMMENT '预期年化收益率max' AFTER `expected_min`;
+#产品派息数据1:n
+CREATE TABLE `bank`.`product_dividend_day` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `pid` INT NOT NULL COMMENT '产品id',
+  `day` DATE NOT NULL COMMENT '派息日',
+  PRIMARY KEY (`id`))
+COMMENT = '产品派息日';

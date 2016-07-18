@@ -66,20 +66,28 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="portlet_tab1">
                                         <!-- BEGIN FORM-->
-                                        <form action="add" enctype="multipart/form-data" method="POST" class="form-horizontal">
+                                        <form action="add" id="form_sample_1" enctype="multipart/form-data" method="POST" class="form-horizontal">
+                                            <div class="alert alert-error hide">
+                                                <button class="close" data-dismiss="alert"></button>
+                                                您的表单有未完成的必填项,请检查.
+                                            </div>
+                                            <div class="alert alert-success hide">
+                                                <button class="close" data-dismiss="alert"></button>
+                                                表单内容验证成功!
+                                            </div>
                                             <div class="control-group">
                                             </div>
                                             <div class="control-group">
                                                 <label class="control-label">报告名</label>
                                                 <div class="controls">
-                                                    <input type="text" name="name" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="name" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
                                             <div class="control-group">
                                                 <label class="control-label">报告类型</label>
                                                 <div class="controls">
-                                                    <select class="large m-wrap" name="cid" tabindex="1">
+                                                    <select class="large m-wrap" name="cid" data-required="1" tabindex="1">
                                                         <option  value="1">每周点评</option>
                                                         <option  value="2">复华财经新视点</option>
                                                         <option  value="3">复华资产研究报告</option>
@@ -107,13 +115,13 @@
                                               <div class="controls">
                                                  <div class="fileupload fileupload-new" data-provides="fileupload">
                                                     <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
-                                                       <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
+                                                       <img src="/static/image/no-image.png" alt="" />
                                                     </div>
                                                     <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
                                                     <div>
                                                        <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
                                                        <span class="fileupload-exists">更换</span>
-                                                       <input type="file" name="coverFile" class="default" /></span>
+                                                       <input type="file" name="cover" class="default" /></span>
                                                        <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
                                                     </div>
                                                  </div>
@@ -127,7 +135,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">详情链接</label>
                                                 <div class="controls">
-                                                    <input type="text" name="" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="url" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -151,3 +159,59 @@
 </div>
 
 <jsp:include page="../../include/footer.jsp"/>
+<script type="text/javascript" src="<%=contextPath%>/assets/jquery-validation/dist/jquery.validate.min.js"></script>
+
+<script>
+    $(function(){
+        var form1 = $('#form_sample_1');
+        var error1 = $('.alert-error', form1);
+        var success1 = $('.alert-success', form1);
+
+        form1.validate({
+            errorElement: 'span', //default input error message container
+            errorClass: 'help-inline', // default input error message class
+            focusInvalid: false, // do not focus the last invalid input
+            ignore: "",
+            rules: {
+                name: {
+                    required: true
+                },
+                url: {
+                    required: true,
+                    url: true
+                }
+            },
+
+            invalidHandler: function (event, validator) { //display error alert on form submit
+                success1.hide();
+                error1.show();
+                App.scrollTo(error1, -200);
+                return false;
+            },
+
+            highlight: function (element) { // hightlight error inputs
+                $(element)
+                        .closest('.help-inline').removeClass('ok'); // display OK icon
+                $(element)
+                        .closest('.control-group').removeClass('success').addClass('error'); // set error class to the control group
+            },
+
+            unhighlight: function (element) { // revert the change dony by hightlight
+                $(element)
+                        .closest('.control-group').removeClass('error'); // set error class to the control group
+            },
+
+            success: function (label) {
+                label
+                        .addClass('valid').addClass('help-inline ok') // mark the current input as valid and display OK icon
+                        .closest('.control-group').removeClass('error').addClass('success'); // set success class to the control group
+            },
+
+            submitHandler: function (form) {
+                success1.show();
+                error1.hide();
+            }
+        });
+
+    })
+</script>
