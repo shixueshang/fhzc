@@ -11,7 +11,7 @@
     <result column="redeem_day" property="redeemDay" jdbcType="DATE" />
     <result column="value_day" property="valueDay" jdbcType="DATE" />
     <result column="expiry_day" property="expiryDay" jdbcType="DATE" />
-    <result column="issue_type" property="issueType" jdbcType="BIT" />
+    <result column="issue_type" property="issueType" jdbcType="DATE" />
     <result column="product_type" property="productType" jdbcType="VARCHAR" />
     <result column="renew_deadline" property="renewDeadline" jdbcType="VARCHAR" />
     <result column="dividend_day" property="dividendDay" jdbcType="DATE" />
@@ -44,6 +44,8 @@
     <result column="invest_term_min" property="investTermMin" jdbcType="INTEGER" />
     <result column="invest_term_max" property="investTermMax" jdbcType="INTEGER" />
     <result column="invest_threshold" property="investThreshold" jdbcType="DECIMAL" />
+    <result column="expected_min" property="expectedMin" jdbcType="TINYINT" />
+    <result column="expected_max" property="expectedMax" jdbcType="TINYINT" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.fhzc.app.system.mybatis.model.Product" extends="BaseResultMap" >
     <result column="desc" property="desc" jdbcType="LONGVARCHAR" />
@@ -114,7 +116,8 @@
     `highlights`, `fund_management_fee`, `fund_subscription_fee`, `fund_manager`, `custodian`, 
     `investment_type`, `project_source`, `issuer`, `is_record`, `prove_url`, `display_order`, 
     `level`, `risk`, `cover`, `notice`, `score_factor`, `is_ recommend`, `is_display`, 
-    `is_renew`, `ctime`, `detail_url`, `invest_term_min`, `invest_term_max`, `invest_threshold`
+    `is_renew`, `ctime`, `detail_url`, `invest_term_min`, `invest_term_max`, `invest_threshold`, 
+    `expected_min`, `expected_max`
   </sql>
   <sql id="Blob_Column_List" >
     `desc`, `detail_content`
@@ -182,10 +185,11 @@
       `score_factor`, `is_ recommend`, `is_display`, 
       `is_renew`, `ctime`, `detail_url`, 
       `invest_term_min`, `invest_term_max`, `invest_threshold`, 
-      `desc`, `detail_content`)
+      `expected_min`, `expected_max`, `desc`, 
+      `detail_content`)
     values (#{pid,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{code,jdbcType=VARCHAR}, 
       #{name,jdbcType=VARCHAR}, #{foundDay,jdbcType=DATE}, #{buyDay,jdbcType=DATE}, #{redeemDay,jdbcType=DATE}, 
-      #{valueDay,jdbcType=DATE}, #{expiryDay,jdbcType=DATE}, #{issueType,jdbcType=BIT}, 
+      #{valueDay,jdbcType=DATE}, #{expiryDay,jdbcType=DATE}, #{issueType,jdbcType=DATE}, 
       #{productType,jdbcType=VARCHAR}, #{renewDeadline,jdbcType=VARCHAR}, #{dividendDay,jdbcType=DATE}, 
       #{annualYield,jdbcType=VARCHAR}, #{incomeDistributionType,jdbcType=VARCHAR}, #{credit,jdbcType=VARCHAR}, 
       #{investmentOrientation,jdbcType=VARCHAR}, #{increaseTrust,jdbcType=VARCHAR}, #{highlights,jdbcType=VARCHAR}, 
@@ -197,7 +201,8 @@
       #{scoreFactor,jdbcType=TINYINT}, #{isRecommend,jdbcType=TINYINT}, #{isDisplay,jdbcType=TINYINT}, 
       #{isRenew,jdbcType=TINYINT}, #{ctime,jdbcType=TIMESTAMP}, #{detailUrl,jdbcType=VARCHAR}, 
       #{investTermMin,jdbcType=INTEGER}, #{investTermMax,jdbcType=INTEGER}, #{investThreshold,jdbcType=DECIMAL}, 
-      #{desc,jdbcType=LONGVARCHAR}, #{detailContent,jdbcType=LONGVARCHAR})
+      #{expectedMin,jdbcType=TINYINT}, #{expectedMax,jdbcType=TINYINT}, #{desc,jdbcType=LONGVARCHAR}, 
+      #{detailContent,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.system.mybatis.model.Product" >
     insert into `product`
@@ -328,6 +333,12 @@
       <if test="investThreshold != null" >
         `invest_threshold`,
       </if>
+      <if test="expectedMin != null" >
+        `expected_min`,
+      </if>
+      <if test="expectedMax != null" >
+        `expected_max`,
+      </if>
       <if test="desc != null" >
         `desc`,
       </if>
@@ -364,7 +375,7 @@
         #{expiryDay,jdbcType=DATE},
       </if>
       <if test="issueType != null" >
-        #{issueType,jdbcType=BIT},
+        #{issueType,jdbcType=DATE},
       </if>
       <if test="productType != null" >
         #{productType,jdbcType=VARCHAR},
@@ -462,6 +473,12 @@
       <if test="investThreshold != null" >
         #{investThreshold,jdbcType=DECIMAL},
       </if>
+      <if test="expectedMin != null" >
+        #{expectedMin,jdbcType=TINYINT},
+      </if>
+      <if test="expectedMax != null" >
+        #{expectedMax,jdbcType=TINYINT},
+      </if>
       <if test="desc != null" >
         #{desc,jdbcType=LONGVARCHAR},
       </if>
@@ -507,7 +524,7 @@
         `expiry_day` = #{record.expiryDay,jdbcType=DATE},
       </if>
       <if test="record.issueType != null" >
-        `issue_type` = #{record.issueType,jdbcType=BIT},
+        `issue_type` = #{record.issueType,jdbcType=DATE},
       </if>
       <if test="record.productType != null" >
         `product_type` = #{record.productType,jdbcType=VARCHAR},
@@ -605,6 +622,12 @@
       <if test="record.investThreshold != null" >
         `invest_threshold` = #{record.investThreshold,jdbcType=DECIMAL},
       </if>
+      <if test="record.expectedMin != null" >
+        `expected_min` = #{record.expectedMin,jdbcType=TINYINT},
+      </if>
+      <if test="record.expectedMax != null" >
+        `expected_max` = #{record.expectedMax,jdbcType=TINYINT},
+      </if>
       <if test="record.desc != null" >
         `desc` = #{record.desc,jdbcType=LONGVARCHAR},
       </if>
@@ -627,7 +650,7 @@
       `redeem_day` = #{record.redeemDay,jdbcType=DATE},
       `value_day` = #{record.valueDay,jdbcType=DATE},
       `expiry_day` = #{record.expiryDay,jdbcType=DATE},
-      `issue_type` = #{record.issueType,jdbcType=BIT},
+      `issue_type` = #{record.issueType,jdbcType=DATE},
       `product_type` = #{record.productType,jdbcType=VARCHAR},
       `renew_deadline` = #{record.renewDeadline,jdbcType=VARCHAR},
       `dividend_day` = #{record.dividendDay,jdbcType=DATE},
@@ -660,6 +683,8 @@
       `invest_term_min` = #{record.investTermMin,jdbcType=INTEGER},
       `invest_term_max` = #{record.investTermMax,jdbcType=INTEGER},
       `invest_threshold` = #{record.investThreshold,jdbcType=DECIMAL},
+      `expected_min` = #{record.expectedMin,jdbcType=TINYINT},
+      `expected_max` = #{record.expectedMax,jdbcType=TINYINT},
       `desc` = #{record.desc,jdbcType=LONGVARCHAR},
       `detail_content` = #{record.detailContent,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
@@ -677,7 +702,7 @@
       `redeem_day` = #{record.redeemDay,jdbcType=DATE},
       `value_day` = #{record.valueDay,jdbcType=DATE},
       `expiry_day` = #{record.expiryDay,jdbcType=DATE},
-      `issue_type` = #{record.issueType,jdbcType=BIT},
+      `issue_type` = #{record.issueType,jdbcType=DATE},
       `product_type` = #{record.productType,jdbcType=VARCHAR},
       `renew_deadline` = #{record.renewDeadline,jdbcType=VARCHAR},
       `dividend_day` = #{record.dividendDay,jdbcType=DATE},
@@ -709,7 +734,9 @@
       `detail_url` = #{record.detailUrl,jdbcType=VARCHAR},
       `invest_term_min` = #{record.investTermMin,jdbcType=INTEGER},
       `invest_term_max` = #{record.investTermMax,jdbcType=INTEGER},
-      `invest_threshold` = #{record.investThreshold,jdbcType=DECIMAL}
+      `invest_threshold` = #{record.investThreshold,jdbcType=DECIMAL},
+      `expected_min` = #{record.expectedMin,jdbcType=TINYINT},
+      `expected_max` = #{record.expectedMax,jdbcType=TINYINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -742,7 +769,7 @@
         `expiry_day` = #{expiryDay,jdbcType=DATE},
       </if>
       <if test="issueType != null" >
-        `issue_type` = #{issueType,jdbcType=BIT},
+        `issue_type` = #{issueType,jdbcType=DATE},
       </if>
       <if test="productType != null" >
         `product_type` = #{productType,jdbcType=VARCHAR},
@@ -840,6 +867,12 @@
       <if test="investThreshold != null" >
         `invest_threshold` = #{investThreshold,jdbcType=DECIMAL},
       </if>
+      <if test="expectedMin != null" >
+        `expected_min` = #{expectedMin,jdbcType=TINYINT},
+      </if>
+      <if test="expectedMax != null" >
+        `expected_max` = #{expectedMax,jdbcType=TINYINT},
+      </if>
       <if test="desc != null" >
         `desc` = #{desc,jdbcType=LONGVARCHAR},
       </if>
@@ -859,7 +892,7 @@
       `redeem_day` = #{redeemDay,jdbcType=DATE},
       `value_day` = #{valueDay,jdbcType=DATE},
       `expiry_day` = #{expiryDay,jdbcType=DATE},
-      `issue_type` = #{issueType,jdbcType=BIT},
+      `issue_type` = #{issueType,jdbcType=DATE},
       `product_type` = #{productType,jdbcType=VARCHAR},
       `renew_deadline` = #{renewDeadline,jdbcType=VARCHAR},
       `dividend_day` = #{dividendDay,jdbcType=DATE},
@@ -892,6 +925,8 @@
       `invest_term_min` = #{investTermMin,jdbcType=INTEGER},
       `invest_term_max` = #{investTermMax,jdbcType=INTEGER},
       `invest_threshold` = #{investThreshold,jdbcType=DECIMAL},
+      `expected_min` = #{expectedMin,jdbcType=TINYINT},
+      `expected_max` = #{expectedMax,jdbcType=TINYINT},
       `desc` = #{desc,jdbcType=LONGVARCHAR},
       `detail_content` = #{detailContent,jdbcType=LONGVARCHAR}
     where `pid` = #{pid,jdbcType=INTEGER}
@@ -906,7 +941,7 @@
       `redeem_day` = #{redeemDay,jdbcType=DATE},
       `value_day` = #{valueDay,jdbcType=DATE},
       `expiry_day` = #{expiryDay,jdbcType=DATE},
-      `issue_type` = #{issueType,jdbcType=BIT},
+      `issue_type` = #{issueType,jdbcType=DATE},
       `product_type` = #{productType,jdbcType=VARCHAR},
       `renew_deadline` = #{renewDeadline,jdbcType=VARCHAR},
       `dividend_day` = #{dividendDay,jdbcType=DATE},
@@ -938,7 +973,9 @@
       `detail_url` = #{detailUrl,jdbcType=VARCHAR},
       `invest_term_min` = #{investTermMin,jdbcType=INTEGER},
       `invest_term_max` = #{investTermMax,jdbcType=INTEGER},
-      `invest_threshold` = #{investThreshold,jdbcType=DECIMAL}
+      `invest_threshold` = #{investThreshold,jdbcType=DECIMAL},
+      `expected_min` = #{expectedMin,jdbcType=TINYINT},
+      `expected_max` = #{expectedMax,jdbcType=TINYINT}
     where `pid` = #{pid,jdbcType=INTEGER}
   </update>
   <select resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.system.mybatis.model.ProductExample" id="selectByExampleWithBLOBsWithRowbounds" >

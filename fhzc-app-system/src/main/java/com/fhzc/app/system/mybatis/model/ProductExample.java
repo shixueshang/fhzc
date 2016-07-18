@@ -703,53 +703,53 @@ public class ProductExample {
             return (Criteria) this;
         }
 
-        public Criteria andIssueTypeEqualTo(Boolean value) {
-            addCriterion("`issue_type` =", value, "issueType");
+        public Criteria andIssueTypeEqualTo(Date value) {
+            addCriterionForJDBCDate("`issue_type` =", value, "issueType");
             return (Criteria) this;
         }
 
-        public Criteria andIssueTypeNotEqualTo(Boolean value) {
-            addCriterion("`issue_type` <>", value, "issueType");
+        public Criteria andIssueTypeNotEqualTo(Date value) {
+            addCriterionForJDBCDate("`issue_type` <>", value, "issueType");
             return (Criteria) this;
         }
 
-        public Criteria andIssueTypeGreaterThan(Boolean value) {
-            addCriterion("`issue_type` >", value, "issueType");
+        public Criteria andIssueTypeGreaterThan(Date value) {
+            addCriterionForJDBCDate("`issue_type` >", value, "issueType");
             return (Criteria) this;
         }
 
-        public Criteria andIssueTypeGreaterThanOrEqualTo(Boolean value) {
-            addCriterion("`issue_type` >=", value, "issueType");
+        public Criteria andIssueTypeGreaterThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("`issue_type` >=", value, "issueType");
             return (Criteria) this;
         }
 
-        public Criteria andIssueTypeLessThan(Boolean value) {
-            addCriterion("`issue_type` <", value, "issueType");
+        public Criteria andIssueTypeLessThan(Date value) {
+            addCriterionForJDBCDate("`issue_type` <", value, "issueType");
             return (Criteria) this;
         }
 
-        public Criteria andIssueTypeLessThanOrEqualTo(Boolean value) {
-            addCriterion("`issue_type` <=", value, "issueType");
+        public Criteria andIssueTypeLessThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("`issue_type` <=", value, "issueType");
             return (Criteria) this;
         }
 
-        public Criteria andIssueTypeIn(List<Boolean> values) {
-            addCriterion("`issue_type` in", values, "issueType");
+        public Criteria andIssueTypeIn(List<Date> values) {
+            addCriterionForJDBCDate("`issue_type` in", values, "issueType");
             return (Criteria) this;
         }
 
-        public Criteria andIssueTypeNotIn(List<Boolean> values) {
-            addCriterion("`issue_type` not in", values, "issueType");
+        public Criteria andIssueTypeNotIn(List<Date> values) {
+            addCriterionForJDBCDate("`issue_type` not in", values, "issueType");
             return (Criteria) this;
         }
 
-        public Criteria andIssueTypeBetween(Boolean value1, Boolean value2) {
-            addCriterion("`issue_type` between", value1, value2, "issueType");
+        public Criteria andIssueTypeBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("`issue_type` between", value1, value2, "issueType");
             return (Criteria) this;
         }
 
-        public Criteria andIssueTypeNotBetween(Boolean value1, Boolean value2) {
-            addCriterion("`issue_type` not between", value1, value2, "issueType");
+        public Criteria andIssueTypeNotBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("`issue_type` not between", value1, value2, "issueType");
             return (Criteria) this;
         }
 
@@ -2870,6 +2870,126 @@ public class ProductExample {
 
         public Criteria andInvestThresholdNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("`invest_threshold` not between", value1, value2, "investThreshold");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectedMinIsNull() {
+            addCriterion("`expected_min` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectedMinIsNotNull() {
+            addCriterion("`expected_min` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectedMinEqualTo(Byte value) {
+            addCriterion("`expected_min` =", value, "expectedMin");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectedMinNotEqualTo(Byte value) {
+            addCriterion("`expected_min` <>", value, "expectedMin");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectedMinGreaterThan(Byte value) {
+            addCriterion("`expected_min` >", value, "expectedMin");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectedMinGreaterThanOrEqualTo(Byte value) {
+            addCriterion("`expected_min` >=", value, "expectedMin");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectedMinLessThan(Byte value) {
+            addCriterion("`expected_min` <", value, "expectedMin");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectedMinLessThanOrEqualTo(Byte value) {
+            addCriterion("`expected_min` <=", value, "expectedMin");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectedMinIn(List<Byte> values) {
+            addCriterion("`expected_min` in", values, "expectedMin");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectedMinNotIn(List<Byte> values) {
+            addCriterion("`expected_min` not in", values, "expectedMin");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectedMinBetween(Byte value1, Byte value2) {
+            addCriterion("`expected_min` between", value1, value2, "expectedMin");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectedMinNotBetween(Byte value1, Byte value2) {
+            addCriterion("`expected_min` not between", value1, value2, "expectedMin");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectedMaxIsNull() {
+            addCriterion("`expected_max` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectedMaxIsNotNull() {
+            addCriterion("`expected_max` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectedMaxEqualTo(Byte value) {
+            addCriterion("`expected_max` =", value, "expectedMax");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectedMaxNotEqualTo(Byte value) {
+            addCriterion("`expected_max` <>", value, "expectedMax");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectedMaxGreaterThan(Byte value) {
+            addCriterion("`expected_max` >", value, "expectedMax");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectedMaxGreaterThanOrEqualTo(Byte value) {
+            addCriterion("`expected_max` >=", value, "expectedMax");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectedMaxLessThan(Byte value) {
+            addCriterion("`expected_max` <", value, "expectedMax");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectedMaxLessThanOrEqualTo(Byte value) {
+            addCriterion("`expected_max` <=", value, "expectedMax");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectedMaxIn(List<Byte> values) {
+            addCriterion("`expected_max` in", values, "expectedMax");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectedMaxNotIn(List<Byte> values) {
+            addCriterion("`expected_max` not in", values, "expectedMax");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectedMaxBetween(Byte value1, Byte value2) {
+            addCriterion("`expected_max` between", value1, value2, "expectedMax");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectedMaxNotBetween(Byte value1, Byte value2) {
+            addCriterion("`expected_max` not between", value1, value2, "expectedMax");
             return (Criteria) this;
         }
     }

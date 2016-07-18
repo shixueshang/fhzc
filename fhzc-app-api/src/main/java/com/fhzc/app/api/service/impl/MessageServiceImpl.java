@@ -47,11 +47,11 @@ public class MessageServiceImpl implements MessageService {
 
         //如果version=0,则返回所有发给我的以及我发过的消息
         if(version != 0){
-            Date lastSyncDate = new Date(version * 1000L);
             criteria.andToUserIdEqualTo(userId);
-            criteria.andSendTimeGreaterThanOrEqualTo(lastSyncDate);
         }
 
+        Date lastSyncDate = new Date(version * 1000L);
+        criteria.andSendTimeGreaterThanOrEqualTo(lastSyncDate);
         example.setOrderByClause("id desc");
         return imMessageMapper.selectByExampleWithBLOBs(example);
     }

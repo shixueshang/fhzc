@@ -1,6 +1,5 @@
 package com.fhzc.app.system.controller.business;
 
-import com.alibaba.fastjson.JSON;
 import com.fhzc.app.system.commons.page.PageHelper;
 import com.fhzc.app.system.commons.page.PageableResult;
 import com.fhzc.app.system.commons.util.Const;
@@ -43,7 +42,6 @@ public class ProductController extends BaseController {
         PageableResult<Product> pageableResult = productService.findPageProducts(page, size);
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("products", pageableResult.getItems());
-        logger.info("##@##@# : " +  JSON.toJSONString(pageableResult.getItems().get(0)));
         return mav;
     }
 
@@ -53,7 +51,7 @@ public class ProductController extends BaseController {
      */
     @RequestMapping(value = "/pub")
     public String pubProduct(){
-        return "business/product/pub";
+        return "business/product/add";
     }
 
     /**

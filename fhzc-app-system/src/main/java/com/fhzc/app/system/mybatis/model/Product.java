@@ -1,8 +1,5 @@
 package com.fhzc.app.system.mybatis.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -25,7 +22,7 @@ public class Product {
 
     private Date expiryDay;
 
-    private Boolean issueType;
+    private Date issueType;
 
     private String productType;
 
@@ -90,6 +87,10 @@ public class Product {
     private Integer investTermMax;
 
     private BigDecimal investThreshold;
+
+    private Byte expectedMin;
+
+    private Byte expectedMax;
 
     private String desc;
 
@@ -167,11 +168,11 @@ public class Product {
         this.expiryDay = expiryDay;
     }
 
-    public Boolean getIssueType() {
+    public Date getIssueType() {
         return issueType;
     }
 
-    public void setIssueType(Boolean issueType) {
+    public void setIssueType(Date issueType) {
         this.issueType = issueType;
     }
 
@@ -429,6 +430,22 @@ public class Product {
 
     public void setInvestThreshold(BigDecimal investThreshold) {
         this.investThreshold = investThreshold;
+    }
+
+    public Byte getExpectedMin() {
+        return expectedMin;
+    }
+
+    public void setExpectedMin(Byte expectedMin) {
+        this.expectedMin = expectedMin;
+    }
+
+    public Byte getExpectedMax() {
+        return expectedMax;
+    }
+
+    public void setExpectedMax(Byte expectedMax) {
+        this.expectedMax = expectedMax;
     }
 
     public String getDesc() {

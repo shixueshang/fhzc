@@ -46,10 +46,10 @@
 
                         <ul class="sub">
                             <li>
-                                <a href="#">活动列表</a>
+                                <a href="/business/activity/list">活动列表</a>
                             </li>
                             <li>
-                                <a href="#">新增活动</a>
+                                <a href="/business/activity/pub">新增活动</a>
                             </li>
                         </ul>
                     </li>
@@ -80,10 +80,10 @@
 
                         <ul class="sub">
                             <li>
-                                <a href="#">权益列表</a>
+                                <a href="/business/rights/list">权益列表</a>
                             </li>
                             <li>
-                                <a href="#">新增权益</a>
+                                <a href="/business/rights/pub">新增权益</a>
                             </li>
                             <li>
                                 <a href="#">供应商列表</a>
