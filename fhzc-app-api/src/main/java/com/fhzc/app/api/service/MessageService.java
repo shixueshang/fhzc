@@ -17,12 +17,12 @@ public interface MessageService {
      ImMessage sendMessgeToSession(ImMessage message);
 
     /**
-     * 获得在指定之间之后所有发给我的未读消息
+     * 获得在指定时间之后所有发给我的未读消息
      * @param userId
-     * @param lastSyncDate
+     * @param version
      * @return
      */
-     List<ImMessage> getUnreadMessages(Integer userId, Date lastSyncDate);
+     List<ImMessage> getUnreadMessages(Integer userId, long version);
 
     /**
      * 获得指定mid之前的历史消息

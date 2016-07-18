@@ -10,6 +10,7 @@ import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.mybatis.model.ImMessage;
 import com.fhzc.app.system.mybatis.model.User;
+import com.vdurmont.emoji.EmojiParser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -56,7 +57,8 @@ public class MessageController extends BaseController {
             }else if(type.equals(APIConstants.Message_Type.Audio)){
                 message.setDuration(duration);
             }
-            message.setContent(text);
+            if(text == null) text = "";
+            message.setContent(EmojiParser.parseToAliases(text));
             //查询对话历史,确定sessionId
             String sessionId = messageService.hasChatHistory(userId, toUserId);
             if(sessionId == null){
@@ -69,6 +71,8 @@ public class MessageController extends BaseController {
             ImMessage result = messageService.sendMessgeToSession(message);
             if(type.equals(APIConstants.Message_Type.Audio)){
                 result.setContent("");
+            }else{
+                result.setContent(EmojiParser.parseToUnicode(result.getContent()));
             }
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
     }
@@ -83,21 +87,21 @@ public class MessageController extends BaseController {
     public ApiJsonResult yapull(long version, Integer userId){
         Map<String, Object> result = new ConcurrentHashMap<String, Object>();
         result.put("version", new Date().getTime() /1000);
-        Date lastSyncDate = new Date(version * 1000L);
-
-        List<Map<String ,Object>> newMessages = newMessages(userId, lastSyncDate);
+        List<Map<String ,Object>> newMessages = newMessages(userId, version);
         result.put("groups", newMessages);
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
     }
 
-    private List<Map<String ,Object>> newMessages(Integer userId, Date lastSyncDate){
+    private List<Map<String ,Object>> newMessages(Integer userId, long version){
         List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
-        List<ImMessage> messages = messageService.getUnreadMessages(userId, lastSyncDate);
+        List<ImMessage> messages = messageService.getUnreadMessages(userId, version);
         //找出有多少组,数据格式 sessionId=List<ImMessage>
         Map<String, List<ImMessage>> sessionMap = new ConcurrentHashMap<String, List<ImMessage>>();
         for(ImMessage message : messages){
             if(message.getMessageType().equals(APIConstants.Message_Type.Audio)){
                 message.setContent("");
+            }else{
+                message.setContent(EmojiParser.parseToUnicode(message.getContent()));
             }
             String sessionId = message.getSessionId();
             if(sessionMap.get(sessionId) != null){

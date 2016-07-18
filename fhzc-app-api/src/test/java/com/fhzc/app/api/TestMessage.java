@@ -49,18 +49,17 @@ public class TestMessage extends Base {
         Integer userId = 1;
         Map<String, Object> result = new ConcurrentHashMap<String, Object>();
         result.put("version", new Date().getTime() / 1000);
-        Date lastSyncDate = new Date(1468505787);
 
-        List<Map<String ,Object>> newMessages = newMessages(userId, lastSyncDate);
+        List<Map<String ,Object>> newMessages = newMessages(userId, 1468505787);
         result.put("groups", newMessages);
 
         logger.debug("未读消息 :: " + JSON.toJSONString(result));
 
     }
 
-    private List<Map<String ,Object>> newMessages(Integer userId, Date lastSyncDate){
+    private List<Map<String ,Object>> newMessages(Integer userId, long version){
         List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
-        List<ImMessage> messages = messageService.getUnreadMessages(userId, lastSyncDate);
+        List<ImMessage> messages = messageService.getUnreadMessages(userId, version);
         //找出有多少组,数据格式 sessionId=List<ImMessage>
         Map<String, List<ImMessage>> sessionMap = new ConcurrentHashMap<String, List<ImMessage>>();
         for(int i = 0; i < messages.size(); i++){

@@ -39,6 +39,7 @@
         <commons-io.version>2.4</commons-io.version>
         <commons-codec.version>1.10</commons-codec.version>
         <poi.version>3.11</poi.version>
+        <emoji.version>3.0.0</emoji.version>
     </properties>
 
     <dependencies>
@@ -243,6 +244,12 @@
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>${poi.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.vdurmont</groupId>
+            <artifactId>emoji-java</artifactId>
+            <version>${emoji.version}</version>
         </dependency>
     </dependencies>
 

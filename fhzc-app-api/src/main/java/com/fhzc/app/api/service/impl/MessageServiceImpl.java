@@ -1,13 +1,16 @@
 package com.fhzc.app.api.service.impl;
 
 import com.fhzc.app.api.service.MessageService;
+import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.system.mybatis.inter.ImMessageMapper;
 import com.fhzc.app.system.mybatis.model.ImMessage;
 import com.fhzc.app.system.mybatis.model.ImMessageExample;
+import com.vdurmont.emoji.EmojiParser;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -38,11 +41,17 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public List<ImMessage> getUnreadMessages(Integer userId, Date lastSyncDate) {
+    public List<ImMessage> getUnreadMessages(Integer userId, long version) {
         ImMessageExample example = new ImMessageExample();
         ImMessageExample.Criteria criteria  = example.createCriteria();
-        criteria.andToUserIdEqualTo(userId);
-        criteria.andSendTimeGreaterThanOrEqualTo(lastSyncDate);
+
+        //如果version=0,则返回所有发给我的以及我发过的消息
+        if(version != 0){
+            Date lastSyncDate = new Date(version * 1000L);
+            criteria.andToUserIdEqualTo(userId);
+            criteria.andSendTimeGreaterThanOrEqualTo(lastSyncDate);
+        }
+
         example.setOrderByClause("id desc");
         return imMessageMapper.selectByExampleWithBLOBs(example);
     }
@@ -56,7 +65,16 @@ public class MessageServiceImpl implements MessageService {
         RowBounds rowBounds = new RowBounds(0, limit);
         example.setOrderByClause("id desc");
 
-        return imMessageMapper.selectByExampleWithBLOBsWithRowbounds(example, rowBounds);
+        List<ImMessage> list = new ArrayList<ImMessage>();
+        List<ImMessage> historyMsg = imMessageMapper.selectByExampleWithBLOBsWithRowbounds(example, rowBounds);
+        for(ImMessage message : historyMsg){
+            if(message.getMessageType().equals(APIConstants.Message_Type.Audio)){
+                message.setContent(EmojiParser.parseToUnicode(message.getContent()));
+                list.add(message);
+            }
+        }
+
+        return list;
     }
 
     @Override
