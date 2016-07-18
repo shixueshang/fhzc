@@ -352,8 +352,21 @@
                                             <div class="control-group">
                                                 <label class="control-label">成立公告</label>
                                                 <div class="controls">
-                                                    <textarea name="notice" class="span6 m-wrap" rows="3"></textarea>
-                                                    <span class="help-inline"></span>
+                                                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                                                        <div class="input-append">
+                                                            <div class="uneditable-input">
+                                                                <i class="icon-file fileupload-exists"></i>
+                                                                <span class="fileupload-preview"></span>
+                                                            </div>
+                                                           <span class="btn btn-file">
+                                                           <span class="fileupload-new">选择文件</span>
+                                                           <span class="fileupload-exists">更换</span>
+                                                           <input type="file" class="default" />
+                                                           </span>
+                                                            <input type="hidden" name="notice">
+                                                            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="control-group">
