@@ -86,12 +86,6 @@
                                 <a href="/business/rights/pub">新增权益</a>
                             </li>
                             <li>
-                                <a href="#">供应商列表</a>
-                            </li>
-                            <li>
-                                <a href="#">新增供应商</a>
-                            </li>
-                            <li>
                                 <a href="#">预约列表</a>
                             </li>
                             <li>

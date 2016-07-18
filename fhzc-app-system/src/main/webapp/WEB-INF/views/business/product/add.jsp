@@ -152,7 +152,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">成立日</label>
                                                 <div class="controls">
-                                                    <input type="text" name="foundDay" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="2016-08-01">
+                                                    <input type="text" name="foundDay" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -167,7 +167,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">开放申购日</label>
                                                 <div class="controls">
-                                                    <input type="text" name="buyDay" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="2016-08-01">
+                                                    <input type="text" name="buyDay" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -175,7 +175,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">赎回日</label>
                                                 <div class="controls">
-                                                    <input type="text" name="redeemDay" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="2016-08-01">
+                                                    <input type="text" name="redeemDay" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -183,7 +183,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">到期日</label>
                                                 <div class="controls">
-                                                    <input type="text" name="expiryDay" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="2016-08-01">
+                                                    <input type="text" name="expiryDay" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -290,7 +290,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">客户等级要求</label>
                                                 <div class="controls">
-                                                    <select name="level" class="large m-wrap" name="productType" tabindex="1">
+                                                    <select name="level" class="large m-wrap"  tabindex="1">
                                                         <option  value="3">金卡客户</option>
                                                         <option  value="2">客户</option>
                                                         <option  value="1">准客户</option>
@@ -301,7 +301,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">风险评级要求</label>
                                                 <div class="controls">
-                                                    <select name="risk" class="large m-wrap" name="productType" tabindex="1">
+                                                    <select name="risk" class="large m-wrap" tabindex="1">
                                                         <option  value="3">A</option>
                                                         <option  value="2">B</option>
                                                         <option  value="1">C</option>
