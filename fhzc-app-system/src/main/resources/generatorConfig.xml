@@ -52,7 +52,7 @@
                delimitAllColumns="true"
                delimitIdentifiers="true"
                domainObjectName="Product">
-            <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
+            <generatedKey column="pid" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
         </table>
 
 
