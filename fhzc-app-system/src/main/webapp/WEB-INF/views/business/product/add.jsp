@@ -441,6 +441,14 @@ $(function(){
             name: {
                 required: true
             },
+            expectedMin: {
+                number: true,
+                min:0
+            },
+            expectedMax: {
+                number: true,
+                min:0
+            },
             investTermMin: {
                 required: true,
                 number: true,
@@ -450,6 +458,18 @@ $(function(){
                 required: true,
                 number: true,
                 min:1
+            },
+            investThreshold: {
+                number: true,
+                min:0
+            },
+            renewDeadline: {
+                number: true,
+                min:0
+            },
+            scoreFactor: {
+                number: true,
+                min:0
             },
             detailUrl: {
                 url: true
