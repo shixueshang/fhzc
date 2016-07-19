@@ -20,6 +20,14 @@ public interface ProductService {
     PageableResult<Product> findPageProducts(int page, int size);
 
     /**
+     * 条件查询产品列表
+     * @param level
+     * @param risk
+     * @return
+     */
+    PageableResult<Product> getProductList(int level,int risk);
+
+    /**
      * 添加产品
      * @param product
      */

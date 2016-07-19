@@ -41,6 +41,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public PageableResult<Product> getProductList(int level,int risk) {
+        ProductExample example = new ProductExample();
+        ProductExample.Criteria criteria = example.createCriteria();
+        criteria.andIsDisplayEqualTo((byte) 1);
+        List<Product> list = productMapper.selectByExample(example);
+        return new PageableResult<Product>(0, 100, list.size(), list);
+    }
+
+    @Override
     public void addOrUpdateProduct(Product product) {
         Integer pid = product.getPid();
         if(pid == null){
