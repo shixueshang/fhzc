@@ -66,7 +66,7 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="portlet_tab1">
                                         <!-- BEGIN FORM-->
-                                        <form action="#" class="form-horizontal">
+                                        <form action="import" enctype="multipart/form-data" method="POST" class="form-horizontal">
                                             <div class="control-group">
                                             </div>
                                             <div class="controls">
@@ -79,7 +79,7 @@
                                                        <span class="btn btn-file">
                                                        <span class="fileupload-new">点击选择</span>
                                                        <span class="fileupload-exists">更换</span>
-                                                       <input type="file" class="default" name="">
+                                                       <input type="file"name="multiFile" class="default" name="">
                                                        </span>
                                                         <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
                                                     </div>
