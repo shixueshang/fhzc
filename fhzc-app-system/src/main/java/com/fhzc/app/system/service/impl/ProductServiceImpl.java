@@ -93,4 +93,15 @@ public class ProductServiceImpl implements ProductService {
     public Product getProduct(Integer pid) {
         return productMapper.selectByPrimaryKey(pid);
     }
+
+    @Override
+    public boolean isNameExists(String name) {
+        ProductExample example = new ProductExample();
+        ProductExample.Criteria criteria = example.createCriteria();
+        criteria.andNameEqualTo(name);
+        if(productMapper.countByExample(example) > 0){
+            return true;
+        }
+        return false;
+    }
 }

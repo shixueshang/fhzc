@@ -48,10 +48,17 @@
 
 
 
-        <table tableName="report"
+        <table tableName="activity"
                delimitAllColumns="true"
                delimitIdentifiers="true"
-               domainObjectName="Report">
+               domainObjectName="Activity">
+            <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
+        </table>
+
+        <table tableName="rights"
+               delimitAllColumns="true"
+               delimitIdentifiers="true"
+               domainObjectName="Rights">
             <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
         </table>
 

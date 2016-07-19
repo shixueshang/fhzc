@@ -106,7 +106,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">报告摘要</label>
                                                 <div class="controls">
-                                                    <textarea name="summary" id="summary" value="${report.summary}" class="span6 m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;"></textarea>
+                                                    <textarea name="summary" id="summary" value="${report.summary}" class="span6 m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;">${report.summary}</textarea>
                                                 </div>
                                             </div>
 
@@ -115,13 +115,13 @@
                                               <div class="controls">
                                                  <div class="fileupload fileupload-new" data-provides="fileupload">
                                                     <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
-                                                       <img src="/static/image/no-image.png" alt="" />
+                                                       <img src="/static/image/no-image.png" alt="" id="default_img" />
                                                     </div>
                                                     <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
                                                     <div>
                                                        <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
                                                        <span class="fileupload-exists">更换</span>
-                                                       <input type="file" name="coverFile" class="default" /></span>
+                                                       <input type="file" name="coverFile" id="cover_img" class="default" /></span>
                                                        <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
                                                     </div>
                                                  </div>
@@ -166,8 +166,12 @@
 
         var reportType = '${report.cid}';
         $('#reportType').val(reportType);
-        var summary = '${report.summary}';
-        $('#summary').val(summary);
+
+        var dispalyImg = $("#default_img");
+        var imgUrl = "<%=contextPath%>${report.cover}";
+        if(imgUrl != ""){
+            dispalyImg.attr("src", imgUrl);
+        }
 
         var form1 = $('#form_sample_1');
         var error1 = $('.alert-error', form1);

@@ -118,7 +118,7 @@
                                                 </div>
                                             </div>
                                             <div class="control-group">
-                                                <label class="control-label">预期年化收益率（单位：%）</label>
+                                                <label class="control-label">预期年化收益率(单位:%)</label>
                                                 <div class="controls">
                                                     <input type="number" name="expectedMin" value="${product.expectedMin}" placeholder="" class="m-wrap small"> ~ <input type="number" name="expectedMax" value="${product.expectedMax}" placeholder="" class="m-wrap small">
                                                     <span class="help-inline"></span>
@@ -126,7 +126,7 @@
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">投资期限（月）<span class="required">*</span></label>
+                                                <label class="control-label">投资期限(月)<span class="required">*</span></label>
                                                 <div class="controls">
                                                     <input type="number" name="investTermMin" value="${product.investTermMin}" data-required="1" placeholder="" class="m-wrap small"> ~ <input type="number" name="investTermMax" value="${product.investTermMax}" data-required="1" placeholder="" class="m-wrap small">
                                                     <span class="help-inline"></span>
@@ -134,7 +134,7 @@
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">起投金额</label>
+                                                <label class="control-label">起投金额(万元)</label>
                                                 <div class="controls">
                                                     <input type="number" name="investThreshold" value="${product.investThreshold / 10000}" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
@@ -152,7 +152,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">成立日</label>
                                                 <div class="controls">
-                                                    <input type="text" name="foundDay"  placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="${product.foundDay}">
+                                                    <input type="text" name="foundDay"  placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${product.foundDay}" pattern="yyyy-MM-dd"/>">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -160,14 +160,14 @@
                                             <div class="control-group">
                                                 <label class="control-label">派息日</label>
                                                 <div class="controls">
-                                                    <input id="dividend_day_tags" name="dividendDay" type="text" data-default="添加一个派息日" class="m-wra tags medium" value="${product.valueDay}" />
+                                                    <input id="dividend_day_tags" name="dividendDay" type="text" data-default="添加一个派息日" class="m-wra tags medium" value="${product.dividendDay}" />
                                                 </div>
                                             </div>
 
                                             <div class="control-group">
                                                 <label class="control-label">开放申购日</label>
                                                 <div class="controls">
-                                                    <input type="text" name="buyDay" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="${product.buyDay}">
+                                                    <input type="text" name="buyDay" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${product.buyDay}" pattern="yyyy-MM-dd"/>">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -175,7 +175,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">赎回日</label>
                                                 <div class="controls">
-                                                    <input type="text" name="redeemDay" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="${product.redeemDay}">
+                                                    <input type="text" name="redeemDay" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${product.redeemDay}" pattern="yyyy-MM-dd"/>">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -183,7 +183,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">到期日</label>
                                                 <div class="controls">
-                                                    <input type="text" name="expiryDay" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="${product.expiryDay}">
+                                                    <input type="text" name="expiryDay" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${product.expiryDay}" pattern="yyyy-MM-dd"/>">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -260,7 +260,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">产品亮点</label>
                                                 <div class="controls">
-                                                    <input type="text" name="highlisghts" value="${product.highlisghts}" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="highlights" value="${product.highlights}" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -330,13 +330,13 @@
                                                 <div class="controls">
                                                     <div class="fileupload fileupload-new" data-provides="fileupload">
                                                         <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
-                                                            <img src="/static/image/no-image.png" alt="" />
+                                                            <img src="/static/image/no-image.png" alt="" id="default_img"/>
                                                         </div>
                                                         <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
                                                         <div>
                                                        <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
                                                        <span class="fileupload-exists">更换</span>
-                                                       <input type="file" name="coverFile" class="default" /></span>
+                                                       <input type="file" name="coverFile" id="cover_img" class="default" /></span>
                                                             <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
                                                         </div>
                                                     </div>
@@ -420,11 +420,17 @@
 </div>
 
 <jsp:include page="../../include/footer.jsp"/>
-<script type="text/javascript" src="<%=contextPath%>/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-<script type="text/javascript" src="<%=contextPath%>/assets/jquery-validation/dist/jquery.validate.min.js"></script>
 
 <script>
 $(function(){
+
+
+    var dispalyImg = $("#default_img");
+    var imgUrl = "<%=contextPath%>${product.cover}";
+    if(imgUrl != ""){
+        dispalyImg.attr("src", imgUrl);
+    }
+
     var form1 = $('#form_sample_1');
     var error1 = $('.alert-error', form1);
     var success1 = $('.alert-success', form1);

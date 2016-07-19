@@ -60,9 +60,11 @@ ADD COLUMN `summary` VARCHAR(255) NULL COMMENT '活动摘要' AFTER `is_display`
 ALTER TABLE `bank`.`activity`
 ADD COLUMN `cid` TINYINT NULL COMMENT '活动类型' AFTER `summary`;
 ALTER TABLE `bank`.`activity`
-ADD COLUMN `cover` VARCHAR(45) NULL DEFAULT NULL COMMENT '封面' AFTER `cid`;
+ADD COLUMN `cover` VARCHAR(255) NULL DEFAULT NULL COMMENT '封面' AFTER `cid`;
 ALTER TABLE `bank`.`activity`
 ADD COLUMN `department_id` TINYINT NULL COMMENT '活动发布角色部门' AFTER `cover`;
+
+
 ALTER TABLE `bank`.`rights`
 ADD COLUMN `supply` VARCHAR(255) NULL AFTER `ctime`,
 ADD COLUMN `summary` TEXT NULL COMMENT '简介' AFTER `supply`;
@@ -73,8 +75,6 @@ CHANGE COLUMN `spend_type` `spend_type` ENUM('var','static') NULL DEFAULT 'stati
 CHANGE COLUMN `level` `level` TINYINT(3) UNSIGNED NULL COMMENT '需要的客户等级' ;
 
 DROP TABLE IF EXISTS `bank`.`product_dividend_day` ;
-
-
 DROP TABLE IF EXISTS `bank`.`report_category` ;
 DROP TABLE IF EXISTS `bank`.`rights_category` ;
 DROP TABLE IF EXISTS `bank`.`activity_category` ;

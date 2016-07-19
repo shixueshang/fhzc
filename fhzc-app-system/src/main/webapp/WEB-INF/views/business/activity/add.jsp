@@ -80,7 +80,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">活动名<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <input type="text" name="name" data-required="1" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="name" value="${activity.name}" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -100,7 +100,7 @@
                                                         预约中
                                                     </label>
                                                     <label class="radio">
-                                                        <input type="radio" name="status" value="1" checked />
+                                                        <input type="radio" name="status" value="1" />
                                                         已完成
                                                     </label>
                                                 </div>
@@ -109,7 +109,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">活动地点</label>
                                                 <div class="controls">
-                                                    <input type="text" name="address" data-required="1" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="address" value="${activity.address}" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -117,7 +117,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">报名开始日期</label>
                                                 <div class="controls">
-                                                    <input type="text" name="applyBeginTime" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="">
+                                                    <input type="text" name="applyBeginTime" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${activity.applyBeginTime}" pattern="yyyy-MM-dd"/>">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -125,7 +125,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">报名结束日期</label>
                                                 <div class="controls">
-                                                    <input type="text" name="applyEndTime" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="">
+                                                    <input type="text" name="applyEndTime" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${activity.applyEndTime}" pattern="yyyy-MM-dd"/>">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -133,7 +133,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">活动开始日期</label>
                                                 <div class="controls">
-                                                    <input type="text" name="beginTime" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="">
+                                                    <input type="text" name="beginTime" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${activity.beginTime}" pattern="yyyy-MM-dd"/>">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -141,7 +141,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">活动结束日期</label>
                                                 <div class="controls">
-                                                    <input type="text" name="endTime" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="">
+                                                    <input type="text" name="endTime" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${activity.endTime}" pattern="yyyy-MM-dd"/>">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -149,7 +149,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">失效时间</label>
                                                 <div class="controls">
-                                                    <input type="text" name="deadTime" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="">
+                                                    <input type="text" name="deadTime" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${activity.expireTime}" pattern="yyyy-MM-dd"/>">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -159,13 +159,13 @@
                                                 <div class="controls">
                                                     <div class="fileupload fileupload-new" data-provides="fileupload">
                                                         <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
-                                                            <img src="/static/image/no-image.png" alt="" />
+                                                            <img src="/static/image/no-image.png" alt="" id="default_img" />
                                                         </div>
                                                         <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
                                                         <div>
                                                        <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
                                                        <span class="fileupload-exists">更换</span>
-                                                       <input type="file" name="cover" class="default" /></span>
+                                                       <input type="file" name="coverFile" class="default" /></span>
                                                             <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
                                                         </div>
                                                     </div>
@@ -180,14 +180,14 @@
                                             <div class="control-group">
                                                 <label class="control-label">活动内容</label>
                                                 <div class="controls">
-                                                    <textarea name="content" class="span6 m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;"></textarea>
+                                                    <textarea name="content"  class="span6 m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;">${activity.content}</textarea>
                                                 </div>
                                             </div>
 
                                             <div class="control-group">
                                                 <label class="control-label">注意事项</label>
                                                 <div class="controls">
-                                                    <textarea name="memo" class="span6 m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;"></textarea>
+                                                    <textarea name="memo" class="span6 m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;">${activity.memo}</textarea>
                                                 </div>
                                             </div>
                                             <div class="control-group">
@@ -199,7 +199,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">活动摘要</label>
                                                 <div class="controls">
-                                                    <textarea name="summary" class="span6 m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;"></textarea>
+                                                    <textarea name="summary" class="span6 m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;">${activity.summary}</textarea>
                                                 </div>
                                             </div>
 
@@ -249,6 +249,13 @@
 <script type="text/javascript" src="<%=contextPath%>/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 <script>
     $(function(){
+
+        var dispalyImg = $("#default_img");
+        var imgUrl = "<%=contextPath%>${activity.cover}";
+        if(imgUrl != ""){
+            dispalyImg.attr("src", imgUrl);
+        }
+
         var form1 = $('#form_sample_1');
         var error1 = $('.alert-error', form1);
         var success1 = $('.alert-success', form1);

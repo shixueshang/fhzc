@@ -86,10 +86,10 @@
                                 <a href="/business/rights/pub">新增权益</a>
                             </li>
                             <li>
-                                <a href="#">预约列表</a>
+                                <a href="/business/rights/order/list">预约列表</a>
                             </li>
                             <li>
-                                <a href="#">新增预约</a>
+                                <a href="/business/rights/order/add">新增预约</a>
                             </li>
 
                         </ul>

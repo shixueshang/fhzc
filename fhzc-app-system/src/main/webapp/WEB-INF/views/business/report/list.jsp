@@ -78,13 +78,7 @@
                                         <td>${report.id}</td>
                                         <td>${report.name}</td>
                                         <td>
-                                            <div class="row">
-                                                <div class="col-xs-6 col-md-3">
-                                                    <a href="#" class="thumbnail">
-                                                        <img src="<%=basePath%>${report.cover}">
-                                                    </a>
-                                                </div>
-                                            </div>
+                                             <img width="120px" src="<%=basePath%>${report.cover}">
                                         </td>
                                         <td>
                                             <c:choose>

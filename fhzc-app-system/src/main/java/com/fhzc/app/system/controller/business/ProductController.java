@@ -5,6 +5,7 @@ import com.fhzc.app.system.commons.page.PageableResult;
 import com.fhzc.app.system.commons.util.Const;
 import com.fhzc.app.system.commons.util.FileUtil;
 import com.fhzc.app.system.commons.util.TextUtils;
+import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.mybatis.model.Product;
 import com.fhzc.app.system.service.ProductService;
@@ -112,6 +113,12 @@ public class ProductController extends BaseController {
         ModelAndView mav = new ModelAndView("/business/product/add");
         mav.addObject("product", productService.getProduct(pid));
         return mav;
+    }
+
+    @RequestMapping(value = "/isNameExists", method = RequestMethod.GET)
+    public AjaxJson isNameExists(String name){
+        boolean flag = productService.isNameExists(name);
+        return new AjaxJson(flag);
     }
 
     /**

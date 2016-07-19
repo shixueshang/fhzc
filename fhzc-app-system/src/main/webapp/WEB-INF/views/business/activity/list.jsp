@@ -76,20 +76,47 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach items="${activities}" var="report">
+                                <c:forEach items="${activities}" var="activity">
                                     <tr>
+                                        <td>${activity.id}</td>
+                                        <td>${activity.name}</td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${activity.cid == '1'}">
+                                                    生命管理俱乐部
+                                                </c:when>
+                                                <c:when test="${activity.cid == '2'}">
+                                                    高尔夫俱乐部
+                                                </c:when>
+                                                <c:when test="${activity.cid == '3'}">
+                                                    教育传承俱乐部
+                                                </c:when>
+                                                <c:when test="${activity.cid == '4'}">
+                                                    商旅俱乐部
+                                                </c:when>
+                                                <c:when test="${activity.cid == '5'}">
+                                                    投资者俱乐部
+                                                </c:when>
+                                            </c:choose>
+                                        </td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${activity.status == '0'}">
+                                                    预约中
+                                                </c:when>
+                                                <c:when test="${activity.cid == '1'}">
+                                                    已完成
+                                                </c:when>
+                                            </c:choose>
+                                        </td>
+                                        <td>${activity.address}</td>
+                                        <td><fmt:formatDate value="${activity.beginTime}" pattern="yyyy-MM-dd"/></td>
+                                        <td><fmt:formatDate value="${activity.endTime}" pattern="yyyy-MM-dd"/></td>
+                                        <td>${activity.sponsor}</td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td><a href="business/report/detail/${report.id}">编辑</a>
+                                        <td><a href="detail/${activity.id}">编辑</a>
                                         </td>
                                     </tr>
                                 </c:forEach>

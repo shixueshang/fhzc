@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fhzc.app.system.mybatis.inter.ActivityMapper" >
+  <resultMap id="BaseResultMap" type="com.fhzc.app.system.mybatis.model.Activity" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="apply_begin_time" property="applyBeginTime" jdbcType="TIMESTAMP" />
+    <result column="apply_end_time" property="applyEndTime" jdbcType="TIMESTAMP" />
+    <result column="begin_time" property="beginTime" jdbcType="DATE" />
+    <result column="end_time" property="endTime" jdbcType="DATE" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="sponsor" property="sponsor" jdbcType="VARCHAR" />
+    <result column="area_id" property="areaId" jdbcType="INTEGER" />
+    <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="is_display" property="isDisplay" jdbcType="TINYINT" />
+    <result column="summary" property="summary" jdbcType="VARCHAR" />
+    <result column="cid" property="cid" jdbcType="TINYINT" />
+    <result column="cover" property="cover" jdbcType="VARCHAR" />
+    <result column="department_id" property="departmentId" jdbcType="TINYINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.fhzc.app.system.mybatis.model.Activity" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    `id`, `name`, `address`, `apply_begin_time`, `apply_end_time`, `begin_time`, `end_time`, 
+    `memo`, `sponsor`, `area_id`, `ctime`, `url`, `status`, `is_display`, `summary`, 
+    `cid`, `cover`, `department_id`
+  </sql>
+  <sql id="Blob_Column_List" >
+    `content`
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.system.mybatis.model.ActivityExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from `activity`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.system.mybatis.model.ActivityExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from `activity`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from `activity`
+    where `id` = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from `activity`
+    where `id` = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fhzc.app.system.mybatis.model.ActivityExample" >
+    delete from `activity`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fhzc.app.system.mybatis.model.Activity" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `activity` (`name`, `address`, `apply_begin_time`, 
+      `apply_end_time`, `begin_time`, `end_time`, 
+      `memo`, `sponsor`, `area_id`, 
+      `ctime`, `url`, `status`, 
+      `is_display`, `summary`, `cid`, 
+      `cover`, `department_id`, `content`
+      )
+    values (#{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{applyBeginTime,jdbcType=TIMESTAMP}, 
+      #{applyEndTime,jdbcType=TIMESTAMP}, #{beginTime,jdbcType=DATE}, #{endTime,jdbcType=DATE}, 
+      #{memo,jdbcType=VARCHAR}, #{sponsor,jdbcType=VARCHAR}, #{areaId,jdbcType=INTEGER}, 
+      #{ctime,jdbcType=TIMESTAMP}, #{url,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+      #{isDisplay,jdbcType=TINYINT}, #{summary,jdbcType=VARCHAR}, #{cid,jdbcType=TINYINT}, 
+      #{cover,jdbcType=VARCHAR}, #{departmentId,jdbcType=TINYINT}, #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fhzc.app.system.mybatis.model.Activity" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `activity`
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        `name`,
+      </if>
+      <if test="address != null" >
+        `address`,
+      </if>
+      <if test="applyBeginTime != null" >
+        `apply_begin_time`,
+      </if>
+      <if test="applyEndTime != null" >
+        `apply_end_time`,
+      </if>
+      <if test="beginTime != null" >
+        `begin_time`,
+      </if>
+      <if test="endTime != null" >
+        `end_time`,
+      </if>
+      <if test="memo != null" >
+        `memo`,
+      </if>
+      <if test="sponsor != null" >
+        `sponsor`,
+      </if>
+      <if test="areaId != null" >
+        `area_id`,
+      </if>
+      <if test="ctime != null" >
+        `ctime`,
+      </if>
+      <if test="url != null" >
+        `url`,
+      </if>
+      <if test="status != null" >
+        `status`,
+      </if>
+      <if test="isDisplay != null" >
+        `is_display`,
+      </if>
+      <if test="summary != null" >
+        `summary`,
+      </if>
+      <if test="cid != null" >
+        `cid`,
+      </if>
+      <if test="cover != null" >
+        `cover`,
+      </if>
+      <if test="departmentId != null" >
+        `department_id`,
+      </if>
+      <if test="content != null" >
+        `content`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="applyBeginTime != null" >
+        #{applyBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="applyEndTime != null" >
+        #{applyEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="beginTime != null" >
+        #{beginTime,jdbcType=DATE},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=DATE},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="sponsor != null" >
+        #{sponsor,jdbcType=VARCHAR},
+      </if>
+      <if test="areaId != null" >
+        #{areaId,jdbcType=INTEGER},
+      </if>
+      <if test="ctime != null" >
+        #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="isDisplay != null" >
+        #{isDisplay,jdbcType=TINYINT},
+      </if>
+      <if test="summary != null" >
+        #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="cid != null" >
+        #{cid,jdbcType=TINYINT},
+      </if>
+      <if test="cover != null" >
+        #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null" >
+        #{departmentId,jdbcType=TINYINT},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fhzc.app.system.mybatis.model.ActivityExample" resultType="java.lang.Integer" >
+    select count(*) from `activity`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update `activity`
+    <set >
+      <if test="record.id != null" >
+        `id` = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        `name` = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        `address` = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyBeginTime != null" >
+        `apply_begin_time` = #{record.applyBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.applyEndTime != null" >
+        `apply_end_time` = #{record.applyEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.beginTime != null" >
+        `begin_time` = #{record.beginTime,jdbcType=DATE},
+      </if>
+      <if test="record.endTime != null" >
+        `end_time` = #{record.endTime,jdbcType=DATE},
+      </if>
+      <if test="record.memo != null" >
+        `memo` = #{record.memo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sponsor != null" >
+        `sponsor` = #{record.sponsor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areaId != null" >
+        `area_id` = #{record.areaId,jdbcType=INTEGER},
+      </if>
+      <if test="record.ctime != null" >
+        `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.url != null" >
+        `url` = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        `status` = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.isDisplay != null" >
+        `is_display` = #{record.isDisplay,jdbcType=TINYINT},
+      </if>
+      <if test="record.summary != null" >
+        `summary` = #{record.summary,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cid != null" >
+        `cid` = #{record.cid,jdbcType=TINYINT},
+      </if>
+      <if test="record.cover != null" >
+        `cover` = #{record.cover,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departmentId != null" >
+        `department_id` = #{record.departmentId,jdbcType=TINYINT},
+      </if>
+      <if test="record.content != null" >
+        `content` = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update `activity`
+    set `id` = #{record.id,jdbcType=INTEGER},
+      `name` = #{record.name,jdbcType=VARCHAR},
+      `address` = #{record.address,jdbcType=VARCHAR},
+      `apply_begin_time` = #{record.applyBeginTime,jdbcType=TIMESTAMP},
+      `apply_end_time` = #{record.applyEndTime,jdbcType=TIMESTAMP},
+      `begin_time` = #{record.beginTime,jdbcType=DATE},
+      `end_time` = #{record.endTime,jdbcType=DATE},
+      `memo` = #{record.memo,jdbcType=VARCHAR},
+      `sponsor` = #{record.sponsor,jdbcType=VARCHAR},
+      `area_id` = #{record.areaId,jdbcType=INTEGER},
+      `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
+      `url` = #{record.url,jdbcType=VARCHAR},
+      `status` = #{record.status,jdbcType=TINYINT},
+      `is_display` = #{record.isDisplay,jdbcType=TINYINT},
+      `summary` = #{record.summary,jdbcType=VARCHAR},
+      `cid` = #{record.cid,jdbcType=TINYINT},
+      `cover` = #{record.cover,jdbcType=VARCHAR},
+      `department_id` = #{record.departmentId,jdbcType=TINYINT},
+      `content` = #{record.content,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update `activity`
+    set `id` = #{record.id,jdbcType=INTEGER},
+      `name` = #{record.name,jdbcType=VARCHAR},
+      `address` = #{record.address,jdbcType=VARCHAR},
+      `apply_begin_time` = #{record.applyBeginTime,jdbcType=TIMESTAMP},
+      `apply_end_time` = #{record.applyEndTime,jdbcType=TIMESTAMP},
+      `begin_time` = #{record.beginTime,jdbcType=DATE},
+      `end_time` = #{record.endTime,jdbcType=DATE},
+      `memo` = #{record.memo,jdbcType=VARCHAR},
+      `sponsor` = #{record.sponsor,jdbcType=VARCHAR},
+      `area_id` = #{record.areaId,jdbcType=INTEGER},
+      `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
+      `url` = #{record.url,jdbcType=VARCHAR},
+      `status` = #{record.status,jdbcType=TINYINT},
+      `is_display` = #{record.isDisplay,jdbcType=TINYINT},
+      `summary` = #{record.summary,jdbcType=VARCHAR},
+      `cid` = #{record.cid,jdbcType=TINYINT},
+      `cover` = #{record.cover,jdbcType=VARCHAR},
+      `department_id` = #{record.departmentId,jdbcType=TINYINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fhzc.app.system.mybatis.model.Activity" >
+    update `activity`
+    <set >
+      <if test="name != null" >
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        `address` = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="applyBeginTime != null" >
+        `apply_begin_time` = #{applyBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="applyEndTime != null" >
+        `apply_end_time` = #{applyEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="beginTime != null" >
+        `begin_time` = #{beginTime,jdbcType=DATE},
+      </if>
+      <if test="endTime != null" >
+        `end_time` = #{endTime,jdbcType=DATE},
+      </if>
+      <if test="memo != null" >
+        `memo` = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="sponsor != null" >
+        `sponsor` = #{sponsor,jdbcType=VARCHAR},
+      </if>
+      <if test="areaId != null" >
+        `area_id` = #{areaId,jdbcType=INTEGER},
+      </if>
+      <if test="ctime != null" >
+        `ctime` = #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="url != null" >
+        `url` = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="isDisplay != null" >
+        `is_display` = #{isDisplay,jdbcType=TINYINT},
+      </if>
+      <if test="summary != null" >
+        `summary` = #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="cid != null" >
+        `cid` = #{cid,jdbcType=TINYINT},
+      </if>
+      <if test="cover != null" >
+        `cover` = #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null" >
+        `department_id` = #{departmentId,jdbcType=TINYINT},
+      </if>
+      <if test="content != null" >
+        `content` = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where `id` = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.fhzc.app.system.mybatis.model.Activity" >
+    update `activity`
+    set `name` = #{name,jdbcType=VARCHAR},
+      `address` = #{address,jdbcType=VARCHAR},
+      `apply_begin_time` = #{applyBeginTime,jdbcType=TIMESTAMP},
+      `apply_end_time` = #{applyEndTime,jdbcType=TIMESTAMP},
+      `begin_time` = #{beginTime,jdbcType=DATE},
+      `end_time` = #{endTime,jdbcType=DATE},
+      `memo` = #{memo,jdbcType=VARCHAR},
+      `sponsor` = #{sponsor,jdbcType=VARCHAR},
+      `area_id` = #{areaId,jdbcType=INTEGER},
+      `ctime` = #{ctime,jdbcType=TIMESTAMP},
+      `url` = #{url,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=TINYINT},
+      `is_display` = #{isDisplay,jdbcType=TINYINT},
+      `summary` = #{summary,jdbcType=VARCHAR},
+      `cid` = #{cid,jdbcType=TINYINT},
+      `cover` = #{cover,jdbcType=VARCHAR},
+      `department_id` = #{departmentId,jdbcType=TINYINT},
+      `content` = #{content,jdbcType=LONGVARCHAR}
+    where `id` = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fhzc.app.system.mybatis.model.Activity" >
+    update `activity`
+    set `name` = #{name,jdbcType=VARCHAR},
+      `address` = #{address,jdbcType=VARCHAR},
+      `apply_begin_time` = #{applyBeginTime,jdbcType=TIMESTAMP},
+      `apply_end_time` = #{applyEndTime,jdbcType=TIMESTAMP},
+      `begin_time` = #{beginTime,jdbcType=DATE},
+      `end_time` = #{endTime,jdbcType=DATE},
+      `memo` = #{memo,jdbcType=VARCHAR},
+      `sponsor` = #{sponsor,jdbcType=VARCHAR},
+      `area_id` = #{areaId,jdbcType=INTEGER},
+      `ctime` = #{ctime,jdbcType=TIMESTAMP},
+      `url` = #{url,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=TINYINT},
+      `is_display` = #{isDisplay,jdbcType=TINYINT},
+      `summary` = #{summary,jdbcType=VARCHAR},
+      `cid` = #{cid,jdbcType=TINYINT},
+      `cover` = #{cover,jdbcType=VARCHAR},
+      `department_id` = #{departmentId,jdbcType=TINYINT}
+    where `id` = #{id,jdbcType=INTEGER}
+  </update>
+  <select resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.system.mybatis.model.ActivityExample" id="selectByExampleWithBLOBsWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from `activity`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select resultMap="BaseResultMap" parameterType="com.fhzc.app.system.mybatis.model.ActivityExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from `activity`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

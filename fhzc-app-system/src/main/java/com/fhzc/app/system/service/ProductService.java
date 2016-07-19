@@ -39,4 +39,11 @@ public interface ProductService {
      * @return
      */
     Product getProduct(Integer pid);
+
+    /**
+     * 查询产品名称是否存在
+     * @param name
+     * @return
+     */
+    boolean isNameExists(String name);
 }
