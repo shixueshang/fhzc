@@ -3,12 +3,10 @@ package com.fhzc.app.system.controller.business;
 import com.fhzc.app.system.commons.page.PageHelper;
 import com.fhzc.app.system.commons.page.PageableResult;
 import com.fhzc.app.system.commons.util.Const;
-import com.fhzc.app.system.commons.util.DateUtil;
 import com.fhzc.app.system.commons.util.FileUtil;
 import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.mybatis.model.Product;
-import com.fhzc.app.system.mybatis.model.ProductDividendDay;
 import com.fhzc.app.system.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -97,16 +95,6 @@ public class ProductController extends BaseController {
         product.setCtime(new Date());
 
         productService.addOrUpdateProduct(product);
-
-        if(product.getDividendDay() != null){
-            String[] dividendDays = product.getDividendDay().split(",");
-            for(String dividendDay : dividendDays){
-                ProductDividendDay pdd = new ProductDividendDay();
-                pdd.setDay(DateUtil.parseDate(dividendDay, "yyyy-MM-dd"));
-                pdd.setPid(product.getPid());
-                productService.addOrUpdateProductDividendDay(pdd);
-            }
-        }
 
         PageableResult<Product> pageableResult = productService.findPageProducts(page, size);
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));

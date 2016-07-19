@@ -48,30 +48,24 @@ INSERT INTO `system_admin_module` (`id`,`admin_id`,`module_id`,`mode`) VALUES (8
 INSERT INTO `system_admin_module` (`id`,`admin_id`,`module_id`,`mode`) VALUES (9,2,3,'r');
 
 
+##初始化字典数据
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('1', 'product_type', '产品类型', '鑫丰母基金(开放式契约型)', '1', '0', '0', '0');
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('2', 'product_type', '产品类型', '封闭式有限合伙私募基金', '2', '0', '0', '0');
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('3', 'product_type', '产品类型', '封闭式契约型私募基金', '3', '0', '0', '0');
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('4', 'report_category', '报告类型', '每周点评', '1', '0', '0', '0');
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('5', 'report_category', '报告类型', '复华财经新视点', '2', '0', '0', '0');
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('6', 'report_category', '报告类型', '复华资产研究报告', '3', '0', '0', '0');
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('7', 'rights_category', '权益类型', '健康管理', '1', '0', '0', '0');
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('8', 'rights_category', '权益类型', '旅行家', '2', '0', '0', '0');
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('9', 'rights_category', '权益类型', '艺术家', '3', '0', '0', '0');
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('10', 'rights_category', '权益类型', '商旅通', '4', '0', '0', '0');
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('11', 'rights_category', '权益类型', '奢生活', '5', '0', '0', '0');
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('12', 'rights_category', '权益类型', '爱体育', '6', '0', '0', '0');
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('13', 'rights_category', '权益类型', '商学院', '7', '0', '0', '0');
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('14', 'rights_category', '权益类型', '俱乐部', '8', '0', '0', '0');
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('15', 'activity_category', '活动类型', '生命管理俱乐部', '1', '0', '0', '0');
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('16', 'activity_category', '活动类型', '高尔夫俱乐部', '2', '0', '0', '0');
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('17', 'activity_category', '活动类型', '教育传承俱乐部', '3', '0', '0', '0');
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('18', 'activity_category', '活动类型', '商旅俱乐部', '4', '0', '0', '0');
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('19', 'activity_category', '活动类型', '投资者俱乐部', '5', '0', '0', '0');
 
-##2016-07-15 改表，增加初始数据
-TRUNCATE TABLE bank.report_category;
-INSERT INTO bank.report_category (name) VALUES ('每周点评');
-INSERT INTO bank.report_category (name) VALUES ('复华财经新视点');
-INSERT INTO bank.report_category (name) VALUES ('复华资产研究报告');
-
-
-
-
-TRUNCATE TABLE `bank`.`rights_category`;
-INSERT INTO `bank`.`rights_category` (`name`) VALUES ('健康管理');
-INSERT INTO `bank`.`rights_category` (`name`) VALUES ('旅行家');
-INSERT INTO `bank`.`rights_category` (`name`) VALUES ('艺术家');
-INSERT INTO `bank`.`rights_category` (`name`) VALUES ('商旅通');
-INSERT INTO `bank`.`rights_category` (`name`) VALUES ('奢生活');
-INSERT INTO `bank`.`rights_category` (`name`) VALUES ('爱体育');
-INSERT INTO `bank`.`rights_category` (`name`) VALUES ('商学院');
-INSERT INTO `bank`.`rights_category` (`name`) VALUES ('俱乐部');
-
-
-TRUNCATE TABLE `bank`.`activity_category`;
-INSERT INTO `bank`.`activity_category` (`name`) VALUES ('生命管理俱乐部');
-INSERT INTO `bank`.`activity_category` (`name`) VALUES ('高尔夫俱乐部');
-INSERT INTO `bank`.`activity_category` (`name`) VALUES ('教育传承俱乐部');
-INSERT INTO `bank`.`activity_category` (`name`) VALUES ('商旅俱乐部');
-INSERT INTO `bank`.`activity_category` (`name`) VALUES ('投资者俱乐部');

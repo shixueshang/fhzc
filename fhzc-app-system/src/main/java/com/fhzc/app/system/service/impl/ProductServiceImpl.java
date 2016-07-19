@@ -4,10 +4,8 @@ import com.fhzc.app.system.commons.page.PageableResult;
 import com.fhzc.app.system.commons.util.excel.ExcelImporter;
 import com.fhzc.app.system.commons.util.excel.ImportCallBack;
 import com.fhzc.app.system.commons.util.excel.ImportConfig;
-import com.fhzc.app.system.mybatis.inter.ProductDividendDayMapper;
 import com.fhzc.app.system.mybatis.inter.ProductMapper;
 import com.fhzc.app.system.mybatis.model.Product;
-import com.fhzc.app.system.mybatis.model.ProductDividendDay;
 import com.fhzc.app.system.mybatis.model.ProductExample;
 import com.fhzc.app.system.service.ProductService;
 import org.apache.ibatis.session.RowBounds;
@@ -32,9 +30,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Resource
     private ProductMapper productMapper;
-
-    @Resource
-    private ProductDividendDayMapper productDividendDayMapper;
 
 
     @Override
@@ -92,16 +87,6 @@ public class ProductServiceImpl implements ProductService {
         }).importExcelFile(multipartFile);
 
         return importResult;
-    }
-
-    @Override
-    public void addOrUpdateProductDividendDay(ProductDividendDay pdd) {
-        Integer id = pdd.getId();
-        if(id == null){
-            productDividendDayMapper.insert(pdd);
-        }else{
-            productDividendDayMapper.updateByPrimaryKey(pdd);
-        }
     }
 
     @Override

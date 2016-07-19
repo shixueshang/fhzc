@@ -1,8 +1,5 @@
 ###字段更新记录
 
-ALTER TABLE bank.report_category
-CHANGE COLUMN cid cid INT(11) NOT NULL AUTO_INCREMENT ;
-
 
 ALTER TABLE bank.report
 ADD COLUMN is_display TINYINT(3) UNSIGNED NOT NULL DEFAULT '0' COMMENT '是否显示 1显示|0不显示' AFTER is_del;
@@ -74,3 +71,10 @@ ADD COLUMN `cover` VARCHAR(255) NULL COMMENT '封面' AFTER `summary`;
 ALTER TABLE `bank`.`rights`
 CHANGE COLUMN `spend_type` `spend_type` ENUM('var','static') NULL DEFAULT 'static' COMMENT '兑换积分是否固定' ,
 CHANGE COLUMN `level` `level` TINYINT(3) UNSIGNED NULL COMMENT '需要的客户等级' ;
+
+DROP TABLE IF EXISTS `bank`.`product_dividend_day` ;
+
+
+DROP TABLE IF EXISTS `bank`.`report_category` ;
+DROP TABLE IF EXISTS `bank`.`rights_category` ;
+DROP TABLE IF EXISTS `bank`.`activity_category` ;

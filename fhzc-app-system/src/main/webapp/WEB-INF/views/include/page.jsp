@@ -2,10 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <c:if test="${page.pageCount > 1}">
-	<div class="row-fluid">
-		<div class="col-lg-12">
-			<nav>
-				<ul class="pagination">
+	<div class="pagination">
+				<ul >
 					<c:if test="${page.pageNum > 1}">
 						<li>
 							<a href="${page.requestUrl}?page=<c:choose><c:when test="${page.pageNum-1 > 0}">${page.pageNum-1}</c:when><c:otherwise>1</c:otherwise></c:choose>&size=${page.pageSize}<c:forEach items="${page.pageParams}" var="entry">&${entry.key}=${entry.value}</c:forEach>"
@@ -71,8 +69,6 @@
 							   class="ib next">&gt;</a></li>
 					</c:if>
 				</ul>
-			</nav>
 			第${page.pageNum}页， 每页显示${page.pageSize}条 ，共${page.recordCount}条记录
-		</div>
 	</div>
 </c:if>

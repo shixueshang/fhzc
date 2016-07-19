@@ -5,6 +5,7 @@
 
 <%
     String contextPath = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + contextPath;
 %>
 
 <jsp:include page="../../include/header.jsp"/>
@@ -76,12 +77,32 @@
                                     <tr>
                                         <td>${report.id}</td>
                                         <td>${report.name}</td>
-                                        <td>${report.cover}</td>
-                                        <td>${report.cid}</td>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-xs-6 col-md-3">
+                                                    <a href="#" class="thumbnail">
+                                                        <img src="<%=basePath%>${report.cover}">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${report.cid == '1'}">
+                                                    每周点评
+                                                </c:when>
+                                                <c:when test="${report.cid == '2'}">
+                                                    复华财经新视点
+                                                </c:when>
+                                                <c:when test="${report.cid == '3'}">
+                                                    复华资产研究报告
+                                                </c:when>
+                                            </c:choose>
+                                        </td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td><a href="/detail/${report.id}">编辑</a>
+                                        <td><a href="detail/${report.id}">编辑</a>
                                         </td>
                                     </tr>
                                 </c:forEach>

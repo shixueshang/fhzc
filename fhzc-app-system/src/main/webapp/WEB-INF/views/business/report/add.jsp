@@ -87,7 +87,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">报告类型</label>
                                                 <div class="controls">
-                                                    <select class="large m-wrap" name="cid" data-required="1" tabindex="1">
+                                                    <select class="large m-wrap" name="cid" id="reportType" data-required="1" tabindex="1">
                                                         <option  value="1">每周点评</option>
                                                         <option  value="2">复华财经新视点</option>
                                                         <option  value="3">复华资产研究报告</option>
@@ -106,7 +106,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">报告摘要</label>
                                                 <div class="controls">
-                                                    <textarea name="summary" class="span6 m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;"></textarea>
+                                                    <textarea name="summary" id="summary" value="${report.summary}" class="span6 m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;"></textarea>
                                                 </div>
                                             </div>
 
@@ -163,6 +163,12 @@
 
 <script>
     $(function(){
+
+        var reportType = '${report.cid}';
+        $('#reportType').val(reportType);
+        var summary = '${report.summary}';
+        $('#summary').val(summary);
+
         var form1 = $('#form_sample_1');
         var error1 = $('.alert-error', form1);
         var success1 = $('.alert-success', form1);

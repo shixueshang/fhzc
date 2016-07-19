@@ -681,20 +681,6 @@ CREATE TABLE IF NOT EXISTS `bank`.`product_areas` (
 
 
 -- -----------------------------------------------------
--- Table `bank`.`report_category`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `bank`.`report_category` ;
-
-CREATE TABLE IF NOT EXISTS `bank`.`report_category` (
-  `cid` INT NOT NULL,
-  `name` VARCHAR(45) NOT NULL COMMENT '分类名称',
-  PRIMARY KEY (`cid`),
-  UNIQUE INDEX `name_uniq` (`name` ASC))
-  ENGINE = InnoDB
-  COMMENT = '投研报告分类';
-
-
--- -----------------------------------------------------
 -- Table `bank`.`contract_tmp`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `bank`.`contract_tmp` ;
@@ -708,21 +694,6 @@ CREATE TABLE IF NOT EXISTS `bank`.`contract_tmp` (
   UNIQUE INDEX `code_uniq` (`code` ASC))
   ENGINE = InnoDB
   COMMENT = '无身份证信息的合同临时表';
-
-
--- -----------------------------------------------------
--- Table `bank`.`rights_category`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `bank`.`rights_category` ;
-
-CREATE TABLE IF NOT EXISTS `bank`.`rights_category` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  `ctime` DATETIME NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `name_uniq` (`name` ASC))
-  ENGINE = InnoDB
-  COMMENT = '权益分类';
 
 
 -- -----------------------------------------------------
@@ -777,21 +748,23 @@ CREATE TABLE IF NOT EXISTS `im_message` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT '消息表';
 
 
-#产品派息数据1:n
-DROP TABLE IF EXISTS `bank`.`product_dividend_day` ;
-CREATE TABLE `bank`.`product_dividend_day` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `pid` INT NOT NULL COMMENT '产品id',
-  `day` DATE NOT NULL COMMENT '派息日',
-  PRIMARY KEY (`id`))
-  COMMENT = '产品派息日';
+DROP TABLE IF EXISTS `bank`.`dictionary` ;
 
-DROP TABLE IF EXISTS `bank`.`activity_category` ;
-CREATE TABLE `bank`.`activity_category` (
+CREATE TABLE IF NOT EXISTS `bank`.`dictionary` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NULL COMMENT '活动名称',
+  `cat` VARCHAR(50) DEFAULT NULL COMMENT '字典分类【英】',
+  `name` VARCHAR(50) DEFAULT NULL COMMENT '字典分类【中】',
+  `key` VARCHAR(50) DEFAULT NULL COMMENT '键',
+  `value` VARCHAR(50) DEFAULT NULL COMMENT '值',
+  `is_default` INT(1) DEFAULT NULL COMMENT '是否默认 1、是，0、否',
+  `status` INT(1) DEFAULT NULL COMMENT '状态',
+  `is_modify` INT(1) DEFAULT NULL COMMENT '是否允许修改 1、是，0、否',
+  `date_created` datetime COMMENT '创建时间',
+  `last_updated` datetime comment '最后修改时间',
   PRIMARY KEY (`id`))
-  COMMENT = '活动分类';
+  ENGINE = InnoDB
+  COMMENT = '字典表';
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

@@ -164,12 +164,11 @@
             </div>
             <!--页面操作详细内容 开始-->
 
-            <div class="row-fluid">
-                <jsp:include page="../../include/page.jsp"/>
-            </div>
         </div>
 
+        <jsp:include page="../../include/page.jsp"/>
     </div>
+
 </div>
 
 <jsp:include page="../../include/footer.jsp"/>
