@@ -48,7 +48,6 @@ CHANGE COLUMN `score_factor` `score_factor` TINYINT(3) UNSIGNED NULL DEFAULT '10
 CHANGE COLUMN `is_ recommend` `is_ recommend` TINYINT(3) UNSIGNED NULL DEFAULT '0' COMMENT '是否推荐 1是|0否' ,
 CHANGE COLUMN `is_display` `is_display` TINYINT(3) UNSIGNED NULL DEFAULT '0' COMMENT '产品是否显示 1显示|0不显示' ,
 CHANGE COLUMN `is_renew` `is_renew` TINYINT(3) UNSIGNED NULL DEFAULT '0' COMMENT '是否是续存期产品 0否|1是' ,
-CHANGE COLUMN `ctime` `ctime` DATETIME NULL COMMENT '记录增加时间' ,
 CHANGE COLUMN `invest_term_min` `invest_term_min` INT(11) NOT NULL COMMENT '最少投资期限' ,
 CHANGE COLUMN `invest_term_max` `invest_term_max` INT(11) NOT NULL COMMENT '最大投资期限' ,
 DROP INDEX `code_UNIQUE` ;
@@ -57,22 +56,6 @@ DROP INDEX `code_UNIQUE` ;
 ALTER TABLE `bank`.`product`
 ADD COLUMN `expected_min` TINYINT NULL COMMENT '预期年化收益率min' AFTER `invest_threshold`,
 ADD COLUMN `expected_max` TINYINT NULL COMMENT '预期年化收益率max' AFTER `expected_min`;
-#产品派息数据1:n
-DROP TABLE IF EXISTS `bank`.`product_dividend_day` ;
-CREATE TABLE `bank`.`product_dividend_day` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `pid` INT NOT NULL COMMENT '产品id',
-  `day` DATE NOT NULL COMMENT '派息日',
-  PRIMARY KEY (`id`))
-  COMMENT = '产品派息日';
-
-DROP TABLE IF EXISTS `bank`.`activity_category` ;
-CREATE TABLE `bank`.`activity_category` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NULL COMMENT '活动名称',
-  PRIMARY KEY (`id`))
-  COMMENT = '活动分类';
-
 
 
 ALTER TABLE `bank`.`activity`
@@ -82,7 +65,7 @@ ADD COLUMN `cid` TINYINT NULL COMMENT '活动类型' AFTER `summary`;
 ALTER TABLE `bank`.`activity`
 ADD COLUMN `cover` VARCHAR(45) NULL DEFAULT NULL COMMENT '封面' AFTER `cid`;
 ALTER TABLE `bank`.`activity`
-ADD COLUMN `department_id` TINYINT NULL COMMENT '活动发布角色部门' AFTER `dead_time`;
+ADD COLUMN `department_id` TINYINT NULL COMMENT '活动发布角色部门' AFTER `cover`;
 ALTER TABLE `bank`.`rights`
 ADD COLUMN `supply` VARCHAR(255) NULL AFTER `ctime`,
 ADD COLUMN `summary` TEXT NULL COMMENT '简介' AFTER `supply`;
@@ -91,4 +74,3 @@ ADD COLUMN `cover` VARCHAR(255) NULL COMMENT '封面' AFTER `summary`;
 ALTER TABLE `bank`.`rights`
 CHANGE COLUMN `spend_type` `spend_type` ENUM('var','static') NULL DEFAULT 'static' COMMENT '兑换积分是否固定' ,
 CHANGE COLUMN `level` `level` TINYINT(3) UNSIGNED NULL COMMENT '需要的客户等级' ;
-DROP TABLE `bank`.`rights_provider`;

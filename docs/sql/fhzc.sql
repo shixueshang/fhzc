@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `bank`.`product` (
   `is_display` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '产品是否显示 1显示|0不显示',
   `is_renew` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否是续存期产品 0否|1是',
   `desc` TEXT NULL COMMENT '产品简介',
-  `ctime` DATETIME NOT NULL COMMENT '记录增加时间',
+  `ctime` DATETIME NULL COMMENT '记录增加时间',
   PRIMARY KEY (`pid`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC),
   UNIQUE INDEX `code_UNIQUE` (`code` ASC))
@@ -562,20 +562,6 @@ CREATE TABLE IF NOT EXISTS `bank`.`admin_role` (
 
 
 -- -----------------------------------------------------
--- Table `bank`.`rights_provider`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `bank`.`rights_provider` ;
-
-CREATE TABLE IF NOT EXISTS `bank`.`rights_provider` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `rights_id` INT NULL COMMENT '权益id',
-  `provider_id` INT NULL COMMENT '供应商id',
-  `ctime` DATETIME NULL COMMENT '创建时间',
-  PRIMARY KEY (`id`))
-  ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `bank`.`system_module`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `bank`.`system_module` ;
@@ -790,6 +776,22 @@ CREATE TABLE IF NOT EXISTS `im_message` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT '消息表';
 
+
+#产品派息数据1:n
+DROP TABLE IF EXISTS `bank`.`product_dividend_day` ;
+CREATE TABLE `bank`.`product_dividend_day` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `pid` INT NOT NULL COMMENT '产品id',
+  `day` DATE NOT NULL COMMENT '派息日',
+  PRIMARY KEY (`id`))
+  COMMENT = '产品派息日';
+
+DROP TABLE IF EXISTS `bank`.`activity_category` ;
+CREATE TABLE `bank`.`activity_category` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NULL COMMENT '活动名称',
+  PRIMARY KEY (`id`))
+  COMMENT = '活动分类';
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
