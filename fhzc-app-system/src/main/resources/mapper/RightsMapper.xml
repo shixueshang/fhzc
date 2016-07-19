@@ -11,6 +11,7 @@
     <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
     <result column="supply" property="supply" jdbcType="VARCHAR" />
     <result column="cover" property="cover" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.fhzc.app.system.mybatis.model.Rights" extends="BaseResultMap" >
     <result column="summary" property="summary" jdbcType="LONGVARCHAR" />
@@ -74,7 +75,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    `id`, `cid`, `name`, `spend_score`, `spend_type`, `level`, `ctime`, `supply`, `cover`
+    `id`, `cid`, `name`, `spend_score`, `spend_type`, `level`, `ctime`, `supply`, `cover`, 
+    `url`
   </sql>
   <sql id="Blob_Column_List" >
     `summary`
@@ -133,12 +135,12 @@
     </selectKey>
     insert into `rights` (`cid`, `name`, `spend_score`, 
       `spend_type`, `level`, `ctime`, 
-      `supply`, `cover`, `summary`
-      )
+      `supply`, `cover`, `url`, 
+      `summary`)
     values (#{cid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{spendScore,jdbcType=INTEGER}, 
       #{spendType,jdbcType=CHAR}, #{level,jdbcType=TINYINT}, #{ctime,jdbcType=TIMESTAMP}, 
-      #{supply,jdbcType=VARCHAR}, #{cover,jdbcType=VARCHAR}, #{summary,jdbcType=LONGVARCHAR}
-      )
+      #{supply,jdbcType=VARCHAR}, #{cover,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{summary,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.system.mybatis.model.Rights" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
@@ -170,6 +172,9 @@
       <if test="cover != null" >
         `cover`,
       </if>
+      <if test="url != null" >
+        `url`,
+      </if>
       <if test="summary != null" >
         `summary`,
       </if>
@@ -198,6 +203,9 @@
       </if>
       <if test="cover != null" >
         #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
       </if>
       <if test="summary != null" >
         #{summary,jdbcType=LONGVARCHAR},
@@ -240,6 +248,9 @@
       <if test="record.cover != null" >
         `cover` = #{record.cover,jdbcType=VARCHAR},
       </if>
+      <if test="record.url != null" >
+        `url` = #{record.url,jdbcType=VARCHAR},
+      </if>
       <if test="record.summary != null" >
         `summary` = #{record.summary,jdbcType=LONGVARCHAR},
       </if>
@@ -259,6 +270,7 @@
       `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
       `supply` = #{record.supply,jdbcType=VARCHAR},
       `cover` = #{record.cover,jdbcType=VARCHAR},
+      `url` = #{record.url,jdbcType=VARCHAR},
       `summary` = #{record.summary,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -274,7 +286,8 @@
       `level` = #{record.level,jdbcType=TINYINT},
       `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
       `supply` = #{record.supply,jdbcType=VARCHAR},
-      `cover` = #{record.cover,jdbcType=VARCHAR}
+      `cover` = #{record.cover,jdbcType=VARCHAR},
+      `url` = #{record.url,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -306,6 +319,9 @@
       <if test="cover != null" >
         `cover` = #{cover,jdbcType=VARCHAR},
       </if>
+      <if test="url != null" >
+        `url` = #{url,jdbcType=VARCHAR},
+      </if>
       <if test="summary != null" >
         `summary` = #{summary,jdbcType=LONGVARCHAR},
       </if>
@@ -322,6 +338,7 @@
       `ctime` = #{ctime,jdbcType=TIMESTAMP},
       `supply` = #{supply,jdbcType=VARCHAR},
       `cover` = #{cover,jdbcType=VARCHAR},
+      `url` = #{url,jdbcType=VARCHAR},
       `summary` = #{summary,jdbcType=LONGVARCHAR}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
@@ -334,7 +351,8 @@
       `level` = #{level,jdbcType=TINYINT},
       `ctime` = #{ctime,jdbcType=TIMESTAMP},
       `supply` = #{supply,jdbcType=VARCHAR},
-      `cover` = #{cover,jdbcType=VARCHAR}
+      `cover` = #{cover,jdbcType=VARCHAR},
+      `url` = #{url,jdbcType=VARCHAR}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
   <select resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.system.mybatis.model.RightsExample" id="selectByExampleWithBLOBsWithRowbounds" >

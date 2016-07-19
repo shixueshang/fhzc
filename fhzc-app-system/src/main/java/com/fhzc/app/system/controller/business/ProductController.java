@@ -22,7 +22,6 @@ import java.math.BigDecimal;
 import java.util.*;
 
 /**
- * 产品管理
  * Created by lihongde on 2016/7/7 15:22
  */
 @Controller

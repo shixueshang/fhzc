@@ -80,7 +80,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">权益名<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <input type="text" name="name" data-required="1" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="name" value="${right.name}" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -88,7 +88,7 @@
                                                 <label class="control-label">权益类型<span class="required">*</span></label>
                                                 <div class="controls">
                                                     <select class="large m-wrap" name="cid" data-required="1" tabindex="1">
-                                                        <option  value="1">--</option>
+                                                        <option  value="1">健康管理</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -118,7 +118,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">供应商</label>
                                                 <div class="controls">
-                                                    <input type="text" name="supply"  placeholder="" class="m-wrap large">
+                                                    <input type="text" name="supply" value="${right.supply}"  placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -135,9 +135,9 @@
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">兑换积分要求<span class="required">*</span></label>
+                                                <label class="control-label">兑换积分<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <input type="text" name="spendScore" data-required="1" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="spendScore" value="spendScore" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -145,7 +145,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">权益简介</label>
                                                 <div class="controls">
-                                                    <textarea name="summary" class="span6 m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;"></textarea>
+                                                    <textarea name="summary" class="span6 m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;">${right.summary}</textarea>
                                                 </div>
                                             </div>
 
@@ -160,7 +160,7 @@
                                                         <div>
                                                        <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
                                                        <span class="fileupload-exists">更换</span>
-                                                       <input type="file" name="cover" class="default" /></span>
+                                                       <input type="file" name="coverFile" class="default" /></span>
                                                             <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
                                                         </div>
                                                     </div>
@@ -176,7 +176,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">详情链接</label>
                                                 <div class="controls">
-                                                    <input type="text" name="url" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="url" value="${right.url}" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -224,7 +224,7 @@
                 spendScore: {
                     number: true,
                     min:0
-                },
+                }
             },
 
             invalidHandler: function (event, validator) { //display error alert on form submit

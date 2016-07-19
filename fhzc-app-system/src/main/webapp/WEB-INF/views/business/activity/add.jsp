@@ -147,14 +147,6 @@
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">失效时间</label>
-                                                <div class="controls">
-                                                    <input type="text" name="deadTime" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${activity.expireTime}" pattern="yyyy-MM-dd"/>">
-                                                    <span class="help-inline"></span>
-                                                </div>
-                                            </div>
-
-                                            <div class="control-group">
                                                 <label class="control-label">活动封面</label>
                                                 <div class="controls">
                                                     <div class="fileupload fileupload-new" data-provides="fileupload">

@@ -21,6 +21,8 @@ public class Rights {
 
     private String cover;
 
+    private String url;
+
     private String summary;
 
     public Integer getId() {
@@ -93,6 +95,14 @@ public class Rights {
 
     public void setCover(String cover) {
         this.cover = cover == null ? null : cover.trim();
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url == null ? null : url.trim();
     }
 
     public String getSummary() {
