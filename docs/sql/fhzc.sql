@@ -57,10 +57,10 @@ CREATE TABLE IF NOT EXISTS `bank`.`product` (
   `found_day` DATE NOT NULL COMMENT '成立日',
   `value_day` DATE NOT NULL COMMENT '起息日',
   `expiry_day` DATE NOT NULL COMMENT '到期日',
-  `issue_type` TINYINT(1) NOT NULL COMMENT '发行模式',
+  `issue_type` INT(1) NOT NULL COMMENT '发行模式',
   `product_type` VARCHAR(200) NOT NULL COMMENT '产品类型',
   `renew_deadline` VARCHAR(200) NULL COMMENT '产品续存期限',
-  `dividend_day` DATE NULL COMMENT '派息日期',
+  `dividend_day` VARCHAR(200) NULL COMMENT '派息日期',
   `annual_yield` VARCHAR(200) NULL COMMENT '年化收益率',
   `income_distribution_type` VARCHAR(200) NULL COMMENT '收益分配方式',
   `investment_orientation` VARCHAR(200) NULL COMMENT '投资方向',
@@ -79,13 +79,13 @@ CREATE TABLE IF NOT EXISTS `bank`.`product` (
   `level` INT NULL COMMENT '允许购买的客户等级',
   `risk` INT NULL COMMENT '能接受的客户风险等级',
   `cover` VARCHAR(255) NULL COMMENT '产品封面',
-  `notice` VARCHAR(45) NULL COMMENT '产品成立公告',
+  `notice` VARCHAR(255) NULL COMMENT '产品成立公告',
   `score_factor` TINYINT UNSIGNED NOT NULL DEFAULT 100 COMMENT '产品积分系数百分比,默认100%',
   `is_ recommend` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否推荐 1是|0否',
   `is_display` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '产品是否显示 1显示|0不显示',
   `is_renew` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否是续存期产品 0否|1是',
   `desc` TEXT NULL COMMENT '产品简介',
-  `ctime` DATETIME NOT NULL COMMENT '记录增加时间',
+  `ctime` DATETIME NULL COMMENT '记录增加时间',
   PRIMARY KEY (`pid`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC),
   UNIQUE INDEX `code_UNIQUE` (`code` ASC))
@@ -562,20 +562,6 @@ CREATE TABLE IF NOT EXISTS `bank`.`admin_role` (
 
 
 -- -----------------------------------------------------
--- Table `bank`.`rights_provider`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `bank`.`rights_provider` ;
-
-CREATE TABLE IF NOT EXISTS `bank`.`rights_provider` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `rights_id` INT NULL COMMENT '权益id',
-  `provider_id` INT NULL COMMENT '供应商id',
-  `ctime` DATETIME NULL COMMENT '创建时间',
-  PRIMARY KEY (`id`))
-  ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `bank`.`system_module`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `bank`.`system_module` ;
@@ -790,6 +776,22 @@ CREATE TABLE IF NOT EXISTS `im_message` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT '消息表';
 
+
+#产品派息数据1:n
+DROP TABLE IF EXISTS `bank`.`product_dividend_day` ;
+CREATE TABLE `bank`.`product_dividend_day` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `pid` INT NOT NULL COMMENT '产品id',
+  `day` DATE NOT NULL COMMENT '派息日',
+  PRIMARY KEY (`id`))
+  COMMENT = '产品派息日';
+
+DROP TABLE IF EXISTS `bank`.`activity_category` ;
+CREATE TABLE `bank`.`activity_category` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NULL COMMENT '活动名称',
+  PRIMARY KEY (`id`))
+  COMMENT = '活动分类';
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

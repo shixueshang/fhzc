@@ -48,11 +48,11 @@
 
 
 
-        <table tableName="product"
+        <table tableName="report"
                delimitAllColumns="true"
                delimitIdentifiers="true"
-               domainObjectName="Product">
-            <generatedKey column="pid" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
+               domainObjectName="Report">
+            <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
         </table>
 
 

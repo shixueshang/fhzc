@@ -3,12 +3,15 @@ package com.fhzc.app.system.controller.business;
 import com.fhzc.app.system.commons.page.PageHelper;
 import com.fhzc.app.system.commons.page.PageableResult;
 import com.fhzc.app.system.commons.util.Const;
+import com.fhzc.app.system.commons.util.DateUtil;
 import com.fhzc.app.system.commons.util.FileUtil;
 import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.mybatis.model.Product;
+import com.fhzc.app.system.mybatis.model.ProductDividendDay;
 import com.fhzc.app.system.service.ProductService;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,9 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 产品管理
@@ -69,29 +70,59 @@ public class ProductController extends BaseController {
      * @param product 产品信息
      * @param coverFile 产品封面
      * @param proveFile 备案证明
+     * @param noticeFile 产品成立公告
      * @return
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ModelAndView addProduct(Product product, MultipartFile coverFile, MultipartFile proveFile){
+    public ModelAndView addOrUpdateProduct(Product product, MultipartFile coverFile, MultipartFile proveFile, MultipartFile noticeFile){
         ModelAndView mav = new ModelAndView("business/product/list");
-        String coverName = FileUtil.generatePictureName(coverFile);
-        String coverPath = TextUtils.getConfig(Const.CONFIG_KEY_SYSTEM_IMAGE_SAVE_PATH, this);
-        FileUtil.transferFile(coverPath, coverName, coverFile);
-        product.setCover(coverPath + coverName);
 
-        String proveUrlName = FileUtil.generatePictureName(proveFile);
-        String proveUrlPath = TextUtils.getConfig(Const.CONFIG_KEY_SYSTEM_IMAGE_SAVE_PATH, this);
-        FileUtil.transferFile(proveUrlPath, proveUrlName, proveFile);
-        product.setProveUrl(proveUrlPath + proveUrlName);
+        if(!coverFile.isEmpty()){
+            String coverName = FileUtil.generatePictureName(coverFile);
+            String coverPath = TextUtils.getConfig(Const.CONFIG_KEY_SYSTEM_IMAGE_SAVE_PATH, this);
+            FileUtil.transferFile(coverPath, coverName, coverFile);
+            product.setCover(coverPath + coverName);
+        }
 
-        product.setInvestThreshold(product.getInvestThreshold().multiply(new BigDecimal(10000)));
+        if(!proveFile.isEmpty()){
+            String proveUrlName = FileUtil.generatePictureName(proveFile);
+            String proveUrlPath = TextUtils.getConfig(Const.CONFIG_KEY_SYSTEM_IMAGE_SAVE_PATH, this);
+            FileUtil.transferFile(proveUrlPath, proveUrlName, proveFile);
+            product.setProveUrl(proveUrlPath + proveUrlName);
+        }
+
+        if(product.getInvestThreshold() != null && product.getInvestThreshold().compareTo(new BigDecimal(0)) == 1){
+            product.setInvestThreshold(product.getInvestThreshold().multiply(new BigDecimal(10000)));
+        }
         product.setCtime(new Date());
 
-        productService.addProduct(product);
+        productService.addOrUpdateProduct(product);
+
+        if(product.getDividendDay() != null){
+            String[] dividendDays = product.getDividendDay().split(",");
+            for(String dividendDay : dividendDays){
+                ProductDividendDay pdd = new ProductDividendDay();
+                pdd.setDay(DateUtil.parseDate(dividendDay, "yyyy-MM-dd"));
+                pdd.setPid(product.getPid());
+                productService.addOrUpdateProductDividendDay(pdd);
+            }
+        }
 
         PageableResult<Product> pageableResult = productService.findPageProducts(page, size);
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("products", pageableResult.getItems());
+        return mav;
+    }
+
+    /**
+     * 产品编辑
+     * @param pid
+     * @return
+     */
+    @RequestMapping(value="/detail/{pid}", method = RequestMethod.GET)
+    public ModelAndView detail(@PathVariable(value = "pid") Integer pid){
+        ModelAndView mav = new ModelAndView("/business/product/add");
+        mav.addObject("product", productService.getProduct(pid));
         return mav;
     }
 
@@ -114,4 +145,5 @@ public class ProductController extends BaseController {
         }
         return result;
     }
+
 }

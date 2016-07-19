@@ -8,8 +8,8 @@
     <result column="cover" property="cover" jdbcType="VARCHAR" />
     <result column="url" property="url" jdbcType="VARCHAR" />
     <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
-    <result column="is_del" property="isDel" jdbcType="TINYINT" />
-    <result column="is_display" property="isDisplay" jdbcType="TINYINT" />
+    <result column="is_del" property="isDel" jdbcType="INTEGER" />
+    <result column="is_display" property="isDisplay" jdbcType="INTEGER" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.fhzc.app.system.mybatis.model.Report" extends="BaseResultMap" >
     <result column="summary" property="summary" jdbcType="LONGVARCHAR" />
@@ -134,8 +134,8 @@
       `url`, `ctime`, `is_del`, 
       `is_display`, `summary`)
     values (#{cid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{cover,jdbcType=VARCHAR}, 
-      #{url,jdbcType=VARCHAR}, #{ctime,jdbcType=TIMESTAMP}, #{isDel,jdbcType=TINYINT}, 
-      #{isDisplay,jdbcType=TINYINT}, #{summary,jdbcType=LONGVARCHAR})
+      #{url,jdbcType=VARCHAR}, #{ctime,jdbcType=TIMESTAMP}, #{isDel,jdbcType=INTEGER}, 
+      #{isDisplay,jdbcType=INTEGER}, #{summary,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.system.mybatis.model.Report" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
@@ -185,10 +185,10 @@
         #{ctime,jdbcType=TIMESTAMP},
       </if>
       <if test="isDel != null" >
-        #{isDel,jdbcType=TINYINT},
+        #{isDel,jdbcType=INTEGER},
       </if>
       <if test="isDisplay != null" >
-        #{isDisplay,jdbcType=TINYINT},
+        #{isDisplay,jdbcType=INTEGER},
       </if>
       <if test="summary != null" >
         #{summary,jdbcType=LONGVARCHAR},
@@ -223,10 +223,10 @@
         `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.isDel != null" >
-        `is_del` = #{record.isDel,jdbcType=TINYINT},
+        `is_del` = #{record.isDel,jdbcType=INTEGER},
       </if>
       <if test="record.isDisplay != null" >
-        `is_display` = #{record.isDisplay,jdbcType=TINYINT},
+        `is_display` = #{record.isDisplay,jdbcType=INTEGER},
       </if>
       <if test="record.summary != null" >
         `summary` = #{record.summary,jdbcType=LONGVARCHAR},
@@ -244,8 +244,8 @@
       `cover` = #{record.cover,jdbcType=VARCHAR},
       `url` = #{record.url,jdbcType=VARCHAR},
       `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
-      `is_del` = #{record.isDel,jdbcType=TINYINT},
-      `is_display` = #{record.isDisplay,jdbcType=TINYINT},
+      `is_del` = #{record.isDel,jdbcType=INTEGER},
+      `is_display` = #{record.isDisplay,jdbcType=INTEGER},
       `summary` = #{record.summary,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -259,8 +259,8 @@
       `cover` = #{record.cover,jdbcType=VARCHAR},
       `url` = #{record.url,jdbcType=VARCHAR},
       `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
-      `is_del` = #{record.isDel,jdbcType=TINYINT},
-      `is_display` = #{record.isDisplay,jdbcType=TINYINT}
+      `is_del` = #{record.isDel,jdbcType=INTEGER},
+      `is_display` = #{record.isDisplay,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -284,10 +284,10 @@
         `ctime` = #{ctime,jdbcType=TIMESTAMP},
       </if>
       <if test="isDel != null" >
-        `is_del` = #{isDel,jdbcType=TINYINT},
+        `is_del` = #{isDel,jdbcType=INTEGER},
       </if>
       <if test="isDisplay != null" >
-        `is_display` = #{isDisplay,jdbcType=TINYINT},
+        `is_display` = #{isDisplay,jdbcType=INTEGER},
       </if>
       <if test="summary != null" >
         `summary` = #{summary,jdbcType=LONGVARCHAR},
@@ -302,8 +302,8 @@
       `cover` = #{cover,jdbcType=VARCHAR},
       `url` = #{url,jdbcType=VARCHAR},
       `ctime` = #{ctime,jdbcType=TIMESTAMP},
-      `is_del` = #{isDel,jdbcType=TINYINT},
-      `is_display` = #{isDisplay,jdbcType=TINYINT},
+      `is_del` = #{isDel,jdbcType=INTEGER},
+      `is_display` = #{isDisplay,jdbcType=INTEGER},
       `summary` = #{summary,jdbcType=LONGVARCHAR}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
@@ -314,8 +314,8 @@
       `cover` = #{cover,jdbcType=VARCHAR},
       `url` = #{url,jdbcType=VARCHAR},
       `ctime` = #{ctime,jdbcType=TIMESTAMP},
-      `is_del` = #{isDel,jdbcType=TINYINT},
-      `is_display` = #{isDisplay,jdbcType=TINYINT}
+      `is_del` = #{isDel,jdbcType=INTEGER},
+      `is_display` = #{isDisplay,jdbcType=INTEGER}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
   <select resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.system.mybatis.model.ReportExample" id="selectByExampleWithBLOBsWithRowbounds" >

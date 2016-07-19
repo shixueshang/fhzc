@@ -505,52 +505,52 @@ public class ReportExample {
             return (Criteria) this;
         }
 
-        public Criteria andIsDelEqualTo(Byte value) {
+        public Criteria andIsDelEqualTo(Integer value) {
             addCriterion("`is_del` =", value, "isDel");
             return (Criteria) this;
         }
 
-        public Criteria andIsDelNotEqualTo(Byte value) {
+        public Criteria andIsDelNotEqualTo(Integer value) {
             addCriterion("`is_del` <>", value, "isDel");
             return (Criteria) this;
         }
 
-        public Criteria andIsDelGreaterThan(Byte value) {
+        public Criteria andIsDelGreaterThan(Integer value) {
             addCriterion("`is_del` >", value, "isDel");
             return (Criteria) this;
         }
 
-        public Criteria andIsDelGreaterThanOrEqualTo(Byte value) {
+        public Criteria andIsDelGreaterThanOrEqualTo(Integer value) {
             addCriterion("`is_del` >=", value, "isDel");
             return (Criteria) this;
         }
 
-        public Criteria andIsDelLessThan(Byte value) {
+        public Criteria andIsDelLessThan(Integer value) {
             addCriterion("`is_del` <", value, "isDel");
             return (Criteria) this;
         }
 
-        public Criteria andIsDelLessThanOrEqualTo(Byte value) {
+        public Criteria andIsDelLessThanOrEqualTo(Integer value) {
             addCriterion("`is_del` <=", value, "isDel");
             return (Criteria) this;
         }
 
-        public Criteria andIsDelIn(List<Byte> values) {
+        public Criteria andIsDelIn(List<Integer> values) {
             addCriterion("`is_del` in", values, "isDel");
             return (Criteria) this;
         }
 
-        public Criteria andIsDelNotIn(List<Byte> values) {
+        public Criteria andIsDelNotIn(List<Integer> values) {
             addCriterion("`is_del` not in", values, "isDel");
             return (Criteria) this;
         }
 
-        public Criteria andIsDelBetween(Byte value1, Byte value2) {
+        public Criteria andIsDelBetween(Integer value1, Integer value2) {
             addCriterion("`is_del` between", value1, value2, "isDel");
             return (Criteria) this;
         }
 
-        public Criteria andIsDelNotBetween(Byte value1, Byte value2) {
+        public Criteria andIsDelNotBetween(Integer value1, Integer value2) {
             addCriterion("`is_del` not between", value1, value2, "isDel");
             return (Criteria) this;
         }
@@ -565,52 +565,52 @@ public class ReportExample {
             return (Criteria) this;
         }
 
-        public Criteria andIsDisplayEqualTo(Byte value) {
+        public Criteria andIsDisplayEqualTo(Integer value) {
             addCriterion("`is_display` =", value, "isDisplay");
             return (Criteria) this;
         }
 
-        public Criteria andIsDisplayNotEqualTo(Byte value) {
+        public Criteria andIsDisplayNotEqualTo(Integer value) {
             addCriterion("`is_display` <>", value, "isDisplay");
             return (Criteria) this;
         }
 
-        public Criteria andIsDisplayGreaterThan(Byte value) {
+        public Criteria andIsDisplayGreaterThan(Integer value) {
             addCriterion("`is_display` >", value, "isDisplay");
             return (Criteria) this;
         }
 
-        public Criteria andIsDisplayGreaterThanOrEqualTo(Byte value) {
+        public Criteria andIsDisplayGreaterThanOrEqualTo(Integer value) {
             addCriterion("`is_display` >=", value, "isDisplay");
             return (Criteria) this;
         }
 
-        public Criteria andIsDisplayLessThan(Byte value) {
+        public Criteria andIsDisplayLessThan(Integer value) {
             addCriterion("`is_display` <", value, "isDisplay");
             return (Criteria) this;
         }
 
-        public Criteria andIsDisplayLessThanOrEqualTo(Byte value) {
+        public Criteria andIsDisplayLessThanOrEqualTo(Integer value) {
             addCriterion("`is_display` <=", value, "isDisplay");
             return (Criteria) this;
         }
 
-        public Criteria andIsDisplayIn(List<Byte> values) {
+        public Criteria andIsDisplayIn(List<Integer> values) {
             addCriterion("`is_display` in", values, "isDisplay");
             return (Criteria) this;
         }
 
-        public Criteria andIsDisplayNotIn(List<Byte> values) {
+        public Criteria andIsDisplayNotIn(List<Integer> values) {
             addCriterion("`is_display` not in", values, "isDisplay");
             return (Criteria) this;
         }
 
-        public Criteria andIsDisplayBetween(Byte value1, Byte value2) {
+        public Criteria andIsDisplayBetween(Integer value1, Integer value2) {
             addCriterion("`is_display` between", value1, value2, "isDisplay");
             return (Criteria) this;
         }
 
-        public Criteria andIsDisplayNotBetween(Byte value1, Byte value2) {
+        public Criteria andIsDisplayNotBetween(Integer value1, Integer value2) {
             addCriterion("`is_display` not between", value1, value2, "isDisplay");
             return (Criteria) this;
         }

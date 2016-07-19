@@ -15,9 +15,9 @@ public class Report {
 
     private Date ctime;
 
-    private Byte isDel;
+    private Integer isDel;
 
-    private Byte isDisplay;
+    private Integer isDisplay;
 
     private String summary;
 
@@ -69,19 +69,19 @@ public class Report {
         this.ctime = ctime;
     }
 
-    public Byte getIsDel() {
+    public Integer getIsDel() {
         return isDel;
     }
 
-    public void setIsDel(Byte isDel) {
+    public void setIsDel(Integer isDel) {
         this.isDel = isDel;
     }
 
-    public Byte getIsDisplay() {
+    public Integer getIsDisplay() {
         return isDisplay;
     }
 
-    public void setIsDisplay(Byte isDisplay) {
+    public void setIsDisplay(Integer isDisplay) {
         this.isDisplay = isDisplay;
     }
 

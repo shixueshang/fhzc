@@ -9,6 +9,7 @@ import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.mybatis.model.Report;
 import com.fhzc.app.system.service.ReportService;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
@@ -43,14 +44,27 @@ public class ReportController extends BaseController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ModelAndView addReport(Report report, MultipartFile coverFile){
+    public ModelAndView addOrUpdateReport(Report report, MultipartFile coverFile){
         ModelAndView mav = new ModelAndView("business/report/list");
         String coverName = FileUtil.generatePictureName(coverFile);
         String coverPath = TextUtils.getConfig(Const.CONFIG_KEY_SYSTEM_IMAGE_SAVE_PATH, this);
         FileUtil.transferFile(coverPath, coverName, coverFile);
         report.setCover(coverPath + coverName);
         report.setCtime(new Date());
-        reportService.addReport(report);
+        report.setIsDel(Const.YES_OR_NO.NO);
+        reportService.addOrUpdateReport(report);
+        return mav;
+    }
+
+    /**
+     * 报告编辑
+     * @param id
+     * @return
+     */
+    @RequestMapping(value="/detail/{id}", method = RequestMethod.GET)
+    public ModelAndView detail(@PathVariable(value = "id") Integer id){
+        ModelAndView mav = new ModelAndView("/business/report/add");
+        mav.addObject("report", reportService.getReport(id));
         return mav;
     }
 }

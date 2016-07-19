@@ -81,7 +81,7 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td><a href="business/report/detail/${report.id}">编辑</a>
+                                        <td><a href="/detail/${report.id}">编辑</a>
                                         </td>
                                     </tr>
                                 </c:forEach>

@@ -20,5 +20,12 @@ public interface ReportService {
      * 添加投研报告
      * @param report
      */
-    void addReport(Report report);
+    void addOrUpdateReport(Report report);
+
+    /**
+     * 获得报告
+     * @param id
+     * @return
+     */
+    Report getReport(Integer id);
 }
