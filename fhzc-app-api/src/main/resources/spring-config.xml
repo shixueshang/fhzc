@@ -11,5 +11,5 @@
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 
     <import resource="classpath:applicationContext.xml"/>
-    <import resource="classpath:shiro.xml"/>
+    <import resource="classpath:shiro/spring-shiro.xml"/>
 </beans>
