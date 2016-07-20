@@ -12,21 +12,7 @@
     <groupId>com.fhzc.app.api</groupId>
     <artifactId>fhzc-app-api</artifactId>
     <packaging>war</packaging>
-    <dependencies>
-        <dependency>
-            <groupId>com.fhzc.app.dao</groupId>
-            <artifactId>fhzc-app-dao</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fhzc.app.dao</groupId>
-            <artifactId>fhzc-app-dao</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fhzc.app.system</groupId>
-            <artifactId>fhzc-app-system</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
+
 
     <dependencyManagement>
         <dependencies>
