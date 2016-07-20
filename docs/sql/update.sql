@@ -79,6 +79,8 @@ DROP TABLE IF EXISTS `bank`.`product_dividend_day` ;
 DROP TABLE IF EXISTS `bank`.`report_category` ;
 DROP TABLE IF EXISTS `bank`.`rights_category` ;
 DROP TABLE IF EXISTS `bank`.`activity_category` ;
+DROP TABLE `bank`.`contract_tmp`;
 
-ALTER TABLE `bank`.`rights`
-ADD COLUMN `url` VARCHAR(255) NULL COMMENT '详情链接' AFTER `cover` ;
+#2016-07-20
+ALTER TABLE `bank`.`product_reservation`
+ADD COLUMN `amount` INT NULL COMMENT '投资金额' AFTER `result`;
