@@ -69,6 +69,10 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
+    <!-- session超时时间30分钟 -->
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
 
     <filter>
         <filter-name>DruidWebStatFilter</filter-name>
