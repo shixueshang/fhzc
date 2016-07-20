@@ -24,7 +24,15 @@ public class ProductApiController extends BaseController {
     @RequestMapping(value = "/api/product",method = RequestMethod.GET)
     @ResponseBody
     public ApiJsonResult productList(Integer userId){
-        PageableResult<Product> productList =  productService.getProductList(0,0);
+        PageableResult<Product> productList =  productService.getProductList(0,0, false);
+
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,productList);
+    }
+
+    @RequestMapping(value = "/api/product/select",method = RequestMethod.GET)
+    @ResponseBody
+    public ApiJsonResult productListSelect(Integer userId){
+        PageableResult<Product> productList =  productService.getProductList(0,0,true);
 
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,productList);
     }

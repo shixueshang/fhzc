@@ -1,7 +1,9 @@
 package com.fhzc.app.system.service;
 
-import com.fhzc.app.system.commons.page.PageableResult;
+
+
 import com.fhzc.app.dao.mybatis.model.Product;
+import com.fhzc.app.dao.mybatis.page.PageableResult;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
@@ -18,14 +20,6 @@ public interface ProductService {
      * @return
      */
     PageableResult<Product> findPageProducts(int page, int size);
-
-    /**
-     * 条件查询产品列表
-     * @param level
-     * @param risk
-     * @return
-     */
-    PageableResult<Product> getProductList(int level,int risk);
 
     /**
      * 添加产品

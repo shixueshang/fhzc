@@ -1,6 +1,6 @@
 package com.fhzc.app.system.service.impl;
 
-import com.fhzc.app.system.commons.page.PageableResult;
+import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.system.commons.util.excel.ExcelImporter;
 import com.fhzc.app.system.commons.util.excel.ImportCallBack;
 import com.fhzc.app.system.commons.util.excel.ImportConfig;
@@ -39,15 +39,6 @@ public class ProductServiceImpl implements ProductService {
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<Product> list = productMapper.selectByExampleWithRowbounds(example, rowBounds);
         return new PageableResult<Product>(page, size, list.size(), list);
-    }
-
-    @Override
-    public PageableResult<Product> getProductList(int level,int risk) {
-        ProductExample example = new ProductExample();
-        ProductExample.Criteria criteria = example.createCriteria();
-        criteria.andIsDisplayEqualTo((byte) 1);
-        List<Product> list = productMapper.selectByExample(example);
-        return new PageableResult<Product>(0, 100, list.size(), list);
     }
 
     @Override

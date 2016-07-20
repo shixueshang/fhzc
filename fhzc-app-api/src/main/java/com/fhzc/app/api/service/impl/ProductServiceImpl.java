@@ -36,10 +36,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public PageableResult<Product> getProductList(int level,int risk) {
+    public PageableResult<Product> getProductList(int level,int risk,boolean is_recommend) {
         ProductExample example = new ProductExample();
         ProductExample.Criteria criteria = example.createCriteria();
         criteria.andIsDisplayEqualTo((byte) 1);
+        if(is_recommend) {
+            criteria.andIsRecommendEqualTo((byte) 1);
+        }
         List<Product> list = productMapper.selectByExample(example);
         return new PageableResult<Product>(0, 100, list.size(), list);
     }
