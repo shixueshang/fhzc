@@ -1,9 +1,9 @@
 package com.fhzc.app.system.service.impl;
 
-import com.fhzc.app.system.commons.page.PageableResult;
 import com.fhzc.app.dao.mybatis.inter.RightsMapper;
 import com.fhzc.app.dao.mybatis.model.Rights;
 import com.fhzc.app.dao.mybatis.model.RightsExample;
+import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.system.service.RightsService;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;

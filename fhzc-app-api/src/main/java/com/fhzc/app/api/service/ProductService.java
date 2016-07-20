@@ -26,13 +26,6 @@ public interface ProductService {
     PageableResult<Product> getProductList(int level, int risk, boolean b);
 
     /**
-     * 添加产品
-     * @param product
-     */
-    void addOrUpdateProduct(Product product);
-
-
-    /**
      * 获得产品信息
      * @param pid
      * @return

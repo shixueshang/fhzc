@@ -18,12 +18,6 @@ public interface RightsService {
     PageableResult<Rights> findPageRights(int page, int size);
 
     /**
-     * 添加或这修改权益
-     * @param rights
-     */
-    void addOrUpdateRights(Rights rights);
-
-    /**
      * 获得权益信息
      * @param id
      * @return

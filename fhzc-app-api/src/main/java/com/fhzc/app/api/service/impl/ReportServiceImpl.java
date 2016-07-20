@@ -29,16 +29,6 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public void addOrUpdateReport(Report report) {
-        Integer id = report.getId();
-        if(id == null){
-            reportMapper.insert(report);
-        }else{
-            reportMapper.updateByPrimaryKey(report);
-        }
-    }
-
-    @Override
     public Report getReport(Integer id) {
         return reportMapper.selectByPrimaryKey(id);
     }

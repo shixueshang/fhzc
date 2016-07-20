@@ -17,12 +17,6 @@ public interface ReportService {
     PageableResult<Report> findPageReports(int page, int size);
 
     /**
-     * 添加投研报告
-     * @param report
-     */
-    void addOrUpdateReport(Report report);
-
-    /**
      * 获得报告
      * @param id
      * @return

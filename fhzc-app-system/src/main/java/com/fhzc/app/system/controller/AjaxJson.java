@@ -1,7 +1,6 @@
 package com.fhzc.app.system.controller;
 
-
-import com.fhzc.app.system.commons.page.PageableResult;
+import com.fhzc.app.dao.mybatis.page.PageableResult;
 
 import java.util.List;
 import java.util.Map;

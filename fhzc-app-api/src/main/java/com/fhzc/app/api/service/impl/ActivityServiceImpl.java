@@ -30,16 +30,6 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public void addOrUpdateActivity(Activity activity) {
-        Integer id = activity.getId();
-        if(id == null){
-            activityMapper.insert(activity);
-        }else{
-            activityMapper.updateByPrimaryKey(activity);
-        }
-    }
-
-    @Override
     public Activity getActivity(Integer id) {
         return activityMapper.selectByPrimaryKey(id);
     }

@@ -48,16 +48,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void addOrUpdateProduct(Product product) {
-        Integer pid = product.getPid();
-        if(pid == null){
-            productMapper.insertSelective(product);
-        }else{
-            productMapper.updateByPrimaryKeySelective(product);
-        }
-    }
-
-    @Override
     public Product getProduct(Integer pid) {
         return productMapper.selectByPrimaryKey(pid);
     }

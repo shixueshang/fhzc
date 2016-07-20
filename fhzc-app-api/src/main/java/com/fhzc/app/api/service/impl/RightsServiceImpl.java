@@ -30,16 +30,6 @@ public class RightsServiceImpl implements RightsService {
     }
 
     @Override
-    public void addOrUpdateRights(Rights rights) {
-        Integer id = rights.getId();
-        if(id == null){
-            rightsMapper.insert(rights);
-        }else{
-            rightsMapper.updateByPrimaryKey(rights);
-        }
-    }
-
-    @Override
     public Rights getRights(Integer id) {
         return rightsMapper.selectByPrimaryKey(id);
     }

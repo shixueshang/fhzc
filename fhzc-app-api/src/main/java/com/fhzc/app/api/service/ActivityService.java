@@ -17,12 +17,6 @@ public interface ActivityService {
     PageableResult<Activity> findPageActivies(int page, int size);
 
     /**
-     * 添加或者修改活动信息
-     * @param activity
-     */
-    void addOrUpdateActivity(Activity activity);
-
-    /**
      * 获得活动信息
      * @param id
      * @return
