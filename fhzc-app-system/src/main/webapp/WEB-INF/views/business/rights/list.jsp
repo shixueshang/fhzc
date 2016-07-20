@@ -64,7 +64,6 @@
                                     <td>权益id</td>
                                     <td>权益名</td>
                                     <td>权益类型</td>
-                                    <td>权益投放分公司</td>
                                     <td>客户等级要求</td>
                                     <td>兑换积分</td>
                                     <td>关注人数</td>
@@ -73,17 +72,38 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach items="${activities}" var="report">
+                                <c:forEach items="${rights}" var="right">
                                     <tr>
+                                        <td>${right.id}</td>
+                                        <td>${right.name}</td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${right.cid == '1'}">
+                                                    是
+                                                </c:when>
+                                                <c:when test="${right.cid == '0'}">
+                                                    否
+                                                </c:when>
+                                            </c:choose>
+
+                                        </td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${right.level == '1'}">
+                                                    准客户
+                                                </c:when>
+                                                <c:when test="${right.level == '2'}">
+                                                    客户
+                                                </c:when>
+                                                <c:when test="${right.level == '3'}">
+                                                    金卡客户
+                                                </c:when>
+                                            </c:choose>
+                                        </td>
+                                        <td>${right.spendScore}</td>
                                         <td></td>
                                         <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td><a href="business/report/detail/${report.id}">编辑</a>
+                                        <td><a href="detail/${right.id}">编辑</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
