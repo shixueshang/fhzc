@@ -2,9 +2,9 @@ package com.fhzc.app.api.service.impl;
 
 import com.fhzc.app.api.service.MessageService;
 import com.fhzc.app.api.tools.APIConstants;
-import com.fhzc.app.system.mybatis.inter.ImMessageMapper;
-import com.fhzc.app.system.mybatis.model.ImMessage;
-import com.fhzc.app.system.mybatis.model.ImMessageExample;
+import com.fhzc.app.dao.mybatis.inter.ImMessageMapper;
+import com.fhzc.app.dao.mybatis.model.ImMessage;
+import com.fhzc.app.dao.mybatis.model.ImMessageExample;
 import com.vdurmont.emoji.EmojiParser;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.fhzc.app.api.service;
 
-import com.fhzc.app.system.mybatis.model.User;
+import com.fhzc.app.dao.mybatis.model.User;
 
 /**
  * Created by lihongde on 2016/7/14.

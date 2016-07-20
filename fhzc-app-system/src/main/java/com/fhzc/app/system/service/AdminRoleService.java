@@ -1,7 +1,7 @@
 package com.fhzc.app.system.service;
 
 import com.fhzc.app.system.commons.util.Tree;
-import com.fhzc.app.system.mybatis.model.AdminRole;
+import com.fhzc.app.dao.mybatis.model.AdminRole;
 
 import java.util.List;
 

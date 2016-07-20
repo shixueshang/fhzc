@@ -1,7 +1,7 @@
 package com.fhzc.app.system.service.impl;
 
 import com.fhzc.app.system.commons.util.Tree;
-import com.fhzc.app.system.mybatis.model.AdminRole;
+import com.fhzc.app.dao.mybatis.model.AdminRole;
 import com.fhzc.app.system.service.AdminRoleService;
 import org.springframework.stereotype.Service;
 

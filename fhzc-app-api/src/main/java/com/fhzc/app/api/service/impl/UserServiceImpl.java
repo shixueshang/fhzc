@@ -1,8 +1,8 @@
 package com.fhzc.app.api.service.impl;
 
 import com.fhzc.app.api.service.UserService;
-import com.fhzc.app.system.mybatis.inter.UserMapper;
-import com.fhzc.app.system.mybatis.model.User;
+import com.fhzc.app.dao.mybatis.inter.UserMapper;
+import com.fhzc.app.dao.mybatis.model.User;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

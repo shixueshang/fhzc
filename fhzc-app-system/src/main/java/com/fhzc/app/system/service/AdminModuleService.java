@@ -1,7 +1,7 @@
 package com.fhzc.app.system.service;
 
-import com.fhzc.app.system.mybatis.model.SystemAdminModule;
-import com.fhzc.app.system.mybatis.model.SystemModule;
+import com.fhzc.app.dao.mybatis.model.SystemAdminModule;
+import com.fhzc.app.dao.mybatis.model.SystemModule;
 
 import java.util.List;
 

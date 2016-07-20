@@ -1,8 +1,8 @@
 package com.fhzc.app.system.service.impl;
 
-import com.fhzc.app.system.mybatis.inter.AdminMapper;
-import com.fhzc.app.system.mybatis.model.Admin;
-import com.fhzc.app.system.mybatis.model.AdminExample;
+import com.fhzc.app.dao.mybatis.inter.AdminMapper;
+import com.fhzc.app.dao.mybatis.model.Admin;
+import com.fhzc.app.dao.mybatis.model.AdminExample;
 import com.fhzc.app.system.service.AdminService;
 import org.springframework.stereotype.Service;
 

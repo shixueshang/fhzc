@@ -1,7 +1,7 @@
 package com.fhzc.app.system.service;
 
 import com.fhzc.app.system.commons.page.PageableResult;
-import com.fhzc.app.system.mybatis.model.Product;
+import com.fhzc.app.dao.mybatis.model.Product;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;

@@ -4,9 +4,9 @@ import com.fhzc.app.system.commons.page.PageableResult;
 import com.fhzc.app.system.commons.util.excel.ExcelImporter;
 import com.fhzc.app.system.commons.util.excel.ImportCallBack;
 import com.fhzc.app.system.commons.util.excel.ImportConfig;
-import com.fhzc.app.system.mybatis.inter.ProductMapper;
-import com.fhzc.app.system.mybatis.model.Product;
-import com.fhzc.app.system.mybatis.model.ProductExample;
+import com.fhzc.app.dao.mybatis.inter.ProductMapper;
+import com.fhzc.app.dao.mybatis.model.Product;
+import com.fhzc.app.dao.mybatis.model.ProductExample;
 import com.fhzc.app.system.service.ProductService;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -23,7 +23,8 @@ import java.util.*;
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    private static final String IMPORT_SQL = "";
+    private static final String IMPORT_SQL = "INSERT INTO product(code, name, found_day, expiry_day, issue_type, product_type, renew_deadline, dividend_day, fund_management_fee, fund_subscription_fee, fund_manager,custodian, invest_term_min, invest_term_max) " +
+            "VALUES(?,?,?,?,?,?,?,?, 0, 0, 0, 'qq', 0, 0)";
 
     @Resource
     private ExcelImporter importer;

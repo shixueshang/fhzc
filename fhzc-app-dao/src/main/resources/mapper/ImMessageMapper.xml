@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fhzc.app.dao.mybatis.inter.ImMessageMapper" >
+  <resultMap id="BaseResultMap" type="com.fhzc.app.dao.mybatis.model.ImMessage" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="send_time" property="sendTime" jdbcType="TIMESTAMP" />
+    <result column="session_id" property="sessionId" jdbcType="VARCHAR" />
+    <result column="message_type" property="messageType" jdbcType="VARCHAR" />
+    <result column="to_user_id" property="toUserId" jdbcType="INTEGER" />
+    <result column="is_read" property="isRead" jdbcType="BIT" />
+    <result column="duration" property="duration" jdbcType="VARCHAR" />
+    <result column="mid" property="mid" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="BIT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.fhzc.app.dao.mybatis.model.ImMessage" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    `id`, `user_id`, `send_time`, `session_id`, `message_type`, `to_user_id`, `is_read`, 
+    `duration`, `mid`, `status`
+  </sql>
+  <sql id="Blob_Column_List" >
+    `content`
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.ImMessageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from `im_message`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.ImMessageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from `im_message`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from `im_message`
+    where `id` = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from `im_message`
+    where `id` = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fhzc.app.dao.mybatis.model.ImMessageExample" >
+    delete from `im_message`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fhzc.app.dao.mybatis.model.ImMessage" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `im_message` (`user_id`, `send_time`, `session_id`, 
+      `message_type`, `to_user_id`, `is_read`, 
+      `duration`, `mid`, `status`, 
+      `content`)
+    values (#{userId,jdbcType=INTEGER}, #{sendTime,jdbcType=TIMESTAMP}, #{sessionId,jdbcType=VARCHAR}, 
+      #{messageType,jdbcType=VARCHAR}, #{toUserId,jdbcType=INTEGER}, #{isRead,jdbcType=BIT}, 
+      #{duration,jdbcType=VARCHAR}, #{mid,jdbcType=INTEGER}, #{status,jdbcType=BIT}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.ImMessage" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `im_message`
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        `user_id`,
+      </if>
+      <if test="sendTime != null" >
+        `send_time`,
+      </if>
+      <if test="sessionId != null" >
+        `session_id`,
+      </if>
+      <if test="messageType != null" >
+        `message_type`,
+      </if>
+      <if test="toUserId != null" >
+        `to_user_id`,
+      </if>
+      <if test="isRead != null" >
+        `is_read`,
+      </if>
+      <if test="duration != null" >
+        `duration`,
+      </if>
+      <if test="mid != null" >
+        `mid`,
+      </if>
+      <if test="status != null" >
+        `status`,
+      </if>
+      <if test="content != null" >
+        `content`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="sendTime != null" >
+        #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sessionId != null" >
+        #{sessionId,jdbcType=VARCHAR},
+      </if>
+      <if test="messageType != null" >
+        #{messageType,jdbcType=VARCHAR},
+      </if>
+      <if test="toUserId != null" >
+        #{toUserId,jdbcType=INTEGER},
+      </if>
+      <if test="isRead != null" >
+        #{isRead,jdbcType=BIT},
+      </if>
+      <if test="duration != null" >
+        #{duration,jdbcType=VARCHAR},
+      </if>
+      <if test="mid != null" >
+        #{mid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fhzc.app.dao.mybatis.model.ImMessageExample" resultType="java.lang.Integer" >
+    select count(*) from `im_message`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update `im_message`
+    <set >
+      <if test="record.id != null" >
+        `id` = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        `user_id` = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.sendTime != null" >
+        `send_time` = #{record.sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sessionId != null" >
+        `session_id` = #{record.sessionId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.messageType != null" >
+        `message_type` = #{record.messageType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.toUserId != null" >
+        `to_user_id` = #{record.toUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.isRead != null" >
+        `is_read` = #{record.isRead,jdbcType=BIT},
+      </if>
+      <if test="record.duration != null" >
+        `duration` = #{record.duration,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mid != null" >
+        `mid` = #{record.mid,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        `status` = #{record.status,jdbcType=BIT},
+      </if>
+      <if test="record.content != null" >
+        `content` = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update `im_message`
+    set `id` = #{record.id,jdbcType=INTEGER},
+      `user_id` = #{record.userId,jdbcType=INTEGER},
+      `send_time` = #{record.sendTime,jdbcType=TIMESTAMP},
+      `session_id` = #{record.sessionId,jdbcType=VARCHAR},
+      `message_type` = #{record.messageType,jdbcType=VARCHAR},
+      `to_user_id` = #{record.toUserId,jdbcType=INTEGER},
+      `is_read` = #{record.isRead,jdbcType=BIT},
+      `duration` = #{record.duration,jdbcType=VARCHAR},
+      `mid` = #{record.mid,jdbcType=INTEGER},
+      `status` = #{record.status,jdbcType=BIT},
+      `content` = #{record.content,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update `im_message`
+    set `id` = #{record.id,jdbcType=INTEGER},
+      `user_id` = #{record.userId,jdbcType=INTEGER},
+      `send_time` = #{record.sendTime,jdbcType=TIMESTAMP},
+      `session_id` = #{record.sessionId,jdbcType=VARCHAR},
+      `message_type` = #{record.messageType,jdbcType=VARCHAR},
+      `to_user_id` = #{record.toUserId,jdbcType=INTEGER},
+      `is_read` = #{record.isRead,jdbcType=BIT},
+      `duration` = #{record.duration,jdbcType=VARCHAR},
+      `mid` = #{record.mid,jdbcType=INTEGER},
+      `status` = #{record.status,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fhzc.app.dao.mybatis.model.ImMessage" >
+    update `im_message`
+    <set >
+      <if test="userId != null" >
+        `user_id` = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="sendTime != null" >
+        `send_time` = #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sessionId != null" >
+        `session_id` = #{sessionId,jdbcType=VARCHAR},
+      </if>
+      <if test="messageType != null" >
+        `message_type` = #{messageType,jdbcType=VARCHAR},
+      </if>
+      <if test="toUserId != null" >
+        `to_user_id` = #{toUserId,jdbcType=INTEGER},
+      </if>
+      <if test="isRead != null" >
+        `is_read` = #{isRead,jdbcType=BIT},
+      </if>
+      <if test="duration != null" >
+        `duration` = #{duration,jdbcType=VARCHAR},
+      </if>
+      <if test="mid != null" >
+        `mid` = #{mid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        `status` = #{status,jdbcType=BIT},
+      </if>
+      <if test="content != null" >
+        `content` = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where `id` = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.ImMessage" >
+    update `im_message`
+    set `user_id` = #{userId,jdbcType=INTEGER},
+      `send_time` = #{sendTime,jdbcType=TIMESTAMP},
+      `session_id` = #{sessionId,jdbcType=VARCHAR},
+      `message_type` = #{messageType,jdbcType=VARCHAR},
+      `to_user_id` = #{toUserId,jdbcType=INTEGER},
+      `is_read` = #{isRead,jdbcType=BIT},
+      `duration` = #{duration,jdbcType=VARCHAR},
+      `mid` = #{mid,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=BIT},
+      `content` = #{content,jdbcType=LONGVARCHAR}
+    where `id` = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fhzc.app.dao.mybatis.model.ImMessage" >
+    update `im_message`
+    set `user_id` = #{userId,jdbcType=INTEGER},
+      `send_time` = #{sendTime,jdbcType=TIMESTAMP},
+      `session_id` = #{sessionId,jdbcType=VARCHAR},
+      `message_type` = #{messageType,jdbcType=VARCHAR},
+      `to_user_id` = #{toUserId,jdbcType=INTEGER},
+      `is_read` = #{isRead,jdbcType=BIT},
+      `duration` = #{duration,jdbcType=VARCHAR},
+      `mid` = #{mid,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=BIT}
+    where `id` = #{id,jdbcType=INTEGER}
+  </update>
+  <select resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.ImMessageExample" id="selectByExampleWithBLOBsWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from `im_message`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.ImMessageExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from `im_message`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

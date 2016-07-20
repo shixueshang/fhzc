@@ -8,7 +8,9 @@
     <artifactId>fhzc</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+
     <modules>
+        <module>fhzc-app-dao</module>
         <module>fhzc-app-system</module>
         <module>fhzc-app-api</module>
     </modules>

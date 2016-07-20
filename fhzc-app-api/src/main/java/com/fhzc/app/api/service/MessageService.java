@@ -1,8 +1,7 @@
 package com.fhzc.app.api.service;
 
-import com.fhzc.app.system.mybatis.model.ImMessage;
+import com.fhzc.app.dao.mybatis.model.ImMessage;
 
-import java.util.Date;
 import java.util.List;
 
 /**

@@ -4,8 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.fhzc.app.api.context.Base;
 import com.fhzc.app.api.service.MessageService;
 import com.fhzc.app.api.service.UserService;
-import com.fhzc.app.system.mybatis.model.ImMessage;
-import com.fhzc.app.system.mybatis.model.User;
+import com.fhzc.app.dao.mybatis.model.ImMessage;
+import com.fhzc.app.dao.mybatis.model.User;
 import org.junit.Test;
 
 import javax.annotation.Resource;

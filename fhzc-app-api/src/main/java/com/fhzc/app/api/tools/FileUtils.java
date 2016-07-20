@@ -1,6 +1,5 @@
 package com.fhzc.app.api.tools;
 
-import com.fhzc.app.system.commons.util.TextUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;

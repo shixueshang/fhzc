@@ -1,8 +1,8 @@
 package com.fhzc.app.system.commons.shiro;
 
-import com.fhzc.app.system.mybatis.model.Admin;
-import com.fhzc.app.system.mybatis.model.SystemAdminModule;
-import com.fhzc.app.system.mybatis.model.SystemModule;
+import com.fhzc.app.dao.mybatis.model.Admin;
+import com.fhzc.app.dao.mybatis.model.SystemAdminModule;
+import com.fhzc.app.dao.mybatis.model.SystemModule;
 import com.fhzc.app.system.service.AdminModuleService;
 import com.fhzc.app.system.service.AdminService;
 import org.apache.commons.lang3.StringUtils;

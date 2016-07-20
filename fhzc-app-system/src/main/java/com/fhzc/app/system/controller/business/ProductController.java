@@ -1,13 +1,13 @@
 package com.fhzc.app.system.controller.business;
 
+import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.commons.page.PageHelper;
 import com.fhzc.app.system.commons.page.PageableResult;
-import com.fhzc.app.system.commons.util.Const;
 import com.fhzc.app.system.commons.util.FileUtil;
 import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
-import com.fhzc.app.system.mybatis.model.Product;
+import com.fhzc.app.dao.mybatis.model.Product;
 import com.fhzc.app.system.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;

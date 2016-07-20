@@ -1,11 +1,10 @@
 package com.fhzc.app.api.controller;
 
+import com.fhzc.app.api.service.ProductService;
 import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
-import com.fhzc.app.system.commons.page.PageableResult;
-import com.fhzc.app.system.controller.BaseController;
-import com.fhzc.app.system.mybatis.model.Product;
-import com.fhzc.app.system.service.ProductService;
+import com.fhzc.app.dao.mybatis.model.Product;
+import com.fhzc.app.dao.mybatis.page.PageableResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

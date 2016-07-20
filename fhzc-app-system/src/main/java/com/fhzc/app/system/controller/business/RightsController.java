@@ -1,12 +1,12 @@
 package com.fhzc.app.system.controller.business;
 
+import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.commons.page.PageHelper;
 import com.fhzc.app.system.commons.page.PageableResult;
-import com.fhzc.app.system.commons.util.Const;
 import com.fhzc.app.system.commons.util.FileUtil;
 import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.controller.BaseController;
-import com.fhzc.app.system.mybatis.model.Rights;
+import com.fhzc.app.dao.mybatis.model.Rights;
 import com.fhzc.app.system.service.RightsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -77,8 +77,19 @@ public class RightsController extends BaseController{
      */
     @RequestMapping(value="/detail/{id}", method = RequestMethod.GET)
     public ModelAndView detail(@PathVariable(value = "id") Integer id){
-        ModelAndView mav = new ModelAndView("/business/rights/add");
+        ModelAndView mav = new ModelAndView("business/rights/add");
         mav.addObject("right", rightsService.getRights(id));
+        return mav;
+    }
+
+    /**
+     * 权益预约列表
+     * @return
+     */
+    @RequestMapping(value = "/order/list", method = RequestMethod.GET)
+    public ModelAndView listRightsOrder(){
+        ModelAndView mav = new ModelAndView("business/rights/order/list");
+
         return mav;
     }
 }

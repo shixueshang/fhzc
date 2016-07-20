@@ -1,11 +1,11 @@
 package com.fhzc.app.system.service.impl;
 
-import com.fhzc.app.system.mybatis.inter.SystemAdminModuleMapper;
-import com.fhzc.app.system.mybatis.inter.SystemModuleMapper;
-import com.fhzc.app.system.mybatis.model.SystemAdminModule;
-import com.fhzc.app.system.mybatis.model.SystemAdminModuleExample;
-import com.fhzc.app.system.mybatis.model.SystemModule;
-import com.fhzc.app.system.mybatis.model.SystemModuleExample;
+import com.fhzc.app.dao.mybatis.inter.SystemAdminModuleMapper;
+import com.fhzc.app.dao.mybatis.inter.SystemModuleMapper;
+import com.fhzc.app.dao.mybatis.model.SystemAdminModule;
+import com.fhzc.app.dao.mybatis.model.SystemAdminModuleExample;
+import com.fhzc.app.dao.mybatis.model.SystemModule;
+import com.fhzc.app.dao.mybatis.model.SystemModuleExample;
 import com.fhzc.app.system.service.AdminModuleService;
 import org.springframework.stereotype.Service;
 

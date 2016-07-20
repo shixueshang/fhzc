@@ -1,9 +1,9 @@
 package com.fhzc.app.system.service.impl;
 
 import com.fhzc.app.system.commons.page.PageableResult;
-import com.fhzc.app.system.mybatis.inter.ActivityMapper;
-import com.fhzc.app.system.mybatis.model.Activity;
-import com.fhzc.app.system.mybatis.model.ActivityExample;
+import com.fhzc.app.dao.mybatis.inter.ActivityMapper;
+import com.fhzc.app.dao.mybatis.model.Activity;
+import com.fhzc.app.dao.mybatis.model.ActivityExample;
 import com.fhzc.app.system.service.ActivityService;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
