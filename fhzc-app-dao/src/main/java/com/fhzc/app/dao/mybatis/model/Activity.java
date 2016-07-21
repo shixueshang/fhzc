@@ -39,6 +39,8 @@ public class Activity {
 
     private Byte departmentId;
 
+    private Byte isRecommend;
+
     private String content;
 
     public Integer getId() {
@@ -183,6 +185,14 @@ public class Activity {
 
     public void setDepartmentId(Byte departmentId) {
         this.departmentId = departmentId;
+    }
+
+    public Byte getIsRecommend() {
+        return isRecommend;
+    }
+
+    public void setIsRecommend(Byte isRecommend) {
+        this.isRecommend = isRecommend;
     }
 
     public String getContent() {

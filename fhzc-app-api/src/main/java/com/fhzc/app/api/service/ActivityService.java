@@ -17,6 +17,13 @@ public interface ActivityService {
     PageableResult<Activity> findPageActivies(int page, int size);
 
     /**
+     * 获得推荐活动列表
+     * @return
+     */
+    PageableResult<Activity> getRecommendActivityList();
+
+
+    /**
      * 获得活动信息
      * @param id
      * @return

@@ -84,3 +84,9 @@ DROP TABLE `bank`.`contract_tmp`;
 #2016-07-20
 ALTER TABLE `bank`.`product_reservation`
 ADD COLUMN `amount` INT NULL COMMENT '投资金额' AFTER `result`;
+
+#2016-07-21
+ALTER TABLE `bank`.`activity`
+ADD COLUMN `is_ recommend` TINYINT(3) UNSIGNED NULL DEFAULT '0' COMMENT '是否推荐 1是|0否' AFTER `department_id`;
+ALTER TABLE `bank`.`report`
+ADD COLUMN `is_ recommend` TINYINT(3) UNSIGNED NULL DEFAULT '0' COMMENT '是否推荐 1是|0否' AFTER `is_display`;

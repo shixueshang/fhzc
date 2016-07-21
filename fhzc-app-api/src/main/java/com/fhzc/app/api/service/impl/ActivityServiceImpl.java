@@ -28,6 +28,16 @@ public class ActivityServiceImpl implements ActivityService {
         List<Activity> list = activityMapper.selectByExampleWithBLOBsWithRowbounds(example, rowBounds);
         return new PageableResult<Activity>(page, size, list.size(), list);
     }
+    
+    @Override
+    public PageableResult<Activity> getRecommendActivityList(){
+        ActivityExample example = new ActivityExample();
+        ActivityExample.Criteria criteria = example.createCriteria();
+        criteria.andIsDisplayEqualTo((byte) 1);
+        criteria.andIsRecommendEqualTo((byte) 1);
+        List<Activity> list = activityMapper.selectByExample(example);
+        return new PageableResult<Activity>(0, 100, list.size(), list);
+    }
 
     @Override
     public Activity getActivity(Integer id) {

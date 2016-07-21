@@ -16,6 +16,13 @@ public interface ReportService {
      */
     PageableResult<Report> findPageReports(int page, int size);
 
+
+    /**
+     * 获得推荐列表
+     * @return
+     */
+    public PageableResult<Report> getRecommendReportList();
+
     /**
      * 获得报告
      * @param id

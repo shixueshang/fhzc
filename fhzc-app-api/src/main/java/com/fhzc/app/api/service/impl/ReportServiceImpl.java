@@ -29,6 +29,16 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
+    public PageableResult<Report> getRecommendReportList(){
+        ReportExample example = new ReportExample();
+        ReportExample.Criteria criteria = example.createCriteria();
+        criteria.andIsDisplayEqualTo((int) 1);
+        criteria.andIsRecommendEqualTo((byte) 1);
+        List<Report> list = reportMapper.selectByExample(example);
+        return new PageableResult<Report>(0, 100, list.size(), list);
+    }
+
+    @Override
     public Report getReport(Integer id) {
         return reportMapper.selectByPrimaryKey(id);
     }

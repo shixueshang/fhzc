@@ -19,6 +19,8 @@ public class Report {
 
     private Integer isDisplay;
 
+    private Byte isRecommend;
+
     private String summary;
 
     public Integer getId() {
@@ -83,6 +85,14 @@ public class Report {
 
     public void setIsDisplay(Integer isDisplay) {
         this.isDisplay = isDisplay;
+    }
+
+    public Byte getIsRecommend() {
+        return isRecommend;
+    }
+
+    public void setIsRecommend(Byte isRecommend) {
+        this.isRecommend = isRecommend;
     }
 
     public String getSummary() {

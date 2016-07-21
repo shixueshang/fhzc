@@ -26,6 +26,13 @@ public interface ProductService {
     PageableResult<Product> getProductList(int level, int risk, boolean b);
 
     /**
+     * 查询推荐产品列表
+     * @return
+     */
+    PageableResult<Product> getRecommendProductList();
+
+
+    /**
      * 获得产品信息
      * @param pid
      * @return
