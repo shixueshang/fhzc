@@ -15,6 +15,8 @@ public class ProductReservation {
 
     private String result;
 
+    private Integer amount;
+
     public Integer getId() {
         return id;
     }
@@ -61,5 +63,13 @@ public class ProductReservation {
 
     public void setResult(String result) {
         this.result = result == null ? null : result.trim();
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
     }
 }
