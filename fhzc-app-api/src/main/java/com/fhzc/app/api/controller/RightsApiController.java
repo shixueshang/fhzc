@@ -25,7 +25,7 @@ public class RightsApiController {
     @RequestMapping(value = "/api/rights",method = RequestMethod.GET)
     @ResponseBody
     public ApiJsonResult rightsList(){
-        PageableResult<Rights> productList =  rightsService.findPageRights(0,0);
+        PageableResult<Rights> productList =  rightsService.findPageRights(0,100);
 
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,productList);
     }

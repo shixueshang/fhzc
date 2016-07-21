@@ -23,8 +23,8 @@ public class ReportApiController {
 
     @RequestMapping(value = "/api/report",method = RequestMethod.GET)
     @ResponseBody
-    public ApiJsonResult reportList(Integer userId){
-        PageableResult<Report> productList =  reportService.findPageReports(0,0);
+    public ApiJsonResult reportList(){
+        PageableResult<Report> productList =  reportService.findPageReports(0,100);
 
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,productList);
     }
