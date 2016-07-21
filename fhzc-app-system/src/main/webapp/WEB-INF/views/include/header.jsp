@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
-	String contextPath = request.getContextPath();
+    String contextPath = request.getContextPath();
 %>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
@@ -12,21 +12,32 @@
 <head>
     <meta charset="utf-8" />
     <title>复华资产</title>
-    <link rel="shortcut icon" href="/static/image/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="<%=contextPath%>/static/image/favicon.ico" type="image/x-icon">
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <meta content="" name="description" />
     <meta content="" name="author" />
 
     <script src="<%=contextPath%>/assets/js/jquery-1.8.3.min.js"></script>
+    <script src="<%=contextPath%>/assets/js/excanvas.js"></script>
+    <script src="<%=contextPath%>/assets/js/respond.js"></script>
 
     <script src="<%=contextPath%>/assets/breakpoints/breakpoints.js"></script>
+    <script src="<%=contextPath%>/assets/jquery-ui/jquery-ui-1.10.1.custom.min.js"></script>
+    <script src="<%=contextPath%>/assets/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="<%=contextPath%>/assets/fullcalendar/fullcalendar/fullcalendar.min.js"></script>
     <script src="<%=contextPath%>/assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="<%=contextPath%>/assets/js/jquery.blockui.js"></script>
     <script src="<%=contextPath%>/assets/js/jquery.cookie.js"></script>
+
+
+    <script src="<%=contextPath%>/assets/flot/jquery.flot.js"></script>
+    <script src="<%=contextPath%>/assets/flot/jquery.flot.resize.js"></script>
+    <script type="text/javascript" src="<%=contextPath%>/assets/gritter/js/jquery.gritter.js"></script>
+    <script type="text/javascript" src="<%=contextPath%>/assets/js/jquery.pulsate.min.js"></script>
+
     <!-- ie8 fixes -->
     <!--[if lt IE 9]>
-    <script src="<%=contextPath%>/assets/js/excanvas.js"></script>
-    <script src="<%=contextPath%>/assets/js/respond.js"></script>
+
     <![endif]-->
 
 
@@ -47,7 +58,7 @@
             App.init();
         });
     </script>
-
+    <script type="text/javascript" src="<%=contextPath%>/assets/js/jquery.pulsate.min.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/assets/jquery-validation/dist/jquery.validate.min.js"></script>
 

@@ -154,7 +154,7 @@
                                                 <div class="controls">
                                                     <div class="fileupload fileupload-new" data-provides="fileupload">
                                                         <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
-                                                            <img src="/static/image/no-image.png" alt="" />
+                                                            <img src="/static/image/no-image.png" alt="" id="default_img" />
                                                         </div>
                                                         <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
                                                         <div>
@@ -205,6 +205,13 @@
 <script type="text/javascript" src="<%=contextPath%>/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 <script>
     $(function(){
+
+        var dispalyImg = $("#default_img");
+        var imgUrl = "<%=contextPath%>${right.cover}";
+        if(imgUrl != ""){
+            dispalyImg.attr("src", imgUrl);
+        }
+
         var form1 = $('#form_sample_1');
         var error1 = $('.alert-error', form1);
         var success1 = $('.alert-success', form1);

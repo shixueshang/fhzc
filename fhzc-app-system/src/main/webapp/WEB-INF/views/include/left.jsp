@@ -132,7 +132,7 @@
 
                         <ul class="sub">
                             <li>
-                                <a href="/organization/resource">组织架构配置</a>
+                                <a href="/organization/department">组织架构配置</a>
                             </li>
                         </ul>
                     </li>

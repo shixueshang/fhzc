@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
-<!-- 使用 mvn mybatis-generator:generate -->
+<!-- 使用 mvn commons-generator:generate -->
 <generatorConfiguration>
     <!-- 配置文件 -->
     <properties resource="jdbc.properties"/>
@@ -48,11 +48,11 @@
 
 
 
-        <table tableName="rights"
+        <table tableName="department"
                delimitAllColumns="true"
                delimitIdentifiers="true"
-               domainObjectName="Rights">
-            <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
+               domainObjectName="Department">
+            <generatedKey column="department_id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
         </table>
 
 

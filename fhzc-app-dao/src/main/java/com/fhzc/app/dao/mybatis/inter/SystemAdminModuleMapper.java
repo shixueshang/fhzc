@@ -2,9 +2,10 @@ package com.fhzc.app.dao.mybatis.inter;
 
 import com.fhzc.app.dao.mybatis.model.SystemAdminModule;
 import com.fhzc.app.dao.mybatis.model.SystemAdminModuleExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
+
+import java.util.List;
 
 public interface SystemAdminModuleMapper {
     int countByExample(SystemAdminModuleExample example);

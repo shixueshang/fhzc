@@ -257,7 +257,7 @@
 
     <build>
         <plugins>
-            <!-- mybatis 代码生成器插件 -->
+            <!-- commons 代码生成器插件 -->
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-maven-plugin</artifactId>

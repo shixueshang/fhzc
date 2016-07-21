@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fhzc.app.dao.mybatis.inter.SystemAdminModuleMapper" >
-  <resultMap id="BaseResultMap" type="com.fhzc.app.dao.mybatis.model.SystemAdminModule" >
+<mapper namespace="com.fhzc.app.dao.commons.inter.SystemAdminModuleMapper" >
+  <resultMap id="BaseResultMap" type="com.fhzc.app.dao.commons.model.SystemAdminModule" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="admin_id" property="adminId" jdbcType="INTEGER" />
     <result column="module_id" property="moduleId" jdbcType="INTEGER" />
@@ -68,7 +68,7 @@
   <sql id="Base_Column_List" >
     `id`, `admin_id`, `module_id`, `mode`
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.SystemAdminModuleExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.commons.model.SystemAdminModuleExample" >
     select
     <if test="distinct" >
       distinct
@@ -92,13 +92,13 @@
     delete from `system_admin_module`
     where `id` = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.fhzc.app.dao.mybatis.model.SystemAdminModuleExample" >
+  <delete id="deleteByExample" parameterType="com.fhzc.app.dao.commons.model.SystemAdminModuleExample" >
     delete from `system_admin_module`
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.fhzc.app.dao.mybatis.model.SystemAdminModule" >
+  <insert id="insert" parameterType="com.fhzc.app.dao.commons.model.SystemAdminModule" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -107,7 +107,7 @@
     values (#{adminId,jdbcType=INTEGER}, #{moduleId,jdbcType=INTEGER}, #{mode,jdbcType=CHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.SystemAdminModule" >
+  <insert id="insertSelective" parameterType="com.fhzc.app.dao.commons.model.SystemAdminModule" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -135,7 +135,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.fhzc.app.dao.mybatis.model.SystemAdminModuleExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.fhzc.app.dao.commons.model.SystemAdminModuleExample" resultType="java.lang.Integer" >
     select count(*) from `system_admin_module`
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -171,7 +171,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.fhzc.app.dao.mybatis.model.SystemAdminModule" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.fhzc.app.dao.commons.model.SystemAdminModule" >
     update `system_admin_module`
     <set >
       <if test="adminId != null" >
@@ -186,14 +186,14 @@
     </set>
     where `id` = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.fhzc.app.dao.mybatis.model.SystemAdminModule" >
+  <update id="updateByPrimaryKey" parameterType="com.fhzc.app.dao.commons.model.SystemAdminModule" >
     update `system_admin_module`
     set `admin_id` = #{adminId,jdbcType=INTEGER},
       `module_id` = #{moduleId,jdbcType=INTEGER},
       `mode` = #{mode,jdbcType=CHAR}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
-  <select resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.SystemAdminModuleExample" id="selectByExampleWithRowbounds" >
+  <select resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.commons.model.SystemAdminModuleExample" id="selectByExampleWithRowbounds" >
     select
     <if test="distinct" >
       distinct

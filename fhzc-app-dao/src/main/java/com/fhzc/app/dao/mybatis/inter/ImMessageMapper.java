@@ -2,9 +2,10 @@ package com.fhzc.app.dao.mybatis.inter;
 
 import com.fhzc.app.dao.mybatis.model.ImMessage;
 import com.fhzc.app.dao.mybatis.model.ImMessageExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
+
+import java.util.List;
 
 public interface ImMessageMapper {
     int countByExample(ImMessageExample example);

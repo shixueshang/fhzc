@@ -13,9 +13,9 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(value = "/organization")
 public class ResourceController extends BaseController {
 
-    @RequestMapping(value = "/resource", method = RequestMethod.GET)
+    @RequestMapping(value = "/department", method = RequestMethod.GET)
     public ModelAndView listResources(){
-        ModelAndView mav = new ModelAndView("organization/resource");
+        ModelAndView mav = new ModelAndView("organization/department");
 
         return mav;
     }
