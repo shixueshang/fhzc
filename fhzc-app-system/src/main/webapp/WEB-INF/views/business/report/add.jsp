@@ -139,6 +139,19 @@
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
+                                            <div class="control-group">
+                                                <label class="control-label">是否推荐(精选)</label>
+                                                <div class="controls">
+                                                    <label class="radio">
+                                                        <input type="radio" name="isRecommend" value="1" />
+                                                        是
+                                                    </label>
+                                                    <label class="radio">
+                                                        <input type="radio" name="isRecommend" value="0" checked />
+                                                        否
+                                                    </label>
+                                                </div>
+                                            </div>
                                             <div class="form-actions">
                                                 <button type="submit" class="btn blue"><i class="icon-ok"></i> 添加</button>
                                             </div>
