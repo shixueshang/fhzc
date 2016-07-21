@@ -1,39 +1,39 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.fhzc.app.dao.mybatis.inter.ReportMapper">
-  <resultMap id="BaseResultMap" type="com.fhzc.app.dao.mybatis.model.Report">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="cid" jdbcType="INTEGER" property="cid" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="cover" jdbcType="VARCHAR" property="cover" />
-    <result column="url" jdbcType="VARCHAR" property="url" />
-    <result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
-    <result column="is_del" jdbcType="INTEGER" property="isDel" />
-    <result column="is_display" jdbcType="INTEGER" property="isDisplay" />
-    <result column="is_ recommend" jdbcType="TINYINT" property="isRecommend" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fhzc.app.dao.mybatis.inter.ReportMapper" >
+  <resultMap id="BaseResultMap" type="com.fhzc.app.dao.mybatis.model.Report" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="cid" property="cid" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="cover" property="cover" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
+    <result column="is_del" property="isDel" jdbcType="INTEGER" />
+    <result column="is_display" property="isDisplay" jdbcType="INTEGER" />
+    <result column="is_ recommend" property="isRecommend" jdbcType="TINYINT" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.fhzc.app.dao.mybatis.model.Report">
-    <result column="summary" jdbcType="LONGVARCHAR" property="summary" />
+  <resultMap id="ResultMapWithBLOBs" type="com.fhzc.app.dao.mybatis.model.Report" extends="BaseResultMap" >
+    <result column="summary" property="summary" jdbcType="LONGVARCHAR" />
   </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -44,25 +44,25 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -73,43 +73,43 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List">
+  <sql id="Base_Column_List" >
     `id`, `cid`, `name`, `cover`, `url`, `ctime`, `is_del`, `is_display`, `is_ recommend`
   </sql>
-  <sql id="Blob_Column_List">
+  <sql id="Blob_Column_List" >
     `summary`
   </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.ReportExample" resultMap="ResultMapWithBLOBs">
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.ReportExample" >
     select
-    <if test="distinct">
+    <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
     from `report`
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null">
+    <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" parameterType="com.fhzc.app.dao.mybatis.model.ReportExample" resultMap="BaseResultMap">
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.ReportExample" >
     select
-    <if test="distinct">
+    <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
     from `report`
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null">
+    <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     ,
@@ -117,18 +117,18 @@
     from `report`
     where `id` = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from `report`
     where `id` = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.fhzc.app.dao.mybatis.model.ReportExample">
+  <delete id="deleteByExample" parameterType="com.fhzc.app.dao.mybatis.model.ReportExample" >
     delete from `report`
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.fhzc.app.dao.mybatis.model.Report">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+  <insert id="insert" parameterType="com.fhzc.app.dao.mybatis.model.Report" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into `report` (`cid`, `name`, `cover`, 
@@ -140,115 +140,115 @@
       #{isDisplay,jdbcType=INTEGER}, #{isRecommend,jdbcType=TINYINT}, #{summary,jdbcType=LONGVARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.Report">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+  <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.Report" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into `report`
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="cid != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
         `cid`,
       </if>
-      <if test="name != null">
+      <if test="name != null" >
         `name`,
       </if>
-      <if test="cover != null">
+      <if test="cover != null" >
         `cover`,
       </if>
-      <if test="url != null">
+      <if test="url != null" >
         `url`,
       </if>
-      <if test="ctime != null">
+      <if test="ctime != null" >
         `ctime`,
       </if>
-      <if test="isDel != null">
+      <if test="isDel != null" >
         `is_del`,
       </if>
-      <if test="isDisplay != null">
+      <if test="isDisplay != null" >
         `is_display`,
       </if>
-      <if test="isRecommend != null">
+      <if test="isRecommend != null" >
         `is_ recommend`,
       </if>
-      <if test="summary != null">
+      <if test="summary != null" >
         `summary`,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="cid != null">
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
         #{cid,jdbcType=INTEGER},
       </if>
-      <if test="name != null">
+      <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="cover != null">
+      <if test="cover != null" >
         #{cover,jdbcType=VARCHAR},
       </if>
-      <if test="url != null">
+      <if test="url != null" >
         #{url,jdbcType=VARCHAR},
       </if>
-      <if test="ctime != null">
+      <if test="ctime != null" >
         #{ctime,jdbcType=TIMESTAMP},
       </if>
-      <if test="isDel != null">
+      <if test="isDel != null" >
         #{isDel,jdbcType=INTEGER},
       </if>
-      <if test="isDisplay != null">
+      <if test="isDisplay != null" >
         #{isDisplay,jdbcType=INTEGER},
       </if>
-      <if test="isRecommend != null">
+      <if test="isRecommend != null" >
         #{isRecommend,jdbcType=TINYINT},
       </if>
-      <if test="summary != null">
+      <if test="summary != null" >
         #{summary,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.fhzc.app.dao.mybatis.model.ReportExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.fhzc.app.dao.mybatis.model.ReportExample" resultType="java.lang.Integer" >
     select count(*) from `report`
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
+  <update id="updateByExampleSelective" parameterType="map" >
     update `report`
-    <set>
-      <if test="record.id != null">
+    <set >
+      <if test="record.id != null" >
         `id` = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.cid != null">
+      <if test="record.cid != null" >
         `cid` = #{record.cid,jdbcType=INTEGER},
       </if>
-      <if test="record.name != null">
+      <if test="record.name != null" >
         `name` = #{record.name,jdbcType=VARCHAR},
       </if>
-      <if test="record.cover != null">
+      <if test="record.cover != null" >
         `cover` = #{record.cover,jdbcType=VARCHAR},
       </if>
-      <if test="record.url != null">
+      <if test="record.url != null" >
         `url` = #{record.url,jdbcType=VARCHAR},
       </if>
-      <if test="record.ctime != null">
+      <if test="record.ctime != null" >
         `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.isDel != null">
+      <if test="record.isDel != null" >
         `is_del` = #{record.isDel,jdbcType=INTEGER},
       </if>
-      <if test="record.isDisplay != null">
+      <if test="record.isDisplay != null" >
         `is_display` = #{record.isDisplay,jdbcType=INTEGER},
       </if>
-      <if test="record.isRecommend != null">
+      <if test="record.isRecommend != null" >
         `is_ recommend` = #{record.isRecommend,jdbcType=TINYINT},
       </if>
-      <if test="record.summary != null">
+      <if test="record.summary != null" >
         `summary` = #{record.summary,jdbcType=LONGVARCHAR},
       </if>
     </set>
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map">
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
     update `report`
     set `id` = #{record.id,jdbcType=INTEGER},
       `cid` = #{record.cid,jdbcType=INTEGER},
@@ -260,11 +260,11 @@
       `is_display` = #{record.isDisplay,jdbcType=INTEGER},
       `is_ recommend` = #{record.isRecommend,jdbcType=TINYINT},
       `summary` = #{record.summary,jdbcType=LONGVARCHAR}
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map">
+  <update id="updateByExample" parameterType="map" >
     update `report`
     set `id` = #{record.id,jdbcType=INTEGER},
       `cid` = #{record.cid,jdbcType=INTEGER},
@@ -275,44 +275,44 @@
       `is_del` = #{record.isDel,jdbcType=INTEGER},
       `is_display` = #{record.isDisplay,jdbcType=INTEGER},
       `is_ recommend` = #{record.isRecommend,jdbcType=TINYINT}
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.fhzc.app.dao.mybatis.model.Report">
+  <update id="updateByPrimaryKeySelective" parameterType="com.fhzc.app.dao.mybatis.model.Report" >
     update `report`
-    <set>
-      <if test="cid != null">
+    <set >
+      <if test="cid != null" >
         `cid` = #{cid,jdbcType=INTEGER},
       </if>
-      <if test="name != null">
+      <if test="name != null" >
         `name` = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="cover != null">
+      <if test="cover != null" >
         `cover` = #{cover,jdbcType=VARCHAR},
       </if>
-      <if test="url != null">
+      <if test="url != null" >
         `url` = #{url,jdbcType=VARCHAR},
       </if>
-      <if test="ctime != null">
+      <if test="ctime != null" >
         `ctime` = #{ctime,jdbcType=TIMESTAMP},
       </if>
-      <if test="isDel != null">
+      <if test="isDel != null" >
         `is_del` = #{isDel,jdbcType=INTEGER},
       </if>
-      <if test="isDisplay != null">
+      <if test="isDisplay != null" >
         `is_display` = #{isDisplay,jdbcType=INTEGER},
       </if>
-      <if test="isRecommend != null">
+      <if test="isRecommend != null" >
         `is_ recommend` = #{isRecommend,jdbcType=TINYINT},
       </if>
-      <if test="summary != null">
+      <if test="summary != null" >
         `summary` = #{summary,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where `id` = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.Report">
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.Report" >
     update `report`
     set `cid` = #{cid,jdbcType=INTEGER},
       `name` = #{name,jdbcType=VARCHAR},
@@ -325,7 +325,7 @@
       `summary` = #{summary,jdbcType=LONGVARCHAR}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.fhzc.app.dao.mybatis.model.Report">
+  <update id="updateByPrimaryKey" parameterType="com.fhzc.app.dao.mybatis.model.Report" >
     update `report`
     set `cid` = #{cid,jdbcType=INTEGER},
       `name` = #{name,jdbcType=VARCHAR},
@@ -337,380 +337,33 @@
       `is_ recommend` = #{isRecommend,jdbcType=TINYINT}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
-  <select id="selectByExampleWithBLOBsWithRowbounds" parameterType="com.fhzc.app.dao.mybatis.model.ReportExample" resultMap="ResultMapWithBLOBs">
+  <select resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.ReportExample" id="selectByExampleWithBLOBsWithRowbounds" >
     select
-    <if test="distinct">
+    <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
     from `report`
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null">
+    <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExampleWithRowbounds" parameterType="com.fhzc.app.dao.mybatis.model.ReportExample" resultMap="BaseResultMap">
+  <select resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.ReportExample" id="selectByExampleWithRowbounds" >
     select
-    <if test="distinct">
+    <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
     from `report`
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <resultMap id="BaseResultMap" type="com.fhzc.app.dao.mybatis.model.Report">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="cid" jdbcType="INTEGER" property="cid" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="cover" jdbcType="VARCHAR" property="cover" />
-    <result column="url" jdbcType="VARCHAR" property="url" />
-    <result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
-    <result column="is_del" jdbcType="INTEGER" property="isDel" />
-    <result column="is_display" jdbcType="INTEGER" property="isDisplay" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.fhzc.app.dao.mybatis.model.Report">
-    <result column="summary" jdbcType="LONGVARCHAR" property="summary" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
-    `id`, `cid`, `name`, `cover`, `url`, `ctime`, `is_del`, `is_display`
-  </sql>
-  <sql id="Blob_Column_List">
-    `summary`
-  </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.ReportExample" resultMap="ResultMapWithBLOBs">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from `report`
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByExample" parameterType="com.fhzc.app.dao.mybatis.model.ReportExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from `report`
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from `report`
-    where `id` = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from `report`
-    where `id` = #{id,jdbcType=INTEGER}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.fhzc.app.dao.mybatis.model.ReportExample">
-    delete from `report`
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.fhzc.app.dao.mybatis.model.Report">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into `report` (`cid`, `name`, `cover`, 
-      `url`, `ctime`, `is_del`, 
-      `is_display`, `summary`)
-    values (#{cid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{cover,jdbcType=VARCHAR}, 
-      #{url,jdbcType=VARCHAR}, #{ctime,jdbcType=TIMESTAMP}, #{isDel,jdbcType=INTEGER}, 
-      #{isDisplay,jdbcType=INTEGER}, #{summary,jdbcType=LONGVARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.Report">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into `report`
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="cid != null">
-        `cid`,
-      </if>
-      <if test="name != null">
-        `name`,
-      </if>
-      <if test="cover != null">
-        `cover`,
-      </if>
-      <if test="url != null">
-        `url`,
-      </if>
-      <if test="ctime != null">
-        `ctime`,
-      </if>
-      <if test="isDel != null">
-        `is_del`,
-      </if>
-      <if test="isDisplay != null">
-        `is_display`,
-      </if>
-      <if test="summary != null">
-        `summary`,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="cid != null">
-        #{cid,jdbcType=INTEGER},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="cover != null">
-        #{cover,jdbcType=VARCHAR},
-      </if>
-      <if test="url != null">
-        #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="ctime != null">
-        #{ctime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="isDel != null">
-        #{isDel,jdbcType=INTEGER},
-      </if>
-      <if test="isDisplay != null">
-        #{isDisplay,jdbcType=INTEGER},
-      </if>
-      <if test="summary != null">
-        #{summary,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.fhzc.app.dao.mybatis.model.ReportExample" resultType="java.lang.Integer">
-    select count(*) from `report`
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update `report`
-    <set>
-      <if test="record.id != null">
-        `id` = #{record.id,jdbcType=INTEGER},
-      </if>
-      <if test="record.cid != null">
-        `cid` = #{record.cid,jdbcType=INTEGER},
-      </if>
-      <if test="record.name != null">
-        `name` = #{record.name,jdbcType=VARCHAR},
-      </if>
-      <if test="record.cover != null">
-        `cover` = #{record.cover,jdbcType=VARCHAR},
-      </if>
-      <if test="record.url != null">
-        `url` = #{record.url,jdbcType=VARCHAR},
-      </if>
-      <if test="record.ctime != null">
-        `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.isDel != null">
-        `is_del` = #{record.isDel,jdbcType=INTEGER},
-      </if>
-      <if test="record.isDisplay != null">
-        `is_display` = #{record.isDisplay,jdbcType=INTEGER},
-      </if>
-      <if test="record.summary != null">
-        `summary` = #{record.summary,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map">
-    update `report`
-    set `id` = #{record.id,jdbcType=INTEGER},
-      `cid` = #{record.cid,jdbcType=INTEGER},
-      `name` = #{record.name,jdbcType=VARCHAR},
-      `cover` = #{record.cover,jdbcType=VARCHAR},
-      `url` = #{record.url,jdbcType=VARCHAR},
-      `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
-      `is_del` = #{record.isDel,jdbcType=INTEGER},
-      `is_display` = #{record.isDisplay,jdbcType=INTEGER},
-      `summary` = #{record.summary,jdbcType=LONGVARCHAR}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update `report`
-    set `id` = #{record.id,jdbcType=INTEGER},
-      `cid` = #{record.cid,jdbcType=INTEGER},
-      `name` = #{record.name,jdbcType=VARCHAR},
-      `cover` = #{record.cover,jdbcType=VARCHAR},
-      `url` = #{record.url,jdbcType=VARCHAR},
-      `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
-      `is_del` = #{record.isDel,jdbcType=INTEGER},
-      `is_display` = #{record.isDisplay,jdbcType=INTEGER}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.fhzc.app.dao.mybatis.model.Report">
-    update `report`
-    <set>
-      <if test="cid != null">
-        `cid` = #{cid,jdbcType=INTEGER},
-      </if>
-      <if test="name != null">
-        `name` = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="cover != null">
-        `cover` = #{cover,jdbcType=VARCHAR},
-      </if>
-      <if test="url != null">
-        `url` = #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="ctime != null">
-        `ctime` = #{ctime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="isDel != null">
-        `is_del` = #{isDel,jdbcType=INTEGER},
-      </if>
-      <if test="isDisplay != null">
-        `is_display` = #{isDisplay,jdbcType=INTEGER},
-      </if>
-      <if test="summary != null">
-        `summary` = #{summary,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where `id` = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.Report">
-    update `report`
-    set `cid` = #{cid,jdbcType=INTEGER},
-      `name` = #{name,jdbcType=VARCHAR},
-      `cover` = #{cover,jdbcType=VARCHAR},
-      `url` = #{url,jdbcType=VARCHAR},
-      `ctime` = #{ctime,jdbcType=TIMESTAMP},
-      `is_del` = #{isDel,jdbcType=INTEGER},
-      `is_display` = #{isDisplay,jdbcType=INTEGER},
-      `summary` = #{summary,jdbcType=LONGVARCHAR}
-    where `id` = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.fhzc.app.dao.mybatis.model.Report">
-    update `report`
-    set `cid` = #{cid,jdbcType=INTEGER},
-      `name` = #{name,jdbcType=VARCHAR},
-      `cover` = #{cover,jdbcType=VARCHAR},
-      `url` = #{url,jdbcType=VARCHAR},
-      `ctime` = #{ctime,jdbcType=TIMESTAMP},
-      `is_del` = #{isDel,jdbcType=INTEGER},
-      `is_display` = #{isDisplay,jdbcType=INTEGER}
-    where `id` = #{id,jdbcType=INTEGER}
-  </update>
-  <select id="selectByExampleWithBLOBsWithRowbounds" parameterType="com.fhzc.app.dao.mybatis.model.ReportExample" resultMap="ResultMapWithBLOBs">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from `report`
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByExampleWithRowbounds" parameterType="com.fhzc.app.dao.mybatis.model.ReportExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from `report`
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
+    <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
   </select>
