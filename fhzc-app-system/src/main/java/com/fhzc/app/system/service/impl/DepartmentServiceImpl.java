@@ -9,6 +9,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,12 +27,26 @@ public class DepartmentServiceImpl implements DepartmentService{
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<Department> list = departmentMapper.selectByExampleWithRowbounds(example, rowBounds);
 
+        List<Department> result = new ArrayList<Department>();
         //构建名称 父级-子级-孙子级
+        Department root = this.findRootDept();
+        for(Department dept : list){
+            if(dept.getParentDeptId() == null){
+                continue;
+            }
 
+        }
         return null;
     }
 
+    private Department findRootDept(){
+        DepartmentExample example = new DepartmentExample();
+        DepartmentExample.Criteria criteria = example.createCriteria();
+        criteria.andParentDeptIdIsNull();
+        return departmentMapper.selectByExample(example).get(0);
+    }
+
     private List<Department> findChildrenByParent(Integer parentId){
-        return  null;
+        return  departmentMapper.findChildrenByParent(parentId);
     }
 }

@@ -11,6 +11,8 @@ public class Department {
 
     private Date ctime;
 
+    private Integer leaf;
+
     public Integer getDepartmentId() {
         return departmentId;
     }
@@ -41,5 +43,13 @@ public class Department {
 
     public void setCtime(Date ctime) {
         this.ctime = ctime;
+    }
+
+    public Integer getLeaf() {
+        return leaf;
+    }
+
+    public void setLeaf(Integer leaf) {
+        this.leaf = leaf;
     }
 }

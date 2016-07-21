@@ -354,6 +354,66 @@ public class DepartmentExample {
             addCriterion("`ctime` not between", value1, value2, "ctime");
             return (Criteria) this;
         }
+
+        public Criteria andLeafIsNull() {
+            addCriterion("`leaf` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeafIsNotNull() {
+            addCriterion("`leaf` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeafEqualTo(Integer value) {
+            addCriterion("`leaf` =", value, "leaf");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeafNotEqualTo(Integer value) {
+            addCriterion("`leaf` <>", value, "leaf");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeafGreaterThan(Integer value) {
+            addCriterion("`leaf` >", value, "leaf");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeafGreaterThanOrEqualTo(Integer value) {
+            addCriterion("`leaf` >=", value, "leaf");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeafLessThan(Integer value) {
+            addCriterion("`leaf` <", value, "leaf");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeafLessThanOrEqualTo(Integer value) {
+            addCriterion("`leaf` <=", value, "leaf");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeafIn(List<Integer> values) {
+            addCriterion("`leaf` in", values, "leaf");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeafNotIn(List<Integer> values) {
+            addCriterion("`leaf` not in", values, "leaf");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeafBetween(Integer value1, Integer value2) {
+            addCriterion("`leaf` between", value1, value2, "leaf");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeafNotBetween(Integer value1, Integer value2) {
+            addCriterion("`leaf` not between", value1, value2, "leaf");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

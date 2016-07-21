@@ -48,18 +48,12 @@
 
 
 
-        <table tableName="activity"
+        <table tableName="department"
                delimitAllColumns="true"
                delimitIdentifiers="true"
-               domainObjectName="Activity">
-            <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
+               domainObjectName="Department">
+            <generatedKey column="department_id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
         </table>
 
-        <table tableName="report"
-               delimitAllColumns="true"
-               delimitIdentifiers="true"
-               domainObjectName="Report">
-            <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
-        </table>
     </context>
 </generatorConfiguration>
