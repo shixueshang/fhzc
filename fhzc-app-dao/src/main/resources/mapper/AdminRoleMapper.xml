@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fhzc.app.dao.commons.inter.AdminRoleMapper" >
-  <resultMap id="BaseResultMap" type="com.fhzc.app.dao.commons.model.AdminRole" >
+<mapper namespace="com.fhzc.app.dao.mybatis.inter.AdminRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.fhzc.app.dao.mybatis.model.AdminRole" >
     <id column="role_id" property="roleId" jdbcType="INTEGER" />
     <result column="role_name" property="roleName" jdbcType="VARCHAR" />
     <result column="ctime" property="ctime" jdbcType="INTEGER" />
@@ -67,7 +67,7 @@
   <sql id="Base_Column_List" >
     `role_id`, `role_name`, `ctime`
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.commons.model.AdminRoleExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.AdminRoleExample" >
     select
     <if test="distinct" >
       distinct
@@ -91,19 +91,19 @@
     delete from `admin_role`
     where `role_id` = #{roleId,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.fhzc.app.dao.commons.model.AdminRoleExample" >
+  <delete id="deleteByExample" parameterType="com.fhzc.app.dao.mybatis.model.AdminRoleExample" >
     delete from `admin_role`
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.fhzc.app.dao.commons.model.AdminRole" >
+  <insert id="insert" parameterType="com.fhzc.app.dao.mybatis.model.AdminRole" >
     insert into `admin_role` (`role_id`, `role_name`, `ctime`
       )
     values (#{roleId,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR}, #{ctime,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.fhzc.app.dao.commons.model.AdminRole" >
+  <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.AdminRole" >
     insert into `admin_role`
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="roleId != null" >
@@ -128,7 +128,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.fhzc.app.dao.commons.model.AdminRoleExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.fhzc.app.dao.mybatis.model.AdminRoleExample" resultType="java.lang.Integer" >
     select count(*) from `admin_role`
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -160,7 +160,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.fhzc.app.dao.commons.model.AdminRole" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.fhzc.app.dao.mybatis.model.AdminRole" >
     update `admin_role`
     <set >
       <if test="roleName != null" >
@@ -172,13 +172,13 @@
     </set>
     where `role_id` = #{roleId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.fhzc.app.dao.commons.model.AdminRole" >
+  <update id="updateByPrimaryKey" parameterType="com.fhzc.app.dao.mybatis.model.AdminRole" >
     update `admin_role`
     set `role_name` = #{roleName,jdbcType=VARCHAR},
       `ctime` = #{ctime,jdbcType=INTEGER}
     where `role_id` = #{roleId,jdbcType=INTEGER}
   </update>
-  <select resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.commons.model.AdminRoleExample" id="selectByExampleWithRowbounds" >
+  <select resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.AdminRoleExample" id="selectByExampleWithRowbounds" >
     select
     <if test="distinct" >
       distinct

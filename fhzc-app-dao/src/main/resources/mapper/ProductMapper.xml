@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fhzc.app.dao.commons.inter.ProductMapper" >
-  <resultMap id="BaseResultMap" type="com.fhzc.app.dao.commons.model.Product" >
+<mapper namespace="com.fhzc.app.dao.mybatis.inter.ProductMapper" >
+  <resultMap id="BaseResultMap" type="com.fhzc.app.dao.mybatis.model.Product" >
     <id column="pid" property="pid" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="TINYINT" />
     <result column="code" property="code" jdbcType="VARCHAR" />
@@ -47,7 +47,7 @@
     <result column="expected_min" property="expectedMin" jdbcType="TINYINT" />
     <result column="expected_max" property="expectedMax" jdbcType="TINYINT" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.fhzc.app.dao.commons.model.Product" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.fhzc.app.dao.mybatis.model.Product" extends="BaseResultMap" >
     <result column="desc" property="desc" jdbcType="LONGVARCHAR" />
     <result column="detail_content" property="detailContent" jdbcType="LONGVARCHAR" />
   </resultMap>
@@ -122,7 +122,7 @@
   <sql id="Blob_Column_List" >
     `desc`, `detail_content`
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.dao.commons.model.ProductExample" >
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.ProductExample" >
     select
     <if test="distinct" >
       distinct
@@ -138,7 +138,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.commons.model.ProductExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.ProductExample" >
     select
     <if test="distinct" >
       distinct
@@ -164,13 +164,13 @@
     delete from `product`
     where `pid` = #{pid,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.fhzc.app.dao.commons.model.ProductExample" >
+  <delete id="deleteByExample" parameterType="com.fhzc.app.dao.mybatis.model.ProductExample" >
     delete from `product`
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.fhzc.app.dao.commons.model.Product" >
+  <insert id="insert" parameterType="com.fhzc.app.dao.mybatis.model.Product" >
     <selectKey resultType="java.lang.Integer" keyProperty="pid" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -207,7 +207,7 @@
       #{expectedMin,jdbcType=TINYINT}, #{expectedMax,jdbcType=TINYINT}, #{desc,jdbcType=LONGVARCHAR}, 
       #{detailContent,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.fhzc.app.dao.commons.model.Product" >
+  <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.Product" >
     <selectKey resultType="java.lang.Integer" keyProperty="pid" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -487,7 +487,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.fhzc.app.dao.commons.model.ProductExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.fhzc.app.dao.mybatis.model.ProductExample" resultType="java.lang.Integer" >
     select count(*) from `product`
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -741,7 +741,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.fhzc.app.dao.commons.model.Product" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.fhzc.app.dao.mybatis.model.Product" >
     update `product`
     <set >
       <if test="status != null" >
@@ -882,7 +882,7 @@
     </set>
     where `pid` = #{pid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.fhzc.app.dao.commons.model.Product" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.Product" >
     update `product`
     set `status` = #{status,jdbcType=TINYINT},
       `code` = #{code,jdbcType=VARCHAR},
@@ -931,7 +931,7 @@
       `detail_content` = #{detailContent,jdbcType=LONGVARCHAR}
     where `pid` = #{pid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.fhzc.app.dao.commons.model.Product" >
+  <update id="updateByPrimaryKey" parameterType="com.fhzc.app.dao.mybatis.model.Product" >
     update `product`
     set `status` = #{status,jdbcType=TINYINT},
       `code` = #{code,jdbcType=VARCHAR},
@@ -978,7 +978,7 @@
       `expected_max` = #{expectedMax,jdbcType=TINYINT}
     where `pid` = #{pid,jdbcType=INTEGER}
   </update>
-  <select resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.dao.commons.model.ProductExample" id="selectByExampleWithBLOBsWithRowbounds" >
+  <select resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.ProductExample" id="selectByExampleWithBLOBsWithRowbounds" >
     select
     <if test="distinct" >
       distinct
@@ -994,7 +994,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.commons.model.ProductExample" id="selectByExampleWithRowbounds" >
+  <select resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.ProductExample" id="selectByExampleWithRowbounds" >
     select
     <if test="distinct" >
       distinct

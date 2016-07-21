@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fhzc.app.dao.commons.inter.AdminMapper" >
-  <resultMap id="BaseResultMap" type="com.fhzc.app.dao.commons.model.Admin" >
+<mapper namespace="com.fhzc.app.dao.mybatis.inter.AdminMapper" >
+  <resultMap id="BaseResultMap" type="com.fhzc.app.dao.mybatis.model.Admin" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="login" property="login" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
@@ -71,7 +71,7 @@
   <sql id="Base_Column_List" >
     `id`, `login`, `password`, `realname`, `role`, `login_ip`, `last_login_time`
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.commons.model.AdminExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.AdminExample" >
     select
     <if test="distinct" >
       distinct
@@ -95,13 +95,13 @@
     delete from `admin`
     where `id` = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.fhzc.app.dao.commons.model.AdminExample" >
+  <delete id="deleteByExample" parameterType="com.fhzc.app.dao.mybatis.model.AdminExample" >
     delete from `admin`
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.fhzc.app.dao.commons.model.Admin" >
+  <insert id="insert" parameterType="com.fhzc.app.dao.mybatis.model.Admin" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -112,7 +112,7 @@
       #{role,jdbcType=INTEGER}, #{loginIp,jdbcType=VARCHAR}, #{lastLoginTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.fhzc.app.dao.commons.model.Admin" >
+  <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.Admin" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -158,7 +158,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.fhzc.app.dao.commons.model.AdminExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.fhzc.app.dao.mybatis.model.AdminExample" resultType="java.lang.Integer" >
     select count(*) from `admin`
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -206,7 +206,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.fhzc.app.dao.commons.model.Admin" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.fhzc.app.dao.mybatis.model.Admin" >
     update `admin`
     <set >
       <if test="login != null" >
@@ -230,7 +230,7 @@
     </set>
     where `id` = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.fhzc.app.dao.commons.model.Admin" >
+  <update id="updateByPrimaryKey" parameterType="com.fhzc.app.dao.mybatis.model.Admin" >
     update `admin`
     set `login` = #{login,jdbcType=VARCHAR},
       `password` = #{password,jdbcType=VARCHAR},
@@ -240,7 +240,7 @@
       `last_login_time` = #{lastLoginTime,jdbcType=TIMESTAMP}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
-  <select resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.commons.model.AdminExample" id="selectByExampleWithRowbounds" >
+  <select resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.AdminExample" id="selectByExampleWithRowbounds" >
     select
     <if test="distinct" >
       distinct

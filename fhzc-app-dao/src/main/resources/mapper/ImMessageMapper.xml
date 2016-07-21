@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fhzc.app.dao.commons.inter.ImMessageMapper" >
-  <resultMap id="BaseResultMap" type="com.fhzc.app.dao.commons.model.ImMessage" >
+<mapper namespace="com.fhzc.app.dao.mybatis.inter.ImMessageMapper" >
+  <resultMap id="BaseResultMap" type="com.fhzc.app.dao.mybatis.model.ImMessage" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="send_time" property="sendTime" jdbcType="TIMESTAMP" />
@@ -13,7 +13,7 @@
     <result column="mid" property="mid" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="BIT" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.fhzc.app.dao.commons.model.ImMessage" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.fhzc.app.dao.mybatis.model.ImMessage" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -81,7 +81,7 @@
   <sql id="Blob_Column_List" >
     `content`
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.dao.commons.model.ImMessageExample" >
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.ImMessageExample" >
     select
     <if test="distinct" >
       distinct
@@ -97,7 +97,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.commons.model.ImMessageExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.ImMessageExample" >
     select
     <if test="distinct" >
       distinct
@@ -123,13 +123,13 @@
     delete from `im_message`
     where `id` = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.fhzc.app.dao.commons.model.ImMessageExample" >
+  <delete id="deleteByExample" parameterType="com.fhzc.app.dao.mybatis.model.ImMessageExample" >
     delete from `im_message`
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.fhzc.app.dao.commons.model.ImMessage" >
+  <insert id="insert" parameterType="com.fhzc.app.dao.mybatis.model.ImMessage" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -142,7 +142,7 @@
       #{duration,jdbcType=VARCHAR}, #{mid,jdbcType=INTEGER}, #{status,jdbcType=BIT}, 
       #{content,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.fhzc.app.dao.commons.model.ImMessage" >
+  <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.ImMessage" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -212,7 +212,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.fhzc.app.dao.commons.model.ImMessageExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.fhzc.app.dao.mybatis.model.ImMessageExample" resultType="java.lang.Integer" >
     select count(*) from `im_message`
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -292,7 +292,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.fhzc.app.dao.commons.model.ImMessage" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.fhzc.app.dao.mybatis.model.ImMessage" >
     update `im_message`
     <set >
       <if test="userId != null" >
@@ -328,7 +328,7 @@
     </set>
     where `id` = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.fhzc.app.dao.commons.model.ImMessage" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.ImMessage" >
     update `im_message`
     set `user_id` = #{userId,jdbcType=INTEGER},
       `send_time` = #{sendTime,jdbcType=TIMESTAMP},
@@ -342,7 +342,7 @@
       `content` = #{content,jdbcType=LONGVARCHAR}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.fhzc.app.dao.commons.model.ImMessage" >
+  <update id="updateByPrimaryKey" parameterType="com.fhzc.app.dao.mybatis.model.ImMessage" >
     update `im_message`
     set `user_id` = #{userId,jdbcType=INTEGER},
       `send_time` = #{sendTime,jdbcType=TIMESTAMP},
@@ -355,7 +355,7 @@
       `status` = #{status,jdbcType=BIT}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
-  <select resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.dao.commons.model.ImMessageExample" id="selectByExampleWithBLOBsWithRowbounds" >
+  <select resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.ImMessageExample" id="selectByExampleWithBLOBsWithRowbounds" >
     select
     <if test="distinct" >
       distinct
@@ -371,7 +371,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.commons.model.ImMessageExample" id="selectByExampleWithRowbounds" >
+  <select resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.ImMessageExample" id="selectByExampleWithRowbounds" >
     select
     <if test="distinct" >
       distinct
