@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * Created by jiajitao on 2016/7/20.
@@ -30,6 +31,7 @@ public class ProductOrderApiController {
         productReservation.setCustomerId(customerId);
         productReservation.setPlannerId(plannerId);
         productReservation.setAmount(amount);
+        productReservation.setCtime(new Date());
         productReservation.setResult(OrderResult.success.toString());
         productReservationService.addOrUpdateProductReservation(productReservation);
 
@@ -45,6 +47,7 @@ public class ProductOrderApiController {
         productReservation.setCustomerId(customerId);
         productReservation.setPlannerId(plannerId);
         productReservation.setAmount(amount);
+        productReservation.setCtime(new Date());
         productReservation.setResult(OrderResult.cancel.toString());
         productReservationService.addOrUpdateProductReservation(productReservation);
 
