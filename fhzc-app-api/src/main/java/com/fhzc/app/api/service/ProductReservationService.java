@@ -8,4 +8,7 @@ import com.fhzc.app.dao.mybatis.model.ProductReservation;
 public interface ProductReservationService {
 
     public void addOrUpdateProductReservation(ProductReservation productReservation);
+
+    public ProductReservation getProductReservation(Integer id) ;
+
 }

@@ -38,14 +38,9 @@ public class ProductOrderApiController {
 
     @RequestMapping(value = "/api/product/order/cancel",method = RequestMethod.POST)
     @ResponseBody
-    public ApiJsonResult productOrderCancel(Integer id,Integer productId,Integer customerId, Integer plannerId,Integer amount){
-        ProductReservation productReservation =new ProductReservation();
-        productReservation.setId(id);
-        productReservation.setProductId(productId);
-        productReservation.setCustomerId(customerId);
-        productReservation.setPlannerId(plannerId);
-        productReservation.setAmount(amount);
-        productReservation.setCtime(new Date());
+    public ApiJsonResult productOrderCancel(Integer id){
+        //todo 先写个id
+        ProductReservation productReservation=productReservationService.getProductReservation(id);
         productReservation.setResult(APIConstants.OrderResult.Cancel);
         productReservationService.addOrUpdateProductReservation(productReservation);
 
