@@ -48,9 +48,9 @@
     
 
     <div class="form-actions">
-        <button type="submit" class="btn blue btn-block">
-            登录 <i class="m-icon-swapright m-icon-white"></i>
-        </button>
+        <input type="submit" class="btn blue btn-block" value="登录"/>
+
+
     </div>
     </form>
     <div style="color: red">

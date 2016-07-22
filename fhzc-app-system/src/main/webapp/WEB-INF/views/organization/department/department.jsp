@@ -7,10 +7,10 @@
     String contextPath = request.getContextPath();
 %>
 
-<jsp:include page="../include/header.jsp"/>
+<jsp:include page="../../include/header.jsp"/>
 <!-- BEGIN BODY -->
 <body class="fixed-top">
-<jsp:include page="../include/nav.jsp"/>
+<jsp:include page="../../include/nav.jsp"/>
 
 <!--扩展样式-->
 <link href="<%=contextPath%>/assets/fancybox/source/jquery.fancybox.css" rel="stylesheet" />
@@ -25,7 +25,7 @@
 
 <!-- BEGIN CONTAINER -->
 <div class="page-container row-fluid">
-    <jsp:include page="../include/left.jsp"/>
+    <jsp:include page="../../include/left.jsp"/>
     <!-- BEGIN PAGE -->
     <div class="page-content">
 
@@ -66,21 +66,21 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="portlet_tab1">
                                         <!-- BEGIN FORM-->
-                                        <form action="#" class="form-horizontal">
+                                        <form action="add" method="POST" class="form-horizontal">
                                             <div class="control-group">
                                             </div>
                                             <div class="control-group">
                                                 <label class="control-label">部门名称</label>
                                                 <div class="controls">
-                                                    <input type="text" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="title" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
                                             <div class="control-group">
                                                 <label class="control-label">上级部门</label>
                                                 <div class="controls">
-                                                    <select class="large m-wrap" tabindex="1">
-                                                        <option value="0">-- 顶级部门 --</option>
+                                                    <select class="large m-wrap" name="parentDeptId" id="parent_dept" tabindex="1">
+                                                        <option ></option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -110,30 +110,17 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>华北区</td>
-                                    <td><a href="#" class="btn mini purple">
-                                        <i class="icon-edit"></i> 修改</a>
-                                        <a href="#" class="btn mini black"><i class="icon-trash"></i> 删除</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>华北区 - 北京分公司</td>
-                                    <td><a href="#" class="btn mini purple">
-                                        <i class="icon-edit"></i> 修改</a>
-                                        <a href="#" class="btn mini black"><i class="icon-trash"></i> 删除</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>华北区 - 北京分公司 - 李鹏直属团队</td>
-                                    <td><a href="#" class="btn mini purple">
-                                        <i class="icon-edit"></i> 修改</a>
-                                        <a href="#" class="btn mini black"><i class="icon-trash"></i> 删除</a>
-                                    </td>
-                                </tr>
+
+                                <c:forEach items="${depts}" var="dept">
+                                    <tr>
+                                        <td>${dept.get("id")}</td>
+                                        <td>${dept.get("name")}</td>
+                                        <td><a href="#" class="btn mini purple">
+                                            <i class="icon-edit"></i> 修改</a>
+                                            <a href="#" class="btn mini black"><i class="icon-trash"></i> 删除</a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
                                 </tbody>
                             </table>
                         </div>
@@ -146,4 +133,19 @@
     </div>
 </div>
 
-<jsp:include page="../include/footer.jsp"/>
+<script>
+
+    $(function(){
+        var depts = '${deptsForAdd}';
+        var json= $.parseJSON(depts);
+        $.each(json, function(i,val){
+            $("#parent_dept").append("<option value='"+val.id+"'>"+val.name+"</option>");
+        });
+
+
+    });
+
+
+</script>
+
+<jsp:include page="../../include/footer.jsp"/>
