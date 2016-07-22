@@ -36,6 +36,7 @@ public class DepartmentServiceImpl implements DepartmentService{
         for(Department dept : list){
             Map<String, Object> resultMap = new ConcurrentHashMap<>();
             resultMap.put("id", dept.getDepartmentId());
+            resultMap.put("title", dept.getTitle());
 
             if(dept.getParentDeptId() == null){
                 resultMap.put("name", dept.getTitle());

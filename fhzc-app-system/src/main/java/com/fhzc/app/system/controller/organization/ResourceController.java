@@ -55,5 +55,4 @@ public class ResourceController extends BaseController {
         mav.addObject("deptsForAdd", JSON.toJSON(pageableResult.getItems()));
         return mav;
     }
-
 }
