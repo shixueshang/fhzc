@@ -82,7 +82,7 @@
                                                 <label class="control-label">产品名<span class="required">*</span></label>
                                                 <div class="controls">
                                                     <input type="text" name="name" value="${product.name}" data-required="1" placeholder="" class="m-wrap large">
-                                                    <span class="help-inline"></span>
+                                                    <span class="help-inline hide">该名称已存在,请换一个名字</span>
                                                 </div>
                                             </div>
                                             <div class="control-group">
@@ -400,6 +400,35 @@
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">是否显示</label>
+                                                <div class="controls">
+                                                    <label class="radio">
+                                                        <input type="radio" name="isDisplay" value="1" />
+                                                        是
+                                                    </label>
+                                                    <label class="radio">
+                                                        <input type="radio" name="isDisplay" value="0" checked />
+                                                        否
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">是否推荐(精选)</label>
+                                                <div class="controls">
+                                                    <label class="radio">
+                                                        <input type="radio" name="isRecommend" value="1" />
+                                                        是
+                                                    </label>
+                                                    <label class="radio">
+                                                        <input type="radio" name="isRecommend" value="0" checked />
+                                                        否
+                                                    </label>
+                                                </div>
+                                            </div>
+
                                             <div class="form-actions">
                                                 <button type="submit" class="btn blue"><i class="icon-ok"></i> 保存</button>
                                             </div>
@@ -440,9 +469,21 @@ $(function(){
         errorClass: 'help-inline', // default input error message class
         focusInvalid: false, // do not focus the last invalid input
         ignore: "",
+        messages: {
+            name:{required:"产品名不能为空！",remote:jQuery.format("产品名已经存在")}
+        },
         rules: {
             name: {
-                required: true
+                required: true,
+                remote: {
+                    url: "/business/product/isNameExists",
+                    type: "get",
+                    data: {
+                        name: function() {
+                            return $("input[name='name']").val();
+                        }
+                    }
+                }
             },
             expectedMin: {
                 number: true,
@@ -538,5 +579,6 @@ $(function(){
 
         }
     });
+
 })
 </script>

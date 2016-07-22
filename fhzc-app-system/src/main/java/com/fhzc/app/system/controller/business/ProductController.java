@@ -117,9 +117,10 @@ public class ProductController extends BaseController {
     }
 
     @RequestMapping(value = "/isNameExists", method = RequestMethod.GET)
-    public AjaxJson isNameExists(String name){
+    @ResponseBody
+    public Object isNameExists(String name){
         boolean flag = productService.isNameExists(name);
-        return new AjaxJson(flag);
+        return !flag;
     }
 
     /**
