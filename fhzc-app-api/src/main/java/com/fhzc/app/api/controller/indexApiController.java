@@ -40,17 +40,12 @@ public class IndexApiController {
     public ApiJsonResult indexList(){
 
         Map<String, Object> map = new HashMap<String,Object>();
-//        map.put("a", List)
-//
-
         PageableResult<Product> productList =  productService.getRecommendProductList();
         PageableResult<Activity> activityList =  activityService.getRecommendActivityList();
         PageableResult<Report> reportServiceList =  reportService.getRecommendReportList();
-
         map.put("product", productList);
         map.put("activity", activityList);
         map.put("report", reportServiceList);
-
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,map);
     }
 
