@@ -66,6 +66,16 @@ public class DepartmentServiceImpl implements DepartmentService{
         }
     }
 
+    @Override
+    public Department getDeparent(Integer id) {
+        return departmentMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        departmentMapper.deleteByPrimaryKey(id);
+    }
+
     /**
      * 递归父级部门
      * @param dept

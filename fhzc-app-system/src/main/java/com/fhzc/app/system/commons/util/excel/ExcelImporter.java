@@ -63,10 +63,10 @@ public class ExcelImporter {
 		int cells = sheet.getRow(1).getLastCellNum();
 		for (int i = 2, length = sheet.getLastRowNum(); i <= length; i++) {
 			Row row = sheet.getRow(i);
-			Object[] tempData = new Object[8];
+			Object[] tempData = new Object[cells];
 			//判断是否为空，如果为空则不处理
 			if (row != null && row.getCell(0) != null && StringUtils.isNotEmpty(getCellFormatValue(row.getCell(0)).trim())) {
-				for (int j = 0; j < 8; j++) {
+				for (int j = 0; j < cells; j++) {
 					tempData[j] = getCellFormatValue(row.getCell(j));
 				}
 				preExecution.add(tempData);

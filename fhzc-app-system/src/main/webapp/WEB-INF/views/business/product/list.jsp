@@ -83,17 +83,11 @@
                                         <td>${product.code}</td>
                                         <td>${product.name}</td>
                                         <td>
-                                            <c:choose>
-                                                <c:when test="${product.productType == '1'}">
-                                                    鑫丰母基金(开放式契约型)
-                                                </c:when>
-                                                <c:when test="${product.productType == '2'}">
-                                                    封闭式有限合伙私募基金
-                                                </c:when>
-                                                <c:when test="${product.productType == '3'}">
-                                                    封闭式契约型私募基金
-                                                </c:when>
-                                            </c:choose>
+                                            <c:forEach items="${productTypes}" var="pType">
+                                                <c:if test="${product.productType == pType.value}">
+                                                        ${pType.key}
+                                                </c:if>
+                                            </c:forEach>
                                         </td>
                                         <td>
                                             <c:choose>
@@ -170,5 +164,22 @@
     </div>
 
 </div>
+
+<script>
+    $.ajax({
+        url: '/dictionary/findDicByType',
+        type: 'GET',
+        data : 'product_type',
+        success: function(result) {
+            if(result){
+
+            }
+        },
+        error: function(xhr, textStatus, errorThrown){
+
+        }
+    });
+
+</script>
 
 <jsp:include page="../../include/footer.jsp"/>

@@ -29,4 +29,34 @@ public class Const {
 
     }
 
+    /**
+     * 字典类型
+     */
+    public static class DIC_CAT{
+        /**
+         *  产品类型
+         */
+        public static  final String PRODUCT_TYPE = "product_type";
+
+        /**
+         *  报告类型
+         */
+        public static  final String REPORT_CATEGORY = "report_category";
+
+        /**
+         *  权益类型
+         */
+        public static  final String RIGHTS_CATEGORY = "rights_category";
+
+        /**
+         *  活动类型
+         */
+        public static  final String ACTIVITY_CATEGORY = "activity_category";
+
+        /**
+         *  产品状态
+         */
+        public static  final String PRODUCT_STATUS = "product_status";
+    }
+
 }

@@ -48,11 +48,11 @@
 
 
 
-        <table tableName="department"
+        <table tableName="dictionary"
                delimitAllColumns="true"
                delimitIdentifiers="true"
-               domainObjectName="Department">
-            <generatedKey column="department_id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
+               domainObjectName="Dictionary">
+            <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
         </table>
 
     </context>

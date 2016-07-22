@@ -115,8 +115,7 @@
                                     <tr>
                                         <td>${dept.get("id")}</td>
                                         <td>${dept.get("name")}</td>
-                                        <td><a href="#" class="btn mini purple">
-                                            <i class="icon-edit"></i> 修改</a>
+                                        <td><a href="#" class="btn mini purple"><i class="icon-edit"></i> 修改</a>
                                             <a href="#" class="btn mini black"><i class="icon-trash"></i> 删除</a>
                                         </td>
                                     </tr>
@@ -141,8 +140,6 @@
         $.each(json, function(i,val){
             $("#parent_dept").append("<option value='"+val.id+"'>"+val.name+"</option>");
         });
-
-
     });
 
 

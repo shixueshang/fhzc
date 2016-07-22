@@ -10,6 +10,7 @@ import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.dao.mybatis.model.Product;
+import com.fhzc.app.system.service.DictionaryService;
 import com.fhzc.app.system.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +34,9 @@ public class ProductController extends BaseController {
     @Resource
     private ProductService productService;
 
+    @Resource
+    private DictionaryService dictionaryService;
+
     /**
      * 产品列表
      * @return
@@ -43,6 +47,8 @@ public class ProductController extends BaseController {
         PageableResult<Product> pageableResult = productService.findPageProducts(page, size);
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("products", pageableResult.getItems());
+        mav.addObject("productTypes", dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_TYPE));
+        mav.addObject("productStatus", dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_STATUS));
         return mav;
     }
 
@@ -55,15 +61,6 @@ public class ProductController extends BaseController {
         return "business/product/add";
     }
 
-    /**
-     * 产品导入页面
-     * @return
-     */
-    @RequestMapping(value = "/importor", method = RequestMethod.GET)
-    public ModelAndView importorProduct(){
-        ModelAndView mav = new ModelAndView("business/product/importor");
-        return mav;
-    }
 
     /**
      * 产品发布

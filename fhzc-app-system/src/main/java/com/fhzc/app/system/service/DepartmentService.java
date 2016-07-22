@@ -23,4 +23,13 @@ public interface DepartmentService {
      * @param department
      */
     void addOrUpdateDept(Department department);
+
+    /**
+     * 获得机构信息
+     * @param id
+     * @return
+     */
+    Department getDeparent(Integer id);
+
+    void delete(Integer id);
 }
