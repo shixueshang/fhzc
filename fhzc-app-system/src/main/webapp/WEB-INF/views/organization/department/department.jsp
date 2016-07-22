@@ -179,11 +179,11 @@
         });
 
         $("#do_mod_dept").click(function () {
-            $.post("/organization/add",{'department_id':$("#dep_mod_id").val(),'title':$("#dep_mod_title").val()},function (data) {})
+            $.post("/organization/add",{'department_id':$("#dep_mod_id").val(),'title':$("#dep_mod_title").val()},function (data) {window.location.reload();})
         });
 
         $("#do_del_dept").click(function () {
-            $.get("/organization/del/" + $("#dep_del_id").val(),function (data) {})
+            $.get("/organization/delete/" + $("#dep_del_id").val(),function (data) {window.location.reload();})
         });
     });
 

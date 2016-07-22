@@ -107,7 +107,7 @@
                                                 </div>
                                             </div>
                                             <div class="control-group">
-                                                <label class="control-label">预期年化收益率(单位:%)</label>
+                                                <label class="control-label">参考业绩标准(单位:%)</label>
                                                 <div class="controls">
                                                     <input type="number" name="expectedMin" value="${product.expectedMin}" placeholder="" class="m-wrap small"> ~ <input type="number" name="expectedMax" value="${product.expectedMax}" placeholder="" class="m-wrap small">
                                                     <span class="help-inline"></span>
