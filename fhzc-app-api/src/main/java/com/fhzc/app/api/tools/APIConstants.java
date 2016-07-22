@@ -65,4 +65,19 @@ public class APIConstants {
 
         public static final String Image = "image";
     }
+
+    /**
+     * Created by jiajitao on 2016/7/21.
+     * 表product_reservation 中的result 产品预约结果
+     */
+    public static class OrderResult{
+        //cancel,success,failed,wait
+        public static final String Cancel = "cancel";
+
+        public static final String Success = "success";
+
+        public static final String Failed = "failed";
+
+        public static final String Wait = "wait";
+    }
 }
