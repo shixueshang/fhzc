@@ -1,10 +1,8 @@
 package com.fhzc.app.api.controller;
 
 import com.fhzc.app.api.service.ProductReservationService;
-import com.fhzc.app.api.service.ProductService;
 import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
-import com.fhzc.app.api.tools.OrderResult;
 import com.fhzc.app.dao.mybatis.model.ProductReservation;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +30,7 @@ public class ProductOrderApiController {
         productReservation.setPlannerId(plannerId);
         productReservation.setAmount(amount);
         productReservation.setCtime(new Date());
-        productReservation.setResult(OrderResult.success.toString());
+        productReservation.setResult(APIConstants.OrderResult.Success);
         productReservationService.addOrUpdateProductReservation(productReservation);
 
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
@@ -48,7 +46,7 @@ public class ProductOrderApiController {
         productReservation.setPlannerId(plannerId);
         productReservation.setAmount(amount);
         productReservation.setCtime(new Date());
-        productReservation.setResult(OrderResult.cancel.toString());
+        productReservation.setResult(APIConstants.OrderResult.Cancel);
         productReservationService.addOrUpdateProductReservation(productReservation);
 
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
