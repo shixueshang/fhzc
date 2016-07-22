@@ -1,12 +1,12 @@
 package com.fhzc.app.system.service.impl;
 
+import com.fhzc.app.dao.mybatis.model.Product;
+import com.fhzc.app.dao.mybatis.model.ProductExample;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.system.commons.util.excel.ExcelImporter;
 import com.fhzc.app.system.commons.util.excel.ImportCallBack;
 import com.fhzc.app.system.commons.util.excel.ImportConfig;
 import com.fhzc.app.dao.mybatis.inter.ProductMapper;
-import com.fhzc.app.dao.mybatis.model.Product;
-import com.fhzc.app.dao.mybatis.model.ProductExample;
 import com.fhzc.app.system.service.ProductService;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.poi.ss.usermodel.Workbook;

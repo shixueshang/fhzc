@@ -13,6 +13,8 @@ public class Department {
 
     private Integer leaf;
 
+    private Integer status;
+
     public Integer getDepartmentId() {
         return departmentId;
     }
@@ -51,5 +53,13 @@ public class Department {
 
     public void setLeaf(Integer leaf) {
         this.leaf = leaf;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

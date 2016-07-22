@@ -64,6 +64,7 @@ public class ResourceController extends BaseController {
      * @param id
      * @return
      */
+    @Deprecated
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
     @ResponseBody
     public AjaxJson edit(@PathVariable(value = "id") Integer id){
@@ -71,9 +72,9 @@ public class ResourceController extends BaseController {
         return new AjaxJson(true, departmentService.getDeparent(id));
     }
 
-    @RequestMapping(value = "/delete{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public AjaxJson delete(@PathVariable(value = "id") Integer id){
-
+        departmentService.delete(id);
         return new AjaxJson(true);
     }
 

@@ -88,54 +88,27 @@
                                             </c:forEach>
                                         </td>
                                         <td>
-                                            <c:choose>
-                                                <c:when test="${product.status == '-1'}">
-                                                    未知
-                                                </c:when>
-                                                <c:when test="${product.status == '0'}">
-                                                    产品预热
-                                                </c:when>
-                                                <c:when test="${product.status == '1'}">
-                                                    募集中
-                                                </c:when>
-                                                <c:when test="${product.status == '2'}">
-                                                    募集结束
-                                                </c:when>
-                                                <c:when test="${product.status == '3'}">
-                                                    募集失败
-                                                </c:when>
-                                                <c:when test="${product.status == '4'}">
-                                                    产品成立
-                                                </c:when>
-                                                <c:when test="${product.status == '5'}">
-                                                    产品到期
-                                                </c:when>
-                                                <c:when test="${product.status == '6'}">
-                                                    提前结束
-                                                </c:when>
-                                            </c:choose>
+                                            <c:forEach items="${productStatus}" var="pStatus">
+                                                <c:if test="${product.status == pStatus.value}">
+                                                    ${pStatus.key}
+                                                </c:if>
+                                            </c:forEach>
                                         </td>
                                         <td></td>
                                         <td><fmt:formatDate value="${product.foundDay}" pattern="yyyy-MM-dd"/></td>
                                         <td>
-                                            <c:choose>
-                                                <c:when test="${product.isRecommend == '1'}">
-                                                    是
-                                                </c:when>
-                                                <c:when test="${data.isRecommend == '0'}">
-                                                    否
-                                                </c:when>
-                                            </c:choose>
+                                            <c:forEach items="${yesNo}" var="yesNo">
+                                                <c:if test="${product.isRecommend == yesNo.value}">
+                                                    ${yesNo.key}
+                                                </c:if>
+                                            </c:forEach>
                                         </td>
                                         <td>
-                                            <c:choose>
-                                                <c:when test="${product.isDisplay == '1'}">
-                                                    是
-                                                </c:when>
-                                                <c:when test="${data.isDisplay == '0'}">
-                                                    否
-                                                </c:when>
-                                            </c:choose>
+                                            <c:forEach items="${yesNo}" var="yesNo">
+                                                <c:if test="${product.isDisplay == yesNo.value}">
+                                                    ${yesNo.key}
+                                                </c:if>
+                                            </c:forEach>
                                         </td>
                                         <td></td>
                                         <td></td>

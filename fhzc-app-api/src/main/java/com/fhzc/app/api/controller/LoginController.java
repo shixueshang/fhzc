@@ -85,6 +85,7 @@ public class LoginController extends BaseController {
     public ApiJsonResult setPassword(Integer identity, String identityNum, String password, String confirmPwd){
         User user = userService.checkUserExists(identity, identityNum);
         user.setPassword(DigestUtils.md5Hex(password));
+        userService.updateUser(user);
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
     }
 }

@@ -3,14 +3,14 @@ package com.fhzc.app.dao.mybatis.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class customerExample {
+public class CustomerExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public customerExample() {
+    public CustomerExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 

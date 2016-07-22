@@ -18,13 +18,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Created by freeman on 16/7/20.
  */
 @Controller
-public class IndexApiController {
+public class IndexApiController extends BaseController {
 
     @Resource
     private ProductService productService;

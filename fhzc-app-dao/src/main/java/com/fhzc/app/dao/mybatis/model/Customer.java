@@ -1,6 +1,6 @@
 package com.fhzc.app.dao.mybatis.model;
 
-public class customer {
+public class Customer {
     private Integer customerId;
 
     private Integer uid;

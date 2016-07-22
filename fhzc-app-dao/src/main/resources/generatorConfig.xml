@@ -46,13 +46,11 @@
 
         <!--生成对应表及类名 -->
 
-
-
-        <table tableName="dictionary"
+        <table tableName="department"
                delimitAllColumns="true"
                delimitIdentifiers="true"
-               domainObjectName="Dictionary">
-            <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
+               domainObjectName="Department">
+            <generatedKey column="deparentment_id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
         </table>
 
     </context>

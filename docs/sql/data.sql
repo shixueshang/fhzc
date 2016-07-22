@@ -53,6 +53,7 @@ INSERT INTO `system_admin_module` (`id`,`admin_id`,`module_id`,`mode`) VALUES (9
 -- Query: SELECT * FROM bank.dictionary
 -- Date: 2016-07-22 15:12
 */
+TRUNCATE TABLE `dictionary`;
 INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (1,'product_type','产品类型','鑫丰母基金(开放式契约型)','1',0,0,0,NULL,NULL);
 INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (2,'product_type','产品类型','封闭式有限合伙私募基金','2',0,0,0,NULL,NULL);
 INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (3,'product_type','产品类型','封闭式契约型私募基金','3',0,0,0,NULL,NULL);
@@ -80,3 +81,66 @@ INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,
 INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (25,'product_status','产品状态','产品成立','5',0,0,0,NULL,NULL);
 INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (26,'product_status','产品状态','产品到期','6',0,0,0,NULL,NULL);
 INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (27,'product_status','产品状态','提前结束','7',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (28, 'yes_no', '是否', '是', '1', '0', '0', '0',NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (29, 'yes_no', '是否', '否', '0', '0', '0', '0',NULL,NULL);
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('30', 'product_issue_type', '产品发行模式', '其他', '0', '0', '0', '0');
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('31', 'product_issue_type', '产品发行模式', '契约型基金', '1', '0', '0', '0');
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('32', 'product_issue_type', '产品发行模式', '有限合伙', '2', '0', '0', '0');
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('33', 'product_issue_type', '产品发行模式', '信托', '3', '0', '0', '0');
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('34', 'product_issue_type', '产品发行模式', '债权', '4', '0', '0', '0');
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('35', 'product_issue_type', '产品发行模式', '保险', '5', '0', '0', '0');
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('36', 'customer_level', '客户等级', '准客户', '1', '0', '0', '0');
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('37', 'customer_level', '客户等级', '客户', '2', '0', '0', '0');
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('38', 'customer_level', '客户等级', '金卡客户', '3', '0', '0', '0');
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('39', 'risk_level', '风险评级', 'A', '1', '0', '0', '0');
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('40', 'risk_level', '风险评级', 'B', '2', '0', '0', '0');
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('41', 'risk_level', '风险评级', 'C', '3', '0', '0', '0');
+
+INSERT INTO `bank`.`areas` (`area_name`) VALUES ('北京');
+INSERT INTO `bank`.`areas` (`area_name`) VALUES ('上海');
+INSERT INTO `bank`.`areas` (`area_name`) VALUES ('广州');
+INSERT INTO `bank`.`areas` (`area_name`) VALUES ('深圳');
+INSERT INTO `bank`.`areas` (`area_name`) VALUES ('天津');
+INSERT INTO `bank`.`areas` (`area_name`) VALUES ('青岛');
+INSERT INTO `bank`.`areas` (`area_name`) VALUES ('杭州');
+INSERT INTO `bank`.`areas` (`area_name`) VALUES ('苏州');
+INSERT INTO `bank`.`areas` (`area_name`) VALUES ('成都');
+INSERT INTO `bank`.`areas` (`area_name`) VALUES ('重庆');
+
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('总经理');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('分公司总经理');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('分公司副总经理');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('副总经理');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('高级理财顾问');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('高级理财规划师');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('华东区域总经理');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('华南区总经理');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('精英理财规划师');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('精英理财规划师(1星)');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('精英理财规划师(2星)');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('精英理财规划师(3星)');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('精英理财规划师(4星)');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('精英理财规划师(5星)');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('理财顾问');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('理财规划师');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('理财规划师(3星)');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('理财规划师(5星)');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('市场总监(1级)');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('市场总监(1星)');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('市场总监(2级)');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('市场总监(2星)');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('市场总监(3级)');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('市场总监(4级)');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('市场总监(5级)');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('市场总监(5星)');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('市场总监(7级)');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('市场总监1级');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('市场总监2级');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('市场总监3级');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('西南区区域总经理');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('资深理财顾问');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('资深理财规划师');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('青渝总经理');
+
+INSERT INTO `rights` VALUES (1,7,'基础体检服务',100,NULL,1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(2,7,'高端体检服务\r',100,NULL,1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(3,7,'基础洁牙服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(4,7,'口腔诊疗服务\r',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(5,7,'全国三甲医院全程导医陪诊服务\r',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(6,7,'全国三甲医院预约专家号服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(7,7,'全国三甲医院专家预约挂号及导诊服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(8,7,'全国三甲医院手术、住院协调预约服务\r',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(9,7,'全国三甲医院重要检查预约服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(10,7,'全球专业海外医疗就诊推荐方案',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(11,7,'海外早期防癌筛查体检服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(19,8,'国内一二线城市接送机服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(20,8,'境外20个城市接送机预约',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(21,8,'全国24家高铁站贵宾休息室预约服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(22,8,'国内机场CIP专用嘉宾通道预约服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(23,8,'全球427家机场VIP贵宾要客通道预约服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(24,8,'各国签证咨询、代办服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(25,8,'三年国际驾照代办服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(26,9,'演唱会、剧院演出门票预订服务\r',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(27,9,'拍卖会门票预订及贵宾入场资格获取服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(28,10,'国内城市道路救援服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(29,10,'私人飞行驾照培训\r',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(30,10,'全国专人代驾服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(31,10,'全国洗车服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(32,11,'知名雪茄、红酒优惠购买预订服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(33,11,'复华定制限量版红酒兑换服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(34,11,'国内高档餐厅预约订位服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(35,11,'国际一线奢侈品牌产品预订及优惠折扣服务05、高端西服、礼服量体定制预约服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(36,11,'奢侈品清洁护理服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(37,11,'专属美容、SPA护理预约服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(38,11,'豪车优惠购买、试乘试驾服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(39,11,'全国优选影院观影服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(40,12,'全国精选高尔夫练习场畅打服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(41,12,'全国高尔夫球场优惠订场服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(42,12,'高尔夫初、中、高级专业培训，预约服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(43,12,'高尔夫专业球具及配件优惠预订服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(44,12,'高尔夫职业赛事观赛预约服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(45,12,'全国健身场馆预订服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(46,12,'全国网球场馆预订服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(47,13,'律师法律咨询服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(48,13,'税务问题咨询服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(49,13,'投资移民咨询服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(50,13,'子女留学及教育咨询服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(51,13,'专属语言培训优惠预订服务',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(52,14,'健康养生专题讲座',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(53,14,'红酒品鉴会',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(54,14,'全球精品旅行线路特惠',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(55,14,'亲子主题活动',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL),(56,14,'、家庭资产配置专题研讨会',100,'static',1,'2016-07-19 20:49:01','某知名供应商','该要暂缺','封面暂无',NULL);
+

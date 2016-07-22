@@ -17,7 +17,7 @@ import javax.annotation.Resource;
  * Created by freeman on 16/7/19.
  */
 @Controller
-public class ActivityApiController {
+public class ActivityApiController extends BaseController{
 
     @Resource
     private ActivityService activityService;

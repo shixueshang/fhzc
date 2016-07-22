@@ -463,53 +463,63 @@ public class ProductExample {
             return (Criteria) this;
         }
 
-        public Criteria andBuyDayEqualTo(Date value) {
-            addCriterionForJDBCDate("`buy_day` =", value, "buyDay");
+        public Criteria andBuyDayEqualTo(String value) {
+            addCriterion("`buy_day` =", value, "buyDay");
             return (Criteria) this;
         }
 
-        public Criteria andBuyDayNotEqualTo(Date value) {
-            addCriterionForJDBCDate("`buy_day` <>", value, "buyDay");
+        public Criteria andBuyDayNotEqualTo(String value) {
+            addCriterion("`buy_day` <>", value, "buyDay");
             return (Criteria) this;
         }
 
-        public Criteria andBuyDayGreaterThan(Date value) {
-            addCriterionForJDBCDate("`buy_day` >", value, "buyDay");
+        public Criteria andBuyDayGreaterThan(String value) {
+            addCriterion("`buy_day` >", value, "buyDay");
             return (Criteria) this;
         }
 
-        public Criteria andBuyDayGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("`buy_day` >=", value, "buyDay");
+        public Criteria andBuyDayGreaterThanOrEqualTo(String value) {
+            addCriterion("`buy_day` >=", value, "buyDay");
             return (Criteria) this;
         }
 
-        public Criteria andBuyDayLessThan(Date value) {
-            addCriterionForJDBCDate("`buy_day` <", value, "buyDay");
+        public Criteria andBuyDayLessThan(String value) {
+            addCriterion("`buy_day` <", value, "buyDay");
             return (Criteria) this;
         }
 
-        public Criteria andBuyDayLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("`buy_day` <=", value, "buyDay");
+        public Criteria andBuyDayLessThanOrEqualTo(String value) {
+            addCriterion("`buy_day` <=", value, "buyDay");
             return (Criteria) this;
         }
 
-        public Criteria andBuyDayIn(List<Date> values) {
-            addCriterionForJDBCDate("`buy_day` in", values, "buyDay");
+        public Criteria andBuyDayLike(String value) {
+            addCriterion("`buy_day` like", value, "buyDay");
             return (Criteria) this;
         }
 
-        public Criteria andBuyDayNotIn(List<Date> values) {
-            addCriterionForJDBCDate("`buy_day` not in", values, "buyDay");
+        public Criteria andBuyDayNotLike(String value) {
+            addCriterion("`buy_day` not like", value, "buyDay");
             return (Criteria) this;
         }
 
-        public Criteria andBuyDayBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("`buy_day` between", value1, value2, "buyDay");
+        public Criteria andBuyDayIn(List<String> values) {
+            addCriterion("`buy_day` in", values, "buyDay");
             return (Criteria) this;
         }
 
-        public Criteria andBuyDayNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("`buy_day` not between", value1, value2, "buyDay");
+        public Criteria andBuyDayNotIn(List<String> values) {
+            addCriterion("`buy_day` not in", values, "buyDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyDayBetween(String value1, String value2) {
+            addCriterion("`buy_day` between", value1, value2, "buyDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuyDayNotBetween(String value1, String value2) {
+            addCriterion("`buy_day` not between", value1, value2, "buyDay");
             return (Criteria) this;
         }
 
@@ -523,53 +533,63 @@ public class ProductExample {
             return (Criteria) this;
         }
 
-        public Criteria andRedeemDayEqualTo(Date value) {
-            addCriterionForJDBCDate("`redeem_day` =", value, "redeemDay");
+        public Criteria andRedeemDayEqualTo(String value) {
+            addCriterion("`redeem_day` =", value, "redeemDay");
             return (Criteria) this;
         }
 
-        public Criteria andRedeemDayNotEqualTo(Date value) {
-            addCriterionForJDBCDate("`redeem_day` <>", value, "redeemDay");
+        public Criteria andRedeemDayNotEqualTo(String value) {
+            addCriterion("`redeem_day` <>", value, "redeemDay");
             return (Criteria) this;
         }
 
-        public Criteria andRedeemDayGreaterThan(Date value) {
-            addCriterionForJDBCDate("`redeem_day` >", value, "redeemDay");
+        public Criteria andRedeemDayGreaterThan(String value) {
+            addCriterion("`redeem_day` >", value, "redeemDay");
             return (Criteria) this;
         }
 
-        public Criteria andRedeemDayGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("`redeem_day` >=", value, "redeemDay");
+        public Criteria andRedeemDayGreaterThanOrEqualTo(String value) {
+            addCriterion("`redeem_day` >=", value, "redeemDay");
             return (Criteria) this;
         }
 
-        public Criteria andRedeemDayLessThan(Date value) {
-            addCriterionForJDBCDate("`redeem_day` <", value, "redeemDay");
+        public Criteria andRedeemDayLessThan(String value) {
+            addCriterion("`redeem_day` <", value, "redeemDay");
             return (Criteria) this;
         }
 
-        public Criteria andRedeemDayLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("`redeem_day` <=", value, "redeemDay");
+        public Criteria andRedeemDayLessThanOrEqualTo(String value) {
+            addCriterion("`redeem_day` <=", value, "redeemDay");
             return (Criteria) this;
         }
 
-        public Criteria andRedeemDayIn(List<Date> values) {
-            addCriterionForJDBCDate("`redeem_day` in", values, "redeemDay");
+        public Criteria andRedeemDayLike(String value) {
+            addCriterion("`redeem_day` like", value, "redeemDay");
             return (Criteria) this;
         }
 
-        public Criteria andRedeemDayNotIn(List<Date> values) {
-            addCriterionForJDBCDate("`redeem_day` not in", values, "redeemDay");
+        public Criteria andRedeemDayNotLike(String value) {
+            addCriterion("`redeem_day` not like", value, "redeemDay");
             return (Criteria) this;
         }
 
-        public Criteria andRedeemDayBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("`redeem_day` between", value1, value2, "redeemDay");
+        public Criteria andRedeemDayIn(List<String> values) {
+            addCriterion("`redeem_day` in", values, "redeemDay");
             return (Criteria) this;
         }
 
-        public Criteria andRedeemDayNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("`redeem_day` not between", value1, value2, "redeemDay");
+        public Criteria andRedeemDayNotIn(List<String> values) {
+            addCriterion("`redeem_day` not in", values, "redeemDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andRedeemDayBetween(String value1, String value2) {
+            addCriterion("`redeem_day` between", value1, value2, "redeemDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andRedeemDayNotBetween(String value1, String value2) {
+            addCriterion("`redeem_day` not between", value1, value2, "redeemDay");
             return (Criteria) this;
         }
 
