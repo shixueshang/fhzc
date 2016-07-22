@@ -14,9 +14,9 @@ public class Product {
 
     private Date foundDay;
 
-    private Date buyDay;
+    private String buyDay;
 
-    private Date redeemDay;
+    private String redeemDay;
 
     private Date valueDay;
 
@@ -136,20 +136,20 @@ public class Product {
         this.foundDay = foundDay;
     }
 
-    public Date getBuyDay() {
+    public String getBuyDay() {
         return buyDay;
     }
 
-    public void setBuyDay(Date buyDay) {
-        this.buyDay = buyDay;
+    public void setBuyDay(String buyDay) {
+        this.buyDay = buyDay == null ? null : buyDay.trim();
     }
 
-    public Date getRedeemDay() {
+    public String getRedeemDay() {
         return redeemDay;
     }
 
-    public void setRedeemDay(Date redeemDay) {
-        this.redeemDay = redeemDay;
+    public void setRedeemDay(String redeemDay) {
+        this.redeemDay = redeemDay == null ? null : redeemDay.trim();
     }
 
     public Date getValueDay() {

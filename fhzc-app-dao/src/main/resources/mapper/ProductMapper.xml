@@ -7,8 +7,8 @@
     <result column="code" property="code" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="found_day" property="foundDay" jdbcType="DATE" />
-    <result column="buy_day" property="buyDay" jdbcType="DATE" />
-    <result column="redeem_day" property="redeemDay" jdbcType="DATE" />
+    <result column="buy_day" property="buyDay" jdbcType="VARCHAR" />
+    <result column="redeem_day" property="redeemDay" jdbcType="VARCHAR" />
     <result column="value_day" property="valueDay" jdbcType="DATE" />
     <result column="expiry_day" property="expiryDay" jdbcType="DATE" />
     <result column="issue_type" property="issueType" jdbcType="INTEGER" />
@@ -191,7 +191,7 @@
       `expected_min`, `expected_max`, `desc`, 
       `detail_content`)
     values (#{status,jdbcType=TINYINT}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{foundDay,jdbcType=DATE}, #{buyDay,jdbcType=DATE}, #{redeemDay,jdbcType=DATE}, 
+      #{foundDay,jdbcType=DATE}, #{buyDay,jdbcType=VARCHAR}, #{redeemDay,jdbcType=VARCHAR}, 
       #{valueDay,jdbcType=DATE}, #{expiryDay,jdbcType=DATE}, #{issueType,jdbcType=INTEGER}, 
       #{productType,jdbcType=VARCHAR}, #{renewDeadline,jdbcType=VARCHAR}, #{dividendDay,jdbcType=VARCHAR}, 
       #{annualYield,jdbcType=VARCHAR}, #{incomeDistributionType,jdbcType=VARCHAR}, #{credit,jdbcType=VARCHAR}, 
@@ -363,10 +363,10 @@
         #{foundDay,jdbcType=DATE},
       </if>
       <if test="buyDay != null" >
-        #{buyDay,jdbcType=DATE},
+        #{buyDay,jdbcType=VARCHAR},
       </if>
       <if test="redeemDay != null" >
-        #{redeemDay,jdbcType=DATE},
+        #{redeemDay,jdbcType=VARCHAR},
       </if>
       <if test="valueDay != null" >
         #{valueDay,jdbcType=DATE},
@@ -512,10 +512,10 @@
         `found_day` = #{record.foundDay,jdbcType=DATE},
       </if>
       <if test="record.buyDay != null" >
-        `buy_day` = #{record.buyDay,jdbcType=DATE},
+        `buy_day` = #{record.buyDay,jdbcType=VARCHAR},
       </if>
       <if test="record.redeemDay != null" >
-        `redeem_day` = #{record.redeemDay,jdbcType=DATE},
+        `redeem_day` = #{record.redeemDay,jdbcType=VARCHAR},
       </if>
       <if test="record.valueDay != null" >
         `value_day` = #{record.valueDay,jdbcType=DATE},
@@ -646,8 +646,8 @@
       `code` = #{record.code,jdbcType=VARCHAR},
       `name` = #{record.name,jdbcType=VARCHAR},
       `found_day` = #{record.foundDay,jdbcType=DATE},
-      `buy_day` = #{record.buyDay,jdbcType=DATE},
-      `redeem_day` = #{record.redeemDay,jdbcType=DATE},
+      `buy_day` = #{record.buyDay,jdbcType=VARCHAR},
+      `redeem_day` = #{record.redeemDay,jdbcType=VARCHAR},
       `value_day` = #{record.valueDay,jdbcType=DATE},
       `expiry_day` = #{record.expiryDay,jdbcType=DATE},
       `issue_type` = #{record.issueType,jdbcType=INTEGER},
@@ -698,8 +698,8 @@
       `code` = #{record.code,jdbcType=VARCHAR},
       `name` = #{record.name,jdbcType=VARCHAR},
       `found_day` = #{record.foundDay,jdbcType=DATE},
-      `buy_day` = #{record.buyDay,jdbcType=DATE},
-      `redeem_day` = #{record.redeemDay,jdbcType=DATE},
+      `buy_day` = #{record.buyDay,jdbcType=VARCHAR},
+      `redeem_day` = #{record.redeemDay,jdbcType=VARCHAR},
       `value_day` = #{record.valueDay,jdbcType=DATE},
       `expiry_day` = #{record.expiryDay,jdbcType=DATE},
       `issue_type` = #{record.issueType,jdbcType=INTEGER},
@@ -757,10 +757,10 @@
         `found_day` = #{foundDay,jdbcType=DATE},
       </if>
       <if test="buyDay != null" >
-        `buy_day` = #{buyDay,jdbcType=DATE},
+        `buy_day` = #{buyDay,jdbcType=VARCHAR},
       </if>
       <if test="redeemDay != null" >
-        `redeem_day` = #{redeemDay,jdbcType=DATE},
+        `redeem_day` = #{redeemDay,jdbcType=VARCHAR},
       </if>
       <if test="valueDay != null" >
         `value_day` = #{valueDay,jdbcType=DATE},
@@ -888,8 +888,8 @@
       `code` = #{code,jdbcType=VARCHAR},
       `name` = #{name,jdbcType=VARCHAR},
       `found_day` = #{foundDay,jdbcType=DATE},
-      `buy_day` = #{buyDay,jdbcType=DATE},
-      `redeem_day` = #{redeemDay,jdbcType=DATE},
+      `buy_day` = #{buyDay,jdbcType=VARCHAR},
+      `redeem_day` = #{redeemDay,jdbcType=VARCHAR},
       `value_day` = #{valueDay,jdbcType=DATE},
       `expiry_day` = #{expiryDay,jdbcType=DATE},
       `issue_type` = #{issueType,jdbcType=INTEGER},
@@ -937,8 +937,8 @@
       `code` = #{code,jdbcType=VARCHAR},
       `name` = #{name,jdbcType=VARCHAR},
       `found_day` = #{foundDay,jdbcType=DATE},
-      `buy_day` = #{buyDay,jdbcType=DATE},
-      `redeem_day` = #{redeemDay,jdbcType=DATE},
+      `buy_day` = #{buyDay,jdbcType=VARCHAR},
+      `redeem_day` = #{redeemDay,jdbcType=VARCHAR},
       `value_day` = #{valueDay,jdbcType=DATE},
       `expiry_day` = #{expiryDay,jdbcType=DATE},
       `issue_type` = #{issueType,jdbcType=INTEGER},

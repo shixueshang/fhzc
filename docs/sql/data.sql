@@ -95,3 +95,51 @@ INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_defaul
 INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('39', 'risk_level', '风险评级', 'A', '1', '0', '0', '0');
 INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('40', 'risk_level', '风险评级', 'B', '2', '0', '0', '0');
 INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('41', 'risk_level', '风险评级', 'C', '3', '0', '0', '0');
+
+INSERT INTO `bank`.`areas` (`area_name`) VALUES ('北京');
+INSERT INTO `bank`.`areas` (`area_name`) VALUES ('上海');
+INSERT INTO `bank`.`areas` (`area_name`) VALUES ('广州');
+INSERT INTO `bank`.`areas` (`area_name`) VALUES ('深圳');
+INSERT INTO `bank`.`areas` (`area_name`) VALUES ('天津');
+INSERT INTO `bank`.`areas` (`area_name`) VALUES ('青岛');
+INSERT INTO `bank`.`areas` (`area_name`) VALUES ('杭州');
+INSERT INTO `bank`.`areas` (`area_name`) VALUES ('苏州');
+INSERT INTO `bank`.`areas` (`area_name`) VALUES ('成都');
+INSERT INTO `bank`.`areas` (`area_name`) VALUES ('重庆');
+
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('总经理');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('分公司总经理');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('分公司副总经理');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('副总经理');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('高级理财顾问');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('高级理财规划师');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('华东区域总经理');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('华南区总经理');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('精英理财规划师');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('精英理财规划师(1星)');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('精英理财规划师(2星)');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('精英理财规划师(3星)');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('精英理财规划师(4星)');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('精英理财规划师(5星)');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('理财顾问');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('理财规划师');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('理财规划师(3星)');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('理财规划师(5星)');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('市场总监(1级)');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('市场总监(1星)');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('市场总监(2级)');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('市场总监(2星)');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('市场总监(3级)');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('市场总监(4级)');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('市场总监(5级)');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('市场总监(5星)');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('市场总监(7级)');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('市场总监1级');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('市场总监2级');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('市场总监3级');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('西南区区域总经理');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('资深理财顾问');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('资深理财规划师');
+INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('青渝总经理');
+
+

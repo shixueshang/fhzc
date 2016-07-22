@@ -1,5 +1,6 @@
 package com.fhzc.app.system.controller.business;
 
+import com.fhzc.app.dao.mybatis.model.Product;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
@@ -7,9 +8,7 @@ import com.fhzc.app.dao.mybatis.util.Const;
 
 import com.fhzc.app.system.commons.util.FileUtil;
 import com.fhzc.app.system.commons.util.TextUtils;
-import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
-import com.fhzc.app.dao.mybatis.model.Product;
 import com.fhzc.app.system.service.DepartmentService;
 import com.fhzc.app.system.service.DictionaryService;
 import com.fhzc.app.system.service.ProductService;

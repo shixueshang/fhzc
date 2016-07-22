@@ -284,7 +284,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">产品简介</label>
                                                 <div class="controls">
-                                                    <textarea name="desc"  class="span6 m-wrap" rows="3"></textarea>
+                                                    <textarea name="desc"  class="span12 ckeditor m-wrap" rows="3"></textarea>
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -353,7 +353,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">详细内容</label>
                                                 <div class="controls">
-                                                    <textarea name="detailContent" class="span6 m-wrap" rows="3"></textarea>
+                                                    <textarea name="detailContent" class="span12 ckeditor m-wrap" rows="3"></textarea>
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -413,7 +413,7 @@
 </div>
 
 <jsp:include page="../../include/footer.jsp"/>
-
+<script type="text/javascript" src="<%=contextPath%>/assets/ckeditor/ckeditor.js"></script>
 <script>
 $(function(){
 
