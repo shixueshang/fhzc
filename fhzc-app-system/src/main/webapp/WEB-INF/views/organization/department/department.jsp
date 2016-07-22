@@ -80,7 +80,6 @@
                                                 <label class="control-label">上级部门</label>
                                                 <div class="controls">
                                                     <select class="large m-wrap" name="parentDeptId" id="parent_dept" tabindex="1">
-                                                        <option ></option>
                                                     </select>
                                                 </div>
                                             </div>

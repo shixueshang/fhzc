@@ -17,7 +17,7 @@ import javax.annotation.Resource;
  * Created by freeman on 16/7/20.
  */
 @Controller
-public class RightsApiController {
+public class RightsApiController extends BaseController{
 
     @Resource
     private RightsService rightsService;

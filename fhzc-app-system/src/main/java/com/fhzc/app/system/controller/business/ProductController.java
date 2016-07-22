@@ -10,6 +10,7 @@ import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.dao.mybatis.model.Product;
+import com.fhzc.app.system.service.DepartmentService;
 import com.fhzc.app.system.service.DictionaryService;
 import com.fhzc.app.system.service.ProductService;
 import org.springframework.stereotype.Controller;
@@ -37,6 +38,9 @@ public class ProductController extends BaseController {
     @Resource
     private DictionaryService dictionaryService;
 
+    @Resource
+    private DepartmentService departmentService;
+
     /**
      * 产品列表
      * @return
@@ -49,6 +53,7 @@ public class ProductController extends BaseController {
         mav.addObject("products", pageableResult.getItems());
         mav.addObject("productTypes", dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_TYPE));
         mav.addObject("productStatus", dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_STATUS));
+        mav.addObject("yesNo", dictionaryService.findDicByType(Const.DIC_CAT.YES_NO));
         return mav;
     }
 
@@ -57,8 +62,12 @@ public class ProductController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/pub")
-    public String pubProduct(){
-        return "business/product/add";
+    public ModelAndView pubProduct(){
+        ModelAndView mav = new ModelAndView("business/product/add");
+        mav.addObject("productTypes", dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_TYPE));
+        mav.addObject("productStatus", dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_STATUS));
+        //mav.addObject("depts", departmentService.f)
+        return mav;
     }
 
 

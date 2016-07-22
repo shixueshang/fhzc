@@ -95,3 +95,7 @@ ADD COLUMN `is_ recommend` TINYINT(3) UNSIGNED NULL DEFAULT '0' COMMENT '是否�
 #2016-07-22
 ALTER TABLE `bank`.`department`
 ADD COLUMN `leaf` INT(1) UNSIGNED NULL DEFAULT '0' COMMENT '是否叶子节点' AFTER `ctime`;
+
+#2016-07-22
+ALTER TABLE `bank`.`department`
+ADD COLUMN `status` INT(1) NULL COMMENT '数据状态(0正常1删除)' AFTER `leaf`;

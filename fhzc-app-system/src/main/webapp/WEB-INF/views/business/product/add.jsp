@@ -96,9 +96,6 @@
                                                 <label class="control-label">产品类型</label>
                                                 <div class="controls">
                                                     <select class="large m-wrap" name="productType" id="productType" tabindex="1">
-                                                        <option  value="1">鑫丰母基金(开放式契约型)</option>
-                                                        <option  value="2">封闭式有限合伙私募基金</option>
-                                                        <option  value="3">封闭式契约型私募基金</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -106,14 +103,6 @@
                                                 <label class="control-label">基金状态</label>
                                                 <div class="controls">
                                                     <select  class="large m-wrap" name="status" id="status" tabindex="1">
-                                                        <option value="-1">未知</option>
-                                                        <option value="0">产品预热</option>
-                                                        <option value="1">募集中</option>
-                                                        <option value="2">募集结束</option>
-                                                        <option value="3">募集失败</option>
-                                                        <option value="4">产品成立</option>
-                                                        <option value="5">产品到期</option>
-                                                        <option value="6">提前结束</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -192,12 +181,6 @@
                                                 <label class="control-label">发行模式</label>
                                                 <div class="controls">
                                                     <select  class="large m-wrap" name="issueType"  tabindex="1">
-                                                        <option value="0">其他</option>
-                                                        <option value="1">契约型基金</option>
-                                                        <option value="2">有限合伙</option>
-                                                        <option value="3">信托</option>
-                                                        <option value="4">债权</option>
-                                                        <option value="5">保险</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -269,19 +252,6 @@
                                                 <label class="control-label">投放分公司</label>
                                                 <div class="controls">
                                                     <select name="departments"  data-placeholder="分公司信息" class="chosen span6" multiple="multiple" tabindex="6">
-                                                        <option value=""></option>
-                                                        <optgroup label="NFC EAST">
-                                                            <option>Dallas Cowboys</option>
-                                                            <option>New York Giants</option>
-                                                            <option>Philadelphia Eagles</option>
-                                                            <option>Washington Redskins</option>
-                                                        </optgroup>
-                                                        <optgroup label="NFC NORTH">
-                                                            <option selected>Chicago Bears</option>
-                                                            <option>Detroit Lions</option>
-                                                            <option>Green Bay Packers</option>
-                                                            <option>Minnesota Vikings</option>
-                                                        </optgroup>
                                                     </select>
                                                 </div>
 
@@ -291,9 +261,6 @@
                                                 <label class="control-label">客户等级要求</label>
                                                 <div class="controls">
                                                     <select name="level" class="large m-wrap"  tabindex="1">
-                                                        <option  value="3">金卡客户</option>
-                                                        <option  value="2">客户</option>
-                                                        <option  value="1">准客户</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -302,9 +269,6 @@
                                                 <label class="control-label">风险评级要求</label>
                                                 <div class="controls">
                                                     <select name="risk" class="large m-wrap" tabindex="1">
-                                                        <option  value="3">A</option>
-                                                        <option  value="2">B</option>
-                                                        <option  value="1">C</option>
                                                     </select>
                                                 </div>
                                             </div>

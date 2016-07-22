@@ -30,29 +30,8 @@ public class DepartmentServiceImpl implements DepartmentService{
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<Department> list = departmentMapper.selectByExampleWithRowbounds(example, rowBounds);
 
-        List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
-        //构建名称 父级-子级-孙子级
-        Department root = this.findRootDept();
-        for(Department dept : list){
-            Map<String, Object> resultMap = new ConcurrentHashMap<>();
-            resultMap.put("id", dept.getDepartmentId());
+        List<Map<String, Object>> result = this.buildDepts(list);
 
-            if(dept.getParentDeptId() == null){
-                resultMap.put("name", dept.getTitle());
-                result.add(resultMap);
-                continue;
-            }
-
-            List<String> names = new ArrayList<String>();
-            List<String> reverseNames = recurseMapTree(dept, root, names);
-            Collections.reverse(reverseNames);
-            StringBuilder sb = new StringBuilder();
-            for(String name : reverseNames){
-                sb.append(name).append("-");
-            }
-            resultMap.put("name", sb.substring(0, sb.length() - 1));
-            result.add(resultMap);
-        }
         return new PageableResult<Map<String, Object>>(page, size, result.size(), result);
     }
 
@@ -74,6 +53,42 @@ public class DepartmentServiceImpl implements DepartmentService{
     @Override
     public void delete(Integer id) {
         departmentMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public List<Map<String, Object>> findDeptByParent(Integer parentId) {
+        return null;
+    }
+
+    /**
+     * 构建名称 父级-子级-孙子级
+     * @param list
+     * @return
+     */
+    private List<Map<String, Object>> buildDepts(List<Department> list){
+        List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
+        Department root = this.findRootDept();
+        for(Department dept : list){
+            Map<String, Object> resultMap = new ConcurrentHashMap<>();
+            resultMap.put("id", dept.getDepartmentId());
+
+            if(dept.getParentDeptId() == null){
+                resultMap.put("name", dept.getTitle());
+                data.add(resultMap);
+                continue;
+            }
+
+            List<String> names = new ArrayList<String>();
+            List<String> reverseNames = recurseMapTree(dept, root, names);
+            Collections.reverse(reverseNames);
+            StringBuilder sb = new StringBuilder();
+            for(String name : reverseNames){
+                sb.append(name).append("-");
+            }
+            resultMap.put("name", sb.substring(0, sb.length() - 1));
+            data.add(resultMap);
+        }
+        return data;
     }
 
     /**
@@ -119,7 +134,4 @@ public class DepartmentServiceImpl implements DepartmentService{
         return departmentMapper.selectByExample(example).get(0);
     }
 
-    private List<Department> findChildrenByParent(Integer parentId){
-        return  departmentMapper.findChildrenByParent(parentId);
-    }
 }

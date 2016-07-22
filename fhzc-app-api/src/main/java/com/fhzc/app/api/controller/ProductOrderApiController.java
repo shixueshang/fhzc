@@ -16,7 +16,7 @@ import java.util.Date;
  * Created by jiajitao on 2016/7/20.
  */
 @Controller
-public class ProductOrderApiController {
+public class ProductOrderApiController extends BaseController{
 
     @Resource
     private ProductReservationService productReservationService;

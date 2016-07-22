@@ -57,6 +57,11 @@ public class Const {
          *  产品状态
          */
         public static  final String PRODUCT_STATUS = "product_status";
+
+        /**
+         *  是否
+         */
+        public static  final String YES_NO = "yes_no";
     }
 
 }
