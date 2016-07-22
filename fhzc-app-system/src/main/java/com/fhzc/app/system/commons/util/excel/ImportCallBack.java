@@ -7,9 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * 导入回调借口 <br />
- * 注：目前由于@Transactional并不起作用，所以选择HibernateDao进行事务处理，后期调整
- * 
+ * 导入回调接口 <br />
+ *
  * @author Guoyan
  */
 @Transactional
@@ -32,7 +31,7 @@ public interface ImportCallBack {
 	 * @param sqlSessionTemplate
 	 *            {@link SqlSessionTemplate}
 	 * @param data
-	 *            即将导入的数据，即进行转换后的数据
+	 *            进行转换后的数据
 	 */
 	void postOperation(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data);
 }

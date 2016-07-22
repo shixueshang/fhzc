@@ -55,7 +55,7 @@ public class ApiJsonResult {
 		this.data = data;
 	}
 
-	public String getMesage() {
+	public String getMessage() {
 		return message;
 	}
 

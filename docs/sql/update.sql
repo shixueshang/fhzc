@@ -90,3 +90,8 @@ ALTER TABLE `bank`.`activity`
 ADD COLUMN `is_ recommend` TINYINT(3) UNSIGNED NULL DEFAULT '0' COMMENT '是否推荐 1是|0否' AFTER `department_id`;
 ALTER TABLE `bank`.`report`
 ADD COLUMN `is_ recommend` TINYINT(3) UNSIGNED NULL DEFAULT '0' COMMENT '是否推荐 1是|0否' AFTER `is_display`;
+
+
+#2016-07-22
+ALTER TABLE `bank`.`department`
+ADD COLUMN `leaf` INT(1) UNSIGNED NULL DEFAULT '0' COMMENT '是否叶子节点' AFTER `ctime`;
