@@ -61,7 +61,6 @@
                             <table class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <td><input type="checkbox" id="checkAll"/>全选</td>
                                     <td>产品代码</td>
                                     <td>产品名称</td>
                                     <td>产品类型</td>
@@ -79,7 +78,6 @@
                                 <tbody>
                                 <c:forEach items="${products}" var="product">
                                     <tr>
-                                        <td><input type="checkbox" id="checkOne"/></td>
                                         <td>${product.code}</td>
                                         <td>${product.name}</td>
                                         <td>
@@ -142,10 +140,9 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td><a href="detail/${product.pid}">编辑</a>
-                                            <a href="#">推荐</a>
-                                            <a href="#">展示</a>
-                                            <a href="#">预约</a>
+                                        <td>
+                                            <a href="detail/${product.pid}" class="btn mini purple"><i class="icon-edit"></i> 编辑</a>
+                                            <a href="#" class="btn mini blue"><i class="icon-share"></i> 预约</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
