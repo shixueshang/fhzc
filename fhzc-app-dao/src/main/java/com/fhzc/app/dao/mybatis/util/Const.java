@@ -64,4 +64,18 @@ public class Const {
         public static  final String YES_NO = "yes_no";
     }
 
+    /**
+     * 数据状态
+     */
+    public static  class Data_Status{
+        /**
+         * 正常状态
+         */
+        public static Integer DATA_NORMAL = 0;
+
+        /**
+         * 删除状态
+         */
+        public static Integer DATA_DELETE = 1;
+    }
 }
