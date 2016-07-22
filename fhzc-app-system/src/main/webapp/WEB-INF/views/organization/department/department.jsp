@@ -114,8 +114,9 @@
                                     <tr>
                                         <td>${dept.get("id")}</td>
                                         <td>${dept.get("name")}</td>
-                                        <td><a href="#" class="btn mini purple"><i class="icon-edit"></i> 修改</a>
-                                            <a href="#" class="btn mini black"><i class="icon-trash"></i> 删除</a>
+                                        <td>
+                                            <a href="#modal_edit" role="button" class="btn mini purple mod_dep" data-toggle="modal" data-id="${dept.get("id")}" data-title="${dept.get("title")}"><i class="icon-edit"></i> 修改</a>
+                                            <a href="#modal_del" role="button" class="btn mini black del_dep" data-toggle="modal" data-id="${dept.get("id")}" ><i class="icon-trash"></i> 删除</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -126,6 +127,34 @@
                 </div>
             </div>
             <!--页面操作详细内容 开始-->
+            <div id="modal_edit" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="my_modal_edit" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h3 id="myModalLabel2">修改名称</h3>
+                </div>
+                <div class="modal-body">
+                    <p><input type="text" id="dep_mod_title" value="" class="m-wrap large"></p>
+                        <input type="hidden" id="dep_mod_id" />
+                </div>
+                <div class="modal-footer">
+                    <button data-dismiss="modal" class="btn green" id="do_mod_dept">确定</button>
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+                </div>
+            </div>
+            <div id="modal_del" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="my_modal_del" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h3 id="myModalLabel3">确定删除</h3>
+                </div>
+                <div class="modal-body">
+                    <p>请确认删除操作,删除后不可恢复</p>
+                    <input type="hidden" id="dep_del_id" />
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+                    <button data-dismiss="modal" class="btn blue" id="do_del_dept">删除</button>
+                </div>
+            </div>
 
         </div>
     </div>
@@ -138,6 +167,23 @@
         var json= $.parseJSON(depts);
         $.each(json, function(i,val){
             $("#parent_dept").append("<option value='"+val.id+"'>"+val.name+"</option>");
+        });
+
+        $(".mod_dep").click(function(){
+            $("#dep_mod_title").val($(this).data('title'));
+            $("#dep_mod_id").val($(this).data('id'));
+        });
+
+        $(".del_dep").click(function(){
+            $("#dep_del_id").val($(this).data('id'))
+        });
+
+        $("#do_mod_dept").click(function () {
+            $.post("/organization/add",{'department_id':$("#dep_mod_id").val(),'title':$("#dep_mod_title").val()},function (data) {})
+        });
+
+        $("#do_del_dept").click(function () {
+            $.get("/organization/del/" + $("#dep_del_id").val(),function (data) {})
         });
     });
 

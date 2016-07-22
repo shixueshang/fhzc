@@ -156,7 +156,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">开放申购日</label>
                                                 <div class="controls">
-                                                    <input type="text" name="buyDay" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${product.buyDay}" pattern="yyyy-MM-dd"/>">
+                                                    <input id="buy_day_tags" name="buyDay" type="text" data-default="添加一个开放申购日" class="m-wra tags medium" value="${product.buyDay}" />
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -164,7 +164,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">赎回日</label>
                                                 <div class="controls">
-                                                    <input type="text" name="redeemDay" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${product.redeemDay}" pattern="yyyy-MM-dd"/>">
+                                                    <input id="redeem_day_tags" name="redeemDay" type="text" data-default="添加一个赎回日" class="m-wra tags medium" value="${product.redeemDay}" />
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -531,9 +531,9 @@ $(function(){
         }
     });
 
-    $('#dividend_day_tags').tagsInput({
+    $('#dividend_day_tags,#buy_day_tags,#redeem_day_tags').tagsInput({
         width: 300,
-        defaultText: "添加派息日",
+        defaultText: "请添加日期",
         'onAddTag': function (tag) {
             var patterns = /^\d{4}-(0?[1-9]|1[0-2])-(0?[1-9]|[1-2]\d|3[0-1])$/;
             if(!patterns.test(tag)){
