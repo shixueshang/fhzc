@@ -45,4 +45,10 @@ public interface DepartmentService {
      */
     List<Map<String, Object>> findDeptByParent(Integer parentId);
 
+    /**
+     * 获得顶级机构
+     * @return
+     */
+    Department findRootDept();
+
 }
