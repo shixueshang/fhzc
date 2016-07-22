@@ -24,7 +24,7 @@ import java.util.Objects;
  * Created by freeman on 16/7/20.
  */
 @Controller
-public class indexApiController {
+public class IndexApiController {
 
     @Resource
     private ProductService productService;
