@@ -103,3 +103,12 @@ ADD COLUMN `status` INT(1) NULL COMMENT '数据状态(0正常1删除)' AFTER `le
 ALTER TABLE `bank`.`product`
 CHANGE COLUMN `buy_day` `buy_day` VARCHAR(200) NULL DEFAULT NULL COMMENT '开放申购日' ,
 CHANGE COLUMN `redeem_day` `redeem_day` VARCHAR(200) NULL DEFAULT NULL COMMENT '赎回日' ;
+
+
+#2016-07-23
+ALTER TABLE `bank`.`product`
+ADD COLUMN `throw_department` INT NULL COMMENT '投放分公司' AFTER `expected_max`;
+
+DROP TABLE IF EXISTS `bank`.`product_areas` ;
+
+ALTER TABLE `bank`.`report` CHANGE COLUMN  `is_recommend` `is_recommend` INT(1) NULL comment '是否推荐';

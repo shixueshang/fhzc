@@ -3,6 +3,8 @@ package com.fhzc.app.api.service;
 import com.fhzc.app.dao.mybatis.model.Product;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 
+import java.util.List;
+
 /**
  * Created by lihongde on 2016/7/7 15:34
  */
@@ -29,7 +31,7 @@ public interface ProductService {
      * 查询推荐产品列表
      * @return
      */
-    PageableResult<Product> getRecommendProductList();
+    List<Product> getRecommendProductList();
 
 
     /**

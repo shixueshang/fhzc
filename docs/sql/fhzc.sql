@@ -666,21 +666,6 @@ CREATE TABLE IF NOT EXISTS `bank`.`passport` (
 
 
 -- -----------------------------------------------------
--- Table `bank`.`product_areas`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `bank`.`product_areas` ;
-
-CREATE TABLE IF NOT EXISTS `bank`.`product_areas` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `product_id` VARCHAR(45) NULL,
-  `area_id` VARCHAR(45) NULL,
-  PRIMARY KEY (`id`),
-  INDEX `area_index` (`area_id` ASC))
-  ENGINE = InnoDB
-  COMMENT = '产品发行区域';
-
-
--- -----------------------------------------------------
 -- Table `bank`.`contract_tmp`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `bank`.`contract_tmp` ;

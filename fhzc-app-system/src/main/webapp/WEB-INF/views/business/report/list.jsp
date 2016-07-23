@@ -96,7 +96,7 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td><a href="detail/${report.id}">编辑</a>
+                                        <td><a href="<%=contextPath%>/business/report/detail/${report.id}">编辑</a>
                                         </td>
                                     </tr>
                                 </c:forEach>

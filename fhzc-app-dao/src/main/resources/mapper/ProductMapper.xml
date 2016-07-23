@@ -46,6 +46,7 @@
     <result column="invest_threshold" property="investThreshold" jdbcType="DECIMAL" />
     <result column="expected_min" property="expectedMin" jdbcType="TINYINT" />
     <result column="expected_max" property="expectedMax" jdbcType="TINYINT" />
+    <result column="throw_department" property="throwDepartment" jdbcType="INTEGER" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.fhzc.app.dao.mybatis.model.Product" extends="BaseResultMap" >
     <result column="desc" property="desc" jdbcType="LONGVARCHAR" />
@@ -117,7 +118,7 @@
     `investment_type`, `project_source`, `issuer`, `is_record`, `prove_url`, `display_order`, 
     `level`, `risk`, `cover`, `notice`, `score_factor`, `is_ recommend`, `is_display`, 
     `is_renew`, `ctime`, `detail_url`, `invest_term_min`, `invest_term_max`, `invest_threshold`, 
-    `expected_min`, `expected_max`
+    `expected_min`, `expected_max`, `throw_department`
   </sql>
   <sql id="Blob_Column_List" >
     `desc`, `detail_content`
@@ -188,8 +189,8 @@
       `score_factor`, `is_ recommend`, `is_display`, 
       `is_renew`, `ctime`, `detail_url`, 
       `invest_term_min`, `invest_term_max`, `invest_threshold`, 
-      `expected_min`, `expected_max`, `desc`, 
-      `detail_content`)
+      `expected_min`, `expected_max`, `throw_department`, 
+      `desc`, `detail_content`)
     values (#{status,jdbcType=TINYINT}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{foundDay,jdbcType=DATE}, #{buyDay,jdbcType=VARCHAR}, #{redeemDay,jdbcType=VARCHAR}, 
       #{valueDay,jdbcType=DATE}, #{expiryDay,jdbcType=DATE}, #{issueType,jdbcType=INTEGER}, 
@@ -204,8 +205,8 @@
       #{scoreFactor,jdbcType=TINYINT}, #{isRecommend,jdbcType=TINYINT}, #{isDisplay,jdbcType=TINYINT}, 
       #{isRenew,jdbcType=TINYINT}, #{ctime,jdbcType=TIMESTAMP}, #{detailUrl,jdbcType=VARCHAR}, 
       #{investTermMin,jdbcType=INTEGER}, #{investTermMax,jdbcType=INTEGER}, #{investThreshold,jdbcType=DECIMAL}, 
-      #{expectedMin,jdbcType=TINYINT}, #{expectedMax,jdbcType=TINYINT}, #{desc,jdbcType=LONGVARCHAR}, 
-      #{detailContent,jdbcType=LONGVARCHAR})
+      #{expectedMin,jdbcType=TINYINT}, #{expectedMax,jdbcType=TINYINT}, #{throwDepartment,jdbcType=INTEGER}, 
+      #{desc,jdbcType=LONGVARCHAR}, #{detailContent,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.Product" >
     <selectKey resultType="java.lang.Integer" keyProperty="pid" order="AFTER" >
@@ -341,6 +342,9 @@
       </if>
       <if test="expectedMax != null" >
         `expected_max`,
+      </if>
+      <if test="throwDepartment != null" >
+        `throw_department`,
       </if>
       <if test="desc != null" >
         `desc`,
@@ -478,6 +482,9 @@
       </if>
       <if test="expectedMax != null" >
         #{expectedMax,jdbcType=TINYINT},
+      </if>
+      <if test="throwDepartment != null" >
+        #{throwDepartment,jdbcType=INTEGER},
       </if>
       <if test="desc != null" >
         #{desc,jdbcType=LONGVARCHAR},
@@ -628,6 +635,9 @@
       <if test="record.expectedMax != null" >
         `expected_max` = #{record.expectedMax,jdbcType=TINYINT},
       </if>
+      <if test="record.throwDepartment != null" >
+        `throw_department` = #{record.throwDepartment,jdbcType=INTEGER},
+      </if>
       <if test="record.desc != null" >
         `desc` = #{record.desc,jdbcType=LONGVARCHAR},
       </if>
@@ -685,6 +695,7 @@
       `invest_threshold` = #{record.investThreshold,jdbcType=DECIMAL},
       `expected_min` = #{record.expectedMin,jdbcType=TINYINT},
       `expected_max` = #{record.expectedMax,jdbcType=TINYINT},
+      `throw_department` = #{record.throwDepartment,jdbcType=INTEGER},
       `desc` = #{record.desc,jdbcType=LONGVARCHAR},
       `detail_content` = #{record.detailContent,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
@@ -736,7 +747,8 @@
       `invest_term_max` = #{record.investTermMax,jdbcType=INTEGER},
       `invest_threshold` = #{record.investThreshold,jdbcType=DECIMAL},
       `expected_min` = #{record.expectedMin,jdbcType=TINYINT},
-      `expected_max` = #{record.expectedMax,jdbcType=TINYINT}
+      `expected_max` = #{record.expectedMax,jdbcType=TINYINT},
+      `throw_department` = #{record.throwDepartment,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -873,6 +885,9 @@
       <if test="expectedMax != null" >
         `expected_max` = #{expectedMax,jdbcType=TINYINT},
       </if>
+      <if test="throwDepartment != null" >
+        `throw_department` = #{throwDepartment,jdbcType=INTEGER},
+      </if>
       <if test="desc != null" >
         `desc` = #{desc,jdbcType=LONGVARCHAR},
       </if>
@@ -927,6 +942,7 @@
       `invest_threshold` = #{investThreshold,jdbcType=DECIMAL},
       `expected_min` = #{expectedMin,jdbcType=TINYINT},
       `expected_max` = #{expectedMax,jdbcType=TINYINT},
+      `throw_department` = #{throwDepartment,jdbcType=INTEGER},
       `desc` = #{desc,jdbcType=LONGVARCHAR},
       `detail_content` = #{detailContent,jdbcType=LONGVARCHAR}
     where `pid` = #{pid,jdbcType=INTEGER}
@@ -975,7 +991,8 @@
       `invest_term_max` = #{investTermMax,jdbcType=INTEGER},
       `invest_threshold` = #{investThreshold,jdbcType=DECIMAL},
       `expected_min` = #{expectedMin,jdbcType=TINYINT},
-      `expected_max` = #{expectedMax,jdbcType=TINYINT}
+      `expected_max` = #{expectedMax,jdbcType=TINYINT},
+      `throw_department` = #{throwDepartment,jdbcType=INTEGER}
     where `pid` = #{pid,jdbcType=INTEGER}
   </update>
   <select resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.ProductExample" id="selectByExampleWithBLOBsWithRowbounds" >

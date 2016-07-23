@@ -616,62 +616,62 @@ public class ReportExample {
         }
 
         public Criteria andIsRecommendIsNull() {
-            addCriterion("`is_ recommend` is null");
+            addCriterion("`is_recommend` is null");
             return (Criteria) this;
         }
 
         public Criteria andIsRecommendIsNotNull() {
-            addCriterion("`is_ recommend` is not null");
+            addCriterion("`is_recommend` is not null");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendEqualTo(Byte value) {
-            addCriterion("`is_ recommend` =", value, "isRecommend");
+        public Criteria andIsRecommendEqualTo(Integer value) {
+            addCriterion("`is_recommend` =", value, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendNotEqualTo(Byte value) {
-            addCriterion("`is_ recommend` <>", value, "isRecommend");
+        public Criteria andIsRecommendNotEqualTo(Integer value) {
+            addCriterion("`is_recommend` <>", value, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendGreaterThan(Byte value) {
-            addCriterion("`is_ recommend` >", value, "isRecommend");
+        public Criteria andIsRecommendGreaterThan(Integer value) {
+            addCriterion("`is_recommend` >", value, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendGreaterThanOrEqualTo(Byte value) {
-            addCriterion("`is_ recommend` >=", value, "isRecommend");
+        public Criteria andIsRecommendGreaterThanOrEqualTo(Integer value) {
+            addCriterion("`is_recommend` >=", value, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendLessThan(Byte value) {
-            addCriterion("`is_ recommend` <", value, "isRecommend");
+        public Criteria andIsRecommendLessThan(Integer value) {
+            addCriterion("`is_recommend` <", value, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendLessThanOrEqualTo(Byte value) {
-            addCriterion("`is_ recommend` <=", value, "isRecommend");
+        public Criteria andIsRecommendLessThanOrEqualTo(Integer value) {
+            addCriterion("`is_recommend` <=", value, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendIn(List<Byte> values) {
-            addCriterion("`is_ recommend` in", values, "isRecommend");
+        public Criteria andIsRecommendIn(List<Integer> values) {
+            addCriterion("`is_recommend` in", values, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendNotIn(List<Byte> values) {
-            addCriterion("`is_ recommend` not in", values, "isRecommend");
+        public Criteria andIsRecommendNotIn(List<Integer> values) {
+            addCriterion("`is_recommend` not in", values, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendBetween(Byte value1, Byte value2) {
-            addCriterion("`is_ recommend` between", value1, value2, "isRecommend");
+        public Criteria andIsRecommendBetween(Integer value1, Integer value2) {
+            addCriterion("`is_recommend` between", value1, value2, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendNotBetween(Byte value1, Byte value2) {
-            addCriterion("`is_ recommend` not between", value1, value2, "isRecommend");
+        public Criteria andIsRecommendNotBetween(Integer value1, Integer value2) {
+            addCriterion("`is_recommend` not between", value1, value2, "isRecommend");
             return (Criteria) this;
         }
     }

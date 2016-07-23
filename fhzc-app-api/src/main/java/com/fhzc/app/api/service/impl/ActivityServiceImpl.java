@@ -30,13 +30,12 @@ public class ActivityServiceImpl implements ActivityService {
     }
     
     @Override
-    public PageableResult<Activity> getRecommendActivityList(){
+    public List<Activity> getRecommendActivityList(){
         ActivityExample example = new ActivityExample();
         ActivityExample.Criteria criteria = example.createCriteria();
         criteria.andIsDisplayEqualTo((byte) 1);
         criteria.andIsRecommendEqualTo((byte) 1);
-        List<Activity> list = activityMapper.selectByExample(example);
-        return new PageableResult<Activity>(0, 100, list.size(), list);
+        return activityMapper.selectByExample(example);
     }
 
     @Override
