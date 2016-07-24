@@ -46,11 +46,11 @@
 
         <!--生成对应表及类名 -->
 
-        <table tableName="department"
+        <table tableName="activity_apply"
                delimitAllColumns="true"
                delimitIdentifiers="true"
-               domainObjectName="Department">
-            <generatedKey column="deparentment_id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
+               domainObjectName="ActivityApply">
+            <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
         </table>
 
     </context>
