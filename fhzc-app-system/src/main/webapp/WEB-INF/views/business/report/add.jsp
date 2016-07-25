@@ -153,6 +153,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-actions">
+                                                <input name="id" type="hidden" value="${report.id}" />
                                                 <button type="submit" class="btn blue"><i class="icon-ok"></i> 添加</button>
                                             </div>
                                         </form>

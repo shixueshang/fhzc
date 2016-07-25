@@ -77,14 +77,41 @@
                                         <td>${admin.login}</td>
                                         <td>${admin.realname}</td>
                                         <td>
+                                            <c:forEach items="${roles}" var="role" >
+                                                <c:if test="${admin.role == role.roleId}" >
+                                                    ${role.roleName}
+                                                </c:if>
+                                                
+                                            </c:forEach>
+                                        </td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${admin.status == '1'}" >
+                                                    正常
+                                                </c:when>
+                                                <c:when test="${admin.status == '0'}" >
+                                                    禁用
+                                                </c:when>
+                                            </c:choose>
+                                        </td>
+                                        <td>
+                                            <c:forEach items="${departments}" var="department">
+                                                <c:if test="${admin.organ == department['id']}">
+                                                    ${department['name']}
+                                                </c:if>
+                                            </c:forEach>
 
                                         </td>
                                         <td>
+                                            <c:forEach items="${areas}" var="area" >
+                                                <c:if test="${admin.area == area.areaId}" >
+                                                    ${area.areaName}
+                                                </c:if>
+
+                                            </c:forEach>
 
                                         </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>${admin.mobile}</td>
                                         <td>
                                             <a href="<%=contextPath%>/system/admin/detail/${admin.id}" class="btn mini purple"><i class="icon-edit"></i> 编辑</a>
                                             <a href="<%=contextPath%>/system/admin/delete/${admin.id}" class="btn mini purple"><i class="icon-edit"></i> 删除</a>

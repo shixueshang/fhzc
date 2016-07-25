@@ -44,4 +44,6 @@ public interface AdminService {
      * @param admin
      */
     void addOrUpdateAdmin(Admin admin);
+
+    void delete(Integer id);
 }

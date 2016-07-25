@@ -64,7 +64,7 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="portlet_tab1">
                                         <!-- BEGIN FORM-->
-                                        <form action="<%=contextPath%>/business/activity/add" id="form_sample_1" enctype="multipart/form-data" method="POST" class="form-horizontal">
+                                        <form action="<%=contextPath%>/system/admin/add" id="form_sample_1" enctype="multipart/form-data" method="POST" class="form-horizontal">
                                             <div class="alert alert-error hide">
                                                 <button class="close" data-dismiss="alert"></button>
                                                 您的表单有未完成的必填项,请检查.
@@ -102,7 +102,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">所属角色</label>
                                                 <div class="controls">
-                                                    <select name="role"  class="large m-wrap"  tabindex="1">
+                                                    <select name="role" id="belongRole" class="large m-wrap"  tabindex="1">
                                                     </select>
                                                 </div>
                                             </div>
@@ -110,7 +110,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">所属机构</label>
                                                 <div class="controls">
-                                                    <select name="organ"  class="large m-wrap"  tabindex="1">
+                                                    <select name="organ" id="belongOrgan" class="large m-wrap"  tabindex="1">
                                                     </select>
                                                 </div>
                                             </div>
@@ -118,7 +118,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">所属地区</label>
                                                 <div class="controls">
-                                                    <select name="area"  class="large m-wrap"  tabindex="1">
+                                                    <select name="area" id="areas"  class="large m-wrap"  tabindex="1">
                                                     </select>
                                                 </div>
                                             </div>
@@ -126,7 +126,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">手机号</label>
                                                 <div class="controls">
-                                                    <input type="text" name="realname" value="${admin.mobile}" placeholder="请填写手机号" class="large m-wrap" >
+                                                    <input type="text" name="mobile" value="${admin.mobile}" placeholder="请填写手机号" class="large m-wrap" >
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -147,6 +147,7 @@
 
 
                                             <div class="form-actions">
+                                                <input name="id" type="hidden" value="${admin.id}" />
                                                 <button type="submit" class="btn blue"><i class="icon-ok"></i> 添加</button>
                                             </div>
                                         </form>
@@ -171,8 +172,38 @@
 <script>
     $(function(){
 
+        var role = '${admin.role}';
+        var roles = '${roles}';
+        var rolesJson= $.parseJSON(roles);
+        $.each(rolesJson, function(i,val){
+            $("#belongRole").append("<option value='"+val.roleId+"'>"+val.roleName+"</option>");
+            if(role == val.roleId){
+                $("#belongRole").val(role);
+            }
+        });
+
+        var areasVal = '${admin.area}';
+        var areas = '${areas}';
+        var areasJson= $.parseJSON(areas);
+        $.each(areasJson, function(i,val){
+            $("#areas").append("<option value='"+val.areaId+"'>"+val.areaName+"</option>");
+            if(areasVal == val.areaId){
+                $("#areas").val(areasVal);
+            }
+        });
+
+        var organVal = '${admin.organ}';
+        var departments = '${departments}';
+        var deptsJson= $.parseJSON(departments);
+        $.each(deptsJson, function(i,val){
+            $("#belongOrgan").append("<option value='"+val.id+"'>"+val.name+"</option>");
+            if(organVal == val.id){
+                $("#belongOrgan").val(organVal);
+            }
+        });
+
         var status = '${admin.status}';
-        if(status == 1){
+        if(status == 1 || status == null || status == ""){
             $.uniform.update($("input[name='status'][value='1']").attr("checked", true));
             $.uniform.update($("input[name='status'][value='0']").attr("checked", false));
         }else{

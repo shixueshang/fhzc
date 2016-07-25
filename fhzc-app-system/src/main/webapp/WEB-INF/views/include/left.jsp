@@ -127,13 +127,13 @@
 
                         <ul class="sub">
                             <li>
-                                <a href="<%=contextPath%>/organization/department">机构配置</a>
+                                <a href="<%=contextPath%>/organization/department/department">机构配置</a>
                             </li>
                         </ul>
                     </li>
                     <li class="has-sub">
                         <a href="javascript:;">
-                            <i class="icon-sitemap"></i>
+                            <i class="icon-wrench"></i>
                             <span class="title">系统管理</span>
                             <span class="selected"></span>
                             <span class="arrow open"></span>

@@ -10,11 +10,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.*;
 
 /**
  * Created by lihongde on 2016/7/21 13:09
@@ -28,6 +24,8 @@ public class DepartmentServiceImpl implements DepartmentService{
     @Override
     public PageableResult<Map<String, Object>> findPageDepts(int page, int size) {
         DepartmentExample example = new DepartmentExample();
+        DepartmentExample.Criteria criteria = example.createCriteria();
+        criteria.andStatusEqualTo(Const.Data_Status.DATA_NORMAL);
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<Department> list = departmentMapper.selectByExampleWithRowbounds(example, rowBounds);
 
@@ -62,6 +60,7 @@ public class DepartmentServiceImpl implements DepartmentService{
     public List<Map<String, Object>> findDeptByParent(Integer parentId) {
         DepartmentExample example = new DepartmentExample();
         DepartmentExample.Criteria criteria = example.createCriteria();
+        criteria.andStatusEqualTo(Const.Data_Status.DATA_NORMAL);
         criteria.andParentDeptIdEqualTo(parentId);
         List<Department> parentDepts = departmentMapper.selectByExample(example);
 
@@ -78,8 +77,9 @@ public class DepartmentServiceImpl implements DepartmentService{
     private List<Map<String, Object>> buildChildren(List<Department> list, Department parent){
         List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
         for(Department dept : list){
-            Map<String, Object> resultMap = new ConcurrentHashMap<String, Object>();
+            Map<String, Object> resultMap = new HashMap<String, Object>();
             resultMap.put("id", dept.getDepartmentId());
+            resultMap.put("parentId", dept.getParentDeptId());
 
             if(dept.getLeaf() == Const.YES_OR_NO.YES){
                 continue;
@@ -99,8 +99,9 @@ public class DepartmentServiceImpl implements DepartmentService{
     private List<String> recurseChildren(Department department, List<String> names, List<Map<String, Object>> data, Department pDept){
         List<Department> children = this.getChildrens(department.getDepartmentId());
         for(Department child : children){
-            Map<String ,Object> map = new ConcurrentHashMap<String,Object>();
+            Map<String ,Object> map = new HashMap<String,Object>();
             map.put("id", child.getDepartmentId());
+            map.put("parentId", child.getParentDeptId());
             if(child.getLeaf() == Const.YES_OR_NO.YES){
                 Department root = this.findRootDept();
                 if(root.getTitle().equals(pDept.getTitle())){
@@ -141,9 +142,10 @@ public class DepartmentServiceImpl implements DepartmentService{
         List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
         Department root = this.findRootDept();
         for(Department dept : list){
-            Map<String, Object> resultMap = new ConcurrentHashMap<>();
+            Map<String, Object> resultMap = new HashMap<>();
             resultMap.put("id", dept.getDepartmentId());
             resultMap.put("title", dept.getTitle());
+            resultMap.put("parentId", dept.getParentDeptId());
 
             if(dept.getParentDeptId() == null){
                 resultMap.put("name", dept.getTitle());
@@ -192,6 +194,15 @@ public class DepartmentServiceImpl implements DepartmentService{
         DepartmentExample.Criteria criteria = example.createCriteria();
         criteria.andParentDeptIdIsNull();
         return departmentMapper.selectByExample(example).get(0);
+    }
+
+    @Override
+    public List<Department> findChildren(Integer parentId) {
+        DepartmentExample example = new DepartmentExample();
+        DepartmentExample.Criteria criteria = example.createCriteria();
+        criteria.andStatusEqualTo(Const.Data_Status.DATA_NORMAL);
+        criteria.andParentDeptIdEqualTo(parentId);
+        return departmentMapper.selectByExample(example);
     }
 
 }
