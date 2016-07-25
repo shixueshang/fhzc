@@ -46,10 +46,10 @@
 
         <!--生成对应表及类名 -->
 
-        <table tableName="activity"
+        <table tableName="system_module"
                delimitAllColumns="true"
                delimitIdentifiers="true"
-               domainObjectName="Activity">
+               domainObjectName="SystemModule">
             <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
         </table>
 

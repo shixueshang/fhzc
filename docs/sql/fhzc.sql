@@ -571,8 +571,8 @@ CREATE TABLE IF NOT EXISTS `bank`.`system_module` (
   `name` VARCHAR(45) NOT NULL COMMENT '模块名称',
   `url` VARCHAR(50) NOT NULL COMMENT '功能资源',
   `desc` VARCHAR(45) NULL COMMENT '描述',
-  `parent_module_id` INT NOT NULL COMMENT '父级资源',
-  `level` TINYINT(1) NULL COMMENT '资源级别',
+  `parent_module_id` INT NULL COMMENT '父级资源',
+  `level` INT(1) NULL COMMENT '资源级别',
   `is_valid` TINYINT(1) NOT NULL COMMENT '是否可用',
   PRIMARY KEY (`id`),
   UNIQUE INDEX `url_uniq` (`url` ASC))
