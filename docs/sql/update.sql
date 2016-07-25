@@ -58,11 +58,11 @@ ADD COLUMN `expected_max` TINYINT NULL COMMENT '预期年化收益率max' AFTER 
 ALTER TABLE `bank`.`activity`
 ADD COLUMN `summary` VARCHAR(255) NULL COMMENT '活动摘要' AFTER `is_display`;
 ALTER TABLE `bank`.`activity`
-ADD COLUMN `cid` TINYINT NULL COMMENT '活动类型' AFTER `summary`;
+ADD COLUMN `cid` INT(1) NULL COMMENT '活动类型' AFTER `summary`;
 ALTER TABLE `bank`.`activity`
 ADD COLUMN `cover` VARCHAR(255) NULL DEFAULT NULL COMMENT '封面' AFTER `cid`;
 ALTER TABLE `bank`.`activity`
-ADD COLUMN `department_id` TINYINT NULL COMMENT '活动发布角色部门' AFTER `cover`;
+ADD COLUMN `department_id` INT(11) NULL COMMENT '活动发布角色部门' AFTER `cover`;
 
 
 ALTER TABLE `bank`.`rights`
@@ -87,7 +87,7 @@ ADD COLUMN `amount` INT NULL COMMENT '投资金额' AFTER `result`;
 
 #2016-07-21
 ALTER TABLE `bank`.`activity`
-ADD COLUMN `is_ recommend` TINYINT(3) UNSIGNED NULL DEFAULT '0' COMMENT '是否推荐 1是|0否' AFTER `department_id`;
+ADD COLUMN `is_ recommend` INT(1) UNSIGNED NULL DEFAULT '0' COMMENT '是否推荐 1是|0否' AFTER `department_id`;
 ALTER TABLE `bank`.`report`
 ADD COLUMN `is_ recommend` TINYINT(3) UNSIGNED NULL DEFAULT '0' COMMENT '是否推荐 1是|0否' AFTER `is_display`;
 
@@ -104,6 +104,14 @@ ALTER TABLE `bank`.`product`
 CHANGE COLUMN `buy_day` `buy_day` VARCHAR(200) NULL DEFAULT NULL COMMENT '开放申购日' ,
 CHANGE COLUMN `redeem_day` `redeem_day` VARCHAR(200) NULL DEFAULT NULL COMMENT '赎回日' ;
 
+
+#2016-07-23
+ALTER TABLE `bank`.`product`
+ADD COLUMN `throw_department` INT NULL COMMENT '投放分公司' AFTER `expected_max`;
+
+DROP TABLE IF EXISTS `bank`.`product_areas` ;
+
+ALTER TABLE `bank`.`report` CHANGE COLUMN  `is_recommend` `is_recommend` INT(1) NULL comment '是否推荐';
 ALTER TABLE `bank`.`product`
 CHANGE COLUMN `invest_threshold` `invest_threshold` DECIMAL(12,2) NULL DEFAULT 1000000 COMMENT '起投金额' ;
 ALTER TABLE `bank`.`report`

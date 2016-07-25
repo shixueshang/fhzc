@@ -3022,6 +3022,66 @@ public class ProductExample {
             addCriterion("`expected_max` not between", value1, value2, "expectedMax");
             return (Criteria) this;
         }
+
+        public Criteria andThrowDepartmentIsNull() {
+            addCriterion("`throw_department` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andThrowDepartmentIsNotNull() {
+            addCriterion("`throw_department` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andThrowDepartmentEqualTo(Integer value) {
+            addCriterion("`throw_department` =", value, "throwDepartment");
+            return (Criteria) this;
+        }
+
+        public Criteria andThrowDepartmentNotEqualTo(Integer value) {
+            addCriterion("`throw_department` <>", value, "throwDepartment");
+            return (Criteria) this;
+        }
+
+        public Criteria andThrowDepartmentGreaterThan(Integer value) {
+            addCriterion("`throw_department` >", value, "throwDepartment");
+            return (Criteria) this;
+        }
+
+        public Criteria andThrowDepartmentGreaterThanOrEqualTo(Integer value) {
+            addCriterion("`throw_department` >=", value, "throwDepartment");
+            return (Criteria) this;
+        }
+
+        public Criteria andThrowDepartmentLessThan(Integer value) {
+            addCriterion("`throw_department` <", value, "throwDepartment");
+            return (Criteria) this;
+        }
+
+        public Criteria andThrowDepartmentLessThanOrEqualTo(Integer value) {
+            addCriterion("`throw_department` <=", value, "throwDepartment");
+            return (Criteria) this;
+        }
+
+        public Criteria andThrowDepartmentIn(List<Integer> values) {
+            addCriterion("`throw_department` in", values, "throwDepartment");
+            return (Criteria) this;
+        }
+
+        public Criteria andThrowDepartmentNotIn(List<Integer> values) {
+            addCriterion("`throw_department` not in", values, "throwDepartment");
+            return (Criteria) this;
+        }
+
+        public Criteria andThrowDepartmentBetween(Integer value1, Integer value2) {
+            addCriterion("`throw_department` between", value1, value2, "throwDepartment");
+            return (Criteria) this;
+        }
+
+        public Criteria andThrowDepartmentNotBetween(Integer value1, Integer value2) {
+            addCriterion("`throw_department` not between", value1, value2, "throwDepartment");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

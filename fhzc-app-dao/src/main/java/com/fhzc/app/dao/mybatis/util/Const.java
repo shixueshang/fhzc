@@ -59,6 +59,21 @@ public class Const {
         public static  final String PRODUCT_STATUS = "product_status";
 
         /**
+         *  产品发行模式
+         */
+        public static  final String PRODUCT_ISSUE_TYPE = "product_issue_type";
+
+        /**
+         *  客户等级
+         */
+        public static  final String CUSTOMER_LEVEL = "customer_level";
+
+        /**
+         *  风险评级
+         */
+        public static  final String RISK_LEVEL = "risk_level";
+
+        /**
          *  是否
          */
         public static  final String YES_NO = "yes_no";

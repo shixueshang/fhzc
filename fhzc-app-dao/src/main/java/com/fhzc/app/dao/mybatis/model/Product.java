@@ -92,6 +92,8 @@ public class Product {
 
     private Byte expectedMax;
 
+    private Integer throwDepartment;
+
     private String desc;
 
     private String detailContent;
@@ -446,6 +448,14 @@ public class Product {
 
     public void setExpectedMax(Byte expectedMax) {
         this.expectedMax = expectedMax;
+    }
+
+    public Integer getThrowDepartment() {
+        return throwDepartment;
+    }
+
+    public void setThrowDepartment(Integer throwDepartment) {
+        this.throwDepartment = throwDepartment;
     }
 
     public String getDesc() {

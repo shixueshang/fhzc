@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fhzc.app.dao.mybatis.inter.RightsReservationMapper" >
+  <resultMap id="BaseResultMap" type="com.fhzc.app.dao.mybatis.model.RightsReservation" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="customer_id" property="customerId" jdbcType="INTEGER" />
+    <result column="planner_id" property="plannerId" jdbcType="INTEGER" />
+    <result column="mark_date" property="markDate" jdbcType="TIMESTAMP" />
+    <result column="detail" property="detail" jdbcType="VARCHAR" />
+    <result column="score_cost" property="scoreCost" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    `id`, `customer_id`, `planner_id`, `mark_date`, `detail`, `score_cost`, `status`, 
+    `memo`, `ctime`
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.RightsReservationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from `rights_reservation`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from `rights_reservation`
+    where `id` = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from `rights_reservation`
+    where `id` = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fhzc.app.dao.mybatis.model.RightsReservationExample" >
+    delete from `rights_reservation`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fhzc.app.dao.mybatis.model.RightsReservation" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `rights_reservation` (`customer_id`, `planner_id`, `mark_date`, 
+      `detail`, `score_cost`, `status`, 
+      `memo`, `ctime`)
+    values (#{customerId,jdbcType=INTEGER}, #{plannerId,jdbcType=INTEGER}, #{markDate,jdbcType=TIMESTAMP}, 
+      #{detail,jdbcType=VARCHAR}, #{scoreCost,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+      #{memo,jdbcType=VARCHAR}, #{ctime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.RightsReservation" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `rights_reservation`
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="customerId != null" >
+        `customer_id`,
+      </if>
+      <if test="plannerId != null" >
+        `planner_id`,
+      </if>
+      <if test="markDate != null" >
+        `mark_date`,
+      </if>
+      <if test="detail != null" >
+        `detail`,
+      </if>
+      <if test="scoreCost != null" >
+        `score_cost`,
+      </if>
+      <if test="status != null" >
+        `status`,
+      </if>
+      <if test="memo != null" >
+        `memo`,
+      </if>
+      <if test="ctime != null" >
+        `ctime`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="customerId != null" >
+        #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="plannerId != null" >
+        #{plannerId,jdbcType=INTEGER},
+      </if>
+      <if test="markDate != null" >
+        #{markDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="detail != null" >
+        #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreCost != null" >
+        #{scoreCost,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null" >
+        #{ctime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fhzc.app.dao.mybatis.model.RightsReservationExample" resultType="java.lang.Integer" >
+    select count(*) from `rights_reservation`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update `rights_reservation`
+    <set >
+      <if test="record.id != null" >
+        `id` = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.customerId != null" >
+        `customer_id` = #{record.customerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.plannerId != null" >
+        `planner_id` = #{record.plannerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.markDate != null" >
+        `mark_date` = #{record.markDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.detail != null" >
+        `detail` = #{record.detail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scoreCost != null" >
+        `score_cost` = #{record.scoreCost,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        `status` = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.memo != null" >
+        `memo` = #{record.memo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctime != null" >
+        `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update `rights_reservation`
+    set `id` = #{record.id,jdbcType=INTEGER},
+      `customer_id` = #{record.customerId,jdbcType=INTEGER},
+      `planner_id` = #{record.plannerId,jdbcType=INTEGER},
+      `mark_date` = #{record.markDate,jdbcType=TIMESTAMP},
+      `detail` = #{record.detail,jdbcType=VARCHAR},
+      `score_cost` = #{record.scoreCost,jdbcType=VARCHAR},
+      `status` = #{record.status,jdbcType=TINYINT},
+      `memo` = #{record.memo,jdbcType=VARCHAR},
+      `ctime` = #{record.ctime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fhzc.app.dao.mybatis.model.RightsReservation" >
+    update `rights_reservation`
+    <set >
+      <if test="customerId != null" >
+        `customer_id` = #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="plannerId != null" >
+        `planner_id` = #{plannerId,jdbcType=INTEGER},
+      </if>
+      <if test="markDate != null" >
+        `mark_date` = #{markDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="detail != null" >
+        `detail` = #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreCost != null" >
+        `score_cost` = #{scoreCost,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="memo != null" >
+        `memo` = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null" >
+        `ctime` = #{ctime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where `id` = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fhzc.app.dao.mybatis.model.RightsReservation" >
+    update `rights_reservation`
+    set `customer_id` = #{customerId,jdbcType=INTEGER},
+      `planner_id` = #{plannerId,jdbcType=INTEGER},
+      `mark_date` = #{markDate,jdbcType=TIMESTAMP},
+      `detail` = #{detail,jdbcType=VARCHAR},
+      `score_cost` = #{scoreCost,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=TINYINT},
+      `memo` = #{memo,jdbcType=VARCHAR},
+      `ctime` = #{ctime,jdbcType=TIMESTAMP}
+    where `id` = #{id,jdbcType=INTEGER}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.RightsReservationExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from `rights_reservation`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

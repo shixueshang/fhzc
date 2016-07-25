@@ -24,4 +24,9 @@ public class ProductReservationServiceImpl implements ProductReservationService 
             productReservationMapper.updateByPrimaryKey(productReservation);
         }
     }
+
+    @Override
+    public ProductReservation getProductReservation(Integer id) {
+        return productReservationMapper.selectByPrimaryKey(id);
+    }
 }

@@ -5,6 +5,7 @@ import com.fhzc.app.dao.mybatis.inter.ReportMapper;
 import com.fhzc.app.dao.mybatis.model.Report;
 import com.fhzc.app.dao.mybatis.model.ReportExample;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
+import com.fhzc.app.dao.mybatis.util.Const;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
@@ -24,18 +25,17 @@ public class ReportServiceImpl implements ReportService {
     public PageableResult<Report> findPageReports(int page, int size) {
         ReportExample example = new ReportExample();
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
-        List<Report> list = reportMapper.selectByExampleWithRowbounds(example, rowBounds);
+        List<Report> list = reportMapper.selectByExampleWithBLOBsWithRowbounds(example, rowBounds);
         return new PageableResult<Report>(page, size, list.size(), list);
     }
 
     @Override
-    public PageableResult<Report> getRecommendReportList(){
+    public List<Report> getRecommendReportList(){
         ReportExample example = new ReportExample();
         ReportExample.Criteria criteria = example.createCriteria();
-        criteria.andIsDisplayEqualTo((int) 1);
-        criteria.andIsRecommendEqualTo((byte) 1);
-        List<Report> list = reportMapper.selectByExample(example);
-        return new PageableResult<Report>(0, 100, list.size(), list);
+        criteria.andIsDisplayEqualTo(Const.YES_OR_NO.YES);
+        criteria.andIsRecommendEqualTo(Const.YES_OR_NO.YES);
+        return reportMapper.selectByExampleWithBLOBs(example);
     }
 
     @Override

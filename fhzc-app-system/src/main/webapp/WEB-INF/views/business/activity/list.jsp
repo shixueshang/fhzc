@@ -117,7 +117,7 @@
                                         <td></td>
                                         <td></td>
                                         <td>
-                                            <a href="detail/${activity.id}" class="btn mini purple"><i class="icon-edit"></i> 编辑</a>
+                                            <a href="<%=contextPath%>/business/activity/detail/${activity.id}" class="btn mini purple"><i class="icon-edit"></i> 编辑</a>
                                         </td>
                                     </tr>
                                 </c:forEach>

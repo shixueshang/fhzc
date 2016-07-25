@@ -66,7 +66,7 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="portlet_tab1">
                                         <!-- BEGIN FORM-->
-                                        <form action="add" method="POST" class="form-horizontal">
+                                        <form action="<%=contextPath%>/organization/department/add" method="POST" class="form-horizontal">
                                             <div class="control-group">
                                             </div>
                                             <div class="control-group">
@@ -179,11 +179,11 @@
         });
 
         $("#do_mod_dept").click(function () {
-            $.post("/organization/add",{'department_id':$("#dep_mod_id").val(),'title':$("#dep_mod_title").val()},function (data) {window.location.reload();})
+            $.post("<%=contextPath%>/organization/add",{'department_id':$("#dep_mod_id").val(),'title':$("#dep_mod_title").val()},function (data) {window.location.reload();})
         });
 
         $("#do_del_dept").click(function () {
-            $.get("/organization/delete/" + $("#dep_del_id").val(),function (data) {window.location.reload();})
+            $.get("<%=contextPath%>/organization/delete/" + $("#dep_del_id").val(),function (data) {window.location.reload();})
         });
     });
 

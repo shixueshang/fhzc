@@ -80,4 +80,19 @@ public class APIConstants {
 
         public static final String Wait = "wait";
     }
+
+    /**
+     * Created by jiajitao on 2016/7/21.
+     * 表product_reservation 中的result 产品预约结果
+     */
+    public static class RightsOrderStatus{
+        //'预约状态 0预约中|1预约成功|2预约失败|3客户取消预约|4客户消费|5客户缺席',
+        public static int ORDER_ING = 0;
+        public static int ORDER_SUCCESS = 1;
+        public static int ORDER_FAILED = 2;
+        public static int ORDER_CANCEL = 3;
+        public static int CUSTOMER_SPAEND = 4;
+        public static int CUSTOMER_ABSEND = 5;
+
+    }
 }

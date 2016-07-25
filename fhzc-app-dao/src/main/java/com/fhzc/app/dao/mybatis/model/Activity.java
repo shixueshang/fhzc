@@ -27,19 +27,19 @@ public class Activity {
 
     private String url;
 
-    private Byte status;
+    private Integer status;
 
-    private Byte isDisplay;
+    private Integer isDisplay;
 
     private String summary;
 
-    private Byte cid;
+    private Integer cid;
 
     private String cover;
 
-    private Byte departmentId;
+    private Integer departmentId;
 
-    private Byte isRecommend;
+    private Integer isRecommend;
 
     private String content;
 
@@ -139,19 +139,19 @@ public class Activity {
         this.url = url == null ? null : url.trim();
     }
 
-    public Byte getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Byte status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
-    public Byte getIsDisplay() {
+    public Integer getIsDisplay() {
         return isDisplay;
     }
 
-    public void setIsDisplay(Byte isDisplay) {
+    public void setIsDisplay(Integer isDisplay) {
         this.isDisplay = isDisplay;
     }
 
@@ -163,11 +163,11 @@ public class Activity {
         this.summary = summary == null ? null : summary.trim();
     }
 
-    public Byte getCid() {
+    public Integer getCid() {
         return cid;
     }
 
-    public void setCid(Byte cid) {
+    public void setCid(Integer cid) {
         this.cid = cid;
     }
 
@@ -179,19 +179,19 @@ public class Activity {
         this.cover = cover == null ? null : cover.trim();
     }
 
-    public Byte getDepartmentId() {
+    public Integer getDepartmentId() {
         return departmentId;
     }
 
-    public void setDepartmentId(Byte departmentId) {
+    public void setDepartmentId(Integer departmentId) {
         this.departmentId = departmentId;
     }
 
-    public Byte getIsRecommend() {
+    public Integer getIsRecommend() {
         return isRecommend;
     }
 
-    public void setIsRecommend(Byte isRecommend) {
+    public void setIsRecommend(Integer isRecommend) {
         this.isRecommend = isRecommend;
     }
 
