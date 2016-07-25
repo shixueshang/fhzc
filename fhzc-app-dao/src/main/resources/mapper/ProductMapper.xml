@@ -44,9 +44,11 @@
     <result column="invest_term_min" property="investTermMin" jdbcType="INTEGER" />
     <result column="invest_term_max" property="investTermMax" jdbcType="INTEGER" />
     <result column="invest_threshold" property="investThreshold" jdbcType="DECIMAL" />
-    <result column="expected_min" property="expectedMin" jdbcType="TINYINT" />
-    <result column="expected_max" property="expectedMax" jdbcType="TINYINT" />
+    <result column="expected_min" property="expectedMin" jdbcType="DECIMAL" />
+    <result column="expected_max" property="expectedMax" jdbcType="DECIMAL" />
     <result column="throw_department" property="throwDepartment" jdbcType="INTEGER" />
+    <result column="collect_start" property="collectStart" jdbcType="DATE" />
+    <result column="collect_end" property="collectEnd" jdbcType="DATE" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.fhzc.app.dao.mybatis.model.Product" extends="BaseResultMap" >
     <result column="desc" property="desc" jdbcType="LONGVARCHAR" />
@@ -118,7 +120,7 @@
     `investment_type`, `project_source`, `issuer`, `is_record`, `prove_url`, `display_order`, 
     `level`, `risk`, `cover`, `notice`, `score_factor`, `is_ recommend`, `is_display`, 
     `is_renew`, `ctime`, `detail_url`, `invest_term_min`, `invest_term_max`, `invest_threshold`, 
-    `expected_min`, `expected_max`, `throw_department`
+    `expected_min`, `expected_max`, `throw_department`, `collect_start`, `collect_end`
   </sql>
   <sql id="Blob_Column_List" >
     `desc`, `detail_content`
@@ -190,7 +192,8 @@
       `is_renew`, `ctime`, `detail_url`, 
       `invest_term_min`, `invest_term_max`, `invest_threshold`, 
       `expected_min`, `expected_max`, `throw_department`, 
-      `desc`, `detail_content`)
+      `collect_start`, `collect_end`, `desc`, 
+      `detail_content`)
     values (#{status,jdbcType=TINYINT}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{foundDay,jdbcType=DATE}, #{buyDay,jdbcType=VARCHAR}, #{redeemDay,jdbcType=VARCHAR}, 
       #{valueDay,jdbcType=DATE}, #{expiryDay,jdbcType=DATE}, #{issueType,jdbcType=INTEGER}, 
@@ -205,8 +208,9 @@
       #{scoreFactor,jdbcType=TINYINT}, #{isRecommend,jdbcType=TINYINT}, #{isDisplay,jdbcType=TINYINT}, 
       #{isRenew,jdbcType=TINYINT}, #{ctime,jdbcType=TIMESTAMP}, #{detailUrl,jdbcType=VARCHAR}, 
       #{investTermMin,jdbcType=INTEGER}, #{investTermMax,jdbcType=INTEGER}, #{investThreshold,jdbcType=DECIMAL}, 
-      #{expectedMin,jdbcType=TINYINT}, #{expectedMax,jdbcType=TINYINT}, #{throwDepartment,jdbcType=INTEGER}, 
-      #{desc,jdbcType=LONGVARCHAR}, #{detailContent,jdbcType=LONGVARCHAR})
+      #{expectedMin,jdbcType=DECIMAL}, #{expectedMax,jdbcType=DECIMAL}, #{throwDepartment,jdbcType=INTEGER}, 
+      #{collectStart,jdbcType=DATE}, #{collectEnd,jdbcType=DATE}, #{desc,jdbcType=LONGVARCHAR}, 
+      #{detailContent,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.Product" >
     <selectKey resultType="java.lang.Integer" keyProperty="pid" order="AFTER" >
@@ -346,6 +350,12 @@
       <if test="throwDepartment != null" >
         `throw_department`,
       </if>
+      <if test="collectStart != null" >
+        `collect_start`,
+      </if>
+      <if test="collectEnd != null" >
+        `collect_end`,
+      </if>
       <if test="desc != null" >
         `desc`,
       </if>
@@ -478,13 +488,19 @@
         #{investThreshold,jdbcType=DECIMAL},
       </if>
       <if test="expectedMin != null" >
-        #{expectedMin,jdbcType=TINYINT},
+        #{expectedMin,jdbcType=DECIMAL},
       </if>
       <if test="expectedMax != null" >
-        #{expectedMax,jdbcType=TINYINT},
+        #{expectedMax,jdbcType=DECIMAL},
       </if>
       <if test="throwDepartment != null" >
         #{throwDepartment,jdbcType=INTEGER},
+      </if>
+      <if test="collectStart != null" >
+        #{collectStart,jdbcType=DATE},
+      </if>
+      <if test="collectEnd != null" >
+        #{collectEnd,jdbcType=DATE},
       </if>
       <if test="desc != null" >
         #{desc,jdbcType=LONGVARCHAR},
@@ -630,13 +646,19 @@
         `invest_threshold` = #{record.investThreshold,jdbcType=DECIMAL},
       </if>
       <if test="record.expectedMin != null" >
-        `expected_min` = #{record.expectedMin,jdbcType=TINYINT},
+        `expected_min` = #{record.expectedMin,jdbcType=DECIMAL},
       </if>
       <if test="record.expectedMax != null" >
-        `expected_max` = #{record.expectedMax,jdbcType=TINYINT},
+        `expected_max` = #{record.expectedMax,jdbcType=DECIMAL},
       </if>
       <if test="record.throwDepartment != null" >
         `throw_department` = #{record.throwDepartment,jdbcType=INTEGER},
+      </if>
+      <if test="record.collectStart != null" >
+        `collect_start` = #{record.collectStart,jdbcType=DATE},
+      </if>
+      <if test="record.collectEnd != null" >
+        `collect_end` = #{record.collectEnd,jdbcType=DATE},
       </if>
       <if test="record.desc != null" >
         `desc` = #{record.desc,jdbcType=LONGVARCHAR},
@@ -693,9 +715,11 @@
       `invest_term_min` = #{record.investTermMin,jdbcType=INTEGER},
       `invest_term_max` = #{record.investTermMax,jdbcType=INTEGER},
       `invest_threshold` = #{record.investThreshold,jdbcType=DECIMAL},
-      `expected_min` = #{record.expectedMin,jdbcType=TINYINT},
-      `expected_max` = #{record.expectedMax,jdbcType=TINYINT},
+      `expected_min` = #{record.expectedMin,jdbcType=DECIMAL},
+      `expected_max` = #{record.expectedMax,jdbcType=DECIMAL},
       `throw_department` = #{record.throwDepartment,jdbcType=INTEGER},
+      `collect_start` = #{record.collectStart,jdbcType=DATE},
+      `collect_end` = #{record.collectEnd,jdbcType=DATE},
       `desc` = #{record.desc,jdbcType=LONGVARCHAR},
       `detail_content` = #{record.detailContent,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
@@ -746,9 +770,11 @@
       `invest_term_min` = #{record.investTermMin,jdbcType=INTEGER},
       `invest_term_max` = #{record.investTermMax,jdbcType=INTEGER},
       `invest_threshold` = #{record.investThreshold,jdbcType=DECIMAL},
-      `expected_min` = #{record.expectedMin,jdbcType=TINYINT},
-      `expected_max` = #{record.expectedMax,jdbcType=TINYINT},
-      `throw_department` = #{record.throwDepartment,jdbcType=INTEGER}
+      `expected_min` = #{record.expectedMin,jdbcType=DECIMAL},
+      `expected_max` = #{record.expectedMax,jdbcType=DECIMAL},
+      `throw_department` = #{record.throwDepartment,jdbcType=INTEGER},
+      `collect_start` = #{record.collectStart,jdbcType=DATE},
+      `collect_end` = #{record.collectEnd,jdbcType=DATE}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -880,13 +906,19 @@
         `invest_threshold` = #{investThreshold,jdbcType=DECIMAL},
       </if>
       <if test="expectedMin != null" >
-        `expected_min` = #{expectedMin,jdbcType=TINYINT},
+        `expected_min` = #{expectedMin,jdbcType=DECIMAL},
       </if>
       <if test="expectedMax != null" >
-        `expected_max` = #{expectedMax,jdbcType=TINYINT},
+        `expected_max` = #{expectedMax,jdbcType=DECIMAL},
       </if>
       <if test="throwDepartment != null" >
         `throw_department` = #{throwDepartment,jdbcType=INTEGER},
+      </if>
+      <if test="collectStart != null" >
+        `collect_start` = #{collectStart,jdbcType=DATE},
+      </if>
+      <if test="collectEnd != null" >
+        `collect_end` = #{collectEnd,jdbcType=DATE},
       </if>
       <if test="desc != null" >
         `desc` = #{desc,jdbcType=LONGVARCHAR},
@@ -940,9 +972,11 @@
       `invest_term_min` = #{investTermMin,jdbcType=INTEGER},
       `invest_term_max` = #{investTermMax,jdbcType=INTEGER},
       `invest_threshold` = #{investThreshold,jdbcType=DECIMAL},
-      `expected_min` = #{expectedMin,jdbcType=TINYINT},
-      `expected_max` = #{expectedMax,jdbcType=TINYINT},
+      `expected_min` = #{expectedMin,jdbcType=DECIMAL},
+      `expected_max` = #{expectedMax,jdbcType=DECIMAL},
       `throw_department` = #{throwDepartment,jdbcType=INTEGER},
+      `collect_start` = #{collectStart,jdbcType=DATE},
+      `collect_end` = #{collectEnd,jdbcType=DATE},
       `desc` = #{desc,jdbcType=LONGVARCHAR},
       `detail_content` = #{detailContent,jdbcType=LONGVARCHAR}
     where `pid` = #{pid,jdbcType=INTEGER}
@@ -990,9 +1024,11 @@
       `invest_term_min` = #{investTermMin,jdbcType=INTEGER},
       `invest_term_max` = #{investTermMax,jdbcType=INTEGER},
       `invest_threshold` = #{investThreshold,jdbcType=DECIMAL},
-      `expected_min` = #{expectedMin,jdbcType=TINYINT},
-      `expected_max` = #{expectedMax,jdbcType=TINYINT},
-      `throw_department` = #{throwDepartment,jdbcType=INTEGER}
+      `expected_min` = #{expectedMin,jdbcType=DECIMAL},
+      `expected_max` = #{expectedMax,jdbcType=DECIMAL},
+      `throw_department` = #{throwDepartment,jdbcType=INTEGER},
+      `collect_start` = #{collectStart,jdbcType=DATE},
+      `collect_end` = #{collectEnd,jdbcType=DATE}
     where `pid` = #{pid,jdbcType=INTEGER}
   </update>
   <select resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.ProductExample" id="selectByExampleWithBLOBsWithRowbounds" >
