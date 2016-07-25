@@ -14,13 +14,13 @@
     <result column="area_id" property="areaId" jdbcType="INTEGER" />
     <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
     <result column="url" property="url" jdbcType="VARCHAR" />
-    <result column="status" property="status" jdbcType="TINYINT" />
-    <result column="is_display" property="isDisplay" jdbcType="TINYINT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="is_display" property="isDisplay" jdbcType="INTEGER" />
     <result column="summary" property="summary" jdbcType="VARCHAR" />
-    <result column="cid" property="cid" jdbcType="TINYINT" />
+    <result column="cid" property="cid" jdbcType="INTEGER" />
     <result column="cover" property="cover" jdbcType="VARCHAR" />
-    <result column="department_id" property="departmentId" jdbcType="TINYINT" />
-    <result column="is_ recommend" property="isRecommend" jdbcType="TINYINT" />
+    <result column="department_id" property="departmentId" jdbcType="INTEGER" />
+    <result column="is_ recommend" property="isRecommend" jdbcType="INTEGER" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.fhzc.app.dao.mybatis.model.Activity" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
@@ -153,9 +153,9 @@
     values (#{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{applyBeginTime,jdbcType=TIMESTAMP}, 
       #{applyEndTime,jdbcType=TIMESTAMP}, #{beginTime,jdbcType=DATE}, #{endTime,jdbcType=DATE}, 
       #{memo,jdbcType=VARCHAR}, #{sponsor,jdbcType=VARCHAR}, #{areaId,jdbcType=INTEGER}, 
-      #{ctime,jdbcType=TIMESTAMP}, #{url,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
-      #{isDisplay,jdbcType=TINYINT}, #{summary,jdbcType=VARCHAR}, #{cid,jdbcType=TINYINT}, 
-      #{cover,jdbcType=VARCHAR}, #{departmentId,jdbcType=TINYINT}, #{isRecommend,jdbcType=TINYINT}, 
+      #{ctime,jdbcType=TIMESTAMP}, #{url,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{isDisplay,jdbcType=INTEGER}, #{summary,jdbcType=VARCHAR}, #{cid,jdbcType=INTEGER}, 
+      #{cover,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER}, #{isRecommend,jdbcType=INTEGER}, 
       #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.Activity" >
@@ -257,25 +257,25 @@
         #{url,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
-        #{status,jdbcType=TINYINT},
+        #{status,jdbcType=INTEGER},
       </if>
       <if test="isDisplay != null" >
-        #{isDisplay,jdbcType=TINYINT},
+        #{isDisplay,jdbcType=INTEGER},
       </if>
       <if test="summary != null" >
         #{summary,jdbcType=VARCHAR},
       </if>
       <if test="cid != null" >
-        #{cid,jdbcType=TINYINT},
+        #{cid,jdbcType=INTEGER},
       </if>
       <if test="cover != null" >
         #{cover,jdbcType=VARCHAR},
       </if>
       <if test="departmentId != null" >
-        #{departmentId,jdbcType=TINYINT},
+        #{departmentId,jdbcType=INTEGER},
       </if>
       <if test="isRecommend != null" >
-        #{isRecommend,jdbcType=TINYINT},
+        #{isRecommend,jdbcType=INTEGER},
       </if>
       <if test="content != null" >
         #{content,jdbcType=LONGVARCHAR},
@@ -328,25 +328,25 @@
         `url` = #{record.url,jdbcType=VARCHAR},
       </if>
       <if test="record.status != null" >
-        `status` = #{record.status,jdbcType=TINYINT},
+        `status` = #{record.status,jdbcType=INTEGER},
       </if>
       <if test="record.isDisplay != null" >
-        `is_display` = #{record.isDisplay,jdbcType=TINYINT},
+        `is_display` = #{record.isDisplay,jdbcType=INTEGER},
       </if>
       <if test="record.summary != null" >
         `summary` = #{record.summary,jdbcType=VARCHAR},
       </if>
       <if test="record.cid != null" >
-        `cid` = #{record.cid,jdbcType=TINYINT},
+        `cid` = #{record.cid,jdbcType=INTEGER},
       </if>
       <if test="record.cover != null" >
         `cover` = #{record.cover,jdbcType=VARCHAR},
       </if>
       <if test="record.departmentId != null" >
-        `department_id` = #{record.departmentId,jdbcType=TINYINT},
+        `department_id` = #{record.departmentId,jdbcType=INTEGER},
       </if>
       <if test="record.isRecommend != null" >
-        `is_ recommend` = #{record.isRecommend,jdbcType=TINYINT},
+        `is_ recommend` = #{record.isRecommend,jdbcType=INTEGER},
       </if>
       <if test="record.content != null" >
         `content` = #{record.content,jdbcType=LONGVARCHAR},
@@ -370,13 +370,13 @@
       `area_id` = #{record.areaId,jdbcType=INTEGER},
       `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
       `url` = #{record.url,jdbcType=VARCHAR},
-      `status` = #{record.status,jdbcType=TINYINT},
-      `is_display` = #{record.isDisplay,jdbcType=TINYINT},
+      `status` = #{record.status,jdbcType=INTEGER},
+      `is_display` = #{record.isDisplay,jdbcType=INTEGER},
       `summary` = #{record.summary,jdbcType=VARCHAR},
-      `cid` = #{record.cid,jdbcType=TINYINT},
+      `cid` = #{record.cid,jdbcType=INTEGER},
       `cover` = #{record.cover,jdbcType=VARCHAR},
-      `department_id` = #{record.departmentId,jdbcType=TINYINT},
-      `is_ recommend` = #{record.isRecommend,jdbcType=TINYINT},
+      `department_id` = #{record.departmentId,jdbcType=INTEGER},
+      `is_ recommend` = #{record.isRecommend,jdbcType=INTEGER},
       `content` = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -396,13 +396,13 @@
       `area_id` = #{record.areaId,jdbcType=INTEGER},
       `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
       `url` = #{record.url,jdbcType=VARCHAR},
-      `status` = #{record.status,jdbcType=TINYINT},
-      `is_display` = #{record.isDisplay,jdbcType=TINYINT},
+      `status` = #{record.status,jdbcType=INTEGER},
+      `is_display` = #{record.isDisplay,jdbcType=INTEGER},
       `summary` = #{record.summary,jdbcType=VARCHAR},
-      `cid` = #{record.cid,jdbcType=TINYINT},
+      `cid` = #{record.cid,jdbcType=INTEGER},
       `cover` = #{record.cover,jdbcType=VARCHAR},
-      `department_id` = #{record.departmentId,jdbcType=TINYINT},
-      `is_ recommend` = #{record.isRecommend,jdbcType=TINYINT}
+      `department_id` = #{record.departmentId,jdbcType=INTEGER},
+      `is_ recommend` = #{record.isRecommend,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -444,25 +444,25 @@
         `url` = #{url,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
-        `status` = #{status,jdbcType=TINYINT},
+        `status` = #{status,jdbcType=INTEGER},
       </if>
       <if test="isDisplay != null" >
-        `is_display` = #{isDisplay,jdbcType=TINYINT},
+        `is_display` = #{isDisplay,jdbcType=INTEGER},
       </if>
       <if test="summary != null" >
         `summary` = #{summary,jdbcType=VARCHAR},
       </if>
       <if test="cid != null" >
-        `cid` = #{cid,jdbcType=TINYINT},
+        `cid` = #{cid,jdbcType=INTEGER},
       </if>
       <if test="cover != null" >
         `cover` = #{cover,jdbcType=VARCHAR},
       </if>
       <if test="departmentId != null" >
-        `department_id` = #{departmentId,jdbcType=TINYINT},
+        `department_id` = #{departmentId,jdbcType=INTEGER},
       </if>
       <if test="isRecommend != null" >
-        `is_ recommend` = #{isRecommend,jdbcType=TINYINT},
+        `is_ recommend` = #{isRecommend,jdbcType=INTEGER},
       </if>
       <if test="content != null" >
         `content` = #{content,jdbcType=LONGVARCHAR},
@@ -483,13 +483,13 @@
       `area_id` = #{areaId,jdbcType=INTEGER},
       `ctime` = #{ctime,jdbcType=TIMESTAMP},
       `url` = #{url,jdbcType=VARCHAR},
-      `status` = #{status,jdbcType=TINYINT},
-      `is_display` = #{isDisplay,jdbcType=TINYINT},
+      `status` = #{status,jdbcType=INTEGER},
+      `is_display` = #{isDisplay,jdbcType=INTEGER},
       `summary` = #{summary,jdbcType=VARCHAR},
-      `cid` = #{cid,jdbcType=TINYINT},
+      `cid` = #{cid,jdbcType=INTEGER},
       `cover` = #{cover,jdbcType=VARCHAR},
-      `department_id` = #{departmentId,jdbcType=TINYINT},
-      `is_ recommend` = #{isRecommend,jdbcType=TINYINT},
+      `department_id` = #{departmentId,jdbcType=INTEGER},
+      `is_ recommend` = #{isRecommend,jdbcType=INTEGER},
       `content` = #{content,jdbcType=LONGVARCHAR}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
@@ -506,13 +506,13 @@
       `area_id` = #{areaId,jdbcType=INTEGER},
       `ctime` = #{ctime,jdbcType=TIMESTAMP},
       `url` = #{url,jdbcType=VARCHAR},
-      `status` = #{status,jdbcType=TINYINT},
-      `is_display` = #{isDisplay,jdbcType=TINYINT},
+      `status` = #{status,jdbcType=INTEGER},
+      `is_display` = #{isDisplay,jdbcType=INTEGER},
       `summary` = #{summary,jdbcType=VARCHAR},
-      `cid` = #{cid,jdbcType=TINYINT},
+      `cid` = #{cid,jdbcType=INTEGER},
       `cover` = #{cover,jdbcType=VARCHAR},
-      `department_id` = #{departmentId,jdbcType=TINYINT},
-      `is_ recommend` = #{isRecommend,jdbcType=TINYINT}
+      `department_id` = #{departmentId,jdbcType=INTEGER},
+      `is_ recommend` = #{isRecommend,jdbcType=INTEGER}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
   <select resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.ActivityExample" id="selectByExampleWithBLOBsWithRowbounds" >

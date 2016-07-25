@@ -103,7 +103,7 @@
                                         <td>${right.spendScore}</td>
                                         <td></td>
                                         <td></td>
-                                        <td><a href="detail/${right.id}" class="btn mini purple"><i class="icon-edit"></i> 编辑</a>
+                                        <td><a href="<%=contextPath%>/business/rights/detail/${right.id}" class="btn mini purple"><i class="icon-edit"></i> 编辑</a>
                                         </td>
                                     </tr>
                                 </c:forEach>

@@ -6,14 +6,10 @@ import com.fhzc.app.dao.mybatis.model.Product;
 import com.fhzc.app.dao.mybatis.model.ProductExample;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import org.apache.ibatis.session.RowBounds;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by lihongde on 2016/7/7 15:43
@@ -48,13 +44,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public PageableResult<Product> getRecommendProductList() {
+    public List<Product> getRecommendProductList() {
         ProductExample example = new ProductExample();
         ProductExample.Criteria criteria = example.createCriteria();
         criteria.andIsDisplayEqualTo((byte) 1);
         criteria.andIsRecommendEqualTo((byte) 1);
-        List<Product> list = productMapper.selectByExample(example);
-        return new PageableResult<Product>(0, 100, list.size(), list);
+        return productMapper.selectByExample(example);
     }
 
     @Override

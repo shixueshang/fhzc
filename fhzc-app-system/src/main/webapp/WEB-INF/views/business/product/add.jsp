@@ -16,7 +16,7 @@
 <link href="<%=contextPath%>/assets/fancybox/source/jquery.fancybox.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/uniform/css/uniform.default.css" />
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/chosen-bootstrap/chosen/chosen.css" />
-<link rel="stylesheet" href="<%=contextPath%>/assets/data-tables/DT_bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/data-tables/DT_bootstrap.css" />
 <link href="<%=contextPath%>/assets/bootstrap-fileupload/bootstrap-fileupload.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/jquery-tags-input/jquery.tagsinput.css" />
 <link rel="stylesheet" href="<%=contextPath%>/assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" />
@@ -66,7 +66,7 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="portlet_tab1">
                                         <!-- BEGIN FORM-->
-                                        <form action="add" id="form_sample_1" enctype="multipart/form-data" method="POST" class="form-horizontal">
+                                        <form action="<%=contextPath%>/business/product/add" id="form_sample_1" enctype="multipart/form-data" method="POST" class="form-horizontal">
                                             <div class="alert alert-error hide">
                                                 <button class="close" data-dismiss="alert"></button>
                                                 您的表单有未完成的必填项,请检查.
@@ -123,7 +123,16 @@
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">起投金额(万元)</label>
+                                                <label class="control-label">募集期的开始和结束</label>
+                                                <div class="controls">
+                                                    <input type="text" name="collectStart"  placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${product.collectStart}" pattern="yyyy-MM-dd"/>"> ~
+                                                    <input type="text" name="collectEnd"  placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${product.collectEnd}" pattern="yyyy-MM-dd"/>">
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">起投金额(万元)<span class="required">*</span></label>
                                                 <div class="controls">
                                                     <input type="number" name="investThreshold" value="${product.investThreshold / 10000}" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
@@ -180,7 +189,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">发行模式</label>
                                                 <div class="controls">
-                                                    <select  class="large m-wrap" name="issueType"  tabindex="1">
+                                                    <select  class="large m-wrap" name="issueType" id="issueType"  tabindex="1">
                                                     </select>
                                                 </div>
                                             </div>
@@ -251,7 +260,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">投放分公司</label>
                                                 <div class="controls">
-                                                    <select name="departments"  data-placeholder="分公司信息" class="chosen span6" multiple="multiple" tabindex="6">
+                                                    <select name="throwDepartment" id="departments"  class="large m-wrap"  tabindex="1">
                                                     </select>
                                                 </div>
 
@@ -260,7 +269,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">客户等级要求</label>
                                                 <div class="controls">
-                                                    <select name="level" class="large m-wrap"  tabindex="1">
+                                                    <select name="level" id="customerLevel" class="large m-wrap"  tabindex="1">
                                                     </select>
                                                 </div>
                                             </div>
@@ -268,7 +277,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">风险评级要求</label>
                                                 <div class="controls">
-                                                    <select name="risk" class="large m-wrap" tabindex="1">
+                                                    <select name="risk" id="riskLevel" class="large m-wrap" tabindex="1">
                                                     </select>
                                                 </div>
                                             </div>
@@ -394,6 +403,7 @@
                                             </div>
 
                                             <div class="form-actions">
+                                                <input name="pid" type="hidden" value="${product.pid}" />
                                                 <button type="submit" class="btn blue"><i class="icon-ok"></i> 保存</button>
                                             </div>
                                         </form>
@@ -417,11 +427,90 @@
 <script>
 $(function(){
 
+    var productTypesVal = '${product.productType}';
+    var productTypes = '${productTypes}';
+    var pTypeJson= $.parseJSON(productTypes);
+    $.each(pTypeJson, function(i,val){
+        $("#productType").append("<option value='"+val.value+"'>"+val.key+"</option>");
+        if(productTypesVal == val.value){
+            $("#productType").val(productTypesVal);
+        }
+    });
+
+
+    var productStatusVal = '${product.status}';
+    var productStatus = '${productStatus}';
+    var statusJson= $.parseJSON(productStatus);
+    $.each(statusJson, function(i,val){
+        $("#status").append("<option value='"+val.value+"'>"+val.key+"</option>");
+        if(productStatusVal == val.value){
+            $("#status").val(productStatusVal);
+        }
+    });
+
+
+    var throwDepartment = '${product.throwDepartment}';
+    var depts = '${departments}';
+    var deptsJson= $.parseJSON(depts);
+    $.each(deptsJson, function(i,val){
+        $("#departments").append("<option value='"+val.id+"'>"+val.name+"</option>");
+        if(throwDepartment == val.id){
+            $("#departments").val(throwDepartment);
+        }
+    });
+
+    var issueTypeVal = '${product.issueType}';
+    var issueType = '${productIssueType}';
+    var issueTypeJson= $.parseJSON(issueType);
+    $.each(issueTypeJson, function(i,val){
+        $("#issueType").append("<option value='"+val.value+"'>"+val.key+"</option>");
+        if(issueTypeVal == val.value){
+            $("#issueType").val(issueTypeVal);
+        }
+    });
+
+    var level = '${product.level}';
+    var customerLevel = '${customerLevel}';
+    var customerLevelJson= $.parseJSON(customerLevel);
+    $.each(customerLevelJson, function(i,val){
+        $("#customerLevel").append("<option value='"+val.value+"'>"+val.key+"</option>");
+        if(level == val.value){
+            $("#customerLevel").val(level);
+        }
+    });
+
+    var risk = '${product.risk}';
+    var riskLevel = '${riskLevel}';
+    var riskLevelJson= $.parseJSON(riskLevel);
+    $.each(riskLevelJson, function(i,val){
+        $("#riskLevel").append("<option value='"+val.value+"'>"+val.key+"</option>");
+        if(risk == val.value){
+            $("#riskLevel").val(risk);
+        }
+    });
 
     var dispalyImg = $("#default_img");
     var imgUrl = "<%=contextPath%>${product.cover}";
     if(imgUrl != ""){
         dispalyImg.attr("src", imgUrl);
+    }
+
+    var isDisplay = '${product.isDisplay}';
+    if(isDisplay == 1){
+        $.uniform.update($("input[name='isDisplay'][value='1']").attr("checked", true));
+        $.uniform.update($("input[name='isDisplay'][value='0']").attr("checked", false));
+    }else{
+        $.uniform.update($("input[name='isDisplay'][value='1']").attr("checked", false));
+        $.uniform.update($("input[name='isDisplay'][value='0']").attr("checked", true));
+    }
+
+    var isRecommend = '${product.isRecommend}';
+    if(isRecommend == 1){
+        $.uniform.update($("input[name='isRecommend'][value='1']").attr("checked", true));
+        $.uniform.update($("input[name='isRecommend'][value='0']").attr("checked", false));
+    }else{
+        $.uniform.update($("input[name='isRecommend'][value='1']").attr("checked", false));
+        $.uniform.update($("input[name='isRecommend'][value='0']").attr("checked", true));
     }
 
     var form1 = $('#form_sample_1');
@@ -444,7 +533,13 @@ $(function(){
                     type: "get",
                     data: {
                         name: function() {
-                            return $("input[name='name']").val();
+                            var old_name = '${product.name}';
+                            var new_name = $("input[name='name']").val();
+                            if(old_name == new_name){
+                                return old_name + 'no check';
+                            }else {
+                                return new_name;
+                            }
                         }
                     }
                 }
@@ -468,6 +563,7 @@ $(function(){
                 min:1
             },
             investThreshold: {
+                required: true,
                 number: true,
                 min:0
             },

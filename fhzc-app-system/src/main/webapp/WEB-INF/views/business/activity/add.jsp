@@ -66,7 +66,7 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="portlet_tab1">
                                         <!-- BEGIN FORM-->
-                                        <form action="add" id="form_sample_1" enctype="multipart/form-data" method="POST" class="form-horizontal">
+                                        <form action="<%=contextPath%>/business/activity/add" id="form_sample_1" enctype="multipart/form-data" method="POST" class="form-horizontal">
                                             <div class="alert alert-error hide">
                                                 <button class="close" data-dismiss="alert"></button>
                                                 您的表单有未完成的必填项,请检查.
@@ -87,8 +87,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">活动类型</label>
                                                 <div class="controls">
-                                                    <select class="large m-wrap" name="cid" data-required="1" tabindex="1">
-                                                        <option  value="1">--</option>
+                                                    <select class="large m-wrap" name="cid" id="activityType" data-required="1" tabindex="1">
                                                     </select>
                                                 </div>
                                             </div>
@@ -96,11 +95,11 @@
                                                 <label class="control-label">活动状态</label>
                                                 <div class="controls">
                                                     <label class="radio">
-                                                        <input type="radio" name="status" value="0" />
+                                                        <input type="radio" id="status_0" name="status" value="${activity.status}"/>
                                                         预约中
                                                     </label>
                                                     <label class="radio">
-                                                        <input type="radio" name="status" value="1" />
+                                                        <input type="radio" id="status_1" name="status" value="${activity.status}" />
                                                         已完成
                                                     </label>
                                                 </div>

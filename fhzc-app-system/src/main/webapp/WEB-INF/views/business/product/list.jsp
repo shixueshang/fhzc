@@ -94,7 +94,14 @@
                                                 </c:if>
                                             </c:forEach>
                                         </td>
-                                        <td></td>
+                                        <td>
+                                            <c:forEach items="${departments}" var="department">
+                                                <c:if test="${product.throwDepartment == department['id']}">
+                                                    ${department['name']}
+                                                </c:if>
+                                            </c:forEach>
+
+                                        </td>
                                         <td><fmt:formatDate value="${product.foundDay}" pattern="yyyy-MM-dd"/></td>
                                         <td>
                                             <c:forEach items="${yesNo}" var="yesNo">
@@ -110,11 +117,12 @@
                                                 </c:if>
                                             </c:forEach>
                                         </td>
-                                        <td></td>
+                                        <td>
+                                        </td>
                                         <td></td>
                                         <td></td>
                                         <td>
-                                            <a href="detail/${product.pid}" class="btn mini purple"><i class="icon-edit"></i> 编辑</a>
+                                            <a href="<%=contextPath%>/business/product/detail/${product.pid}" class="btn mini purple"><i class="icon-edit"></i> 编辑</a>
                                             <a href="#" class="btn mini blue"><i class="icon-share"></i> 预约</a>
                                         </td>
                                     </tr>
@@ -135,21 +143,5 @@
 
 </div>
 
-<script>
-    $.ajax({
-        url: '/dictionary/findDicByType',
-        type: 'GET',
-        data : 'product_type',
-        success: function(result) {
-            if(result){
-
-            }
-        },
-        error: function(xhr, textStatus, errorThrown){
-
-        }
-    });
-
-</script>
 
 <jsp:include page="../../include/footer.jsp"/>

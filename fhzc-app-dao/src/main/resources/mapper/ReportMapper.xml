@@ -10,7 +10,7 @@
     <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
     <result column="is_del" property="isDel" jdbcType="INTEGER" />
     <result column="is_display" property="isDisplay" jdbcType="INTEGER" />
-    <result column="is_ recommend" property="isRecommend" jdbcType="TINYINT" />
+    <result column="is_recommend" property="isRecommend" jdbcType="INTEGER" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.fhzc.app.dao.mybatis.model.Report" extends="BaseResultMap" >
     <result column="summary" property="summary" jdbcType="LONGVARCHAR" />
@@ -74,7 +74,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    `id`, `cid`, `name`, `cover`, `url`, `ctime`, `is_del`, `is_display`, `is_ recommend`
+    `id`, `cid`, `name`, `cover`, `url`, `ctime`, `is_del`, `is_display`, `is_recommend`
   </sql>
   <sql id="Blob_Column_List" >
     `summary`
@@ -133,11 +133,11 @@
     </selectKey>
     insert into `report` (`cid`, `name`, `cover`, 
       `url`, `ctime`, `is_del`, 
-      `is_display`, `is_ recommend`, `summary`
+      `is_display`, `is_recommend`, `summary`
       )
     values (#{cid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{cover,jdbcType=VARCHAR}, 
       #{url,jdbcType=VARCHAR}, #{ctime,jdbcType=TIMESTAMP}, #{isDel,jdbcType=INTEGER}, 
-      #{isDisplay,jdbcType=INTEGER}, #{isRecommend,jdbcType=TINYINT}, #{summary,jdbcType=LONGVARCHAR}
+      #{isDisplay,jdbcType=INTEGER}, #{isRecommend,jdbcType=INTEGER}, #{summary,jdbcType=LONGVARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.Report" >
@@ -168,7 +168,7 @@
         `is_display`,
       </if>
       <if test="isRecommend != null" >
-        `is_ recommend`,
+        `is_recommend`,
       </if>
       <if test="summary != null" >
         `summary`,
@@ -197,7 +197,7 @@
         #{isDisplay,jdbcType=INTEGER},
       </if>
       <if test="isRecommend != null" >
-        #{isRecommend,jdbcType=TINYINT},
+        #{isRecommend,jdbcType=INTEGER},
       </if>
       <if test="summary != null" >
         #{summary,jdbcType=LONGVARCHAR},
@@ -238,7 +238,7 @@
         `is_display` = #{record.isDisplay,jdbcType=INTEGER},
       </if>
       <if test="record.isRecommend != null" >
-        `is_ recommend` = #{record.isRecommend,jdbcType=TINYINT},
+        `is_recommend` = #{record.isRecommend,jdbcType=INTEGER},
       </if>
       <if test="record.summary != null" >
         `summary` = #{record.summary,jdbcType=LONGVARCHAR},
@@ -258,7 +258,7 @@
       `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
       `is_del` = #{record.isDel,jdbcType=INTEGER},
       `is_display` = #{record.isDisplay,jdbcType=INTEGER},
-      `is_ recommend` = #{record.isRecommend,jdbcType=TINYINT},
+      `is_recommend` = #{record.isRecommend,jdbcType=INTEGER},
       `summary` = #{record.summary,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -274,7 +274,7 @@
       `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
       `is_del` = #{record.isDel,jdbcType=INTEGER},
       `is_display` = #{record.isDisplay,jdbcType=INTEGER},
-      `is_ recommend` = #{record.isRecommend,jdbcType=TINYINT}
+      `is_recommend` = #{record.isRecommend,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -304,7 +304,7 @@
         `is_display` = #{isDisplay,jdbcType=INTEGER},
       </if>
       <if test="isRecommend != null" >
-        `is_ recommend` = #{isRecommend,jdbcType=TINYINT},
+        `is_recommend` = #{isRecommend,jdbcType=INTEGER},
       </if>
       <if test="summary != null" >
         `summary` = #{summary,jdbcType=LONGVARCHAR},
@@ -321,7 +321,7 @@
       `ctime` = #{ctime,jdbcType=TIMESTAMP},
       `is_del` = #{isDel,jdbcType=INTEGER},
       `is_display` = #{isDisplay,jdbcType=INTEGER},
-      `is_ recommend` = #{isRecommend,jdbcType=TINYINT},
+      `is_recommend` = #{isRecommend,jdbcType=INTEGER},
       `summary` = #{summary,jdbcType=LONGVARCHAR}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
@@ -334,7 +334,7 @@
       `ctime` = #{ctime,jdbcType=TIMESTAMP},
       `is_del` = #{isDel,jdbcType=INTEGER},
       `is_display` = #{isDisplay,jdbcType=INTEGER},
-      `is_ recommend` = #{isRecommend,jdbcType=TINYINT}
+      `is_recommend` = #{isRecommend,jdbcType=INTEGER}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
   <select resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.ReportExample" id="selectByExampleWithBLOBsWithRowbounds" >

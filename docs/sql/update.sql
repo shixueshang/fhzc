@@ -58,11 +58,11 @@ ADD COLUMN `expected_max` TINYINT NULL COMMENT '预期年化收益率max' AFTER 
 ALTER TABLE `bank`.`activity`
 ADD COLUMN `summary` VARCHAR(255) NULL COMMENT '活动摘要' AFTER `is_display`;
 ALTER TABLE `bank`.`activity`
-ADD COLUMN `cid` TINYINT NULL COMMENT '活动类型' AFTER `summary`;
+ADD COLUMN `cid` INT(1) NULL COMMENT '活动类型' AFTER `summary`;
 ALTER TABLE `bank`.`activity`
 ADD COLUMN `cover` VARCHAR(255) NULL DEFAULT NULL COMMENT '封面' AFTER `cid`;
 ALTER TABLE `bank`.`activity`
-ADD COLUMN `department_id` TINYINT NULL COMMENT '活动发布角色部门' AFTER `cover`;
+ADD COLUMN `department_id` INT(11) NULL COMMENT '活动发布角色部门' AFTER `cover`;
 
 
 ALTER TABLE `bank`.`rights`
@@ -87,9 +87,9 @@ ADD COLUMN `amount` INT NULL COMMENT '投资金额' AFTER `result`;
 
 #2016-07-21
 ALTER TABLE `bank`.`activity`
-ADD COLUMN `is_ recommend` TINYINT(3) UNSIGNED NULL DEFAULT '0' COMMENT '是否推荐 1是|0否' AFTER `department_id`;
+ADD COLUMN `is_recommend` INT(1) UNSIGNED NULL DEFAULT '0' COMMENT '是否推荐 1是|0否' AFTER `department_id`;
 ALTER TABLE `bank`.`report`
-ADD COLUMN `is_ recommend` TINYINT(3) UNSIGNED NULL DEFAULT '0' COMMENT '是否推荐 1是|0否' AFTER `is_display`;
+ADD COLUMN `is_recommend` TINYINT(3) UNSIGNED NULL DEFAULT '0' COMMENT '是否推荐 1是|0否' AFTER `is_display`;
 
 
 #2016-07-22
@@ -103,3 +103,35 @@ ADD COLUMN `status` INT(1) NULL COMMENT '数据状态(0正常1删除)' AFTER `le
 ALTER TABLE `bank`.`product`
 CHANGE COLUMN `buy_day` `buy_day` VARCHAR(200) NULL DEFAULT NULL COMMENT '开放申购日' ,
 CHANGE COLUMN `redeem_day` `redeem_day` VARCHAR(200) NULL DEFAULT NULL COMMENT '赎回日' ;
+
+
+#2016-07-23
+ALTER TABLE `bank`.`product`
+ADD COLUMN `throw_department` INT NULL COMMENT '投放分公司' AFTER `expected_max`;
+
+DROP TABLE IF EXISTS `bank`.`product_areas` ;
+
+ALTER TABLE `bank`.`report` CHANGE COLUMN  `is_recommend` `is_recommend` INT(1) NULL comment '是否推荐';
+
+ALTER TABLE `bank`.`product`
+CHANGE COLUMN `invest_threshold` `invest_threshold` DECIMAL(12,2) NULL DEFAULT 1000000 COMMENT '起投金额' ;
+ALTER TABLE `bank`.`report`
+CHANGE COLUMN `is_recommend` `is_recommend` TINYINT(3) UNSIGNED NULL DEFAULT '0' COMMENT '是否推荐 1是|0否' ;
+
+#2016-07-25
+ALTER TABLE `bank`.`planner_achivements_monthly`
+ADD COLUMN `customer_name` VARCHAR(45) NULL COMMENT '客户姓名' AFTER `customer_uid`;
+
+
+#2016-07-25
+ALTER TABLE `bank`.`admin`
+ADD COLUMN `mobile` VARCHAR(45) NULL COMMENT '手机号' AFTER `status`,
+ADD COLUMN `organ` INT(11) NULL COMMENT '所属公司' AFTER `mobile`,
+ADD COLUMN `area` VARCHAR(45) NULL AFTER `organ`;
+ALTER TABLE `bank`.`product`
+CHANGE COLUMN `invest_threshold` `invest_threshold` DECIMAL(12,2) NOT NULL DEFAULT '1000000.00' COMMENT '起投金额' ,
+CHANGE COLUMN `expected_min` `expected_min` DECIMAL(12,2) NULL DEFAULT NULL COMMENT '预期年化收益率min' ,
+CHANGE COLUMN `expected_max` `expected_max` DECIMAL(12,2) NULL DEFAULT NULL COMMENT '预期年化收益率max' ,
+ADD COLUMN `collect_start` DATE NULL COMMENT '募集期的开始' AFTER `throw_department`,
+ADD COLUMN `collect_end` DATE NULL COMMENT '募集期的结束' AFTER `collect_start`;
+
