@@ -66,7 +66,7 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="portlet_tab1">
                                         <!-- BEGIN FORM-->
-                                        <form action="import" enctype="multipart/form-data" method="POST" class="form-horizontal">
+                                        <form action="<%=contextPath%>/business/product/import" enctype="multipart/form-data" method="POST" class="form-horizontal">
                                             <div class="control-group">
                                             </div>
                                             <div class="controls">

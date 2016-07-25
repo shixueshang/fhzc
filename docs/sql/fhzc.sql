@@ -286,8 +286,8 @@ CREATE TABLE IF NOT EXISTS `bank`.`activity` (
   `area_id` INT NULL,
   `ctime` DATETIME NOT NULL,
   `url` VARCHAR(255) NULL COMMENT '活动链接',
-  `status` TINYINT NOT NULL DEFAULT 0 COMMENT '活动状态 0预约中|1已完成',
-  `is_display` TINYINT NOT NULL DEFAULT 0 COMMENT '是否显示 0否|1是',
+  `status` INT(1) NOT NULL DEFAULT 0 COMMENT '活动状态 0预约中|1已完成',
+  `is_display` INT(1) NOT NULL DEFAULT 0 COMMENT '是否显示 0否|1是',
   PRIMARY KEY (`id`),
   INDEX `area` (`area_id` ASC))
   ENGINE = InnoDB
@@ -571,11 +571,10 @@ CREATE TABLE IF NOT EXISTS `bank`.`system_module` (
   `name` VARCHAR(45) NOT NULL COMMENT '模块名称',
   `url` VARCHAR(50) NOT NULL COMMENT '功能资源',
   `desc` VARCHAR(45) NULL COMMENT '描述',
-  `parent_module_id` INT NOT NULL COMMENT '父级资源',
-  `level` TINYINT(1) NULL COMMENT '资源级别',
+  `parent_module_id` INT NULL COMMENT '父级资源',
+  `level` INT(1) NULL COMMENT '资源级别',
   `is_valid` TINYINT(1) NOT NULL COMMENT '是否可用',
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `url_uniq` (`url` ASC))
+  PRIMARY KEY (`id`))
   ENGINE = InnoDB
   COMMENT = '后台系统模块名称';
 
@@ -583,11 +582,11 @@ CREATE TABLE IF NOT EXISTS `bank`.`system_module` (
 -- -----------------------------------------------------
 -- Table `bank`.`system_admin_module`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `bank`.`system_admin_module` ;
+DROP TABLE IF EXISTS `bank`.`system_role_module` ;
 
-CREATE TABLE IF NOT EXISTS `bank`.`system_admin_module` (
+CREATE TABLE IF NOT EXISTS `bank`.`system_role_module` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `admin_id` INT NOT NULL COMMENT '后台人员id',
+  `admin_role_id` INT NOT NULL COMMENT '后台人员id',
   `module_id` INT NOT NULL COMMENT '模块id',
   `mode` ENUM('r','rw') NOT NULL DEFAULT 'r' COMMENT '模块读\\读写',
   PRIMARY KEY (`id`),
@@ -663,21 +662,6 @@ CREATE TABLE IF NOT EXISTS `bank`.`passport` (
   UNIQUE INDEX `name_uniq` (`name` ASC))
   ENGINE = InnoDB
   COMMENT = '证件类型';
-
-
--- -----------------------------------------------------
--- Table `bank`.`product_areas`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `bank`.`product_areas` ;
-
-CREATE TABLE IF NOT EXISTS `bank`.`product_areas` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `product_id` VARCHAR(45) NULL,
-  `area_id` VARCHAR(45) NULL,
-  PRIMARY KEY (`id`),
-  INDEX `area_index` (`area_id` ASC))
-  ENGINE = InnoDB
-  COMMENT = '产品发行区域';
 
 
 -- -----------------------------------------------------

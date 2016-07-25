@@ -24,7 +24,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "/organization")
-public class ResourceController extends BaseController {
+public class OrganizationController extends BaseController {
 
     @Resource
     private DepartmentService departmentService;

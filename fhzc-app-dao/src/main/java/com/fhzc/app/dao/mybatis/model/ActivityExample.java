@@ -912,52 +912,52 @@ public class ActivityExample {
             return (Criteria) this;
         }
 
-        public Criteria andStatusEqualTo(Byte value) {
+        public Criteria andStatusEqualTo(Integer value) {
             addCriterion("`status` =", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotEqualTo(Byte value) {
+        public Criteria andStatusNotEqualTo(Integer value) {
             addCriterion("`status` <>", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThan(Byte value) {
+        public Criteria andStatusGreaterThan(Integer value) {
             addCriterion("`status` >", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThanOrEqualTo(Byte value) {
+        public Criteria andStatusGreaterThanOrEqualTo(Integer value) {
             addCriterion("`status` >=", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThan(Byte value) {
+        public Criteria andStatusLessThan(Integer value) {
             addCriterion("`status` <", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThanOrEqualTo(Byte value) {
+        public Criteria andStatusLessThanOrEqualTo(Integer value) {
             addCriterion("`status` <=", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusIn(List<Byte> values) {
+        public Criteria andStatusIn(List<Integer> values) {
             addCriterion("`status` in", values, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotIn(List<Byte> values) {
+        public Criteria andStatusNotIn(List<Integer> values) {
             addCriterion("`status` not in", values, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusBetween(Byte value1, Byte value2) {
+        public Criteria andStatusBetween(Integer value1, Integer value2) {
             addCriterion("`status` between", value1, value2, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotBetween(Byte value1, Byte value2) {
+        public Criteria andStatusNotBetween(Integer value1, Integer value2) {
             addCriterion("`status` not between", value1, value2, "status");
             return (Criteria) this;
         }
@@ -972,52 +972,52 @@ public class ActivityExample {
             return (Criteria) this;
         }
 
-        public Criteria andIsDisplayEqualTo(Byte value) {
+        public Criteria andIsDisplayEqualTo(Integer value) {
             addCriterion("`is_display` =", value, "isDisplay");
             return (Criteria) this;
         }
 
-        public Criteria andIsDisplayNotEqualTo(Byte value) {
+        public Criteria andIsDisplayNotEqualTo(Integer value) {
             addCriterion("`is_display` <>", value, "isDisplay");
             return (Criteria) this;
         }
 
-        public Criteria andIsDisplayGreaterThan(Byte value) {
+        public Criteria andIsDisplayGreaterThan(Integer value) {
             addCriterion("`is_display` >", value, "isDisplay");
             return (Criteria) this;
         }
 
-        public Criteria andIsDisplayGreaterThanOrEqualTo(Byte value) {
+        public Criteria andIsDisplayGreaterThanOrEqualTo(Integer value) {
             addCriterion("`is_display` >=", value, "isDisplay");
             return (Criteria) this;
         }
 
-        public Criteria andIsDisplayLessThan(Byte value) {
+        public Criteria andIsDisplayLessThan(Integer value) {
             addCriterion("`is_display` <", value, "isDisplay");
             return (Criteria) this;
         }
 
-        public Criteria andIsDisplayLessThanOrEqualTo(Byte value) {
+        public Criteria andIsDisplayLessThanOrEqualTo(Integer value) {
             addCriterion("`is_display` <=", value, "isDisplay");
             return (Criteria) this;
         }
 
-        public Criteria andIsDisplayIn(List<Byte> values) {
+        public Criteria andIsDisplayIn(List<Integer> values) {
             addCriterion("`is_display` in", values, "isDisplay");
             return (Criteria) this;
         }
 
-        public Criteria andIsDisplayNotIn(List<Byte> values) {
+        public Criteria andIsDisplayNotIn(List<Integer> values) {
             addCriterion("`is_display` not in", values, "isDisplay");
             return (Criteria) this;
         }
 
-        public Criteria andIsDisplayBetween(Byte value1, Byte value2) {
+        public Criteria andIsDisplayBetween(Integer value1, Integer value2) {
             addCriterion("`is_display` between", value1, value2, "isDisplay");
             return (Criteria) this;
         }
 
-        public Criteria andIsDisplayNotBetween(Byte value1, Byte value2) {
+        public Criteria andIsDisplayNotBetween(Integer value1, Integer value2) {
             addCriterion("`is_display` not between", value1, value2, "isDisplay");
             return (Criteria) this;
         }
@@ -1102,52 +1102,52 @@ public class ActivityExample {
             return (Criteria) this;
         }
 
-        public Criteria andCidEqualTo(Byte value) {
+        public Criteria andCidEqualTo(Integer value) {
             addCriterion("`cid` =", value, "cid");
             return (Criteria) this;
         }
 
-        public Criteria andCidNotEqualTo(Byte value) {
+        public Criteria andCidNotEqualTo(Integer value) {
             addCriterion("`cid` <>", value, "cid");
             return (Criteria) this;
         }
 
-        public Criteria andCidGreaterThan(Byte value) {
+        public Criteria andCidGreaterThan(Integer value) {
             addCriterion("`cid` >", value, "cid");
             return (Criteria) this;
         }
 
-        public Criteria andCidGreaterThanOrEqualTo(Byte value) {
+        public Criteria andCidGreaterThanOrEqualTo(Integer value) {
             addCriterion("`cid` >=", value, "cid");
             return (Criteria) this;
         }
 
-        public Criteria andCidLessThan(Byte value) {
+        public Criteria andCidLessThan(Integer value) {
             addCriterion("`cid` <", value, "cid");
             return (Criteria) this;
         }
 
-        public Criteria andCidLessThanOrEqualTo(Byte value) {
+        public Criteria andCidLessThanOrEqualTo(Integer value) {
             addCriterion("`cid` <=", value, "cid");
             return (Criteria) this;
         }
 
-        public Criteria andCidIn(List<Byte> values) {
+        public Criteria andCidIn(List<Integer> values) {
             addCriterion("`cid` in", values, "cid");
             return (Criteria) this;
         }
 
-        public Criteria andCidNotIn(List<Byte> values) {
+        public Criteria andCidNotIn(List<Integer> values) {
             addCriterion("`cid` not in", values, "cid");
             return (Criteria) this;
         }
 
-        public Criteria andCidBetween(Byte value1, Byte value2) {
+        public Criteria andCidBetween(Integer value1, Integer value2) {
             addCriterion("`cid` between", value1, value2, "cid");
             return (Criteria) this;
         }
 
-        public Criteria andCidNotBetween(Byte value1, Byte value2) {
+        public Criteria andCidNotBetween(Integer value1, Integer value2) {
             addCriterion("`cid` not between", value1, value2, "cid");
             return (Criteria) this;
         }
@@ -1232,52 +1232,52 @@ public class ActivityExample {
             return (Criteria) this;
         }
 
-        public Criteria andDepartmentIdEqualTo(Byte value) {
+        public Criteria andDepartmentIdEqualTo(Integer value) {
             addCriterion("`department_id` =", value, "departmentId");
             return (Criteria) this;
         }
 
-        public Criteria andDepartmentIdNotEqualTo(Byte value) {
+        public Criteria andDepartmentIdNotEqualTo(Integer value) {
             addCriterion("`department_id` <>", value, "departmentId");
             return (Criteria) this;
         }
 
-        public Criteria andDepartmentIdGreaterThan(Byte value) {
+        public Criteria andDepartmentIdGreaterThan(Integer value) {
             addCriterion("`department_id` >", value, "departmentId");
             return (Criteria) this;
         }
 
-        public Criteria andDepartmentIdGreaterThanOrEqualTo(Byte value) {
+        public Criteria andDepartmentIdGreaterThanOrEqualTo(Integer value) {
             addCriterion("`department_id` >=", value, "departmentId");
             return (Criteria) this;
         }
 
-        public Criteria andDepartmentIdLessThan(Byte value) {
+        public Criteria andDepartmentIdLessThan(Integer value) {
             addCriterion("`department_id` <", value, "departmentId");
             return (Criteria) this;
         }
 
-        public Criteria andDepartmentIdLessThanOrEqualTo(Byte value) {
+        public Criteria andDepartmentIdLessThanOrEqualTo(Integer value) {
             addCriterion("`department_id` <=", value, "departmentId");
             return (Criteria) this;
         }
 
-        public Criteria andDepartmentIdIn(List<Byte> values) {
+        public Criteria andDepartmentIdIn(List<Integer> values) {
             addCriterion("`department_id` in", values, "departmentId");
             return (Criteria) this;
         }
 
-        public Criteria andDepartmentIdNotIn(List<Byte> values) {
+        public Criteria andDepartmentIdNotIn(List<Integer> values) {
             addCriterion("`department_id` not in", values, "departmentId");
             return (Criteria) this;
         }
 
-        public Criteria andDepartmentIdBetween(Byte value1, Byte value2) {
+        public Criteria andDepartmentIdBetween(Integer value1, Integer value2) {
             addCriterion("`department_id` between", value1, value2, "departmentId");
             return (Criteria) this;
         }
 
-        public Criteria andDepartmentIdNotBetween(Byte value1, Byte value2) {
+        public Criteria andDepartmentIdNotBetween(Integer value1, Integer value2) {
             addCriterion("`department_id` not between", value1, value2, "departmentId");
             return (Criteria) this;
         }
@@ -1292,52 +1292,52 @@ public class ActivityExample {
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendEqualTo(Byte value) {
+        public Criteria andIsRecommendEqualTo(Integer value) {
             addCriterion("`is_ recommend` =", value, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendNotEqualTo(Byte value) {
+        public Criteria andIsRecommendNotEqualTo(Integer value) {
             addCriterion("`is_ recommend` <>", value, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendGreaterThan(Byte value) {
+        public Criteria andIsRecommendGreaterThan(Integer value) {
             addCriterion("`is_ recommend` >", value, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendGreaterThanOrEqualTo(Byte value) {
+        public Criteria andIsRecommendGreaterThanOrEqualTo(Integer value) {
             addCriterion("`is_ recommend` >=", value, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendLessThan(Byte value) {
+        public Criteria andIsRecommendLessThan(Integer value) {
             addCriterion("`is_ recommend` <", value, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendLessThanOrEqualTo(Byte value) {
+        public Criteria andIsRecommendLessThanOrEqualTo(Integer value) {
             addCriterion("`is_ recommend` <=", value, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendIn(List<Byte> values) {
+        public Criteria andIsRecommendIn(List<Integer> values) {
             addCriterion("`is_ recommend` in", values, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendNotIn(List<Byte> values) {
+        public Criteria andIsRecommendNotIn(List<Integer> values) {
             addCriterion("`is_ recommend` not in", values, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendBetween(Byte value1, Byte value2) {
+        public Criteria andIsRecommendBetween(Integer value1, Integer value2) {
             addCriterion("`is_ recommend` between", value1, value2, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendNotBetween(Byte value1, Byte value2) {
+        public Criteria andIsRecommendNotBetween(Integer value1, Integer value2) {
             addCriterion("`is_ recommend` not between", value1, value2, "isRecommend");
             return (Criteria) this;
         }

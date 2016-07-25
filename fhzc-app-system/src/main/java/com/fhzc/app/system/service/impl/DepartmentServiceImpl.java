@@ -102,7 +102,13 @@ public class DepartmentServiceImpl implements DepartmentService{
             Map<String ,Object> map = new ConcurrentHashMap<String,Object>();
             map.put("id", child.getDepartmentId());
             if(child.getLeaf() == Const.YES_OR_NO.YES){
-                map.put("name",pDept.getTitle() + "-" + department.getTitle() + "-" + child.getTitle());
+                Department root = this.findRootDept();
+                if(root.getTitle().equals(pDept.getTitle())){
+                    map.put("name",pDept.getTitle() + "-" + department.getTitle() + "-" + child.getTitle());
+                }else{
+                    map.put("name",root.getTitle() + "-" + pDept.getTitle() + "-" + department.getTitle() + "-" + child.getTitle());
+                }
+
                 names.add(child.getTitle());
                 data.add(map);
             }else{

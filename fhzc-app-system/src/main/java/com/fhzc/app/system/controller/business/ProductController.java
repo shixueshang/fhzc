@@ -1,5 +1,6 @@
 package com.fhzc.app.system.controller.business;
 
+import com.alibaba.fastjson.JSON;
 import com.fhzc.app.dao.mybatis.model.Product;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
@@ -52,6 +53,7 @@ public class ProductController extends BaseController {
         mav.addObject("products", pageableResult.getItems());
         mav.addObject("productTypes", dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_TYPE));
         mav.addObject("productStatus", dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_STATUS));
+        mav.addObject("departments", departmentService.findDeptByParent(1));
         mav.addObject("yesNo", dictionaryService.findDicByType(Const.DIC_CAT.YES_NO));
         return mav;
     }
@@ -63,9 +65,12 @@ public class ProductController extends BaseController {
     @RequestMapping(value = "/pub")
     public ModelAndView pubProduct(){
         ModelAndView mav = new ModelAndView("business/product/add");
-        mav.addObject("productTypes", dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_TYPE));
-        mav.addObject("productStatus", dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_STATUS));
-        //mav.addObject("depts", departmentService.f)
+        mav.addObject("productTypes", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_TYPE)));
+        mav.addObject("productStatus", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_STATUS)));
+        mav.addObject("departments", JSON.toJSON(departmentService.findDeptByParent(1)));
+        mav.addObject("productIssueType", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_ISSUE_TYPE)));
+        mav.addObject("customerLevel", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL)));
+        mav.addObject("riskLevel", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.RISK_LEVEL)));
         return mav;
     }
 
@@ -116,8 +121,14 @@ public class ProductController extends BaseController {
      */
     @RequestMapping(value="/detail/{pid}", method = RequestMethod.GET)
     public ModelAndView detail(@PathVariable(value = "pid") Integer pid){
-        ModelAndView mav = new ModelAndView("/business/product/add");
+        ModelAndView mav = new ModelAndView("business/product/add");
         mav.addObject("product", productService.getProduct(pid));
+        mav.addObject("productTypes", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_TYPE)));
+        mav.addObject("productStatus", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_STATUS)));
+        mav.addObject("departments", JSON.toJSON(departmentService.findDeptByParent(1)));
+        mav.addObject("productIssueType", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_ISSUE_TYPE)));
+        mav.addObject("customerLevel", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL)));
+        mav.addObject("riskLevel", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.RISK_LEVEL)));
         return mav;
     }
 

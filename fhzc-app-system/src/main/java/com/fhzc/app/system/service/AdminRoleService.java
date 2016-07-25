@@ -1,6 +1,5 @@
 package com.fhzc.app.system.service;
 
-import com.fhzc.app.system.commons.util.Tree;
 import com.fhzc.app.dao.mybatis.model.AdminRole;
 
 import java.util.List;
@@ -10,22 +9,17 @@ import java.util.List;
  */
 public interface AdminRoleService {
     /**
-     * 查询权限列表
+     * 查询角色列表
      *
      * @param page
      * @param size
      */
-    void findDataGrid(int page, int size);
+    void findPageRole(int page, int size);
+
+    List<AdminRole> getAllRoles();
 
     /**
-     * 查询权限树
-     *
-     * @return
-     */
-    List<Tree> findTree();
-
-    /**
-     * 根据id查询权限
+     * 根据id查询角色
      *
      * @param id
      * @return

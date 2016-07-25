@@ -1,9 +1,9 @@
 package com.fhzc.app.dao.mybatis.model;
 
-public class SystemAdminModule {
+public class SystemRoleModule {
     private Integer id;
 
-    private Integer adminId;
+    private Integer adminRoleId;
 
     private Integer moduleId;
 
@@ -17,12 +17,12 @@ public class SystemAdminModule {
         this.id = id;
     }
 
-    public Integer getAdminId() {
-        return adminId;
+    public Integer getAdminRoleId() {
+        return adminRoleId;
     }
 
-    public void setAdminId(Integer adminId) {
-        this.adminId = adminId;
+    public void setAdminRoleId(Integer adminRoleId) {
+        this.adminRoleId = adminRoleId;
     }
 
     public Integer getModuleId() {

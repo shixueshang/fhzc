@@ -19,7 +19,7 @@ public class Report {
 
     private Integer isDisplay;
 
-    private Byte isRecommend;
+    private Integer isRecommend;
 
     private String summary;
 
@@ -87,11 +87,11 @@ public class Report {
         this.isDisplay = isDisplay;
     }
 
-    public Byte getIsRecommend() {
+    public Integer getIsRecommend() {
         return isRecommend;
     }
 
-    public void setIsRecommend(Byte isRecommend) {
+    public void setIsRecommend(Integer isRecommend) {
         this.isRecommend = isRecommend;
     }
 

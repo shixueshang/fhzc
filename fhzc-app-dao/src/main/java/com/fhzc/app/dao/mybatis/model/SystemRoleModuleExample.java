@@ -3,14 +3,14 @@ package com.fhzc.app.dao.mybatis.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SystemAdminModuleExample {
+public class SystemRoleModuleExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public SystemAdminModuleExample() {
+    public SystemRoleModuleExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -164,63 +164,63 @@ public class SystemAdminModuleExample {
             return (Criteria) this;
         }
 
-        public Criteria andAdminIdIsNull() {
-            addCriterion("`admin_id` is null");
+        public Criteria andAdminRoleIdIsNull() {
+            addCriterion("`admin_role_id` is null");
             return (Criteria) this;
         }
 
-        public Criteria andAdminIdIsNotNull() {
-            addCriterion("`admin_id` is not null");
+        public Criteria andAdminRoleIdIsNotNull() {
+            addCriterion("`admin_role_id` is not null");
             return (Criteria) this;
         }
 
-        public Criteria andAdminIdEqualTo(Integer value) {
-            addCriterion("`admin_id` =", value, "adminId");
+        public Criteria andAdminRoleIdEqualTo(Integer value) {
+            addCriterion("`admin_role_id` =", value, "adminRoleId");
             return (Criteria) this;
         }
 
-        public Criteria andAdminIdNotEqualTo(Integer value) {
-            addCriterion("`admin_id` <>", value, "adminId");
+        public Criteria andAdminRoleIdNotEqualTo(Integer value) {
+            addCriterion("`admin_role_id` <>", value, "adminRoleId");
             return (Criteria) this;
         }
 
-        public Criteria andAdminIdGreaterThan(Integer value) {
-            addCriterion("`admin_id` >", value, "adminId");
+        public Criteria andAdminRoleIdGreaterThan(Integer value) {
+            addCriterion("`admin_role_id` >", value, "adminRoleId");
             return (Criteria) this;
         }
 
-        public Criteria andAdminIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("`admin_id` >=", value, "adminId");
+        public Criteria andAdminRoleIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("`admin_role_id` >=", value, "adminRoleId");
             return (Criteria) this;
         }
 
-        public Criteria andAdminIdLessThan(Integer value) {
-            addCriterion("`admin_id` <", value, "adminId");
+        public Criteria andAdminRoleIdLessThan(Integer value) {
+            addCriterion("`admin_role_id` <", value, "adminRoleId");
             return (Criteria) this;
         }
 
-        public Criteria andAdminIdLessThanOrEqualTo(Integer value) {
-            addCriterion("`admin_id` <=", value, "adminId");
+        public Criteria andAdminRoleIdLessThanOrEqualTo(Integer value) {
+            addCriterion("`admin_role_id` <=", value, "adminRoleId");
             return (Criteria) this;
         }
 
-        public Criteria andAdminIdIn(List<Integer> values) {
-            addCriterion("`admin_id` in", values, "adminId");
+        public Criteria andAdminRoleIdIn(List<Integer> values) {
+            addCriterion("`admin_role_id` in", values, "adminRoleId");
             return (Criteria) this;
         }
 
-        public Criteria andAdminIdNotIn(List<Integer> values) {
-            addCriterion("`admin_id` not in", values, "adminId");
+        public Criteria andAdminRoleIdNotIn(List<Integer> values) {
+            addCriterion("`admin_role_id` not in", values, "adminRoleId");
             return (Criteria) this;
         }
 
-        public Criteria andAdminIdBetween(Integer value1, Integer value2) {
-            addCriterion("`admin_id` between", value1, value2, "adminId");
+        public Criteria andAdminRoleIdBetween(Integer value1, Integer value2) {
+            addCriterion("`admin_role_id` between", value1, value2, "adminRoleId");
             return (Criteria) this;
         }
 
-        public Criteria andAdminIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("`admin_id` not between", value1, value2, "adminId");
+        public Criteria andAdminRoleIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("`admin_role_id` not between", value1, value2, "adminRoleId");
             return (Criteria) this;
         }
 
