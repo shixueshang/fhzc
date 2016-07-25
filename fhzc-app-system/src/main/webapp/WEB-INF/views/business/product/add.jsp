@@ -394,6 +394,7 @@
                                             </div>
 
                                             <div class="form-actions">
+                                                <input name="pid" type="hidden" value="${product.pid}" />
                                                 <button type="submit" class="btn blue"><i class="icon-ok"></i> 保存</button>
                                             </div>
                                         </form>
@@ -485,6 +486,24 @@ $(function(){
         dispalyImg.attr("src", imgUrl);
     }
 
+    var isDisplay = '${product.isDisplay}';
+    if(isDisplay == 1){
+        $.uniform.update($("input[name='isDisplay'][value='1']").attr("checked", true));
+        $.uniform.update($("input[name='isDisplay'][value='0']").attr("checked", false));
+    }else{
+        $.uniform.update($("input[name='isDisplay'][value='1']").attr("checked", false));
+        $.uniform.update($("input[name='isDisplay'][value='0']").attr("checked", true));
+    }
+
+    var isRecommend = '${product.isRecommend}';
+    if(isRecommend == 1){
+        $.uniform.update($("input[name='isRecommend'][value='1']").attr("checked", true));
+        $.uniform.update($("input[name='isRecommend'][value='0']").attr("checked", false));
+    }else{
+        $.uniform.update($("input[name='isRecommend'][value='1']").attr("checked", false));
+        $.uniform.update($("input[name='isRecommend'][value='0']").attr("checked", true));
+    }
+
     var form1 = $('#form_sample_1');
     var error1 = $('.alert-error', form1);
     var success1 = $('.alert-success', form1);
@@ -505,7 +524,13 @@ $(function(){
                     type: "get",
                     data: {
                         name: function() {
-                            return $("input[name='name']").val();
+                            var old_name = '${product.name}';
+                            var new_name = $("input[name='name']").val();
+                            if(old_name == new_name){
+                                return old_name + 'no check';
+                            }else {
+                                return new_name;
+                            }
                         }
                     }
                 }

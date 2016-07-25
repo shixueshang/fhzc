@@ -41,7 +41,7 @@
     <![endif]-->
 
 
-    <script type="text/javascript" src="<%=contextPath%>/assets/chosen-bootstrap/chosen/chosen.jquery.js"></script>
+    <%--<script type="text/javascript" src="<%=contextPath%>/assets/chosen-bootstrap/chosen/chosen.jquery.js"></script>--%>
     <script type="text/javascript" src="<%=contextPath%>/assets/uniform/jquery.uniform.min.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/assets/data-tables/jquery.dataTables.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/assets/data-tables/DT_bootstrap.js"></script>
