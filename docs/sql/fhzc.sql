@@ -286,8 +286,8 @@ CREATE TABLE IF NOT EXISTS `bank`.`activity` (
   `area_id` INT NULL,
   `ctime` DATETIME NOT NULL,
   `url` VARCHAR(255) NULL COMMENT '活动链接',
-  `status` TINYINT NOT NULL DEFAULT 0 COMMENT '活动状态 0预约中|1已完成',
-  `is_display` TINYINT NOT NULL DEFAULT 0 COMMENT '是否显示 0否|1是',
+  `status` INT(1) NOT NULL DEFAULT 0 COMMENT '活动状态 0预约中|1已完成',
+  `is_display` INT(1) NOT NULL DEFAULT 0 COMMENT '是否显示 0否|1是',
   PRIMARY KEY (`id`),
   INDEX `area` (`area_id` ASC))
   ENGINE = InnoDB

@@ -46,10 +46,10 @@
 
         <!--生成对应表及类名 -->
 
-        <table tableName="report"
+        <table tableName="activity"
                delimitAllColumns="true"
                delimitIdentifiers="true"
-               domainObjectName="Report">
+               domainObjectName="Activity">
             <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
         </table>
 
