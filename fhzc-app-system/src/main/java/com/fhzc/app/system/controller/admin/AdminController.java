@@ -1,11 +1,15 @@
 package com.fhzc.app.system.controller.admin;
 
+import com.alibaba.fastjson.JSON;
 import com.fhzc.app.dao.mybatis.model.Admin;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
+import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.AdminRoleService;
 import com.fhzc.app.system.service.AdminService;
+import com.fhzc.app.system.service.AreasService;
+import com.fhzc.app.system.service.DepartmentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,6 +30,12 @@ public class AdminController extends BaseController {
     @Resource
     private AdminRoleService adminRoleService;
 
+    @Resource
+    private DepartmentService departmentService;
+
+    @Resource
+    private AreasService areasService;
+
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public ModelAndView listAdmin(){
         ModelAndView mav = new ModelAndView("system/admin/list");
@@ -33,8 +43,32 @@ public class AdminController extends BaseController {
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("admins", pageableResult.getItems());
         mav.addObject("roles", adminRoleService.getAllRoles());
+        mav.addObject("departments", departmentService.findDeptByParent(Const.ROOT_DEPT_ID));
+        mav.addObject("areas", areasService.getAllAreas());
         return mav;
     }
 
+    @RequestMapping(value = "/pub")
+    public ModelAndView pub(){
+        ModelAndView mav = new ModelAndView("system/admin/add");
+        mav.addObject("roles", JSON.toJSON(adminRoleService.getAllRoles()));
+        mav.addObject("departments", JSON.toJSON(departmentService.findDeptByParent(Const.ROOT_DEPT_ID)));
+        mav.addObject("areas", JSON.toJSON(areasService.getAllAreas()));
+        return mav;
+    }
 
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public ModelAndView add(Admin admin){
+        ModelAndView mav = new ModelAndView("system/admin/list");
+
+        adminService.addOrUpdateAdmin(admin);
+
+        PageableResult<Admin> pageableResult = adminService.findPageAdmins(page, size);
+        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
+        mav.addObject("admins", pageableResult.getItems());
+        mav.addObject("roles", adminRoleService.getAllRoles());
+        mav.addObject("departments", departmentService.findDeptByParent(Const.ROOT_DEPT_ID));
+        mav.addObject("areas", areasService.getAllAreas());
+        return mav;
+    }
 }

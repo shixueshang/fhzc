@@ -78,155 +78,73 @@
                                             <div class="control-group">
                                                 <label class="control-label">用户名<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <input type="text" name="login" value="${admin.login}" data-required="1" placeholder="请填写用户名" class="m-wrap large">
+                                                    <input type="text" name="login" value="${admin.login}" data-required="1" placeholder="请填写登录名" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
                                             <div class="control-group">
                                                 <label class="control-label">用户密码</label>
                                                 <div class="controls">
-                                                    <select class="large m-wrap" name="password" value="${admin.password}" id="password" data-required="1" tabindex="1">
+                                                    <input type="password" name="password" value="${admin.password}" placeholder="请填写密码" class="large m-wrap" >
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">用户真实姓名</label>
+                                                <div class="controls">
+                                                    <input type="text" name="realname" value="${admin.realname}" placeholder="请填写真实姓名" class="large m-wrap" >
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="control-group">
+                                                <label class="control-label">所属角色</label>
+                                                <div class="controls">
+                                                    <select name="role"  class="large m-wrap"  tabindex="1">
                                                     </select>
                                                 </div>
                                             </div>
+
                                             <div class="control-group">
-                                                <label class="control-label">活动状态</label>
+                                                <label class="control-label">所属机构</label>
                                                 <div class="controls">
-                                                    <label class="radio">
-                                                        <input type="radio" id="status_0" name="status" value="${activity.status}"/>
-                                                        预约中
-                                                    </label>
-                                                    <label class="radio">
-                                                        <input type="radio" id="status_1" name="status" value="${activity.status}" />
-                                                        已完成
-                                                    </label>
+                                                    <select name="organ"  class="large m-wrap"  tabindex="1">
+                                                    </select>
                                                 </div>
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">活动地点</label>
+                                                <label class="control-label">所属地区</label>
                                                 <div class="controls">
-                                                    <input type="text" name="address" value="${activity.address}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <select name="area"  class="large m-wrap"  tabindex="1">
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">手机号</label>
+                                                <div class="controls">
+                                                    <input type="text" name="realname" value="${admin.mobile}" placeholder="请填写手机号" class="large m-wrap" >
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">报名开始日期</label>
-                                                <div class="controls">
-                                                    <input type="text" name="applyBeginTime" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${activity.applyBeginTime}" pattern="yyyy-MM-dd"/>">
-                                                    <span class="help-inline"></span>
-                                                </div>
-                                            </div>
-
-                                            <div class="control-group">
-                                                <label class="control-label">报名结束日期</label>
-                                                <div class="controls">
-                                                    <input type="text" name="applyEndTime" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${activity.applyEndTime}" pattern="yyyy-MM-dd"/>">
-                                                    <span class="help-inline"></span>
-                                                </div>
-                                            </div>
-
-                                            <div class="control-group">
-                                                <label class="control-label">活动开始日期</label>
-                                                <div class="controls">
-                                                    <input type="text" name="beginTime" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${activity.beginTime}" pattern="yyyy-MM-dd"/>">
-                                                    <span class="help-inline"></span>
-                                                </div>
-                                            </div>
-
-                                            <div class="control-group">
-                                                <label class="control-label">活动结束日期</label>
-                                                <div class="controls">
-                                                    <input type="text" name="endTime" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${activity.endTime}" pattern="yyyy-MM-dd"/>">
-                                                    <span class="help-inline"></span>
-                                                </div>
-                                            </div>
-
-                                            <div class="control-group">
-                                                <label class="control-label">活动封面</label>
-                                                <div class="controls">
-                                                    <div class="fileupload fileupload-new" data-provides="fileupload">
-                                                        <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
-                                                            <img src="/static/image/no-image.png" alt="" id="default_img" />
-                                                        </div>
-                                                        <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
-                                                        <div>
-                                                       <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
-                                                       <span class="fileupload-exists">更换</span>
-                                                       <input type="file" name="coverFile" class="default" /></span>
-                                                            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
-                                                        </div>
-                                                    </div>
-                                                    <span class="label label-important">注意!</span>
-                                                 <span>
-                                                 上传图片预览仅支持Firefox, Chrome, Opera,
-                                                 Safari ,Internet Explorer 10
-                                                 </span>
-                                                </div>
-                                            </div>
-
-                                            <div class="control-group">
-                                                <label class="control-label">活动内容</label>
-                                                <div class="controls">
-                                                    <textarea name="content"  class="span6 m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;">${activity.content}</textarea>
-                                                </div>
-                                            </div>
-
-                                            <div class="control-group">
-                                                <label class="control-label">注意事项</label>
-                                                <div class="controls">
-                                                    <textarea name="memo" class="span6 m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;">${activity.memo}</textarea>
-                                                </div>
-                                            </div>
-                                            <div class="control-group">
-                                                <label class="control-label">活动主办方</label>
-                                                <div class="controls">
-                                                    <textarea name="sponsor" class="span6 m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="control-group">
-                                                <label class="control-label">活动摘要</label>
-                                                <div class="controls">
-                                                    <textarea name="summary" class="span6 m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;">${activity.summary}</textarea>
-                                                </div>
-                                            </div>
-
-                                            <div class="control-group">
-                                                <label class="control-label">详情链接</label>
-                                                <div class="controls">
-                                                    <input type="text" name="url" data-required="1" placeholder="" class="m-wrap large">
-                                                    <span class="help-inline"></span>
-                                                </div>
-                                            </div>
-
-                                            <div class="control-group">
-                                                <label class="control-label">是否显示</label>
+                                                <label class="control-label">状态</label>
                                                 <div class="controls">
                                                     <label class="radio">
-                                                        <input type="radio" name="isDisplay" value="1" />
-                                                        是
+                                                        <input type="radio" name="status" value="1" checked />
+                                                        正常
                                                     </label>
                                                     <label class="radio">
-                                                        <input type="radio" name="isDisplay" value="0" checked />
-                                                        否
+                                                        <input type="radio" name="status" value="0"  />
+                                                        禁用
                                                     </label>
                                                 </div>
                                             </div>
 
-                                            <div class="control-group">
-                                                <label class="control-label">是否推荐(精选)</label>
-                                                <div class="controls">
-                                                    <label class="radio">
-                                                        <input type="radio" name="isRecommend" value="1" />
-                                                        是
-                                                    </label>
-                                                    <label class="radio">
-                                                        <input type="radio" name="isRecommend" value="0" checked />
-                                                        否
-                                                    </label>
-                                                </div>
-                                            </div>
 
                                             <div class="form-actions">
                                                 <button type="submit" class="btn blue"><i class="icon-ok"></i> 添加</button>
@@ -252,6 +170,15 @@
 <script type="text/javascript" src="<%=contextPath%>/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 <script>
     $(function(){
+
+        var status = '${admin.status}';
+        if(status == 1){
+            $.uniform.update($("input[name='status'][value='1']").attr("checked", true));
+            $.uniform.update($("input[name='status'][value='0']").attr("checked", false));
+        }else{
+            $.uniform.update($("input[name='status'][value='1']").attr("checked", false));
+            $.uniform.update($("input[name='status'][value='0']").attr("checked", true));
+        }
 
         var dispalyImg = $("#default_img");
         var imgUrl = "<%=contextPath%>${activity.cover}";

@@ -48,4 +48,14 @@ public class AdminServiceImpl implements AdminService{
     public void updatePwdById(Integer uid, String pwd) {
 
     }
+
+    @Override
+    public void addOrUpdateAdmin(Admin admin) {
+        Integer id = admin.getId();
+        if(id == null){
+            adminMapper.insert(admin);
+        }else{
+            adminMapper.updateByPrimaryKey(admin);
+        }
+    }
 }
