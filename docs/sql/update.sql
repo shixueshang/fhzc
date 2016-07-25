@@ -103,3 +103,12 @@ ADD COLUMN `status` INT(1) NULL COMMENT '数据状态(0正常1删除)' AFTER `le
 ALTER TABLE `bank`.`product`
 CHANGE COLUMN `buy_day` `buy_day` VARCHAR(200) NULL DEFAULT NULL COMMENT '开放申购日' ,
 CHANGE COLUMN `redeem_day` `redeem_day` VARCHAR(200) NULL DEFAULT NULL COMMENT '赎回日' ;
+
+ALTER TABLE `bank`.`product`
+CHANGE COLUMN `invest_threshold` `invest_threshold` DECIMAL(12,2) NULL DEFAULT 1000000 COMMENT '起投金额' ;
+ALTER TABLE `bank`.`report`
+CHANGE COLUMN `is_ recommend` `is_recommend` TINYINT(3) UNSIGNED NULL DEFAULT '0' COMMENT '是否推荐 1是|0否' ;
+
+#2016-07-25
+ALTER TABLE `bank`.`planner_achivements_monthly`
+ADD COLUMN `customer_name` VARCHAR(45) NULL COMMENT '客户姓名' AFTER `customer_uid`;
