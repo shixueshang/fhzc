@@ -96,4 +96,69 @@ public class TextUtils {
     }
 
 
+    
+    /**
+     * 判断字符串是否是整数
+     */
+    public static boolean isInteger(String value) {
+     try {
+      Integer.parseInt(value);
+      return true;
+     } catch (NumberFormatException e) {
+      return false;
+     }
+    }
+
+    /**
+     * 判断字符串是否是浮点数
+     */
+    public static boolean isDouble(String value) {
+     try {
+      Double.parseDouble(value);
+      if (value.contains("."))
+       return true;
+      return false;
+     } catch (NumberFormatException e) {
+      return false;
+     }
+    }
+
+    /**
+     * 判断字符串是否是数字
+     */
+    public static boolean isNumber(String value) {
+     return isInteger(value) || isDouble(value);
+    }
+    
+    /**
+     * 字符串直接转换成整数，如果为空，直接为0
+     */
+    public static int StringtoInteger(String value) {
+    	if(isInteger(value)){
+    		return Integer.parseInt(value);
+    	}
+    	else if(isDouble(value)){
+    		return Math.round(Float.parseFloat(value));
+    	}
+    	else{
+    		return 0;
+    	}
+    }
+    
+    /**
+     * 字符串直接转换成整数，并放大1万倍，如果为空，直接为0
+     */
+    public static int Stringto10kInteger(String value) {
+    	if(isInteger(value)){
+    		return Integer.parseInt(value)*10000;
+    	}
+    	else if(isDouble(value)){
+    		return Math.round(Float.parseFloat(value)*10000);
+    	}
+    	else{
+    		return 0;
+    	}
+    }
+
+
 }

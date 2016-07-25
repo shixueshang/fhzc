@@ -45,8 +45,12 @@ public class ExcelImporter {
 		this.importConfig = importConfig;
 		return this;
 	}
+	
+	public Map<String, Object> importExcelFile(MultipartFile multipartFile)  throws IOException {
+	     return importExcelFile(multipartFile,0,2);
+	}
 
-	public Map<String, Object> importExcelFile(MultipartFile multipartFile) throws IOException {
+	public Map<String, Object> importExcelFile(MultipartFile multipartFile, int startsheetno, int startrowno) throws IOException {
         Map<String, Object> importMap = new HashMap<String, Object>();
 
 		ImportConfig importConfig = this.getImportConfig();
@@ -58,10 +62,10 @@ public class ExcelImporter {
 		if (null != error && !"".equals(error)) throw new RuntimeException(error);
 		// 获取表格中的数据，按行形成List<Object[]>
 		List<Object[]> preExecution = new LinkedList<Object[]>();
-		Sheet sheet = xwb.getSheetAt(1);
+		Sheet sheet = xwb.getSheetAt(startsheetno);
 		//用第2行的列数当做总的数据列数
-		int cells = sheet.getRow(1).getLastCellNum();
-		for (int i = 2, length = sheet.getLastRowNum(); i <= length; i++) {
+		int cells = sheet.getRow(startrowno).getLastCellNum();
+		for (int i = startrowno, length = sheet.getLastRowNum(); i <= length; i++) {
 			Row row = sheet.getRow(i);
 			Object[] tempData = new Object[cells];
 			//判断是否为空，如果为空则不处理
