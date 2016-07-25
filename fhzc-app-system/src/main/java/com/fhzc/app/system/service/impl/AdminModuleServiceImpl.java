@@ -1,11 +1,11 @@
 package com.fhzc.app.system.service.impl;
 
-import com.fhzc.app.dao.mybatis.inter.SystemAdminModuleMapper;
 import com.fhzc.app.dao.mybatis.inter.SystemModuleMapper;
-import com.fhzc.app.dao.mybatis.model.SystemAdminModule;
-import com.fhzc.app.dao.mybatis.model.SystemAdminModuleExample;
+import com.fhzc.app.dao.mybatis.inter.SystemRoleModuleMapper;
 import com.fhzc.app.dao.mybatis.model.SystemModule;
 import com.fhzc.app.dao.mybatis.model.SystemModuleExample;
+import com.fhzc.app.dao.mybatis.model.SystemRoleModule;
+import com.fhzc.app.dao.mybatis.model.SystemRoleModuleExample;
 import com.fhzc.app.system.service.AdminModuleService;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ import java.util.List;
 public class AdminModuleServiceImpl implements AdminModuleService {
 
     @Resource
-    private SystemAdminModuleMapper systemAdminModuleMapper;
+    private SystemRoleModuleMapper systemRoleModuleMapper;
 
     @Resource
     private SystemModuleMapper systemModuleMapper;
@@ -30,11 +30,11 @@ public class AdminModuleServiceImpl implements AdminModuleService {
     }
 
     @Override
-    public List<SystemAdminModule> findModulesByAdminId(Integer uid) {
-        SystemAdminModuleExample example = new SystemAdminModuleExample();
-        SystemAdminModuleExample.Criteria criteria = example.createCriteria();
-        criteria.andAdminIdEqualTo(uid);
-        return systemAdminModuleMapper.selectByExample(example);
+    public List<SystemRoleModule> findModulesByAdminRole(Integer roleId) {
+        SystemRoleModuleExample example = new SystemRoleModuleExample();
+        SystemRoleModuleExample.Criteria criteria = example.createCriteria();
+        criteria.andAdminRoleIdEqualTo(roleId);
+        return systemRoleModuleMapper.selectByExample(example);
     }
 
     @Override

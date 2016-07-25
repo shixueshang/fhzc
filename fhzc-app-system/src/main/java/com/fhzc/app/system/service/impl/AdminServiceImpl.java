@@ -3,10 +3,13 @@ package com.fhzc.app.system.service.impl;
 import com.fhzc.app.dao.mybatis.inter.AdminMapper;
 import com.fhzc.app.dao.mybatis.model.Admin;
 import com.fhzc.app.dao.mybatis.model.AdminExample;
+import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.system.service.AdminService;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by lihongde on 2016/7/6 20:06
@@ -34,8 +37,11 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
-    public void findPageAdmins(int page, int size) {
-
+    public PageableResult<Admin> findPageAdmins(int page, int size) {
+        AdminExample example = new AdminExample();
+        RowBounds rowBounds = new RowBounds((page - 1) * size, size);
+        List<Admin> list = adminMapper.selectByExampleWithRowbounds(example, rowBounds);
+        return new PageableResult<Admin>(page, size, list.size(), list);
     }
 
     @Override

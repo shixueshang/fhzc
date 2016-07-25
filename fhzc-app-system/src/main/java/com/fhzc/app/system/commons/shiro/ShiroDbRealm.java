@@ -1,7 +1,6 @@
 package com.fhzc.app.system.commons.shiro;
 
 import com.fhzc.app.dao.mybatis.model.Admin;
-import com.fhzc.app.dao.mybatis.model.SystemAdminModule;
 import com.fhzc.app.dao.mybatis.model.SystemModule;
 import com.fhzc.app.system.service.AdminModuleService;
 import com.fhzc.app.system.service.AdminService;
@@ -62,16 +61,16 @@ public class ShiroDbRealm extends AuthorizingRealm {
                 }
             }
         }else{
-            List<SystemAdminModule> roleResourceList = adminModuleService.findModulesByAdminId(shiroAdmin.getId());
+            /*List<SystemAdminModule> roleResourceList = adminModuleService.findModulesByAdminId(shiroAdmin.getId());
             for (SystemAdminModule systemAdminModule : roleResourceList) {
                 SystemModule module = adminModuleService.getSystemModule(systemAdminModule.getModuleId());
                 if (StringUtils.isNoneBlank(module.getUrl())) {
                     urlSet.add(module.getUrl());
                 }
-            }
+            }*/
         }
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         info.addStringPermissions(urlSet);
-        return info;
+        return null;
     }
 }
