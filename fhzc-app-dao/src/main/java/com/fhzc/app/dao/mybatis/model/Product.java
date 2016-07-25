@@ -88,11 +88,15 @@ public class Product {
 
     private BigDecimal investThreshold;
 
-    private Byte expectedMin;
+    private BigDecimal expectedMin;
 
-    private Byte expectedMax;
+    private BigDecimal expectedMax;
 
     private Integer throwDepartment;
+
+    private Date collectStart;
+
+    private Date collectEnd;
 
     private String desc;
 
@@ -434,19 +438,19 @@ public class Product {
         this.investThreshold = investThreshold;
     }
 
-    public Byte getExpectedMin() {
+    public BigDecimal getExpectedMin() {
         return expectedMin;
     }
 
-    public void setExpectedMin(Byte expectedMin) {
+    public void setExpectedMin(BigDecimal expectedMin) {
         this.expectedMin = expectedMin;
     }
 
-    public Byte getExpectedMax() {
+    public BigDecimal getExpectedMax() {
         return expectedMax;
     }
 
-    public void setExpectedMax(Byte expectedMax) {
+    public void setExpectedMax(BigDecimal expectedMax) {
         this.expectedMax = expectedMax;
     }
 
@@ -456,6 +460,22 @@ public class Product {
 
     public void setThrowDepartment(Integer throwDepartment) {
         this.throwDepartment = throwDepartment;
+    }
+
+    public Date getCollectStart() {
+        return collectStart;
+    }
+
+    public void setCollectStart(Date collectStart) {
+        this.collectStart = collectStart;
+    }
+
+    public Date getCollectEnd() {
+        return collectEnd;
+    }
+
+    public void setCollectEnd(Date collectEnd) {
+        this.collectEnd = collectEnd;
     }
 
     public String getDesc() {

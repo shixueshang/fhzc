@@ -123,7 +123,16 @@
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">起投金额(万元)</label>
+                                                <label class="control-label">募集期的开始和结束</label>
+                                                <div class="controls">
+                                                    <input type="text" name="collectStart"  placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${product.collectStart}" pattern="yyyy-MM-dd"/>"> ~
+                                                    <input type="text" name="collectEnd"  placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${product.collectEnd}" pattern="yyyy-MM-dd"/>">
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">起投金额(万元)<span class="required">*</span></label>
                                                 <div class="controls">
                                                     <input type="number" name="investThreshold" value="${product.investThreshold / 10000}" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
@@ -554,6 +563,7 @@ $(function(){
                 min:1
             },
             investThreshold: {
+                required: true,
                 number: true,
                 min:0
             },

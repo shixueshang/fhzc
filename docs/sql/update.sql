@@ -128,4 +128,10 @@ ALTER TABLE `bank`.`admin`
 ADD COLUMN `mobile` VARCHAR(45) NULL COMMENT '手机号' AFTER `status`,
 ADD COLUMN `organ` INT(11) NULL COMMENT '所属公司' AFTER `mobile`,
 ADD COLUMN `area` VARCHAR(45) NULL AFTER `organ`;
+ALTER TABLE `bank`.`product`
+CHANGE COLUMN `invest_threshold` `invest_threshold` DECIMAL(12,2) NOT NULL DEFAULT '1000000.00' COMMENT '起投金额' ,
+CHANGE COLUMN `expected_min` `expected_min` DECIMAL(12,2) NULL DEFAULT NULL COMMENT '预期年化收益率min' ,
+CHANGE COLUMN `expected_max` `expected_max` DECIMAL(12,2) NULL DEFAULT NULL COMMENT '预期年化收益率max' ,
+ADD COLUMN `collect_start` DATE NULL COMMENT '募集期的开始' AFTER `throw_department`,
+ADD COLUMN `collect_end` DATE NULL COMMENT '募集期的结束' AFTER `collect_start`;
 
