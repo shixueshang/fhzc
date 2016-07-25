@@ -50,5 +50,11 @@ public interface DepartmentService {
      * @return
      */
     Department findRootDept();
-
+    
+    /**
+     * 获得机构id
+     * @param name
+     * @return
+     */
+    Department getDeparent(String name);
 }

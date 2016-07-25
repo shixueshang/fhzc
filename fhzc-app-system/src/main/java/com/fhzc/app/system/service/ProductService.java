@@ -48,4 +48,18 @@ public interface ProductService {
      * @return
      */
     boolean isNameExists(String name);
+    
+    /**
+     * 查询产品名称是否存在
+     * @param name
+     * @return
+     */
+	int checkProductExists(String name);
+	 
+	/**
+     * 查询产品
+     * @param name
+     * @return
+     */
+	 Product getProduct(String name);
 }

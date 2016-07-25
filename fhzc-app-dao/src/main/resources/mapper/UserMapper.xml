@@ -109,6 +109,13 @@
     from `user`
     where `uid` = #{uid,jdbcType=INTEGER}
   </select>
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from `user`
+    where `realname` = #{realname,jdbcType=VARCHAR}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from `user`
     where `uid` = #{uid,jdbcType=INTEGER}

@@ -188,4 +188,9 @@ public class DepartmentServiceImpl implements DepartmentService{
         return departmentMapper.selectByExample(example).get(0);
     }
 
+	@Override
+	public Department getDeparent(String name) {
+		return departmentMapper.selectDepByName(name);
+	}
+
 }
