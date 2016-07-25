@@ -14,7 +14,7 @@
                         <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
                     </li>
                     <li class="start active ">
-                        <a href="/system/home">
+                        <a href="<%=contextPath%>/system/home">
                             <i class="icon-home"></i>
                             <span class="title">Dashboard</span>
                             <span class="selected"></span>
@@ -86,12 +86,6 @@
                             <li>
                                 <a href="<%=contextPath%>/business/rights/pub">新增权益</a>
                             </li>
-                            <li>
-                                <a href="<%=contextPath%>/business/rights/order/list">预约列表</a>
-                            </li>
-                            <li>
-                                <a href="<%=contextPath%>/business/rights/order/add">新增预约</a>
-                            </li>
 
                         </ul>
                     </li>
@@ -126,14 +120,31 @@
                     <li class="has-sub">
                         <a href="javascript:;">
                             <i class="icon-sitemap"></i>
-                            <span class="title">组织管理</span>
+                            <span class="title">机构管理</span>
                             <span class="selected"></span>
                             <span class="arrow open"></span>
                         </a>
 
                         <ul class="sub">
                             <li>
-                                <a href="<%=contextPath%>/organization/department">组织架构配置</a>
+                                <a href="<%=contextPath%>/organization/department">机构配置</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="has-sub">
+                        <a href="javascript:;">
+                            <i class="icon-sitemap"></i>
+                            <span class="title">权限管理</span>
+                            <span class="selected"></span>
+                            <span class="arrow open"></span>
+                        </a>
+
+                        <ul class="sub">
+                            <li>
+                                <a href="<%=contextPath%>/resource/list">权限列表</a>
+                            </li>
+                            <li>
+                                <a href="<%=contextPath%>/resource/pub">权限新增</a>
                             </li>
                         </ul>
                     </li>
