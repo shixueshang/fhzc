@@ -95,4 +95,13 @@ public class APIConstants {
         public static int CUSTOMER_ABSEND = 5;
 
     }
+
+    public static class ActivityApply{
+        // '是否参加 0否|1是', 活动申请结果状态
+        public static int RESULT_NO = 0;
+        public static int RESULT_YES = 1;
+        public static String TYPE_SELF = "self";
+        public static String TYPE_INVITE = "invite";
+
+    }
 }

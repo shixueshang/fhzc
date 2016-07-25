@@ -58,4 +58,11 @@ public interface DepartmentService {
      */
     List<Department> findChildren(Integer parentId);
 
+
+    /**
+     * 获得机构id
+     * @param name
+     * @return
+     */
+    Department getDeparent(String name);
 }

@@ -91,6 +91,14 @@
     from `customer`
     where `customer_id` = #{customerId,jdbcType=INTEGER}
   </select>
+  
+   <select id="selectByUid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from `customer`
+    where `uid` = #{uid,jdbcType=INTEGER}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from `customer`
     where `customer_id` = #{customerId,jdbcType=INTEGER}
