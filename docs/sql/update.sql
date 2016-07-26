@@ -135,3 +135,5 @@ CHANGE COLUMN `expected_max` `expected_max` DECIMAL(12,2) NULL DEFAULT NULL COMM
 ADD COLUMN `collect_start` DATE NULL COMMENT '募集期的开始' AFTER `throw_department`,
 ADD COLUMN `collect_end` DATE NULL COMMENT '募集期的结束' AFTER `collect_start`;
 
+ALTER TABLE `bank`.`planner`
+CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT ;
