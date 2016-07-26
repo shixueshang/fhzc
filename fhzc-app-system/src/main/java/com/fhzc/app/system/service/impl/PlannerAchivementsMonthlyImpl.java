@@ -31,9 +31,11 @@ import com.fhzc.app.system.service.PlannerAchivementsMonthlyService;
 public class PlannerAchivementsMonthlyImpl implements PlannerAchivementsMonthlyService {
 
 	   private static final String IMPORT_SQL = "insert into `planner_achivements_monthly` (`planner_uid`, `planner_percent`, `manager_uid`,`mannager_percent`," 
-		       + "`product_id`, `product_type`, `customer_name`,`customer_buy`, `annualised`, `product_cycle`, `transfer_date`, `memo`, `ctime`, `area_id`) "
-		       + " select planner1.uid,?,planner2.uid,?,p.pid,p.product_type,?,?,?,?,?,?,NOW(),null from planner planner1,planner planner2,product p "
-		       + " where  planner1.work_num=? and planner2.work_num=? and p.name=?";
+		       + "`product_id`, `product_type`,`customer_uid`, `customer_name`,`customer_buy`, `annualised`, `product_cycle`, `transfer_date`, `memo`, `ctime`, `area_id`) "
+		       + " select planner1.uid,?,planner2.uid,?,p.pid,p.product_type,-1,?,?,?,?,?,?,NOW(),null from planner planner1"
+		       + " left join planner planner2 on planner2.work_num=? "
+		       + " left join product p on p.name=?"
+		       + " where  planner1.work_num=?";
 
 
 			    @Resource
@@ -84,9 +86,9 @@ public class PlannerAchivementsMonthlyImpl implements PlannerAchivementsMonthlyS
 				    			newData[5] = tempData[15];	//周期
 				    			newData[6] = tempData[16];	//到账日期
 				    			newData[7] = tempData[17];	//备注
-				    			newData[8] = tempData[2].toString().trim();	//理财师工号
-				    			newData[9] = tempData[6].toString().trim();	//客户经理工号
-				    			newData[10] = tempData[12].toString().trim();	//产品名称
+				    			newData[8] = tempData[6].toString().trim();	//客户经理工号
+				    			newData[9] = tempData[12].toString().trim();	//产品名称
+				    			newData[10] = tempData[2].toString().trim();	//理财师工号
 
 				    			sqldata.add(newData);
 			    			}
