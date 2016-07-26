@@ -10,6 +10,7 @@
     <result column="product_id" property="productId" jdbcType="INTEGER" />
     <result column="product_type" property="productType" jdbcType="VARCHAR" />
     <result column="customer_uid" property="customerUid" jdbcType="INTEGER" />
+    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
     <result column="customer_buy" property="customerBuy" jdbcType="INTEGER" />
     <result column="annualised" property="annualised" jdbcType="INTEGER" />
     <result column="product_cycle" property="productCycle" jdbcType="INTEGER" />
@@ -17,6 +18,12 @@
     <result column="memo" property="memo" jdbcType="VARCHAR" />
     <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
     <result column="area_id" property="areaId" jdbcType="INTEGER" />
+    <result column="area_name" jdbcType="VARCHAR" property="areaName" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="planner_name" jdbcType="VARCHAR" property="plannerName" />
+    <result column="planner_work_num" jdbcType="VARCHAR" property="plannerWorkNum" />
+    <result column="manager_name" jdbcType="VARCHAR" property="managerName" />
+    <result column="manager_work_num" jdbcType="VARCHAR" property="managerWorkNum" />         
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -78,8 +85,8 @@
   </sql>
   <sql id="Base_Column_List" >
     `id`, `planner_uid`, `planner_percent`, `manager_uid`, `mannager_percent`, `product_id`, 
-    `product_type`, `customer_uid`, `customer_buy`, `annualised`, `product_cycle`, `transfer_date`, 
-    `memo`, `ctime`, `area_id`
+    `product_type`, `customer_uid`, `customer_name`, `customer_buy`, `annualised`, `product_cycle`, 
+    `transfer_date`, `memo`, `ctime`, `area_id`
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.PlannerAchivementsMonthlyExample" >
     select
@@ -117,14 +124,16 @@
     </selectKey>
     insert into `planner_achivements_monthly` (`planner_uid`, `planner_percent`, `manager_uid`, 
       `mannager_percent`, `product_id`, `product_type`, 
-      `customer_uid`, `customer_buy`, `annualised`, 
-      `product_cycle`, `transfer_date`, `memo`, 
-      `ctime`, `area_id`)
+      `customer_uid`, `customer_name`, `customer_buy`, 
+      `annualised`, `product_cycle`, `transfer_date`, 
+      `memo`, `ctime`, `area_id`
+      )
     values (#{plannerUid,jdbcType=INTEGER}, #{plannerPercent,jdbcType=VARCHAR}, #{managerUid,jdbcType=INTEGER}, 
       #{mannagerPercent,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER}, #{productType,jdbcType=VARCHAR}, 
-      #{customerUid,jdbcType=INTEGER}, #{customerBuy,jdbcType=INTEGER}, #{annualised,jdbcType=INTEGER}, 
-      #{productCycle,jdbcType=INTEGER}, #{transferDate,jdbcType=DATE}, #{memo,jdbcType=VARCHAR}, 
-      #{ctime,jdbcType=TIMESTAMP}, #{areaId,jdbcType=INTEGER})
+      #{customerUid,jdbcType=INTEGER}, #{customerName,jdbcType=VARCHAR}, #{customerBuy,jdbcType=INTEGER}, 
+      #{annualised,jdbcType=INTEGER}, #{productCycle,jdbcType=INTEGER}, #{transferDate,jdbcType=DATE}, 
+      #{memo,jdbcType=VARCHAR}, #{ctime,jdbcType=TIMESTAMP}, #{areaId,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.PlannerAchivementsMonthly" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
@@ -152,6 +161,9 @@
       </if>
       <if test="customerUid != null" >
         `customer_uid`,
+      </if>
+      <if test="customerName != null" >
+        `customer_name`,
       </if>
       <if test="customerBuy != null" >
         `customer_buy`,
@@ -196,6 +208,9 @@
       </if>
       <if test="customerUid != null" >
         #{customerUid,jdbcType=INTEGER},
+      </if>
+      <if test="customerName != null" >
+        #{customerName,jdbcType=VARCHAR},
       </if>
       <if test="customerBuy != null" >
         #{customerBuy,jdbcType=INTEGER},
@@ -253,6 +268,9 @@
       <if test="record.customerUid != null" >
         `customer_uid` = #{record.customerUid,jdbcType=INTEGER},
       </if>
+      <if test="record.customerName != null" >
+        `customer_name` = #{record.customerName,jdbcType=VARCHAR},
+      </if>
       <if test="record.customerBuy != null" >
         `customer_buy` = #{record.customerBuy,jdbcType=INTEGER},
       </if>
@@ -289,6 +307,7 @@
       `product_id` = #{record.productId,jdbcType=INTEGER},
       `product_type` = #{record.productType,jdbcType=VARCHAR},
       `customer_uid` = #{record.customerUid,jdbcType=INTEGER},
+      `customer_name` = #{record.customerName,jdbcType=VARCHAR},
       `customer_buy` = #{record.customerBuy,jdbcType=INTEGER},
       `annualised` = #{record.annualised,jdbcType=INTEGER},
       `product_cycle` = #{record.productCycle,jdbcType=INTEGER},
@@ -324,6 +343,9 @@
       <if test="customerUid != null" >
         `customer_uid` = #{customerUid,jdbcType=INTEGER},
       </if>
+      <if test="customerName != null" >
+        `customer_name` = #{customerName,jdbcType=VARCHAR},
+      </if>
       <if test="customerBuy != null" >
         `customer_buy` = #{customerBuy,jdbcType=INTEGER},
       </if>
@@ -357,6 +379,7 @@
       `product_id` = #{productId,jdbcType=INTEGER},
       `product_type` = #{productType,jdbcType=VARCHAR},
       `customer_uid` = #{customerUid,jdbcType=INTEGER},
+      `customer_name` = #{customerName,jdbcType=VARCHAR},
       `customer_buy` = #{customerBuy,jdbcType=INTEGER},
       `annualised` = #{annualised,jdbcType=INTEGER},
       `product_cycle` = #{productCycle,jdbcType=INTEGER},
@@ -371,8 +394,18 @@
     <if test="distinct" >
       distinct
     </if>
-    <include refid="Base_Column_List" />
-    from `planner_achivements_monthly`
+    p.id, p.planner_uid, p.planner_percent, p.manager_uid, p.mannager_percent, p.product_id, 
+    p.product_type, p.customer_uid, p.customer_name, p.customer_buy, p.annualised, p.product_cycle, p.transfer_date, 
+    p.memo, p.ctime, p.area_id
+    , areas.area_name, product.name product_name, user.realname planner_name, planner.work_num planner_work_num
+    , manager_user.realname manager_name, manager.work_num manager_work_num
+    from planner_achivements_monthly p 
+    left join areas on p.area_id=areas.area_id
+    left join product on p.product_id=product.pid
+    left join user on p.planner_uid = user.uid
+    left join planner on p.planner_uid = planner.uid
+    left join user manager_user on p.planner_uid = manager_user.uid
+    left join planner manager on p.planner_uid = manager.uid    
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>

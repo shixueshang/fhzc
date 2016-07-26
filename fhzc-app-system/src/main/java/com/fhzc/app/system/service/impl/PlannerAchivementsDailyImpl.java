@@ -35,7 +35,7 @@ public class PlannerAchivementsDailyImpl implements PlannerAchivementsDailyServi
 	
 	   private static final String IMPORT_SQL = "insert into `planner_achivements_daily` (`transfer_date`, `area_id`, `planner_uid`," 
        + "`product_id`, `annualised`, `contract_amount`,`expire_date`, `product_type`, `memo`, `ctime`) "
-       + " select ?,area_id,uid,pid,?,?,?,?,?,NOW() from areas,planner,product where area_name=? and work_num=? and product.name=?";
+       + " select ?,area_id,uid,pid,?,?,?,?,?,NOW() from planner left join areas on area_name=? left join product on product.name=? where work_num=? ";
 
 
 	    @Resource
@@ -95,8 +95,8 @@ public class PlannerAchivementsDailyImpl implements PlannerAchivementsDailyServi
 		    			newData[4] = tempData[9];		//产品类型
 		    			newData[5] = tempData[10];		//备注
 		    			newData[6] = tempData[1];		//地区
-		    			newData[7] = tempData[3];		//理财师工号
-		    			newData[8] = tempData[5];		//产品名称
+		    			newData[7] = tempData[5];		//产品名称
+		    			newData[8] = tempData[3];		//理财师工号
 		    			
 		    			sqldata.add(newData);
 	    			}

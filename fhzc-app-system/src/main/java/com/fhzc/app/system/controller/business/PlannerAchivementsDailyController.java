@@ -15,6 +15,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fhzc.app.dao.mybatis.model.PlannerAchivementsDaily;
+import com.fhzc.app.dao.mybatis.model.Product;
+import com.fhzc.app.dao.mybatis.page.PageHelper;
+import com.fhzc.app.dao.mybatis.page.PageableResult;
+import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.PlannerAchivementsDailyService;
 
@@ -37,7 +42,12 @@ public class PlannerAchivementsDailyController  extends BaseController  {
     @RequestMapping(value = "/importor", method = RequestMethod.GET)
     public ModelAndView importorProduct(){
         ModelAndView mav = new ModelAndView("business/plannerachivementsdaily/importor");
+        PageableResult<PlannerAchivementsDaily> pageableResult = plannerAchivementsDailyService.findPagePlannerAchivementsDaily(page, size);
+        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
+        mav.addObject("plannerAchivementsDailys", pageableResult.getItems());
+
         return mav;
+
     }
     
     /**
@@ -45,20 +55,51 @@ public class PlannerAchivementsDailyController  extends BaseController  {
      * @param multiFile
      * @return
      */
+//    @RequestMapping(value = "/import", method = RequestMethod.POST)
+//    @ResponseBody
+//    public Map<String, Object> importExcel(MultipartFile multiFile){
+//        Map<String, Object> result = new HashMap<String, Object>();
+//        try {
+//            result = plannerAchivementsDailyService.importDailyExcelFile(multiFile);
+//            
+//            result.put("success", true);
+//        } catch (Exception e) {
+//            logger.error("导入失败");
+//            result.put("success", false);
+//            e.printStackTrace();
+//        }
+//        return result;
+//    }
+
+    /**
+     * excel导入
+     * @param multiFile
+     * @return
+     */
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> importExcel(MultipartFile multiFile){
-        Map<String, Object> result = new HashMap<String, Object>();
+    public ModelAndView importExcel(MultipartFile multiFile){
+    	Map<String, Object> result = new HashMap<String, Object>();
+        ModelAndView mav = new ModelAndView("business/plannerachivementsdaily/importor");
         try {
             result = plannerAchivementsDailyService.importDailyExcelFile(multiFile);
-            
             result.put("success", true);
-        } catch (Exception e) {
-            logger.error("导入失败");
-            result.put("success", false);
-            e.printStackTrace();
-        }
-        return result;
-    }
+            	
+            PageableResult<PlannerAchivementsDaily> pageableResult = plannerAchivementsDailyService.findPagePlannerAchivementsDaily(page, size);
+            mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
+            mav.addObject("plannerAchivementsDailys", pageableResult.getItems());
+            
+            mav.addAllObjects(result);
 
+            return mav;
+
+        } catch (Exception e) {
+            logger.error("导入失败" + e.getMessage() );
+            result.put("success", false);
+            mav.addAllObjects(result);
+           // e.printStackTrace();
+            return mav;
+        }
+
+    }
 }

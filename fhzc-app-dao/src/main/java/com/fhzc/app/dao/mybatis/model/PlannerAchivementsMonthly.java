@@ -19,6 +19,8 @@ public class PlannerAchivementsMonthly {
 
     private Integer customerUid;
 
+    private String customerName;
+
     private Integer customerBuy;
 
     private Integer annualised;
@@ -32,8 +34,66 @@ public class PlannerAchivementsMonthly {
     private Date ctime;
 
     private Integer areaId;
+    
+    
+    private String areaName;
+    private String productName;
+    private String plannerName;
+    private String plannerWorkNum; 
+    private String managerName;
+    private String managerWorkNum; 
+    
+    
 
-    public Integer getId() {
+    public String getAreaName() {
+		return areaName;
+	}
+
+	public void setAreaName(String areaName) {
+		this.areaName = areaName;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public String getPlannerName() {
+		return plannerName;
+	}
+
+	public void setPlannerName(String plannerName) {
+		this.plannerName = plannerName;
+	}
+
+	public String getPlannerWorkNum() {
+		return plannerWorkNum;
+	}
+
+	public void setPlannerWorkNum(String plannerWorkNum) {
+		this.plannerWorkNum = plannerWorkNum;
+	}
+
+	public String getManagerName() {
+		return managerName;
+	}
+
+	public void setManagerName(String managerName) {
+		this.managerName = managerName;
+	}
+
+	public String getManagerWorkNum() {
+		return managerWorkNum;
+	}
+
+	public void setManagerWorkNum(String managerWorkNum) {
+		this.managerWorkNum = managerWorkNum;
+	}
+
+	public Integer getId() {
         return id;
     }
 
@@ -95,6 +155,14 @@ public class PlannerAchivementsMonthly {
 
     public void setCustomerUid(Integer customerUid) {
         this.customerUid = customerUid;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName == null ? null : customerName.trim();
     }
 
     public Integer getCustomerBuy() {

@@ -40,10 +40,10 @@
                     <ul class="breadcrumb">
                         <li>
                             <i class="icon-home"></i>
-                            <a href="javascript:void(0);">理财师业绩日报管理</a>
+                            <a href="javascript:void(0);">理财师业绩月报管理</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li class="active"><a href="javascript:void(0);">理财师业绩日报导入</a></li>
+                        <li class="active"><a href="javascript:void(0);">理财师业绩月报导入</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
@@ -92,7 +92,14 @@
                                         </form>
                                         <!-- END FORM-->
                                     </div>
-                                </div>
+                                     <c:if test="${success != null}">
+                                    	<div class="tab-pane active" id="portlet_tab1">
+		                                    <ul>
+		                                    <li>本次供操作记录${totalRows}条，其中成功${successRows}条，失败${failRows}条</li>
+		                                    </ul>
+	                                    </div>
+                                    </c:if>
+                               </div>
                             </div>
                         </div>
                     </div>
@@ -106,32 +113,35 @@
                             <table class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <td><input type="checkbox" id="checkAll"/>全选</td>
-                                    <td>日期</td>
-                                    <td>地区</td>
-                                    <td>理财师姓名</td>
+                                	<td>划款到账日期</td>
+                                    <td>理财师</td>
                                     <td>理财师员工编号</td>
+                                    <td>分担比例</td>
+                                    <td>客户经理</td>
+                                    <td>客户经理员工编号</td>
+                                    <td>分担比例</td>
                                     <td>产品名称</td>
-                                    <td>年化金额</td>
-                                    <td>合同金额</td>
-                                    <td>期限</td>
-                                    <td>产品类型</td>
+                                    <td>认购人姓名</td>
+                                    <td>认购金额</td>
+                                    <td>产品周期</td>
                                     <td>备注</td>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach items="${plannerAchivementsDailys}" var="plannerAchivementsDaily">
+                                <c:forEach items="${plannerAchivementsMonthlys}" var="plannerAchivementsMonthly">
                                     <tr>
-                                        <td>${fn:substring(plannerAchivementsDaily.transfer_date, 0, 10)}</td>
-                                        <td>${plannerAchivementsDaily.area_name}</td>
-                                        <td>${plannerAchivementsDaily.planner_name}</td>
-                                        <td>${plannerAchivementsDaily.work_num}</td>
-                                        <td>${plannerAchivementsDaily.product_name}</td>
-                                        <td>${plannerAchivementsDaily.annualised}</td>
-                                        <td>${plannerAchivementsDaily.contract_amount}</td>
-                                        <td>${fn:substring(plannerAchivementsDaily.expire_date, 0, 10)}</td>
-                                        <td>${plannerAchivementsDaily.product_type}</td>
-                                        <td>${plannerAchivementsDaily.memo}</td>
+                                        <td><fmt:formatDate value="${plannerAchivementsMonthly.transferDate}" pattern="yyyy-MM-dd"/></td>
+                                        <td>${plannerAchivementsMonthly.plannerName}</td>
+                                        <td>${plannerAchivementsMonthly.plannerWorkNum}</td>
+                                        <td>${plannerAchivementsMonthly.plannerPercent}</td>
+                                        <td>${plannerAchivementsMonthly.managerName}</td>
+                                        <td>${plannerAchivementsMonthly.managerWorkNum}</td>
+                                        <td>${plannerAchivementsMonthly.mannagerPercent}</td>
+                                        <td>${plannerAchivementsMonthly.productName}</td>
+                                        <td>${plannerAchivementsMonthly.customerName}</td>
+                                        <td>${plannerAchivementsMonthly.annualised}</td>
+                                        <td>${plannerAchivementsMonthly.productCycle}</td>
+                                        <td>${plannerAchivementsMonthly.memo}</td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>
