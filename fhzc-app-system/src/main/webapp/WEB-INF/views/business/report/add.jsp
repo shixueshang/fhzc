@@ -106,7 +106,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">报告摘要</label>
                                                 <div class="controls">
-                                                    <textarea name="summary" id="summary" value="${report.summary}" class="span6 m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;">${report.summary}</textarea>
+                                                    <textarea name="summary" id="summary" class="span6 m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;">${report.summary}</textarea>
                                                 </div>
                                             </div>
 
@@ -153,6 +153,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-actions">
+                                                <input name="id" type="hidden" value="${report.id}" />
                                                 <button type="submit" class="btn blue"><i class="icon-ok"></i> 添加</button>
                                             </div>
                                         </form>

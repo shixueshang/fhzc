@@ -1,6 +1,7 @@
 package com.fhzc.app.system.service;
 
 import com.fhzc.app.dao.mybatis.model.Admin;
+import com.fhzc.app.dao.mybatis.page.PageableResult;
 
 /**
  * Created by lihongde on 2016/7/6 20:08
@@ -26,8 +27,9 @@ public interface AdminService {
      *
      * @param page
      * @param size
+     * @return
      */
-    void findPageAdmins(int page, int size);
+    PageableResult<Admin> findPageAdmins(int page, int size);
 
     /**
      * 修改密码
@@ -36,4 +38,12 @@ public interface AdminService {
      * @param pwd
      */
     void updatePwdById(Integer uid, String pwd);
+
+    /**
+     * 添加或者修改管理员
+     * @param admin
+     */
+    void addOrUpdateAdmin(Admin admin);
+
+    void delete(Integer id);
 }

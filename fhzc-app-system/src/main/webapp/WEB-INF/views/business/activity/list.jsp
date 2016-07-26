@@ -81,30 +81,18 @@
                                         <td>${activity.id}</td>
                                         <td>${activity.name}</td>
                                         <td>
-                                            <c:choose>
-                                                <c:when test="${activity.cid == '1'}">
-                                                    生命管理俱乐部
-                                                </c:when>
-                                                <c:when test="${activity.cid == '2'}">
-                                                    高尔夫俱乐部
-                                                </c:when>
-                                                <c:when test="${activity.cid == '3'}">
-                                                    教育传承俱乐部
-                                                </c:when>
-                                                <c:when test="${activity.cid == '4'}">
-                                                    商旅俱乐部
-                                                </c:when>
-                                                <c:when test="${activity.cid == '5'}">
-                                                    投资者俱乐部
-                                                </c:when>
-                                            </c:choose>
+                                            <c:forEach items="${activityTypes}" var="activityType">
+                                                <c:if test="${activity.cid == activityType.value}" >
+                                                    ${activityType.key}
+                                                </c:if>
+                                            </c:forEach>
                                         </td>
                                         <td>
                                             <c:choose>
                                                 <c:when test="${activity.status == '0'}">
                                                     预约中
                                                 </c:when>
-                                                <c:when test="${activity.cid == '1'}">
+                                                <c:when test="${activity.status == '1'}">
                                                     已完成
                                                 </c:when>
                                             </c:choose>

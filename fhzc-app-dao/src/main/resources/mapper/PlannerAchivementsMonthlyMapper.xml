@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fhzc.app.dao.mybatis.inter.PlannerAchivementsMonthlyMapper" >
+  <resultMap id="BaseResultMap" type="com.fhzc.app.dao.mybatis.model.PlannerAchivementsMonthly" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="planner_uid" property="plannerUid" jdbcType="INTEGER" />
+    <result column="planner_percent" property="plannerPercent" jdbcType="VARCHAR" />
+    <result column="manager_uid" property="managerUid" jdbcType="INTEGER" />
+    <result column="mannager_percent" property="mannagerPercent" jdbcType="VARCHAR" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="product_type" property="productType" jdbcType="VARCHAR" />
+    <result column="customer_uid" property="customerUid" jdbcType="INTEGER" />
+    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+    <result column="customer_buy" property="customerBuy" jdbcType="INTEGER" />
+    <result column="annualised" property="annualised" jdbcType="INTEGER" />
+    <result column="product_cycle" property="productCycle" jdbcType="INTEGER" />
+    <result column="transfer_date" property="transferDate" jdbcType="DATE" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
+    <result column="area_id" property="areaId" jdbcType="INTEGER" />
+    <result column="area_name" jdbcType="VARCHAR" property="areaName" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="planner_name" jdbcType="VARCHAR" property="plannerName" />
+    <result column="planner_work_num" jdbcType="VARCHAR" property="plannerWorkNum" />
+    <result column="manager_name" jdbcType="VARCHAR" property="managerName" />
+    <result column="manager_work_num" jdbcType="VARCHAR" property="managerWorkNum" />         
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    `id`, `planner_uid`, `planner_percent`, `manager_uid`, `mannager_percent`, `product_id`, 
+    `product_type`, `customer_uid`, `customer_name`, `customer_buy`, `annualised`, `product_cycle`, 
+    `transfer_date`, `memo`, `ctime`, `area_id`
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.PlannerAchivementsMonthlyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from `planner_achivements_monthly`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from `planner_achivements_monthly`
+    where `id` = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from `planner_achivements_monthly`
+    where `id` = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fhzc.app.dao.mybatis.model.PlannerAchivementsMonthlyExample" >
+    delete from `planner_achivements_monthly`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fhzc.app.dao.mybatis.model.PlannerAchivementsMonthly" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `planner_achivements_monthly` (`planner_uid`, `planner_percent`, `manager_uid`, 
+      `mannager_percent`, `product_id`, `product_type`, 
+      `customer_uid`, `customer_name`, `customer_buy`, 
+      `annualised`, `product_cycle`, `transfer_date`, 
+      `memo`, `ctime`, `area_id`
+      )
+    values (#{plannerUid,jdbcType=INTEGER}, #{plannerPercent,jdbcType=VARCHAR}, #{managerUid,jdbcType=INTEGER}, 
+      #{mannagerPercent,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER}, #{productType,jdbcType=VARCHAR}, 
+      #{customerUid,jdbcType=INTEGER}, #{customerName,jdbcType=VARCHAR}, #{customerBuy,jdbcType=INTEGER}, 
+      #{annualised,jdbcType=INTEGER}, #{productCycle,jdbcType=INTEGER}, #{transferDate,jdbcType=DATE}, 
+      #{memo,jdbcType=VARCHAR}, #{ctime,jdbcType=TIMESTAMP}, #{areaId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.PlannerAchivementsMonthly" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `planner_achivements_monthly`
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="plannerUid != null" >
+        `planner_uid`,
+      </if>
+      <if test="plannerPercent != null" >
+        `planner_percent`,
+      </if>
+      <if test="managerUid != null" >
+        `manager_uid`,
+      </if>
+      <if test="mannagerPercent != null" >
+        `mannager_percent`,
+      </if>
+      <if test="productId != null" >
+        `product_id`,
+      </if>
+      <if test="productType != null" >
+        `product_type`,
+      </if>
+      <if test="customerUid != null" >
+        `customer_uid`,
+      </if>
+      <if test="customerName != null" >
+        `customer_name`,
+      </if>
+      <if test="customerBuy != null" >
+        `customer_buy`,
+      </if>
+      <if test="annualised != null" >
+        `annualised`,
+      </if>
+      <if test="productCycle != null" >
+        `product_cycle`,
+      </if>
+      <if test="transferDate != null" >
+        `transfer_date`,
+      </if>
+      <if test="memo != null" >
+        `memo`,
+      </if>
+      <if test="ctime != null" >
+        `ctime`,
+      </if>
+      <if test="areaId != null" >
+        `area_id`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="plannerUid != null" >
+        #{plannerUid,jdbcType=INTEGER},
+      </if>
+      <if test="plannerPercent != null" >
+        #{plannerPercent,jdbcType=VARCHAR},
+      </if>
+      <if test="managerUid != null" >
+        #{managerUid,jdbcType=INTEGER},
+      </if>
+      <if test="mannagerPercent != null" >
+        #{mannagerPercent,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="productType != null" >
+        #{productType,jdbcType=VARCHAR},
+      </if>
+      <if test="customerUid != null" >
+        #{customerUid,jdbcType=INTEGER},
+      </if>
+      <if test="customerName != null" >
+        #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerBuy != null" >
+        #{customerBuy,jdbcType=INTEGER},
+      </if>
+      <if test="annualised != null" >
+        #{annualised,jdbcType=INTEGER},
+      </if>
+      <if test="productCycle != null" >
+        #{productCycle,jdbcType=INTEGER},
+      </if>
+      <if test="transferDate != null" >
+        #{transferDate,jdbcType=DATE},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null" >
+        #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="areaId != null" >
+        #{areaId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fhzc.app.dao.mybatis.model.PlannerAchivementsMonthlyExample" resultType="java.lang.Integer" >
+    select count(*) from `planner_achivements_monthly`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update `planner_achivements_monthly`
+    <set >
+      <if test="record.id != null" >
+        `id` = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.plannerUid != null" >
+        `planner_uid` = #{record.plannerUid,jdbcType=INTEGER},
+      </if>
+      <if test="record.plannerPercent != null" >
+        `planner_percent` = #{record.plannerPercent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.managerUid != null" >
+        `manager_uid` = #{record.managerUid,jdbcType=INTEGER},
+      </if>
+      <if test="record.mannagerPercent != null" >
+        `mannager_percent` = #{record.mannagerPercent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productId != null" >
+        `product_id` = #{record.productId,jdbcType=INTEGER},
+      </if>
+      <if test="record.productType != null" >
+        `product_type` = #{record.productType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerUid != null" >
+        `customer_uid` = #{record.customerUid,jdbcType=INTEGER},
+      </if>
+      <if test="record.customerName != null" >
+        `customer_name` = #{record.customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerBuy != null" >
+        `customer_buy` = #{record.customerBuy,jdbcType=INTEGER},
+      </if>
+      <if test="record.annualised != null" >
+        `annualised` = #{record.annualised,jdbcType=INTEGER},
+      </if>
+      <if test="record.productCycle != null" >
+        `product_cycle` = #{record.productCycle,jdbcType=INTEGER},
+      </if>
+      <if test="record.transferDate != null" >
+        `transfer_date` = #{record.transferDate,jdbcType=DATE},
+      </if>
+      <if test="record.memo != null" >
+        `memo` = #{record.memo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctime != null" >
+        `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.areaId != null" >
+        `area_id` = #{record.areaId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update `planner_achivements_monthly`
+    set `id` = #{record.id,jdbcType=INTEGER},
+      `planner_uid` = #{record.plannerUid,jdbcType=INTEGER},
+      `planner_percent` = #{record.plannerPercent,jdbcType=VARCHAR},
+      `manager_uid` = #{record.managerUid,jdbcType=INTEGER},
+      `mannager_percent` = #{record.mannagerPercent,jdbcType=VARCHAR},
+      `product_id` = #{record.productId,jdbcType=INTEGER},
+      `product_type` = #{record.productType,jdbcType=VARCHAR},
+      `customer_uid` = #{record.customerUid,jdbcType=INTEGER},
+      `customer_name` = #{record.customerName,jdbcType=VARCHAR},
+      `customer_buy` = #{record.customerBuy,jdbcType=INTEGER},
+      `annualised` = #{record.annualised,jdbcType=INTEGER},
+      `product_cycle` = #{record.productCycle,jdbcType=INTEGER},
+      `transfer_date` = #{record.transferDate,jdbcType=DATE},
+      `memo` = #{record.memo,jdbcType=VARCHAR},
+      `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
+      `area_id` = #{record.areaId,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fhzc.app.dao.mybatis.model.PlannerAchivementsMonthly" >
+    update `planner_achivements_monthly`
+    <set >
+      <if test="plannerUid != null" >
+        `planner_uid` = #{plannerUid,jdbcType=INTEGER},
+      </if>
+      <if test="plannerPercent != null" >
+        `planner_percent` = #{plannerPercent,jdbcType=VARCHAR},
+      </if>
+      <if test="managerUid != null" >
+        `manager_uid` = #{managerUid,jdbcType=INTEGER},
+      </if>
+      <if test="mannagerPercent != null" >
+        `mannager_percent` = #{mannagerPercent,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        `product_id` = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="productType != null" >
+        `product_type` = #{productType,jdbcType=VARCHAR},
+      </if>
+      <if test="customerUid != null" >
+        `customer_uid` = #{customerUid,jdbcType=INTEGER},
+      </if>
+      <if test="customerName != null" >
+        `customer_name` = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerBuy != null" >
+        `customer_buy` = #{customerBuy,jdbcType=INTEGER},
+      </if>
+      <if test="annualised != null" >
+        `annualised` = #{annualised,jdbcType=INTEGER},
+      </if>
+      <if test="productCycle != null" >
+        `product_cycle` = #{productCycle,jdbcType=INTEGER},
+      </if>
+      <if test="transferDate != null" >
+        `transfer_date` = #{transferDate,jdbcType=DATE},
+      </if>
+      <if test="memo != null" >
+        `memo` = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null" >
+        `ctime` = #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="areaId != null" >
+        `area_id` = #{areaId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where `id` = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fhzc.app.dao.mybatis.model.PlannerAchivementsMonthly" >
+    update `planner_achivements_monthly`
+    set `planner_uid` = #{plannerUid,jdbcType=INTEGER},
+      `planner_percent` = #{plannerPercent,jdbcType=VARCHAR},
+      `manager_uid` = #{managerUid,jdbcType=INTEGER},
+      `mannager_percent` = #{mannagerPercent,jdbcType=VARCHAR},
+      `product_id` = #{productId,jdbcType=INTEGER},
+      `product_type` = #{productType,jdbcType=VARCHAR},
+      `customer_uid` = #{customerUid,jdbcType=INTEGER},
+      `customer_name` = #{customerName,jdbcType=VARCHAR},
+      `customer_buy` = #{customerBuy,jdbcType=INTEGER},
+      `annualised` = #{annualised,jdbcType=INTEGER},
+      `product_cycle` = #{productCycle,jdbcType=INTEGER},
+      `transfer_date` = #{transferDate,jdbcType=DATE},
+      `memo` = #{memo,jdbcType=VARCHAR},
+      `ctime` = #{ctime,jdbcType=TIMESTAMP},
+      `area_id` = #{areaId,jdbcType=INTEGER}
+    where `id` = #{id,jdbcType=INTEGER}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.PlannerAchivementsMonthlyExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    p.id, p.planner_uid, p.planner_percent, p.manager_uid, p.mannager_percent, p.product_id, 
+    p.product_type, p.customer_uid, p.customer_name, p.customer_buy, p.annualised, p.product_cycle, p.transfer_date, 
+    p.memo, p.ctime, p.area_id
+    , areas.area_name, product.name product_name, user.realname planner_name, planner.work_num planner_work_num
+    , manager_user.realname manager_name, manager.work_num manager_work_num
+    from planner_achivements_monthly p 
+    left join areas on p.area_id=areas.area_id
+    left join product on p.product_id=product.pid
+    left join user on p.planner_uid = user.uid
+    left join planner on p.planner_uid = planner.uid
+    left join user manager_user on p.planner_uid = manager_user.uid
+    left join planner manager on p.planner_uid = manager.uid    
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

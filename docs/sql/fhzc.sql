@@ -571,11 +571,10 @@ CREATE TABLE IF NOT EXISTS `bank`.`system_module` (
   `name` VARCHAR(45) NOT NULL COMMENT '模块名称',
   `url` VARCHAR(50) NOT NULL COMMENT '功能资源',
   `desc` VARCHAR(45) NULL COMMENT '描述',
-  `parent_module_id` INT NOT NULL COMMENT '父级资源',
-  `level` TINYINT(1) NULL COMMENT '资源级别',
+  `parent_module_id` INT NULL COMMENT '父级资源',
+  `level` INT(1) NULL COMMENT '资源级别',
   `is_valid` TINYINT(1) NOT NULL COMMENT '是否可用',
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `url_uniq` (`url` ASC))
+  PRIMARY KEY (`id`))
   ENGINE = InnoDB
   COMMENT = '后台系统模块名称';
 
@@ -583,15 +582,14 @@ CREATE TABLE IF NOT EXISTS `bank`.`system_module` (
 -- -----------------------------------------------------
 -- Table `bank`.`system_admin_module`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `bank`.`system_admin_module` ;
+DROP TABLE IF EXISTS `bank`.`system_role_module` ;
 
-CREATE TABLE IF NOT EXISTS `bank`.`system_admin_module` (
+CREATE TABLE IF NOT EXISTS `bank`.`system_role_module` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `admin_id` INT NOT NULL COMMENT '后台人员id',
+  `admin_role_id` INT NOT NULL COMMENT '后台人员id',
   `module_id` INT NOT NULL COMMENT '模块id',
   `mode` ENUM('r','rw') NOT NULL DEFAULT 'r' COMMENT '模块读\\读写',
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `admin_module_uniq` (`admin_id` ASC, `module_id` ASC))
+  PRIMARY KEY (`id`))
   ENGINE = InnoDB
   COMMENT = '后台人员权限';
 

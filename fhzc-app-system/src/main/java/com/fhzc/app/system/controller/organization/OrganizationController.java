@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.fhzc.app.dao.mybatis.model.Department;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
+import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.DepartmentService;
@@ -17,13 +18,14 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by lihongde on 2016/7/8 19:57
  */
 @Controller
-@RequestMapping(value = "/organization")
+@RequestMapping(value = "/organization/department")
 public class OrganizationController extends BaseController {
 
     @Resource
@@ -51,6 +53,16 @@ public class OrganizationController extends BaseController {
     public ModelAndView addOrUpdateDept(Department department){
         ModelAndView mav = new ModelAndView("organization/department/department");
         department.setCtime(new Date());
+        department.setStatus(Const.Data_Status.DATA_NORMAL);
+
+        //判断父级机构是否有子机构，如果没有则修改父级机构的leaf=0
+        List<Department> list = departmentService.findChildren(department.getParentDeptId());
+        if(list.size() == 0){
+            Department parentDept = departmentService.getDeparent(department.getParentDeptId());
+            parentDept.setLeaf(Const.YES_OR_NO.NO);
+            departmentService.addOrUpdateDept(parentDept);
+        }
+
         departmentService.addOrUpdateDept(department);
         PageableResult<Map<String, Object>> pageableResult =  departmentService.findPageDepts(page, size);
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
@@ -73,6 +85,7 @@ public class OrganizationController extends BaseController {
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    @ResponseBody
     public AjaxJson delete(@PathVariable(value = "id") Integer id){
         departmentService.delete(id);
         return new AjaxJson(true);

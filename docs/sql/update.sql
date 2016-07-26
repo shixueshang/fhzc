@@ -87,9 +87,9 @@ ADD COLUMN `amount` INT NULL COMMENT '投资金额' AFTER `result`;
 
 #2016-07-21
 ALTER TABLE `bank`.`activity`
-ADD COLUMN `is_ recommend` INT(1) UNSIGNED NULL DEFAULT '0' COMMENT '是否推荐 1是|0否' AFTER `department_id`;
+ADD COLUMN `is_recommend` INT(1) UNSIGNED NULL DEFAULT '0' COMMENT '是否推荐 1是|0否' AFTER `department_id`;
 ALTER TABLE `bank`.`report`
-ADD COLUMN `is_ recommend` TINYINT(3) UNSIGNED NULL DEFAULT '0' COMMENT '是否推荐 1是|0否' AFTER `is_display`;
+ADD COLUMN `is_recommend` TINYINT(3) UNSIGNED NULL DEFAULT '0' COMMENT '是否推荐 1是|0否' AFTER `is_display`;
 
 
 #2016-07-22
@@ -112,3 +112,30 @@ ADD COLUMN `throw_department` INT NULL COMMENT '投放分公司' AFTER `expected
 DROP TABLE IF EXISTS `bank`.`product_areas` ;
 
 ALTER TABLE `bank`.`report` CHANGE COLUMN  `is_recommend` `is_recommend` INT(1) NULL comment '是否推荐';
+
+ALTER TABLE `bank`.`product`
+CHANGE COLUMN `invest_threshold` `invest_threshold` DECIMAL(12,2) NULL DEFAULT 1000000 COMMENT '起投金额' ;
+ALTER TABLE `bank`.`report`
+CHANGE COLUMN `is_recommend` `is_recommend` TINYINT(3) UNSIGNED NULL DEFAULT '0' COMMENT '是否推荐 1是|0否' ;
+
+#2016-07-25
+ALTER TABLE `bank`.`planner_achivements_monthly`
+ADD COLUMN `customer_name` VARCHAR(45) NULL COMMENT '客户姓名' AFTER `customer_uid`;
+
+
+#2016-07-25
+ALTER TABLE `bank`.`admin`
+ADD COLUMN `mobile` VARCHAR(45) NULL COMMENT '手机号' AFTER `status`,
+ADD COLUMN `organ` INT(11) NULL COMMENT '所属公司' AFTER `mobile`,
+ADD COLUMN `area` VARCHAR(45) NULL AFTER `organ`;
+ALTER TABLE `bank`.`product`
+CHANGE COLUMN `invest_threshold` `invest_threshold` DECIMAL(12,2) NOT NULL DEFAULT '1000000.00' COMMENT '起投金额' ,
+CHANGE COLUMN `expected_min` `expected_min` DECIMAL(12,2) NULL DEFAULT NULL COMMENT '预期年化收益率min' ,
+CHANGE COLUMN `expected_max` `expected_max` DECIMAL(12,2) NULL DEFAULT NULL COMMENT '预期年化收益率max' ,
+ADD COLUMN `collect_start` DATE NULL COMMENT '募集期的开始' AFTER `throw_department`,
+ADD COLUMN `collect_end` DATE NULL COMMENT '募集期的结束' AFTER `collect_start`;
+
+#2016-07-25
+ALTER TABLE `bank`.`admin_role`
+ADD COLUMN `description` VARCHAR(500) NULL COMMENT '描述' AFTER `role_name` ,
+ADD COLUMN `status` INT(1) NULL COMMENT '状态0正常1禁用' AFTER `description`;

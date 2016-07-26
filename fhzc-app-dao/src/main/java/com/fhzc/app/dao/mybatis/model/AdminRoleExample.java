@@ -234,63 +234,133 @@ public class AdminRoleExample {
             return (Criteria) this;
         }
 
-        public Criteria andCtimeIsNull() {
-            addCriterion("`ctime` is null");
+        public Criteria andDescriptionIsNull() {
+            addCriterion("`description` is null");
             return (Criteria) this;
         }
 
-        public Criteria andCtimeIsNotNull() {
-            addCriterion("`ctime` is not null");
+        public Criteria andDescriptionIsNotNull() {
+            addCriterion("`description` is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCtimeEqualTo(Integer value) {
-            addCriterion("`ctime` =", value, "ctime");
+        public Criteria andDescriptionEqualTo(String value) {
+            addCriterion("`description` =", value, "description");
             return (Criteria) this;
         }
 
-        public Criteria andCtimeNotEqualTo(Integer value) {
-            addCriterion("`ctime` <>", value, "ctime");
+        public Criteria andDescriptionNotEqualTo(String value) {
+            addCriterion("`description` <>", value, "description");
             return (Criteria) this;
         }
 
-        public Criteria andCtimeGreaterThan(Integer value) {
-            addCriterion("`ctime` >", value, "ctime");
+        public Criteria andDescriptionGreaterThan(String value) {
+            addCriterion("`description` >", value, "description");
             return (Criteria) this;
         }
 
-        public Criteria andCtimeGreaterThanOrEqualTo(Integer value) {
-            addCriterion("`ctime` >=", value, "ctime");
+        public Criteria andDescriptionGreaterThanOrEqualTo(String value) {
+            addCriterion("`description` >=", value, "description");
             return (Criteria) this;
         }
 
-        public Criteria andCtimeLessThan(Integer value) {
-            addCriterion("`ctime` <", value, "ctime");
+        public Criteria andDescriptionLessThan(String value) {
+            addCriterion("`description` <", value, "description");
             return (Criteria) this;
         }
 
-        public Criteria andCtimeLessThanOrEqualTo(Integer value) {
-            addCriterion("`ctime` <=", value, "ctime");
+        public Criteria andDescriptionLessThanOrEqualTo(String value) {
+            addCriterion("`description` <=", value, "description");
             return (Criteria) this;
         }
 
-        public Criteria andCtimeIn(List<Integer> values) {
-            addCriterion("`ctime` in", values, "ctime");
+        public Criteria andDescriptionLike(String value) {
+            addCriterion("`description` like", value, "description");
             return (Criteria) this;
         }
 
-        public Criteria andCtimeNotIn(List<Integer> values) {
-            addCriterion("`ctime` not in", values, "ctime");
+        public Criteria andDescriptionNotLike(String value) {
+            addCriterion("`description` not like", value, "description");
             return (Criteria) this;
         }
 
-        public Criteria andCtimeBetween(Integer value1, Integer value2) {
-            addCriterion("`ctime` between", value1, value2, "ctime");
+        public Criteria andDescriptionIn(List<String> values) {
+            addCriterion("`description` in", values, "description");
             return (Criteria) this;
         }
 
-        public Criteria andCtimeNotBetween(Integer value1, Integer value2) {
-            addCriterion("`ctime` not between", value1, value2, "ctime");
+        public Criteria andDescriptionNotIn(List<String> values) {
+            addCriterion("`description` not in", values, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionBetween(String value1, String value2) {
+            addCriterion("`description` between", value1, value2, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptionNotBetween(String value1, String value2) {
+            addCriterion("`description` not between", value1, value2, "description");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNull() {
+            addCriterion("`status` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNotNull() {
+            addCriterion("`status` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusEqualTo(Integer value) {
+            addCriterion("`status` =", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotEqualTo(Integer value) {
+            addCriterion("`status` <>", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThan(Integer value) {
+            addCriterion("`status` >", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThanOrEqualTo(Integer value) {
+            addCriterion("`status` >=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThan(Integer value) {
+            addCriterion("`status` <", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThanOrEqualTo(Integer value) {
+            addCriterion("`status` <=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIn(List<Integer> values) {
+            addCriterion("`status` in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotIn(List<Integer> values) {
+            addCriterion("`status` not in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusBetween(Integer value1, Integer value2) {
+            addCriterion("`status` between", value1, value2, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotBetween(Integer value1, Integer value2) {
+            addCriterion("`status` not between", value1, value2, "status");
             return (Criteria) this;
         }
     }

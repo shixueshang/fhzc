@@ -123,7 +123,16 @@
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">起投金额(万元)</label>
+                                                <label class="control-label">募集期的开始和结束</label>
+                                                <div class="controls">
+                                                    <input type="text" name="collectStart"  placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${product.collectStart}" pattern="yyyy-MM-dd"/>"> ~
+                                                    <input type="text" name="collectEnd"  placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${product.collectEnd}" pattern="yyyy-MM-dd"/>">
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">起投金额(万元)<span class="required">*</span></label>
                                                 <div class="controls">
                                                     <input type="number" name="investThreshold" value="${product.investThreshold / 10000}" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
@@ -394,6 +403,7 @@
                                             </div>
 
                                             <div class="form-actions">
+                                                <input name="pid" type="hidden" value="${product.pid}" />
                                                 <button type="submit" class="btn blue"><i class="icon-ok"></i> 保存</button>
                                             </div>
                                         </form>
@@ -485,6 +495,24 @@ $(function(){
         dispalyImg.attr("src", imgUrl);
     }
 
+    var isDisplay = '${product.isDisplay}';
+    if(isDisplay == 1){
+        $.uniform.update($("input[name='isDisplay'][value='1']").attr("checked", true));
+        $.uniform.update($("input[name='isDisplay'][value='0']").attr("checked", false));
+    }else{
+        $.uniform.update($("input[name='isDisplay'][value='1']").attr("checked", false));
+        $.uniform.update($("input[name='isDisplay'][value='0']").attr("checked", true));
+    }
+
+    var isRecommend = '${product.isRecommend}';
+    if(isRecommend == 1){
+        $.uniform.update($("input[name='isRecommend'][value='1']").attr("checked", true));
+        $.uniform.update($("input[name='isRecommend'][value='0']").attr("checked", false));
+    }else{
+        $.uniform.update($("input[name='isRecommend'][value='1']").attr("checked", false));
+        $.uniform.update($("input[name='isRecommend'][value='0']").attr("checked", true));
+    }
+
     var form1 = $('#form_sample_1');
     var error1 = $('.alert-error', form1);
     var success1 = $('.alert-success', form1);
@@ -505,7 +533,13 @@ $(function(){
                     type: "get",
                     data: {
                         name: function() {
-                            return $("input[name='name']").val();
+                            var old_name = '${product.name}';
+                            var new_name = $("input[name='name']").val();
+                            if(old_name == new_name){
+                                return old_name + 'no check';
+                            }else {
+                                return new_name;
+                            }
                         }
                     }
                 }
@@ -529,6 +563,7 @@ $(function(){
                 min:1
             },
             investThreshold: {
+                required: true,
                 number: true,
                 min:0
             },

@@ -115,7 +115,8 @@
                                         <td>${dept.get("id")}</td>
                                         <td>${dept.get("name")}</td>
                                         <td>
-                                            <a href="#modal_edit" role="button" class="btn mini purple mod_dep" data-toggle="modal" data-id="${dept.get("id")}" data-title="${dept.get("title")}"><i class="icon-edit"></i> 修改</a>
+
+                                            <a href="#modal_edit" role="button" class="btn mini purple mod_dep" data-toggle="modal" data-id="${dept.get("id")}" data-title="${dept.get("title")}" data-pid="${dept.get("parentId")}"><i class="icon-edit"></i> 修改</a>
                                             <a href="#modal_del" role="button" class="btn mini black del_dep" data-toggle="modal" data-id="${dept.get("id")}" ><i class="icon-trash"></i> 删除</a>
                                         </td>
                                     </tr>
@@ -135,6 +136,7 @@
                 <div class="modal-body">
                     <p><input type="text" id="dep_mod_title" value="" class="m-wrap large"></p>
                         <input type="hidden" id="dep_mod_id" />
+                        <input type="hidden" id="dep_parent_id" />
                 </div>
                 <div class="modal-footer">
                     <button data-dismiss="modal" class="btn green" id="do_mod_dept">确定</button>
@@ -172,6 +174,7 @@
         $(".mod_dep").click(function(){
             $("#dep_mod_title").val($(this).data('title'));
             $("#dep_mod_id").val($(this).data('id'));
+            $("#dep_parent_id").val($(this).data('pid'));
         });
 
         $(".del_dep").click(function(){
@@ -179,11 +182,11 @@
         });
 
         $("#do_mod_dept").click(function () {
-            $.post("<%=contextPath%>/organization/add",{'department_id':$("#dep_mod_id").val(),'title':$("#dep_mod_title").val()},function (data) {window.location.reload();})
+            $.post("<%=contextPath%>/organization/department/add",{'departmentId':$("#dep_mod_id").val(),'title':$("#dep_mod_title").val(),'parentDeptId':$("#dep_parent_id").val()},function (data) {window.location.reload();})
         });
 
         $("#do_del_dept").click(function () {
-            $.get("<%=contextPath%>/organization/delete/" + $("#dep_del_id").val(),function (data) {window.location.reload();})
+            $.get("<%=contextPath%>/organization/department/delete/" + $("#dep_del_id").val(),function (data) {window.location.reload();})
         });
     });
 

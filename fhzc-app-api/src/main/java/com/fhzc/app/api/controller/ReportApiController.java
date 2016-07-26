@@ -24,13 +24,14 @@ public class ReportApiController extends BaseController{
     @RequestMapping(value = "/api/report",method = RequestMethod.GET)
     @ResponseBody
     public ApiJsonResult reportList(){
+        PageableResult<Report> reportList =  reportService.findPageReports(0,100);
 
-        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,reportService.findPageReports(page,size));
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,reportList);
     }
 
     @RequestMapping(value = "/api/report/detail",method = RequestMethod.GET)
     @ResponseBody
-    public  ApiJsonResult detail(Integer reportId){
+    public  ApiJsonResult reportDetail(Integer reportId){
         Report report = reportService.getReport(reportId);
 
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,report);

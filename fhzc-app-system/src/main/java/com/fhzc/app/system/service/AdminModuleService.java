@@ -1,7 +1,7 @@
 package com.fhzc.app.system.service;
 
-import com.fhzc.app.dao.mybatis.model.SystemAdminModule;
 import com.fhzc.app.dao.mybatis.model.SystemModule;
+import com.fhzc.app.dao.mybatis.model.SystemRoleModule;
 
 import java.util.List;
 
@@ -13,11 +13,11 @@ public interface AdminModuleService {
     SystemModule getSystemModule(Integer id);
 
     /**
-     * 查询用户权限
-     * @param uid
+     * 根据角色查询权限
+     * @param roleId
      * @return
      */
-    List<SystemAdminModule> findModulesByAdminId(Integer uid);
+    List<SystemRoleModule> findModulesByAdminRole(Integer roleId);
 
     List<SystemModule> findAllModules();
 }

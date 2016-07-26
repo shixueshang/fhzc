@@ -95,11 +95,11 @@
                                                 <label class="control-label">活动状态</label>
                                                 <div class="controls">
                                                     <label class="radio">
-                                                        <input type="radio" id="status_0" name="status" value="${activity.status}"/>
+                                                        <input type="radio" id="status_0" name="status" value="0" checked/>
                                                         预约中
                                                     </label>
                                                     <label class="radio">
-                                                        <input type="radio" id="status_1" name="status" value="${activity.status}" />
+                                                        <input type="radio" id="status_1" name="status" value="1" />
                                                         已完成
                                                     </label>
                                                 </div>
@@ -231,6 +231,7 @@
                                             </div>
 
                                             <div class="form-actions">
+                                                <input name="id" type="hidden" value="${activity.id}" />
                                                 <button type="submit" class="btn blue"><i class="icon-ok"></i> 添加</button>
                                             </div>
                                         </form>
@@ -255,10 +256,48 @@
 <script>
     $(function(){
 
+        var activityTypesVal = '${activity.cid}';
+        var activityTypes = '${activityTypes}';
+        var aTypeJson= $.parseJSON(activityTypes);
+        $.each(aTypeJson, function(i,val){
+            $("#activityType").append("<option value='"+val.value+"'>"+val.key+"</option>");
+            if(activityTypesVal == val.value){
+                $("#activityType").val(activityTypesVal);
+            }
+        });
+
         var dispalyImg = $("#default_img");
-        var imgUrl = "<%=contextPath%>${activity.cover}";
+        var imgUrl = "<%=contextPath%>/${activity.cover}";
         if(imgUrl != ""){
             dispalyImg.attr("src", imgUrl);
+        }
+
+
+        var status = '${activity.status}';
+        if(status == 1 || status == null || status == ""){
+            $.uniform.update($("input[name='status'][value='1']").attr("checked", true));
+            $.uniform.update($("input[name='status'][value='0']").attr("checked", false));
+        }else{
+            $.uniform.update($("input[name='status'][value='1']").attr("checked", false));
+            $.uniform.update($("input[name='status'][value='0']").attr("checked", true));
+        }
+
+        var isDisplay = '${activity.isDisplay}';
+        if(isDisplay == 1 || isDisplay == null || isDisplay == ""){
+            $.uniform.update($("input[name='isDisplay'][value='1']").attr("checked", true));
+            $.uniform.update($("input[name='isDisplay'][value='0']").attr("checked", false));
+        }else{
+            $.uniform.update($("input[name='isDisplay'][value='1']").attr("checked", false));
+            $.uniform.update($("input[name='isDisplay'][value='0']").attr("checked", true));
+        }
+
+        var isRecommend = '${activity.isRecommend}';
+        if(isRecommend == 1 || isRecommend == null || isRecommend == ""){
+            $.uniform.update($("input[name='isRecommend'][value='1']").attr("checked", true));
+            $.uniform.update($("input[name='isRecommend'][value='0']").attr("checked", false));
+        }else{
+            $.uniform.update($("input[name='isRecommend'][value='1']").attr("checked", false));
+            $.uniform.update($("input[name='isRecommend'][value='0']").attr("checked", true));
         }
 
         var form1 = $('#form_sample_1');
