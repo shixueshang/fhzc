@@ -3,14 +3,14 @@ package com.fhzc.app.dao.mybatis.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SystemAdminModuleExample {
+public class AreasExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public SystemAdminModuleExample() {
+    public AreasExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -104,253 +104,253 @@ public class SystemAdminModuleExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andIdIsNull() {
-            addCriterion("`id` is null");
+        public Criteria andAreaIdIsNull() {
+            addCriterion("`area_id` is null");
             return (Criteria) this;
         }
 
-        public Criteria andIdIsNotNull() {
-            addCriterion("`id` is not null");
+        public Criteria andAreaIdIsNotNull() {
+            addCriterion("`area_id` is not null");
             return (Criteria) this;
         }
 
-        public Criteria andIdEqualTo(Integer value) {
-            addCriterion("`id` =", value, "id");
+        public Criteria andAreaIdEqualTo(Integer value) {
+            addCriterion("`area_id` =", value, "areaId");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotEqualTo(Integer value) {
-            addCriterion("`id` <>", value, "id");
+        public Criteria andAreaIdNotEqualTo(Integer value) {
+            addCriterion("`area_id` <>", value, "areaId");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThan(Integer value) {
-            addCriterion("`id` >", value, "id");
+        public Criteria andAreaIdGreaterThan(Integer value) {
+            addCriterion("`area_id` >", value, "areaId");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("`id` >=", value, "id");
+        public Criteria andAreaIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("`area_id` >=", value, "areaId");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThan(Integer value) {
-            addCriterion("`id` <", value, "id");
+        public Criteria andAreaIdLessThan(Integer value) {
+            addCriterion("`area_id` <", value, "areaId");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThanOrEqualTo(Integer value) {
-            addCriterion("`id` <=", value, "id");
+        public Criteria andAreaIdLessThanOrEqualTo(Integer value) {
+            addCriterion("`area_id` <=", value, "areaId");
             return (Criteria) this;
         }
 
-        public Criteria andIdIn(List<Integer> values) {
-            addCriterion("`id` in", values, "id");
+        public Criteria andAreaIdIn(List<Integer> values) {
+            addCriterion("`area_id` in", values, "areaId");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotIn(List<Integer> values) {
-            addCriterion("`id` not in", values, "id");
+        public Criteria andAreaIdNotIn(List<Integer> values) {
+            addCriterion("`area_id` not in", values, "areaId");
             return (Criteria) this;
         }
 
-        public Criteria andIdBetween(Integer value1, Integer value2) {
-            addCriterion("`id` between", value1, value2, "id");
+        public Criteria andAreaIdBetween(Integer value1, Integer value2) {
+            addCriterion("`area_id` between", value1, value2, "areaId");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("`id` not between", value1, value2, "id");
+        public Criteria andAreaIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("`area_id` not between", value1, value2, "areaId");
             return (Criteria) this;
         }
 
-        public Criteria andAdminIdIsNull() {
-            addCriterion("`admin_id` is null");
+        public Criteria andParentIdIsNull() {
+            addCriterion("`parent_id` is null");
             return (Criteria) this;
         }
 
-        public Criteria andAdminIdIsNotNull() {
-            addCriterion("`admin_id` is not null");
+        public Criteria andParentIdIsNotNull() {
+            addCriterion("`parent_id` is not null");
             return (Criteria) this;
         }
 
-        public Criteria andAdminIdEqualTo(Integer value) {
-            addCriterion("`admin_id` =", value, "adminId");
+        public Criteria andParentIdEqualTo(Integer value) {
+            addCriterion("`parent_id` =", value, "parentId");
             return (Criteria) this;
         }
 
-        public Criteria andAdminIdNotEqualTo(Integer value) {
-            addCriterion("`admin_id` <>", value, "adminId");
+        public Criteria andParentIdNotEqualTo(Integer value) {
+            addCriterion("`parent_id` <>", value, "parentId");
             return (Criteria) this;
         }
 
-        public Criteria andAdminIdGreaterThan(Integer value) {
-            addCriterion("`admin_id` >", value, "adminId");
+        public Criteria andParentIdGreaterThan(Integer value) {
+            addCriterion("`parent_id` >", value, "parentId");
             return (Criteria) this;
         }
 
-        public Criteria andAdminIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("`admin_id` >=", value, "adminId");
+        public Criteria andParentIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("`parent_id` >=", value, "parentId");
             return (Criteria) this;
         }
 
-        public Criteria andAdminIdLessThan(Integer value) {
-            addCriterion("`admin_id` <", value, "adminId");
+        public Criteria andParentIdLessThan(Integer value) {
+            addCriterion("`parent_id` <", value, "parentId");
             return (Criteria) this;
         }
 
-        public Criteria andAdminIdLessThanOrEqualTo(Integer value) {
-            addCriterion("`admin_id` <=", value, "adminId");
+        public Criteria andParentIdLessThanOrEqualTo(Integer value) {
+            addCriterion("`parent_id` <=", value, "parentId");
             return (Criteria) this;
         }
 
-        public Criteria andAdminIdIn(List<Integer> values) {
-            addCriterion("`admin_id` in", values, "adminId");
+        public Criteria andParentIdIn(List<Integer> values) {
+            addCriterion("`parent_id` in", values, "parentId");
             return (Criteria) this;
         }
 
-        public Criteria andAdminIdNotIn(List<Integer> values) {
-            addCriterion("`admin_id` not in", values, "adminId");
+        public Criteria andParentIdNotIn(List<Integer> values) {
+            addCriterion("`parent_id` not in", values, "parentId");
             return (Criteria) this;
         }
 
-        public Criteria andAdminIdBetween(Integer value1, Integer value2) {
-            addCriterion("`admin_id` between", value1, value2, "adminId");
+        public Criteria andParentIdBetween(Integer value1, Integer value2) {
+            addCriterion("`parent_id` between", value1, value2, "parentId");
             return (Criteria) this;
         }
 
-        public Criteria andAdminIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("`admin_id` not between", value1, value2, "adminId");
+        public Criteria andParentIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("`parent_id` not between", value1, value2, "parentId");
             return (Criteria) this;
         }
 
-        public Criteria andModuleIdIsNull() {
-            addCriterion("`module_id` is null");
+        public Criteria andAreaNameIsNull() {
+            addCriterion("`area_name` is null");
             return (Criteria) this;
         }
 
-        public Criteria andModuleIdIsNotNull() {
-            addCriterion("`module_id` is not null");
+        public Criteria andAreaNameIsNotNull() {
+            addCriterion("`area_name` is not null");
             return (Criteria) this;
         }
 
-        public Criteria andModuleIdEqualTo(Integer value) {
-            addCriterion("`module_id` =", value, "moduleId");
+        public Criteria andAreaNameEqualTo(String value) {
+            addCriterion("`area_name` =", value, "areaName");
             return (Criteria) this;
         }
 
-        public Criteria andModuleIdNotEqualTo(Integer value) {
-            addCriterion("`module_id` <>", value, "moduleId");
+        public Criteria andAreaNameNotEqualTo(String value) {
+            addCriterion("`area_name` <>", value, "areaName");
             return (Criteria) this;
         }
 
-        public Criteria andModuleIdGreaterThan(Integer value) {
-            addCriterion("`module_id` >", value, "moduleId");
+        public Criteria andAreaNameGreaterThan(String value) {
+            addCriterion("`area_name` >", value, "areaName");
             return (Criteria) this;
         }
 
-        public Criteria andModuleIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("`module_id` >=", value, "moduleId");
+        public Criteria andAreaNameGreaterThanOrEqualTo(String value) {
+            addCriterion("`area_name` >=", value, "areaName");
             return (Criteria) this;
         }
 
-        public Criteria andModuleIdLessThan(Integer value) {
-            addCriterion("`module_id` <", value, "moduleId");
+        public Criteria andAreaNameLessThan(String value) {
+            addCriterion("`area_name` <", value, "areaName");
             return (Criteria) this;
         }
 
-        public Criteria andModuleIdLessThanOrEqualTo(Integer value) {
-            addCriterion("`module_id` <=", value, "moduleId");
+        public Criteria andAreaNameLessThanOrEqualTo(String value) {
+            addCriterion("`area_name` <=", value, "areaName");
             return (Criteria) this;
         }
 
-        public Criteria andModuleIdIn(List<Integer> values) {
-            addCriterion("`module_id` in", values, "moduleId");
+        public Criteria andAreaNameLike(String value) {
+            addCriterion("`area_name` like", value, "areaName");
             return (Criteria) this;
         }
 
-        public Criteria andModuleIdNotIn(List<Integer> values) {
-            addCriterion("`module_id` not in", values, "moduleId");
+        public Criteria andAreaNameNotLike(String value) {
+            addCriterion("`area_name` not like", value, "areaName");
             return (Criteria) this;
         }
 
-        public Criteria andModuleIdBetween(Integer value1, Integer value2) {
-            addCriterion("`module_id` between", value1, value2, "moduleId");
+        public Criteria andAreaNameIn(List<String> values) {
+            addCriterion("`area_name` in", values, "areaName");
             return (Criteria) this;
         }
 
-        public Criteria andModuleIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("`module_id` not between", value1, value2, "moduleId");
+        public Criteria andAreaNameNotIn(List<String> values) {
+            addCriterion("`area_name` not in", values, "areaName");
             return (Criteria) this;
         }
 
-        public Criteria andModeIsNull() {
-            addCriterion("`mode` is null");
+        public Criteria andAreaNameBetween(String value1, String value2) {
+            addCriterion("`area_name` between", value1, value2, "areaName");
             return (Criteria) this;
         }
 
-        public Criteria andModeIsNotNull() {
-            addCriterion("`mode` is not null");
+        public Criteria andAreaNameNotBetween(String value1, String value2) {
+            addCriterion("`area_name` not between", value1, value2, "areaName");
             return (Criteria) this;
         }
 
-        public Criteria andModeEqualTo(String value) {
-            addCriterion("`mode` =", value, "mode");
+        public Criteria andDisplayOrderIsNull() {
+            addCriterion("`display_order` is null");
             return (Criteria) this;
         }
 
-        public Criteria andModeNotEqualTo(String value) {
-            addCriterion("`mode` <>", value, "mode");
+        public Criteria andDisplayOrderIsNotNull() {
+            addCriterion("`display_order` is not null");
             return (Criteria) this;
         }
 
-        public Criteria andModeGreaterThan(String value) {
-            addCriterion("`mode` >", value, "mode");
+        public Criteria andDisplayOrderEqualTo(Integer value) {
+            addCriterion("`display_order` =", value, "displayOrder");
             return (Criteria) this;
         }
 
-        public Criteria andModeGreaterThanOrEqualTo(String value) {
-            addCriterion("`mode` >=", value, "mode");
+        public Criteria andDisplayOrderNotEqualTo(Integer value) {
+            addCriterion("`display_order` <>", value, "displayOrder");
             return (Criteria) this;
         }
 
-        public Criteria andModeLessThan(String value) {
-            addCriterion("`mode` <", value, "mode");
+        public Criteria andDisplayOrderGreaterThan(Integer value) {
+            addCriterion("`display_order` >", value, "displayOrder");
             return (Criteria) this;
         }
 
-        public Criteria andModeLessThanOrEqualTo(String value) {
-            addCriterion("`mode` <=", value, "mode");
+        public Criteria andDisplayOrderGreaterThanOrEqualTo(Integer value) {
+            addCriterion("`display_order` >=", value, "displayOrder");
             return (Criteria) this;
         }
 
-        public Criteria andModeLike(String value) {
-            addCriterion("`mode` like", value, "mode");
+        public Criteria andDisplayOrderLessThan(Integer value) {
+            addCriterion("`display_order` <", value, "displayOrder");
             return (Criteria) this;
         }
 
-        public Criteria andModeNotLike(String value) {
-            addCriterion("`mode` not like", value, "mode");
+        public Criteria andDisplayOrderLessThanOrEqualTo(Integer value) {
+            addCriterion("`display_order` <=", value, "displayOrder");
             return (Criteria) this;
         }
 
-        public Criteria andModeIn(List<String> values) {
-            addCriterion("`mode` in", values, "mode");
+        public Criteria andDisplayOrderIn(List<Integer> values) {
+            addCriterion("`display_order` in", values, "displayOrder");
             return (Criteria) this;
         }
 
-        public Criteria andModeNotIn(List<String> values) {
-            addCriterion("`mode` not in", values, "mode");
+        public Criteria andDisplayOrderNotIn(List<Integer> values) {
+            addCriterion("`display_order` not in", values, "displayOrder");
             return (Criteria) this;
         }
 
-        public Criteria andModeBetween(String value1, String value2) {
-            addCriterion("`mode` between", value1, value2, "mode");
+        public Criteria andDisplayOrderBetween(Integer value1, Integer value2) {
+            addCriterion("`display_order` between", value1, value2, "displayOrder");
             return (Criteria) this;
         }
 
-        public Criteria andModeNotBetween(String value1, String value2) {
-            addCriterion("`mode` not between", value1, value2, "mode");
+        public Criteria andDisplayOrderNotBetween(Integer value1, Integer value2) {
+            addCriterion("`display_order` not between", value1, value2, "displayOrder");
             return (Criteria) this;
         }
     }

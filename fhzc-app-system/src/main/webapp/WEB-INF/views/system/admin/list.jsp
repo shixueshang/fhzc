@@ -40,10 +40,10 @@
                     <ul class="breadcrumb">
                         <li>
                             <i class="icon-home"></i>
-                            <a href="javascript:void(0);">活动管理</a>
+                            <a href="javascript:void(0);">系统管理</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li class="active"><a href="javascript:void(0);">活动列表</a></li>
+                        <li class="active"><a href="javascript:void(0);">管理员列表</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
@@ -61,51 +61,60 @@
                             <table class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <td>活动id</td>
-                                    <td>活动名</td>
-                                    <td>活动类型</td>
-                                    <td>活动状态</td>
-                                    <td>活动地点</td>
-                                    <td>活动开始时间</td>
-                                    <td>活动结束时间</td>
-                                    <td>活动主办方</td>
-                                    <td>投放分公司</td>
-                                    <td>关注人数</td>
-                                    <td>预约人数</td>
+                                    <td>用户名</td>
+                                    <td>用户真实姓名</td>
+                                    <td>所属角色</td>
+                                    <td>状态</td>
+                                    <td>所属公司</td>
+                                    <td>所属地区</td>
+                                    <td>电话</td>
                                     <td>操作</td>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach items="${activities}" var="activity">
+                                <c:forEach items="${admins}" var="admin">
                                     <tr>
-                                        <td>${activity.id}</td>
-                                        <td>${activity.name}</td>
+                                        <td>${admin.login}</td>
+                                        <td>${admin.realname}</td>
                                         <td>
-                                            <c:forEach items="${activityTypes}" var="activityType">
-                                                <c:if test="${activity.cid == activityType.value}" >
-                                                    ${activityType.key}
+                                            <c:forEach items="${roles}" var="role" >
+                                                <c:if test="${admin.role == role.roleId}" >
+                                                    ${role.roleName}
                                                 </c:if>
+                                                
                                             </c:forEach>
                                         </td>
                                         <td>
                                             <c:choose>
-                                                <c:when test="${activity.status == '0'}">
-                                                    预约中
+                                                <c:when test="${admin.status == '1'}" >
+                                                    正常
                                                 </c:when>
-                                                <c:when test="${activity.status == '1'}">
-                                                    已完成
+                                                <c:when test="${admin.status == '0'}" >
+                                                    禁用
                                                 </c:when>
                                             </c:choose>
                                         </td>
-                                        <td>${activity.address}</td>
-                                        <td><fmt:formatDate value="${activity.beginTime}" pattern="yyyy-MM-dd"/></td>
-                                        <td><fmt:formatDate value="${activity.endTime}" pattern="yyyy-MM-dd"/></td>
-                                        <td>${activity.sponsor}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
                                         <td>
-                                            <a href="<%=contextPath%>/business/activity/detail/${activity.id}" class="btn mini purple"><i class="icon-edit"></i> 编辑</a>
+                                            <c:forEach items="${departments}" var="department">
+                                                <c:if test="${admin.organ == department['id']}">
+                                                    ${department['name']}
+                                                </c:if>
+                                            </c:forEach>
+
+                                        </td>
+                                        <td>
+                                            <c:forEach items="${areas}" var="area" >
+                                                <c:if test="${admin.area == area.areaId}" >
+                                                    ${area.areaName}
+                                                </c:if>
+
+                                            </c:forEach>
+
+                                        </td>
+                                        <td>${admin.mobile}</td>
+                                        <td>
+                                            <a href="<%=contextPath%>/system/admin/detail/${admin.id}" class="btn mini purple"><i class="icon-edit"></i> 编辑</a>
+                                            <a href="<%=contextPath%>/system/admin/delete/${admin.id}" class="btn mini purple"><i class="icon-edit"></i> 删除</a>
                                         </td>
                                     </tr>
                                 </c:forEach>

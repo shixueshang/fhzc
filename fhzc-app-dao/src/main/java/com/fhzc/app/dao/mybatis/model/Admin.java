@@ -12,11 +12,19 @@ public class Admin implements Serializable{
 
     private String realname;
 
-    private Integer role;
-
     private String loginIp;
 
     private Date lastLoginTime;
+
+    private Integer role;
+
+    private Integer status;
+
+    private String mobile;
+
+    private Integer organ;
+
+    private String area;
 
     public Integer getId() {
         return id;
@@ -50,14 +58,6 @@ public class Admin implements Serializable{
         this.realname = realname == null ? null : realname.trim();
     }
 
-    public Integer getRole() {
-        return role;
-    }
-
-    public void setRole(Integer role) {
-        this.role = role;
-    }
-
     public String getLoginIp() {
         return loginIp;
     }
@@ -72,5 +72,45 @@ public class Admin implements Serializable{
 
     public void setLastLoginTime(Date lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
+    }
+
+    public Integer getRole() {
+        return role;
+    }
+
+    public void setRole(Integer role) {
+        this.role = role;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile == null ? null : mobile.trim();
+    }
+
+    public Integer getOrgan() {
+        return organ;
+    }
+
+    public void setOrgan(Integer organ) {
+        this.organ = organ;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area == null ? null : area.trim();
     }
 }

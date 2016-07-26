@@ -90,6 +90,14 @@
     from `department`
     where `department_id` = #{departmentId,jdbcType=INTEGER}
   </select>
+  
+   <select id="selectDepByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from `department` 
+    where `title` = #{title,jdbcType=VARCHAR}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from `department`
     where `department_id` = #{departmentId,jdbcType=INTEGER}

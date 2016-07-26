@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fhzc.app.dao.mybatis.inter.AdminRoleMapper" >
-  <resultMap id="BaseResultMap" type="com.fhzc.app.dao.mybatis.model.AdminRole" >
-    <id column="role_id" property="roleId" jdbcType="INTEGER" />
-    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+<mapper namespace="com.fhzc.app.dao.mybatis.inter.AreasMapper" >
+  <resultMap id="BaseResultMap" type="com.fhzc.app.dao.mybatis.model.Areas" >
+    <id column="area_id" property="areaId" jdbcType="INTEGER" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="area_name" property="areaName" jdbcType="VARCHAR" />
+    <result column="display_order" property="displayOrder" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -64,15 +66,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    `role_id`, `role_name`
+    `area_id`, `parent_id`, `area_name`, `display_order`
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.AdminRoleExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.AreasExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from `admin_role`
+    from `areas`
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -83,56 +85,76 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from `admin_role`
-    where `role_id` = #{roleId,jdbcType=INTEGER}
+    from `areas`
+    where `area_id` = #{areaId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from `admin_role`
-    where `role_id` = #{roleId,jdbcType=INTEGER}
+    delete from `areas`
+    where `area_id` = #{areaId,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.fhzc.app.dao.mybatis.model.AdminRoleExample" >
-    delete from `admin_role`
+  <delete id="deleteByExample" parameterType="com.fhzc.app.dao.mybatis.model.AreasExample" >
+    delete from `areas`
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.fhzc.app.dao.mybatis.model.AdminRole" >
-    insert into `admin_role` (`role_id`, `role_name`)
-    values (#{roleId,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="com.fhzc.app.dao.mybatis.model.Areas" >
+    insert into `areas` (`area_id`, `parent_id`, `area_name`, 
+      `display_order`)
+    values (#{areaId,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{areaName,jdbcType=VARCHAR}, 
+      #{displayOrder,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.AdminRole" >
-    insert into `admin_role`
+  <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.Areas" >
+    insert into `areas`
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="roleId != null" >
-        `role_id`,
+      <if test="areaId != null" >
+        `area_id`,
       </if>
-      <if test="roleName != null" >
-        `role_name`,
+      <if test="parentId != null" >
+        `parent_id`,
+      </if>
+      <if test="areaName != null" >
+        `area_name`,
+      </if>
+      <if test="displayOrder != null" >
+        `display_order`,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="roleId != null" >
-        #{roleId,jdbcType=INTEGER},
+      <if test="areaId != null" >
+        #{areaId,jdbcType=INTEGER},
       </if>
-      <if test="roleName != null" >
-        #{roleName,jdbcType=VARCHAR},
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="areaName != null" >
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null" >
+        #{displayOrder,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.fhzc.app.dao.mybatis.model.AdminRoleExample" resultType="java.lang.Integer" >
-    select count(*) from `admin_role`
+  <select id="countByExample" parameterType="com.fhzc.app.dao.mybatis.model.AreasExample" resultType="java.lang.Integer" >
+    select count(*) from `areas`
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update `admin_role`
+    update `areas`
     <set >
-      <if test="record.roleId != null" >
-        `role_id` = #{record.roleId,jdbcType=INTEGER},
+      <if test="record.areaId != null" >
+        `area_id` = #{record.areaId,jdbcType=INTEGER},
       </if>
-      <if test="record.roleName != null" >
-        `role_name` = #{record.roleName,jdbcType=VARCHAR},
+      <if test="record.parentId != null" >
+        `parent_id` = #{record.parentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.areaName != null" >
+        `area_name` = #{record.areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.displayOrder != null" >
+        `display_order` = #{record.displayOrder,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -140,34 +162,44 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update `admin_role`
-    set `role_id` = #{record.roleId,jdbcType=INTEGER},
-      `role_name` = #{record.roleName,jdbcType=VARCHAR}
+    update `areas`
+    set `area_id` = #{record.areaId,jdbcType=INTEGER},
+      `parent_id` = #{record.parentId,jdbcType=INTEGER},
+      `area_name` = #{record.areaName,jdbcType=VARCHAR},
+      `display_order` = #{record.displayOrder,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.fhzc.app.dao.mybatis.model.AdminRole" >
-    update `admin_role`
+  <update id="updateByPrimaryKeySelective" parameterType="com.fhzc.app.dao.mybatis.model.Areas" >
+    update `areas`
     <set >
-      <if test="roleName != null" >
-        `role_name` = #{roleName,jdbcType=VARCHAR},
+      <if test="parentId != null" >
+        `parent_id` = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="areaName != null" >
+        `area_name` = #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null" >
+        `display_order` = #{displayOrder,jdbcType=INTEGER},
       </if>
     </set>
-    where `role_id` = #{roleId,jdbcType=INTEGER}
+    where `area_id` = #{areaId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.fhzc.app.dao.mybatis.model.AdminRole" >
-    update `admin_role`
-    set `role_name` = #{roleName,jdbcType=VARCHAR}
-    where `role_id` = #{roleId,jdbcType=INTEGER}
+  <update id="updateByPrimaryKey" parameterType="com.fhzc.app.dao.mybatis.model.Areas" >
+    update `areas`
+    set `parent_id` = #{parentId,jdbcType=INTEGER},
+      `area_name` = #{areaName,jdbcType=VARCHAR},
+      `display_order` = #{displayOrder,jdbcType=INTEGER}
+    where `area_id` = #{areaId,jdbcType=INTEGER}
   </update>
-  <select resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.AdminRoleExample" id="selectByExampleWithRowbounds" >
+  <select resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.AreasExample" id="selectByExampleWithRowbounds" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from `admin_role`
+    from `areas`
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>

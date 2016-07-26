@@ -21,8 +21,6 @@
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/jquery-tags-input/jquery.tagsinput.css" />
 <link rel="stylesheet" href="<%=contextPath%>/assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" />
 
-<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/bootstrap-datepicker/css/datepicker.css">
-
 <!-- BEGIN CONTAINER -->
 <div class="page-container row-fluid">
     <jsp:include page="../../include/left.jsp"/>
@@ -40,10 +38,10 @@
                     <ul class="breadcrumb">
                         <li>
                             <i class="icon-home"></i>
-                            <a href="javascript:void(0);">投研报告管理</a>
+                            <a href="javascript:void(0);">系统管理</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li class="active"><a href="javascript:void(0);">新增报告</a></li>
+                        <li class="active"><a href="javascript:void(0);">管理员新增</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
@@ -66,7 +64,7 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="portlet_tab1">
                                         <!-- BEGIN FORM-->
-                                        <form action="<%=contextPath%>/business/report/add" id="form_sample_1" enctype="multipart/form-data" method="POST" class="form-horizontal">
+                                        <form action="<%=contextPath%>/system/admin/add" id="form_sample_1" enctype="multipart/form-data" method="POST" class="form-horizontal">
                                             <div class="alert alert-error hide">
                                                 <button class="close" data-dismiss="alert"></button>
                                                 您的表单有未完成的必填项,请检查.
@@ -78,82 +76,78 @@
                                             <div class="control-group">
                                             </div>
                                             <div class="control-group">
-                                                <label class="control-label">报告名</label>
+                                                <label class="control-label">用户名<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <input type="text" name="name" value="${report.name}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="login" value="${admin.login}" data-required="1" placeholder="请填写登录名" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
                                             <div class="control-group">
-                                                <label class="control-label">报告类型</label>
+                                                <label class="control-label">用户密码</label>
                                                 <div class="controls">
-                                                    <select class="large m-wrap" name="cid" id="reportType" data-required="1" tabindex="1">
-                                                        <option  value="1">每周点评</option>
-                                                        <option  value="2">复华财经新视点</option>
-                                                        <option  value="3">复华资产研究报告</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="control-group">
-                                                <label class="control-label">报告状态</label>
-                                                <div class="controls">
-                                                    <select class="large m-wrap" name="isDisplay" tabindex="1">
-                                                        <option  value="1">显示</option>
-                                                        <option  value="0">不显示</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="control-group">
-                                                <label class="control-label">报告摘要</label>
-                                                <div class="controls">
-                                                    <textarea name="summary" id="summary" value="${report.summary}" class="span6 m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;">${report.summary}</textarea>
+                                                    <input type="password" name="password" value="${admin.password}" placeholder="请填写密码" class="large m-wrap" >
+                                                    <span class="help-inline"></span>
                                                 </div>
                                             </div>
 
                                             <div class="control-group">
-                                              <label class="control-label">报告封面</label>
-                                              <div class="controls">
-                                                 <div class="fileupload fileupload-new" data-provides="fileupload">
-                                                    <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
-                                                       <img src="/static/image/no-image.png" alt="" id="default_img" />
-                                                    </div>
-                                                    <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
-                                                    <div>
-                                                       <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
-                                                       <span class="fileupload-exists">更换</span>
-                                                       <input type="file" name="coverFile" id="cover_img" class="default" /></span>
-                                                       <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
-                                                    </div>
-                                                 </div>
-                                                 <span class="label label-important">注意!</span>
-                                                 <span>
-                                                 上传图片预览仅支持Firefox, Chrome, Opera,
-                                                 Safari ,Internet Explorer 10
-                                                 </span>
-                                              </div>
-                                           </div>
-                                            <div class="control-group">
-                                                <label class="control-label">详情链接</label>
+                                                <label class="control-label">用户真实姓名</label>
                                                 <div class="controls">
-                                                    <input type="text" name="url" value="${report.url}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="realname" value="${admin.realname}" placeholder="请填写真实姓名" class="large m-wrap" >
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
+
+
                                             <div class="control-group">
-                                                <label class="control-label">是否推荐(精选)</label>
+                                                <label class="control-label">所属角色</label>
+                                                <div class="controls">
+                                                    <select name="role" id="belongRole" class="large m-wrap"  tabindex="1">
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">所属机构</label>
+                                                <div class="controls">
+                                                    <select name="organ" id="belongOrgan" class="large m-wrap"  tabindex="1">
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">所属地区</label>
+                                                <div class="controls">
+                                                    <select name="area" id="areas"  class="large m-wrap"  tabindex="1">
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">手机号</label>
+                                                <div class="controls">
+                                                    <input type="text" name="mobile" value="${admin.mobile}" placeholder="请填写手机号" class="large m-wrap" >
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">状态</label>
                                                 <div class="controls">
                                                     <label class="radio">
-                                                        <input type="radio" name="isRecommend" value="1" />
-                                                        是
+                                                        <input type="radio" name="status" value="1" checked />
+                                                        正常
                                                     </label>
                                                     <label class="radio">
-                                                        <input type="radio" name="isRecommend" value="0" checked />
-                                                        否
+                                                        <input type="radio" name="status" value="0"  />
+                                                        禁用
                                                     </label>
                                                 </div>
                                             </div>
+
+
                                             <div class="form-actions">
-                                                <input name="id" type="hidden" value="${report.id}" />
+                                                <input name="id" type="hidden" value="${admin.id}" />
                                                 <button type="submit" class="btn blue"><i class="icon-ok"></i> 添加</button>
                                             </div>
                                         </form>
@@ -174,15 +168,51 @@
 
 <jsp:include page="../../include/footer.jsp"/>
 <script type="text/javascript" src="<%=contextPath%>/assets/jquery-validation/dist/jquery.validate.min.js"></script>
-
+<script type="text/javascript" src="<%=contextPath%>/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 <script>
     $(function(){
 
-        var reportType = '${report.cid}';
-        $('#reportType').val(reportType);
+        var role = '${admin.role}';
+        var roles = '${roles}';
+        var rolesJson= $.parseJSON(roles);
+        $.each(rolesJson, function(i,val){
+            $("#belongRole").append("<option value='"+val.roleId+"'>"+val.roleName+"</option>");
+            if(role == val.roleId){
+                $("#belongRole").val(role);
+            }
+        });
+
+        var areasVal = '${admin.area}';
+        var areas = '${areas}';
+        var areasJson= $.parseJSON(areas);
+        $.each(areasJson, function(i,val){
+            $("#areas").append("<option value='"+val.areaId+"'>"+val.areaName+"</option>");
+            if(areasVal == val.areaId){
+                $("#areas").val(areasVal);
+            }
+        });
+
+        var organVal = '${admin.organ}';
+        var departments = '${departments}';
+        var deptsJson= $.parseJSON(departments);
+        $.each(deptsJson, function(i,val){
+            $("#belongOrgan").append("<option value='"+val.id+"'>"+val.name+"</option>");
+            if(organVal == val.id){
+                $("#belongOrgan").val(organVal);
+            }
+        });
+
+        var status = '${admin.status}';
+        if(status == 1 || status == null || status == ""){
+            $.uniform.update($("input[name='status'][value='1']").attr("checked", true));
+            $.uniform.update($("input[name='status'][value='0']").attr("checked", false));
+        }else{
+            $.uniform.update($("input[name='status'][value='1']").attr("checked", false));
+            $.uniform.update($("input[name='status'][value='0']").attr("checked", true));
+        }
 
         var dispalyImg = $("#default_img");
-        var imgUrl = "<%=contextPath%>${report.cover}";
+        var imgUrl = "<%=contextPath%>${activity.cover}";
         if(imgUrl != ""){
             dispalyImg.attr("src", imgUrl);
         }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fhzc.app.dao.mybatis.inter.SystemAdminModuleMapper" >
-  <resultMap id="BaseResultMap" type="com.fhzc.app.dao.mybatis.model.SystemAdminModule" >
+<mapper namespace="com.fhzc.app.dao.mybatis.inter.SystemRoleModuleMapper" >
+  <resultMap id="BaseResultMap" type="com.fhzc.app.dao.mybatis.model.SystemRoleModule" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="admin_id" property="adminId" jdbcType="INTEGER" />
+    <result column="admin_role_id" property="adminRoleId" jdbcType="INTEGER" />
     <result column="module_id" property="moduleId" jdbcType="INTEGER" />
     <result column="mode" property="mode" jdbcType="CHAR" />
   </resultMap>
@@ -66,15 +66,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    `id`, `admin_id`, `module_id`, `mode`
+    `id`, `admin_role_id`, `module_id`, `mode`
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.SystemAdminModuleExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.SystemRoleModuleExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from `system_admin_module`
+    from `system_role_module`
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -85,36 +85,36 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from `system_admin_module`
+    from `system_role_module`
     where `id` = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from `system_admin_module`
+    delete from `system_role_module`
     where `id` = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.fhzc.app.dao.mybatis.model.SystemAdminModuleExample" >
-    delete from `system_admin_module`
+  <delete id="deleteByExample" parameterType="com.fhzc.app.dao.mybatis.model.SystemRoleModuleExample" >
+    delete from `system_role_module`
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.fhzc.app.dao.mybatis.model.SystemAdminModule" >
+  <insert id="insert" parameterType="com.fhzc.app.dao.mybatis.model.SystemRoleModule" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into `system_admin_module` (`admin_id`, `module_id`, `mode`
+    insert into `system_role_module` (`admin_role_id`, `module_id`, `mode`
       )
-    values (#{adminId,jdbcType=INTEGER}, #{moduleId,jdbcType=INTEGER}, #{mode,jdbcType=CHAR}
+    values (#{adminRoleId,jdbcType=INTEGER}, #{moduleId,jdbcType=INTEGER}, #{mode,jdbcType=CHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.SystemAdminModule" >
+  <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.SystemRoleModule" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into `system_admin_module`
+    insert into `system_role_module`
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="adminId != null" >
-        `admin_id`,
+      <if test="adminRoleId != null" >
+        `admin_role_id`,
       </if>
       <if test="moduleId != null" >
         `module_id`,
@@ -124,8 +124,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="adminId != null" >
-        #{adminId,jdbcType=INTEGER},
+      <if test="adminRoleId != null" >
+        #{adminRoleId,jdbcType=INTEGER},
       </if>
       <if test="moduleId != null" >
         #{moduleId,jdbcType=INTEGER},
@@ -135,20 +135,20 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.fhzc.app.dao.mybatis.model.SystemAdminModuleExample" resultType="java.lang.Integer" >
-    select count(*) from `system_admin_module`
+  <select id="countByExample" parameterType="com.fhzc.app.dao.mybatis.model.SystemRoleModuleExample" resultType="java.lang.Integer" >
+    select count(*) from `system_role_module`
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update `system_admin_module`
+    update `system_role_module`
     <set >
       <if test="record.id != null" >
         `id` = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.adminId != null" >
-        `admin_id` = #{record.adminId,jdbcType=INTEGER},
+      <if test="record.adminRoleId != null" >
+        `admin_role_id` = #{record.adminRoleId,jdbcType=INTEGER},
       </if>
       <if test="record.moduleId != null" >
         `module_id` = #{record.moduleId,jdbcType=INTEGER},
@@ -162,20 +162,20 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update `system_admin_module`
+    update `system_role_module`
     set `id` = #{record.id,jdbcType=INTEGER},
-      `admin_id` = #{record.adminId,jdbcType=INTEGER},
+      `admin_role_id` = #{record.adminRoleId,jdbcType=INTEGER},
       `module_id` = #{record.moduleId,jdbcType=INTEGER},
       `mode` = #{record.mode,jdbcType=CHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.fhzc.app.dao.mybatis.model.SystemAdminModule" >
-    update `system_admin_module`
+  <update id="updateByPrimaryKeySelective" parameterType="com.fhzc.app.dao.mybatis.model.SystemRoleModule" >
+    update `system_role_module`
     <set >
-      <if test="adminId != null" >
-        `admin_id` = #{adminId,jdbcType=INTEGER},
+      <if test="adminRoleId != null" >
+        `admin_role_id` = #{adminRoleId,jdbcType=INTEGER},
       </if>
       <if test="moduleId != null" >
         `module_id` = #{moduleId,jdbcType=INTEGER},
@@ -186,20 +186,20 @@
     </set>
     where `id` = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.fhzc.app.dao.mybatis.model.SystemAdminModule" >
-    update `system_admin_module`
-    set `admin_id` = #{adminId,jdbcType=INTEGER},
+  <update id="updateByPrimaryKey" parameterType="com.fhzc.app.dao.mybatis.model.SystemRoleModule" >
+    update `system_role_module`
+    set `admin_role_id` = #{adminRoleId,jdbcType=INTEGER},
       `module_id` = #{moduleId,jdbcType=INTEGER},
       `mode` = #{mode,jdbcType=CHAR}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
-  <select resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.SystemAdminModuleExample" id="selectByExampleWithRowbounds" >
+  <select resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.SystemRoleModuleExample" id="selectByExampleWithRowbounds" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from `system_admin_module`
+    from `system_role_module`
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>

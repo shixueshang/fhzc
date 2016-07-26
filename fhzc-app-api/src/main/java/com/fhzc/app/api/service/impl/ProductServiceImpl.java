@@ -6,14 +6,10 @@ import com.fhzc.app.dao.mybatis.model.Product;
 import com.fhzc.app.dao.mybatis.model.ProductExample;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import org.apache.ibatis.session.RowBounds;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by lihongde on 2016/7/7 15:43

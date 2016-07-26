@@ -5,6 +5,7 @@ import com.fhzc.app.dao.mybatis.inter.ActivityMapper;
 import com.fhzc.app.dao.mybatis.model.Activity;
 import com.fhzc.app.dao.mybatis.model.ActivityExample;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
+import com.fhzc.app.dao.mybatis.util.Const;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
@@ -33,8 +34,8 @@ public class ActivityServiceImpl implements ActivityService {
     public List<Activity> getRecommendActivityList(){
         ActivityExample example = new ActivityExample();
         ActivityExample.Criteria criteria = example.createCriteria();
-        criteria.andIsDisplayEqualTo((byte) 1);
-        criteria.andIsRecommendEqualTo((byte) 1);
+        criteria.andIsDisplayEqualTo(Const.YES_OR_NO.YES);
+        criteria.andIsRecommendEqualTo(Const.YES_OR_NO.YES);
         return activityMapper.selectByExample(example);
     }
 

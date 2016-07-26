@@ -194,4 +194,20 @@ public class DepartmentServiceImpl implements DepartmentService{
         return departmentMapper.selectByExample(example).get(0);
     }
 
+    @Override
+    public List<Department> findChildren(Integer parentId) {
+        DepartmentExample example = new DepartmentExample();
+        DepartmentExample.Criteria criteria = example.createCriteria();
+        criteria.andParentDeptIdEqualTo(parentId);
+        return departmentMapper.selectByExample(example);
+    }
+
+    @Override
+    public Department getDeparent(String name) {
+        DepartmentExample example = new DepartmentExample();
+        DepartmentExample.Criteria criteria = example.createCriteria();
+        criteria.andTitleEqualTo(name);
+        return departmentMapper.selectByExample(example).get(0);
+    }
+
 }

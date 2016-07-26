@@ -127,24 +127,30 @@
 
                         <ul class="sub">
                             <li>
-                                <a href="<%=contextPath%>/organization/department">机构配置</a>
+                                <a href="<%=contextPath%>/organization/department/department">机构配置</a>
                             </li>
                         </ul>
                     </li>
                     <li class="has-sub">
                         <a href="javascript:;">
-                            <i class="icon-sitemap"></i>
-                            <span class="title">权限管理</span>
+                            <i class="icon-wrench"></i>
+                            <span class="title">系统管理</span>
                             <span class="selected"></span>
                             <span class="arrow open"></span>
                         </a>
 
                         <ul class="sub">
                             <li>
-                                <a href="<%=contextPath%>/resource/list">权限列表</a>
+                                <a href="<%=contextPath%>/system/resource/list">权限列表</a>
                             </li>
                             <li>
-                                <a href="<%=contextPath%>/resource/pub">权限新增</a>
+                                <a href="<%=contextPath%>/system/resource/pub">权限新增</a>
+                            </li>
+                            <li>
+                                <a href="<%=contextPath%>/system/admin/list">管理员列表</a>
+                            </li>
+                            <li>
+                                <a href="<%=contextPath%>/system/admin/pub">管理员新增</a>
                             </li>
                         </ul>
                     </li>

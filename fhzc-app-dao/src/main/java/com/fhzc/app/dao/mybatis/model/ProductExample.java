@@ -2913,52 +2913,52 @@ public class ProductExample {
             return (Criteria) this;
         }
 
-        public Criteria andExpectedMinEqualTo(Byte value) {
+        public Criteria andExpectedMinEqualTo(BigDecimal value) {
             addCriterion("`expected_min` =", value, "expectedMin");
             return (Criteria) this;
         }
 
-        public Criteria andExpectedMinNotEqualTo(Byte value) {
+        public Criteria andExpectedMinNotEqualTo(BigDecimal value) {
             addCriterion("`expected_min` <>", value, "expectedMin");
             return (Criteria) this;
         }
 
-        public Criteria andExpectedMinGreaterThan(Byte value) {
+        public Criteria andExpectedMinGreaterThan(BigDecimal value) {
             addCriterion("`expected_min` >", value, "expectedMin");
             return (Criteria) this;
         }
 
-        public Criteria andExpectedMinGreaterThanOrEqualTo(Byte value) {
+        public Criteria andExpectedMinGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("`expected_min` >=", value, "expectedMin");
             return (Criteria) this;
         }
 
-        public Criteria andExpectedMinLessThan(Byte value) {
+        public Criteria andExpectedMinLessThan(BigDecimal value) {
             addCriterion("`expected_min` <", value, "expectedMin");
             return (Criteria) this;
         }
 
-        public Criteria andExpectedMinLessThanOrEqualTo(Byte value) {
+        public Criteria andExpectedMinLessThanOrEqualTo(BigDecimal value) {
             addCriterion("`expected_min` <=", value, "expectedMin");
             return (Criteria) this;
         }
 
-        public Criteria andExpectedMinIn(List<Byte> values) {
+        public Criteria andExpectedMinIn(List<BigDecimal> values) {
             addCriterion("`expected_min` in", values, "expectedMin");
             return (Criteria) this;
         }
 
-        public Criteria andExpectedMinNotIn(List<Byte> values) {
+        public Criteria andExpectedMinNotIn(List<BigDecimal> values) {
             addCriterion("`expected_min` not in", values, "expectedMin");
             return (Criteria) this;
         }
 
-        public Criteria andExpectedMinBetween(Byte value1, Byte value2) {
+        public Criteria andExpectedMinBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("`expected_min` between", value1, value2, "expectedMin");
             return (Criteria) this;
         }
 
-        public Criteria andExpectedMinNotBetween(Byte value1, Byte value2) {
+        public Criteria andExpectedMinNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("`expected_min` not between", value1, value2, "expectedMin");
             return (Criteria) this;
         }
@@ -2973,52 +2973,52 @@ public class ProductExample {
             return (Criteria) this;
         }
 
-        public Criteria andExpectedMaxEqualTo(Byte value) {
+        public Criteria andExpectedMaxEqualTo(BigDecimal value) {
             addCriterion("`expected_max` =", value, "expectedMax");
             return (Criteria) this;
         }
 
-        public Criteria andExpectedMaxNotEqualTo(Byte value) {
+        public Criteria andExpectedMaxNotEqualTo(BigDecimal value) {
             addCriterion("`expected_max` <>", value, "expectedMax");
             return (Criteria) this;
         }
 
-        public Criteria andExpectedMaxGreaterThan(Byte value) {
+        public Criteria andExpectedMaxGreaterThan(BigDecimal value) {
             addCriterion("`expected_max` >", value, "expectedMax");
             return (Criteria) this;
         }
 
-        public Criteria andExpectedMaxGreaterThanOrEqualTo(Byte value) {
+        public Criteria andExpectedMaxGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("`expected_max` >=", value, "expectedMax");
             return (Criteria) this;
         }
 
-        public Criteria andExpectedMaxLessThan(Byte value) {
+        public Criteria andExpectedMaxLessThan(BigDecimal value) {
             addCriterion("`expected_max` <", value, "expectedMax");
             return (Criteria) this;
         }
 
-        public Criteria andExpectedMaxLessThanOrEqualTo(Byte value) {
+        public Criteria andExpectedMaxLessThanOrEqualTo(BigDecimal value) {
             addCriterion("`expected_max` <=", value, "expectedMax");
             return (Criteria) this;
         }
 
-        public Criteria andExpectedMaxIn(List<Byte> values) {
+        public Criteria andExpectedMaxIn(List<BigDecimal> values) {
             addCriterion("`expected_max` in", values, "expectedMax");
             return (Criteria) this;
         }
 
-        public Criteria andExpectedMaxNotIn(List<Byte> values) {
+        public Criteria andExpectedMaxNotIn(List<BigDecimal> values) {
             addCriterion("`expected_max` not in", values, "expectedMax");
             return (Criteria) this;
         }
 
-        public Criteria andExpectedMaxBetween(Byte value1, Byte value2) {
+        public Criteria andExpectedMaxBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("`expected_max` between", value1, value2, "expectedMax");
             return (Criteria) this;
         }
 
-        public Criteria andExpectedMaxNotBetween(Byte value1, Byte value2) {
+        public Criteria andExpectedMaxNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("`expected_max` not between", value1, value2, "expectedMax");
             return (Criteria) this;
         }
@@ -3080,6 +3080,126 @@ public class ProductExample {
 
         public Criteria andThrowDepartmentNotBetween(Integer value1, Integer value2) {
             addCriterion("`throw_department` not between", value1, value2, "throwDepartment");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectStartIsNull() {
+            addCriterion("`collect_start` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectStartIsNotNull() {
+            addCriterion("`collect_start` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectStartEqualTo(Date value) {
+            addCriterionForJDBCDate("`collect_start` =", value, "collectStart");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectStartNotEqualTo(Date value) {
+            addCriterionForJDBCDate("`collect_start` <>", value, "collectStart");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectStartGreaterThan(Date value) {
+            addCriterionForJDBCDate("`collect_start` >", value, "collectStart");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectStartGreaterThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("`collect_start` >=", value, "collectStart");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectStartLessThan(Date value) {
+            addCriterionForJDBCDate("`collect_start` <", value, "collectStart");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectStartLessThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("`collect_start` <=", value, "collectStart");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectStartIn(List<Date> values) {
+            addCriterionForJDBCDate("`collect_start` in", values, "collectStart");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectStartNotIn(List<Date> values) {
+            addCriterionForJDBCDate("`collect_start` not in", values, "collectStart");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectStartBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("`collect_start` between", value1, value2, "collectStart");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectStartNotBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("`collect_start` not between", value1, value2, "collectStart");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectEndIsNull() {
+            addCriterion("`collect_end` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectEndIsNotNull() {
+            addCriterion("`collect_end` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectEndEqualTo(Date value) {
+            addCriterionForJDBCDate("`collect_end` =", value, "collectEnd");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectEndNotEqualTo(Date value) {
+            addCriterionForJDBCDate("`collect_end` <>", value, "collectEnd");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectEndGreaterThan(Date value) {
+            addCriterionForJDBCDate("`collect_end` >", value, "collectEnd");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectEndGreaterThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("`collect_end` >=", value, "collectEnd");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectEndLessThan(Date value) {
+            addCriterionForJDBCDate("`collect_end` <", value, "collectEnd");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectEndLessThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("`collect_end` <=", value, "collectEnd");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectEndIn(List<Date> values) {
+            addCriterionForJDBCDate("`collect_end` in", values, "collectEnd");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectEndNotIn(List<Date> values) {
+            addCriterionForJDBCDate("`collect_end` not in", values, "collectEnd");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectEndBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("`collect_end` between", value1, value2, "collectEnd");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectEndNotBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("`collect_end` not between", value1, value2, "collectEnd");
             return (Criteria) this;
         }
     }

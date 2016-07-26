@@ -23,12 +23,7 @@ public class ProductOrderApiController extends BaseController{
 
     @RequestMapping(value = "/api/product/order",method = RequestMethod.POST)
     @ResponseBody
-    public ApiJsonResult productOrder(Integer productId,Integer customerId, Integer plannerId,Integer amount){
-        ProductReservation productReservation =new ProductReservation();
-        productReservation.setProductId(productId);
-        productReservation.setCustomerId(customerId);
-        productReservation.setPlannerId(plannerId);
-        productReservation.setAmount(amount);
+    public ApiJsonResult productOrder(ProductReservation productReservation){
         productReservation.setCtime(new Date());
         productReservation.setResult(APIConstants.OrderResult.Success);
         productReservationService.addOrUpdateProductReservation(productReservation);
