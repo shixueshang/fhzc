@@ -283,7 +283,7 @@
         }
 
         var isDisplay = '${activity.isDisplay}';
-        if(isDisplay == 1 || status == null || status == ""){
+        if(isDisplay == 1 || isDisplay == null || isDisplay == ""){
             $.uniform.update($("input[name='isDisplay'][value='1']").attr("checked", true));
             $.uniform.update($("input[name='isDisplay'][value='0']").attr("checked", false));
         }else{
@@ -292,7 +292,7 @@
         }
 
         var isRecommend = '${activity.isRecommend}';
-        if(isRecommend == 1 || status == null || status == ""){
+        if(isRecommend == 1 || isRecommend == null || isRecommend == ""){
             $.uniform.update($("input[name='isRecommend'][value='1']").attr("checked", true));
             $.uniform.update($("input[name='isRecommend'][value='0']").attr("checked", false));
         }else{

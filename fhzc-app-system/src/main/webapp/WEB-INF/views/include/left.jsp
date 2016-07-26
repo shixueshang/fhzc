@@ -141,16 +141,22 @@
 
                         <ul class="sub">
                             <li>
-                                <a href="<%=contextPath%>/system/resource/list">权限列表</a>
-                            </li>
-                            <li>
-                                <a href="<%=contextPath%>/system/resource/pub">权限新增</a>
-                            </li>
-                            <li>
                                 <a href="<%=contextPath%>/system/admin/list">管理员列表</a>
                             </li>
                             <li>
                                 <a href="<%=contextPath%>/system/admin/pub">管理员新增</a>
+                            </li>
+                            <li>
+                                <a href="<%=contextPath%>/system/role/list">角色列表</a>
+                            </li>
+                            <li>
+                                <a href="<%=contextPath%>/system/role/pub">角色新增</a>
+                            </li>
+                            <li>
+                                <a href="<%=contextPath%>/system/resource/list">权限列表</a>
+                            </li>
+                            <li>
+                                <a href="<%=contextPath%>/system/resource/pub">权限新增</a>
                             </li>
                         </ul>
                     </li>

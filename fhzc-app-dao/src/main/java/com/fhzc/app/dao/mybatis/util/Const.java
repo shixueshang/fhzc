@@ -1,8 +1,5 @@
 package com.fhzc.app.dao.mybatis.util;
 
-
-import org.apache.xmlbeans.impl.schema.StscChecker;
-
 public class Const {
 
     /**

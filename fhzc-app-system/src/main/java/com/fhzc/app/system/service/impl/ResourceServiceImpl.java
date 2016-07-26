@@ -1,8 +1,11 @@
 package com.fhzc.app.system.service.impl;
 
 import com.fhzc.app.dao.mybatis.inter.SystemModuleMapper;
+import com.fhzc.app.dao.mybatis.inter.SystemRoleModuleMapper;
 import com.fhzc.app.dao.mybatis.model.SystemModule;
 import com.fhzc.app.dao.mybatis.model.SystemModuleExample;
+import com.fhzc.app.dao.mybatis.model.SystemRoleModule;
+import com.fhzc.app.dao.mybatis.model.SystemRoleModuleExample;
 import com.fhzc.app.system.commons.util.TreeUtil;
 import com.fhzc.app.system.service.ResourceService;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,9 @@ public class ResourceServiceImpl implements ResourceService {
     @Resource
     private SystemModuleMapper systemModuleMapper;
 
+    @Resource
+    private SystemRoleModuleMapper systemRoleModuleMapper;
+
     @Override
     public List<Map<String, Object>> findAllResource() {
         SystemModuleExample example = new SystemModuleExample();
@@ -38,5 +44,13 @@ public class ResourceServiceImpl implements ResourceService {
         }
 
         return TreeUtil.buildMapTree(mapModules, "id", "parent_id");
+    }
+
+    @Override
+    public List<SystemRoleModule> findModulesByRole(Integer roleId) {
+        SystemRoleModuleExample example = new SystemRoleModuleExample();
+        SystemRoleModuleExample.Criteria criteria = example.createCriteria();
+        criteria.andAdminRoleIdEqualTo(roleId);
+        return systemRoleModuleMapper.selectByExample(example);
     }
 }
