@@ -35,6 +35,9 @@
                             <li>
                                 <a href="<%=contextPath%>/business/product/pub">新增产品</a>
                             </li>
+                            <li>
+                                <a href="<%=contextPath%>/business/product/order/list">产品预约列表</a>
+                            </li>
                         </ul>
                     </li>
                     <li class="has-sub">

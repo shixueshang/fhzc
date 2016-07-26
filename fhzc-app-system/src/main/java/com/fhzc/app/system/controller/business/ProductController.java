@@ -159,4 +159,15 @@ public class ProductController extends BaseController {
         return result;
     }
 
+    /**
+     * 产品预约列表
+     * @return
+     */
+    @RequestMapping(value = "/order/list", method = RequestMethod.GET)
+    public ModelAndView listRightsOrder(){
+        ModelAndView mav = new ModelAndView("business/product/order/list");
+
+        return mav;
+    }
+
 }
