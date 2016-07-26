@@ -18,4 +18,5 @@
 *.classpath
 .settings/
 *target/
+.externalToolBuilders/
 

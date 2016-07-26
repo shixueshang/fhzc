@@ -92,6 +92,13 @@
                                         </form>
                                         <!-- END FORM-->
                                     </div>
+                                     <c:if test="${success != null}">
+                                    	<div class="tab-pane active" id="portlet_tab1">
+		                                    <ul>
+		                                    <li>本次供操作记录${totalRows}条，其中成功${successRows}条，失败${failRows}条</li>
+		                                    </ul>
+	                                    </div>
+                                    </c:if>
                                 </div>
                             </div>
                         </div>
@@ -106,7 +113,6 @@
                             <table class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <td><input type="checkbox" id="checkAll"/>全选</td>
                                     <td>日期</td>
                                     <td>地区</td>
                                     <td>理财师姓名</td>
@@ -122,15 +128,15 @@
                                 <tbody>
                                 <c:forEach items="${plannerAchivementsDailys}" var="plannerAchivementsDaily">
                                     <tr>
-                                        <td>${fn:substring(plannerAchivementsDaily.transfer_date, 0, 10)}</td>
-                                        <td>${plannerAchivementsDaily.area_name}</td>
-                                        <td>${plannerAchivementsDaily.planner_name}</td>
-                                        <td>${plannerAchivementsDaily.work_num}</td>
-                                        <td>${plannerAchivementsDaily.product_name}</td>
+                                        <td><fmt:formatDate value="${plannerAchivementsDaily.transferDate}" pattern="yyyy-MM-dd"/></td>
+                                        <td>${plannerAchivementsDaily.areaName}</td>
+                                        <td>${plannerAchivementsDaily.plannerName}</td>
+                                        <td>${plannerAchivementsDaily.workNum}</td>
+                                        <td>${plannerAchivementsDaily.productName}</td>
                                         <td>${plannerAchivementsDaily.annualised}</td>
-                                        <td>${plannerAchivementsDaily.contract_amount}</td>
-                                        <td>${fn:substring(plannerAchivementsDaily.expire_date, 0, 10)}</td>
-                                        <td>${plannerAchivementsDaily.product_type}</td>
+                                        <td>${plannerAchivementsDaily.contractAmount}</td>
+                                        <td>${fn:substring(plannerAchivementsDaily.expireDate, 0, 10)}</td>
+                                        <td></td>
                                         <td>${plannerAchivementsDaily.memo}</td>
                                     </tr>
                                 </c:forEach>

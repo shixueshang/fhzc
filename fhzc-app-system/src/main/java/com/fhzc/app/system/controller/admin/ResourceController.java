@@ -1,6 +1,5 @@
 package com.fhzc.app.system.controller.admin;
 
-import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.ResourceService;
 import org.springframework.stereotype.Controller;

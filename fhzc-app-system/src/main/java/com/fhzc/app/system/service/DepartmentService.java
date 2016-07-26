@@ -51,4 +51,18 @@ public interface DepartmentService {
      */
     Department findRootDept();
 
+    /**
+     * 根据父级id查询下级机构
+     * @param parentId
+     * @return
+     */
+    List<Department> findChildren(Integer parentId);
+
+
+    /**
+     * 获得机构id
+     * @param name
+     * @return
+     */
+    Department getDeparent(String name);
 }

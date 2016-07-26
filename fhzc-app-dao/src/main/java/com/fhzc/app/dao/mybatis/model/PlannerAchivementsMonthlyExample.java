@@ -642,6 +642,76 @@ public class PlannerAchivementsMonthlyExample {
             return (Criteria) this;
         }
 
+        public Criteria andCustomerNameIsNull() {
+            addCriterion("`customer_name` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerNameIsNotNull() {
+            addCriterion("`customer_name` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerNameEqualTo(String value) {
+            addCriterion("`customer_name` =", value, "customerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerNameNotEqualTo(String value) {
+            addCriterion("`customer_name` <>", value, "customerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerNameGreaterThan(String value) {
+            addCriterion("`customer_name` >", value, "customerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerNameGreaterThanOrEqualTo(String value) {
+            addCriterion("`customer_name` >=", value, "customerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerNameLessThan(String value) {
+            addCriterion("`customer_name` <", value, "customerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerNameLessThanOrEqualTo(String value) {
+            addCriterion("`customer_name` <=", value, "customerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerNameLike(String value) {
+            addCriterion("`customer_name` like", value, "customerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerNameNotLike(String value) {
+            addCriterion("`customer_name` not like", value, "customerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerNameIn(List<String> values) {
+            addCriterion("`customer_name` in", values, "customerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerNameNotIn(List<String> values) {
+            addCriterion("`customer_name` not in", values, "customerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerNameBetween(String value1, String value2) {
+            addCriterion("`customer_name` between", value1, value2, "customerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerNameNotBetween(String value1, String value2) {
+            addCriterion("`customer_name` not between", value1, value2, "customerName");
+            return (Criteria) this;
+        }
+
         public Criteria andCustomerBuyIsNull() {
             addCriterion("`customer_buy` is null");
             return (Criteria) this;

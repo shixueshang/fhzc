@@ -10,8 +10,7 @@ public class TreeUtil {
     public static final String CHILDREN = "children";
     public static final String LEAF = "leaf";
     public static final String CHECKED = "checked";
-    public static final String CHECKED_UPPER = "CHECKED";
-    public static final String CHECKBOX = "CHECKBOX";
+    public static final String CHECKBOX = "checkbox";
     public static final String NULL = "null";
 
     /**
@@ -28,8 +27,8 @@ public class TreeUtil {
         List<Map<String, Object>> children = new ArrayList<Map<String, Object>>();
         for (Map<String, Object> ent : src) {
             ent.put(LEAF, true);
-            if (ent.get(CHECKBOX) != null && ent.get(CHECKED_UPPER) != null) {
-                ent.put(CHECKED, ent.get(CHECKED_UPPER));
+            if (ent.get(CHECKBOX) != null && ent.get(CHECKED) != null) {
+                ent.put(CHECKED, ent.get(CHECKED));
             }
             if (ent.get(parentFieldName) == null || "".equals(ent.get(parentFieldName).toString()) || NULL.equals(ent.get(parentFieldName).toString())) {
                 Map<String, Object> result = ent;

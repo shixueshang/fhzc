@@ -33,7 +33,7 @@ public class AdminServiceImpl implements AdminService{
 
     @Override
     public Admin findAdminById(Integer uid) {
-        return null;
+        return adminMapper.selectByPrimaryKey(uid);
     }
 
     @Override
@@ -47,5 +47,20 @@ public class AdminServiceImpl implements AdminService{
     @Override
     public void updatePwdById(Integer uid, String pwd) {
 
+    }
+
+    @Override
+    public void addOrUpdateAdmin(Admin admin) {
+        Integer id = admin.getId();
+        if(id == null){
+            adminMapper.insert(admin);
+        }else{
+            adminMapper.updateByPrimaryKey(admin);
+        }
+    }
+
+    @Override
+    public void delete(Integer id) {
+        adminMapper.deleteByPrimaryKey(id);
     }
 }

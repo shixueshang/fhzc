@@ -13,6 +13,10 @@
     <result column="product_type" property="productType" jdbcType="VARCHAR" />
     <result column="memo" property="memo" jdbcType="VARCHAR" />
     <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
+    <result column="area_name" property="areaName" jdbcType="VARCHAR" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+    <result column="planner_name" property="plannerName" jdbcType="VARCHAR" />
+    <result column="work_num" property="workNum" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -302,8 +306,13 @@
     <if test="distinct" >
       distinct
     </if>
-    <include refid="Base_Column_List" />
-    from `planner_achivements_daily`
+    p.id, p.transfer_date, p.area_id, p.planner_uid, p.product_id, p.annualised, p.contract_amount, p.expire_date, p.product_type, p.memo, p.ctime
+    ,areas.area_name, product.name product_name, user.realname planner_name, planner.work_num 
+    from planner_achivements_daily p
+    left join areas on p.area_id=areas.area_id
+    left join product on p.product_id=product.pid
+    left join user on p.planner_uid = user.uid
+    left join planner on p.planner_uid = planner.uid
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>

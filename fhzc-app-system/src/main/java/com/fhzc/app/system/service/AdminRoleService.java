@@ -1,6 +1,7 @@
 package com.fhzc.app.system.service;
 
 import com.fhzc.app.dao.mybatis.model.AdminRole;
+import com.fhzc.app.dao.mybatis.page.PageableResult;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public interface AdminRoleService {
      * @param page
      * @param size
      */
-    void findPageRole(int page, int size);
+    PageableResult<AdminRole> findPageRole(int page, int size);
 
     List<AdminRole> getAllRoles();
 
@@ -25,4 +26,16 @@ public interface AdminRoleService {
      * @return
      */
     AdminRole findRoleById(Integer id);
+
+    /**
+     * 添加或修改角色
+     * @param role
+     */
+    void addOrUpdateRole(AdminRole role);
+
+    /**
+     * 删除(禁用)
+     * @param id
+     */
+    void delete(Integer id);
 }

@@ -1,6 +1,5 @@
 package com.fhzc.app.dao.mybatis.util;
 
-
 public class Const {
 
     /**
@@ -9,6 +8,11 @@ public class Const {
     public static String CONFIG_KEY_IMAGE_SAVE_PATH =  "chat_image_save_path";
 
     public static String CONFIG_KEY_SYSTEM_IMAGE_SAVE_PATH =  "system_image_save_path";
+
+    /**
+     * 顶级机构id
+     */
+    public static Integer ROOT_DEPT_ID = 1;
 
     /**
      * 默认分页起始页

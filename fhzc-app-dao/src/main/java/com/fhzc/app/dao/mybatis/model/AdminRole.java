@@ -5,7 +5,9 @@ public class AdminRole {
 
     private String roleName;
 
-    private Integer ctime;
+    private String description;
+
+    private Integer status;
 
     public Integer getRoleId() {
         return roleId;
@@ -23,11 +25,19 @@ public class AdminRole {
         this.roleName = roleName == null ? null : roleName.trim();
     }
 
-    public Integer getCtime() {
-        return ctime;
+    public String getDescription() {
+        return description;
     }
 
-    public void setCtime(Integer ctime) {
-        this.ctime = ctime;
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

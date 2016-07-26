@@ -38,4 +38,12 @@ public interface AdminService {
      * @param pwd
      */
     void updatePwdById(Integer uid, String pwd);
+
+    /**
+     * 添加或者修改管理员
+     * @param admin
+     */
+    void addOrUpdateAdmin(Admin admin);
+
+    void delete(Integer id);
 }

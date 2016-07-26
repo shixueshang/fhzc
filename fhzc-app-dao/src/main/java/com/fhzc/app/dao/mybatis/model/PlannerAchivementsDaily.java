@@ -24,8 +24,48 @@ public class PlannerAchivementsDaily {
     private String memo;
 
     private Date ctime;
+    
+    
+    private String areaName;
+    private String productName;
+    private String plannerName;
+    private String workNum;
+    
+    
 
-    public Integer getId() {
+    public String getWorkNum() {
+		return workNum;
+	}
+
+	public void setWorkNum(String workNum) {
+		this.workNum = workNum;
+	}
+
+	public String getAreaName() {
+		return areaName;
+	}
+
+	public void setAreaName(String areaName) {
+		this.areaName = areaName;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public String getPlannerName() {
+		return plannerName;
+	}
+
+	public void setPlannerName(String plannerName) {
+		this.plannerName = plannerName;
+	}
+
+	public Integer getId() {
         return id;
     }
 
