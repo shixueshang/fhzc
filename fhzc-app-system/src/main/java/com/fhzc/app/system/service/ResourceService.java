@@ -1,5 +1,6 @@
 package com.fhzc.app.system.service;
 
+import com.fhzc.app.dao.mybatis.model.SystemModule;
 import com.fhzc.app.dao.mybatis.model.SystemRoleModule;
 
 import java.util.List;
@@ -22,4 +23,23 @@ public interface ResourceService {
      * @return
      */
     List<SystemRoleModule> findModulesByRole(Integer roleId);
+
+    /**
+     * 查找指定级别的资源
+     * @param level
+     * @return
+     */
+    List<Map<String, Object>>  findModulesByLevel(Integer level);
+
+    /**
+     * 删除指定角色的权限
+     * @param roleId
+     */
+    void deleteModuleByRole(Integer roleId);
+
+    /**
+     * 授权
+     * @param roleModule
+     */
+    void addRoleModule(SystemRoleModule roleModule);
 }

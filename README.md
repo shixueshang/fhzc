@@ -1,7 +1,7 @@
 
 项目初始化
 使用sql文件数据库建立数据库
-1、导入docs/sql下的fhzc.sql
+1、导入docs/sql下的fhzc.sql -> update.sql -> data.sql
 2、修改jdbc.properties中的数据库账号密码
 
 
