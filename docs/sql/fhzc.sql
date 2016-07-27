@@ -588,7 +588,7 @@ CREATE TABLE IF NOT EXISTS `bank`.`system_role_module` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `admin_role_id` INT NOT NULL COMMENT '后台人员id',
   `module_id` INT NOT NULL COMMENT '模块id',
-  `mode` ENUM('r','rw') NOT NULL DEFAULT 'r' COMMENT '模块读\\读写',
+  `mode` ENUM('r','rw') NOT NULL DEFAULT 'rw' COMMENT '模块读\\读写',
   PRIMARY KEY (`id`))
   ENGINE = InnoDB
   COMMENT = '后台人员权限';

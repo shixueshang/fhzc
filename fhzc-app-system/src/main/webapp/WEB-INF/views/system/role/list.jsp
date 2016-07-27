@@ -82,7 +82,7 @@
                                         <td>
                                             <a href="<%=contextPath%>/system/role/detail/${role.roleId}"><i class="icon-edit"></i>编辑</a>
                                             <a href="<%=contextPath%>/system/role/delete/${role.roleId}"><i class="icon-trash"></i>删除</a>
-                                            <a href="<%=contextPath%>/system/role/authorization"><i class="icon-tag"></i>分配权限</a>
+                                            <a href="<%=contextPath%>/system/role/authorization/${role.roleId}"><i class="icon-tag"></i>分配权限</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
