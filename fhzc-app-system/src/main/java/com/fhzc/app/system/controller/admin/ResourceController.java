@@ -1,5 +1,6 @@
 package com.fhzc.app.system.controller.admin;
 
+import com.fhzc.app.system.commons.util.TreeUtil;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.ResourceService;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,8 @@ public class ResourceController extends BaseController {
     @RequestMapping(value = "/list")
     public ModelAndView listResource(){
         ModelAndView mav = new ModelAndView("system/resource/list");
-        mav.addObject("resources", resourceService.findAllResource());
+
+        mav.addObject("resources", TreeUtil.buildMapTree(resourceService.findAllResource(), "id", "parent_id"));
         return mav;
     }
 }

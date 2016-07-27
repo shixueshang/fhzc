@@ -159,6 +159,7 @@
             </div>
 
         </div>
+        <jsp:include page="../../include/page.jsp"/>
     </div>
 </div>
 

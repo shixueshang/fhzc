@@ -25,7 +25,7 @@ public class ReportServiceImpl implements ReportService {
         ReportExample example = new ReportExample();
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<Report> list = reportMapper.selectByExampleWithRowbounds(example, rowBounds);
-        return new PageableResult<Report>(page, size, list.size(), list);
+        return new PageableResult<Report>(page, size, reportMapper.countByExample(example), list);
     }
 
     @Override

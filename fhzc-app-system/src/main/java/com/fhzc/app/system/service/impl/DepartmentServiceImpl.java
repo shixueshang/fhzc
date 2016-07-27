@@ -33,7 +33,7 @@ public class DepartmentServiceImpl implements DepartmentService{
 
         List<Map<String, Object>> result = this.buildDepts(list);
 
-        return new PageableResult<Map<String, Object>>(page, size, result.size(), result);
+        return new PageableResult<Map<String, Object>>(page, size, departmentMapper.countByExample(example), result);
     }
 
     @Override

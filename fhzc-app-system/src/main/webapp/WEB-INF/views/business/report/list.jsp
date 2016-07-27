@@ -66,7 +66,6 @@
                                     <td>报告名</td>
                                     <td>封面图</td>
                                     <td>报告类型</td>
-                                    <td>可见用户等级</td>
                                     <td>生效状态</td>
                                     <td>关注人数</td>
                                     <td>操作</td>
@@ -81,19 +80,12 @@
                                              <img width="120px" src="<%=basePath%>${report.cover}">
                                         </td>
                                         <td>
-                                            <c:choose>
-                                                <c:when test="${report.cid == '1'}">
-                                                    每周点评
-                                                </c:when>
-                                                <c:when test="${report.cid == '2'}">
-                                                    复华财经新视点
-                                                </c:when>
-                                                <c:when test="${report.cid == '3'}">
-                                                    复华资产研究报告
-                                                </c:when>
-                                            </c:choose>
+                                            <c:forEach items="${reportTypes}" var="reportType">
+                                                <c:if test="${report.cid == reportType.value}">
+                                                    ${reportType.key}
+                                                </c:if>
+                                            </c:forEach>
                                         </td>
-                                        <td></td>
                                         <td></td>
                                         <td></td>
                                         <td><a href="<%=contextPath%>/business/report/detail/${report.id}">编辑</a>
@@ -109,6 +101,7 @@
             <!--页面操作详细内容 开始-->
 
         </div>
+        <jsp:include page="../../include/page.jsp"/>
     </div>
 </div>
 

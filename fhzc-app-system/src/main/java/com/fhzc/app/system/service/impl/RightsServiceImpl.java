@@ -25,7 +25,7 @@ public class RightsServiceImpl implements RightsService {
         RightsExample example = new RightsExample();
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<Rights> list = rightsMapper.selectByExampleWithBLOBsWithRowbounds(example, rowBounds);
-        return new PageableResult<Rights>(page, size, list.size(), list);
+        return new PageableResult<Rights>(page, size, rightsMapper.countByExample(example), list);
     }
 
     @Override

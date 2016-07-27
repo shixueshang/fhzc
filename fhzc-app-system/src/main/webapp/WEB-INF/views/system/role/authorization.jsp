@@ -64,15 +64,91 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="portlet_tab1">
                                         <!-- BEGIN FORM-->
-                                        <form action="<%=contextPath%>/system/role/authorization/confirm" method="POST" class="form-horizontal">
+                                        <form  id="form_sample" class="form-horizontal">
 
-                                            <div class="control-group">
+                                        <c:forEach items="${resources}" var="resource">
+                                            <c:if test="${resource.level != 3}">
+
+                                            <div class="control-group padding_${resource.level_px}">
+
+                                                <c:choose>
+                                                    <c:when test="${resource.level == 1}">
+                                                        <div class="controls">
+                                                            <label class="checkbox">
+                                                                <div class="checker">
+                                                                    <c:choose>
+                                                                        <c:when test="${resource.checkbox == 'checked'}">
+                                                                            <span class="checked">
+                                                                            <input type="checkbox" checked="checked" name="resource" value="${resource.id}" data-pid="${resource.parent_id}" data-id="${resource.id}" data-level="${resource.parent_id}_${resource.level}" data-l="${resource.level}" style="opacity: 0;">
+                                                                            </span>
+                                                                        </c:when>
+                                                                        <c:otherwise>
+                                                                            <span>
+                                                                            <input type="checkbox" name="resource" value="${resource.id}" data-pid="${resource.parent_id}" data-id="${resource.id}" data-level="${resource.parent_id}_${resource.level}" data-l="${resource.level}" style="opacity: 0;">
+                                                                            </span>
+                                                                        </c:otherwise>
+                                                                    </c:choose>
+                                                                </div>
+                                                                <span class="label label-info label-mini">${resource.name}</span>
+                                                            </label>
+                                                        </div>
+                                                    </c:when>
+                                                    <c:when test="${resource.level == 2}" >
+                                                        <div class="controls">
+                                                            <label class="checkbox">
+                                                                <div class="checker">
+                                                                    <c:choose>
+                                                                    <c:when test="${resource.checkbox == 'checked'}">
+                                                                            <span class="checked">
+                                                                            <input type="checkbox" checked="checked" name="resource" value="${resource.id}" data-pid="${resource.parent_id}" data-id="${resource.id}" data-level="${resource.parent_id}_${resource.level}" data-l="${resource.level}" style="opacity: 0;">
+                                                                            </span>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                            <span>
+                                                                            <input type="checkbox" name="resource" value="${resource.id}" data-pid="${resource.parent_id}" data-id="${resource.id}" data-level="${resource.parent_id}_${resource.level}" data-l="${resource.level}" style="opacity: 0;">
+                                                                            </span>
+                                                                    </c:otherwise>
+                                                                    </c:choose>
+                                                                </div>
+                                                                <span class="label label-info label-mini">${resource.name}</span>
+                                                            </label>
+                                                        </div>
+
+                                                        <!-- 3级资源 -->
+                                                        <div class="controls padding_20">
+                                                            <c:forEach items="${children}" var="child" >
+                                                                <c:choose>
+                                                                    <c:when test="${child.parent_id == resource.id}">
+                                                                        <label class="checkbox">
+                                                                        <div class="checker">
+                                                                            <c:choose>
+                                                                            <c:when test="${child.checkbox == 'checked'}">
+                                                                                <span class="checked">
+                                                                                <input type="checkbox" checked="checked" name="resource" value="${child.id}" data-pid="${child.parent_id}" data-id="${child.id}" data-level="${child.parent_id}_${child.level}" data-l="${child.level}" style="opacity: 0;">
+                                                                                </span>
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                                <span>
+                                                                                <input type="checkbox" name="resource" value="${child.id}" data-pid="${child.parent_id}" data-id="${child.id}" data-level="${child.parent_id}_${child.level}" data-l="${child.level}" style="opacity: 0;">
+                                                                                </span>
+                                                                            </c:otherwise>
+                                                                            </c:choose>
+                                                                        </div>
+                                                                        <span class="msg-dark-blue" style="font-size: 13px;">${child.name}</span>
+                                                                        </label>
+                                                                    </c:when>
+                                                                </c:choose>
+                                                            </c:forEach>
+                                                        </div>
+                                                    </c:when>
+                                                </c:choose>
                                             </div>
-
+                                            </c:if>
+                                            
+                                        </c:forEach>
 
                                             <div class="form-actions">
-                                                <input name="roleId" type="hidden" value="${role.roleId}" />
-                                                <button type="submit" class="btn blue"><i class="icon-ok"></i> 添加</button>
+                                                <button type="button" onclick="submitForm()" class="btn blue"><i class="icon-ok"></i> 添加</button>
                                             </div>
                                         </form>
                                         <!-- END FORM-->
@@ -90,13 +166,94 @@
 
 <script>
 
-    $(function(){
+    jQuery(document).ready(function () {
 
-        var resources = '${resources}';
-        console.info(resources);
+        /**
+         * 操作checkbox
+         * @param {type} obj
+         * @param {type} status
+         * @returns {undefined}
+         */
+        function checkHandler(obj, status) {
+            if (status) {
+                obj.closest('span').addClass('checked');
+                obj.prop('checked', true);
+            } else {
+                obj.closest('span').removeClass('checked');
+                obj.prop('checked', false);
+            }
+        }
+
+        /**
+         * 子元素选中
+         * @param {type} id
+         * @param {type} level
+         * @param {type} status
+         * @returns {undefined}
+         */
+        function checkChildHandle(id, level, status) {
+            var childObj = $('input[data-level="' + id + '_' + level + '"]'), c_childObj = [];
+            $.each(childObj, function (i, v) {
+                var c_id = $(v).data('id'), c_s_level = parseInt($(v).data('l')) + 1 * 1;
+                c_childObj[i] = $('input[data-level="' + c_id + '_' + c_s_level + '"]');
+                checkHandler($(v), status);
+                checkHandler(c_childObj[i], status);
+            });
+        }
+
+        $('input[type="checkbox"]').click(function () {
+            var _this = $(this), pid = _this.data('pid'), id = _this.data('id'), s_level = parseInt(_this.data('l')) + 1 * 1, level = _this.data('level'), parentObj = $('input[data-id="' + pid + '"]');
+            var p_pid = parentObj.data('pid'), p_level = parentObj.data('level'), p_parentObj = $('input[data-id="' + p_pid + '"]');
+            var broLength = $('input[data-level="' + level + '"]:checked').length;
+
+            if (_this.is(":checked")) {
+                checkHandler(parentObj, true);
+                checkHandler(p_parentObj, true);
+                checkChildHandle(id, s_level, true);
+
+            } else {
+                (broLength <= 0) ? checkHandler(parentObj, false) : "";
+
+                var pBroLength = $('input[data-level="' + p_level + '"]:checked').length;
+                (pBroLength <= 0) ? checkHandler(p_parentObj, false) : "";
+
+                checkChildHandle(id, s_level, false);
+            }
+        });
 
     });
 
+    function submitForm(){
+
+        if($('input[type="checkbox"]:checked').length == 0){
+            BootstrapDialog.alert({
+                title: '提示',
+                message: '请至少选择一个权限!'
+            });
+        }
+
+        var roleModules = new Array();
+
+        $('input[type="checkbox"]:checked').each(function(){
+            var roleModule = {};
+            roleModule.adminRoleId = '${role.roleId}';
+            roleModule.moduleId = $(this).val();
+            roleModules.push(roleModule);
+        });
+
+        $.ajax({
+            url:"<%=contextPath%>/system/role/authorization/confirm",
+            type:"POST",
+            data:JSON.stringify(roleModules),
+            dataType:"json",
+            contentType:"application/json",
+            success:function(data){
+                window.location.href = "<%=contextPath%>/system/role/list";
+            },error:function(data){
+
+            }
+        });
+    }
 
 </script>
 

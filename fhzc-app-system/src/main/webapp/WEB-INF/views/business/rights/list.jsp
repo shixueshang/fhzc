@@ -77,28 +77,18 @@
                                         <td>${right.id}</td>
                                         <td>${right.name}</td>
                                         <td>
-                                            <c:choose>
-                                                <c:when test="${right.cid == '1'}">
-                                                    是
-                                                </c:when>
-                                                <c:when test="${right.cid == '0'}">
-                                                    否
-                                                </c:when>
-                                            </c:choose>
-
+                                            <c:forEach items="${rightsCategory}" var="category">
+                                                <c:if test="${right.cid == category.value}">
+                                                    ${category.key}
+                                                </c:if>
+                                            </c:forEach>
                                         </td>
                                         <td>
-                                            <c:choose>
-                                                <c:when test="${right.level == '1'}">
-                                                    准客户
-                                                </c:when>
-                                                <c:when test="${right.level == '2'}">
-                                                    客户
-                                                </c:when>
-                                                <c:when test="${right.level == '3'}">
-                                                    金卡客户
-                                                </c:when>
-                                            </c:choose>
+                                            <c:forEach items="${customerLevel}" var="level">
+                                                <c:if test="${right.level == level.value}">
+                                                    ${level.key}
+                                                </c:if>
+                                            </c:forEach>
                                         </td>
                                         <td>${right.spendScore}</td>
                                         <td></td>
@@ -116,6 +106,7 @@
             <!--页面操作详细内容 开始-->
 
         </div>
+        <jsp:include page="../../include/page.jsp"/>
     </div>
 </div>
 

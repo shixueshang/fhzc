@@ -27,7 +27,7 @@ public class AdminRoleServiceImpl implements AdminRoleService {
         AdminRoleExample example = new AdminRoleExample();
         RowBounds rowBounds = new RowBounds((page - 1 ) * size, size);
         List<AdminRole> list = adminRoleMapper.selectByExample(example);
-        return new PageableResult<AdminRole>(page, size, list.size(), list);
+        return new PageableResult<AdminRole>(page, size, adminRoleMapper.countByExample(example), list);
     }
 
     @Override

@@ -139,3 +139,7 @@ ADD COLUMN `collect_end` DATE NULL COMMENT '募集期的结束' AFTER `collect_s
 ALTER TABLE `bank`.`admin_role`
 ADD COLUMN `description` VARCHAR(500) NULL COMMENT '描述' AFTER `role_name` ,
 ADD COLUMN `status` INT(1) NULL COMMENT '状态0正常1禁用' AFTER `description`;
+ALTER TABLE `bank`.`planner`
+CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT ;
+
+DROP TABLE IF EXISTS `bank`.`passport` ;
