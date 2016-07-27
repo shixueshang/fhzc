@@ -1,12 +1,13 @@
 package com.fhzc.app.system.service.impl;
 
-import com.fhzc.app.dao.mybatis.model.Product;
-import com.fhzc.app.dao.mybatis.model.ProductExample;
+import com.fhzc.app.dao.mybatis.bo.ProductReservationBo;
+import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.system.commons.util.excel.ExcelImporter;
 import com.fhzc.app.system.commons.util.excel.ImportCallBack;
 import com.fhzc.app.system.commons.util.excel.ImportConfig;
 import com.fhzc.app.dao.mybatis.inter.ProductMapper;
+import com.fhzc.app.dao.mybatis.inter.ProductReservationMapper;
 import com.fhzc.app.system.service.ProductService;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -32,6 +33,8 @@ public class ProductServiceImpl implements ProductService {
     @Resource
     private ProductMapper productMapper;
 
+    @Resource
+    private ProductReservationMapper productReservationMapper;
 
     @Override
     public PageableResult<Product> findPageProducts(int page, int size) {
@@ -124,5 +127,16 @@ public class ProductServiceImpl implements ProductService {
     public Product getProduct(String name){
     	return productMapper.selectByName(name);
     }
-    
+
+    /**
+     * 查询预约产品列表
+     * @param page
+     * @param size
+     * @return
+     */
+    public PageableResult<ProductReservationBo> findPageProductReservations(ProductReserQuery query, int page, int size) {
+        RowBounds rowBounds = new RowBounds((page - 1) * size, size);
+        List<ProductReservationBo> list = productReservationMapper.selectReservations(query, rowBounds);
+        return new PageableResult<ProductReservationBo>(page, size, list.size(), list);
+    }
 }

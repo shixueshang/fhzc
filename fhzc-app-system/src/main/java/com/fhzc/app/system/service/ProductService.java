@@ -2,7 +2,10 @@ package com.fhzc.app.system.service;
 
 
 
+import com.fhzc.app.dao.mybatis.bo.ProductReservationBo;
 import com.fhzc.app.dao.mybatis.model.Product;
+import com.fhzc.app.dao.mybatis.model.ProductReserQuery;
+import com.fhzc.app.dao.mybatis.model.ProductReservation;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -62,4 +65,12 @@ public interface ProductService {
      * @return
      */
 	 Product getProduct(String name);
+
+    /**
+     * 查询预约产品列表
+     * @param page
+     * @param size
+     * @return
+     */
+    PageableResult<ProductReservationBo> findPageProductReservations(ProductReserQuery query, int page, int size);
 }

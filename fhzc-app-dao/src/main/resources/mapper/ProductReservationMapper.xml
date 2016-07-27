@@ -10,6 +10,20 @@
     <result column="result" property="result" jdbcType="CHAR" />
     <result column="amount" property="amount" jdbcType="INTEGER" />
   </resultMap>
+
+  <resultMap id="ViewResultMap" type="com.fhzc.app.dao.mybatis.bo.ProductReservationBo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result property="reservationTime" column="apply_time" jdbcType="TIMESTAMP" />
+    <result property="productId" column="product_id" jdbcType="INTEGER" />
+    <result property="reservationAmount" column="amount" jdbcType="INTEGER" />
+    <result property="clientId" column="customer_id" jdbcType="INTEGER" />
+    <result property="clientName" column="cname" jdbcType="VARCHAR" />
+    <result property="planerId" column="work_num" jdbcType="VARCHAR" />
+    <result property="planerName" column="pname" jdbcType="VARCHAR" />
+    <result property="planerPhone" column="phone" jdbcType="VARCHAR" />
+    <result property="reservationStatus" column="result" jdbcType="VARCHAR" />
+  </resultMap>
+
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -254,4 +268,23 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectReservations" parameterType="com.fhzc.app.dao.mybatis.model.ProductReserQuery" resultMap="ViewResultMap">
+  select p.id, p.product_id, p.apply_time, p.result, p.amount, pu.work_num, pu.realname pname, pu.phone, cu.customer_id, cu.passport_code, cu.realname cname from product_reservation p,
+    (select pl.id, pl.work_num, u.realname, u.phone, u.passport_code from planner pl, user u where pl.uid = u.uid)pu,
+    (select c.customer_id, u.realname, u.phone, u.passport_code from customer c, user u where c.uid = u.uid) cu
+    where p.customer_id = cu.customer_id and p.planner_id = pu.id
+      <if test="productName != null">
+        AND p.product_id = #{productId}
+      </if>
+      <if test="customerIdCardNum != null">
+        AND cu.passport_code = #{customerIdCardNum}
+      </if>
+      <if test="startDate != null">
+        AND p.apply_time &gt;= #{startDate}
+      </if>
+      <if test="endDate != null">
+        AND p.apply_time &lt;= #{endDate}
+      </if>
+  </select>
+  
 </mapper>
