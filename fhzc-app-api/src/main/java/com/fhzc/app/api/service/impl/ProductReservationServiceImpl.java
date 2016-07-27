@@ -3,9 +3,11 @@ package com.fhzc.app.api.service.impl;
 import com.fhzc.app.api.service.ProductReservationService;
 import com.fhzc.app.dao.mybatis.inter.ProductReservationMapper;
 import com.fhzc.app.dao.mybatis.model.ProductReservation;
+import com.fhzc.app.dao.mybatis.model.ProductReservationExample;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by jiajitao on 2016/7/20.
@@ -28,5 +30,13 @@ public class ProductReservationServiceImpl implements ProductReservationService 
     @Override
     public ProductReservation getProductReservation(Integer id) {
         return productReservationMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<ProductReservation> getUserProductList(Integer customer_id) {
+        ProductReservationExample example = new ProductReservationExample();
+        ProductReservationExample.Criteria criteria = example.createCriteria();
+        criteria.andCustomerIdEqualTo(customer_id);
+        return productReservationMapper.selectByExample(example);
     }
 }

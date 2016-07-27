@@ -4,9 +4,11 @@ import com.fhzc.app.api.service.RightsReservationService;
 import com.fhzc.app.dao.mybatis.inter.RightsReservationMapper;
 import com.fhzc.app.dao.mybatis.model.Rights;
 import com.fhzc.app.dao.mybatis.model.RightsReservation;
+import com.fhzc.app.dao.mybatis.model.RightsReservationExample;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/7/22.
@@ -17,7 +19,7 @@ public class RightsReservationServiceImpl implements RightsReservationService{
     private RightsReservationMapper rightsReservationMapper;
 
     @Override
-    public void addOrUpdateProductReservation(RightsReservation rightsReservation) {
+    public void addOrUpdateRightsReservation(RightsReservation rightsReservation) {
         Integer id= rightsReservation.getId();
         if(id == null){
             rightsReservationMapper.insert(rightsReservation);
@@ -30,4 +32,11 @@ public class RightsReservationServiceImpl implements RightsReservationService{
         return rightsReservationMapper.selectByPrimaryKey(id);
     }
 
+    @Override
+    public List<RightsReservation> getUserRightsList(Integer customer_id) {
+        RightsReservationExample example = new  RightsReservationExample();
+        RightsReservationExample.Criteria criteria = example.createCriteria();
+        criteria.andCustomerIdEqualTo(customer_id);
+        return rightsReservationMapper.selectByExample(example);
+    }
 }

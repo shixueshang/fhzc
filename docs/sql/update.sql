@@ -143,3 +143,38 @@ ALTER TABLE `bank`.`planner`
 CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT ;
 
 DROP TABLE IF EXISTS `bank`.`passport` ;
+ALTER TABLE `bank`.`assets_history`
+ADD COLUMN `amount` INT(11) NULL DEFAULT NULL COMMENT '金额' AFTER `type`;
+
+ALTER TABLE `bank`.`product_reservation`
+ADD COLUMN `apply_time` DATETIME NULL COMMENT '预约时间' AFTER `planner_id`;
+
+ALTER TABLE `bank`.`department`
+ADD COLUMN `leader_uid` INT NULL COMMENT '部门负责人uid' AFTER `status`;
+
+ALTER TABLE `bank`.`planner`
+DROP COLUMN `dept_4`,
+DROP COLUMN `dept_3`,
+DROP COLUMN `dept_2`,
+DROP COLUMN `dept_1`,
+DROP COLUMN `area_uid`,
+DROP COLUMN `mg_uid`,
+DROP COLUMN `sub_mg_uid`,
+DROP COLUMN `md_uid`;
+
+#2016-07-27
+ALTER TABLE `bank`.`contract`
+ADD COLUMN `customer_name` VARCHAR(45) NULL AFTER `customer_id`,
+DROP INDEX `serial_UNIQUE` ;
+
+DROP TABLE `bank`.`contract_tmp`;
+ALTER TABLE `bank`.`assets_history`
+ADD COLUMN `dead_date` DATE NULL COMMENT '截至日期' AFTER `ctime`,
+ADD COLUMN `payment_date` DATE NULL COMMENT '到账日期' AFTER `dead_date`;
+
+ALTER TABLE `bank`.`contract`
+ADD COLUMN `expire_day` DATE NULL DEFAULT NULL COMMENT '合同到期日期' AFTER `product_expire_day`;
+
+ALTER TABLE `bank`.`rights_reservation`
+ADD COLUMN `rights_id` INT NOT NULL COMMENT '预约的权益id' AFTER `id`;
+

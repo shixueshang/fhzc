@@ -11,12 +11,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by jiajitao on 2016/7/22.
@@ -50,7 +49,7 @@ public class RightsReservationApiController extends BaseController {
         }
         rightsReservation.setCtime(new Date());
         rightsReservation.setStatus(APIConstants.RightsOrderStatus.ORDER_ING);
-        rightsReservationService.addOrUpdateProductReservation(rightsReservation);
+        rightsReservationService.addOrUpdateRightsReservation(rightsReservation);
 
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
     }
@@ -76,10 +75,20 @@ public class RightsReservationApiController extends BaseController {
         }else{
             return new ApiJsonResult(APIConstants.API_JSON_RESULT.FAILED,GETSTATUS_FAIL_MESSAGE);
         }
-        rightsReservationService.addOrUpdateProductReservation(rightsReservation);
+        rightsReservationService.addOrUpdateRightsReservation(rightsReservation);
 
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
     }
 
-
+    @RequestMapping(value = "/api/personal/right/order",method = RequestMethod.GET)
+    @ResponseBody
+    public ApiJsonResult personalRightOrder(Integer customer_id){
+        List<RightsReservation> reservationList = rightsReservationService.getUserRightsList(customer_id);
+        List<RightsReservation> result = new ArrayList<>();
+        for(RightsReservation reserv : reservationList) {
+            RightsReservation rights = rightsReservationService.getRightsReservation(reserv.getId());
+            result.add(rights);
+        }
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
+    }
 }
