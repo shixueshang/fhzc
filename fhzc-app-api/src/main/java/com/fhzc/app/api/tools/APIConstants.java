@@ -2,18 +2,20 @@ package com.fhzc.app.api.tools;
 
 public class APIConstants {
 
-	public static String UMENG_PUSH_APPKEY = "568e2fd0e0f55af072000aa6";
-	public static String UMENG_PUSH_APP_MASTER_SECRET = "kqtyxz5j9mvxvr0tbcjae15epaci8xp4";
+	public static final String UMENG_PUSH_APPKEY = "568e2fd0e0f55af072000aa6";
+	public static final String UMENG_PUSH_APP_MASTER_SECRET = "kqtyxz5j9mvxvr0tbcjae15epaci8xp4";
 	
-	public static String UMENG_PUSH_APPKEY_ANDROID = "569f50fce0f55a65e900106a";
-	public static String UMENG_PUSH_APP_MASTER_SECRET_ANDROID = "5hj1s7a94o8mgsqvyg6rpccdcwuydozv";
+	public static final String UMENG_PUSH_APPKEY_ANDROID = "569f50fce0f55a65e900106a";
+	public static final String UMENG_PUSH_APP_MASTER_SECRET_ANDROID = "5hj1s7a94o8mgsqvyg6rpccdcwuydozv";
 	
-	public static String PARAMETER_KEY_X_ACCESS_TOKEN = "X-Access-Token";
+	public static final String PARAMETER_KEY_X_ACCESS_TOKEN = "X-Access-Token";
 	
-	public static String MESSAGE_NEED_LOGIN = "未登录或登录信息错误";
-	public static String MESSAGE_QUESTION_INVALID = "问题信息不存在";
-	
-	public static String CONFIG_KEY_NEED_CHECK_ACCESS_TOKEN = "need_check_access_token";
+	public static final String MESSAGE_NEED_LOGIN = "未登录或登录信息错误";
+
+    /**
+     * 免登录有效时间7天
+     */
+    public static final long EXPIRE_TIMESTAMP = 7 * 24 * 60 * 60 * 1000;
 
 
     /**
@@ -102,6 +104,22 @@ public class APIConstants {
         public static int RESULT_YES = 1;
         public static String TYPE_SELF = "self";
         public static String TYPE_INVITE = "invite";
+
+    }
+
+    /**
+     * 用户角色
+     */
+    public static class USER_ROIE{
+        /**
+         * 理财师
+         */
+        public static final String PLANNER = "planner";
+
+        /**
+         * 客户
+         */
+        public static final String CUSTOMER = "customer";
 
     }
 }

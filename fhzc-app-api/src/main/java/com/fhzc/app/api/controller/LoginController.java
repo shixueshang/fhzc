@@ -10,6 +10,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by lihongde on 2016/7/20 17:21
@@ -57,12 +61,17 @@ public class LoginController extends BaseController {
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
             return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST, "用户名/密码不能为空");
         }
-        Subject user = SecurityUtils.getSubject();
+        Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(username, DigestUtils.md5Hex(password).toCharArray());
         token.setRememberMe(true);
         try {
-            user.login(token);
-            return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
+            subject.login(token);
+            User user = userService.getUserByLogin(username);
+            Session session = subject.getSession(true);
+            session.setAttribute("currentUser", user);
+            Map<String ,Object> result = new HashMap<String ,Object>();
+            result.put("loginTime", new Date().getTime());
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
         } catch (UnknownAccountException e) {
             return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST, "账号不存在");
         } catch (IncorrectCredentialsException e) {
