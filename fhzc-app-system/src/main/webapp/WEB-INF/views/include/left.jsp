@@ -35,6 +35,10 @@
                         <shiro:hasPermission name="/business/product/pub"><li>
                                 <a href="<%=contextPath%>/business/product/pub">新增产品</a>
                             </li></shiro:hasPermission>
+                        <shiro:hasPermission name="/business/product/order/list">
+                            <li>
+                                <a href="<%=contextPath%>/business/product/order/list">产品预约列表</a>
+                            </li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>
 
