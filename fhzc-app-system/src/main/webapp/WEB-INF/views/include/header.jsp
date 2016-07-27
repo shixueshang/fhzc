@@ -61,6 +61,8 @@
     <script type="text/javascript" src="<%=contextPath%>/assets/js/jquery.pulsate.min.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/assets/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="<%=contextPath%>/assets/bootstrap/js/bootstrap-dialog.js"></script>
+
 
     <link href="<%=contextPath%>/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" /> <!-- bootstrap默认css -->
     <link href="<%=contextPath%>/assets/css/metro.css" rel="stylesheet" /> <!-- 控制button的显示样式，如果不引入的话，则为bootstrap默认样式 -->

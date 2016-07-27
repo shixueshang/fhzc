@@ -1,5 +1,6 @@
 package com.fhzc.app.system.controller.business;
 
+import com.alibaba.fastjson.JSON;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
@@ -7,6 +8,7 @@ import com.fhzc.app.system.commons.util.FileUtil;
 import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.dao.mybatis.model.Report;
+import com.fhzc.app.system.service.DictionaryService;
 import com.fhzc.app.system.service.ReportService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,18 +31,26 @@ public class ReportController extends BaseController {
     @Resource
     private ReportService reportService;
 
+    @Resource
+    private DictionaryService dictionaryService;
+
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView listReport(){
         ModelAndView mav = new ModelAndView("business/report/list");
         PageableResult<Report> pageableResult =  reportService.findPageReports(page, size);
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("reports", pageableResult.getItems());
+        mav.addObject("reportTypes", dictionaryService.findDicByType(Const.DIC_CAT.REPORT_CATEGORY));
+        mav.addObject("url", "business/report");
         return mav;
     }
 
     @RequestMapping(value = "/pub")
-    public String pub(){
-        return "business/report/add";
+    public ModelAndView pub(){
+        ModelAndView mav = new ModelAndView("business/report/add");
+        mav.addObject("reportTypes", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.REPORT_CATEGORY)));
+        mav.addObject("url", "business/report");
+        return mav;
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -53,6 +63,12 @@ public class ReportController extends BaseController {
         report.setCtime(new Date());
         report.setIsDel(Const.YES_OR_NO.NO);
         reportService.addOrUpdateReport(report);
+
+        PageableResult<Report> pageableResult =  reportService.findPageReports(page, size);
+        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
+        mav.addObject("reports", pageableResult.getItems());
+        mav.addObject("reportTypes", dictionaryService.findDicByType(Const.DIC_CAT.REPORT_CATEGORY));
+        mav.addObject("url", "business/report");
         return mav;
     }
 

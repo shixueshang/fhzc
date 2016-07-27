@@ -2,6 +2,8 @@ package com.fhzc.app.system.commons.shiro;
 
 import com.fhzc.app.dao.mybatis.model.Admin;
 import com.fhzc.app.dao.mybatis.model.SystemModule;
+import com.fhzc.app.dao.mybatis.model.SystemRoleModule;
+import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.service.AdminModuleService;
 import com.fhzc.app.system.service.AdminService;
 import org.apache.commons.lang3.StringUtils;
@@ -53,7 +55,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
         Admin shiroAdmin = (Admin) principals.getPrimaryPrincipal();
         Set<String> urlSet = new HashSet<String>();
         //超级管理员获得所有权限
-        if(shiroAdmin.getLogin().equals("admin")){
+        if(shiroAdmin.getLogin().equals(Const.ADMIN_USER)){
             List<SystemModule> modules = adminModuleService.findAllModules();
             for(SystemModule module : modules){
                 if (StringUtils.isNoneBlank(module.getUrl())) {
@@ -61,16 +63,16 @@ public class ShiroDbRealm extends AuthorizingRealm {
                 }
             }
         }else{
-            /*List<SystemAdminModule> roleResourceList = adminModuleService.findModulesByAdminId(shiroAdmin.getId());
-            for (SystemAdminModule systemAdminModule : roleResourceList) {
+            List<SystemRoleModule> roleResourceList = adminModuleService.findModulesByAdminRole(shiroAdmin.getRole());
+            for (SystemRoleModule systemAdminModule : roleResourceList) {
                 SystemModule module = adminModuleService.getSystemModule(systemAdminModule.getModuleId());
                 if (StringUtils.isNoneBlank(module.getUrl())) {
                     urlSet.add(module.getUrl());
                 }
-            }*/
+            }
         }
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         info.addStringPermissions(urlSet);
-        return null;
+        return info;
     }
 }

@@ -38,7 +38,7 @@ public class ProductServiceImpl implements ProductService {
         ProductExample example = new ProductExample();
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<Product> list = productMapper.selectByExampleWithRowbounds(example, rowBounds);
-        return new PageableResult<Product>(page, size, list.size(), list);
+        return new PageableResult<Product>(page, size, productMapper.countByExample(example), list);
     }
 
     @Override

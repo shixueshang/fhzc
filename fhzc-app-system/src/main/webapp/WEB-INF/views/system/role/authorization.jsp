@@ -148,7 +148,7 @@
                                         </c:forEach>
 
                                             <div class="form-actions">
-                                                <button  onclick="submitForm()" class="btn blue"><i class="icon-ok"></i> 添加</button>
+                                                <button type="button" onclick="submitForm()" class="btn blue"><i class="icon-ok"></i> 添加</button>
                                             </div>
                                         </form>
                                         <!-- END FORM-->
@@ -226,20 +226,20 @@
     function submitForm(){
 
         if($('input[type="checkbox"]:checked').length == 0){
-            showMsg("请至少选中一个权限", false);
-            return false;
+            BootstrapDialog.alert({
+                title: '提示',
+                message: '请至少选择一个权限!'
+            });
         }
 
         var roleModules = new Array();
-        var roleModule = {};
 
         $('input[type="checkbox"]:checked').each(function(){
+            var roleModule = {};
             roleModule.adminRoleId = '${role.roleId}';
             roleModule.moduleId = $(this).val();
             roleModules.push(roleModule);
         });
-
-        console.info(roleModules);
 
         $.ajax({
             url:"<%=contextPath%>/system/role/authorization/confirm",
@@ -248,7 +248,7 @@
             dataType:"json",
             contentType:"application/json",
             success:function(data){
-
+                window.location.href = "<%=contextPath%>/system/role/list";
             },error:function(data){
 
             }

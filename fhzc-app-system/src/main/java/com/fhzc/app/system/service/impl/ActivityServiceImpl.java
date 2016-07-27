@@ -23,10 +23,9 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     public PageableResult<Activity> findPageActivies(int page, int size) {
         ActivityExample example = new ActivityExample();
-        ActivityExample.Criteria criteria = example.createCriteria();
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<Activity> list = activityMapper.selectByExampleWithBLOBsWithRowbounds(example, rowBounds);
-        return new PageableResult<Activity>(page, size, list.size(), list);
+        return new PageableResult<Activity>(page, size, activityMapper.countByExample(example), list);
     }
 
     @Override

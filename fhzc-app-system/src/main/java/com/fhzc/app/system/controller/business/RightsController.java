@@ -1,5 +1,6 @@
 package com.fhzc.app.system.controller.business;
 
+import com.alibaba.fastjson.JSON;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
@@ -7,6 +8,8 @@ import com.fhzc.app.system.commons.util.FileUtil;
 import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.dao.mybatis.model.Rights;
+import com.fhzc.app.system.service.DepartmentService;
+import com.fhzc.app.system.service.DictionaryService;
 import com.fhzc.app.system.service.RightsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +31,12 @@ public class RightsController extends BaseController{
     @Resource
     private RightsService rightsService;
 
+    @Resource
+    private DictionaryService dictionaryService;
+
+    @Resource
+    private DepartmentService departmentService;
+
     /**
      * 权益列表
      * @return
@@ -38,12 +47,21 @@ public class RightsController extends BaseController{
         PageableResult<Rights> pageableResult = rightsService.findPageRights(page, size);
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("rights", pageableResult.getItems());
+        mav.addObject("customerLevel", dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL));
+        mav.addObject("rightsCategory", dictionaryService.findDicByType(Const.DIC_CAT.RIGHTS_CATEGORY));
+        mav.addObject("departments", departmentService.findDeptByParent(Const.ROOT_DEPT_ID));
+        mav.addObject("url", "business/rights");
         return mav;
     }
 
     @RequestMapping(value = "/pub")
-    public String preAdd(){
-        return "business/rights/add";
+    public ModelAndView preAdd(){
+        ModelAndView mav = new ModelAndView("business/rights/add");
+        mav.addObject("customerLevel", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL)));
+        mav.addObject("rightsCategory", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.RIGHTS_CATEGORY)));
+        mav.addObject("departments", JSON.toJSON(departmentService.findDeptByParent(Const.ROOT_DEPT_ID)));
+        mav.addObject("url", "business/rights");
+        return mav;
     }
 
     /**
@@ -67,6 +85,7 @@ public class RightsController extends BaseController{
         PageableResult<Rights> pageableResult = rightsService.findPageRights(page, size);
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("rights", pageableResult.getItems());
+        mav.addObject("url", "business/rights");
         return mav;
     }
 
@@ -79,6 +98,9 @@ public class RightsController extends BaseController{
     public ModelAndView detail(@PathVariable(value = "id") Integer id){
         ModelAndView mav = new ModelAndView("business/rights/add");
         mav.addObject("right", rightsService.getRights(id));
+        mav.addObject("departments", JSON.toJSON(departmentService.findDeptByParent(1)));
+        mav.addObject("customerLevel", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL)));
+        mav.addObject("rightsCategory", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.RIGHTS_CATEGORY)));
         return mav;
     }
 

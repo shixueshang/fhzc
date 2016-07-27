@@ -88,7 +88,6 @@
                                                 <label class="control-label">权益类型<span class="required">*</span></label>
                                                 <div class="controls">
                                                     <select class="large m-wrap" name="cid" data-required="1" tabindex="1">
-                                                        <option  value="1">健康管理</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -96,20 +95,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">投放分公司</label>
                                                 <div class="controls">
-                                                    <select name="departments"  data-placeholder="分公司信息" class="chosen span6" multiple="multiple" tabindex="6">
-                                                        <option value=""></option>
-                                                        <optgroup label="NFC EAST">
-                                                            <option>Dallas Cowboys</option>
-                                                            <option>New York Giants</option>
-                                                            <option>Philadelphia Eagles</option>
-                                                            <option>Washington Redskins</option>
-                                                        </optgroup>
-                                                        <optgroup label="NFC NORTH">
-                                                            <option selected>Chicago Bears</option>
-                                                            <option>Detroit Lions</option>
-                                                            <option>Green Bay Packers</option>
-                                                            <option>Minnesota Vikings</option>
-                                                        </optgroup>
+                                                    <select name="departments" id="departments"  class="large m-wrap"  tabindex="1">
                                                     </select>
                                                 </div>
 
@@ -127,9 +113,6 @@
                                                 <label class="control-label">客户等级要求</label>
                                                 <div class="controls">
                                                     <select name="level" class="large m-wrap"  tabindex="1">
-                                                        <option  value="3">金卡客户</option>
-                                                        <option  value="2">客户</option>
-                                                        <option  value="1">准客户</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -206,6 +189,36 @@
 <script type="text/javascript" src="<%=contextPath%>/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 <script>
     $(function(){
+
+        var rightType = '${right.cid}';
+        var categorys = '${rightsCategory}';
+        var categoryJson= $.parseJSON(categorys);
+        $.each(categoryJson, function(i,val){
+            $("#cid").append("<option value='"+val.value+"'>"+val.key+"</option>");
+            if(rightType == val.value){
+                $("#cid").val(rightType);
+            }
+        });
+
+        var level = '${right.level}';
+        var customerLevel = '${customerLevel}';
+        var levelJson= $.parseJSON(customerLevel);
+        $.each(levelJson, function(i,val){
+            $("#level").append("<option value='"+val.value+"'>"+val.key+"</option>");
+            if(level == val.value){
+                $("#level").val(level);
+            }
+        });
+
+        var throwDepartment = '${product.throwDepartment}';
+        var depts = '${departments}';
+        var deptsJson= $.parseJSON(depts);
+        $.each(deptsJson, function(i,val){
+            $("#departments").append("<option value='"+val.id+"'>"+val.name+"</option>");
+            if(throwDepartment == val.id){
+                $("#departments").val(throwDepartment);
+            }
+        });
 
         var dispalyImg = $("#default_img");
         var imgUrl = "<%=contextPath%>${right.cover}";

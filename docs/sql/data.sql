@@ -95,7 +95,12 @@ INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_defaul
 INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('39', 'risk_level', '风险评级', 'A', '1', '0', '0', '0');
 INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('40', 'risk_level', '风险评级', 'B', '2', '0', '0', '0');
 INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('41', 'risk_level', '风险评级', 'C', '3', '0', '0', '0');
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('42', 'passport', '证件类型', '身份证', 'A', '0', '0', '0');
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('43', 'passport', '证件类型', '台胞证', 'B', '0', '0', '0');
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('44', 'passport', '证件类型', '回乡证', 'C', '0', '0', '0');
 
+
+TRUNCATE TABLE `areas`;
 INSERT INTO `bank`.`areas` (`area_name`) VALUES ('北京');
 INSERT INTO `bank`.`areas` (`area_name`) VALUES ('上海');
 INSERT INTO `bank`.`areas` (`area_name`) VALUES ('广州');
@@ -107,6 +112,7 @@ INSERT INTO `bank`.`areas` (`area_name`) VALUES ('苏州');
 INSERT INTO `bank`.`areas` (`area_name`) VALUES ('成都');
 INSERT INTO `bank`.`areas` (`area_name`) VALUES ('重庆');
 
+TRUNCATE TABLE `user_role`;
 INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('总经理');
 INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('分公司总经理');
 INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('分公司副总经理');
