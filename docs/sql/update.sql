@@ -141,3 +141,22 @@ ADD COLUMN `description` VARCHAR(500) NULL COMMENT '描述' AFTER `role_name` ,
 ADD COLUMN `status` INT(1) NULL COMMENT '状态0正常1禁用' AFTER `description`;
 ALTER TABLE `bank`.`planner`
 CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT ;
+
+ALTER TABLE `bank`.`assets_history`
+ADD COLUMN `amount` INT(11) NULL DEFAULT NULL COMMENT '金额' AFTER `type`;
+
+ALTER TABLE `bank`.`product_reservation`
+ADD COLUMN `apply_time` DATETIME NULL COMMENT '预约时间' AFTER `planner_id`;
+
+ALTER TABLE `bank`.`department`
+ADD COLUMN `leader_uid` INT NULL COMMENT '部门负责人uid' AFTER `status`;
+
+ALTER TABLE `bank`.`planner`
+DROP COLUMN `dept_4`,
+DROP COLUMN `dept_3`,
+DROP COLUMN `dept_2`,
+DROP COLUMN `dept_1`,
+DROP COLUMN `area_uid`,
+DROP COLUMN `mg_uid`,
+DROP COLUMN `sub_mg_uid`,
+DROP COLUMN `md_uid`;
