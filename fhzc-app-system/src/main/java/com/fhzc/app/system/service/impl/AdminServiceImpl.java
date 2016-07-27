@@ -41,7 +41,7 @@ public class AdminServiceImpl implements AdminService{
         AdminExample example = new AdminExample();
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<Admin> list = adminMapper.selectByExampleWithRowbounds(example, rowBounds);
-        return new PageableResult<Admin>(page, size, list.size(), list);
+        return new PageableResult<Admin>(page, size, adminMapper.countByExample(example), list);
     }
 
     @Override

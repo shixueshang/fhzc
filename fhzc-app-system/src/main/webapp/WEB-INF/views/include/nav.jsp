@@ -34,7 +34,7 @@
                         <li class="dropdown user">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img alt="" width="29" height="29" src="<%=contextPath%>/assets/images/avatar.png" />
-                                <span class="username"><shiro:principal property="login"></shiro:principal></span>
+                                <span class="username"><shiro:principal property="realname"></shiro:principal></span>
                                 <i class="icon-angle-down"></i>
                             </a>
                             <ul class="dropdown-menu">

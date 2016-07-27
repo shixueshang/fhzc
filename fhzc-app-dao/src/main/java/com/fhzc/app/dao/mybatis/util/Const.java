@@ -5,14 +5,19 @@ public class Const {
     /**
      * 聊天图片存放地址
      */
-    public static String CONFIG_KEY_IMAGE_SAVE_PATH =  "chat_image_save_path";
+    public static final String CONFIG_KEY_IMAGE_SAVE_PATH =  "chat_image_save_path";
 
-    public static String CONFIG_KEY_SYSTEM_IMAGE_SAVE_PATH =  "system_image_save_path";
+    public static final String CONFIG_KEY_SYSTEM_IMAGE_SAVE_PATH =  "system_image_save_path";
 
     /**
      * 顶级机构id
      */
-    public static Integer ROOT_DEPT_ID = 1;
+    public static final Integer ROOT_DEPT_ID = 1;
+
+    /**
+     * 超级管理员
+     */
+    public static final String ADMIN_USER = "admin";
 
     /**
      * 默认分页起始页
@@ -90,11 +95,26 @@ public class Const {
         /**
          * 正常状态
          */
-        public static Integer DATA_NORMAL = 0;
+        public static final Integer DATA_NORMAL = 0;
 
         /**
          * 删除状态
          */
-        public static Integer DATA_DELETE = 1;
+        public static final Integer DATA_DELETE = 1;
+    }
+
+    /**
+     * 数据库读写权限
+     */
+    public static class READ_WRITE{
+        /**
+         * 只读
+         */
+        public static final String READ_ONLY = "r";
+
+        /**
+         * 读写
+         */
+        public static final String READ_AND_WRITE = "rw";
     }
 }

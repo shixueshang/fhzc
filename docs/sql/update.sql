@@ -142,6 +142,7 @@ ADD COLUMN `status` INT(1) NULL COMMENT '状态0正常1禁用' AFTER `descriptio
 ALTER TABLE `bank`.`planner`
 CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT ;
 
+DROP TABLE IF EXISTS `bank`.`passport` ;
 ALTER TABLE `bank`.`assets_history`
 ADD COLUMN `amount` INT(11) NULL DEFAULT NULL COMMENT '金额' AFTER `type`;
 

@@ -88,21 +88,10 @@
                                                 <label class="control-label">报告类型</label>
                                                 <div class="controls">
                                                     <select class="large m-wrap" name="cid" id="reportType" data-required="1" tabindex="1">
-                                                        <option  value="1">每周点评</option>
-                                                        <option  value="2">复华财经新视点</option>
-                                                        <option  value="3">复华资产研究报告</option>
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="control-group">
-                                                <label class="control-label">报告状态</label>
-                                                <div class="controls">
-                                                    <select class="large m-wrap" name="isDisplay" tabindex="1">
-                                                        <option  value="1">显示</option>
-                                                        <option  value="0">不显示</option>
-                                                    </select>
-                                                </div>
-                                            </div>
+
                                             <div class="control-group">
                                                 <label class="control-label">报告摘要</label>
                                                 <div class="controls">
@@ -139,6 +128,21 @@
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">是否显示</label>
+                                                <div class="controls">
+                                                    <label class="radio">
+                                                        <input type="radio" name="isDisplay" value="1" />
+                                                        显示
+                                                    </label>
+                                                    <label class="radio">
+                                                        <input type="radio" name="isDisplay" value="0" checked />
+                                                        不显示
+                                                    </label>
+                                                </div>
+                                            </div>
+
                                             <div class="control-group">
                                                 <label class="control-label">是否推荐(精选)</label>
                                                 <div class="controls">
@@ -179,7 +183,33 @@
     $(function(){
 
         var reportType = '${report.cid}';
-        $('#reportType').val(reportType);
+        var reportTypes = '${reportTypes}';
+        var pTypeJson= $.parseJSON(reportTypes);
+        $.each(pTypeJson, function(i,val){
+            $("#reportType").append("<option value='"+val.value+"'>"+val.key+"</option>");
+            if(reportType == val.value){
+                $("#reportType").val(reportType);
+            }
+        });
+
+
+        var isDisplay = '${report.isDisplay}';
+        if(isDisplay == 1 || isDisplay == '' || isDisplay == null){
+            $.uniform.update($("input[name='isDisplay'][value='1']").attr("checked", true));
+            $.uniform.update($("input[name='isDisplay'][value='0']").attr("checked", false));
+        }else{
+            $.uniform.update($("input[name='isDisplay'][value='1']").attr("checked", false));
+            $.uniform.update($("input[name='isDisplay'][value='0']").attr("checked", true));
+        }
+
+        var isRecommend = '${report.isRecommend}';
+        if(isRecommend == 1 || isRecommend == '' || isRecommend == null){
+            $.uniform.update($("input[name='isRecommend'][value='1']").attr("checked", true));
+            $.uniform.update($("input[name='isRecommend'][value='0']").attr("checked", false));
+        }else{
+            $.uniform.update($("input[name='isRecommend'][value='1']").attr("checked", false));
+            $.uniform.update($("input[name='isRecommend'][value='0']").attr("checked", true));
+        }
 
         var dispalyImg = $("#default_img");
         var imgUrl = "<%=contextPath%>${report.cover}";

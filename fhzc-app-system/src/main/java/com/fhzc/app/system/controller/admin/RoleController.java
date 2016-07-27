@@ -5,6 +5,7 @@ import com.fhzc.app.dao.mybatis.model.AdminRole;
 import com.fhzc.app.dao.mybatis.model.SystemRoleModule;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
+import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.AdminRoleService;
@@ -105,14 +106,15 @@ public class RoleController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/authorization/confirm", method = RequestMethod.POST)
+    @ResponseBody
     public AjaxJson confirm(@RequestBody List<SystemRoleModule> roleModules){
-        ModelAndView mav = new ModelAndView("system/role/list");
 
         //删除该角色以前的权限
         resourceService.deleteModuleByRole(roleModules.get(0).getAdminRoleId());
 
         //重新授权
         for(SystemRoleModule roleModule : roleModules){
+            roleModule.setMode(Const.READ_WRITE.READ_AND_WRITE);
             resourceService.addRoleModule(roleModule);
         }
         return new AjaxJson(true);
