@@ -1,6 +1,8 @@
 package com.fhzc.app.system.service;
 
+import com.fhzc.app.dao.mybatis.bo.ActivityApplyBo;
 import com.fhzc.app.dao.mybatis.model.Activity;
+import com.fhzc.app.dao.mybatis.model.ActivityApplyQuery;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 
 /**
@@ -28,4 +30,13 @@ public interface ActivityService {
      * @return
      */
     Activity getActivity(Integer id);
+
+    /**
+     * 获得活动报名列表
+     * @param query 过滤条件
+     * @param page
+     * @param size
+     * @return
+     */
+    PageableResult<ActivityApplyBo> findPageActivityApplies(ActivityApplyQuery query, int page, int size);
 }

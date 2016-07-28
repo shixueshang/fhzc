@@ -31,7 +31,14 @@ public class RightsServiceImpl implements RightsService {
 
     @Override
     public Rights getRights(Integer id) {
-        return rightsMapper.selectByPrimaryKey(id);
+        RightsExample example = new RightsExample();
+        RightsExample.Criteria criteria = example.createCriteria();
+        criteria.andIdEqualTo(id);
+        if(rightsMapper.countByExample(example) > 0) {
+            return rightsMapper.selectByPrimaryKey(id);
+        }else{
+            return null;
+        }
     }
 
 

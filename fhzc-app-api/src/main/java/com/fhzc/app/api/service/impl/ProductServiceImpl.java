@@ -54,7 +54,15 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product getProduct(Integer pid) {
-        return productMapper.selectByPrimaryKey(pid);
+        ProductExample example = new ProductExample();
+        ProductExample.Criteria criteria = example.createCriteria();
+        criteria.andPidEqualTo(pid);
+        if(productMapper.countByExample(example) > 0){
+            return productMapper.selectByPrimaryKey(pid);
+        }else{
+            return null;
+        }
+
     }
 
     @Override

@@ -41,7 +41,15 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public Activity getActivity(Integer id) {
-        return activityMapper.selectByPrimaryKey(id);
+        ActivityExample example = new ActivityExample();
+        ActivityExample.Criteria criteria = example.createCriteria();
+        criteria.andIdEqualTo(id);
+        if(activityMapper.countByExample(example) > 0){
+            return activityMapper.selectByPrimaryKey(id);
+        }else{
+            return null;
+        }
+
     }
 
 

@@ -188,3 +188,15 @@ CHANGE COLUMN `status` `status` INT(1) NULL DEFAULT NULL COMMENT '预约状态 0
 ALTER TABLE `bank`.`activity_apply`
 CHANGE COLUMN `customer_id` `customer_id` INT NOT NULL ,
 CHANGE COLUMN `planner_id` `planner_id` INT NULL DEFAULT NULL ;
+
+ALTER TABLE `bank`.`focus`
+ADD COLUMN `status` INT NULL DEFAULT 0 COMMENT '关注状态 0 未关注 1 关注' AFTER `ctime`;
+
+ALTER TABLE `bank`.`focus`
+DROP COLUMN `ftype`;
+
+ALTER TABLE `bank`.`focus`
+ADD COLUMN `ftype` ENUM('product','report','rights','activity') NULL AFTER `fid`;
+
+ALTER TABLE `bank`.`focus`
+ADD UNIQUE INDEX `fcs_uniq` (`uid` ASC, `fid` ASC, `ftype` ASC);

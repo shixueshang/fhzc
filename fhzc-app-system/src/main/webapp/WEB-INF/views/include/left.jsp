@@ -57,6 +57,9 @@
                         <shiro:hasPermission name="/business/activity/pub">   <li>
                                 <a href="<%=contextPath%>/business/activity/pub">新增活动</a>
                             </li></shiro:hasPermission>
+                            <shiro:hasPermission name="/business/activity/registers">   <li>
+                                <a href="<%=contextPath%>/business/activity/registers">报名管理</a>
+                            </li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>
 

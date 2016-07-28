@@ -46,10 +46,10 @@
 
         <!--生成对应表及类名 -->
 
-        <table tableName="admin_role"
+        <table tableName="level"
                delimitAllColumns="true"
                delimitIdentifiers="true"
-               domainObjectName="AdminRole">
+               domainObjectName="Level">
             <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
         </table>
 
