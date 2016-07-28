@@ -7,9 +7,9 @@ public class ActivityApply {
 
     private Integer activityId;
 
-    private String customerId;
+    private Integer customerId;
 
-    private String plannerId;
+    private Integer plannerId;
 
     private String phone;
 
@@ -18,6 +18,10 @@ public class ActivityApply {
     private Integer result;
 
     private Date ctime;
+
+    private Integer isContact;
+
+    private Integer isSure;
 
     public Integer getId() {
         return id;
@@ -35,20 +39,20 @@ public class ActivityApply {
         this.activityId = activityId;
     }
 
-    public String getCustomerId() {
+    public Integer getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId == null ? null : customerId.trim();
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
     }
 
-    public String getPlannerId() {
+    public Integer getPlannerId() {
         return plannerId;
     }
 
-    public void setPlannerId(String plannerId) {
-        this.plannerId = plannerId == null ? null : plannerId.trim();
+    public void setPlannerId(Integer plannerId) {
+        this.plannerId = plannerId;
     }
 
     public String getPhone() {
@@ -81,5 +85,21 @@ public class ActivityApply {
 
     public void setCtime(Date ctime) {
         this.ctime = ctime;
+    }
+
+    public Integer getIsContact() {
+        return isContact;
+    }
+
+    public void setIsContact(Integer isContact) {
+        this.isContact = isContact;
+    }
+
+    public Integer getIsSure() {
+        return isSure;
+    }
+
+    public void setIsSure(Integer isSure) {
+        this.isSure = isSure;
     }
 }

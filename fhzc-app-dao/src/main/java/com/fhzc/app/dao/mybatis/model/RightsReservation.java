@@ -5,6 +5,8 @@ import java.util.Date;
 public class RightsReservation {
     private Integer id;
 
+    private Integer rightsId;
+
     private Integer customerId;
 
     private Integer plannerId;
@@ -13,7 +15,7 @@ public class RightsReservation {
 
     private String detail;
 
-    private Integer scoreCost;
+    private String scoreCost;
 
     private Integer status;
 
@@ -27,6 +29,14 @@ public class RightsReservation {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getRightsId() {
+        return rightsId;
+    }
+
+    public void setRightsId(Integer rightsId) {
+        this.rightsId = rightsId;
     }
 
     public Integer getCustomerId() {
@@ -61,12 +71,12 @@ public class RightsReservation {
         this.detail = detail == null ? null : detail.trim();
     }
 
-    public Integer getScoreCost() {
+    public String getScoreCost() {
         return scoreCost;
     }
 
-    public void setScoreCost(Integer scoreCost) {
-        this.scoreCost = scoreCost;
+    public void setScoreCost(String scoreCost) {
+        this.scoreCost = scoreCost == null ? null : scoreCost.trim();
     }
 
     public Integer getStatus() {
