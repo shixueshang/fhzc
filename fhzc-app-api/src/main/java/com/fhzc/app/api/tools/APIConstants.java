@@ -122,4 +122,10 @@ public class APIConstants {
         public static final String CUSTOMER = "customer";
 
     }
+
+    public static class FocusStatus {
+        public static final int On = 1;
+        public static final int Off = 0;
+
+    }
 }

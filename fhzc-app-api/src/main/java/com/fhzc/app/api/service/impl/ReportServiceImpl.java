@@ -40,6 +40,13 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public Report getReport(Integer id) {
-        return reportMapper.selectByPrimaryKey(id);
+        ReportExample example = new ReportExample();
+        ReportExample.Criteria criteria = example.createCriteria();
+        criteria.andIdEqualTo(id);
+        if(reportMapper.countByExample(example) > 0) {
+            return reportMapper.selectByPrimaryKey(id);
+        }else{
+            return null;
+        }
     }
 }
