@@ -3,11 +3,12 @@
 <mapper namespace="com.fhzc.app.dao.mybatis.inter.RightsReservationMapper" >
   <resultMap id="BaseResultMap" type="com.fhzc.app.dao.mybatis.model.RightsReservation" >
     <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="rights_id" property="rightsId" jdbcType="INTEGER" />
     <result column="customer_id" property="customerId" jdbcType="INTEGER" />
     <result column="planner_id" property="plannerId" jdbcType="INTEGER" />
     <result column="mark_date" property="markDate" jdbcType="TIMESTAMP" />
     <result column="detail" property="detail" jdbcType="VARCHAR" />
-    <result column="score_cost" property="scoreCost" jdbcType="INTEGER" />
+    <result column="score_cost" property="scoreCost" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="memo" property="memo" jdbcType="VARCHAR" />
     <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
@@ -71,8 +72,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    `id`, `customer_id`, `planner_id`, `mark_date`, `detail`, `score_cost`, `status`, 
-    `memo`, `ctime`
+    `id`, `rights_id`, `customer_id`, `planner_id`, `mark_date`, `detail`, `score_cost`, 
+    `status`, `memo`, `ctime`
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.RightsReservationExample" >
     select
@@ -108,12 +109,14 @@
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into `rights_reservation` (`customer_id`, `planner_id`, `mark_date`, 
-      `detail`, `score_cost`, `status`, 
-      `memo`, `ctime`)
-    values (#{customerId,jdbcType=INTEGER}, #{plannerId,jdbcType=INTEGER}, #{markDate,jdbcType=TIMESTAMP}, 
-      #{detail,jdbcType=VARCHAR}, #{scoreCost,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
-      #{memo,jdbcType=VARCHAR}, #{ctime,jdbcType=TIMESTAMP})
+    insert into `rights_reservation` (`rights_id`, `customer_id`, `planner_id`, 
+      `mark_date`, `detail`, `score_cost`, 
+      `status`, `memo`, `ctime`
+      )
+    values (#{rightsId,jdbcType=INTEGER}, #{customerId,jdbcType=INTEGER}, #{plannerId,jdbcType=INTEGER}, 
+      #{markDate,jdbcType=TIMESTAMP}, #{detail,jdbcType=VARCHAR}, #{scoreCost,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{memo,jdbcType=VARCHAR}, #{ctime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.RightsReservation" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
@@ -121,6 +124,9 @@
     </selectKey>
     insert into `rights_reservation`
     <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rightsId != null" >
+        `rights_id`,
+      </if>
       <if test="customerId != null" >
         `customer_id`,
       </if>
@@ -147,6 +153,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rightsId != null" >
+        #{rightsId,jdbcType=INTEGER},
+      </if>
       <if test="customerId != null" >
         #{customerId,jdbcType=INTEGER},
       </if>
@@ -163,7 +172,7 @@
         #{scoreCost,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
-        #{status,jdbcType=TINYINT},
+        #{status,jdbcType=INTEGER},
       </if>
       <if test="memo != null" >
         #{memo,jdbcType=VARCHAR},
@@ -185,6 +194,9 @@
       <if test="record.id != null" >
         `id` = #{record.id,jdbcType=INTEGER},
       </if>
+      <if test="record.rightsId != null" >
+        `rights_id` = #{record.rightsId,jdbcType=INTEGER},
+      </if>
       <if test="record.customerId != null" >
         `customer_id` = #{record.customerId,jdbcType=INTEGER},
       </if>
@@ -201,7 +213,7 @@
         `score_cost` = #{record.scoreCost,jdbcType=VARCHAR},
       </if>
       <if test="record.status != null" >
-        `status` = #{record.status,jdbcType=TINYINT},
+        `status` = #{record.status,jdbcType=INTEGER},
       </if>
       <if test="record.memo != null" >
         `memo` = #{record.memo,jdbcType=VARCHAR},
@@ -217,12 +229,13 @@
   <update id="updateByExample" parameterType="map" >
     update `rights_reservation`
     set `id` = #{record.id,jdbcType=INTEGER},
+      `rights_id` = #{record.rightsId,jdbcType=INTEGER},
       `customer_id` = #{record.customerId,jdbcType=INTEGER},
       `planner_id` = #{record.plannerId,jdbcType=INTEGER},
       `mark_date` = #{record.markDate,jdbcType=TIMESTAMP},
       `detail` = #{record.detail,jdbcType=VARCHAR},
       `score_cost` = #{record.scoreCost,jdbcType=VARCHAR},
-      `status` = #{record.status,jdbcType=TINYINT},
+      `status` = #{record.status,jdbcType=INTEGER},
       `memo` = #{record.memo,jdbcType=VARCHAR},
       `ctime` = #{record.ctime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
@@ -232,6 +245,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.fhzc.app.dao.mybatis.model.RightsReservation" >
     update `rights_reservation`
     <set >
+      <if test="rightsId != null" >
+        `rights_id` = #{rightsId,jdbcType=INTEGER},
+      </if>
       <if test="customerId != null" >
         `customer_id` = #{customerId,jdbcType=INTEGER},
       </if>
@@ -248,7 +264,7 @@
         `score_cost` = #{scoreCost,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
-        `status` = #{status,jdbcType=TINYINT},
+        `status` = #{status,jdbcType=INTEGER},
       </if>
       <if test="memo != null" >
         `memo` = #{memo,jdbcType=VARCHAR},
@@ -261,12 +277,13 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.fhzc.app.dao.mybatis.model.RightsReservation" >
     update `rights_reservation`
-    set `customer_id` = #{customerId,jdbcType=INTEGER},
+    set `rights_id` = #{rightsId,jdbcType=INTEGER},
+      `customer_id` = #{customerId,jdbcType=INTEGER},
       `planner_id` = #{plannerId,jdbcType=INTEGER},
       `mark_date` = #{markDate,jdbcType=TIMESTAMP},
       `detail` = #{detail,jdbcType=VARCHAR},
       `score_cost` = #{scoreCost,jdbcType=VARCHAR},
-      `status` = #{status,jdbcType=TINYINT},
+      `status` = #{status,jdbcType=INTEGER},
       `memo` = #{memo,jdbcType=VARCHAR},
       `ctime` = #{ctime,jdbcType=TIMESTAMP}
     where `id` = #{id,jdbcType=INTEGER}
