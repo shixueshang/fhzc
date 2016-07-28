@@ -1,8 +1,10 @@
 package com.fhzc.app.api.controller;
 
 import com.fhzc.app.api.service.RightsReservationService;
+import com.fhzc.app.api.service.RightsService;
 import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
+import com.fhzc.app.dao.mybatis.model.Rights;
 import com.fhzc.app.dao.mybatis.model.RightsReservation;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,9 +15,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by jiajitao on 2016/7/22.
@@ -24,6 +24,9 @@ import java.util.List;
 public class RightsReservationApiController extends BaseController {
     @Resource
     private RightsReservationService rightsReservationService;
+
+    @Resource
+    private RightsService rightsService;
 
     public static long LONGHOUR = 24;
 
@@ -84,10 +87,15 @@ public class RightsReservationApiController extends BaseController {
     @ResponseBody
     public ApiJsonResult personalRightOrder(Integer customer_id){
         List<RightsReservation> reservationList = rightsReservationService.getUserRightsList(customer_id);
-        List<RightsReservation> result = new ArrayList<>();
+        List<Map> result = new ArrayList<>();
         for(RightsReservation reserv : reservationList) {
-            RightsReservation rights = rightsReservationService.getRightsReservation(reserv.getId());
-            result.add(rights);
+            Rights rights = rightsService.getRights(reserv.getRightsId());
+            Map map = new HashMap();
+            map.put("rights_id",reserv.getRightsId());
+            map.put("cover",rights.getCover());
+            map.put("mark_date",reserv.getMarkDate());
+            map.put("status",reserv.getStatus());
+            result.add(map);
         }
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
     }

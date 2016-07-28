@@ -178,3 +178,13 @@ ADD COLUMN `expire_day` DATE NULL DEFAULT NULL COMMENT '合同到期日期' AFTE
 ALTER TABLE `bank`.`rights_reservation`
 ADD COLUMN `rights_id` INT NOT NULL COMMENT '预约的权益id' AFTER `id`;
 
+ALTER TABLE `bank`.`activity_apply`
+ADD COLUMN `is_contact` INT(1) NULL DEFAULT 0 COMMENT '是否电话联系1 已联系，0未联系' AFTER `ctime`,
+ADD COLUMN `is_sure` INT(1) NULL DEFAULT 0 COMMENT '是否确认参加 1 参加，0不参加' AFTER `is_contact`;
+
+ALTER TABLE `bank`.`rights_reservation`
+CHANGE COLUMN `status` `status` INT(1) NULL DEFAULT NULL COMMENT '预约状态 0预约中|1预约成功|2预约失败|3客户取消预约|4客户消费|5客户缺席' ;
+
+ALTER TABLE `bank`.`activity_apply`
+CHANGE COLUMN `customer_id` `customer_id` INT NOT NULL ,
+CHANGE COLUMN `planner_id` `planner_id` INT NULL DEFAULT NULL ;
