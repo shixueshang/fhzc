@@ -34,4 +34,6 @@ public interface ProductReservationMapper {
     int updateByPrimaryKey(ProductReservation record);
 
     List<ProductReservationBo> selectReservations(ProductReserQuery query, RowBounds rowBounds);
+
+    int countReservations(ProductReserQuery query);
 }

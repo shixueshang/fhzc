@@ -13,6 +13,17 @@
     <result column="is_contact" property="isContact" jdbcType="INTEGER" />
     <result column="is_sure" property="isSure" jdbcType="INTEGER" />
   </resultMap>
+
+  <resultMap id="ViewResultMap" type="com.fhzc.app.dao.mybatis.bo.ActivityApplyBo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result property="registerTime" column="ctime" jdbcType="TIMESTAMP" />
+    <result property="activityId" column="activity_id" jdbcType="INTEGER" />
+    <result property="clientId" column="customer_id" jdbcType="INTEGER" />
+    <result property="clientName" column="realname" jdbcType="VARCHAR" />
+    <result property="clientPhone" column="phone" jdbcType="VARCHAR" />
+    <result property="levelId" column="level_id" jdbcType="INTEGER" />
+  </resultMap>
+
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -298,6 +309,40 @@
     </if>
     <if test="orderByClause != null" >
       order by ${orderByClause}
+    </if>
+  </select>
+
+  <select id="listActivityApplies" parameterType="com.fhzc.app.dao.mybatis.model.ActivityApplyQuery" resultMap="ViewResultMap">
+  SELECT id, activity_id, c.customer_id, planner_id, a.phone, type, result, a.ctime, u.realname, c.level_id, u.passport_code
+  FROM activity_apply a, customer c, user u where a.customer_id = c.customer_id and c.uid = u.uid  and a.type = 'self'
+  <if test="activityName != null">
+    AND a.activity_id = #{activityId}
+  </if>
+  <if test="customerIdCardNum != null">
+    AND u.passport_code = #{customerIdCardNum}
+  </if>
+  <if test="startDate != null">
+    AND a.ctime &gt;= #{startDate}
+  </if>
+  <if test="endDate != null">
+    AND a.ctime &lt;= #{endDate}
+  </if>
+</select>
+
+  <select id="countActivityApplies" parameterType="com.fhzc.app.dao.mybatis.model.ActivityApplyQuery" resultType="java.lang.Integer">
+    SELECT count(*)
+    FROM activity_apply a, customer c, user u where a.customer_id = c.customer_id and c.uid = u.uid and a.type = 'self'
+    <if test="activityName != null">
+      AND a.activity_id = #{activityId}
+    </if>
+    <if test="customerIdCardNum != null">
+      AND u.passport_code = #{customerIdCardNum}
+    </if>
+    <if test="startDate != null">
+      AND a.ctime &gt;= #{startDate}
+    </if>
+    <if test="endDate != null">
+      AND a.ctime &lt;= #{endDate}
     </if>
   </select>
 </mapper>

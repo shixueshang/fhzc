@@ -46,10 +46,10 @@
 
         <!--生成对应表及类名 -->
 
-        <table tableName="focus"
+        <table tableName="level"
                delimitAllColumns="true"
                delimitIdentifiers="true"
-               domainObjectName="Focus">
+               domainObjectName="Level">
             <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
         </table>
 
