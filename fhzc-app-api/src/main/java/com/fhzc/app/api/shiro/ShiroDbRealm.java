@@ -4,6 +4,7 @@ import com.fhzc.app.api.service.UserService;
 import com.fhzc.app.dao.mybatis.model.User;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
@@ -35,7 +36,12 @@ public class ShiroDbRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+        User user = (User) principals.getPrimaryPrincipal();
+        if(user != null){
+            SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
+            return info;
+        }
         return null;
     }
 }

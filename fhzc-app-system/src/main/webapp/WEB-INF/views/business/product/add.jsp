@@ -43,7 +43,7 @@
                             <a href="javascript:void(0);">业务管理</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li class="active"><a href="javascript:void(0);">新增产品</a></li>
+                        <li class="active"><a href="javascript:void(0);" id="product_title">新增产品</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
@@ -426,6 +426,9 @@
 <script type="text/javascript" src="<%=contextPath%>/assets/ckeditor/ckeditor.js"></script>
 <script>
 $(function(){
+
+    var productId =  '${product.pid}';
+    console.info(productId)
 
     var productTypesVal = '${product.productType}';
     var productTypes = '${productTypes}';

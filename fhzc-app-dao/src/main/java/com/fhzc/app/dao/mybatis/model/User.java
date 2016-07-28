@@ -1,8 +1,10 @@
 package com.fhzc.app.dao.mybatis.model;
 
+import java.beans.Transient;
+import java.io.Serializable;
 import java.util.Date;
 
-public class User {
+public class User implements Serializable{
     private Integer uid;
 
     private String login;
@@ -46,6 +48,17 @@ public class User {
     private Date ctime;
 
     private String avatar;
+
+
+    private String level;
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
 
     public Integer getUid() {
         return uid;

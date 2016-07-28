@@ -1,9 +1,12 @@
 package com.fhzc.app.api.controller;
 
 import com.fhzc.app.api.tools.APIConstants;
+import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.dao.mybatis.util.DateEditor;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -68,5 +71,11 @@ public class BaseController {
             size = Const.DEFAULT_PAGE_SIZE;
         }
 	}
+
+    public User getCurrentUser(){
+        Subject subject = SecurityUtils.getSubject();
+        User user  = (User)subject.getSession().getAttribute("user");
+        return user;
+    }
 
 }
