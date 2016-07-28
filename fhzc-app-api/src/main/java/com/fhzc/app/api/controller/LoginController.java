@@ -1,5 +1,6 @@
 package com.fhzc.app.api.controller;
 
+import com.fhzc.app.api.exception.NeedLoginRequestException;
 import com.fhzc.app.api.service.UserService;
 import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
@@ -18,9 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by lihongde on 2016/7/20 17:21
@@ -55,9 +53,15 @@ public class LoginController extends BaseController {
      * @param password
      * @return
      */
-    @RequestMapping(value = "/api/auth/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/auth/login", method = {RequestMethod.POST, RequestMethod.GET})
     @ResponseBody
-    public ApiJsonResult loginPost(String username, String password) {
+    public ApiJsonResult login(String username, String password) {
+
+        String method = request.getMethod();
+        if("GET".equals(method.toUpperCase())){
+            throw  new NeedLoginRequestException(APIConstants.MESSAGE_NEED_LOGIN);
+        }
+
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
             return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST, "用户名/密码不能为空");
         }
@@ -68,10 +72,9 @@ public class LoginController extends BaseController {
             subject.login(token);
             User user = userService.getUserByLogin(username);
             Session session = subject.getSession(true);
-            session.setAttribute("currentUser", user);
-            Map<String ,Object> result = new HashMap<String ,Object>();
-            result.put("loginTime", new Date().getTime());
-            return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
+            session.setAttribute("user", user);
+
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
         } catch (UnknownAccountException e) {
             return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST, "账号不存在");
         } catch (IncorrectCredentialsException e) {
