@@ -286,5 +286,24 @@
         AND p.apply_time &lt;= #{endDate}
       </if>
   </select>
+
+  <select id="countReservations" parameterType="com.fhzc.app.dao.mybatis.model.ProductReserQuery" resultType="java.lang.Integer">
+    select count(*) from product_reservation p,
+    (select pl.id, pl.work_num, u.realname, u.phone, u.passport_code from planner pl, user u where pl.uid = u.uid)pu,
+    (select c.customer_id, u.realname, u.phone, u.passport_code from customer c, user u where c.uid = u.uid) cu
+    where p.customer_id = cu.customer_id and p.planner_id = pu.id
+    <if test="productName != null">
+      AND p.product_id = #{productId}
+    </if>
+    <if test="customerIdCardNum != null">
+      AND cu.passport_code = #{customerIdCardNum}
+    </if>
+    <if test="startDate != null">
+      AND p.apply_time &gt;= #{startDate}
+    </if>
+    <if test="endDate != null">
+      AND p.apply_time &lt;= #{endDate}
+    </if>
+  </select>
   
 </mapper>
