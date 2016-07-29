@@ -42,11 +42,4 @@ public interface UserService {
      */
     User getUser(Integer uid);
     
-    /**
-     * 查询用户
-     * @param name
-     * @return
-     */
-	User getUser(String name);
-
 }

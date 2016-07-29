@@ -93,9 +93,4 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectByPrimaryKey(uid);
     }
 
-    
-	@Override
-	public User getUser(String name) {
-		 return userMapper.selectByName(name);
-	}
 }

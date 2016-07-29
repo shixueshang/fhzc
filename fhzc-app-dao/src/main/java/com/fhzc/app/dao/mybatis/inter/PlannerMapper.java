@@ -22,8 +22,6 @@ public interface PlannerMapper {
     List<Planner> selectByExample(PlannerExample example);
 
     Planner selectByPrimaryKey(Integer id);
-    
-    Planner selectByUid(Integer uid);
 
     int updateByExampleSelective(@Param("record") Planner record, @Param("example") PlannerExample example);
 

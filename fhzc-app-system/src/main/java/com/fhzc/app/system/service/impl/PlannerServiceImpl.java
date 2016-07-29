@@ -48,7 +48,7 @@ public class PlannerServiceImpl implements PlannerService {
         PlannerExample example = new PlannerExample();
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<Planner> list = plannerMapper.selectByExampleWithRowbounds(example, rowBounds);
-        return new PageableResult<Planner>(page, size, list.size(), list);
+        return new PageableResult<Planner>(page, size, plannerMapper.countByExample(example), list);
     }
 
     @Override
@@ -172,7 +172,10 @@ public class PlannerServiceImpl implements PlannerService {
 
 	@Override
 	public Planner getPlannerByUid(Integer uid) {
-		return plannerMapper.selectByUid(uid);
+        PlannerExample example = new PlannerExample();
+        PlannerExample.Criteria criteria = example.createCriteria();
+        criteria.andUidEqualTo(uid);
+		return plannerMapper.selectByExample(example).get(0);
 	}
 
 	@Override

@@ -113,6 +113,7 @@
                         </ul>
                     </li>
 
+                    <shiro:hasPermission name="/personal/planner">
                     <li class="has-sub">
                         <a href="javascript:">
                             <i class="icon-group"></i>
@@ -122,11 +123,11 @@
                         </a>
 
                         <ul class="sub">
-                            <li>
-                                <a href="#">理财师列表</a>
-                            </li>
+                        <shiro:hasPermission name="/personal/planner/list"><li>
+                                <a href="/personal/planner/list">理财师列表</a>
+                            </li></shiro:hasPermission>
                         </ul>
-                    </li>
+                    </li></shiro:hasPermission>
 
                     <shiro:hasPermission name="/organization/department"><li class="has-sub">
                         <a href="javascript:;">
