@@ -2,18 +2,17 @@ package com.fhzc.app.system.controller.business;
 
 import com.alibaba.fastjson.JSON;
 import com.fhzc.app.dao.mybatis.bo.ActivityApplyBo;
+import com.fhzc.app.dao.mybatis.model.Activity;
 import com.fhzc.app.dao.mybatis.model.ActivityApplyQuery;
-import com.fhzc.app.dao.mybatis.model.Level;
+import com.fhzc.app.dao.mybatis.model.Dictionary;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.commons.util.FileUtil;
 import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.controller.BaseController;
-import com.fhzc.app.dao.mybatis.model.Activity;
 import com.fhzc.app.system.service.ActivityService;
 import com.fhzc.app.system.service.DictionaryService;
-import com.fhzc.app.system.service.LevelService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
@@ -41,9 +40,6 @@ public class ActivityController extends BaseController {
 
     @Resource
     private DictionaryService dictionaryService;
-
-    @Resource
-    private LevelService levelService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView listActivities(){
@@ -133,11 +129,13 @@ public class ActivityController extends BaseController {
                 if (levelMap.containsKey(lid)){
                     bo.setClientLevel(levelMap.get(lid));
                 } else {
-                    Level level = levelService.findLevelById((int)lid);
-                    if (level != null){
-                        String levelDis = level.getName() + "-" + level.getValue();
-                        bo.setClientLevel(levelDis);
-                        levelMap.put(lid, levelDis);
+                    List<Dictionary> dicts = dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL);
+                    for(Dictionary dict : dicts){
+                        if(dict.getValue().equals(lid+"")){
+                            bo.setClientLevel(dict.getKey());
+                            levelMap.put(lid, dict.getKey());
+                            break;
+                        }
                     }
                 }
             }
