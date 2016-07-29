@@ -110,11 +110,15 @@
                                                 </c:forEach>
                                             </td>
                                             <td>
-                                                <c:forEach items="${areas}" var="area">
-                                                    <c:if test="${user.areaId == area.areaId}">
-                                                        ${area.areaName}
-                                                    </c:if>
-                                                </c:forEach>
+                                                 <c:forEach items="${users}" var="user">
+                                                     <c:if test="${planner.uid == user.uid}">
+                                                         <c:forEach items="${areas}" var="area">
+                                                             <c:if test="${user.areaId == area.areaId}">
+                                                                 ${area.areaName}
+                                                             </c:if>
+                                                         </c:forEach>
+                                                     </c:if>
+                                                 </c:forEach>
                                             </td>
                                             <td>
                                                 <c:choose>

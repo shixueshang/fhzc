@@ -71,6 +71,7 @@ public class PlannerController extends BaseController {
         mav.addObject("users", users);
         mav.addObject("departments", departmentService.findDeptByParent(1));
         mav.addObject("areas", areasService.getAllAreas());
+        mav.addObject("url", "personal/planner");
         return mav;
     }
 
