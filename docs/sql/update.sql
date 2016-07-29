@@ -200,3 +200,37 @@ ADD COLUMN `ftype` ENUM('product','report','rights','activity') NULL AFTER `fid`
 
 ALTER TABLE `bank`.`focus`
 ADD UNIQUE INDEX `fcs_uniq` (`uid` ASC, `fid` ASC, `ftype` ASC);
+
+ALTER TABLE `bank`.`score_history`
+CHANGE COLUMN `is_vaild` `is_vaild` INT(1) NOT NULL DEFAULT '1' COMMENT '有效性' ,
+CHANGE COLUMN `is_approve` `is_approve` INT(1) NOT NULL DEFAULT '0' COMMENT '审批状态' ;
+
+ALTER TABLE `bank`.`assets_history`
+ADD COLUMN `serial` VARCHAR(45) NOT NULL COMMENT '合同编号' AFTER `payment_date`,
+ADD COLUMN `customer_name` VARCHAR(45) NULL DEFAULT NULL AFTER `serial`,
+ADD COLUMN `planner_id` INT(11) NULL DEFAULT NULL COMMENT '理财师id' AFTER `customer_name`,
+ADD COLUMN `buy_time` DATE NOT NULL COMMENT '到账日期' AFTER `planner_id`,
+ADD COLUMN `amount_usd` INT(11) NOT NULL COMMENT '投资额（美元）' AFTER `buy_time`,
+ADD COLUMN `amount_rmb` INT(11) NOT NULL COMMENT '投资额（人民币）' AFTER `amount_usd`,
+ADD COLUMN `annualised` INT(11) NULL DEFAULT NULL COMMENT '年化金额' AFTER `amount_rmb`,
+ADD COLUMN `period` VARCHAR(45) NOT NULL COMMENT '投资期限' AFTER `annualised`,
+ADD COLUMN `invaild` TINYINT(4) NOT NULL DEFAULT '1' COMMENT '合同有效性:1有效|0无效' AFTER `period`,
+ADD COLUMN `product_found_day` DATE NULL DEFAULT NULL COMMENT '产品成立日期' AFTER `invaild`,
+ADD COLUMN `value_date` DATE NULL DEFAULT NULL COMMENT '起息日' AFTER `product_found_day`,
+ADD COLUMN `product_expire_day` DATE NULL DEFAULT NULL COMMENT '产品到期日期' AFTER `value_date`,
+ADD COLUMN `expire_day` DATE NULL DEFAULT NULL COMMENT '合同到期日期' AFTER `product_expire_day`,
+ADD COLUMN `bank` VARCHAR(45) NOT NULL COMMENT '开户银行信息' AFTER `expire_day`,
+ADD COLUMN `bank_account` VARCHAR(45) NOT NULL COMMENT '银行账号' AFTER `bank`,
+ADD COLUMN `lot` VARCHAR(45) NULL DEFAULT NULL COMMENT '基金份额' AFTER `bank_account`,
+ADD COLUMN `duration_month` INT(11) NULL DEFAULT NULL COMMENT '投资期限（月）' AFTER `lot`,
+ADD COLUMN `duration_day` INT(11) NULL DEFAULT NULL COMMENT '投资期限（日）' AFTER `duration_month`,
+ADD COLUMN `pub_agent` VARCHAR(45) NULL DEFAULT NULL COMMENT '发行机构' AFTER `duration_day`,
+ADD COLUMN `branch_agent` VARCHAR(45) NULL DEFAULT NULL COMMENT '分支机构' AFTER `pub_agent`,
+ADD COLUMN `is_member` TINYINT(4) NOT NULL DEFAULT '1' COMMENT '是否是会员 0否|1是' AFTER `branch_agent`,
+ADD COLUMN `memo` VARCHAR(45) NULL DEFAULT NULL COMMENT '备注信息' AFTER `is_member`,
+ADD COLUMN `earning_rate` VARCHAR(45) NULL DEFAULT NULL COMMENT '收益率' AFTER `memo`,
+ADD COLUMN `distribute_earning` VARCHAR(45) NULL DEFAULT NULL COMMENT '分配收益' AFTER `earning_rate`,
+ADD COLUMN `payment` VARCHAR(45) NULL DEFAULT NULL COMMENT '兑付合计' AFTER `distribute_earning`;
+
+ALTER TABLE `bank`.`rights`
+ADD COLUMN `is_ recommend` TINYINT(3) UNSIGNED NULL DEFAULT '0' COMMENT '是否精选 1是|0否' AFTER `url`;

@@ -15,4 +15,5 @@ public interface ProductReservationService {
 
     public List<ProductReservation> getUserProductList(Integer customer_id);
 
+    public ProductReservation getUserProductReservation(Integer uid, Integer productId);
 }

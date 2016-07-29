@@ -3,6 +3,8 @@ package com.fhzc.app.api.service;
 import com.fhzc.app.dao.mybatis.model.Rights;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 
+import java.util.List;
+
 
 /**
  * Created by lihongde on 2016/7/19 19:50
@@ -23,4 +25,6 @@ public interface RightsService {
      * @return
      */
     Rights getRights(Integer id);
+
+    List<Rights> getListByCid(Integer cid);
 }

@@ -23,6 +23,8 @@ public class Rights {
 
     private String url;
 
+    private Byte isRecommend;
+
     private String summary;
 
     public Integer getId() {
@@ -103,6 +105,14 @@ public class Rights {
 
     public void setUrl(String url) {
         this.url = url == null ? null : url.trim();
+    }
+
+    public Byte getIsRecommend() {
+        return isRecommend;
+    }
+
+    public void setIsRecommend(Byte isRecommend) {
+        this.isRecommend = isRecommend;
     }
 
     public String getSummary() {
