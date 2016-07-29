@@ -1,6 +1,7 @@
 package com.fhzc.app.api.service.impl;
 
 import com.fhzc.app.api.service.FocusService;
+import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.dao.mybatis.inter.FocusMapper;
 import com.fhzc.app.dao.mybatis.model.Focus;
 import com.fhzc.app.dao.mybatis.model.FocusExample;
@@ -46,6 +47,7 @@ public class FocusServiceImpl implements FocusService{
     public List<Focus> getFocusList(Integer customer_id){
         FocusExample example = new FocusExample();
         FocusExample.Criteria criteria = example.createCriteria();
+        criteria.andStatusEqualTo(APIConstants.FocusStatus.On);
         criteria.andUidEqualTo(customer_id);
         return focusMapper.selectByExample(example);
     }
