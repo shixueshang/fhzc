@@ -43,7 +43,7 @@
                             <a href="javascript:void(0);">活动管理</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li class="active"><a href="javascript:void(0);">新增活动</a></li>
+                        <li class="active"><a href="javascript:void(0);" id="activity_title">新增活动</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
@@ -232,7 +232,7 @@
 
                                             <div class="form-actions">
                                                 <input name="id" type="hidden" value="${activity.id}" />
-                                                <button type="submit" class="btn blue"><i class="icon-ok"></i> 添加</button>
+                                                <button type="submit" class="btn blue"><i class="icon-ok"></i> 保存</button>
                                             </div>
                                         </form>
                                         <!-- END FORM-->
@@ -255,6 +255,11 @@
 <script type="text/javascript" src="<%=contextPath%>/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 <script>
     $(function(){
+
+        var activityId =  '${activity.id}';
+        if(activityId != null && activityId != ''){
+            $('#activity_title').text('活动编辑');
+        }
 
         var activityTypesVal = '${activity.cid}';
         var activityTypes = '${activityTypes}';

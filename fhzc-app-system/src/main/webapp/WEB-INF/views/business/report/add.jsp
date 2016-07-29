@@ -43,7 +43,7 @@
                             <a href="javascript:void(0);">投研报告管理</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li class="active"><a href="javascript:void(0);">新增报告</a></li>
+                        <li class="active"><a href="javascript:void(0);" id="report_title">新增报告</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
@@ -158,7 +158,7 @@
                                             </div>
                                             <div class="form-actions">
                                                 <input name="id" type="hidden" value="${report.id}" />
-                                                <button type="submit" class="btn blue"><i class="icon-ok"></i> 添加</button>
+                                                <button type="submit" class="btn blue"><i class="icon-ok"></i> 保存</button>
                                             </div>
                                         </form>
                                         <!-- END FORM-->
@@ -181,6 +181,11 @@
 
 <script>
     $(function(){
+
+        var reportId =  '${report.id}';
+        if(reportId != null && reportId != ''){
+            $('#report_title').text('编辑报告');
+        }
 
         var reportType = '${report.cid}';
         var reportTypes = '${reportTypes}';

@@ -52,6 +52,7 @@ public class ActivityController extends BaseController {
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("activities", pageableResult.getItems());
         mav.addObject("activityTypes", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.ACTIVITY_CATEGORY)));
+        mav.addObject("url", "business/activity");
         return mav;
     }
 
@@ -59,6 +60,7 @@ public class ActivityController extends BaseController {
     public ModelAndView preAdd(){
         ModelAndView mav = new ModelAndView("business/activity/add");
         mav.addObject("activityTypes", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.ACTIVITY_CATEGORY)));
+        mav.addObject("url", "business/activity");
         return mav;
     }
 

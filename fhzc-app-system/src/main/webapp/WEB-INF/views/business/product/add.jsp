@@ -57,7 +57,7 @@
                         <div class="portlet-title">
                             <h4>
                                 <i class="icon-reorder"></i>
-                                <span class="hidden-480">新增产品</span>
+                                <span class="hidden-480"></span>
                                 &nbsp;
                             </h4>
                         </div>
@@ -428,7 +428,9 @@
 $(function(){
 
     var productId =  '${product.pid}';
-    console.info(productId)
+    if(productId != null && productId != ''){
+        $('#product_title').text('产品编辑');
+    }
 
     var productTypesVal = '${product.productType}';
     var productTypes = '${productTypes}';
