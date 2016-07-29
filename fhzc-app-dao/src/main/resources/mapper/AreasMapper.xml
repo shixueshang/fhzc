@@ -88,6 +88,13 @@
     from `areas`
     where `area_id` = #{areaId,jdbcType=INTEGER}
   </select>
+  <select id="selectAreasByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from `areas`
+    where `area_name` = #{areaName,jdbcType=VARCHAR}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from `areas`
     where `area_id` = #{areaId,jdbcType=INTEGER}
