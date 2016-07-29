@@ -64,7 +64,7 @@ public class ProductApiController extends BaseController {
 
         Focus focus = focusService.getFocusByCond(user.getUid(),productId,APIConstants.FocusType.Product);
         if(focus != null){
-            result.put("focusStauts",focus.getStatus());
+            result.put("focusStatus",focus.getStatus());
         }
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
     }

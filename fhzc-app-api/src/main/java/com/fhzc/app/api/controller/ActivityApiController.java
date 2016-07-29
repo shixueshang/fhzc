@@ -57,7 +57,7 @@ public class ActivityApiController extends BaseController{
 
         Focus focus = focusService.getFocusByCond(user.getUid(),activityId,APIConstants.FocusType.Activity);
         if(focus != null){
-            result.put("focusStauts",focus.getStatus());
+            result.put("focusStatus",focus.getStatus());
         }
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,activity);
     }

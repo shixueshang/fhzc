@@ -45,7 +45,7 @@ public class ReportApiController extends BaseController{
         User user = super.getCurrentUser();
         Focus focus = focusService.getFocusByCond(user.getUid(),reportId,APIConstants.FocusType.Product);
         if(focus != null){
-            result.put("focusStauts",focus.getStatus());
+            result.put("focusStatus",focus.getStatus());
         }
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,report);
     }
