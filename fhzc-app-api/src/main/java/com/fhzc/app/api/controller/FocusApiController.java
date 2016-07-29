@@ -4,6 +4,7 @@ import com.fhzc.app.api.service.*;
 import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
 import com.fhzc.app.dao.mybatis.model.*;
+import com.fhzc.app.dao.mybatis.model.Dictionary;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,6 +34,8 @@ public class FocusApiController extends BaseController {
     @Resource
     private RightsService rightsService;
 
+    @Resource
+    private DictionaryService dictionaryService;
     /*
      * uid 用户id
      * fid 被关注的资源id,可能是产品id、活动id等
@@ -43,9 +46,9 @@ public class FocusApiController extends BaseController {
     @ResponseBody
     public ApiJsonResult focusOn(Integer uid, Integer fid, String ftype, Integer status){
         Focus focus = new Focus();
-        List<Focus> focusList = focusService.getFocusByCond(uid,fid,ftype);
-        if (focusList.size() > 0) {
-            focus.setId(focusList.get(0).getId());
+        Focus focusExist = focusService.getFocusByCond(uid,fid,ftype);
+        if (focusExist != null) {
+            focus.setId(focusExist.getId());
         }
 
         focus.setCtime(new Date());
@@ -60,8 +63,8 @@ public class FocusApiController extends BaseController {
     @RequestMapping(value = "/api/focus/status", method = RequestMethod.GET)
     @ResponseBody
     public ApiJsonResult focusStatus(Integer uid, Integer fid, String ftype){
-        List<Focus> focusList = focusService.getFocusByCond(uid,fid,ftype);
-        Integer status = focusList.get(0).getStatus();
+        Focus focus = focusService.getFocusByCond(uid,fid,ftype);
+        Integer status = focus.getStatus();
 
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,status);
     }
@@ -83,7 +86,6 @@ public class FocusApiController extends BaseController {
             switch (ftype){
                 case "product":
                     Product product = productService.getProduct(fid);
-                    if(product == null) continue;
                     map.put("name",product.getName());
                     map.put("expected_min",product.getExpectedMin());
                     map.put("expected_max",product.getExpectedMax());
@@ -97,7 +99,6 @@ public class FocusApiController extends BaseController {
                     break;
                 case "report":
                     Report report = reportService.getReport(fid);
-                    if(report == null) continue;
                     map.put("name",report.getName());
                     map.put("cover",report.getCover());
                     map.put("summary",report.getSummary());
@@ -115,10 +116,17 @@ public class FocusApiController extends BaseController {
                     break;
                 case "rights":
                     Rights rights = rightsService.getRights(fid);
-                    if(rights == null) continue;
                     map.put("name",rights.getName());
                     map.put("cover",rights.getCover());
                     map.put("summary",rights.getSummary());
+                    map.put("spend_score",rights.getSpendScore());
+                    map.put("level",rights.getLevel());
+                    List<Dictionary> dictionary = dictionaryService.findDicByType("customer_level");
+                    for(Dictionary dic : dictionary){
+                        if(dic.getValue().equals(rights.getLevel())){
+                            map.put("level_name",dic.getKey());
+                        }
+                    }
                     rightsList.add(map);
                     break;
             }

@@ -754,6 +754,66 @@ public class RightsExample {
             addCriterion("`url` not between", value1, value2, "url");
             return (Criteria) this;
         }
+
+        public Criteria andIsRecommendIsNull() {
+            addCriterion("`is_ recommend` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsRecommendIsNotNull() {
+            addCriterion("`is_ recommend` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsRecommendEqualTo(Byte value) {
+            addCriterion("`is_ recommend` =", value, "isRecommend");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsRecommendNotEqualTo(Byte value) {
+            addCriterion("`is_ recommend` <>", value, "isRecommend");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsRecommendGreaterThan(Byte value) {
+            addCriterion("`is_ recommend` >", value, "isRecommend");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsRecommendGreaterThanOrEqualTo(Byte value) {
+            addCriterion("`is_ recommend` >=", value, "isRecommend");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsRecommendLessThan(Byte value) {
+            addCriterion("`is_ recommend` <", value, "isRecommend");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsRecommendLessThanOrEqualTo(Byte value) {
+            addCriterion("`is_ recommend` <=", value, "isRecommend");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsRecommendIn(List<Byte> values) {
+            addCriterion("`is_ recommend` in", values, "isRecommend");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsRecommendNotIn(List<Byte> values) {
+            addCriterion("`is_ recommend` not in", values, "isRecommend");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsRecommendBetween(Byte value1, Byte value2) {
+            addCriterion("`is_ recommend` between", value1, value2, "isRecommend");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsRecommendNotBetween(Byte value1, Byte value2) {
+            addCriterion("`is_ recommend` not between", value1, value2, "isRecommend");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -12,7 +12,7 @@ public interface FocusService {
 
     public Focus getFocus(Integer id);
 
-    public List<Focus> getFocusByCond(Integer uid, Integer fid, String ftype);
+    public Focus getFocusByCond(Integer uid, Integer fid, String ftype);
 
     List<Focus> getFocusList(Integer customer_id);
 }
