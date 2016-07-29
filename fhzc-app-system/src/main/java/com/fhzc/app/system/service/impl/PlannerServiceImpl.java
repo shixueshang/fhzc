@@ -19,7 +19,9 @@ import java.util.*;
 
 /**
  * Created by menghq on 2016/7/26.
+ * 
  */
+@Service
 public class PlannerServiceImpl implements PlannerService {
    
 	private static final String IMPORT_SQL = "call sp_insert_planner(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
