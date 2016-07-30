@@ -14,7 +14,7 @@ import java.util.Map;
 public interface CustomerService {
 
     /**
-     * 查询列表
+     * 根据姓名或者证件号查询客户列表
      * @param page
      * @param size
      * @return
@@ -37,10 +37,10 @@ public interface CustomerService {
 
     /**
      * 获得产品信息
-     * @param pid
+     * @param customerId
      * @return
      */
-    Customer getCustomer(Integer customer_id);
+    Customer getCustomer(Integer customerId);
 
     /**
      * 查询客户名称是否存在
@@ -51,7 +51,7 @@ public interface CustomerService {
     
 	 /**
      * 通过uid查询客户
-     * @param name
+     * @param uId
      * @return
      */
 	 Customer getCustomerByUid(Integer uId);
