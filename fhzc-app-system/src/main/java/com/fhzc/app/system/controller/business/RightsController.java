@@ -114,4 +114,15 @@ public class RightsController extends BaseController{
 
         return mav;
     }
+
+    /**
+     * 权益预约列表
+     * @return
+     */
+    @RequestMapping(value = "/check/phone", method = RequestMethod.GET)
+    public ModelAndView checkPhone(String phoneNum){
+        ModelAndView mav = new ModelAndView();
+
+        return mav;
+    }
 }
