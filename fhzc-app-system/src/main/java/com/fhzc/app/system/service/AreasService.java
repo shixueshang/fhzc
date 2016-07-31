@@ -10,4 +10,6 @@ import java.util.List;
 public interface AreasService {
 
     List<Areas> getAllAreas();
+    
+    Areas getAreas(String name);
 }

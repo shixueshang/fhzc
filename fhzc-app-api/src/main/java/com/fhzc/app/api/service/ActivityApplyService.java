@@ -9,9 +9,11 @@ import java.util.List;
  */
 public interface ActivityApplyService {
 
-    public void addOrUpdateActivityApply(ActivityApply activityApply);
+    void addOrUpdateActivityApply(ActivityApply activityApply);
 
-    public ActivityApply getActivityApply(Integer id) ;
+    ActivityApply getActivityApply(Integer id) ;
 
     List<ActivityApply> getActivityApplyList(Integer customer_id);
+
+    ActivityApply getByUidActivityId(Integer uid, Integer activityId);
 }

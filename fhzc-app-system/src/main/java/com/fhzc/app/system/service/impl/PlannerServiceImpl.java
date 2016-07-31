@@ -1,16 +1,37 @@
 package com.fhzc.app.system.service.impl;
 
+import com.fhzc.app.dao.mybatis.page.PageableResult;
+import com.fhzc.app.system.commons.util.excel.ExcelImporter;
+import com.fhzc.app.system.commons.util.excel.ImportCallBack;
+import com.fhzc.app.system.commons.util.excel.ImportConfig;
 import com.fhzc.app.dao.mybatis.inter.PlannerMapper;
 import com.fhzc.app.dao.mybatis.model.Planner;
+import com.fhzc.app.dao.mybatis.model.PlannerExample;
 import com.fhzc.app.system.service.PlannerService;
+import org.apache.ibatis.session.RowBounds;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.util.*;
 
 /**
  * Created by menghq on 2016/7/26.
+ * 
  */
+@Service
 public class PlannerServiceImpl implements PlannerService {
-    @Resource
+   
+	private static final String IMPORT_SQL = "call sp_insert_planner(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	    
+	private static final String IMPORT_OFF_SQL = "call sp_removeoffer_planner(?)";
+	
+	@Resource
+	private ExcelImporter importer;
+	 
+	@Resource
     PlannerMapper plannerMapper;
 
     /**
@@ -21,4 +42,151 @@ public class PlannerServiceImpl implements PlannerService {
     public Planner getPlanner(Integer id) {
         return plannerMapper.selectByPrimaryKey(id);
     }
+    
+    @Override
+    public PageableResult<Planner> findPagePlanners(int page, int size) {
+        PlannerExample example = new PlannerExample();
+        RowBounds rowBounds = new RowBounds((page - 1) * size, size);
+        List<Planner> list = plannerMapper.selectByExampleWithRowbounds(example, rowBounds);
+        return new PageableResult<Planner>(page, size, plannerMapper.countByExample(example), list);
+    }
+
+    @Override
+    public void addOrUpdatePlanner(Planner planner) {
+        Integer id = planner.getId();
+        if(id == null){
+            plannerMapper.insertSelective(planner);
+        }else{
+        	plannerMapper.updateByPrimaryKeySelective(planner);
+        }
+    }
+
+    @Override
+    public Map<String, Object> importExcelFile(MultipartFile multipartFile) throws Exception {
+       Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
+        @Override
+        public String validation(Workbook xwb) {
+            return null;
+        }
+
+        @Override
+        public String getImportSQL() {
+        		return IMPORT_SQL;
+        }
+
+        @Override
+        public List<Object[]> getImportData(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data) {
+        	List<Object[]> plannerList = new ArrayList<Object[]>();
+        	if(data.get(0).length>0){
+	        	for (Object[] objects : data) {
+	        		Object[] temData = new  Object[18];
+	        		temData[0] = objects[1];	//工号 work_num,作为初始登录名
+	        		temData[1] = objects[4];	//手机号 mobile，作为初始密码	
+	        		temData[2] = objects[1];	//工号 work_num
+	        		temData[3] = objects[2];	//姓名 realname
+	        		temData[4] = objects[3];	//证件号 passport_code
+	        		temData[5] = objects[4];	//手机号 mobile	
+	        		temData[6] = objects[5];	//所属公司 company
+	        		temData[7] = objects[6];	//所属城市 area
+	        		temData[8] = objects[7];	//一级部门 dept1
+	        	    temData[9] = objects[8];	//负责人 dept1_leader	
+	        		temData[10] = objects[9];	//二级部门 dept2
+	        		temData[11] = objects[10];	//负责人 dept2_leader
+	        		temData[12] = objects[11];	//三级部门 dept3
+	        		temData[13] = objects[12];	//负责人 dept3_leader
+	        		temData[14] = objects[13];	//四级部门 dept14
+	        		temData[15] = objects[14];	//负责人 dept4_leader
+	        		temData[16] = objects[15];	//岗位名称 job_title_cn
+	        		temData[17] = objects[16];	//岗位序列 position
+	        		plannerList.add(temData);
+				}
+        	}
+            return plannerList;
+        }
+
+        @Override
+        public ImportCallBack getImportCallBack() {
+            return new ImportCallBack() {
+                @Override
+                public void preOperation(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data) {
+
+                }
+
+                @Override
+                public void postOperation (SqlSessionTemplate sqlSessionTemplate, List < Object[]>data){
+
+                }
+            };
+
+        }
+        }).importExcelFile(multipartFile);
+
+        return importResult;
+    }
+    
+    @Override
+    public Map<String, Object> importExcelFileOff(MultipartFile multipartFile) throws Exception {
+       Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
+        @Override
+        public String validation(Workbook xwb) {
+            return null;
+        }
+
+        @Override
+        public String getImportSQL() {
+        		return IMPORT_OFF_SQL;
+        }
+
+        @Override
+        public List<Object[]> getImportData(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data) {
+        	List<Object[]> plannerList = new ArrayList<Object[]>();
+        	if(data.get(0).length>0){
+	        	for (Object[] objects : data) {
+	        		Object[] temData = new  Object[1];
+	        		temData[0] = objects[1];	//工号 work_num
+	        		plannerList.add(temData);
+				}
+        	}
+            return plannerList;
+        }
+
+        @Override
+        public ImportCallBack getImportCallBack() {
+            return new ImportCallBack() {
+                @Override
+                public void preOperation(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data) {
+
+                }
+
+                @Override
+                public void postOperation (SqlSessionTemplate sqlSessionTemplate, List < Object[]>data){
+
+                }
+            };
+
+        }
+        }).importExcelFile(multipartFile,1,2);
+
+        return importResult;
+    }
+
+	@Override
+	public Planner getPlannerByUid(Integer uid) {
+        PlannerExample example = new PlannerExample();
+        PlannerExample.Criteria criteria = example.createCriteria();
+        criteria.andUidEqualTo(uid);
+		return plannerMapper.selectByExample(example).get(0);
+	}
+
+	@Override
+	public Map<String,Map<String, Object>> importExcel(MultipartFile multipartFile) throws Exception {
+		 Map<String, Object> importResultOn = new HashMap<String, Object>();
+		 Map<String, Object> importResultOff = new HashMap<String, Object>();
+		 Map<String,Map<String, Object>> map = new HashMap<String,Map<String, Object>>();
+		 importResultOn = importExcelFile(multipartFile);
+		 importResultOff = importExcelFileOff(multipartFile);
+		 map.put("on", importResultOn);
+		 map.put("off", importResultOff);
+		 return map;
+	}
 }

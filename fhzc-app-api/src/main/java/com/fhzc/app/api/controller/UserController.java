@@ -1,6 +1,5 @@
 package com.fhzc.app.api.controller;
 
-import com.fhzc.app.api.exception.BadRequestException;
 import com.fhzc.app.api.service.CustomerService;
 import com.fhzc.app.api.service.DictionaryService;
 import com.fhzc.app.api.tools.APIConstants;
@@ -39,14 +38,12 @@ public class UserController extends BaseController {
     public ApiJsonResult getUserInfo(){
         User user  = getCurrentUser();
         Customer customer = customerService.getCustomerByUid(user.getUid());
-        if(customer == null){
-            throw new BadRequestException("客户信息不存在");
-        }
-
-        List<Dictionary> dicts = dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL);
-        for(Dictionary dict : dicts){
-            if(dict.getValue().equals(customer.getLevelId().toString())){
-                user.setLevel(dict.getKey());
+        if(customer != null){
+            List<Dictionary> dicts = dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL);
+            for(Dictionary dict : dicts){
+                if(dict.getValue().equals(customer.getLevelId().toString())){
+                    user.setLevel(dict.getKey());
+                }
             }
         }
 

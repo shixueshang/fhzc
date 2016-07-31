@@ -104,7 +104,7 @@
                         </ul>
                     </li></shiro:hasPermission>
 
-                    <li class="has-sub">
+                    <shiro:hasPermission name="/personal/customer"><li class="has-sub">
                         <a href="javascript:;">
                             <i class="icon-user"></i>
                             <span class="title">客户管理</span>
@@ -113,12 +113,13 @@
                         </a>
 
                         <ul class="sub">
-                            <li>
-                                <a href="#">客户列表</a>
-                            </li>
+                        <shiro:hasPermission name="/personal/customer/single/list"><li>
+                                <a href="/personal/customer/single/list">客户列表</a>
+                            </li></shiro:hasPermission>
                         </ul>
-                    </li>
+                    </li></shiro:hasPermission>
 
+                    <shiro:hasPermission name="/personal/planner">
                     <li class="has-sub">
                         <a href="javascript:">
                             <i class="icon-group"></i>
@@ -128,11 +129,11 @@
                         </a>
 
                         <ul class="sub">
-                            <li>
-                                <a href="#">理财师列表</a>
-                            </li>
+                        <shiro:hasPermission name="/personal/planner/list"><li>
+                                <a href="/personal/planner/list">理财师列表</a>
+                            </li></shiro:hasPermission>
                         </ul>
-                    </li>
+                    </li></shiro:hasPermission>
 
                     <shiro:hasPermission name="/organization/department"><li class="has-sub">
                         <a href="javascript:;">

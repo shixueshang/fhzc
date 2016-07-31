@@ -21,22 +21,6 @@ public class Planner {
 
     private Date leaveTime;
 
-    private Integer mdUid;
-
-    private Integer subMgUid;
-
-    private Integer mgUid;
-
-    private Integer areaUid;
-
-    private Integer dept1;
-
-    private Integer dept2;
-
-    private Integer dept3;
-
-    private Integer dept4;
-
     private String jobTitleCn;
 
     private String position;
@@ -111,70 +95,6 @@ public class Planner {
 
     public void setLeaveTime(Date leaveTime) {
         this.leaveTime = leaveTime;
-    }
-
-    public Integer getMdUid() {
-        return mdUid;
-    }
-
-    public void setMdUid(Integer mdUid) {
-        this.mdUid = mdUid;
-    }
-
-    public Integer getSubMgUid() {
-        return subMgUid;
-    }
-
-    public void setSubMgUid(Integer subMgUid) {
-        this.subMgUid = subMgUid;
-    }
-
-    public Integer getMgUid() {
-        return mgUid;
-    }
-
-    public void setMgUid(Integer mgUid) {
-        this.mgUid = mgUid;
-    }
-
-    public Integer getAreaUid() {
-        return areaUid;
-    }
-
-    public void setAreaUid(Integer areaUid) {
-        this.areaUid = areaUid;
-    }
-
-    public Integer getDept1() {
-        return dept1;
-    }
-
-    public void setDept1(Integer dept1) {
-        this.dept1 = dept1;
-    }
-
-    public Integer getDept2() {
-        return dept2;
-    }
-
-    public void setDept2(Integer dept2) {
-        this.dept2 = dept2;
-    }
-
-    public Integer getDept3() {
-        return dept3;
-    }
-
-    public void setDept3(Integer dept3) {
-        this.dept3 = dept3;
-    }
-
-    public Integer getDept4() {
-        return dept4;
-    }
-
-    public void setDept4(Integer dept4) {
-        this.dept4 = dept4;
     }
 
     public String getJobTitleCn() {

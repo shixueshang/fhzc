@@ -49,6 +49,7 @@ public class AdminController extends BaseController {
         mav.addObject("roles", adminRoleService.getAllRoles());
         mav.addObject("departments", departmentService.findDeptByParent(Const.ROOT_DEPT_ID));
         mav.addObject("areas", areasService.getAllAreas());
+        mav.addObject("url", "system/admin");
         return mav;
     }
 
@@ -58,6 +59,7 @@ public class AdminController extends BaseController {
         mav.addObject("roles", JSON.toJSON(adminRoleService.getAllRoles()));
         mav.addObject("departments", JSON.toJSON(departmentService.findDeptByParent(Const.ROOT_DEPT_ID)));
         mav.addObject("areas", JSON.toJSON(areasService.getAllAreas()));
+        mav.addObject("url", "system/admin");
         return mav;
     }
 

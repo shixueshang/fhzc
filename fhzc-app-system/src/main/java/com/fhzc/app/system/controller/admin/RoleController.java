@@ -10,6 +10,7 @@ import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.AdminRoleService;
 import com.fhzc.app.system.service.ResourceService;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -38,12 +39,15 @@ public class RoleController extends BaseController {
         PageableResult<AdminRole> pageableResult = adminRoleService.findPageRole(page, size);
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("roles", pageableResult.getItems());
+        mav.addObject("url", "system/role");
         return mav;
     }
 
     @RequestMapping(value = "/pub")
-    public String pub(){
-       return "system/role/add";
+    public ModelAndView pub(){
+        ModelAndView mav = new ModelAndView("system/role/add");
+        mav.addObject("url", "system/role");
+       return mav;
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)

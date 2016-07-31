@@ -12,6 +12,7 @@
     <result column="supply" property="supply" jdbcType="VARCHAR" />
     <result column="cover" property="cover" jdbcType="VARCHAR" />
     <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="is_ recommend" property="isRecommend" jdbcType="TINYINT" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.fhzc.app.dao.mybatis.model.Rights" extends="BaseResultMap" >
     <result column="summary" property="summary" jdbcType="LONGVARCHAR" />
@@ -76,7 +77,7 @@
   </sql>
   <sql id="Base_Column_List" >
     `id`, `cid`, `name`, `spend_score`, `spend_type`, `level`, `ctime`, `supply`, `cover`, 
-    `url`
+    `url`, `is_ recommend`
   </sql>
   <sql id="Blob_Column_List" >
     `summary`
@@ -136,11 +137,11 @@
     insert into `rights` (`cid`, `name`, `spend_score`, 
       `spend_type`, `level`, `ctime`, 
       `supply`, `cover`, `url`, 
-      `summary`)
+      `is_ recommend`, `summary`)
     values (#{cid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{spendScore,jdbcType=INTEGER}, 
       #{spendType,jdbcType=CHAR}, #{level,jdbcType=TINYINT}, #{ctime,jdbcType=TIMESTAMP}, 
       #{supply,jdbcType=VARCHAR}, #{cover,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
-      #{summary,jdbcType=LONGVARCHAR})
+      #{isRecommend,jdbcType=TINYINT}, #{summary,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.Rights" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
@@ -175,6 +176,9 @@
       <if test="url != null" >
         `url`,
       </if>
+      <if test="isRecommend != null" >
+        `is_ recommend`,
+      </if>
       <if test="summary != null" >
         `summary`,
       </if>
@@ -206,6 +210,9 @@
       </if>
       <if test="url != null" >
         #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="isRecommend != null" >
+        #{isRecommend,jdbcType=TINYINT},
       </if>
       <if test="summary != null" >
         #{summary,jdbcType=LONGVARCHAR},
@@ -251,6 +258,9 @@
       <if test="record.url != null" >
         `url` = #{record.url,jdbcType=VARCHAR},
       </if>
+      <if test="record.isRecommend != null" >
+        `is_ recommend` = #{record.isRecommend,jdbcType=TINYINT},
+      </if>
       <if test="record.summary != null" >
         `summary` = #{record.summary,jdbcType=LONGVARCHAR},
       </if>
@@ -271,6 +281,7 @@
       `supply` = #{record.supply,jdbcType=VARCHAR},
       `cover` = #{record.cover,jdbcType=VARCHAR},
       `url` = #{record.url,jdbcType=VARCHAR},
+      `is_ recommend` = #{record.isRecommend,jdbcType=TINYINT},
       `summary` = #{record.summary,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -287,7 +298,8 @@
       `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
       `supply` = #{record.supply,jdbcType=VARCHAR},
       `cover` = #{record.cover,jdbcType=VARCHAR},
-      `url` = #{record.url,jdbcType=VARCHAR}
+      `url` = #{record.url,jdbcType=VARCHAR},
+      `is_ recommend` = #{record.isRecommend,jdbcType=TINYINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -322,6 +334,9 @@
       <if test="url != null" >
         `url` = #{url,jdbcType=VARCHAR},
       </if>
+      <if test="isRecommend != null" >
+        `is_ recommend` = #{isRecommend,jdbcType=TINYINT},
+      </if>
       <if test="summary != null" >
         `summary` = #{summary,jdbcType=LONGVARCHAR},
       </if>
@@ -339,6 +354,7 @@
       `supply` = #{supply,jdbcType=VARCHAR},
       `cover` = #{cover,jdbcType=VARCHAR},
       `url` = #{url,jdbcType=VARCHAR},
+      `is_ recommend` = #{isRecommend,jdbcType=TINYINT},
       `summary` = #{summary,jdbcType=LONGVARCHAR}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
@@ -352,7 +368,8 @@
       `ctime` = #{ctime,jdbcType=TIMESTAMP},
       `supply` = #{supply,jdbcType=VARCHAR},
       `cover` = #{cover,jdbcType=VARCHAR},
-      `url` = #{url,jdbcType=VARCHAR}
+      `url` = #{url,jdbcType=VARCHAR},
+      `is_ recommend` = #{isRecommend,jdbcType=TINYINT}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
   <select resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.RightsExample" id="selectByExampleWithBLOBsWithRowbounds" >

@@ -41,7 +41,7 @@
                             <a href="javascript:void(0);">系统管理</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li class="active"><a href="javascript:void(0);">新增角色</a></li>
+                        <li class="active"><a href="javascript:void(0);" id="role_title">新增角色</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
@@ -105,7 +105,7 @@
 
                                             <div class="form-actions">
                                                 <input name="roleId" type="hidden" value="${role.roleId}" />
-                                                <button type="submit" class="btn blue"><i class="icon-ok"></i> 添加</button>
+                                                <button type="submit" class="btn blue"><i class="icon-ok"></i> 保存</button>
                                             </div>
                                         </form>
                                         <!-- END FORM-->
@@ -124,6 +124,11 @@
 <script>
 
     $(function(){
+
+        var roleId =  '${role.roleId}';
+        if(roleId != null && roleId != ''){
+            $('#role_title').text('编辑角色');
+        }
 
         var status = '${role.status}';
         if(status == 0 || status == null || status == ""){

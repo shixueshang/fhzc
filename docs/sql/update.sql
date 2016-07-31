@@ -200,3 +200,9 @@ ADD COLUMN `ftype` ENUM('product','report','rights','activity') NULL AFTER `fid`
 
 ALTER TABLE `bank`.`focus`
 ADD UNIQUE INDEX `fcs_uniq` (`uid` ASC, `fid` ASC, `ftype` ASC);
+
+#2016-07-29
+DROP TABLE IF EXISTS `bank`.`level` ;
+
+ALTER TABLE `bank`.`user`
+ADD COLUMN `salt` VARCHAR(45) NULL COMMENT '加密key' AFTER `avatar`;

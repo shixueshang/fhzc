@@ -23,4 +23,9 @@ public class AreasServiceImpl implements AreasService {
         AreasExample example = new AreasExample();
         return areasMapper.selectByExample(example);
     }
+
+	@Override
+	public Areas getAreas(String name) {
+		return areasMapper.selectAreasByName(name);
+	}
 }

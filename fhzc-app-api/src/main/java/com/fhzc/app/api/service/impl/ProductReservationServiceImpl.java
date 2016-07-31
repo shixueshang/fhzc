@@ -39,4 +39,17 @@ public class ProductReservationServiceImpl implements ProductReservationService 
         criteria.andCustomerIdEqualTo(customer_id);
         return productReservationMapper.selectByExample(example);
     }
+
+    @Override
+    public ProductReservation getUserProductReservation(Integer uid, Integer productId){
+        ProductReservationExample example = new ProductReservationExample();
+        ProductReservationExample.Criteria criteria = example.createCriteria();
+        criteria.andCustomerIdEqualTo(uid);
+        criteria.andProductIdEqualTo(productId);
+        if(productReservationMapper.countByExample(example) > 0) {
+            return productReservationMapper.selectByExample(example).get(0);
+        }else{
+            return null;
+        }
+    }
 }

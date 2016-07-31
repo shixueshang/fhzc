@@ -41,7 +41,7 @@
                             <a href="javascript:void(0);">系统管理</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li class="active"><a href="javascript:void(0);">管理员新增</a></li>
+                        <li class="active"><a href="javascript:void(0);" id="admin_title">管理员新增</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
@@ -148,7 +148,7 @@
 
                                             <div class="form-actions">
                                                 <input name="id" type="hidden" value="${admin.id}" />
-                                                <button type="submit" class="btn blue"><i class="icon-ok"></i> 添加</button>
+                                                <button type="submit" class="btn blue"><i class="icon-ok"></i> 保存</button>
                                             </div>
                                         </form>
                                         <!-- END FORM-->
@@ -171,6 +171,11 @@
 <script type="text/javascript" src="<%=contextPath%>/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 <script>
     $(function(){
+
+        var adminId =  '${admin.id}';
+        if(adminId != null && adminId != ''){
+            $('#admin_title').text('编辑管理员');
+        }
 
         var role = '${admin.role}';
         var roles = '${roles}';

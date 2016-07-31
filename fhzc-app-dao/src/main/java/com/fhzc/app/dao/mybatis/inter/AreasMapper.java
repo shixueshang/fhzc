@@ -22,6 +22,8 @@ public interface AreasMapper {
     List<Areas> selectByExample(AreasExample example);
 
     Areas selectByPrimaryKey(Integer areaId);
+    
+    Areas selectAreasByName(String name);
 
     int updateByExampleSelective(@Param("record") Areas record, @Param("example") AreasExample example);
 
