@@ -145,4 +145,6 @@ public class ActivityController extends BaseController {
         mav.addObject("activityApplies", pageableResult.getItems());
         return mav;
     }
+
+
 }

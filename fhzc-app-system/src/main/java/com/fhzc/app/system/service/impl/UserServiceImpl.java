@@ -130,4 +130,13 @@ public class UserServiceImpl implements UserService {
         return result;
     }
 
+    @Override
+    public User getUserByMobile(String mobileNum) {
+        List<User> users = userMapper.selectUserByMobile(mobileNum);
+        if (users != null && users.size() > 0){
+            return users.get(0);
+        }
+
+        return null;
+    }
 }

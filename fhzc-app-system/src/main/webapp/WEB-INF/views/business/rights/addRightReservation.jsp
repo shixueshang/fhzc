@@ -77,6 +77,8 @@
                                             </div>
                                             <div class="control-group">
                                             </div>
+                                            <input type="hidden" name="userValid" id="userValid" value="0">
+                                            <input type="hidden" name="rightValid" id="rightValid" value="0">
                                             <div class="control-group">
                                                 <label class="control-label">用户手机号<span class="required">*</span></label>
                                                 <div class="controls">
@@ -88,14 +90,14 @@
                                             <div class="control-group">
                                                 <label class="control-label">姓名</label>
                                                 <div class="controls">
-                                                    <input type="text" name="cname" id="cname" readonly>
+                                                    <input type="text" name="cname" id="cname" disabled>
                                                 </div>
                                             </div>
 
                                             <div class="control-group">
                                                 <label class="control-label">客户等级</label>
                                                 <div class="controls">
-                                                    <input type="text" name="clevel" id="clevel" readonly>
+                                                    <input type="text" name="clevel" id="clevel" disabled>
                                                 </div>
 
                                             </div>
@@ -103,7 +105,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">客户可用积分</label>
                                                 <div class="controls">
-                                                    <input type="text" name="csore" id="csore" readonly>
+                                                    <input type="text" name="csore" id="csore" disabled>
                                                 </div>
 
                                             </div>
@@ -111,7 +113,11 @@
                                             <div class="control-group">
                                                 <label class="control-label">客户预约权益</label>
                                                 <div class="controls">
-                                                    <select name="reservationRight" class="large m-wrap"  tabindex="1">
+                                                    <select name="reservationRight" id="reservationRight" class="large m-wrap"  tabindex="1">
+                                                        <option value="">--请选择客户权益--</option>
+                                                        <c:forEach items="${rights}" var="right">
+                                                            <option value="${right.id}">${right.name}</option>
+                                                        </c:forEach>
                                                     </select>
                                                 </div>
                                             </div>
@@ -135,7 +141,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">兑换所需积分</label>
                                                 <div class="controls">
-                                                    <input type="text" name="exchangeScore" value="exchangeScore" data-required="1" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="exchangeScore" id="exchangeScore" data-required="1" placeholder="" class="m-wrap large" disabled>
                                                 </div>
                                             </div>
 
@@ -231,9 +237,55 @@
                     url: "<%=contextPath%>/business/rights/check/phone",
                     type: "get",
                     dataType: "json",
+                    contentType:'application/json;charset=utf-8',
                     data: {phoneNum:phoneNum},
                     success: function (data) {
+                        if (data == null){
+                            validatePhoneError('请确认收入的手机号为有效客户的有效手机号');
+                            $("#rightValid").val("0");
+                            return;
+                        }
 
+
+
+                        if (data.name != null && data.name != ''){
+                            $("#cname").val(data.name);
+                        } else {
+                            validatePhoneError('请确认收入的手机号为有效客户的有效手机号');
+                        }
+
+                        if (data.clevel != null && data.clevel != ''){
+                            $("#clevel").val(data.customerLevel);
+                        } else {
+                            validatePhoneError('请确认收入的手机号为有效客户的有效手机号');
+                        }
+
+                        if (data.name != null && data.name != '' && data.clevel != null && data.clevel != ''){
+                            $("#rightValid").val("1");
+                        } else {
+                            $("#rightValid").val("0");
+                        }
+
+                        $("#csore").val(data.availableScore);
+                    },
+                    error: function (err) {
+                        validatePhoneError('请确认收入的手机号为有效客户的有效手机号');
+                    }
+                });
+            }
+        });
+
+        $("#reservationRight").change(function () {
+            var rightId = $("#reservationRight").val();
+            if (rightId != null && rightId != ''){
+                $.ajax({
+                    url: "<%=contextPath%>/business/rights/get/rightInfo",
+                    type: "get",
+                    dataType: "json",
+                    contentType:'application/json;charset=utf-8',
+                    data: {rightId:rightId},
+                    success: function (data) {
+                        $("#exchangeScore").val(data.score);
                     },
                     error: function (err) {
 
@@ -242,4 +294,16 @@
             }
         });
     })
+
+    function validatePhoneError(text) {
+        clearPhoneError();
+        var error =  "<p style='color:red; margin: 0'>"+text+"</p>"
+        $("#phoneNum").parent().append(error);
+    }
+
+    function clearPhoneError() {
+        if ($("#phoneNum").parent().find("p").size() > 0){
+            $("#phoneNum").parent().find("p").remove();
+        }
+    }
 </script>

@@ -1,21 +1,27 @@
 package com.fhzc.app.system.service.impl;
 
-import com.fhzc.app.dao.mybatis.model.Customer;
-import com.fhzc.app.dao.mybatis.model.CustomerExample;
+import com.fhzc.app.dao.mybatis.inter.DictionaryMapper;
+import com.fhzc.app.dao.mybatis.inter.ScoreHistoryMapper;
+import com.fhzc.app.dao.mybatis.inter.UserMapper;
+import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
+import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.commons.util.excel.ExcelImporter;
 import com.fhzc.app.system.commons.util.excel.ImportCallBack;
 import com.fhzc.app.system.commons.util.excel.ImportConfig;
 import com.fhzc.app.dao.mybatis.inter.CustomerMapper;
+import com.fhzc.app.system.commons.vo.CustomerVo;
 import com.fhzc.app.system.service.CustomerService;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.*;
+import java.util.Dictionary;
 
 /**
  * Created by Double_J on 2016/7/7 15:43
@@ -31,6 +37,14 @@ public class CustomerServiceImpl implements CustomerService {
     @Resource
     private CustomerMapper customerMapper;
 
+    @Resource
+    private UserMapper userMapper;
+
+    @Resource
+    private DictionaryMapper dictionaryMapper;
+
+    @Resource
+    private ScoreHistoryMapper scoreHistoryMapper;
 
     @Override
     public PageableResult<Customer> findPageCustomers( int page, int size) {
@@ -115,5 +129,45 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public Customer getCustomerByUid(Integer uId) {
 		return customerMapper.selectByUid(uId);
-	}    
+	}
+
+    /**
+     * 通过移动号码获取客户信息
+     * @param mobileNum
+     * @return
+     */
+    @Override
+    @ResponseBody
+    public CustomerVo getCustomerInfoByMobile(String mobileNum) {
+        List<User> users = userMapper.selectUserByMobile(mobileNum);
+        if (users != null && users.size() > 0){
+            CustomerVo vo = new CustomerVo();
+            vo.setName(users.get(0).getRealname());
+            Customer customer = customerMapper.selectByUid(users.get(0).getUid());
+            if (customer != null){
+                DictionaryExample example = new DictionaryExample();
+                DictionaryExample.Criteria criteria = example.createCriteria();
+                criteria.andCatEqualTo(Const.DIC_CAT.CUSTOMER_LEVEL);
+                List<com.fhzc.app.dao.mybatis.model.Dictionary> dicts = dictionaryMapper.selectByExample(example);
+
+                for(com.fhzc.app.dao.mybatis.model.Dictionary dict : dicts){
+                    if(dict.getValue().equals(customer.getLevelId())){
+                        vo.setCustomerLevel(dict.getKey());
+                        break;
+                    }
+                }
+            }
+
+            Integer score = scoreHistoryMapper.getScoreByUid(users.get(0).getUid());
+            if (score == null){
+                vo.setAvailableScore(0+"");
+            } else {
+                vo.setAvailableScore(score+"");
+            }
+
+            return vo;
+        }
+
+        return null;
+    }
 }

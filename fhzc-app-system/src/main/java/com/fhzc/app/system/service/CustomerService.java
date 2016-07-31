@@ -4,6 +4,7 @@ package com.fhzc.app.system.service;
 
 import com.fhzc.app.dao.mybatis.model.Customer;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
+import com.fhzc.app.system.commons.vo.CustomerVo;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
@@ -55,4 +56,11 @@ public interface CustomerService {
      * @return
      */
 	 Customer getCustomerByUid(Integer uId);
+
+    /**
+     * 通过移动号码获取客户信息
+     * @param mobileNum
+     * @return
+     */
+    CustomerVo getCustomerInfoByMobile(String mobileNum);
 }

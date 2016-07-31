@@ -6,8 +6,11 @@ import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.commons.util.FileUtil;
 import com.fhzc.app.system.commons.util.TextUtils;
+import com.fhzc.app.system.commons.vo.CustomerVo;
+import com.fhzc.app.system.commons.vo.RightVo;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.dao.mybatis.model.Rights;
+import com.fhzc.app.system.service.CustomerService;
 import com.fhzc.app.system.service.DepartmentService;
 import com.fhzc.app.system.service.DictionaryService;
 import com.fhzc.app.system.service.RightsService;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -36,6 +40,9 @@ public class RightsController extends BaseController{
 
     @Resource
     private DepartmentService departmentService;
+
+    @Resource
+    private CustomerService customerService;
 
     /**
      * 权益列表
@@ -116,13 +123,39 @@ public class RightsController extends BaseController{
     }
 
     /**
-     * 权益预约列表
+     * 创建权益预约
+     * @return
+     */
+    @RequestMapping(value = "/reservation/pub", method = RequestMethod.GET)
+    public ModelAndView preReservationAdd(){
+        ModelAndView mav = new ModelAndView("business/rights/addRightReservation");
+        PageableResult<Rights> pageableResult = rightsService.findPageRights(1, 500);
+        mav.addObject("rights", pageableResult.getItems());
+        return mav;
+    }
+
+    /**
+     * 检查用户手机号
      * @return
      */
     @RequestMapping(value = "/check/phone", method = RequestMethod.GET)
-    public ModelAndView checkPhone(String phoneNum){
-        ModelAndView mav = new ModelAndView();
+    @ResponseBody
+    public CustomerVo checkPhone(String phoneNum){
+        CustomerVo vo = customerService.getCustomerInfoByMobile(phoneNum);
+        return vo;
+    }
 
-        return mav;
+    /**
+     * 获取权益信息
+     * @return
+     */
+    @RequestMapping(value = "/get/rightInfo", method = RequestMethod.GET)
+    @ResponseBody
+    public RightVo rightInfo(long rightId){
+        RightVo vo = new RightVo();
+        Rights rights = rightsService.getRights((int)rightId);
+        vo.setScore(rights.getSpendScore());
+
+        return vo;
     }
 }
