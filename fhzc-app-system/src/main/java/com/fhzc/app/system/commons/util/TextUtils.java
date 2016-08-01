@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.text.DecimalFormat;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -159,6 +160,24 @@ public class TextUtils {
     		return 0;
     	}
     }
-
-
+    
+    /**
+     * 手机号转换
+     */
+    public static String IntToDouble(String value){
+    	if(value.contains(".")||value.contains("e")){
+    	 	Double temPhone = Double.parseDouble(value);
+      	 	DecimalFormat df = new DecimalFormat();
+      	 	return df.format(temPhone).replace(",", "");
+    	}else{
+    		return value;
+    	}
+    }
+  
+    /**
+     * 截取小数点之前的整数，适用于常规格式的数字转换
+     */
+    public static int FloatToInt(String value){
+    	return Integer.parseInt((value.contains(".")?value.substring(0,value.indexOf(".")):value));
+    }
 }

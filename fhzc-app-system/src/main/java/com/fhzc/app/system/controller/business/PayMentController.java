@@ -26,11 +26,11 @@ public class PayMentController extends BaseController {
     private PayMentService payMentService;
 
     /**
-     * 导入页面
+     * 普通产品导入页面
      * @return
      */
     @RequestMapping(value = "/importor", method = RequestMethod.GET)
-    public ModelAndView importorCustomerDocument(){
+    public ModelAndView importorPayMent(){
         ModelAndView mav = new ModelAndView("business/payment/importor");
         return mav;
     }
@@ -46,6 +46,35 @@ public class PayMentController extends BaseController {
         Map<String, Object> result = new HashMap<String, Object>();
         try {
             result = payMentService.importExcelFile(multiFile);
+            result.put("success", true);
+        } catch (Exception e) {
+            logger.error("导入失败");
+            result.put("success", false);
+            e.printStackTrace();
+        }
+        return result;
+    }
+    
+    /**
+     * 鑫丰母基金导入页面
+     * @return
+     */
+    @RequestMapping(value = "/importorspecial", method = RequestMethod.GET)
+    public ModelAndView importorSpecialPayMent(){
+        ModelAndView mav = new ModelAndView("business/payment/importorspecial");
+        return mav;
+    }
+    /**
+     * excel导入
+     * @param multiFile
+     * @return
+     */
+    @RequestMapping(value = "/importspecial", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> importExcelSpecial(MultipartFile multiFile){
+        Map<String, Object> result = new HashMap<String, Object>();
+        try {
+            result = payMentService.importExcelFileSpecial(multiFile);
             result.put("success", true);
         } catch (Exception e) {
             logger.error("导入失败");

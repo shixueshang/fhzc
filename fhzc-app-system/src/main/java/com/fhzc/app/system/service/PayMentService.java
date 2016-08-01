@@ -11,11 +11,20 @@ import java.util.Map;
  */
 public interface PayMentService {
 
-/**
-  * 兑付表导入
-  * @param multipartFile
-  * @return
-  * @throws Exception
-  */
- Map<String, Object> importExcelFile(MultipartFile multipartFile) throws Exception;
+	/**
+	  * 一般兑付表导入
+	  * @param multipartFile
+	  * @return
+	  * @throws Exception
+	  */
+	 Map<String, Object> importExcelFile(MultipartFile multipartFile) throws Exception;
+	 
+	 /**
+	  * 鑫丰母基金兑付表导入
+	  * @param multipartFile
+	  * @return
+	  * @throws Exception
+	  */
+	 Map<String, Object> importExcelFileSpecial(MultipartFile multipartFile) throws Exception;
+ 
 }
