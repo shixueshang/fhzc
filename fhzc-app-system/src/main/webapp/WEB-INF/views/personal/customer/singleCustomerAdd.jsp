@@ -133,7 +133,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">出生日期</label>
                                                 <div class="controls">
-                                                    <input type="text" name="birthday" value="${user.birthday}" data-required="1" placeholder="" class="m-wrap m-ctrl-medium date-picker">
+                                                    <input type="text" name="birthday" value="<fmt:formatDate value="${user.birthday}" pattern="yyyy-MM-dd"/>" data-required="1" placeholder="" class="m-wrap m-ctrl-medium date-picker">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -149,6 +149,45 @@
                                                 <label class="control-label">证件号码</label>
                                                 <div class="controls">
                                                     <input type="text" name="passportCode" value="${user.passportCode}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">会员等级</label>
+                                                <div class="controls">
+                                                    <select class="large m-wrap" name="levelId" id="levelId" tabindex="1"></select>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">可用积分</label>
+                                                <div class="controls">
+                                                    <input type="text" name="availableScore" value="${availableScore}" readonly data-required="1" placeholder="" class="m-wrap large">
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">冻结积分</label>
+                                                <div class="controls">
+                                                    <input type="text" name="frozenScore" value="${frozenScore}" readonly data-required="1" placeholder="" class="m-wrap large">
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">理财师工号</label>
+                                                <div class="controls">
+                                                    <input type="text" name="plannerNum" value="${plannerNum}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">理财师姓名</label>
+                                                <div class="controls">
+                                                    <input type="text" name="plannerName" value="${plannerName}" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -180,39 +219,36 @@
 <script>
     $(function(){
 
-        var reportId =  '${report.id}';
-        if(reportId != null && reportId != ''){
-            $('#report_title').text('编辑报告');
-        }
+        var passportType = '${user.passportTypeId}';
+        var passports = '${passports}';
+        var typeJson= $.parseJSON(passports);
+        $.each(typeJson, function(i,val){
+            $("#passportTypeId").append("<option value='"+val.value+"'>"+val.key+"</option>");
+            if(passportType == val.value){
+                $("#passportTypeId").val(passportType);
+            }
+        });
 
-        var reportType = '${report.cid}';
-        var reportTypes = '${reportTypes}';
-        var pTypeJson= $.parseJSON(reportTypes);
-        $.each(pTypeJson, function(i,val){
-            $("#reportType").append("<option value='"+val.value+"'>"+val.key+"</option>");
-            if(reportType == val.value){
-                $("#reportType").val(reportType);
+        var level = '${customer.levelId}';
+        var customerLevels = '${customerLevels}';
+        var levelJson= $.parseJSON(customerLevels);
+        $.each(levelJson, function(i,val){
+            $("#levelId").append("<option value='"+val.value+"'>"+val.key+"</option>");
+            if(level == val.value){
+                $("#levelId").val(level);
             }
         });
 
 
-        var isDisplay = '${report.isDisplay}';
-        if(isDisplay == 1 || isDisplay == '' || isDisplay == null){
-            $.uniform.update($("input[name='isDisplay'][value='1']").attr("checked", true));
-            $.uniform.update($("input[name='isDisplay'][value='0']").attr("checked", false));
+        var gender = '${user.gender}';
+        if(gender == 'male' || isDisplay == '' || isDisplay == null){
+            $.uniform.update($("input[name='gender'][value='male']").attr("checked", true));
+            $.uniform.update($("input[name='gender'][value='female']").attr("checked", false));
         }else{
-            $.uniform.update($("input[name='isDisplay'][value='1']").attr("checked", false));
-            $.uniform.update($("input[name='isDisplay'][value='0']").attr("checked", true));
+            $.uniform.update($("input[name='gender'][value='male']").attr("checked", false));
+            $.uniform.update($("input[name='gender'][value='female']").attr("checked", true));
         }
 
-        var isRecommend = '${report.isRecommend}';
-        if(isRecommend == 1 || isRecommend == '' || isRecommend == null){
-            $.uniform.update($("input[name='isRecommend'][value='1']").attr("checked", true));
-            $.uniform.update($("input[name='isRecommend'][value='0']").attr("checked", false));
-        }else{
-            $.uniform.update($("input[name='isRecommend'][value='1']").attr("checked", false));
-            $.uniform.update($("input[name='isRecommend'][value='0']").attr("checked", true));
-        }
 
         var dispalyImg = $("#default_img");
         var imgUrl = "<%=contextPath%>${report.cover}";

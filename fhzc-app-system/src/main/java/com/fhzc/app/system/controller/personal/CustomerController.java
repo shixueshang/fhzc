@@ -40,6 +40,7 @@ public class CustomerController extends BaseController {
     @Resource
     private ScoreService scoreService;
 
+
     /**
      * 个人客户列表页面
      * @return
@@ -85,6 +86,8 @@ public class CustomerController extends BaseController {
         mav.addObject("customerLevels", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL)));
         mav.addObject("availableScore", JSON.toJSON(scoreService.sumScore(scoreService.getAvailableList(customer.getUid()))));
         mav.addObject("frozenScore", JSON.toJSON(scoreService.sumScore(scoreService.getFrozen(customer.getUid()))));
+
+        customerService.getPlannerByCustomerId(customer.getCustomerId());
         return mav;
     }
 

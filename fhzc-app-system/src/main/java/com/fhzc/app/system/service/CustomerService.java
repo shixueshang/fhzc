@@ -2,7 +2,7 @@ package com.fhzc.app.system.service;
 
 
 
-import com.fhzc.app.dao.mybatis.model.Customer;
+import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -55,4 +55,11 @@ public interface CustomerService {
      * @return
      */
 	 Customer getCustomerByUid(Integer uId);
+
+    /**
+     * 获得客户的主理财师
+     * @param customerId
+     * @return
+     */
+    PlannerCustomer getPlannerByCustomerId(Integer customerId);
 }

@@ -497,19 +497,16 @@ CREATE TABLE IF NOT EXISTS `bank`.`activity_apply` (
 
 
 -- -----------------------------------------------------
--- Table `bank`.`planner_service`
+-- Table `bank`.`planner_customer`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `bank`.`planner_service` ;
+DROP TABLE IF EXISTS `bank`.`planner_customer` ;
 
-CREATE TABLE IF NOT EXISTS `bank`.`planner_service` (
+CREATE TABLE IF NOT EXISTS `bank`.`planner_customer` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `planner_id` INT NULL,
   `customer_id` INT NULL,
-  `ctime` DATETIME NULL,
-  `status` ENUM('invaild','vaild') NULL DEFAULT 'vaild',
   `is_main` TINYINT NOT NULL DEFAULT 0 COMMENT '是否为主理财师 0否|1是',
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `planner_customer_uniq` (`planner_id` ASC, `customer_id` ASC))
+  PRIMARY KEY (`id`))
   ENGINE = InnoDB
   COMMENT = '客户理财师关系表';
 
