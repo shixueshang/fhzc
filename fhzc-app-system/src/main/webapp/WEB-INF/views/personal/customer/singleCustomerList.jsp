@@ -82,6 +82,7 @@
                                     <td>手机号码</td>
                                     <td>固定电话</td>
                                     <td>性别</td>
+                                    <td>操作</td>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -158,6 +159,7 @@
                                                 </c:if>
                                             </c:forEach>
                                         </td>
+                                        <td><a href="<%=contextPath%>/personal/customer/detail/${customer.customerId}" class="btn mini purple"><i class="icon-edit"></i>编辑</a></td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>

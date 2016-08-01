@@ -1,5 +1,6 @@
 package com.fhzc.app.system.controller.personal;
 
+import com.alibaba.fastjson.JSON;
 import com.fhzc.app.dao.mybatis.model.Customer;
 import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
@@ -8,8 +9,10 @@ import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.CustomerService;
 import com.fhzc.app.system.service.DictionaryService;
+import com.fhzc.app.system.service.ScoreService;
 import com.fhzc.app.system.service.UserService;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -33,6 +36,9 @@ public class CustomerController extends BaseController {
 
     @Resource
     private DictionaryService dictionaryService;
+
+    @Resource
+    private ScoreService scoreService;
 
     /**
      * 个人客户列表页面
@@ -66,6 +72,19 @@ public class CustomerController extends BaseController {
         mav.addObject("customerLevel", dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL));
         mav.addObject("passports", dictionaryService.findDicByType(Const.DIC_CAT.PASSPORT));
         mav.addObject("url", "personal/customer");
+        return mav;
+    }
+
+    @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
+    public ModelAndView edit(@PathVariable(value = "id") Integer customerId){
+        ModelAndView mav = new ModelAndView("personal/customer/singleCustomerAdd");
+        Customer customer = customerService.getCustomer(customerId);
+        mav.addObject("customer", JSON.toJSON(customer));
+        mav.addObject("user", JSON.toJSON(userService.getUser(customer.getUid())));
+        mav.addObject("passports", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.PASSPORT)));
+        mav.addObject("customerLevels", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL)));
+        mav.addObject("availableScore", JSON.toJSON(scoreService.sumScore(scoreService.getAvailableList(customer.getUid()))));
+        mav.addObject("frozenScore", JSON.toJSON(scoreService.sumScore(scoreService.getFrozen(customer.getUid()))));
         return mav;
     }
 

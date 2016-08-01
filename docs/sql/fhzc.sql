@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `bank`.`log` (
 DROP TABLE IF EXISTS `bank`.`planner` ;
 
 CREATE TABLE IF NOT EXISTS `bank`.`planner` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `uid` INT NOT NULL,
   `work_num` VARCHAR(45) NOT NULL COMMENT '工号',
   `department_id` INT NULL COMMENT '所属分公司',
@@ -708,7 +708,7 @@ CREATE TABLE IF NOT EXISTS `bank`.`planner_achivements_daily` (
 DROP TABLE IF EXISTS `bank`.`customer_bank` ;
 
 CREATE TABLE IF NOT EXISTS `bank`.`customer_bank` (
-  `bank_info_id` INT NOT NULL,
+  `bank_info_id` INT NOT NULL AUTO_INCREMENT,
   `bank` VARCHAR(45) NOT NULL COMMENT '开户行',
   `bank_account` VARCHAR(45) NOT NULL COMMENT '银行卡号',
   `ctime` DATETIME NOT NULL COMMENT '记录添加时间',

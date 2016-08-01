@@ -122,4 +122,22 @@ public class Const {
          */
         public static final String READ_AND_WRITE = "rw";
     }
+
+    public static class Score{
+        public static final long LONGDAY = 30;
+
+        public static final String ADD = "add";
+        public static final String CONSUME = "consume";
+        public static final String FROZEN = "frozen";
+        public static final String EXPIRE = "expire";
+
+        public static final int IS_VAILD = 1;
+        public static final int NOT_VAILD = 0;
+
+        public static final int IS_APPROVE = 1;
+        public static final int NOT_APPROVE = 0;
+
+
+
+    }
 }

@@ -43,7 +43,7 @@
                             <a href="javascript:void(0);">客户管理管理</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li class="active"><a href="javascript:void(0);" id="report_title">新增个人客户</a></li>
+                        <li class="active"><a href="javascript:void(0);" id="report_title">编辑个人客户</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
@@ -87,7 +87,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">客户姓名</label>
                                                 <div class="controls">
-                                                    <input type="text" name="realname" value="${user.realname}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="realname" value="${user.login}" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -101,64 +101,61 @@
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">报告封面</label>
+                                                <label class="control-label">手机号码</label>
                                                 <div class="controls">
-                                                    <div class="fileupload fileupload-new" data-provides="fileupload">
-                                                        <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
-                                                            <img src="/static/image/no-image.png" alt="" id="default_img" />
-                                                        </div>
-                                                        <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
-                                                        <div>
-                                                       <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
-                                                       <span class="fileupload-exists">更换</span>
-                                                       <input type="file" name="coverFile" id="cover_img" class="default" /></span>
-                                                            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
-                                                        </div>
-                                                    </div>
-                                                    <span class="label label-important">注意!</span>
-                                                 <span>
-                                                 上传图片预览仅支持Firefox, Chrome, Opera,
-                                                 Safari ,Internet Explorer 10
-                                                 </span>
-                                                </div>
-                                            </div>
-                                            <div class="control-group">
-                                                <label class="control-label">详情链接</label>
-                                                <div class="controls">
-                                                    <input type="text" name="url" value="${report.url}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="mobile" value="${user.mobile}" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">是否显示</label>
+                                                <label class="control-label">固定电话</label>
+                                                <div class="controls">
+                                                    <input type="text" name="phone" value="${user.phone}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">性别</label>
                                                 <div class="controls">
                                                     <label class="radio">
-                                                        <input type="radio" name="isDisplay" value="1" />
-                                                        显示
+                                                        <input type="radio" name="gender" value="male" checked/>
+                                                        男
                                                     </label>
                                                     <label class="radio">
-                                                        <input type="radio" name="isDisplay" value="0" checked />
-                                                        不显示
+                                                        <input type="radio" name="gender" value="female"  />
+                                                        女
                                                     </label>
                                                 </div>
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">是否推荐(精选)</label>
+                                                <label class="control-label">出生日期</label>
                                                 <div class="controls">
-                                                    <label class="radio">
-                                                        <input type="radio" name="isRecommend" value="1" />
-                                                        是
-                                                    </label>
-                                                    <label class="radio">
-                                                        <input type="radio" name="isRecommend" value="0" checked />
-                                                        否
-                                                    </label>
+                                                    <input type="text" name="birthday" value="${user.birthday}" data-required="1" placeholder="" class="m-wrap m-ctrl-medium date-picker">
+                                                    <span class="help-inline"></span>
                                                 </div>
                                             </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">证件类型</label>
+                                                <div class="controls">
+                                                    <select class="large m-wrap" name="passportTypeId" id="passportTypeId" tabindex="1"></select>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">证件号码</label>
+                                                <div class="controls">
+                                                    <input type="text" name="passportCode" value="${user.passportCode}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
+
                                             <div class="form-actions">
-                                                <input name="id" type="hidden" value="${report.id}" />
+                                                <input name="customerId" type="hidden" value="${customer.customerId}" />
+                                                <input name="uid" type="hidden" value="${user.uid}" />
                                                 <button type="submit" class="btn blue"><i class="icon-ok"></i> 保存</button>
                                             </div>
                                         </form>
