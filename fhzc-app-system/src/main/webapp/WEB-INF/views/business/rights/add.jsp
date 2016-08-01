@@ -43,7 +43,7 @@
                             <a href="javascript:void(0);">权益管理</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li class="active"><a href="javascript:void(0);">新增权益</a></li>
+                        <li class="active"><a href="javascript:void(0);" id="rights_title">新增权益</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
@@ -166,7 +166,7 @@
 
                                             <div class="form-actions">
                                                 <input name="id" type="hidden" value="${right.id}" />
-                                                <button type="submit" class="btn blue"><i class="icon-ok"></i> 添加</button>
+                                                <button type="submit" class="btn blue"><i class="icon-ok"></i> 保存</button>
                                             </div>
                                         </form>
                                         <!-- END FORM-->
@@ -189,6 +189,11 @@
 <script type="text/javascript" src="<%=contextPath%>/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 <script>
     $(function(){
+
+        var rightId =  '${right.id}';
+        if(rightId != null && rightId != ''){
+            $('#right_title').text('编辑权益');
+        }
 
         var rightType = '${right.cid}';
         var categorys = '${rightsCategory}';

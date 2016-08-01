@@ -14,12 +14,14 @@ import java.util.Map;
 public interface UserService {
 
     /**
-     * 查询用户列表
+     * 根据用户名查询用户列表
+     *
+     * @param name
      * @param page
      * @param size
      * @return
      */
-    PageableResult<User> findPageUsers(int page, int size);
+    PageableResult<User> findPageUsers(String name, int page, int size);
 
     /**
      * 添加用户
@@ -42,11 +44,4 @@ public interface UserService {
      */
     User getUser(Integer uid);
     
-    /**
-     * 查询用户
-     * @param name
-     * @return
-     */
-	User getUser(String name);
-
 }

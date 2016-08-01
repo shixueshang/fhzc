@@ -46,11 +46,11 @@
 
         <!--生成对应表及类名 -->
 
-        <table tableName="level"
+        <table tableName="user"
                delimitAllColumns="true"
                delimitIdentifiers="true"
-               domainObjectName="Level">
-            <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
+               domainObjectName="User">
+            <generatedKey column="uid" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
         </table>
 
 

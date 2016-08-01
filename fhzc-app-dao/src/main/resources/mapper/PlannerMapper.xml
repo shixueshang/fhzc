@@ -11,14 +11,6 @@
     <result column="role_id" property="roleId" jdbcType="INTEGER" />
     <result column="entry_time" property="entryTime" jdbcType="DATE" />
     <result column="leave_time" property="leaveTime" jdbcType="DATE" />
-    <result column="md_uid" property="mdUid" jdbcType="INTEGER" />
-    <result column="sub_mg_uid" property="subMgUid" jdbcType="INTEGER" />
-    <result column="mg_uid" property="mgUid" jdbcType="INTEGER" />
-    <result column="area_uid" property="areaUid" jdbcType="INTEGER" />
-    <result column="dept_1" property="dept1" jdbcType="INTEGER" />
-    <result column="dept_2" property="dept2" jdbcType="INTEGER" />
-    <result column="dept_3" property="dept3" jdbcType="INTEGER" />
-    <result column="dept_4" property="dept4" jdbcType="INTEGER" />
     <result column="job_title_cn" property="jobTitleCn" jdbcType="VARCHAR" />
     <result column="position" property="position" jdbcType="VARCHAR" />
   </resultMap>
@@ -82,8 +74,7 @@
   </sql>
   <sql id="Base_Column_List" >
     `id`, `uid`, `work_num`, `department_id`, `avatar`, `status`, `role_id`, `entry_time`, 
-    `leave_time`, `md_uid`, `sub_mg_uid`, `mg_uid`, `area_uid`, `dept_1`, `dept_2`, `dept_3`, 
-    `dept_4`, `job_title_cn`, `position`
+    `leave_time`, `job_title_cn`, `position`
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.PlannerExample" >
     select
@@ -105,12 +96,6 @@
     from `planner`
     where `id` = #{id,jdbcType=INTEGER}
   </select>
-  <select id="selectByUid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from `planner`
-    where `uid` = #{uid,jdbcType=INTEGER}
-  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from `planner`
     where `id` = #{id,jdbcType=INTEGER}
@@ -127,18 +112,12 @@
     </selectKey>
     insert into `planner` (`uid`, `work_num`, `department_id`, 
       `avatar`, `status`, `role_id`, 
-      `entry_time`, `leave_time`, `md_uid`, 
-      `sub_mg_uid`, `mg_uid`, `area_uid`, 
-      `dept_1`, `dept_2`, `dept_3`, 
-      `dept_4`, `job_title_cn`, `position`
-      )
+      `entry_time`, `leave_time`, `job_title_cn`, 
+      `position`)
     values (#{uid,jdbcType=INTEGER}, #{workNum,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER}, 
       #{avatar,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{roleId,jdbcType=INTEGER}, 
-      #{entryTime,jdbcType=DATE}, #{leaveTime,jdbcType=DATE}, #{mdUid,jdbcType=INTEGER}, 
-      #{subMgUid,jdbcType=INTEGER}, #{mgUid,jdbcType=INTEGER}, #{areaUid,jdbcType=INTEGER}, 
-      #{dept1,jdbcType=INTEGER}, #{dept2,jdbcType=INTEGER}, #{dept3,jdbcType=INTEGER}, 
-      #{dept4,jdbcType=INTEGER}, #{jobTitleCn,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}
-      )
+      #{entryTime,jdbcType=DATE}, #{leaveTime,jdbcType=DATE}, #{jobTitleCn,jdbcType=VARCHAR}, 
+      #{position,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.Planner" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
@@ -169,30 +148,6 @@
       </if>
       <if test="leaveTime != null" >
         `leave_time`,
-      </if>
-      <if test="mdUid != null" >
-        `md_uid`,
-      </if>
-      <if test="subMgUid != null" >
-        `sub_mg_uid`,
-      </if>
-      <if test="mgUid != null" >
-        `mg_uid`,
-      </if>
-      <if test="areaUid != null" >
-        `area_uid`,
-      </if>
-      <if test="dept1 != null" >
-        `dept_1`,
-      </if>
-      <if test="dept2 != null" >
-        `dept_2`,
-      </if>
-      <if test="dept3 != null" >
-        `dept_3`,
-      </if>
-      <if test="dept4 != null" >
-        `dept_4`,
       </if>
       <if test="jobTitleCn != null" >
         `job_title_cn`,
@@ -225,30 +180,6 @@
       </if>
       <if test="leaveTime != null" >
         #{leaveTime,jdbcType=DATE},
-      </if>
-      <if test="mdUid != null" >
-        #{mdUid,jdbcType=INTEGER},
-      </if>
-      <if test="subMgUid != null" >
-        #{subMgUid,jdbcType=INTEGER},
-      </if>
-      <if test="mgUid != null" >
-        #{mgUid,jdbcType=INTEGER},
-      </if>
-      <if test="areaUid != null" >
-        #{areaUid,jdbcType=INTEGER},
-      </if>
-      <if test="dept1 != null" >
-        #{dept1,jdbcType=INTEGER},
-      </if>
-      <if test="dept2 != null" >
-        #{dept2,jdbcType=INTEGER},
-      </if>
-      <if test="dept3 != null" >
-        #{dept3,jdbcType=INTEGER},
-      </if>
-      <if test="dept4 != null" >
-        #{dept4,jdbcType=INTEGER},
       </if>
       <if test="jobTitleCn != null" >
         #{jobTitleCn,jdbcType=VARCHAR},
@@ -294,30 +225,6 @@
       <if test="record.leaveTime != null" >
         `leave_time` = #{record.leaveTime,jdbcType=DATE},
       </if>
-      <if test="record.mdUid != null" >
-        `md_uid` = #{record.mdUid,jdbcType=INTEGER},
-      </if>
-      <if test="record.subMgUid != null" >
-        `sub_mg_uid` = #{record.subMgUid,jdbcType=INTEGER},
-      </if>
-      <if test="record.mgUid != null" >
-        `mg_uid` = #{record.mgUid,jdbcType=INTEGER},
-      </if>
-      <if test="record.areaUid != null" >
-        `area_uid` = #{record.areaUid,jdbcType=INTEGER},
-      </if>
-      <if test="record.dept1 != null" >
-        `dept_1` = #{record.dept1,jdbcType=INTEGER},
-      </if>
-      <if test="record.dept2 != null" >
-        `dept_2` = #{record.dept2,jdbcType=INTEGER},
-      </if>
-      <if test="record.dept3 != null" >
-        `dept_3` = #{record.dept3,jdbcType=INTEGER},
-      </if>
-      <if test="record.dept4 != null" >
-        `dept_4` = #{record.dept4,jdbcType=INTEGER},
-      </if>
       <if test="record.jobTitleCn != null" >
         `job_title_cn` = #{record.jobTitleCn,jdbcType=VARCHAR},
       </if>
@@ -340,14 +247,6 @@
       `role_id` = #{record.roleId,jdbcType=INTEGER},
       `entry_time` = #{record.entryTime,jdbcType=DATE},
       `leave_time` = #{record.leaveTime,jdbcType=DATE},
-      `md_uid` = #{record.mdUid,jdbcType=INTEGER},
-      `sub_mg_uid` = #{record.subMgUid,jdbcType=INTEGER},
-      `mg_uid` = #{record.mgUid,jdbcType=INTEGER},
-      `area_uid` = #{record.areaUid,jdbcType=INTEGER},
-      `dept_1` = #{record.dept1,jdbcType=INTEGER},
-      `dept_2` = #{record.dept2,jdbcType=INTEGER},
-      `dept_3` = #{record.dept3,jdbcType=INTEGER},
-      `dept_4` = #{record.dept4,jdbcType=INTEGER},
       `job_title_cn` = #{record.jobTitleCn,jdbcType=VARCHAR},
       `position` = #{record.position,jdbcType=VARCHAR}
     <if test="_parameter != null" >
@@ -381,30 +280,6 @@
       <if test="leaveTime != null" >
         `leave_time` = #{leaveTime,jdbcType=DATE},
       </if>
-      <if test="mdUid != null" >
-        `md_uid` = #{mdUid,jdbcType=INTEGER},
-      </if>
-      <if test="subMgUid != null" >
-        `sub_mg_uid` = #{subMgUid,jdbcType=INTEGER},
-      </if>
-      <if test="mgUid != null" >
-        `mg_uid` = #{mgUid,jdbcType=INTEGER},
-      </if>
-      <if test="areaUid != null" >
-        `area_uid` = #{areaUid,jdbcType=INTEGER},
-      </if>
-      <if test="dept1 != null" >
-        `dept_1` = #{dept1,jdbcType=INTEGER},
-      </if>
-      <if test="dept2 != null" >
-        `dept_2` = #{dept2,jdbcType=INTEGER},
-      </if>
-      <if test="dept3 != null" >
-        `dept_3` = #{dept3,jdbcType=INTEGER},
-      </if>
-      <if test="dept4 != null" >
-        `dept_4` = #{dept4,jdbcType=INTEGER},
-      </if>
       <if test="jobTitleCn != null" >
         `job_title_cn` = #{jobTitleCn,jdbcType=VARCHAR},
       </if>
@@ -424,14 +299,6 @@
       `role_id` = #{roleId,jdbcType=INTEGER},
       `entry_time` = #{entryTime,jdbcType=DATE},
       `leave_time` = #{leaveTime,jdbcType=DATE},
-      `md_uid` = #{mdUid,jdbcType=INTEGER},
-      `sub_mg_uid` = #{subMgUid,jdbcType=INTEGER},
-      `mg_uid` = #{mgUid,jdbcType=INTEGER},
-      `area_uid` = #{areaUid,jdbcType=INTEGER},
-      `dept_1` = #{dept1,jdbcType=INTEGER},
-      `dept_2` = #{dept2,jdbcType=INTEGER},
-      `dept_3` = #{dept3,jdbcType=INTEGER},
-      `dept_4` = #{dept4,jdbcType=INTEGER},
       `job_title_cn` = #{jobTitleCn,jdbcType=VARCHAR},
       `position` = #{position,jdbcType=VARCHAR}
     where `id` = #{id,jdbcType=INTEGER}

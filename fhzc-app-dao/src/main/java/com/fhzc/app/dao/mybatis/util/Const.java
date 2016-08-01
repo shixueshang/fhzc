@@ -86,6 +86,11 @@ public class Const {
          *  是否
          */
         public static  final String YES_NO = "yes_no";
+
+        /**
+         * 证件类型
+         */
+        public static final String PASSPORT = "passport";
     }
 
     /**

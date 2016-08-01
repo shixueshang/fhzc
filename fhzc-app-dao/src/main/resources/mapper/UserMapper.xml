@@ -24,6 +24,7 @@
     <result column="is_del" property="isDel" jdbcType="TINYINT" />
     <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
     <result column="avatar" property="avatar" jdbcType="VARCHAR" />
+    <result column="salt" property="salt" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -87,7 +88,7 @@
     `uid`, `login`, `password`, `realname`, `gender`, `birthday`, `passport_type_id`, 
     `passport_code`, `passport_agent`, `passport_address`, `passport_expire`, `mobile`, 
     `phone`, `phone_ext`, `email`, `address`, `login_role`, `device_uuid`, `area_id`, 
-    `is_del`, `ctime`, `avatar`
+    `is_del`, `ctime`, `avatar`, `salt`
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.UserExample" >
     select
@@ -109,13 +110,6 @@
     from `user`
     where `uid` = #{uid,jdbcType=INTEGER}
   </select>
-  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from `user`
-    where `realname` = #{realname,jdbcType=VARCHAR}
-  </select>
-  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from `user`
     where `uid` = #{uid,jdbcType=INTEGER}
@@ -127,29 +121,32 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.fhzc.app.dao.mybatis.model.User" >
-    insert into `user` (`uid`, `login`, `password`, 
-      `realname`, `gender`, `birthday`, 
-      `passport_type_id`, `passport_code`, `passport_agent`, 
-      `passport_address`, `passport_expire`, `mobile`, 
-      `phone`, `phone_ext`, `email`, 
-      `address`, `login_role`, `device_uuid`, 
-      `area_id`, `is_del`, `ctime`, 
-      `avatar`)
-    values (#{uid,jdbcType=INTEGER}, #{login,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{realname,jdbcType=VARCHAR}, #{gender,jdbcType=CHAR}, #{birthday,jdbcType=DATE}, 
-      #{passportTypeId,jdbcType=INTEGER}, #{passportCode,jdbcType=VARCHAR}, #{passportAgent,jdbcType=VARCHAR}, 
-      #{passportAddress,jdbcType=VARCHAR}, #{passportExpire,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
-      #{phone,jdbcType=VARCHAR}, #{phoneExt,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
-      #{address,jdbcType=VARCHAR}, #{loginRole,jdbcType=CHAR}, #{deviceUuid,jdbcType=VARCHAR}, 
-      #{areaId,jdbcType=INTEGER}, #{isDel,jdbcType=TINYINT}, #{ctime,jdbcType=TIMESTAMP}, 
-      #{avatar,jdbcType=VARCHAR})
+    <selectKey resultType="java.lang.Integer" keyProperty="uid" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `user` (`login`, `password`, `realname`, 
+      `gender`, `birthday`, `passport_type_id`, 
+      `passport_code`, `passport_agent`, `passport_address`, 
+      `passport_expire`, `mobile`, `phone`, 
+      `phone_ext`, `email`, `address`, 
+      `login_role`, `device_uuid`, `area_id`, 
+      `is_del`, `ctime`, `avatar`, 
+      `salt`)
+    values (#{login,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=CHAR}, #{birthday,jdbcType=DATE}, #{passportTypeId,jdbcType=INTEGER}, 
+      #{passportCode,jdbcType=VARCHAR}, #{passportAgent,jdbcType=VARCHAR}, #{passportAddress,jdbcType=VARCHAR}, 
+      #{passportExpire,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{phoneExt,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{loginRole,jdbcType=CHAR}, #{deviceUuid,jdbcType=VARCHAR}, #{areaId,jdbcType=INTEGER}, 
+      #{isDel,jdbcType=TINYINT}, #{ctime,jdbcType=TIMESTAMP}, #{avatar,jdbcType=VARCHAR}, 
+      #{salt,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.User" >
+    <selectKey resultType="java.lang.Integer" keyProperty="uid" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into `user`
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="uid != null" >
-        `uid`,
-      </if>
       <if test="login != null" >
         `login`,
       </if>
@@ -213,11 +210,11 @@
       <if test="avatar != null" >
         `avatar`,
       </if>
+      <if test="salt != null" >
+        `salt`,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="uid != null" >
-        #{uid,jdbcType=INTEGER},
-      </if>
       <if test="login != null" >
         #{login,jdbcType=VARCHAR},
       </if>
@@ -280,6 +277,9 @@
       </if>
       <if test="avatar != null" >
         #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null" >
+        #{salt,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -358,6 +358,9 @@
       <if test="record.avatar != null" >
         `avatar` = #{record.avatar,jdbcType=VARCHAR},
       </if>
+      <if test="record.salt != null" >
+        `salt` = #{record.salt,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -386,7 +389,8 @@
       `area_id` = #{record.areaId,jdbcType=INTEGER},
       `is_del` = #{record.isDel,jdbcType=TINYINT},
       `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
-      `avatar` = #{record.avatar,jdbcType=VARCHAR}
+      `avatar` = #{record.avatar,jdbcType=VARCHAR},
+      `salt` = #{record.salt,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -457,6 +461,9 @@
       <if test="avatar != null" >
         `avatar` = #{avatar,jdbcType=VARCHAR},
       </if>
+      <if test="salt != null" >
+        `salt` = #{salt,jdbcType=VARCHAR},
+      </if>
     </set>
     where `uid` = #{uid,jdbcType=INTEGER}
   </update>
@@ -482,7 +489,8 @@
       `area_id` = #{areaId,jdbcType=INTEGER},
       `is_del` = #{isDel,jdbcType=TINYINT},
       `ctime` = #{ctime,jdbcType=TIMESTAMP},
-      `avatar` = #{avatar,jdbcType=VARCHAR}
+      `avatar` = #{avatar,jdbcType=VARCHAR},
+      `salt` = #{salt,jdbcType=VARCHAR}
     where `uid` = #{uid,jdbcType=INTEGER}
   </update>
   <select resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.UserExample" id="selectByExampleWithRowbounds" >

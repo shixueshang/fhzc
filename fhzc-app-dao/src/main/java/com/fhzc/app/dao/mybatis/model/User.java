@@ -1,6 +1,5 @@
 package com.fhzc.app.dao.mybatis.model;
 
-import java.beans.Transient;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -49,6 +48,7 @@ public class User implements Serializable{
 
     private String avatar;
 
+    private String salt;
 
     private String level;
 
@@ -234,5 +234,13 @@ public class User implements Serializable{
 
     public void setAvatar(String avatar) {
         this.avatar = avatar == null ? null : avatar.trim();
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt == null ? null : salt.trim();
     }
 }

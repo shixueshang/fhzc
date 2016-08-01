@@ -22,14 +22,14 @@ CREATE TABLE IF NOT EXISTS `bank`.`user` (
   `birthday` DATE NULL COMMENT '生日',
   `avatar` VARCHAR(255) NULL COMMENT '用户图像',
   `passport_type_id` INT NULL COMMENT '证件类型',
-  `passport_code` VARCHAR(45) NULL COMMENT '证件号码（加密）',
+  `passport_code` VARCHAR(200) NULL COMMENT '证件号码（加密）',
   `passport_agent` VARCHAR(45) NULL COMMENT '发证机关（加密）',
   `passport_address` VARCHAR(45) NULL COMMENT '证件地址（加密）',
   `passport_expire` VARCHAR(45) NULL COMMENT '证件有效期',
-  `mobile` VARCHAR(45) NULL COMMENT '移动电话',
+  `mobile` VARCHAR(200) NULL COMMENT '移动电话',
   `phone` VARCHAR(45) NULL COMMENT '固定电话',
   `phone_ext` VARCHAR(45) NULL COMMENT '其他电话',
-  `email` VARCHAR(45) NULL COMMENT '邮箱',
+  `email` VARCHAR(200) NULL COMMENT '邮箱',
   `address` VARCHAR(200) NULL COMMENT '通信地址（加密）',
   `login_role` ENUM('customer','planner') NOT NULL COMMENT '登陆角色（客户、理财师）',
   `device_uuid` VARCHAR(45) NULL COMMENT '登陆设备uuid',
@@ -615,7 +615,8 @@ CREATE TABLE IF NOT EXISTS `bank`.`rights_reservation` (
 
 
 -- -----------------------------------------------------
--- Table `bank`.`planner_areas`
+-- Table `bank`.`planner_
+-- areas`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `bank`.`planner_areas` ;
 

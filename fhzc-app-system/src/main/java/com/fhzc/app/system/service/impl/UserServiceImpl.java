@@ -3,6 +3,7 @@ package com.fhzc.app.system.service.impl;
 import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.model.UserExample;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
+import com.fhzc.app.dao.mybatis.util.EncryptUtils;
 import com.fhzc.app.system.commons.util.excel.ExcelImporter;
 import com.fhzc.app.system.commons.util.excel.ImportCallBack;
 import com.fhzc.app.system.commons.util.excel.ImportConfig;
@@ -11,6 +12,8 @@ import com.fhzc.app.system.service.UserService;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,6 +27,8 @@ import java.util.*;
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
+    private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
     private static final String IMPORT_SQL = "";
 	
     @Resource
@@ -33,11 +38,15 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
     
     @Override
-    public PageableResult<User> findPageUsers(int page, int size) {
+    public PageableResult<User> findPageUsers(String name, int page, int size) {
         UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        criteria.andRealnameEqualTo(name);
+
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<User> list = userMapper.selectByExampleWithRowbounds(example, rowBounds);
-        return new PageableResult<User>(page, size, list.size(), list);
+
+        return new PageableResult<User>(page, size, userMapper.countByExample(example), decryptUser(list));
     }
 
     @Override
@@ -93,9 +102,32 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectByPrimaryKey(uid);
     }
 
-    
-	@Override
-	public User getUser(String name) {
-		 return userMapper.selectByName(name);
-	}
+    /**
+     * 解密
+     * @param list
+     * @return
+     */
+    private List<User> decryptUser(List<User> list){
+        List<User> result = new ArrayList<User>();
+        for(User user : list){
+            String key = user.getSalt();
+            try {
+                if(user.getPassportCode() != null){
+                    user.setPassportCode(EncryptUtils.decryptByDES(key, user.getPassportCode()));
+                }
+                if(user.getMobile() != null){
+                    user.setMobile(EncryptUtils.decryptByDES(key, user.getMobile()));
+                }
+                if(user.getEmail() != null){
+                    user.setEmail(EncryptUtils.decryptByDES(key, user.getEmail()));
+                }
+                result.add(user);
+            } catch (Exception e) {
+                logger.error("解密失败");
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
 }

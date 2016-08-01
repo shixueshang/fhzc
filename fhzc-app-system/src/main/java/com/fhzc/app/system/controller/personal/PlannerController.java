@@ -1,13 +1,18 @@
 package com.fhzc.app.system.controller.personal;
 
+import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 
 
+import com.fhzc.app.dao.mybatis.util.EncryptUtils;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.dao.mybatis.model.Planner;
+import com.fhzc.app.system.service.AreasService;
+import com.fhzc.app.system.service.DepartmentService;
 import com.fhzc.app.system.service.PlannerService;
 
+import com.fhzc.app.system.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,19 +30,48 @@ import java.util.*;
 @RequestMapping(value = "personal/planner")
 public class PlannerController extends BaseController {
 
-    @Resource()
+    @Resource
     private PlannerService plannerService;
+
+    @Resource
+    private UserService userService;
+
+    @Resource
+    private DepartmentService departmentService;
+
+    @Resource
+    private AreasService areasService;
 
     /**
      * 理财师列表
      * @return
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ModelAndView listProduct(){
-        ModelAndView mav = new ModelAndView("personal/planner/import");
+    public ModelAndView listPlanners(){
+        ModelAndView mav = new ModelAndView("personal/planner/list");
         PageableResult<Planner> pageableResult = plannerService.findPagePlanners(page, size);
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("planners", pageableResult.getItems());
+
+        //查询用户表的理财师信息
+        List<Planner> planners = pageableResult.getItems();
+        List<User> users = new ArrayList<User>();
+        for(Planner planner : planners){
+            User user = userService.getUser(planner.getUid());
+            try {
+                user.setPassportCode(EncryptUtils.decryptByDES(user.getSalt(), user.getPassportCode()));
+                user.setMobile(EncryptUtils.decryptByDES(user.getSalt(),user.getMobile()));
+                user.setEmail(EncryptUtils.decryptByDES(user.getSalt(), user.getEmail()));
+            } catch (Exception e) {
+                logger.error("解密失败");
+            }
+            users.add(user);
+        }
+
+        mav.addObject("users", users);
+        mav.addObject("departments", departmentService.findDeptByParent(1));
+        mav.addObject("areas", areasService.getAllAreas());
+        mav.addObject("url", "personal/planner");
         return mav;
     }
 
@@ -47,7 +81,7 @@ public class PlannerController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/importor", method = RequestMethod.GET)
-    public ModelAndView importorProduct(){
+    public ModelAndView importPlanner(){
         ModelAndView mav = new ModelAndView("personal/planner/importor");
         return mav;
     }

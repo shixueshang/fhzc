@@ -40,10 +40,10 @@
                     <ul class="breadcrumb">
                         <li>
                             <i class="icon-home"></i>
-                            <a href="javascript:void(0);">投研报告管理</a>
+                            <a href="javascript:void(0);">客户管理管理</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li class="active"><a href="javascript:void(0);" id="report_title">新增报告</a></li>
+                        <li class="active"><a href="javascript:void(0);" id="report_title">新增个人客户</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
@@ -66,7 +66,7 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="portlet_tab1">
                                         <!-- BEGIN FORM-->
-                                        <form action="<%=contextPath%>/business/report/add" id="form_sample_1" enctype="multipart/form-data" method="POST" class="form-horizontal">
+                                        <form action="<%=contextPath%>/personal/customer/add" id="form_sample_1"  method="POST" class="form-horizontal">
                                             <div class="alert alert-error hide">
                                                 <button class="close" data-dismiss="alert"></button>
                                                 您的表单有未完成的必填项,请检查.
@@ -78,49 +78,50 @@
                                             <div class="control-group">
                                             </div>
                                             <div class="control-group">
-                                                <label class="control-label">报告名</label>
+                                                <label class="control-label">客户编号</label>
                                                 <div class="controls">
-                                                    <input type="text" name="name" value="${report.name}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="cbId" value="${customer.cbId}" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
                                             <div class="control-group">
-                                                <label class="control-label">报告类型</label>
+                                                <label class="control-label">客户姓名</label>
                                                 <div class="controls">
-                                                    <select class="large m-wrap" name="cid" id="reportType" data-required="1" tabindex="1">
-                                                    </select>
+                                                    <input type="text" name="realname" value="${user.realname}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <span class="help-inline"></span>
                                                 </div>
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">报告摘要</label>
+                                                <label class="control-label">客户登陆名</label>
                                                 <div class="controls">
-                                                    <textarea name="summary" id="summary" class="span6 m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;">${report.summary}</textarea>
+                                                    <input type="text" name="login" value="${user.realname}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <span class="help-inline"></span>
                                                 </div>
                                             </div>
 
                                             <div class="control-group">
-                                              <label class="control-label">报告封面</label>
-                                              <div class="controls">
-                                                 <div class="fileupload fileupload-new" data-provides="fileupload">
-                                                    <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
-                                                       <img src="/static/image/no-image.png" alt="" id="default_img" />
-                                                    </div>
-                                                    <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
-                                                    <div>
+                                                <label class="control-label">报告封面</label>
+                                                <div class="controls">
+                                                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                                                        <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                                            <img src="/static/image/no-image.png" alt="" id="default_img" />
+                                                        </div>
+                                                        <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                                        <div>
                                                        <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
                                                        <span class="fileupload-exists">更换</span>
                                                        <input type="file" name="coverFile" id="cover_img" class="default" /></span>
-                                                       <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+                                                            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+                                                        </div>
                                                     </div>
-                                                 </div>
-                                                 <span class="label label-important">注意!</span>
+                                                    <span class="label label-important">注意!</span>
                                                  <span>
                                                  上传图片预览仅支持Firefox, Chrome, Opera,
                                                  Safari ,Internet Explorer 10
                                                  </span>
-                                              </div>
-                                           </div>
+                                                </div>
+                                            </div>
                                             <div class="control-group">
                                                 <label class="control-label">详情链接</label>
                                                 <div class="controls">

@@ -33,11 +33,12 @@ public class CustomerServiceImpl implements CustomerService {
 
 
     @Override
-    public PageableResult<Customer> findPageCustomers(int page, int size) {
+    public PageableResult<Customer> findPageCustomers( int page, int size) {
+
         CustomerExample example = new CustomerExample();
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<Customer> list = customerMapper.selectByExampleWithRowbounds(example, rowBounds);
-        return new PageableResult<Customer>(page, size, list.size(), list);
+        return new PageableResult<Customer>(page, size, customerMapper.countByExample(example), list);
     }
 
     @Override
@@ -108,7 +109,7 @@ public class CustomerServiceImpl implements CustomerService {
     
     /**
      * 获得机构id
-     * @param name
+     * @param uId
      * @return
      */
 	@Override
