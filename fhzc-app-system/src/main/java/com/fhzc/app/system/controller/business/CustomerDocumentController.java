@@ -27,7 +27,7 @@ public class CustomerDocumentController extends BaseController {
 
 
     /**
-     * 导入页面
+     * 个人客户导入页面
      * @return
      */
     @RequestMapping(value = "/importor", method = RequestMethod.GET)
@@ -43,10 +43,25 @@ public class CustomerDocumentController extends BaseController {
      */
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> importExcel(MultipartFile multiFile){
+//    public Map<String, Map<String, Object>> importExcel(MultipartFile multiFile){
+//       	Map<String,Map<String,Object>> result = new HashMap<String,Map<String,Object>>();
+//       	Map<String,Object> map = new HashMap<String, Object>();
+//        try {
+//            result = customerDocumentService.importExcel(multiFile);
+//            map.put("flag", true);
+//            result.put("success", map);
+//        } catch (Exception e) {
+//            logger.error("导入失败");
+//            map.put("flag", false);
+//            result.put("success", map);
+//            e.printStackTrace();
+//        }
+//        return result;
+//    }
+    public Map<String, Object> importExcelSpecial(MultipartFile multiFile){
         Map<String, Object> result = new HashMap<String, Object>();
         try {
-            result = customerDocumentService.importExcelFile(multiFile);
+            result = customerDocumentService.importExcelFilePersonal(multiFile);
             result.put("success", true);
         } catch (Exception e) {
             logger.error("导入失败");
