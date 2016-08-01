@@ -26,6 +26,7 @@ public class ScoreServiceImpl implements ScoreService{
         ScoreHistoryExample example = new ScoreHistoryExample();
         ScoreHistoryExample.Criteria criteria = example.createCriteria();
 
+        criteria.andUidEqualTo(uid);
         criteria.andStatusEqualTo(type);
         criteria.andIsVaildEqualTo(APIConstants.Score.IS_VAILD);
         criteria.andIsApproveEqualTo(APIConstants.Score.IS_APPROVE);
@@ -47,10 +48,9 @@ public class ScoreServiceImpl implements ScoreService{
         return scoreHistories;
     }
 
-    @Override
-    public List<ScoreHistory> getWillExpired(Integer uid){
 
-        List<ScoreHistory> scoreHistories = this.getList(uid, APIConstants.Score.ADD);
+    @Override
+    public List<ScoreHistory> calcWillExpired(List<ScoreHistory> scoreHistories){
 
         List<ScoreHistory> result = new ArrayList<>();
         for(ScoreHistory score : scoreHistories){
@@ -61,6 +61,12 @@ public class ScoreServiceImpl implements ScoreService{
         }
 
         return result;
+    }
+
+    @Override
+    public List<ScoreHistory> getWillExpired(Integer uid) {
+        return this.calcWillExpired(this.getAvailableList(uid));
+
     }
 
     @Override
