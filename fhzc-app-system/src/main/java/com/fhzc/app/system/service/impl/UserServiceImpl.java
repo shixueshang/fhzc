@@ -52,6 +52,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public void addOrUpdateUser(User user) {
         Integer pid = user.getUid();
+        String passport = user.getPassportCode();
+        String key = passport.substring(passport.length() - 8);
+        user.setSalt(key);
+        try {
+            user.setPassportCode(EncryptUtils.encryptToDES(key, user.getPassportCode()));
+        if(user.getMobile() != null){
+            user.setMobile(EncryptUtils.encryptToDES(key, user.getMobile()));
+        }
+        if(user.getEmail() != null){
+            user.setEmail(EncryptUtils.encryptToDES(key, user.getEmail()));
+        }
+        } catch (Exception e) {
+            logger.error("加密失败");
+            e.printStackTrace();
+        }
         if(pid == null){
             userMapper.insertSelective(user);
         }else{
@@ -123,9 +138,7 @@ public class UserServiceImpl implements UserService {
     private User decryptUser(User user){
         String key = user.getSalt();
         try {
-            if(user.getPassportCode() != null){
-                user.setPassportCode(EncryptUtils.decryptByDES(key, user.getPassportCode()));
-            }
+            user.setPassportCode(EncryptUtils.decryptByDES(key, user.getPassportCode()));
             if(user.getMobile() != null){
                 user.setMobile(EncryptUtils.decryptByDES(key, user.getMobile()));
             }

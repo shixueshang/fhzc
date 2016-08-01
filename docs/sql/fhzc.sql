@@ -746,6 +746,20 @@ CREATE TABLE IF NOT EXISTS `bank`.`dictionary` (
   ENGINE = InnoDB
   COMMENT = '字典表';
 
+CREATE TABLE IF NOT EXISTS `bank`.`customer_organ` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `customer_id` INT(11) NOT NULL COMMENT '客户id',
+  `rights_enjoy_person` VARCHAR(45) NULL DEFAULT NULL COMMENT '权益享用人',
+  `passport_type_id` INT(11) NULL DEFAULT NULL COMMENT '证件类型',
+  `passport_code` VARCHAR(45) NULL DEFAULT NULL COMMENT '证件号',
+  `mobile` VARCHAR(11) NULL DEFAULT NULL COMMENT '手机号',
+  PRIMARY KEY (`id`))
+  ENGINE = InnoDB
+  DEFAULT CHARACTER SET = utf8
+  COMMENT = '机构客户权益享用人表';
+
+
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

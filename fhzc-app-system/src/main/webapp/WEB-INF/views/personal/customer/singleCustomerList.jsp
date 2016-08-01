@@ -126,10 +126,18 @@
                                             </c:forEach>
                                         </td>
                                         <td>
-
+                                            <c:forEach items="${scores}" var="score">
+                                                <c:if test="${customer.customerId == score['customerId']}">
+                                                    ${score['availableScore']}
+                                                </c:if>
+                                            </c:forEach>
                                         </td>
                                         <td>
-
+                                            <c:forEach items="${scores}" var="score">
+                                                <c:if test="${customer.customerId == score['customerId']}">
+                                                    ${score['frozenScore']}
+                                                </c:if>
+                                            </c:forEach>
                                         </td>
                                         <td>
                                             <c:forEach items="${users}" var="user">

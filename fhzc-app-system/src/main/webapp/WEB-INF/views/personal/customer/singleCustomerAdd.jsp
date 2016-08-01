@@ -66,7 +66,7 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="portlet_tab1">
                                         <!-- BEGIN FORM-->
-                                        <form action="<%=contextPath%>/personal/customer/add" id="form_sample_1"  method="POST" class="form-horizontal">
+                                        <form action="<%=contextPath%>/personal/customer/update" id="form_sample_1"  method="POST" class="form-horizontal">
                                             <div class="alert alert-error hide">
                                                 <button class="close" data-dismiss="alert"></button>
                                                 您的表单有未完成的必填项,请检查.
@@ -87,7 +87,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">客户姓名</label>
                                                 <div class="controls">
-                                                    <input type="text" name="realname" value="${user.login}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="realname" value="${user.realname}" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -95,7 +95,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">客户登陆名</label>
                                                 <div class="controls">
-                                                    <input type="text" name="login" value="${user.realname}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="login" value="${user.login}" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -179,7 +179,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">理财师工号</label>
                                                 <div class="controls">
-                                                    <input type="text" name="plannerNum" value="${plannerNum}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="plannerNum" value="${planner.workNum}" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -187,7 +187,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">理财师姓名</label>
                                                 <div class="controls">
-                                                    <input type="text" name="plannerName" value="${plannerName}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="plannerName" value="${plannerUser.realname}" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>

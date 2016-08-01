@@ -22,8 +22,6 @@ public interface CustomerMapper {
     List<Customer> selectByExample(CustomerExample example);
 
     Customer selectByPrimaryKey(Integer customerId);
-    
-    Customer selectByUid(Integer uId);
 
     int updateByExampleSelective(@Param("record") Customer record, @Param("example") CustomerExample example);
 

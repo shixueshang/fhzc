@@ -36,7 +36,7 @@ public interface CustomerService {
     Map<String, Object> importExcelFile(MultipartFile multipartFile) throws Exception;
 
     /**
-     * 获得产品信息
+     * 获得客户信息
      * @param customerId
      * @return
      */
