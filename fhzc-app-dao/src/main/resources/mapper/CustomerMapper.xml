@@ -202,6 +202,12 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
+  <select id="selectByUid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from `customer`
+    where `uid` = #{uid,jdbcType=INTEGER}
+  </select>
   <update id="updateByExampleSelective" parameterType="map" >
     update `customer`
     <set >

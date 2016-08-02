@@ -1,6 +1,7 @@
 package com.fhzc.app.system.controller.business;
 
 import com.alibaba.fastjson.JSON;
+import com.fhzc.app.dao.mybatis.model.RightsReservation;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
@@ -165,12 +166,18 @@ public class RightsController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/reservation/add", method = RequestMethod.GET)
-    public RightVo addReservation(long rightId, long customerId, long exchangeScore, Date reservationTime){
-        RightVo vo = new RightVo();
-        Rights rights = rightsService.getRights((int)rightId);
-        vo.setScore(rights.getSpendScore());
-        vo.setProviderName(rights.getSupply());
+    public ModelAndView addReservation(long rightId, long customerId, long exchangeScore, Date reservationTime){
+        RightsReservation reservation = new RightsReservation();
+        reservation.setCtime(new Date());
+        reservation.setRightsId((int)rightId);
+        reservation.setCustomerId((int)customerId);
+        reservation.setScoreCost(Long.toString(exchangeScore));
+        reservation.setMarkDate(reservationTime);
+        rightsService.addRightsReservation(reservation);
 
-        return vo;
+        ModelAndView mav = new ModelAndView("business/rights/addRightReservation");
+        PageableResult<Rights> pageableResult = rightsService.findPageRights(1, 500);
+        mav.addObject("rights", pageableResult.getItems());
+        return mav;
     }
 }

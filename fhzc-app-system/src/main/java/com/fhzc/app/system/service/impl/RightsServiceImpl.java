@@ -1,8 +1,10 @@
 package com.fhzc.app.system.service.impl;
 
 import com.fhzc.app.dao.mybatis.inter.RightsMapper;
+import com.fhzc.app.dao.mybatis.inter.RightsReservationMapper;
 import com.fhzc.app.dao.mybatis.model.Rights;
 import com.fhzc.app.dao.mybatis.model.RightsExample;
+import com.fhzc.app.dao.mybatis.model.RightsReservation;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.system.service.RightsService;
 import org.apache.ibatis.session.RowBounds;
@@ -19,6 +21,9 @@ public class RightsServiceImpl implements RightsService {
 
     @Resource
     private RightsMapper rightsMapper;
+
+    @Resource
+    private RightsReservationMapper rightsReservationMapper;
 
     @Override
     public PageableResult<Rights> findPageRights(int page, int size) {
@@ -43,5 +48,8 @@ public class RightsServiceImpl implements RightsService {
         return rightsMapper.selectByPrimaryKey(id);
     }
 
-
+    @Override
+    public int addRightsReservation(RightsReservation reservation) {
+        return rightsReservationMapper.insert(reservation);
+    }
 }
