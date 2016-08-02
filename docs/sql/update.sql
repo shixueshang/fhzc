@@ -206,6 +206,13 @@ DROP TABLE IF EXISTS `bank`.`level` ;
 
 ALTER TABLE `bank`.`user`
 ADD COLUMN `salt` VARCHAR(45) NULL COMMENT '加密key' AFTER `avatar`;
+ALTER TABLE `bank`.`rights_reservation`
+CHANGE COLUMN `score_cost` `score_cost` INT NULL DEFAULT NULL COMMENT '积分花费' ;
+
+ALTER TABLE `bank`.`activity_apply`
+ADD COLUMN `person_num` INT NOT NULL DEFAULT 1 COMMENT '报名人数' AFTER `customer_id`,
+ADD COLUMN `person_name` VARCHAR(45) NULL COMMENT '预约客户姓名' AFTER `is_sure`;
+
 
 #2016-08-01
 ALTER TABLE `bank`.`customer`

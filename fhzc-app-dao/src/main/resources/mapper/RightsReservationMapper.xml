@@ -8,7 +8,7 @@
     <result column="planner_id" property="plannerId" jdbcType="INTEGER" />
     <result column="mark_date" property="markDate" jdbcType="TIMESTAMP" />
     <result column="detail" property="detail" jdbcType="VARCHAR" />
-    <result column="score_cost" property="scoreCost" jdbcType="VARCHAR" />
+    <result column="score_cost" property="scoreCost" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="memo" property="memo" jdbcType="VARCHAR" />
     <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
@@ -114,7 +114,7 @@
       `status`, `memo`, `ctime`
       )
     values (#{rightsId,jdbcType=INTEGER}, #{customerId,jdbcType=INTEGER}, #{plannerId,jdbcType=INTEGER}, 
-      #{markDate,jdbcType=TIMESTAMP}, #{detail,jdbcType=VARCHAR}, #{scoreCost,jdbcType=VARCHAR}, 
+      #{markDate,jdbcType=TIMESTAMP}, #{detail,jdbcType=VARCHAR}, #{scoreCost,jdbcType=INTEGER}, 
       #{status,jdbcType=INTEGER}, #{memo,jdbcType=VARCHAR}, #{ctime,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -169,7 +169,7 @@
         #{detail,jdbcType=VARCHAR},
       </if>
       <if test="scoreCost != null" >
-        #{scoreCost,jdbcType=VARCHAR},
+        #{scoreCost,jdbcType=INTEGER},
       </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
@@ -210,7 +210,7 @@
         `detail` = #{record.detail,jdbcType=VARCHAR},
       </if>
       <if test="record.scoreCost != null" >
-        `score_cost` = #{record.scoreCost,jdbcType=VARCHAR},
+        `score_cost` = #{record.scoreCost,jdbcType=INTEGER},
       </if>
       <if test="record.status != null" >
         `status` = #{record.status,jdbcType=INTEGER},
@@ -234,7 +234,7 @@
       `planner_id` = #{record.plannerId,jdbcType=INTEGER},
       `mark_date` = #{record.markDate,jdbcType=TIMESTAMP},
       `detail` = #{record.detail,jdbcType=VARCHAR},
-      `score_cost` = #{record.scoreCost,jdbcType=VARCHAR},
+      `score_cost` = #{record.scoreCost,jdbcType=INTEGER},
       `status` = #{record.status,jdbcType=INTEGER},
       `memo` = #{record.memo,jdbcType=VARCHAR},
       `ctime` = #{record.ctime,jdbcType=TIMESTAMP}
@@ -261,7 +261,7 @@
         `detail` = #{detail,jdbcType=VARCHAR},
       </if>
       <if test="scoreCost != null" >
-        `score_cost` = #{scoreCost,jdbcType=VARCHAR},
+        `score_cost` = #{scoreCost,jdbcType=INTEGER},
       </if>
       <if test="status != null" >
         `status` = #{status,jdbcType=INTEGER},
@@ -282,7 +282,7 @@
       `planner_id` = #{plannerId,jdbcType=INTEGER},
       `mark_date` = #{markDate,jdbcType=TIMESTAMP},
       `detail` = #{detail,jdbcType=VARCHAR},
-      `score_cost` = #{scoreCost,jdbcType=VARCHAR},
+      `score_cost` = #{scoreCost,jdbcType=INTEGER},
       `status` = #{status,jdbcType=INTEGER},
       `memo` = #{memo,jdbcType=VARCHAR},
       `ctime` = #{ctime,jdbcType=TIMESTAMP}

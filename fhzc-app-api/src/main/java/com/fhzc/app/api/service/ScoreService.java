@@ -3,6 +3,7 @@ package com.fhzc.app.api.service;
 import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.dao.mybatis.model.ScoreHistory;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,5 +18,11 @@ public interface ScoreService {
     List<ScoreHistory> getExpiredList(Integer uid);
     List<ScoreHistory> calcWillExpired(List<ScoreHistory> scoreHistories);
     Integer sumScore(List<ScoreHistory> scoreHistories);
+
+    List<ScoreHistory> getList(Integer uid, String type, Date start, Date end);
+    List<ScoreHistory> getAvailableList(Integer uid, Date start, Date end);
+    List<ScoreHistory> getFrozen(Integer uid, Date start, Date end);
+    List<ScoreHistory> getWillExpired(Integer uid, Date start, Date end);
+    List<ScoreHistory> getAllList(Integer uid, Date start, Date end);
 
 }

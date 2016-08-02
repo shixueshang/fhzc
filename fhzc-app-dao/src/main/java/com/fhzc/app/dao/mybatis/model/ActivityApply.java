@@ -9,6 +9,8 @@ public class ActivityApply {
 
     private Integer customerId;
 
+    private Integer personNum;
+
     private Integer plannerId;
 
     private String phone;
@@ -22,6 +24,8 @@ public class ActivityApply {
     private Integer isContact;
 
     private Integer isSure;
+
+    private String personName;
 
     public Integer getId() {
         return id;
@@ -45,6 +49,14 @@ public class ActivityApply {
 
     public void setCustomerId(Integer customerId) {
         this.customerId = customerId;
+    }
+
+    public Integer getPersonNum() {
+        return personNum;
+    }
+
+    public void setPersonNum(Integer personNum) {
+        this.personNum = personNum;
     }
 
     public Integer getPlannerId() {
@@ -101,5 +113,13 @@ public class ActivityApply {
 
     public void setIsSure(Integer isSure) {
         this.isSure = isSure;
+    }
+
+    public String getPersonName() {
+        return personName;
+    }
+
+    public void setPersonName(String personName) {
+        this.personName = personName == null ? null : personName.trim();
     }
 }

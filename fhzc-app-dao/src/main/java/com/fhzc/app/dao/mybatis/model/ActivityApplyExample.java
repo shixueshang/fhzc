@@ -285,6 +285,66 @@ public class ActivityApplyExample {
             return (Criteria) this;
         }
 
+        public Criteria andPersonNumIsNull() {
+            addCriterion("`person_num` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonNumIsNotNull() {
+            addCriterion("`person_num` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonNumEqualTo(Integer value) {
+            addCriterion("`person_num` =", value, "personNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonNumNotEqualTo(Integer value) {
+            addCriterion("`person_num` <>", value, "personNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonNumGreaterThan(Integer value) {
+            addCriterion("`person_num` >", value, "personNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonNumGreaterThanOrEqualTo(Integer value) {
+            addCriterion("`person_num` >=", value, "personNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonNumLessThan(Integer value) {
+            addCriterion("`person_num` <", value, "personNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonNumLessThanOrEqualTo(Integer value) {
+            addCriterion("`person_num` <=", value, "personNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonNumIn(List<Integer> values) {
+            addCriterion("`person_num` in", values, "personNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonNumNotIn(List<Integer> values) {
+            addCriterion("`person_num` not in", values, "personNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonNumBetween(Integer value1, Integer value2) {
+            addCriterion("`person_num` between", value1, value2, "personNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonNumNotBetween(Integer value1, Integer value2) {
+            addCriterion("`person_num` not between", value1, value2, "personNum");
+            return (Criteria) this;
+        }
+
         public Criteria andPlannerIdIsNull() {
             addCriterion("`planner_id` is null");
             return (Criteria) this;
@@ -722,6 +782,76 @@ public class ActivityApplyExample {
 
         public Criteria andIsSureNotBetween(Integer value1, Integer value2) {
             addCriterion("`is_sure` not between", value1, value2, "isSure");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonNameIsNull() {
+            addCriterion("`person_name` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonNameIsNotNull() {
+            addCriterion("`person_name` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonNameEqualTo(String value) {
+            addCriterion("`person_name` =", value, "personName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonNameNotEqualTo(String value) {
+            addCriterion("`person_name` <>", value, "personName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonNameGreaterThan(String value) {
+            addCriterion("`person_name` >", value, "personName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonNameGreaterThanOrEqualTo(String value) {
+            addCriterion("`person_name` >=", value, "personName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonNameLessThan(String value) {
+            addCriterion("`person_name` <", value, "personName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonNameLessThanOrEqualTo(String value) {
+            addCriterion("`person_name` <=", value, "personName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonNameLike(String value) {
+            addCriterion("`person_name` like", value, "personName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonNameNotLike(String value) {
+            addCriterion("`person_name` not like", value, "personName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonNameIn(List<String> values) {
+            addCriterion("`person_name` in", values, "personName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonNameNotIn(List<String> values) {
+            addCriterion("`person_name` not in", values, "personName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonNameBetween(String value1, String value2) {
+            addCriterion("`person_name` between", value1, value2, "personName");
+            return (Criteria) this;
+        }
+
+        public Criteria andPersonNameNotBetween(String value1, String value2) {
+            addCriterion("`person_name` not between", value1, value2, "personName");
             return (Criteria) this;
         }
     }

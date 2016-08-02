@@ -15,7 +15,7 @@ public class RightsReservation {
 
     private String detail;
 
-    private String scoreCost;
+    private Integer scoreCost;
 
     private Integer status;
 
@@ -71,12 +71,12 @@ public class RightsReservation {
         this.detail = detail == null ? null : detail.trim();
     }
 
-    public String getScoreCost() {
+    public Integer getScoreCost() {
         return scoreCost;
     }
 
-    public void setScoreCost(String scoreCost) {
-        this.scoreCost = scoreCost == null ? null : scoreCost.trim();
+    public void setScoreCost(Integer scoreCost) {
+        this.scoreCost = scoreCost;
     }
 
     public Integer getStatus() {
