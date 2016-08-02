@@ -53,9 +53,10 @@ public interface CustomerService {
 	 /**
      * 通过uid查询客户
      * @param uId
+      * @param customerType
      * @return
      */
-	 Customer getCustomerByUid(Integer uId);
+	 Customer getCustomerByUid(Integer uId, String customerType);
 
     /**
      * 获得客户的主理财师

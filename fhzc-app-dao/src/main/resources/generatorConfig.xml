@@ -53,12 +53,6 @@
             <generatedKey column="customer_id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
         </table>
 
-        <table tableName="customer_organ"
-               delimitAllColumns="true"
-               delimitIdentifiers="true"
-               domainObjectName="CustomerOrgan">
-            <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
-        </table>
 
 
     </context>

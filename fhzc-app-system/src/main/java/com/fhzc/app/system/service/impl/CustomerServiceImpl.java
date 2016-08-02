@@ -133,11 +133,15 @@ public class CustomerServiceImpl implements CustomerService {
      * @return
      */
     @Override
-    public Customer getCustomerByUid(Integer uId) {
+    public Customer getCustomerByUid(Integer uId, String customerType) {
         CustomerExample example = new CustomerExample();
         CustomerExample.Criteria criteria = example.createCriteria();
         criteria.andUidEqualTo(uId);
-        return customerMapper.selectByExample(example).get(0);
+        criteria.andCustomerTypeEqualTo(customerType);
+        if(customerMapper.countByExample(example) > 0){
+            return customerMapper.selectByExample(example).get(0);
+        }
+        return null;
     }
 
     @Override
@@ -146,7 +150,10 @@ public class CustomerServiceImpl implements CustomerService {
         PlannerCustomerExample.Criteria criteria = example.createCriteria();
         criteria.andCustomerIdEqualTo(customerId);
         criteria.andIsMainEqualTo(Byte.valueOf(Const.YES_OR_NO.YES.toString()));
-        return plannerCustomerMapper.selectByExample(example).get(0);
+        if(plannerCustomerMapper.countByExample(example) > 0){
+            return plannerCustomerMapper.selectByExample(example).get(0);
+        }
+        return null;
     }
 
     /**
@@ -160,7 +167,8 @@ public class CustomerServiceImpl implements CustomerService {
         if (users != null && users.size() > 0){
             CustomerVo vo = new CustomerVo();
             vo.setName(users.get(0).getRealname());
-            Customer customer = customerMapper.selectByUid(users.get(0).getUid());
+            // TODO 需要根据手机号判断是个人客户还是机构客户
+            Customer customer = this.getCustomerByUid(users.get(0).getUid(), Const.CUSTOMER_TYPE.SINGLE_CUSTOMER);
             vo.setCustomerId(customer.getCustomerId());
             if (customer != null){
                 DictionaryExample example = new DictionaryExample();

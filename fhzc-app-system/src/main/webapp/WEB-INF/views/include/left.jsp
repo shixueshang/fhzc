@@ -114,7 +114,10 @@
 
                         <ul class="sub">
                         <shiro:hasPermission name="/personal/customer/single/list"><li>
-                                <a href="/personal/customer/single/list">客户列表</a>
+                                <a href="/personal/customer/single/list">个人客户列表</a>
+                            </li></shiro:hasPermission>
+                        <shiro:hasPermission name="/personal/customer/organ/list"><li>
+                                <a href="/personal/customer/organ/list">机构客户列表</a>
                             </li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>
@@ -184,8 +187,6 @@
     var obj = $('a[href*="'+url+'"]');
     $.each(obj, function(i, v){
         var _this = $(v), _parent = _this.closest('ul'), _p_parent = _parent.closest('li');
-        console.log(_parent.html());
-        console.log(_p_parent.html());
         _p_parent.addClass('active').addClass('open');
         _parent.show();
 

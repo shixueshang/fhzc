@@ -87,7 +87,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">权益类型<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <select class="large m-wrap" name="cid" data-required="1" tabindex="1">
+                                                    <select class="large m-wrap" name="cid" id="rightsCategory" data-required="1" tabindex="1">
                                                     </select>
                                                 </div>
                                             </div>
@@ -112,7 +112,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">客户等级要求</label>
                                                 <div class="controls">
-                                                    <select name="level" class="large m-wrap"  tabindex="1">
+                                                    <select name="level" id="level" class="large m-wrap"  tabindex="1">
                                                     </select>
                                                 </div>
                                             </div>
@@ -120,7 +120,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">兑换积分<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <input type="text" name="spendScore" value="spendScore" data-required="1" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="spendScore" value="${right.spendScore}" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -197,11 +197,12 @@
 
         var rightType = '${right.cid}';
         var categorys = '${rightsCategory}';
+        console.info(categorys)
         var categoryJson= $.parseJSON(categorys);
         $.each(categoryJson, function(i,val){
-            $("#cid").append("<option value='"+val.value+"'>"+val.key+"</option>");
+            $("#rightsCategory").append("<option value='"+val.value+"'>"+val.key+"</option>");
             if(rightType == val.value){
-                $("#cid").val(rightType);
+                $("#rightsCategory").val(rightType);
             }
         });
 

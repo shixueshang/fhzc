@@ -534,6 +534,76 @@ public class CustomerExample {
             return (Criteria) this;
         }
 
+        public Criteria andOrganNameIsNull() {
+            addCriterion("`organ_name` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganNameIsNotNull() {
+            addCriterion("`organ_name` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganNameEqualTo(String value) {
+            addCriterion("`organ_name` =", value, "organName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganNameNotEqualTo(String value) {
+            addCriterion("`organ_name` <>", value, "organName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganNameGreaterThan(String value) {
+            addCriterion("`organ_name` >", value, "organName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganNameGreaterThanOrEqualTo(String value) {
+            addCriterion("`organ_name` >=", value, "organName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganNameLessThan(String value) {
+            addCriterion("`organ_name` <", value, "organName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganNameLessThanOrEqualTo(String value) {
+            addCriterion("`organ_name` <=", value, "organName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganNameLike(String value) {
+            addCriterion("`organ_name` like", value, "organName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganNameNotLike(String value) {
+            addCriterion("`organ_name` not like", value, "organName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganNameIn(List<String> values) {
+            addCriterion("`organ_name` in", values, "organName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganNameNotIn(List<String> values) {
+            addCriterion("`organ_name` not in", values, "organName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganNameBetween(String value1, String value2) {
+            addCriterion("`organ_name` between", value1, value2, "organName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrganNameNotBetween(String value1, String value2) {
+            addCriterion("`organ_name` not between", value1, value2, "organName");
+            return (Criteria) this;
+        }
+
         public Criteria andCustomerTypeIsNull() {
             addCriterion("`customer_type` is null");
             return (Criteria) this;
@@ -744,73 +814,73 @@ public class CustomerExample {
             return (Criteria) this;
         }
 
-        public Criteria andContactRalationIsNull() {
-            addCriterion("`contact_ralation` is null");
+        public Criteria andContactRelationIsNull() {
+            addCriterion("`contact_relation` is null");
             return (Criteria) this;
         }
 
-        public Criteria andContactRalationIsNotNull() {
-            addCriterion("`contact_ralation` is not null");
+        public Criteria andContactRelationIsNotNull() {
+            addCriterion("`contact_relation` is not null");
             return (Criteria) this;
         }
 
-        public Criteria andContactRalationEqualTo(String value) {
-            addCriterion("`contact_ralation` =", value, "contactRalation");
+        public Criteria andContactRelationEqualTo(String value) {
+            addCriterion("`contact_relation` =", value, "contactRelation");
             return (Criteria) this;
         }
 
-        public Criteria andContactRalationNotEqualTo(String value) {
-            addCriterion("`contact_ralation` <>", value, "contactRalation");
+        public Criteria andContactRelationNotEqualTo(String value) {
+            addCriterion("`contact_relation` <>", value, "contactRelation");
             return (Criteria) this;
         }
 
-        public Criteria andContactRalationGreaterThan(String value) {
-            addCriterion("`contact_ralation` >", value, "contactRalation");
+        public Criteria andContactRelationGreaterThan(String value) {
+            addCriterion("`contact_relation` >", value, "contactRelation");
             return (Criteria) this;
         }
 
-        public Criteria andContactRalationGreaterThanOrEqualTo(String value) {
-            addCriterion("`contact_ralation` >=", value, "contactRalation");
+        public Criteria andContactRelationGreaterThanOrEqualTo(String value) {
+            addCriterion("`contact_relation` >=", value, "contactRelation");
             return (Criteria) this;
         }
 
-        public Criteria andContactRalationLessThan(String value) {
-            addCriterion("`contact_ralation` <", value, "contactRalation");
+        public Criteria andContactRelationLessThan(String value) {
+            addCriterion("`contact_relation` <", value, "contactRelation");
             return (Criteria) this;
         }
 
-        public Criteria andContactRalationLessThanOrEqualTo(String value) {
-            addCriterion("`contact_ralation` <=", value, "contactRalation");
+        public Criteria andContactRelationLessThanOrEqualTo(String value) {
+            addCriterion("`contact_relation` <=", value, "contactRelation");
             return (Criteria) this;
         }
 
-        public Criteria andContactRalationLike(String value) {
-            addCriterion("`contact_ralation` like", value, "contactRalation");
+        public Criteria andContactRelationLike(String value) {
+            addCriterion("`contact_relation` like", value, "contactRelation");
             return (Criteria) this;
         }
 
-        public Criteria andContactRalationNotLike(String value) {
-            addCriterion("`contact_ralation` not like", value, "contactRalation");
+        public Criteria andContactRelationNotLike(String value) {
+            addCriterion("`contact_relation` not like", value, "contactRelation");
             return (Criteria) this;
         }
 
-        public Criteria andContactRalationIn(List<String> values) {
-            addCriterion("`contact_ralation` in", values, "contactRalation");
+        public Criteria andContactRelationIn(List<String> values) {
+            addCriterion("`contact_relation` in", values, "contactRelation");
             return (Criteria) this;
         }
 
-        public Criteria andContactRalationNotIn(List<String> values) {
-            addCriterion("`contact_ralation` not in", values, "contactRalation");
+        public Criteria andContactRelationNotIn(List<String> values) {
+            addCriterion("`contact_relation` not in", values, "contactRelation");
             return (Criteria) this;
         }
 
-        public Criteria andContactRalationBetween(String value1, String value2) {
-            addCriterion("`contact_ralation` between", value1, value2, "contactRalation");
+        public Criteria andContactRelationBetween(String value1, String value2) {
+            addCriterion("`contact_relation` between", value1, value2, "contactRelation");
             return (Criteria) this;
         }
 
-        public Criteria andContactRalationNotBetween(String value1, String value2) {
-            addCriterion("`contact_ralation` not between", value1, value2, "contactRalation");
+        public Criteria andContactRelationNotBetween(String value1, String value2) {
+            addCriterion("`contact_relation` not between", value1, value2, "contactRelation");
             return (Criteria) this;
         }
 

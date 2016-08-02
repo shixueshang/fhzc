@@ -1,5 +1,6 @@
 package com.fhzc.app.api.controller;
 
+import com.fhzc.app.api.exception.BadRequestException;
 import com.fhzc.app.api.exception.NeedLoginRequestException;
 import com.fhzc.app.api.service.UserService;
 import com.fhzc.app.api.tools.APIConstants;
@@ -97,6 +98,44 @@ public class LoginController extends BaseController {
     public ApiJsonResult setPassword(Integer identity, String identityNum, String password, String confirmPwd){
         User user = userService.checkUserExists(identity, identityNum);
         user.setPassword(DigestUtils.md5Hex(password));
+        userService.updateUser(user);
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
+    }
+
+    /**
+     * 修改密码之前校验原密码
+     * @param password
+     * @return
+     */
+    @RequestMapping(value = "/api/password/preModify", method = RequestMethod.GET)
+    @ResponseBody
+    public ApiJsonResult preModify(String password){
+        User user = getCurrentUser();
+        String md5Pwd = DigestUtils.md5Hex(password);
+        if(!user.getPassword().equals(md5Pwd)){
+            throw new BadRequestException("密码输入错误");
+        }
+
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
+    }
+
+
+    /**
+     * 修改密码
+     * @param newPwd  新密码
+     * @param confirmPwd  确认密码
+     * @return
+     */
+    @RequestMapping(value = "/api/password/reset", method = RequestMethod.POST)
+    @ResponseBody
+    public ApiJsonResult modify(String newPwd, String confirmPwd) {
+
+        User user = getCurrentUser();
+
+        if(!newPwd.equals(confirmPwd)){
+            throw new BadRequestException("两次输入的密码不一致");
+        }
+        user.setPassword(DigestUtils.md5Hex(newPwd));
         userService.updateUser(user);
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
     }

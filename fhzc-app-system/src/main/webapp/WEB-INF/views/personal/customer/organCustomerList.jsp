@@ -50,9 +50,9 @@
             </div>
 
             <div class="row-fluid">
-                <form  class="form-inline" action="/personal/customer/single/find" method="GET">
+                <form  class="form-inline" action="/personal/customer/organ/find" method="GET">
                     <div class="form-group">
-                        <input class="form-control" id="name" placeholder="输入客户姓名" name="name" >
+                        <input class="form-control" id="name" placeholder="输入联系人姓名" name="name" >
 
                         <button type="submit">查询</button>
                     </div>
@@ -72,15 +72,13 @@
                                 <thead>
                                 <tr>
                                     <td>客户编号</td>
-                                    <td>客户姓名</td>
+                                    <td>机构全称</td>
                                     <td>会员等级</td>
-                                    <td>证件类型</td>
-                                    <td>证件号码</td>
                                     <td>当前可用积分</td>
                                     <td>冻结积分</td>
-                                    <td>手机号码</td>
+                                    <td>联系人姓名</td>
+                                    <td>联系人手机号</td>
                                     <td>固定电话</td>
-                                    <td>性别</td>
                                     <td>操作</td>
                                 </tr>
                                 </thead>
@@ -88,39 +86,15 @@
                                 <c:forEach items="${customers}" var="customer">
                                     <tr>
                                         <td>${customer.cbId}</td>
-                                        <td>
-                                            <c:forEach items="${users}" var="user">
-                                                <c:if test="${customer.uid == user.uid}">
-                                                    ${user.realname}
-                                                </c:if>
-                                            </c:forEach>
-                                        </td>
+                                        <td>${customer.organName}</td>
                                         <td>
                                             <c:forEach items="${users}" var="user">
                                                 <c:if test="${customer.uid == user.uid}">
                                                     <c:forEach items="${customerLevel}" var="level">
                                                         <c:if test="${customer.levelId == level.value}">
-                                                                ${level.key}
+                                                            ${level.key}
                                                         </c:if>
                                                     </c:forEach>
-                                                </c:if>
-                                            </c:forEach>
-                                        </td>
-                                        <td>
-                                        <c:forEach items="${users}" var="user">
-                                            <c:if test="${customer.uid == user.uid}">
-                                                <c:forEach items="${passports}" var="passport">
-                                                    <c:if test="${user.passportTypeId == passport.value}">
-                                                        ${passport.key}
-                                                    </c:if>
-                                                </c:forEach>
-                                            </c:if>
-                                        </c:forEach>
-                                        </td>
-                                        <td>
-                                            <c:forEach items="${users}" var="user">
-                                                <c:if test="${customer.uid == user.uid}">
-                                                    ${user.passportCode}
                                                 </c:if>
                                             </c:forEach>
                                         </td>
@@ -141,6 +115,14 @@
                                         <td>
                                             <c:forEach items="${users}" var="user">
                                                 <c:if test="${customer.uid == user.uid}">
+                                                    ${user.realname}
+                                                </c:if>
+                                            </c:forEach>
+                                        </td>
+
+                                        <td>
+                                            <c:forEach items="${users}" var="user">
+                                                <c:if test="${customer.uid == user.uid}">
                                                     ${user.mobile}
                                                 </c:if>
                                             </c:forEach>
@@ -152,21 +134,7 @@
                                                 </c:if>
                                             </c:forEach>
                                         </td>
-                                        <td>
-                                            <c:forEach items="${users}" var="user">
-                                                <c:if test="${customer.uid == user.uid}">
-                                                    <c:choose>
-                                                        <c:when test="${user.gender == 'male'}">
-                                                            男
-                                                        </c:when>
-                                                        <c:when test="${user.gender == 'female'}">
-                                                            女
-                                                        </c:when>
-                                                    </c:choose>
-                                                </c:if>
-                                            </c:forEach>
-                                        </td>
-                                        <td><a href="<%=contextPath%>/personal/customer/single/detail/${customer.customerId}" class="btn mini purple"><i class="icon-edit"></i>编辑</a></td>
+                                        <td><a href="<%=contextPath%>/personal/customer/organ/detail/${customer.customerId}" class="btn mini purple"><i class="icon-edit"></i>编辑</a></td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>

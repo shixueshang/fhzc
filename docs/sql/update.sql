@@ -215,9 +215,12 @@ ADD COLUMN `business_license` VARCHAR(255) NULL COMMENT '营业执照' AFTER `cu
 ALTER TABLE `bank`.`customer`
 ADD COLUMN `account_license` VARCHAR(255) NULL COMMENT '开户许可' AFTER `business_license`;
 ALTER TABLE `bank`.`customer`
-ADD COLUMN `contact_ralation` VARCHAR(45) NULL COMMENT '联系人关系' AFTER `account_license`;
+ADD COLUMN `contact_relation` VARCHAR(45) NULL COMMENT '联系人关系' AFTER `account_license`;
 ALTER TABLE `bank`.`customer`
 ADD COLUMN `entrusted_letter` VARCHAR(45) NULL COMMENT '法人委托函' AFTER `contact_ralation`;
+ALTER TABLE `bank`.`customer`
+ADD COLUMN `organ_name` VARCHAR(100) NULL COMMENT '机构全称' AFTER `customer_type`;
+
 
 
 

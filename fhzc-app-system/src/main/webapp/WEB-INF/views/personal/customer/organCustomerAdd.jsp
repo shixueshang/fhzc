@@ -43,7 +43,7 @@
                             <a href="javascript:void(0);">客户管理管理</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li class="active"><a href="javascript:void(0);" id="report_title">编辑个人客户</a></li>
+                        <li class="active"><a href="javascript:void(0);" id="report_title">编辑机构客户</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
@@ -66,7 +66,7 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="portlet_tab1">
                                         <!-- BEGIN FORM-->
-                                        <form action="<%=contextPath%>/personal/customer/single/update" id="form_sample_1"  method="POST" class="form-horizontal">
+                                        <form action="<%=contextPath%>/personal/customer/organ/update" id="form_sample_1"  method="POST" class="form-horizontal">
                                             <div class="alert alert-error hide">
                                                 <button class="close" data-dismiss="alert"></button>
                                                 您的表单有未完成的必填项,请检查.
@@ -85,71 +85,56 @@
                                                 </div>
                                             </div>
                                             <div class="control-group">
-                                                <label class="control-label">客户姓名</label>
+                                                <label class="control-label">机构全称</label>
                                                 <div class="controls">
-                                                    <input type="text" name="realname" value="${user.realname}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="realname" value="${customer.organName}" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">客户登陆名</label>
+                                                <label class="control-label">营业执照</label>
                                                 <div class="controls">
-                                                    <input type="text" name="login" value="${user.login}" data-required="1" placeholder="" class="m-wrap large">
-                                                    <span class="help-inline"></span>
+                                                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                                                        <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                                            <img src="/static/image/no-image.png" alt="" id="default_img"/>
+                                                        </div>
+                                                        <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                                        <div>
+                                                       <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
+                                                       <span class="fileupload-exists">更换</span>
+                                                       <input type="file" name="businessLicense" id="businessLicense" class="default" /></span>
+                                                            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+                                                        </div>
+                                                    </div>
+                                                    <span class="label label-important">注意!</span>
+                                                 <span>
+                                                 上传图片预览仅支持Firefox, Chrome, Opera,
+                                                 Safari ,Internet Explorer 10
+                                                 </span>
                                                 </div>
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">手机号码</label>
+                                                <label class="control-label">开户许可证</label>
                                                 <div class="controls">
-                                                    <input type="text" name="mobile" value="${user.mobile}" data-required="1" placeholder="" class="m-wrap large">
-                                                    <span class="help-inline"></span>
-                                                </div>
-                                            </div>
-
-                                            <div class="control-group">
-                                                <label class="control-label">固定电话</label>
-                                                <div class="controls">
-                                                    <input type="text" name="phone" value="${user.phone}" data-required="1" placeholder="" class="m-wrap large">
-                                                    <span class="help-inline"></span>
-                                                </div>
-                                            </div>
-
-                                            <div class="control-group">
-                                                <label class="control-label">性别</label>
-                                                <div class="controls">
-                                                    <label class="radio">
-                                                        <input type="radio" name="gender" value="male" checked/>
-                                                        男
-                                                    </label>
-                                                    <label class="radio">
-                                                        <input type="radio" name="gender" value="female"  />
-                                                        女
-                                                    </label>
-                                                </div>
-                                            </div>
-
-                                            <div class="control-group">
-                                                <label class="control-label">出生日期</label>
-                                                <div class="controls">
-                                                    <input type="text" name="birthday" value="<fmt:formatDate value="${user.birthday}" pattern="yyyy-MM-dd"/>" data-required="1" placeholder="" class="m-wrap m-ctrl-medium date-picker">
-                                                    <span class="help-inline"></span>
-                                                </div>
-                                            </div>
-
-                                            <div class="control-group">
-                                                <label class="control-label">证件类型</label>
-                                                <div class="controls">
-                                                    <select class="large m-wrap" name="passportTypeId" id="passportTypeId" tabindex="1"></select>
-                                                </div>
-                                            </div>
-
-                                            <div class="control-group">
-                                                <label class="control-label">证件号码</label>
-                                                <div class="controls">
-                                                    <input type="text" name="passportCode" value="${user.passportCode}" data-required="1" placeholder="" class="m-wrap large">
-                                                    <span class="help-inline"></span>
+                                                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                                                        <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                                            <img src="/static/image/no-image.png" alt="" />
+                                                        </div>
+                                                        <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                                        <div>
+                                                       <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
+                                                       <span class="fileupload-exists">更换</span>
+                                                       <input type="file" name="accountLicense" id="accountLicense" class="default" /></span>
+                                                            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+                                                        </div>
+                                                    </div>
+                                                    <span class="label label-important">注意!</span>
+                                                 <span>
+                                                 上传图片预览仅支持Firefox, Chrome, Opera,
+                                                 Safari ,Internet Explorer 10
+                                                 </span>
                                                 </div>
                                             </div>
 
@@ -189,6 +174,109 @@
                                                 <div class="controls">
                                                     <input type="text" name="plannerName" value="${plannerUser.realname}" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">联系人姓名</label>
+                                                <div class="controls">
+                                                    <input type="text" name="realname" value="${user.realname}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">证件类型</label>
+                                                <div class="controls">
+                                                    <select class="large m-wrap" name="passportTypeId" id="passportTypeId" tabindex="1"></select>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">证件号码</label>
+                                                <div class="controls">
+                                                    <input type="text" name="passportCode" value="${user.passportCode}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">联系人手机号码</label>
+                                                <div class="controls">
+                                                    <input type="text" name="mobile" value="${user.mobile}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">固定电话</label>
+                                                <div class="controls">
+                                                    <input type="text" name="phone" value="${user.phone}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">性别</label>
+                                                <div class="controls">
+                                                    <label class="radio">
+                                                        <input type="radio" name="gender" value="male" checked/>
+                                                        男
+                                                    </label>
+                                                    <label class="radio">
+                                                        <input type="radio" name="gender" value="female"  />
+                                                        女
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">出生日期</label>
+                                                <div class="controls">
+                                                    <input type="text" name="birthday" value="<fmt:formatDate value="${user.birthday}" pattern="yyyy-MM-dd"/>" data-required="1" placeholder="" class="m-wrap m-ctrl-medium date-picker">
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="control-group">
+                                                <label class="control-label">联系人关系</label>
+                                                <div class="controls">
+                                                    <label class="radio">
+                                                        <input type="radio" name="contractRelation" value="1" checked/>
+                                                        法人
+                                                    </label>
+                                                    <label class="radio">
+                                                        <input type="radio" name="contractRelation" value="2"  />
+                                                        委托人
+                                                    </label>
+                                                    <label class="radio">
+                                                        <input type="radio" name="contractRelation" value="3"  />
+                                                        代持人
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">法人委托函</label>
+                                                <div class="controls">
+                                                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                                                        <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                                            <img src="/static/image/no-image.png" alt="" />
+                                                        </div>
+                                                        <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                                        <div>
+                                                       <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
+                                                       <span class="fileupload-exists">更换</span>
+                                                       <input type="file" name="entrustedLetter" id="entrustedLetter" class="default" /></span>
+                                                            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+                                                        </div>
+                                                    </div>
+                                                    <span class="label label-important">注意!</span>
+                                                 <span>
+                                                 上传图片预览仅支持Firefox, Chrome, Opera,
+                                                 Safari ,Internet Explorer 10
+                                                 </span>
                                                 </div>
                                             </div>
 
@@ -247,6 +335,13 @@
         }else{
             $.uniform.update($("input[name='gender'][value='male']").attr("checked", false));
             $.uniform.update($("input[name='gender'][value='female']").attr("checked", true));
+        }
+
+
+        var dispalyImg = $("#default_img");
+        var imgUrl = "<%=contextPath%>/${report.cover}";
+        if(imgUrl != ""){
+            dispalyImg.attr("src", imgUrl);
         }
 
         var form1 = $('#form_sample_1');

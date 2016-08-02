@@ -15,13 +15,15 @@ public class Customer {
 
     private Integer bankInfoId;
 
+    private String organName;
+
     private String customerType;
 
     private String businessLicense;
 
     private String accountLicense;
 
-    private String contactRalation;
+    private String contactRelation;
 
     private String entrustedLetter;
 
@@ -81,6 +83,14 @@ public class Customer {
         this.bankInfoId = bankInfoId;
     }
 
+    public String getOrganName() {
+        return organName;
+    }
+
+    public void setOrganName(String organName) {
+        this.organName = organName == null ? null : organName.trim();
+    }
+
     public String getCustomerType() {
         return customerType;
     }
@@ -105,12 +115,12 @@ public class Customer {
         this.accountLicense = accountLicense == null ? null : accountLicense.trim();
     }
 
-    public String getContactRalation() {
-        return contactRalation;
+    public String getContactRelation() {
+        return contactRelation;
     }
 
-    public void setContactRalation(String contactRalation) {
-        this.contactRalation = contactRalation == null ? null : contactRalation.trim();
+    public void setContactRelation(String contactRelation) {
+        this.contactRelation = contactRelation == null ? null : contactRelation.trim();
     }
 
     public String getEntrustedLetter() {

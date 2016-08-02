@@ -9,10 +9,11 @@
     <result column="risk" property="risk" jdbcType="VARCHAR" />
     <result column="department_id" property="departmentId" jdbcType="INTEGER" />
     <result column="bank_info_id" property="bankInfoId" jdbcType="INTEGER" />
+    <result column="organ_name" property="organName" jdbcType="VARCHAR" />
     <result column="customer_type" property="customerType" jdbcType="CHAR" />
     <result column="business_license" property="businessLicense" jdbcType="VARCHAR" />
     <result column="account_license" property="accountLicense" jdbcType="VARCHAR" />
-    <result column="contact_ralation" property="contactRalation" jdbcType="VARCHAR" />
+    <result column="contact_relation" property="contactRelation" jdbcType="VARCHAR" />
     <result column="entrusted_letter" property="entrustedLetter" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -75,7 +76,8 @@
   </sql>
   <sql id="Base_Column_List" >
     `customer_id`, `uid`, `cb_id`, `level_id`, `risk`, `department_id`, `bank_info_id`, 
-    `customer_type`, `business_license`, `account_license`, `contact_ralation`, `entrusted_letter`
+    `organ_name`, `customer_type`, `business_license`, `account_license`, `contact_relation`, 
+    `entrusted_letter`
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.CustomerExample" >
     select
@@ -113,12 +115,14 @@
     </selectKey>
     insert into `customer` (`uid`, `cb_id`, `level_id`, 
       `risk`, `department_id`, `bank_info_id`, 
-      `customer_type`, `business_license`, `account_license`, 
-      `contact_ralation`, `entrusted_letter`)
+      `organ_name`, `customer_type`, `business_license`, 
+      `account_license`, `contact_relation`, `entrusted_letter`
+      )
     values (#{uid,jdbcType=INTEGER}, #{cbId,jdbcType=INTEGER}, #{levelId,jdbcType=INTEGER}, 
       #{risk,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER}, #{bankInfoId,jdbcType=INTEGER}, 
-      #{customerType,jdbcType=CHAR}, #{businessLicense,jdbcType=VARCHAR}, #{accountLicense,jdbcType=VARCHAR}, 
-      #{contactRalation,jdbcType=VARCHAR}, #{entrustedLetter,jdbcType=VARCHAR})
+      #{organName,jdbcType=VARCHAR}, #{customerType,jdbcType=CHAR}, #{businessLicense,jdbcType=VARCHAR}, 
+      #{accountLicense,jdbcType=VARCHAR}, #{contactRelation,jdbcType=VARCHAR}, #{entrustedLetter,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.Customer" >
     <selectKey resultType="java.lang.Integer" keyProperty="customerId" order="AFTER" >
@@ -144,6 +148,9 @@
       <if test="bankInfoId != null" >
         `bank_info_id`,
       </if>
+      <if test="organName != null" >
+        `organ_name`,
+      </if>
       <if test="customerType != null" >
         `customer_type`,
       </if>
@@ -153,8 +160,8 @@
       <if test="accountLicense != null" >
         `account_license`,
       </if>
-      <if test="contactRalation != null" >
-        `contact_ralation`,
+      <if test="contactRelation != null" >
+        `contact_relation`,
       </if>
       <if test="entrustedLetter != null" >
         `entrusted_letter`,
@@ -179,6 +186,9 @@
       <if test="bankInfoId != null" >
         #{bankInfoId,jdbcType=INTEGER},
       </if>
+      <if test="organName != null" >
+        #{organName,jdbcType=VARCHAR},
+      </if>
       <if test="customerType != null" >
         #{customerType,jdbcType=CHAR},
       </if>
@@ -188,8 +198,8 @@
       <if test="accountLicense != null" >
         #{accountLicense,jdbcType=VARCHAR},
       </if>
-      <if test="contactRalation != null" >
-        #{contactRalation,jdbcType=VARCHAR},
+      <if test="contactRelation != null" >
+        #{contactRelation,jdbcType=VARCHAR},
       </if>
       <if test="entrustedLetter != null" >
         #{entrustedLetter,jdbcType=VARCHAR},
@@ -201,12 +211,6 @@
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
-  </select>
-  <select id="selectByUid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select
-    <include refid="Base_Column_List" />
-    from `customer`
-    where `uid` = #{uid,jdbcType=INTEGER}
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
     update `customer`
@@ -232,6 +236,9 @@
       <if test="record.bankInfoId != null" >
         `bank_info_id` = #{record.bankInfoId,jdbcType=INTEGER},
       </if>
+      <if test="record.organName != null" >
+        `organ_name` = #{record.organName,jdbcType=VARCHAR},
+      </if>
       <if test="record.customerType != null" >
         `customer_type` = #{record.customerType,jdbcType=CHAR},
       </if>
@@ -241,8 +248,8 @@
       <if test="record.accountLicense != null" >
         `account_license` = #{record.accountLicense,jdbcType=VARCHAR},
       </if>
-      <if test="record.contactRalation != null" >
-        `contact_ralation` = #{record.contactRalation,jdbcType=VARCHAR},
+      <if test="record.contactRelation != null" >
+        `contact_relation` = #{record.contactRelation,jdbcType=VARCHAR},
       </if>
       <if test="record.entrustedLetter != null" >
         `entrusted_letter` = #{record.entrustedLetter,jdbcType=VARCHAR},
@@ -261,10 +268,11 @@
       `risk` = #{record.risk,jdbcType=VARCHAR},
       `department_id` = #{record.departmentId,jdbcType=INTEGER},
       `bank_info_id` = #{record.bankInfoId,jdbcType=INTEGER},
+      `organ_name` = #{record.organName,jdbcType=VARCHAR},
       `customer_type` = #{record.customerType,jdbcType=CHAR},
       `business_license` = #{record.businessLicense,jdbcType=VARCHAR},
       `account_license` = #{record.accountLicense,jdbcType=VARCHAR},
-      `contact_ralation` = #{record.contactRalation,jdbcType=VARCHAR},
+      `contact_relation` = #{record.contactRelation,jdbcType=VARCHAR},
       `entrusted_letter` = #{record.entrustedLetter,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -291,6 +299,9 @@
       <if test="bankInfoId != null" >
         `bank_info_id` = #{bankInfoId,jdbcType=INTEGER},
       </if>
+      <if test="organName != null" >
+        `organ_name` = #{organName,jdbcType=VARCHAR},
+      </if>
       <if test="customerType != null" >
         `customer_type` = #{customerType,jdbcType=CHAR},
       </if>
@@ -300,8 +311,8 @@
       <if test="accountLicense != null" >
         `account_license` = #{accountLicense,jdbcType=VARCHAR},
       </if>
-      <if test="contactRalation != null" >
-        `contact_ralation` = #{contactRalation,jdbcType=VARCHAR},
+      <if test="contactRelation != null" >
+        `contact_relation` = #{contactRelation,jdbcType=VARCHAR},
       </if>
       <if test="entrustedLetter != null" >
         `entrusted_letter` = #{entrustedLetter,jdbcType=VARCHAR},
@@ -317,10 +328,11 @@
       `risk` = #{risk,jdbcType=VARCHAR},
       `department_id` = #{departmentId,jdbcType=INTEGER},
       `bank_info_id` = #{bankInfoId,jdbcType=INTEGER},
+      `organ_name` = #{organName,jdbcType=VARCHAR},
       `customer_type` = #{customerType,jdbcType=CHAR},
       `business_license` = #{businessLicense,jdbcType=VARCHAR},
       `account_license` = #{accountLicense,jdbcType=VARCHAR},
-      `contact_ralation` = #{contactRalation,jdbcType=VARCHAR},
+      `contact_relation` = #{contactRelation,jdbcType=VARCHAR},
       `entrusted_letter` = #{entrustedLetter,jdbcType=VARCHAR}
     where `customer_id` = #{customerId,jdbcType=INTEGER}
   </update>

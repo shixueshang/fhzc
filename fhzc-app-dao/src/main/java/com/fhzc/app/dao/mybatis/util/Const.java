@@ -137,7 +137,17 @@ public class Const {
         public static final int IS_APPROVE = 1;
         public static final int NOT_APPROVE = 0;
 
+    }
 
+    public static class CUSTOMER_TYPE{
+        /**
+         * 单人客户
+         */
+        public static final String SINGLE_CUSTOMER = "single";
 
+        /**
+         * 机构客户
+         */
+        public static final String ORGAN_CUSTOMER = "organ";
     }
 }
