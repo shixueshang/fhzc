@@ -166,13 +166,14 @@ public class RightsController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/reservation/add", method = RequestMethod.GET)
-    public ModelAndView addReservation(long rightId, long customerId, long exchangeScore, Date reservationTime){
+    public ModelAndView addReservation(long reservationRight, long customerId, long exchangeScore, Date reservationTime){
         RightsReservation reservation = new RightsReservation();
         reservation.setCtime(new Date());
-        reservation.setRightsId((int)rightId);
+        reservation.setRightsId((int)reservationRight);
         reservation.setCustomerId((int)customerId);
         reservation.setScoreCost(Long.toString(exchangeScore));
         reservation.setMarkDate(reservationTime);
+        reservation.setStatus(1);
         rightsService.addRightsReservation(reservation);
 
         ModelAndView mav = new ModelAndView("business/rights/addRightReservation");

@@ -69,7 +69,7 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="portlet_tab1">
                                         <!-- BEGIN FORM-->
-                                        <form action="<%=contextPath%>/business/rights/addReservation" id="form_sample_1" method="POST" class="form-horizontal" onsubmit=" return checkInputs();">
+                                        <form action="<%=contextPath%>/business/rights/reservation/add" id="form_sample_1" method="get" class="form-horizontal" onsubmit=" return checkInputs();">
                                             <div class="alert alert-error hide">
                                                 <button class="close" data-dismiss="alert"></button>
                                                 您的表单有未完成的必填项,请检查.
@@ -157,7 +157,7 @@
                                             </div>
                                             <div class="form-actions">
                                                 <input name="id" type="hidden" value="${right.id}" />
-                                                <button type="submit" class="btn blue"><i class="icon-ok"></i> 添加</button>
+                                                <button type="submit" id="submit_btn" class="btn blue"><i class="icon-ok"></i> 添加</button>
                                             </div>
                                         </form>
                                         <!-- END FORM-->
@@ -364,5 +364,7 @@
             validateDateError("请选择输入日期");
             return false;
         }
+
+        $("#submit_btn").attr("disabled",true);
     }
 </script>
