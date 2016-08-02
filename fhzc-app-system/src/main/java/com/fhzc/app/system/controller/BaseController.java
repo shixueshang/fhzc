@@ -6,9 +6,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.fhzc.app.dao.mybatis.model.Admin;
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.dao.mybatis.util.DateEditor;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.WebDataBinder;
@@ -66,5 +69,11 @@ public class BaseController {
             size = Const.DEFAULT_PAGE_SIZE;
         }
 	}
+
+    public Admin getCurrentUser(){
+        Subject subject = SecurityUtils.getSubject();
+        Admin admin  = (Admin)subject.getSession().getAttribute("admin");
+        return admin;
+    }
 
 }

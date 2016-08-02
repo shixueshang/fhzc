@@ -10,16 +10,12 @@ import java.util.List;
  */
 public interface ScoreService {
 
-    public List<ScoreHistory> getList(Integer uid, String type);
-
-    public List<ScoreHistory> getAvailableList(Integer uid);
-
-    public List<ScoreHistory> getFrozen(Integer uid);
-
-    public List<ScoreHistory> getWillExpired(Integer uid);
-
-    public List<ScoreHistory> getExpiredList(Integer uid);
-
-    public Integer sumScore(List<ScoreHistory> scoreHistories);
+    List<ScoreHistory> getList(Integer uid, String type);
+    List<ScoreHistory> getAvailableList(Integer uid);
+    List<ScoreHistory> getFrozen(Integer uid);
+    List<ScoreHistory> getWillExpired(Integer uid);
+    List<ScoreHistory> getExpiredList(Integer uid);
+    List<ScoreHistory> calcWillExpired(List<ScoreHistory> scoreHistories);
+    Integer sumScore(List<ScoreHistory> scoreHistories);
 
 }

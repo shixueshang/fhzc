@@ -4,6 +4,8 @@ import com.fhzc.app.dao.mybatis.inter.DictionaryMapper;
 import com.fhzc.app.dao.mybatis.inter.ScoreHistoryMapper;
 import com.fhzc.app.dao.mybatis.inter.UserMapper;
 import com.fhzc.app.dao.mybatis.model.*;
+import com.fhzc.app.dao.mybatis.inter.PlannerCustomerMapper;
+import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.commons.util.excel.ExcelImporter;
@@ -12,6 +14,7 @@ import com.fhzc.app.system.commons.util.excel.ImportConfig;
 import com.fhzc.app.dao.mybatis.inter.CustomerMapper;
 import com.fhzc.app.system.commons.vo.CustomerVo;
 import com.fhzc.app.system.service.CustomerService;
+import com.fhzc.app.system.service.*;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -45,6 +48,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Resource
     private ScoreHistoryMapper scoreHistoryMapper;
+    @Resource
+    private PlannerCustomerMapper plannerCustomerMapper;
+
 
     @Override
     public PageableResult<Customer> findPageCustomers( int page, int size) {
@@ -67,38 +73,38 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Map<String, Object> importExcelFile(MultipartFile multipartFile) throws Exception {
-       Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
-        @Override
-        public String validation(Workbook xwb) {
-            return null;
-        }
+        Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
+            @Override
+            public String validation(Workbook xwb) {
+                return null;
+            }
 
-        @Override
-        public String getImportSQL() {
-            return IMPORT_SQL;
-        }
+            @Override
+            public String getImportSQL() {
+                return IMPORT_SQL;
+            }
 
-        @Override
-        public List<Object[]> getImportData(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data) {
-        	
-        	return data;
-        }
+            @Override
+            public List<Object[]> getImportData(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data) {
 
-        @Override
-        public ImportCallBack getImportCallBack() {
-            return new ImportCallBack() {
-                @Override
-                public void preOperation(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data) {
+                return data;
+            }
 
-                }
+            @Override
+            public ImportCallBack getImportCallBack() {
+                return new ImportCallBack() {
+                    @Override
+                    public void preOperation(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data) {
 
-                @Override
-                public void postOperation (SqlSessionTemplate sqlSessionTemplate, List < Object[]>data){
+                    }
 
-                }
-            };
+                    @Override
+                    public void postOperation (SqlSessionTemplate sqlSessionTemplate, List < Object[]>data){
 
-        }
+                    }
+                };
+
+            }
         }).importExcelFile(multipartFile);
 
         return importResult;
@@ -120,16 +126,25 @@ public class CustomerServiceImpl implements CustomerService {
         return false;
     }
 
-    
+
     /**
      * 获得机构id
      * @param uId
      * @return
      */
-	@Override
-	public Customer getCustomerByUid(Integer uId) {
-		return customerMapper.selectByUid(uId);
-	}
+    @Override
+    public Customer getCustomerByUid(Integer uId) {
+        return customerMapper.selectByUid(uId);
+    }
+
+    @Override
+    public PlannerCustomer getPlannerByCustomerId(Integer customerId) {
+        PlannerCustomerExample example = new PlannerCustomerExample();
+        PlannerCustomerExample.Criteria criteria = example.createCriteria();
+        criteria.andCustomerIdEqualTo(customerId);
+        criteria.andIsMainEqualTo(Byte.valueOf(Const.YES_OR_NO.YES.toString()));
+        return plannerCustomerMapper.selectByExample(example).get(0);
+    }
 
     /**
      * 通过移动号码获取客户信息
@@ -137,7 +152,6 @@ public class CustomerServiceImpl implements CustomerService {
      * @return
      */
     @Override
-    @ResponseBody
     public CustomerVo getCustomerInfoByMobile(String mobileNum) {
         List<User> users = userMapper.selectUserByMobile(mobileNum);
         if (users != null && users.size() > 0){

@@ -10,6 +10,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.UUID;
 
 /**
  * 加密解密工具类
@@ -47,12 +48,13 @@ public class EncryptUtils {
      *
      * @return String 加密后的字符串
      */
-    public static String encryptToSHA() {
+    public static String encryptToSHA(String info) {
         byte[] digesta = null;
         try {
             // 得到一个SHA-1的消息摘要
             MessageDigest alga = MessageDigest.getInstance(SHA);
             // 添加要进行计算摘要的信息
+            alga.update(info.getBytes());
             digesta = alga.digest();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
@@ -384,8 +386,8 @@ public class EncryptUtils {
      * @param args
      */
     public static void main(String[] args) throws Exception {
-        String source = "18559041317";
-        String key = EncryptUtils.getDESKey(EncryptUtils.encryptToSHA());
+        String source = "13810465136";
+        String key = EncryptUtils.getDESKey(EncryptUtils.encryptToSHA(UUID.randomUUID().toString()));
         System.out.println(key);
         System.out.println("DES加密后为:" + EncryptUtils.encryptToDES(key, source));
         String str12 = EncryptUtils.decryptByDES(key, EncryptUtils.encryptToDES(key, source));

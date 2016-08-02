@@ -1,23 +1,21 @@
-package com.fhzc.app.api.service.impl;
+package com.fhzc.app.system.service.impl;
 
-import com.fhzc.app.api.service.ScoreService;
-import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.dao.mybatis.inter.ScoreHistoryMapper;
 import com.fhzc.app.dao.mybatis.model.ScoreHistory;
 import com.fhzc.app.dao.mybatis.model.ScoreHistoryExample;
 import com.fhzc.app.dao.mybatis.util.Const;
+import com.fhzc.app.system.service.ScoreService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
- * Created by freeman on 16/7/29.
+ * Created by lihongde on 2016/8/1 11:53
  */
 @Service
-public class ScoreServiceImpl implements ScoreService{
+public class ScoreServiceImpl implements ScoreService {
 
     @Resource
     private ScoreHistoryMapper scoreHistoryMapper;
@@ -50,8 +48,7 @@ public class ScoreServiceImpl implements ScoreService{
     }
 
 
-    @Override
-    public List<ScoreHistory> calcWillExpired(List<ScoreHistory> scoreHistories){
+    private List<ScoreHistory> calcWillExpired(List<ScoreHistory> scoreHistories){
 
         List<ScoreHistory> result = new ArrayList<>();
         for(ScoreHistory score : scoreHistories){

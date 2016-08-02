@@ -48,10 +48,9 @@ INSERT INTO `system_admin_module` (`id`,`admin_id`,`module_id`,`mode`) VALUES (8
 INSERT INTO `system_admin_module` (`id`,`admin_id`,`module_id`,`mode`) VALUES (9,2,3,'r');
 
 
-##初始化字典数据
 /*
 -- Query: SELECT * FROM bank.dictionary
--- Date: 2016-07-22 15:12
+-- Date: 2016-08-01 10:57
 */
 TRUNCATE TABLE `dictionary`;
 INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (1,'product_type','产品类型','鑫丰母基金(开放式契约型)','1',0,0,0,NULL,NULL);
@@ -81,23 +80,26 @@ INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,
 INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (25,'product_status','产品状态','产品成立','5',0,0,0,NULL,NULL);
 INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (26,'product_status','产品状态','产品到期','6',0,0,0,NULL,NULL);
 INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (27,'product_status','产品状态','提前结束','7',0,0,0,NULL,NULL);
-INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (28, 'yes_no', '是否', '是', '1', '0', '0', '0',NULL,NULL);
-INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (29, 'yes_no', '是否', '否', '0', '0', '0', '0',NULL,NULL);
-INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('30', 'product_issue_type', '产品发行模式', '其他', '0', '0', '0', '0');
-INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('31', 'product_issue_type', '产品发行模式', '契约型基金', '1', '0', '0', '0');
-INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('32', 'product_issue_type', '产品发行模式', '有限合伙', '2', '0', '0', '0');
-INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('33', 'product_issue_type', '产品发行模式', '信托', '3', '0', '0', '0');
-INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('34', 'product_issue_type', '产品发行模式', '债权', '4', '0', '0', '0');
-INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('35', 'product_issue_type', '产品发行模式', '保险', '5', '0', '0', '0');
-INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('36', 'customer_level', '客户等级', '准客户', '1', '0', '0', '0');
-INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('37', 'customer_level', '客户等级', '客户', '2', '0', '0', '0');
-INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('38', 'customer_level', '客户等级', '金卡客户', '3', '0', '0', '0');
-INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('39', 'risk_level', '风险评级', 'A', '1', '0', '0', '0');
-INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('40', 'risk_level', '风险评级', 'B', '2', '0', '0', '0');
-INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('41', 'risk_level', '风险评级', 'C', '3', '0', '0', '0');
-INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('42', 'passport', '证件类型', '身份证', 'A', '0', '0', '0');
-INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('43', 'passport', '证件类型', '台胞证', 'B', '0', '0', '0');
-INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`) VALUES ('44', 'passport', '证件类型', '回乡证', 'C', '0', '0', '0');
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (28,'yes_no','是否','是','1',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (29,'yes_no','是否','否','0',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (30,'product_issue_type','产品发行模式','其他','0',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (31,'product_issue_type','产品发行模式','契约型基金','1',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (32,'product_issue_type','产品发行模式','有限合伙','2',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (33,'product_issue_type','产品发行模式','信托','3',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (34,'product_issue_type','产品发行模式','债权','4',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (35,'product_issue_type','产品发行模式','保险','5',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (36,'customer_level','客户等级','投资人','1',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (37,'customer_level','客户等级','准会员','2',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (38,'customer_level','客户等级','银卡','3',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (39,'customer_level','客户等级','金卡','4',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (40,'customer_level','客户等级','黑金卡','5',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (50,'risk_level','风险评级','A','1',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (51,'risk_level','风险评级','B','2',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (52,'risk_level','风险评级','C','3',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (53,'passport','证件类型','身份证','1',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (54,'passport','证件类型','台胞证','2',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (55,'passport','证件类型','回乡证','3',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (56,'passport','证件类型','营业执照','4',0,0,0,NULL,NULL);
 
 
 TRUNCATE TABLE `areas`;
