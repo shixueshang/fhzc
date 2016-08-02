@@ -228,6 +228,10 @@ ADD COLUMN `entrusted_letter` VARCHAR(45) NULL COMMENT '法人委托函' AFTER `
 ALTER TABLE `bank`.`customer`
 ADD COLUMN `organ_name` VARCHAR(100) NULL COMMENT '机构全称' AFTER `customer_type`;
 
+ALTER TABLE `bank`.`customer`
+CHANGE COLUMN `cb_id` `cb_id` VARCHAR(45) NULL DEFAULT NULL COMMENT '客户号（来自excel）' ;
+
+
 
 
 

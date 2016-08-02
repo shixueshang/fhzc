@@ -92,8 +92,8 @@ public class ScoreServiceImpl implements ScoreService{
 
         criteria.andUidEqualTo(uid);
         criteria.andStatusEqualTo(type);
-        criteria.andIsVaildEqualTo(APIConstants.Score.IS_VAILD);
-        criteria.andIsApproveEqualTo(APIConstants.Score.IS_APPROVE);
+        criteria.andIsVaildEqualTo(Const.Score.IS_VAILD);
+        criteria.andIsApproveEqualTo(Const.Score.IS_APPROVE);
         criteria.andCtimeBetween(start,end);
 
         return scoreHistoryMapper.selectByExample(example);
@@ -101,13 +101,13 @@ public class ScoreServiceImpl implements ScoreService{
 
     @Override
     public List<ScoreHistory> getAvailableList(Integer uid, Date start, Date end){
-        List<ScoreHistory> scoreHistories = this.getList(uid, APIConstants.Score.ADD,start,end);
+        List<ScoreHistory> scoreHistories = this.getList(uid, Const.Score.ADD,start,end);
         return scoreHistories;
     }
 
     @Override
     public List<ScoreHistory> getFrozen(Integer uid, Date start, Date end){
-        List<ScoreHistory> scoreHistories = this.getList(uid, APIConstants.Score.FROZEN,start,end);
+        List<ScoreHistory> scoreHistories = this.getList(uid, Const.Score.FROZEN,start,end);
         return scoreHistories;
     }
 
@@ -122,8 +122,8 @@ public class ScoreServiceImpl implements ScoreService{
         ScoreHistoryExample.Criteria criteria = example.createCriteria();
 
         criteria.andUidEqualTo(uid);
-        criteria.andIsVaildEqualTo(APIConstants.Score.IS_VAILD);
-        criteria.andIsApproveEqualTo(APIConstants.Score.IS_APPROVE);
+        criteria.andIsVaildEqualTo(Const.Score.IS_VAILD);
+        criteria.andIsApproveEqualTo(Const.Score.IS_APPROVE);
         criteria.andVaildTimeBetween(start,end);
 
         return scoreHistoryMapper.selectByExample(example);

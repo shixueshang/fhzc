@@ -234,52 +234,62 @@ public class CustomerExample {
             return (Criteria) this;
         }
 
-        public Criteria andCbIdEqualTo(Integer value) {
+        public Criteria andCbIdEqualTo(String value) {
             addCriterion("`cb_id` =", value, "cbId");
             return (Criteria) this;
         }
 
-        public Criteria andCbIdNotEqualTo(Integer value) {
+        public Criteria andCbIdNotEqualTo(String value) {
             addCriterion("`cb_id` <>", value, "cbId");
             return (Criteria) this;
         }
 
-        public Criteria andCbIdGreaterThan(Integer value) {
+        public Criteria andCbIdGreaterThan(String value) {
             addCriterion("`cb_id` >", value, "cbId");
             return (Criteria) this;
         }
 
-        public Criteria andCbIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andCbIdGreaterThanOrEqualTo(String value) {
             addCriterion("`cb_id` >=", value, "cbId");
             return (Criteria) this;
         }
 
-        public Criteria andCbIdLessThan(Integer value) {
+        public Criteria andCbIdLessThan(String value) {
             addCriterion("`cb_id` <", value, "cbId");
             return (Criteria) this;
         }
 
-        public Criteria andCbIdLessThanOrEqualTo(Integer value) {
+        public Criteria andCbIdLessThanOrEqualTo(String value) {
             addCriterion("`cb_id` <=", value, "cbId");
             return (Criteria) this;
         }
 
-        public Criteria andCbIdIn(List<Integer> values) {
+        public Criteria andCbIdLike(String value) {
+            addCriterion("`cb_id` like", value, "cbId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCbIdNotLike(String value) {
+            addCriterion("`cb_id` not like", value, "cbId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCbIdIn(List<String> values) {
             addCriterion("`cb_id` in", values, "cbId");
             return (Criteria) this;
         }
 
-        public Criteria andCbIdNotIn(List<Integer> values) {
+        public Criteria andCbIdNotIn(List<String> values) {
             addCriterion("`cb_id` not in", values, "cbId");
             return (Criteria) this;
         }
 
-        public Criteria andCbIdBetween(Integer value1, Integer value2) {
+        public Criteria andCbIdBetween(String value1, String value2) {
             addCriterion("`cb_id` between", value1, value2, "cbId");
             return (Criteria) this;
         }
 
-        public Criteria andCbIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andCbIdNotBetween(String value1, String value2) {
             addCriterion("`cb_id` not between", value1, value2, "cbId");
             return (Criteria) this;
         }

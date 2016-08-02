@@ -5,7 +5,7 @@ public class Customer {
 
     private Integer uid;
 
-    private Integer cbId;
+    private String cbId;
 
     private Integer levelId;
 
@@ -43,12 +43,12 @@ public class Customer {
         this.uid = uid;
     }
 
-    public Integer getCbId() {
+    public String getCbId() {
         return cbId;
     }
 
-    public void setCbId(Integer cbId) {
-        this.cbId = cbId;
+    public void setCbId(String cbId) {
+        this.cbId = cbId == null ? null : cbId.trim();
     }
 
     public Integer getLevelId() {

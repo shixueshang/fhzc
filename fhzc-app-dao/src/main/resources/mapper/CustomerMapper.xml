@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.fhzc.app.dao.mybatis.model.Customer" >
     <id column="customer_id" property="customerId" jdbcType="INTEGER" />
     <result column="uid" property="uid" jdbcType="INTEGER" />
-    <result column="cb_id" property="cbId" jdbcType="INTEGER" />
+    <result column="cb_id" property="cbId" jdbcType="VARCHAR" />
     <result column="level_id" property="levelId" jdbcType="INTEGER" />
     <result column="risk" property="risk" jdbcType="VARCHAR" />
     <result column="department_id" property="departmentId" jdbcType="INTEGER" />
@@ -118,7 +118,7 @@
       `organ_name`, `customer_type`, `business_license`, 
       `account_license`, `contact_relation`, `entrusted_letter`
       )
-    values (#{uid,jdbcType=INTEGER}, #{cbId,jdbcType=INTEGER}, #{levelId,jdbcType=INTEGER}, 
+    values (#{uid,jdbcType=INTEGER}, #{cbId,jdbcType=VARCHAR}, #{levelId,jdbcType=INTEGER}, 
       #{risk,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER}, #{bankInfoId,jdbcType=INTEGER}, 
       #{organName,jdbcType=VARCHAR}, #{customerType,jdbcType=CHAR}, #{businessLicense,jdbcType=VARCHAR}, 
       #{accountLicense,jdbcType=VARCHAR}, #{contactRelation,jdbcType=VARCHAR}, #{entrustedLetter,jdbcType=VARCHAR}
@@ -172,7 +172,7 @@
         #{uid,jdbcType=INTEGER},
       </if>
       <if test="cbId != null" >
-        #{cbId,jdbcType=INTEGER},
+        #{cbId,jdbcType=VARCHAR},
       </if>
       <if test="levelId != null" >
         #{levelId,jdbcType=INTEGER},
@@ -222,7 +222,7 @@
         `uid` = #{record.uid,jdbcType=INTEGER},
       </if>
       <if test="record.cbId != null" >
-        `cb_id` = #{record.cbId,jdbcType=INTEGER},
+        `cb_id` = #{record.cbId,jdbcType=VARCHAR},
       </if>
       <if test="record.levelId != null" >
         `level_id` = #{record.levelId,jdbcType=INTEGER},
@@ -263,7 +263,7 @@
     update `customer`
     set `customer_id` = #{record.customerId,jdbcType=INTEGER},
       `uid` = #{record.uid,jdbcType=INTEGER},
-      `cb_id` = #{record.cbId,jdbcType=INTEGER},
+      `cb_id` = #{record.cbId,jdbcType=VARCHAR},
       `level_id` = #{record.levelId,jdbcType=INTEGER},
       `risk` = #{record.risk,jdbcType=VARCHAR},
       `department_id` = #{record.departmentId,jdbcType=INTEGER},
@@ -285,7 +285,7 @@
         `uid` = #{uid,jdbcType=INTEGER},
       </if>
       <if test="cbId != null" >
-        `cb_id` = #{cbId,jdbcType=INTEGER},
+        `cb_id` = #{cbId,jdbcType=VARCHAR},
       </if>
       <if test="levelId != null" >
         `level_id` = #{levelId,jdbcType=INTEGER},
@@ -323,7 +323,7 @@
   <update id="updateByPrimaryKey" parameterType="com.fhzc.app.dao.mybatis.model.Customer" >
     update `customer`
     set `uid` = #{uid,jdbcType=INTEGER},
-      `cb_id` = #{cbId,jdbcType=INTEGER},
+      `cb_id` = #{cbId,jdbcType=VARCHAR},
       `level_id` = #{levelId,jdbcType=INTEGER},
       `risk` = #{risk,jdbcType=VARCHAR},
       `department_id` = #{departmentId,jdbcType=INTEGER},
