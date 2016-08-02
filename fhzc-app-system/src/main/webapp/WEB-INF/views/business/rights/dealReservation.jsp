@@ -164,7 +164,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">预约时间</label>
                                                 <div class="controls">
-                                                    <input class="form-control" id="reservationTime" name="reservationTime" value="${reservation.markDate}" style="width: 180px">
+                                                    <input class="form-control" id="reservationTime" name="reservationTime" value="<fmt:formatDate value='${reservation.markDate}' pattern='yyyy-MM-dd HH:mm:ss'/>" style="width: 180px">
                                                 </div>
                                             </div>
                                             <div class="form-actions">
