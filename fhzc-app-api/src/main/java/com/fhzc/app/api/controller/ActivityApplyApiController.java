@@ -31,7 +31,7 @@ public class ActivityApplyApiController extends BaseController {
     @ResponseBody
     public ApiJsonResult activityApplyJoin(ActivityApply activityApply){
 
-        //如果理财师id为空则活动为自己申请
+        //如果理财师id为0则活动为自己申请
         Integer plannerId = activityApply.getPlannerId();
         if(plannerId == 0){
             activityApply.setPlannerId(0);

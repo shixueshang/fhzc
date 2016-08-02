@@ -36,21 +36,23 @@ public class RightsReservationApiController extends BaseController {
 
     @RequestMapping(value = "/api/rights/exchange",method = RequestMethod.POST)
     @ResponseBody
-    public ApiJsonResult rightsReservation(RightsReservation rightsReservation,String oderDate){
+    public ApiJsonResult rightsReservation(RightsReservation rightsReservation){
 
-        SimpleDateFormat sbf=new SimpleDateFormat("yyyyMMdd");
-        Date markDateForm=null;
-        try {
-            markDateForm=sbf.parse(oderDate);
-        } catch (ParseException e) {
-
-        }
-        if(markDateForm==null){
-            return new ApiJsonResult(APIConstants.API_JSON_RESULT.FAILED,"date formart is error");
-        }else {
-            rightsReservation.setMarkDate(markDateForm);
-        }
+//        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        Date markDateForm=null;
+//        try {
+//            markDateForm=sdf.parse(String.valueOf(rightsReservation.getMarkDate()));
+//        } catch (ParseException e) {
+//
+//        }
+//        if(markDateForm==null){
+//            return new ApiJsonResult(APIConstants.API_JSON_RESULT.FAILED,"date formart is error");
+//        }else {
+//            rightsReservation.setMarkDate(markDateForm);
+//        }
+        Rights rights = rightsService.getRights(rightsReservation.getRightsId());
         rightsReservation.setCtime(new Date());
+        rightsReservation.setScoreCost(rights.getSpendScore());
         rightsReservation.setStatus(APIConstants.RightsOrderStatus.ORDER_ING);
         rightsReservationService.addOrUpdateRightsReservation(rightsReservation);
 

@@ -485,62 +485,52 @@ public class RightsReservationExample {
             return (Criteria) this;
         }
 
-        public Criteria andScoreCostEqualTo(String value) {
+        public Criteria andScoreCostEqualTo(Integer value) {
             addCriterion("`score_cost` =", value, "scoreCost");
             return (Criteria) this;
         }
 
-        public Criteria andScoreCostNotEqualTo(String value) {
+        public Criteria andScoreCostNotEqualTo(Integer value) {
             addCriterion("`score_cost` <>", value, "scoreCost");
             return (Criteria) this;
         }
 
-        public Criteria andScoreCostGreaterThan(String value) {
+        public Criteria andScoreCostGreaterThan(Integer value) {
             addCriterion("`score_cost` >", value, "scoreCost");
             return (Criteria) this;
         }
 
-        public Criteria andScoreCostGreaterThanOrEqualTo(String value) {
+        public Criteria andScoreCostGreaterThanOrEqualTo(Integer value) {
             addCriterion("`score_cost` >=", value, "scoreCost");
             return (Criteria) this;
         }
 
-        public Criteria andScoreCostLessThan(String value) {
+        public Criteria andScoreCostLessThan(Integer value) {
             addCriterion("`score_cost` <", value, "scoreCost");
             return (Criteria) this;
         }
 
-        public Criteria andScoreCostLessThanOrEqualTo(String value) {
+        public Criteria andScoreCostLessThanOrEqualTo(Integer value) {
             addCriterion("`score_cost` <=", value, "scoreCost");
             return (Criteria) this;
         }
 
-        public Criteria andScoreCostLike(String value) {
-            addCriterion("`score_cost` like", value, "scoreCost");
-            return (Criteria) this;
-        }
-
-        public Criteria andScoreCostNotLike(String value) {
-            addCriterion("`score_cost` not like", value, "scoreCost");
-            return (Criteria) this;
-        }
-
-        public Criteria andScoreCostIn(List<String> values) {
+        public Criteria andScoreCostIn(List<Integer> values) {
             addCriterion("`score_cost` in", values, "scoreCost");
             return (Criteria) this;
         }
 
-        public Criteria andScoreCostNotIn(List<String> values) {
+        public Criteria andScoreCostNotIn(List<Integer> values) {
             addCriterion("`score_cost` not in", values, "scoreCost");
             return (Criteria) this;
         }
 
-        public Criteria andScoreCostBetween(String value1, String value2) {
+        public Criteria andScoreCostBetween(Integer value1, Integer value2) {
             addCriterion("`score_cost` between", value1, value2, "scoreCost");
             return (Criteria) this;
         }
 
-        public Criteria andScoreCostNotBetween(String value1, String value2) {
+        public Criteria andScoreCostNotBetween(Integer value1, Integer value2) {
             addCriterion("`score_cost` not between", value1, value2, "scoreCost");
             return (Criteria) this;
         }

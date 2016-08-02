@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -48,18 +50,40 @@ public class ScoreApiController extends BaseController {
 
     @RequestMapping(value = "/api/personal/score/detail",method = RequestMethod.GET)
     @ResponseBody
-    public ApiJsonResult personalScoreDetail(String type, Date start, Date end){
+    public ApiJsonResult personalScoreDetail(String type, String start, String end){
         User user = super.getCurrentUser();
         Integer uid = user.getUid();
         List<ScoreHistory>  scoreHistory = null;
-        switch (type){
-            case "frozen":
-                scoreHistory = scoreService.getFrozen(uid);
-                break;
-            default:
-                break;
-        }
 
+        SimpleDateFormat sbf=new SimpleDateFormat("yyyy-MM-dd");
+        Date scoreStart=null;
+        Date scoreEnd=null;
+        try {
+            scoreStart=sbf.parse(start);
+            scoreEnd=sbf.parse(end);
+        } catch (ParseException e) {
+
+        }
+        if(scoreStart==null || scoreEnd==null){
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.FAILED,"date formart is error");
+        }else {
+            switch (type){
+                case "all":
+                    scoreHistory = scoreService.getAllList(uid,scoreStart,scoreEnd);
+                    break;
+                case "available":
+                    scoreHistory = scoreService.getAvailableList(uid,scoreStart,scoreEnd);
+                    break;
+                case "frozen":
+                    scoreHistory = scoreService.getFrozen(uid,scoreStart,scoreEnd);
+                    break;
+                case "will":
+                    scoreHistory = scoreService.getWillExpired(uid,scoreStart,scoreEnd);
+                    break;
+                default:
+                    break;
+            }
+        }
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, scoreHistory);
     }
 

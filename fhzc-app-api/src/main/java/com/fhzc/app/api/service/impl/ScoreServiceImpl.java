@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by freeman on 16/7/29.
@@ -84,7 +84,48 @@ public class ScoreServiceImpl implements ScoreService{
         return sum;
     }
 
+    @Override
+    public List<ScoreHistory> getList(Integer uid, String type, Date start, Date end){
+        ScoreHistoryExample example = new ScoreHistoryExample();
+        ScoreHistoryExample.Criteria criteria = example.createCriteria();
 
+        criteria.andUidEqualTo(uid);
+        criteria.andStatusEqualTo(type);
+        criteria.andIsVaildEqualTo(APIConstants.Score.IS_VAILD);
+        criteria.andIsApproveEqualTo(APIConstants.Score.IS_APPROVE);
+        criteria.andCtimeBetween(start,end);
 
+        return scoreHistoryMapper.selectByExample(example);
+    }
+
+    @Override
+    public List<ScoreHistory> getAvailableList(Integer uid, Date start, Date end){
+        List<ScoreHistory> scoreHistories = this.getList(uid, APIConstants.Score.ADD,start,end);
+        return scoreHistories;
+    }
+
+    @Override
+    public List<ScoreHistory> getFrozen(Integer uid, Date start, Date end){
+        List<ScoreHistory> scoreHistories = this.getList(uid, APIConstants.Score.FROZEN,start,end);
+        return scoreHistories;
+    }
+
+    @Override
+    public List<ScoreHistory> getWillExpired(Integer uid, Date start, Date end){
+        return this.calcWillExpired(this.getAvailableList(uid,start,end));
+    }
+
+    @Override
+    public List<ScoreHistory> getAllList(Integer uid, Date start, Date end){
+        ScoreHistoryExample example = new ScoreHistoryExample();
+        ScoreHistoryExample.Criteria criteria = example.createCriteria();
+
+        criteria.andUidEqualTo(uid);
+        criteria.andIsVaildEqualTo(APIConstants.Score.IS_VAILD);
+        criteria.andIsApproveEqualTo(APIConstants.Score.IS_APPROVE);
+        criteria.andVaildTimeBetween(start,end);
+
+        return scoreHistoryMapper.selectByExample(example);
+    }
 
 }

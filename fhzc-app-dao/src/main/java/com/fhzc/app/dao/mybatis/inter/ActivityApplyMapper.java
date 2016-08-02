@@ -1,11 +1,8 @@
 package com.fhzc.app.dao.mybatis.inter;
 
-import com.fhzc.app.dao.mybatis.bo.ActivityApplyBo;
 import com.fhzc.app.dao.mybatis.model.ActivityApply;
 import com.fhzc.app.dao.mybatis.model.ActivityApplyExample;
 import java.util.List;
-
-import com.fhzc.app.dao.mybatis.model.ActivityApplyQuery;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
@@ -33,8 +30,4 @@ public interface ActivityApplyMapper {
     int updateByPrimaryKeySelective(ActivityApply record);
 
     int updateByPrimaryKey(ActivityApply record);
-
-    List<ActivityApplyBo> listActivityApplies(ActivityApplyQuery activityApplyQuery, RowBounds rowBounds);
-
-    int countActivityApplies(ActivityApplyQuery activityApplyQuery);
 }
