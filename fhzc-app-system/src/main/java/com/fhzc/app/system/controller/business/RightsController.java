@@ -169,12 +169,12 @@ public class RightsController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/reservation/add", method = RequestMethod.GET)
-    public ModelAndView addReservation(long reservationRight, long customerId, long exchangeScore, Date reservationTime){
+    public ModelAndView addReservation(long reservationRight, long customerId, Integer exchangeScore, Date reservationTime){
         RightsReservation reservation = new RightsReservation();
         reservation.setCtime(new Date());
         reservation.setRightsId((int)reservationRight);
         reservation.setCustomerId((int)customerId);
-        reservation.setScoreCost(Long.toString(exchangeScore));
+        reservation.setScoreCost(exchangeScore);
         reservation.setMarkDate(reservationTime);
         reservation.setStatus(1);
         rightsService.addRightsReservation(reservation);
@@ -203,7 +203,7 @@ public class RightsController extends BaseController{
                 vo.setCustomerName(u.getRealname());
                 vo.setPhoneNum(u.getMobile());
 
-                vo.setScore(Integer.parseInt(reser.getScoreCost()));
+                vo.setScore(reser.getScoreCost());
                 vo.setReservationTime(reser.getMarkDate());
                 vos.add(vo);
             }
