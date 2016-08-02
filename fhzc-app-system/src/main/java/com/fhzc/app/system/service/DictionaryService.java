@@ -15,4 +15,11 @@ public interface DictionaryService {
      * @return
      */
     List<Dictionary> findDicByType(String cat);
+
+    /**
+     * 获取客户的level
+     * @param levelValue
+     * @return
+     */
+    Dictionary findCustomerLevel(String levelValue);
 }

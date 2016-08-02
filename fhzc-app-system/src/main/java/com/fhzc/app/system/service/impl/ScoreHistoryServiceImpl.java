@@ -1,5 +1,6 @@
 package com.fhzc.app.system.service.impl;
 
+import com.fhzc.app.dao.mybatis.inter.ScoreHistoryMapper;
 import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.commons.util.excel.ExcelImporter;
 import com.fhzc.app.system.commons.util.excel.ImportCallBack;
@@ -28,6 +29,9 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
     
     @Resource
     private ExcelImporter importer;
+
+	@Resource
+	private ScoreHistoryMapper scoreHistoryMapper;
 
     @Override
     public Map<String, Object> importExcelFileConsume(MultipartFile multipartFile) throws Exception {
@@ -158,4 +162,8 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 		 return map;
 	}
 
+	@Override
+	public Integer getScoreByUserId(Integer uid) {
+		return scoreHistoryMapper.getScoreByUid(uid);
+	}
 }
