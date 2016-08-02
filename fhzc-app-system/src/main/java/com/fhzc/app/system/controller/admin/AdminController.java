@@ -64,19 +64,11 @@ public class AdminController extends BaseController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ModelAndView add(Admin admin){
-        ModelAndView mav = new ModelAndView("system/admin/list");
-
+    public String add(Admin admin){
         admin.setPassword(DigestUtils.md5Hex(admin.getPassword()));
         adminService.addOrUpdateAdmin(admin);
 
-        PageableResult<Admin> pageableResult = adminService.findPageAdmins(page, size);
-        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
-        mav.addObject("admins", pageableResult.getItems());
-        mav.addObject("roles", adminRoleService.getAllRoles());
-        mav.addObject("departments", departmentService.findDeptByParent(Const.ROOT_DEPT_ID));
-        mav.addObject("areas", areasService.getAllAreas());
-        return mav;
+        return "redirect:/system/admin/list";
     }
 
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)

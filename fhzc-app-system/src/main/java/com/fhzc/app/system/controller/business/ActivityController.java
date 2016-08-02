@@ -61,8 +61,7 @@ public class ActivityController extends BaseController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ModelAndView addActivity(Activity activity, MultipartFile coverFile){
-        ModelAndView mav = new ModelAndView("business/activity/list");
+    public String addActivity(Activity activity, MultipartFile coverFile){
 
         if(!coverFile.isEmpty()){
             String coverName = FileUtil.generatePictureName(coverFile);
@@ -73,11 +72,7 @@ public class ActivityController extends BaseController {
         activity.setCtime(new Date());
         activityService.addOrUpdateActivity(activity);
 
-        PageableResult<Activity> pageableResult = activityService.findPageActivies(page, size);
-        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
-        mav.addObject("activities", pageableResult.getItems());
-        mav.addObject("activityTypes", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.ACTIVITY_CATEGORY)));
-        return mav;
+        return "redirect:/business/activity/list";
     }
 
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)

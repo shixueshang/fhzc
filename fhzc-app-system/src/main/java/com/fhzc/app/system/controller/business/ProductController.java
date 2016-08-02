@@ -92,8 +92,7 @@ public class ProductController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ModelAndView addOrUpdateProduct(Product product, MultipartFile coverFile, MultipartFile proveFile, MultipartFile noticeFile){
-        ModelAndView mav = new ModelAndView("business/product/list");
+    public String addOrUpdateProduct(Product product, MultipartFile coverFile, MultipartFile proveFile, MultipartFile noticeFile){
 
         if(!coverFile.isEmpty()){
             String coverName = FileUtil.generatePictureName(coverFile);
@@ -116,11 +115,7 @@ public class ProductController extends BaseController {
 
         productService.addOrUpdateProduct(product);
 
-        PageableResult<Product> pageableResult = productService.findPageProducts(page, size);
-        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
-        mav.addObject("products", pageableResult.getItems());
-        mav.addObject("url", "business/product");
-        return mav;
+        return "redirect:/business/product/list";
     }
 
     /**

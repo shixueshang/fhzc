@@ -178,7 +178,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">注意事项</label>
                                                 <div class="controls">
-                                                    <textarea name="memo" class="span6 m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;">${activity.memo}</textarea>
+                                                    <textarea name="memo" class="span6 m-wrap" maxlength="250" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;">${activity.memo}</textarea>
                                                 </div>
                                             </div>
                                             <div class="control-group">

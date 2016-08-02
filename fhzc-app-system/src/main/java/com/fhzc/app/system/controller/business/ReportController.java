@@ -54,8 +54,7 @@ public class ReportController extends BaseController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ModelAndView addOrUpdateReport(Report report, MultipartFile coverFile){
-        ModelAndView mav = new ModelAndView("business/report/list");
+    public String addOrUpdateReport(Report report, MultipartFile coverFile){
         String coverName = FileUtil.generatePictureName(coverFile);
         String coverPath = TextUtils.getConfig(Const.CONFIG_KEY_SYSTEM_IMAGE_SAVE_PATH, this);
         FileUtil.transferFile(coverPath, coverName, coverFile);
@@ -64,12 +63,7 @@ public class ReportController extends BaseController {
         report.setIsDel(Const.YES_OR_NO.NO);
         reportService.addOrUpdateReport(report);
 
-        PageableResult<Report> pageableResult =  reportService.findPageReports(page, size);
-        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
-        mav.addObject("reports", pageableResult.getItems());
-        mav.addObject("reportTypes", dictionaryService.findDicByType(Const.DIC_CAT.REPORT_CATEGORY));
-        mav.addObject("url", "business/report");
-        return mav;
+        return "redirect:/business/report/list";
     }
 
     /**

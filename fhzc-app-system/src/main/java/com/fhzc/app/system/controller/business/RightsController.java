@@ -81,9 +81,8 @@ public class RightsController extends BaseController{
      * @param coverFile
      * @return
      */
-    @RequestMapping(value = "/add")
-    public ModelAndView addRight(Rights rights, MultipartFile coverFile){
-        ModelAndView mav = new ModelAndView("business/rights/list");
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public String addRight(Rights rights, MultipartFile coverFile){
         if(!coverFile.isEmpty()){
             String coverName = FileUtil.generatePictureName(coverFile);
             String coverPath = TextUtils.getConfig(Const.CONFIG_KEY_SYSTEM_IMAGE_SAVE_PATH, this);
@@ -93,11 +92,7 @@ public class RightsController extends BaseController{
         rights.setCtime(new Date());
         rightsService.addOrUpdateRights(rights);
 
-        PageableResult<Rights> pageableResult = rightsService.findPageRights(page, size);
-        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
-        mav.addObject("rights", pageableResult.getItems());
-        mav.addObject("url", "business/rights");
-        return mav;
+        return "redirect:/business/rights/list";
     }
 
     /**
@@ -172,7 +167,7 @@ public class RightsController extends BaseController{
     public ModelAndView addReservation(long reservationRight, long customerId, Integer exchangeScore, Date reservationTime){
         RightsReservation reservation = new RightsReservation();
         reservation.setCtime(new Date());
-        reservation.setRightsId((int)reservationRight);
+        reservation.setRightsId((int) reservationRight);
         reservation.setCustomerId((int)customerId);
         reservation.setScoreCost(exchangeScore);
         reservation.setMarkDate(reservationTime);

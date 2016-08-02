@@ -51,13 +51,9 @@ public class RoleController extends BaseController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ModelAndView add(AdminRole role){
-        ModelAndView mav = new ModelAndView("system/role/list");
+    public String add(AdminRole role){
         adminRoleService.addOrUpdateRole(role);
-        PageableResult<AdminRole> pageableResult = adminRoleService.findPageRole(page, size);
-        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
-        mav.addObject("roles", pageableResult.getItems());
-        return mav;
+        return "redirect:/system/role/list";
     }
 
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
