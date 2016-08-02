@@ -134,7 +134,10 @@ public class CustomerServiceImpl implements CustomerService {
      */
     @Override
     public Customer getCustomerByUid(Integer uId) {
-        return customerMapper.selectByUid(uId);
+        CustomerExample example = new CustomerExample();
+        CustomerExample.Criteria criteria = example.createCriteria();
+        criteria.andUidEqualTo(uId);
+        return customerMapper.selectByExample(example).get(0);
     }
 
     @Override
