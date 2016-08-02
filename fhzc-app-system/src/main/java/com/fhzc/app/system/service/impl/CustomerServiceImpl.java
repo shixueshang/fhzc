@@ -144,6 +144,7 @@ public class CustomerServiceImpl implements CustomerService {
             CustomerVo vo = new CustomerVo();
             vo.setName(users.get(0).getRealname());
             Customer customer = customerMapper.selectByUid(users.get(0).getUid());
+            vo.setCustomerId(customer.getCustomerId());
             if (customer != null){
                 DictionaryExample example = new DictionaryExample();
                 DictionaryExample.Criteria criteria = example.createCriteria();
@@ -151,7 +152,7 @@ public class CustomerServiceImpl implements CustomerService {
                 List<com.fhzc.app.dao.mybatis.model.Dictionary> dicts = dictionaryMapper.selectByExample(example);
 
                 for(com.fhzc.app.dao.mybatis.model.Dictionary dict : dicts){
-                    if(dict.getValue().equals(customer.getLevelId())){
+                    if(dict.getValue().equals(customer.getLevelId()+"")){
                         vo.setCustomerLevel(dict.getKey());
                         break;
                     }

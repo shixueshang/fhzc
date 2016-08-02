@@ -7,6 +7,7 @@ public class CustomerVo {
     private String name;
     private String customerLevel;
     private String availableScore;
+    private long customerId;
 
     public String getName() {
         return name;
@@ -30,5 +31,13 @@ public class CustomerVo {
 
     public void setAvailableScore(String availableScore) {
         this.availableScore = availableScore;
+    }
+
+    public long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(long customerId) {
+        this.customerId = customerId;
     }
 }

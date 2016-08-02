@@ -155,6 +155,21 @@ public class RightsController extends BaseController{
         RightVo vo = new RightVo();
         Rights rights = rightsService.getRights((int)rightId);
         vo.setScore(rights.getSpendScore());
+        vo.setProviderName(rights.getSupply());
+
+        return vo;
+    }
+
+    /**
+     * 获取权益信息
+     * @return
+     */
+    @RequestMapping(value = "/reservation/add", method = RequestMethod.GET)
+    public RightVo addReservation(long rightId, long customerId, long exchangeScore, Date reservationTime){
+        RightVo vo = new RightVo();
+        Rights rights = rightsService.getRights((int)rightId);
+        vo.setScore(rights.getSpendScore());
+        vo.setProviderName(rights.getSupply());
 
         return vo;
     }

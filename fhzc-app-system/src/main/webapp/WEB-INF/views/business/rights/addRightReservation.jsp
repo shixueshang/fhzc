@@ -20,8 +20,11 @@
 <link href="<%=contextPath%>/assets/bootstrap-fileupload/bootstrap-fileupload.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/jquery-tags-input/jquery.tagsinput.css" />
 <link rel="stylesheet" href="<%=contextPath%>/assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" />
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/jquery-ui/jquery-ui-1.10.1.custom.css">
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/custom_datepicker/jquery-ui-timepicker-addon.css">
+<script src="<%=contextPath%>/assets/jquery-ui/jquery-ui-1.10.1.custom.min.js"></script>
+<script src="<%=contextPath%>/assets/custom_datepicker/jquery-ui-timepicker-addon.js"></script>
 
-<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/bootstrap-datepicker/css/datepicker.css">
 
 <!-- BEGIN CONTAINER -->
 <div class="page-container row-fluid">
@@ -66,7 +69,7 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="portlet_tab1">
                                         <!-- BEGIN FORM-->
-                                        <form action="<%=contextPath%>/business/rights/addReservation" id="form_sample_1" method="POST" class="form-horizontal">
+                                        <form action="<%=contextPath%>/business/rights/addReservation" id="form_sample_1" method="POST" class="form-horizontal" onsubmit=" return checkInputs();">
                                             <div class="alert alert-error hide">
                                                 <button class="close" data-dismiss="alert"></button>
                                                 您的表单有未完成的必填项,请检查.
@@ -79,6 +82,7 @@
                                             </div>
                                             <input type="hidden" name="userValid" id="userValid" value="0">
                                             <input type="hidden" name="rightValid" id="rightValid" value="0">
+                                            <input type="hidden" name="customerId" id="customerId" value="0">
                                             <div class="control-group">
                                                 <label class="control-label">用户手机号<span class="required">*</span></label>
                                                 <div class="controls">
@@ -141,14 +145,14 @@
                                             <div class="control-group">
                                                 <label class="control-label">兑换所需积分</label>
                                                 <div class="controls">
-                                                    <input type="text" name="exchangeScore" id="exchangeScore" data-required="1" placeholder="" class="m-wrap large" disabled>
+                                                    <input type="text" name="exchangeScore" id="exchangeScore" readonly>
                                                 </div>
                                             </div>
 
                                             <div class="control-group">
                                                 <label class="control-label">预约时间</label>
                                                 <div class="controls">
-                                                    <input class="form-control" id="reservationTime" name="startTime" style="width: 180px">
+                                                    <input class="form-control" id="reservationTime" name="reservationTime" style="width: 180px">
                                                 </div>
                                             </div>
                                             <div class="form-actions">
@@ -173,19 +177,19 @@
 
 <jsp:include page="../../include/footer.jsp"/>
 <script type="text/javascript" src="<%=contextPath%>/assets/jquery-validation/dist/jquery.validate.min.js"></script>
-<script type="text/javascript" src="<%=contextPath%>/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+
 <script>
     $(function(){
         var form1 = $('#form_sample_1');
         var error1 = $('.alert-error', form1);
         var success1 = $('.alert-success', form1);
 
-        form1.validate({
+        /*form1.validate({
             errorElement: 'span', //default input error message container
             errorClass: 'help-inline', // default input error message class
             focusInvalid: false, // do not focus the last invalid input
             ignore: "",
-            /*rules: {
+            /!*rules: {
                 name: {
                     required: true
                 },
@@ -196,7 +200,7 @@
                     number: true,
                     min:0
                 }
-            },*/
+            },*!/
 
             invalidHandler: function (event, validator) { //display error alert on form submit
                 success1.hide();
@@ -228,11 +232,12 @@
                 error1.hide();
                 form.submit();
             }
-        });
+        });*/
 
         $("#checkPhone").click(function () {
             var phoneNum = $("#phoneNum").val();
             if (phoneNum != null && phoneNum != ''){
+                clearPhoneError();
                 $.ajax({
                     url: "<%=contextPath%>/business/rights/check/phone",
                     type: "get",
@@ -254,13 +259,14 @@
                             validatePhoneError('请确认收入的手机号为有效客户的有效手机号');
                         }
 
-                        if (data.clevel != null && data.clevel != ''){
+                        if (data.customerLevel != null && data.customerLevel != ''){
                             $("#clevel").val(data.customerLevel);
                         } else {
                             validatePhoneError('请确认收入的手机号为有效客户的有效手机号');
                         }
 
-                        if (data.name != null && data.name != '' && data.clevel != null && data.clevel != ''){
+                        if (data.name != null && data.name != '' && data.customerLevel != null && data.customerLevel != ''){
+                            $("#customerId").val(data.customerId);
                             $("#rightValid").val("1");
                         } else {
                             $("#rightValid").val("0");
@@ -278,6 +284,7 @@
         $("#reservationRight").change(function () {
             var rightId = $("#reservationRight").val();
             if (rightId != null && rightId != ''){
+                clearRightsError();
                 $.ajax({
                     url: "<%=contextPath%>/business/rights/get/rightInfo",
                     type: "get",
@@ -286,6 +293,7 @@
                     data: {rightId:rightId},
                     success: function (data) {
                         $("#exchangeScore").val(data.score);
+                        $("#provider").val(data.providerName);
                     },
                     error: function (err) {
 
@@ -293,7 +301,16 @@
                 });
             }
         });
-    })
+
+        $("#reservationTime").datetimepicker({
+            timeFormat: 'HH:mm:ss',
+            dateFormat: "yy-mm-dd"
+        });
+
+        $("#reservationTime").change(function () {
+            clearDateError();
+        });
+    });
 
     function validatePhoneError(text) {
         clearPhoneError();
@@ -304,6 +321,48 @@
     function clearPhoneError() {
         if ($("#phoneNum").parent().find("p").size() > 0){
             $("#phoneNum").parent().find("p").remove();
+        }
+    }
+
+    function validateRightsError(text) {
+        clearRightsError();
+        var error =  "<p style='color:red; margin: 0'>"+text+"</p>"
+        $("#reservationRight").parent().append(error);
+    }
+
+    function clearRightsError() {
+        if ($("#reservationRight").parent().find("p").size() > 0){
+            $("#reservationRight").parent().find("p").remove();
+        }
+    }
+
+    function validateDateError(text) {
+        clearDateError();
+        var error =  "<p style='color:red; margin: 0'>"+text+"</p>"
+        $("#reservationTime").parent().append(error);
+    }
+
+    function clearDateError() {
+        if ($("#reservationTime").parent().find("p").size() > 0){
+            $("#reservationTime").parent().find("p").remove();
+        }
+    }
+    
+    function checkInputs() {
+        if ($("#rightValid").val() == '0'){
+            validatePhoneError('请确认收入的手机号为有效客户的有效手机号');
+            $("html,body").animate({scrollTop:0});
+            return false;
+        }
+
+        if ($("#reservationRight").val() == ''){
+            validateRightsError("请选择权益");
+            return false;
+        }
+
+        if ($("#reservationTime").val() == ''){
+            validateDateError("请选择输入日期");
+            return false;
         }
     }
 </script>
