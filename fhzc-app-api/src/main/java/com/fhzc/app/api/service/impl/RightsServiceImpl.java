@@ -56,5 +56,16 @@ public class RightsServiceImpl implements RightsService {
         }
     }
 
-
+    @Override
+    public List<Rights> getRecommend(){
+        RightsExample example = new RightsExample();
+        RightsExample.Criteria criteria = example.createCriteria();
+        criteria.andIsRecommendEqualTo((byte) 1);
+        example.setOrderByClause("ctime desc");
+        if (rightsMapper.countByExample(example) > 0) {
+            return rightsMapper.selectByExample(example);
+        } else {
+            return null;
+        }
+    }
 }
