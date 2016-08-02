@@ -36,4 +36,12 @@ public interface RightsService {
      * @return
      */
     int addRightsReservation(RightsReservation reservation);
+
+    /**
+     * 获得预约列表
+     * @param page
+     * @param size
+     * @return
+     */
+    PageableResult<RightsReservation> listRightReservations(int page, int size);
 }
