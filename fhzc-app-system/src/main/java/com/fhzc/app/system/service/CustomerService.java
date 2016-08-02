@@ -2,8 +2,9 @@ package com.fhzc.app.system.service;
 
 
 
-import com.fhzc.app.dao.mybatis.model.Customer;
+import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
+import com.fhzc.app.system.commons.vo.CustomerVo;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
@@ -36,7 +37,7 @@ public interface CustomerService {
     Map<String, Object> importExcelFile(MultipartFile multipartFile) throws Exception;
 
     /**
-     * 获得产品信息
+     * 获得客户信息
      * @param customerId
      * @return
      */
@@ -55,4 +56,18 @@ public interface CustomerService {
      * @return
      */
 	 Customer getCustomerByUid(Integer uId);
+
+    /**
+     * 获得客户的主理财师
+     * @param customerId
+     * @return
+     */
+    PlannerCustomer getPlannerByCustomerId(Integer customerId);
+
+    /**
+     * 通过移动号码获取客户信息
+     * @param mobileNum
+     * @return
+     */
+    CustomerVo getCustomerInfoByMobile(String mobileNum);
 }

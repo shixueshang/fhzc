@@ -1,6 +1,7 @@
 package com.fhzc.app.system.service;
 
 import com.fhzc.app.dao.mybatis.model.Rights;
+import com.fhzc.app.dao.mybatis.model.RightsReservation;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 
 /**
@@ -28,4 +29,19 @@ public interface RightsService {
      * @return
      */
     Rights getRights(Integer id);
+
+    /**
+     * 获得权益信息
+     * @param reservation
+     * @return
+     */
+    int addRightsReservation(RightsReservation reservation);
+
+    /**
+     * 获得预约列表
+     * @param page
+     * @param size
+     * @return
+     */
+    PageableResult<RightsReservation> listRightReservations(int page, int size);
 }

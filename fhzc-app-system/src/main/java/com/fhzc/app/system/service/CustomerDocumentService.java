@@ -9,13 +9,29 @@ import java.util.Map;
  */
 public interface CustomerDocumentService {
 
-	   /**
-     * 投资人档案表导入
+	/**
+     * 个人投资人档案表导入
      * @param multipartFile
      * @return
      * @throws Exception
      */
-    Map<String, Object> importExcelFile(MultipartFile multipartFile) throws Exception;
+    Map<String, Object> importExcelFilePersonal(MultipartFile multipartFile) throws Exception;
+	
+    /**
+     * 机构投资人档案表导入
+     * @param multipartFile
+     * @return
+     * @throws Exception
+     */
+    Map<String, Object> importExcelFileAgent(MultipartFile multipartFile) throws Exception;
+    
+    /**
+     * 投资人档案表一步导入
+     * @param multipartFile
+     * @return
+     * @throws Exception
+     */
+    Map<String,Map<String, Object>> importExcel(MultipartFile multipartFile) throws Exception;
 
 
 }

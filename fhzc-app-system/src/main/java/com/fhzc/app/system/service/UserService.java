@@ -43,5 +43,11 @@ public interface UserService {
      * @return
      */
     User getUser(Integer uid);
-    
+
+    /**
+     * 获得用户信息
+     * @param mobileNum
+     * @return
+     */
+    User getUserByMobile(String mobileNum);
 }

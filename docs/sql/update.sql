@@ -213,3 +213,18 @@ ALTER TABLE `bank`.`activity_apply`
 ADD COLUMN `person_num` INT NOT NULL DEFAULT 1 COMMENT '报名人数' AFTER `customer_id`,
 ADD COLUMN `person_name` VARCHAR(45) NULL COMMENT '预约客户姓名' AFTER `is_sure`;
 
+
+#2016-08-01
+ALTER TABLE `bank`.`customer`
+ADD COLUMN `customer_type` ENUM('single', 'organ') NULL COMMENT '客户类型' AFTER `bank_info_id`;
+ALTER TABLE `bank`.`customer`
+ADD COLUMN `business_license` VARCHAR(255) NULL COMMENT '营业执照' AFTER `customer_type`;
+ALTER TABLE `bank`.`customer`
+ADD COLUMN `account_license` VARCHAR(255) NULL COMMENT '开户许可' AFTER `business_license`;
+ALTER TABLE `bank`.`customer`
+ADD COLUMN `contact_ralation` VARCHAR(45) NULL COMMENT '联系人关系' AFTER `account_license`;
+ALTER TABLE `bank`.`customer`
+ADD COLUMN `entrusted_letter` VARCHAR(45) NULL COMMENT '法人委托函' AFTER `contact_ralation`;
+
+
+

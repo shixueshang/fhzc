@@ -5,6 +5,7 @@ import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.dao.mybatis.inter.ScoreHistoryMapper;
 import com.fhzc.app.dao.mybatis.model.ScoreHistory;
 import com.fhzc.app.dao.mybatis.model.ScoreHistoryExample;
+import com.fhzc.app.dao.mybatis.util.Const;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -28,8 +29,8 @@ public class ScoreServiceImpl implements ScoreService{
 
         criteria.andUidEqualTo(uid);
         criteria.andStatusEqualTo(type);
-        criteria.andIsVaildEqualTo(APIConstants.Score.IS_VAILD);
-        criteria.andIsApproveEqualTo(APIConstants.Score.IS_APPROVE);
+        criteria.andIsVaildEqualTo(Const.Score.IS_VAILD);
+        criteria.andIsApproveEqualTo(Const.Score.IS_APPROVE);
 
         return scoreHistoryMapper.selectByExample(example);
 
@@ -37,14 +38,14 @@ public class ScoreServiceImpl implements ScoreService{
 
     @Override
     public List<ScoreHistory> getAvailableList(Integer uid){
-        List<ScoreHistory> scoreHistories = this.getList(uid, APIConstants.Score.ADD);
+        List<ScoreHistory> scoreHistories = this.getList(uid, Const.Score.ADD);
         return scoreHistories;
     }
 
 
     @Override
     public List<ScoreHistory> getFrozen(Integer uid){
-        List<ScoreHistory> scoreHistories = this.getList(uid, APIConstants.Score.FROZEN);
+        List<ScoreHistory> scoreHistories = this.getList(uid, Const.Score.FROZEN);
         return scoreHistories;
     }
 
@@ -55,7 +56,7 @@ public class ScoreServiceImpl implements ScoreService{
         List<ScoreHistory> result = new ArrayList<>();
         for(ScoreHistory score : scoreHistories){
             long diff=System.currentTimeMillis() - score.getVaildTime().getTime();
-            if(APIConstants.Score.LONGDAY < (diff / (1000 * 60 * 60 * 24))){
+            if(Const.Score.LONGDAY < (diff / (1000 * 60 * 60 * 24))){
                 result.add(score);
             }
         }
@@ -71,7 +72,7 @@ public class ScoreServiceImpl implements ScoreService{
 
     @Override
     public List<ScoreHistory> getExpiredList(Integer uid){
-        List<ScoreHistory> scoreHistories = this.getList(uid, APIConstants.Score.EXPIRE);
+        List<ScoreHistory> scoreHistories = this.getList(uid, Const.Score.EXPIRE);
         return scoreHistories;
     }
 

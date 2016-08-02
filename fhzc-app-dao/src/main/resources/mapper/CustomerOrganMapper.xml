@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fhzc.app.dao.mybatis.inter.CustomerOrganMapper" >
+  <resultMap id="BaseResultMap" type="com.fhzc.app.dao.mybatis.model.CustomerOrgan" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="customer_id" property="customerId" jdbcType="INTEGER" />
+    <result column="rights_enjoy_person" property="rightsEnjoyPerson" jdbcType="VARCHAR" />
+    <result column="passport_type_id" property="passportTypeId" jdbcType="INTEGER" />
+    <result column="passport_code" property="passportCode" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    `id`, `customer_id`, `rights_enjoy_person`, `passport_type_id`, `passport_code`, 
+    `mobile`
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.CustomerOrganExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from `customer_organ`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from `customer_organ`
+    where `id` = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from `customer_organ`
+    where `id` = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fhzc.app.dao.mybatis.model.CustomerOrganExample" >
+    delete from `customer_organ`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fhzc.app.dao.mybatis.model.CustomerOrgan" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `customer_organ` (`customer_id`, `rights_enjoy_person`, `passport_type_id`, 
+      `passport_code`, `mobile`)
+    values (#{customerId,jdbcType=INTEGER}, #{rightsEnjoyPerson,jdbcType=VARCHAR}, #{passportTypeId,jdbcType=INTEGER}, 
+      #{passportCode,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.CustomerOrgan" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `customer_organ`
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="customerId != null" >
+        `customer_id`,
+      </if>
+      <if test="rightsEnjoyPerson != null" >
+        `rights_enjoy_person`,
+      </if>
+      <if test="passportTypeId != null" >
+        `passport_type_id`,
+      </if>
+      <if test="passportCode != null" >
+        `passport_code`,
+      </if>
+      <if test="mobile != null" >
+        `mobile`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="customerId != null" >
+        #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="rightsEnjoyPerson != null" >
+        #{rightsEnjoyPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="passportTypeId != null" >
+        #{passportTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="passportCode != null" >
+        #{passportCode,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fhzc.app.dao.mybatis.model.CustomerOrganExample" resultType="java.lang.Integer" >
+    select count(*) from `customer_organ`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update `customer_organ`
+    <set >
+      <if test="record.id != null" >
+        `id` = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.customerId != null" >
+        `customer_id` = #{record.customerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.rightsEnjoyPerson != null" >
+        `rights_enjoy_person` = #{record.rightsEnjoyPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.passportTypeId != null" >
+        `passport_type_id` = #{record.passportTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.passportCode != null" >
+        `passport_code` = #{record.passportCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile != null" >
+        `mobile` = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update `customer_organ`
+    set `id` = #{record.id,jdbcType=INTEGER},
+      `customer_id` = #{record.customerId,jdbcType=INTEGER},
+      `rights_enjoy_person` = #{record.rightsEnjoyPerson,jdbcType=VARCHAR},
+      `passport_type_id` = #{record.passportTypeId,jdbcType=INTEGER},
+      `passport_code` = #{record.passportCode,jdbcType=VARCHAR},
+      `mobile` = #{record.mobile,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fhzc.app.dao.mybatis.model.CustomerOrgan" >
+    update `customer_organ`
+    <set >
+      <if test="customerId != null" >
+        `customer_id` = #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="rightsEnjoyPerson != null" >
+        `rights_enjoy_person` = #{rightsEnjoyPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="passportTypeId != null" >
+        `passport_type_id` = #{passportTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="passportCode != null" >
+        `passport_code` = #{passportCode,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        `mobile` = #{mobile,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where `id` = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fhzc.app.dao.mybatis.model.CustomerOrgan" >
+    update `customer_organ`
+    set `customer_id` = #{customerId,jdbcType=INTEGER},
+      `rights_enjoy_person` = #{rightsEnjoyPerson,jdbcType=VARCHAR},
+      `passport_type_id` = #{passportTypeId,jdbcType=INTEGER},
+      `passport_code` = #{passportCode,jdbcType=VARCHAR},
+      `mobile` = #{mobile,jdbcType=VARCHAR}
+    where `id` = #{id,jdbcType=INTEGER}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.CustomerOrganExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from `customer_organ`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

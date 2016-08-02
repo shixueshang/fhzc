@@ -43,7 +43,7 @@
                             <a href="javascript:void(0);">客户管理管理</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li class="active"><a href="javascript:void(0);" id="report_title">新增个人客户</a></li>
+                        <li class="active"><a href="javascript:void(0);" id="report_title">编辑个人客户</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
@@ -66,7 +66,7 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="portlet_tab1">
                                         <!-- BEGIN FORM-->
-                                        <form action="<%=contextPath%>/personal/customer/add" id="form_sample_1"  method="POST" class="form-horizontal">
+                                        <form action="<%=contextPath%>/personal/customer/update" id="form_sample_1"  method="POST" class="form-horizontal">
                                             <div class="alert alert-error hide">
                                                 <button class="close" data-dismiss="alert"></button>
                                                 您的表单有未完成的必填项,请检查.
@@ -95,70 +95,106 @@
                                             <div class="control-group">
                                                 <label class="control-label">客户登陆名</label>
                                                 <div class="controls">
-                                                    <input type="text" name="login" value="${user.realname}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="login" value="${user.login}" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">报告封面</label>
+                                                <label class="control-label">手机号码</label>
                                                 <div class="controls">
-                                                    <div class="fileupload fileupload-new" data-provides="fileupload">
-                                                        <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
-                                                            <img src="/static/image/no-image.png" alt="" id="default_img" />
-                                                        </div>
-                                                        <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
-                                                        <div>
-                                                       <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
-                                                       <span class="fileupload-exists">更换</span>
-                                                       <input type="file" name="coverFile" id="cover_img" class="default" /></span>
-                                                            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
-                                                        </div>
-                                                    </div>
-                                                    <span class="label label-important">注意!</span>
-                                                 <span>
-                                                 上传图片预览仅支持Firefox, Chrome, Opera,
-                                                 Safari ,Internet Explorer 10
-                                                 </span>
-                                                </div>
-                                            </div>
-                                            <div class="control-group">
-                                                <label class="control-label">详情链接</label>
-                                                <div class="controls">
-                                                    <input type="text" name="url" value="${report.url}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="mobile" value="${user.mobile}" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">是否显示</label>
+                                                <label class="control-label">固定电话</label>
+                                                <div class="controls">
+                                                    <input type="text" name="phone" value="${user.phone}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">性别</label>
                                                 <div class="controls">
                                                     <label class="radio">
-                                                        <input type="radio" name="isDisplay" value="1" />
-                                                        显示
+                                                        <input type="radio" name="gender" value="male" checked/>
+                                                        男
                                                     </label>
                                                     <label class="radio">
-                                                        <input type="radio" name="isDisplay" value="0" checked />
-                                                        不显示
+                                                        <input type="radio" name="gender" value="female"  />
+                                                        女
                                                     </label>
                                                 </div>
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">是否推荐(精选)</label>
+                                                <label class="control-label">出生日期</label>
                                                 <div class="controls">
-                                                    <label class="radio">
-                                                        <input type="radio" name="isRecommend" value="1" />
-                                                        是
-                                                    </label>
-                                                    <label class="radio">
-                                                        <input type="radio" name="isRecommend" value="0" checked />
-                                                        否
-                                                    </label>
+                                                    <input type="text" name="birthday" value="<fmt:formatDate value="${user.birthday}" pattern="yyyy-MM-dd"/>" data-required="1" placeholder="" class="m-wrap m-ctrl-medium date-picker">
+                                                    <span class="help-inline"></span>
                                                 </div>
                                             </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">证件类型</label>
+                                                <div class="controls">
+                                                    <select class="large m-wrap" name="passportTypeId" id="passportTypeId" tabindex="1"></select>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">证件号码</label>
+                                                <div class="controls">
+                                                    <input type="text" name="passportCode" value="${user.passportCode}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">会员等级</label>
+                                                <div class="controls">
+                                                    <select class="large m-wrap" name="levelId" id="levelId" tabindex="1"></select>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">可用积分</label>
+                                                <div class="controls">
+                                                    <input type="text" name="availableScore" value="${availableScore}" readonly data-required="1" placeholder="" class="m-wrap large">
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">冻结积分</label>
+                                                <div class="controls">
+                                                    <input type="text" name="frozenScore" value="${frozenScore}" readonly data-required="1" placeholder="" class="m-wrap large">
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">理财师工号</label>
+                                                <div class="controls">
+                                                    <input type="text" name="plannerNum" value="${planner.workNum}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">理财师姓名</label>
+                                                <div class="controls">
+                                                    <input type="text" name="plannerName" value="${plannerUser.realname}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
+
                                             <div class="form-actions">
-                                                <input name="id" type="hidden" value="${report.id}" />
+                                                <input name="customerId" type="hidden" value="${customer.customerId}" />
+                                                <input name="uid" type="hidden" value="${user.uid}" />
                                                 <button type="submit" class="btn blue"><i class="icon-ok"></i> 保存</button>
                                             </div>
                                         </form>
@@ -183,39 +219,36 @@
 <script>
     $(function(){
 
-        var reportId =  '${report.id}';
-        if(reportId != null && reportId != ''){
-            $('#report_title').text('编辑报告');
-        }
+        var passportType = '${user.passportTypeId}';
+        var passports = '${passports}';
+        var typeJson= $.parseJSON(passports);
+        $.each(typeJson, function(i,val){
+            $("#passportTypeId").append("<option value='"+val.value+"'>"+val.key+"</option>");
+            if(passportType == val.value){
+                $("#passportTypeId").val(passportType);
+            }
+        });
 
-        var reportType = '${report.cid}';
-        var reportTypes = '${reportTypes}';
-        var pTypeJson= $.parseJSON(reportTypes);
-        $.each(pTypeJson, function(i,val){
-            $("#reportType").append("<option value='"+val.value+"'>"+val.key+"</option>");
-            if(reportType == val.value){
-                $("#reportType").val(reportType);
+        var level = '${customer.levelId}';
+        var customerLevels = '${customerLevels}';
+        var levelJson= $.parseJSON(customerLevels);
+        $.each(levelJson, function(i,val){
+            $("#levelId").append("<option value='"+val.value+"'>"+val.key+"</option>");
+            if(level == val.value){
+                $("#levelId").val(level);
             }
         });
 
 
-        var isDisplay = '${report.isDisplay}';
-        if(isDisplay == 1 || isDisplay == '' || isDisplay == null){
-            $.uniform.update($("input[name='isDisplay'][value='1']").attr("checked", true));
-            $.uniform.update($("input[name='isDisplay'][value='0']").attr("checked", false));
+        var gender = '${user.gender}';
+        if(gender == 'male' || isDisplay == '' || isDisplay == null){
+            $.uniform.update($("input[name='gender'][value='male']").attr("checked", true));
+            $.uniform.update($("input[name='gender'][value='female']").attr("checked", false));
         }else{
-            $.uniform.update($("input[name='isDisplay'][value='1']").attr("checked", false));
-            $.uniform.update($("input[name='isDisplay'][value='0']").attr("checked", true));
+            $.uniform.update($("input[name='gender'][value='male']").attr("checked", false));
+            $.uniform.update($("input[name='gender'][value='female']").attr("checked", true));
         }
 
-        var isRecommend = '${report.isRecommend}';
-        if(isRecommend == 1 || isRecommend == '' || isRecommend == null){
-            $.uniform.update($("input[name='isRecommend'][value='1']").attr("checked", true));
-            $.uniform.update($("input[name='isRecommend'][value='0']").attr("checked", false));
-        }else{
-            $.uniform.update($("input[name='isRecommend'][value='1']").attr("checked", false));
-            $.uniform.update($("input[name='isRecommend'][value='0']").attr("checked", true));
-        }
 
         var dispalyImg = $("#default_img");
         var imgUrl = "<%=contextPath%>${report.cover}";

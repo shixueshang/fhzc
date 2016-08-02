@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `bank`.`log` (
 DROP TABLE IF EXISTS `bank`.`planner` ;
 
 CREATE TABLE IF NOT EXISTS `bank`.`planner` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `uid` INT NOT NULL,
   `work_num` VARCHAR(45) NOT NULL COMMENT '工号',
   `department_id` INT NULL COMMENT '所属分公司',
@@ -497,19 +497,16 @@ CREATE TABLE IF NOT EXISTS `bank`.`activity_apply` (
 
 
 -- -----------------------------------------------------
--- Table `bank`.`planner_service`
+-- Table `bank`.`planner_customer`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `bank`.`planner_service` ;
+DROP TABLE IF EXISTS `bank`.`planner_customer` ;
 
-CREATE TABLE IF NOT EXISTS `bank`.`planner_service` (
+CREATE TABLE IF NOT EXISTS `bank`.`planner_customer` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `planner_id` INT NULL,
   `customer_id` INT NULL,
-  `ctime` DATETIME NULL,
-  `status` ENUM('invaild','vaild') NULL DEFAULT 'vaild',
   `is_main` TINYINT NOT NULL DEFAULT 0 COMMENT '是否为主理财师 0否|1是',
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `planner_customer_uniq` (`planner_id` ASC, `customer_id` ASC))
+  PRIMARY KEY (`id`))
   ENGINE = InnoDB
   COMMENT = '客户理财师关系表';
 
@@ -708,7 +705,7 @@ CREATE TABLE IF NOT EXISTS `bank`.`planner_achivements_daily` (
 DROP TABLE IF EXISTS `bank`.`customer_bank` ;
 
 CREATE TABLE IF NOT EXISTS `bank`.`customer_bank` (
-  `bank_info_id` INT NOT NULL,
+  `bank_info_id` INT NOT NULL AUTO_INCREMENT,
   `bank` VARCHAR(45) NOT NULL COMMENT '开户行',
   `bank_account` VARCHAR(45) NOT NULL COMMENT '银行卡号',
   `ctime` DATETIME NOT NULL COMMENT '记录添加时间',
@@ -748,6 +745,20 @@ CREATE TABLE IF NOT EXISTS `bank`.`dictionary` (
   PRIMARY KEY (`id`))
   ENGINE = InnoDB
   COMMENT = '字典表';
+
+CREATE TABLE IF NOT EXISTS `bank`.`customer_organ` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `customer_id` INT(11) NOT NULL COMMENT '客户id',
+  `rights_enjoy_person` VARCHAR(45) NULL DEFAULT NULL COMMENT '权益享用人',
+  `passport_type_id` INT(11) NULL DEFAULT NULL COMMENT '证件类型',
+  `passport_code` VARCHAR(45) NULL DEFAULT NULL COMMENT '证件号',
+  `mobile` VARCHAR(11) NULL DEFAULT NULL COMMENT '手机号',
+  PRIMARY KEY (`id`))
+  ENGINE = InnoDB
+  DEFAULT CHARACTER SET = utf8
+  COMMENT = '机构客户权益享用人表';
+
+
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

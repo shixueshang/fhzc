@@ -95,6 +95,12 @@
                         <shiro:hasPermission name="/business/rights/pub"><li>
                                 <a href="<%=contextPath%>/business/rights/pub">新增权益</a>
                             </li></shiro:hasPermission>
+                        <shiro:hasPermission name="/business/rights/reservation/pub"><li>
+                            <a href="<%=contextPath%>/business/rights/reservation/pub">新增预约</a>
+                        </li></shiro:hasPermission>
+                        <shiro:hasPermission name="/business/rights/reservations"><li>
+                            <a href="<%=contextPath%>/business/rights/reservations">权益预约列表</a>
+                        </li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>
 
