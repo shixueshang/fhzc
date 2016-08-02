@@ -82,18 +82,20 @@
                                     <td>预约时间</td>
                                     <td>权利名称</td>
                                     <td>客户姓名</td>
-                                    <td>客户等级</td>
-                                    <td>手机号码</td>
+                                    <td>客户电话</td>
+                                    <td>消耗积分</td>
+                                    <td></td>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach items="${activityApplies}" var="activityApply">
+                                <c:forEach items="${reservations}" var="reservation">
                                     <tr>
-                                        <td>${activityApply.registerTime}</td>
-                                        <td>${activityApply.activityName}</td>
-                                        <td>${activityApply.clientName}</td>
-                                        <td>${activityApply.clientLevel}</td>
-                                        <td>${activityApply.clientPhone}</td>
+                                        <td><fmt:formatDate value="${reservation.reservationTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+                                        <td>${reservation.rightName}</td>
+                                        <td>${reservation.customerName}</td>
+                                        <td>${reservation.phoneNum}</td>
+                                        <td>${reservation.score}</td>
+                                        <td><button class="Deal_Reser" data-id="${reservation.id}">处理预约</button></td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>

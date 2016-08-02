@@ -9,12 +9,10 @@ import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.commons.util.FileUtil;
 import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.commons.vo.CustomerVo;
+import com.fhzc.app.system.commons.vo.RightReservationVo;
 import com.fhzc.app.system.commons.vo.RightVo;
 import com.fhzc.app.system.controller.BaseController;
-import com.fhzc.app.system.service.CustomerService;
-import com.fhzc.app.system.service.DepartmentService;
-import com.fhzc.app.system.service.DictionaryService;
-import com.fhzc.app.system.service.RightsService;
+import com.fhzc.app.system.service.*;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
@@ -26,10 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by lihongde on 2016/7/18 15:38
@@ -49,6 +44,9 @@ public class RightsController extends BaseController{
 
     @Resource
     private CustomerService customerService;
+
+    @Resource
+    private UserService userService;
 
     /**
      * 权益列表
@@ -188,13 +186,31 @@ public class RightsController extends BaseController{
     }
 
     @RequestMapping(value = "/reservations", method = RequestMethod.GET)
-    public ModelAndView listActivityApplies(String rightName, String identityId, Date startTime, Date endTime){
-        ModelAndView mav = new ModelAndView("business/activity/registerList");
+    public ModelAndView listRightReservations(String rightName, String identityId, Date startTime, Date endTime){
+        ModelAndView mav = new ModelAndView("business/rights/reservationList");
+        PageableResult<RightsReservation> pageableResult = rightsService.listRightReservations(page, size);
+        List<RightsReservation> reservations = pageableResult.getItems();
+        List<RightReservationVo> vos = new LinkedList<RightReservationVo>();
+        if (!CollectionUtils.isEmpty(reservations)){
+            for (RightsReservation reser : reservations){
+                RightReservationVo vo = new RightReservationVo();
+                vo.setId(reser.getId());
+                Rights r = rightsService.getRights(reser.getRightsId());
+                vo.setRightName(r.getName());
 
+                Customer c = customerService.getCustomer(reser.getCustomerId());
+                User u = userService.getUser(c.getUid());
+                vo.setCustomerName(u.getRealname());
+                vo.setPhoneNum(u.getMobile());
 
+                vo.setScore(Integer.parseInt(reser.getScoreCost()));
+                vo.setReservationTime(reser.getMarkDate());
+                vos.add(vo);
+            }
+        }
 
-        //mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
-        //mav.addObject("activityApplies", pageableResult.getItems());
+        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
+        mav.addObject("reservations", vos);
         return mav;
     }
 }
