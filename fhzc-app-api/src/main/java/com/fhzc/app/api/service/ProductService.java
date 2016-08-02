@@ -41,6 +41,12 @@ public interface ProductService {
      */
     Product getProduct(Integer pid);
 
+
+    /**
+     * 获得最新产品信息
+     * @return
+     */
+    List<Product> getNewProductList();
     /**
      * 查询产品名称是否存在
      * @param name

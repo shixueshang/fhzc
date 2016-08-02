@@ -66,6 +66,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> getNewProductList() {
+        ProductExample example = new ProductExample();
+        ProductExample.Criteria criteria = example.createCriteria();
+        example.setOrderByClause("ctime desc");
+
+        criteria.andIsDisplayEqualTo((byte) 1);
+        return productMapper.selectByExample(example);
+    }
+
+    @Override
     public boolean isNameExists(String name) {
         ProductExample example = new ProductExample();
         ProductExample.Criteria criteria = example.createCriteria();
