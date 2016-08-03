@@ -41,6 +41,8 @@ public class Activity {
 
     private Integer isRecommend;
 
+    private String userReq;
+
     private String content;
 
     public Integer getId() {
@@ -193,6 +195,14 @@ public class Activity {
 
     public void setIsRecommend(Integer isRecommend) {
         this.isRecommend = isRecommend;
+    }
+
+    public String getUserReq() {
+        return userReq;
+    }
+
+    public void setUserReq(String userReq) {
+        this.userReq = userReq == null ? null : userReq.trim();
     }
 
     public String getContent() {

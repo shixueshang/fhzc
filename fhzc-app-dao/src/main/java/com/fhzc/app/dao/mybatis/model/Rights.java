@@ -25,6 +25,8 @@ public class Rights {
 
     private Byte isRecommend;
 
+    private String notice;
+
     private String summary;
 
     public Integer getId() {
@@ -113,6 +115,14 @@ public class Rights {
 
     public void setIsRecommend(Byte isRecommend) {
         this.isRecommend = isRecommend;
+    }
+
+    public String getNotice() {
+        return notice;
+    }
+
+    public void setNotice(String notice) {
+        this.notice = notice == null ? null : notice.trim();
     }
 
     public String getSummary() {

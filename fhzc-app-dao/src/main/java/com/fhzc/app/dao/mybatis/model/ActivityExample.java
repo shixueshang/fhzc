@@ -1341,6 +1341,76 @@ public class ActivityExample {
             addCriterion("`is_ recommend` not between", value1, value2, "isRecommend");
             return (Criteria) this;
         }
+
+        public Criteria andUserReqIsNull() {
+            addCriterion("`user_req` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserReqIsNotNull() {
+            addCriterion("`user_req` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserReqEqualTo(String value) {
+            addCriterion("`user_req` =", value, "userReq");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserReqNotEqualTo(String value) {
+            addCriterion("`user_req` <>", value, "userReq");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserReqGreaterThan(String value) {
+            addCriterion("`user_req` >", value, "userReq");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserReqGreaterThanOrEqualTo(String value) {
+            addCriterion("`user_req` >=", value, "userReq");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserReqLessThan(String value) {
+            addCriterion("`user_req` <", value, "userReq");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserReqLessThanOrEqualTo(String value) {
+            addCriterion("`user_req` <=", value, "userReq");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserReqLike(String value) {
+            addCriterion("`user_req` like", value, "userReq");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserReqNotLike(String value) {
+            addCriterion("`user_req` not like", value, "userReq");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserReqIn(List<String> values) {
+            addCriterion("`user_req` in", values, "userReq");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserReqNotIn(List<String> values) {
+            addCriterion("`user_req` not in", values, "userReq");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserReqBetween(String value1, String value2) {
+            addCriterion("`user_req` between", value1, value2, "userReq");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserReqNotBetween(String value1, String value2) {
+            addCriterion("`user_req` not between", value1, value2, "userReq");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
