@@ -54,18 +54,4 @@ public class ContractController extends BaseController {
         }
         return result;
     }
-//    public ModelAndView importExcel(MultipartFile multiFile){
-//    	ModelAndView mav = new ModelAndView("business/contract/importor");
-//        Map<String, Object> result = new HashMap<String, Object>();
-//        try {
-//            result = contractService.importExcelFile(multiFile);
-//            result.put("success", true);
-//        } catch (Exception e) {
-//            logger.error("导入失败");
-//            result.put("success", false);
-//            e.printStackTrace();
-//        }
-//        mav.addObject("result", result);
-//        return mav;
-//    }
 }

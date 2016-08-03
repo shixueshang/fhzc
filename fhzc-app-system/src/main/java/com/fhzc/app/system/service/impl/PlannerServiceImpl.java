@@ -1,6 +1,7 @@
 package com.fhzc.app.system.service.impl;
 
 import com.fhzc.app.dao.mybatis.page.PageableResult;
+import com.fhzc.app.dao.mybatis.util.EncryptUtils;
 import com.fhzc.app.system.commons.util.excel.ExcelImporter;
 import com.fhzc.app.system.commons.util.excel.ImportCallBack;
 import com.fhzc.app.system.commons.util.excel.ImportConfig;
@@ -75,17 +76,17 @@ public class PlannerServiceImpl implements PlannerService {
         }
 
         @Override
-        public List<Object[]> getImportData(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data) {
+        public List<Object[]> getImportData(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data)  {
         	List<Object[]> plannerList = new ArrayList<Object[]>();
         	if(data.get(0).length>0){
 	        	for (Object[] objects : data) {
 	        		Object[] temData = new  Object[18];
 	        		temData[0] = objects[1];	//工号 work_num,作为初始登录名
-	        		temData[1] = objects[4];	//手机号 mobile，作为初始密码	
+	        		temData[1] = EncryptUtils.encryptToMD5(objects[4].toString());	//手机号 mobile，作为初始密码	
 	        		temData[2] = objects[1];	//工号 work_num
 	        		temData[3] = objects[2];	//姓名 realname
-	        		temData[4] = objects[3];	//证件号 passport_code
-	        		temData[5] = objects[4];	//手机号 mobile	
+					temData[4] = objects[3];	//证件号
+					temData[5] = objects[4];	//手机号
 	        		temData[6] = objects[5];	//所属公司 company
 	        		temData[7] = objects[6];	//所属城市 area
 	        		temData[8] = objects[7];	//一级部门 dept1
