@@ -21,6 +21,7 @@
     <result column="cover" property="cover" jdbcType="VARCHAR" />
     <result column="department_id" property="departmentId" jdbcType="INTEGER" />
     <result column="is_ recommend" property="isRecommend" jdbcType="INTEGER" />
+    <result column="user_req" property="userReq" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.fhzc.app.dao.mybatis.model.Activity" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
@@ -86,7 +87,7 @@
   <sql id="Base_Column_List" >
     `id`, `name`, `address`, `apply_begin_time`, `apply_end_time`, `begin_time`, `end_time`, 
     `memo`, `sponsor`, `area_id`, `ctime`, `url`, `status`, `is_display`, `summary`, 
-    `cid`, `cover`, `department_id`, `is_ recommend`
+    `cid`, `cover`, `department_id`, `is_ recommend`, `user_req`
   </sql>
   <sql id="Blob_Column_List" >
     `content`
@@ -149,14 +150,14 @@
       `ctime`, `url`, `status`, 
       `is_display`, `summary`, `cid`, 
       `cover`, `department_id`, `is_ recommend`, 
-      `content`)
+      `user_req`, `content`)
     values (#{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{applyBeginTime,jdbcType=TIMESTAMP}, 
       #{applyEndTime,jdbcType=TIMESTAMP}, #{beginTime,jdbcType=DATE}, #{endTime,jdbcType=DATE}, 
       #{memo,jdbcType=VARCHAR}, #{sponsor,jdbcType=VARCHAR}, #{areaId,jdbcType=INTEGER}, 
       #{ctime,jdbcType=TIMESTAMP}, #{url,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
       #{isDisplay,jdbcType=INTEGER}, #{summary,jdbcType=VARCHAR}, #{cid,jdbcType=INTEGER}, 
       #{cover,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER}, #{isRecommend,jdbcType=INTEGER}, 
-      #{content,jdbcType=LONGVARCHAR})
+      #{userReq,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.Activity" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
@@ -218,6 +219,9 @@
       <if test="isRecommend != null" >
         `is_ recommend`,
       </if>
+      <if test="userReq != null" >
+        `user_req`,
+      </if>
       <if test="content != null" >
         `content`,
       </if>
@@ -276,6 +280,9 @@
       </if>
       <if test="isRecommend != null" >
         #{isRecommend,jdbcType=INTEGER},
+      </if>
+      <if test="userReq != null" >
+        #{userReq,jdbcType=VARCHAR},
       </if>
       <if test="content != null" >
         #{content,jdbcType=LONGVARCHAR},
@@ -348,6 +355,9 @@
       <if test="record.isRecommend != null" >
         `is_ recommend` = #{record.isRecommend,jdbcType=INTEGER},
       </if>
+      <if test="record.userReq != null" >
+        `user_req` = #{record.userReq,jdbcType=VARCHAR},
+      </if>
       <if test="record.content != null" >
         `content` = #{record.content,jdbcType=LONGVARCHAR},
       </if>
@@ -377,6 +387,7 @@
       `cover` = #{record.cover,jdbcType=VARCHAR},
       `department_id` = #{record.departmentId,jdbcType=INTEGER},
       `is_ recommend` = #{record.isRecommend,jdbcType=INTEGER},
+      `user_req` = #{record.userReq,jdbcType=VARCHAR},
       `content` = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -402,7 +413,8 @@
       `cid` = #{record.cid,jdbcType=INTEGER},
       `cover` = #{record.cover,jdbcType=VARCHAR},
       `department_id` = #{record.departmentId,jdbcType=INTEGER},
-      `is_ recommend` = #{record.isRecommend,jdbcType=INTEGER}
+      `is_ recommend` = #{record.isRecommend,jdbcType=INTEGER},
+      `user_req` = #{record.userReq,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -464,6 +476,9 @@
       <if test="isRecommend != null" >
         `is_ recommend` = #{isRecommend,jdbcType=INTEGER},
       </if>
+      <if test="userReq != null" >
+        `user_req` = #{userReq,jdbcType=VARCHAR},
+      </if>
       <if test="content != null" >
         `content` = #{content,jdbcType=LONGVARCHAR},
       </if>
@@ -490,6 +505,7 @@
       `cover` = #{cover,jdbcType=VARCHAR},
       `department_id` = #{departmentId,jdbcType=INTEGER},
       `is_ recommend` = #{isRecommend,jdbcType=INTEGER},
+      `user_req` = #{userReq,jdbcType=VARCHAR},
       `content` = #{content,jdbcType=LONGVARCHAR}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
@@ -512,7 +528,8 @@
       `cid` = #{cid,jdbcType=INTEGER},
       `cover` = #{cover,jdbcType=VARCHAR},
       `department_id` = #{departmentId,jdbcType=INTEGER},
-      `is_ recommend` = #{isRecommend,jdbcType=INTEGER}
+      `is_ recommend` = #{isRecommend,jdbcType=INTEGER},
+      `user_req` = #{userReq,jdbcType=VARCHAR}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
   <select resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.ActivityExample" id="selectByExampleWithBLOBsWithRowbounds" >

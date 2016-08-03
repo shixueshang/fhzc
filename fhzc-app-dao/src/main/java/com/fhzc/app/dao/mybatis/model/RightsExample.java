@@ -814,6 +814,76 @@ public class RightsExample {
             addCriterion("`is_ recommend` not between", value1, value2, "isRecommend");
             return (Criteria) this;
         }
+
+        public Criteria andNoticeIsNull() {
+            addCriterion("`notice` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeIsNotNull() {
+            addCriterion("`notice` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeEqualTo(String value) {
+            addCriterion("`notice` =", value, "notice");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeNotEqualTo(String value) {
+            addCriterion("`notice` <>", value, "notice");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeGreaterThan(String value) {
+            addCriterion("`notice` >", value, "notice");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeGreaterThanOrEqualTo(String value) {
+            addCriterion("`notice` >=", value, "notice");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeLessThan(String value) {
+            addCriterion("`notice` <", value, "notice");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeLessThanOrEqualTo(String value) {
+            addCriterion("`notice` <=", value, "notice");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeLike(String value) {
+            addCriterion("`notice` like", value, "notice");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeNotLike(String value) {
+            addCriterion("`notice` not like", value, "notice");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeIn(List<String> values) {
+            addCriterion("`notice` in", values, "notice");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeNotIn(List<String> values) {
+            addCriterion("`notice` not in", values, "notice");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeBetween(String value1, String value2) {
+            addCriterion("`notice` between", value1, value2, "notice");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeNotBetween(String value1, String value2) {
+            addCriterion("`notice` not between", value1, value2, "notice");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

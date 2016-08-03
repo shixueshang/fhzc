@@ -22,5 +22,7 @@ public interface DictionaryService {
      */
     void addOrUpdate(Dictionary dictionary);
 
+    Dictionary findCustomerLevel(String levelValue);
+
     void delete(Integer id);
 }

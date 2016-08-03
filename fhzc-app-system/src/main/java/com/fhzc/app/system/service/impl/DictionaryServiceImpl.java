@@ -3,6 +3,7 @@ package com.fhzc.app.system.service.impl;
 import com.fhzc.app.dao.mybatis.inter.DictionaryMapper;
 import com.fhzc.app.dao.mybatis.model.Dictionary;
 import com.fhzc.app.dao.mybatis.model.DictionaryExample;
+import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.service.DictionaryService;
 import org.springframework.stereotype.Service;
 
@@ -43,5 +44,18 @@ public class DictionaryServiceImpl implements DictionaryService {
     @Override
     public void delete(Integer id) {
         dictionaryMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public Dictionary findCustomerLevel(String levelValue) {
+        List<Dictionary> dicts = findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL);
+
+        for(com.fhzc.app.dao.mybatis.model.Dictionary dict : dicts){
+            if(dict.getValue().equals(levelValue)){
+                return dict;
+            }
+        }
+
+        return null;
     }
 }
