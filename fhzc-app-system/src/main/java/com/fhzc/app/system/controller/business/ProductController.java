@@ -145,6 +145,12 @@ public class ProductController extends BaseController {
         return !flag;
     }
 
+    @RequestMapping(value = "/importor")
+    public String importorProduct(){
+
+        return "business/product/importor";
+    }
+
     /**
      * excel导入
      * @param multiFile
