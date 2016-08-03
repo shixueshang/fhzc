@@ -243,4 +243,32 @@ public class RightsController extends BaseController{
         mav.addObject("providerInfo", rvo);
         return mav;
     }
+
+    /**
+     * 处理权益信息
+     * @return
+     */
+    @RequestMapping(value = "/reservation/save", method = RequestMethod.GET)
+    public ModelAndView saveReservation(String reservationRight, long id, Integer exchangeScore, Date reservationTime, long reservationStatus){
+        //RightsReservation reservation = new RightsReservation();
+        RightsReservation reservation = rightsService.getReservationById((int)id);
+        if (!reservation.getRightsId().toString().equals(reservationRight)){
+            reservation.setRightsId(Integer.parseInt(reservationRight));
+            reservation.setScoreCost(exchangeScore);
+        }
+
+        Integer oldStatus = reservation.getStatus();
+        reservation.setStatus((int)reservationStatus);
+        reservation.setMarkDate(reservationTime);
+        rightsService.updateReservation(reservation);
+
+        if (reservationStatus != reservation.getStatus() && reservation.getStatus() != 4 && reservation.getStatus() != 5 && (reservationStatus == 4 || reservationStatus == 5)){
+
+        }
+
+        ModelAndView mav = new ModelAndView("business/rights/addRightReservation");
+        PageableResult<Rights> pageableResult = rightsService.findPageRights(1, 500);
+        mav.addObject("rights", pageableResult.getItems());
+        return mav;
+    }
 }

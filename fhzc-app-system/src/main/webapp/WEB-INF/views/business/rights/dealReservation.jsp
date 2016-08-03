@@ -317,17 +317,6 @@
     }
 
     function checkInputs() {
-        if ($("#rightValid").val() == '0'){
-            validatePhoneError('请确认收入的手机号为有效客户的有效手机号');
-            $("html,body").animate({scrollTop:0});
-            return false;
-        }
-
-        if ($("#reservationRight").val() == ''){
-            validateRightsError("请选择权益");
-            return false;
-        }
-
         if ($("#reservationTime").val() == ''){
             validateDateError("请选择输入日期");
             return false;

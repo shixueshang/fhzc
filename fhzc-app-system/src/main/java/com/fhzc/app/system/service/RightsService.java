@@ -51,4 +51,11 @@ public interface RightsService {
      * @return
      */
     RightsReservation getReservationById(Integer id);
+
+    /**
+     * 更新预约
+     * @param reservation
+     * @return
+     */
+    int updateReservation(RightsReservation reservation);
 }
