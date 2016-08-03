@@ -61,4 +61,9 @@ public class RightsServiceImpl implements RightsService {
         List<RightsReservation> rightsReservations = rightsReservationMapper.selectByExampleWithRowbounds(example, rowBounds);
         return new PageableResult<RightsReservation>(page, size, rightsReservationMapper.countByExample(example), rightsReservations);
     }
+
+    @Override
+    public RightsReservation getReservationById(Integer id) {
+        return rightsReservationMapper.selectByPrimaryKey(id);
+    }
 }

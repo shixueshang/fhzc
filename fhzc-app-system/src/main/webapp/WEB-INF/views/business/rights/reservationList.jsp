@@ -41,10 +41,10 @@
                     <ul class="breadcrumb">
                         <li>
                             <i class="icon-home"></i>
-                            <a href="javascript:void(0);">产品管理</a>
+                            <a href="javascript:void(0);">权益管理</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li class="active"><a href="javascript:void(0);">报名管理</a></li>
+                        <li class="active"><a href="javascript:void(0);">预约列表</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
@@ -116,6 +116,12 @@
 
 <script type="text/javascript">
 $(document).ready(function () {
+    $(".Deal_Reser").click(function () {
+        var id = $(this).data("id");
+        var url = '<%=contextPath%>/business/rights/reservation/deal?id='+id;
+        window.location.href = url;
+    });
+
     $('#startTime').datetimepicker({
         timeFormat: 'HH:mm:ss',
         dateFormat: "yy-mm-dd"

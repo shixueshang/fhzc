@@ -44,4 +44,11 @@ public interface RightsService {
      * @return
      */
     PageableResult<RightsReservation> listRightReservations(int page, int size);
+
+    /**
+     * 获得预约
+     * @param id
+     * @return
+     */
+    RightsReservation getReservationById(Integer id);
 }

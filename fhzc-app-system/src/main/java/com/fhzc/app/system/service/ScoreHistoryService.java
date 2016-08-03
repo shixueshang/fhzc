@@ -33,5 +33,10 @@ public interface ScoreHistoryService {
      */
     Map<String,Map<String, Object>> importExcel(MultipartFile multipartFile) throws Exception;
 
-
+    /**
+     * 获取用户的有效积分
+     * @param uid
+     * @return
+     */
+    Integer getScoreByUserId(Integer uid);
 }

@@ -7,6 +7,15 @@ public class RightVo {
     private String providerName;
     private String providerPhone;
     private int score;
+    private long rightId;
+
+    public long getRightId() {
+        return rightId;
+    }
+
+    public void setRightId(long rightId) {
+        this.rightId = rightId;
+    }
 
     public String getProviderName() {
         return providerName;
