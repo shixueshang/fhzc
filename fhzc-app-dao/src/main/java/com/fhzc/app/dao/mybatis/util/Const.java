@@ -150,4 +150,31 @@ public class Const {
          */
         public static final String ORGAN_CUSTOMER = "organ";
     }
+
+    public static class ASSETS_TYPE{
+        /**
+         * 派息
+         */
+        public static final String DIVIDEND = "dividend";
+
+        /**
+         * 购买
+         */
+        public static final String PURCHASE = "purchase";
+
+        /**
+         * 存续
+         */
+        public static final String RENEW = "renew";
+
+        /**
+         * 兑付
+         */
+        public static final String REDEMPTION= "redemption";
+    }
+
+    public static class USER_ROLE{
+        public static final String PLANNER = "planner";
+        public static final String CUSTOMER= "customer";
+    }
 }

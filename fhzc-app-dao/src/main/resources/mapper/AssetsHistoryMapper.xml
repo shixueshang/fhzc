@@ -1,0 +1,667 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fhzc.app.dao.mybatis.inter.AssetsHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.fhzc.app.dao.mybatis.model.AssetsHistory" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="customer_id" property="customerId" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="CHAR" />
+    <result column="amount" property="amount" jdbcType="INTEGER" />
+    <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
+    <result column="dead_date" property="deadDate" jdbcType="DATE" />
+    <result column="payment_date" property="paymentDate" jdbcType="DATE" />
+    <result column="serial" property="serial" jdbcType="VARCHAR" />
+    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+    <result column="planner_id" property="plannerId" jdbcType="INTEGER" />
+    <result column="buy_time" property="buyTime" jdbcType="DATE" />
+    <result column="amount_usd" property="amountUsd" jdbcType="INTEGER" />
+    <result column="amount_rmb" property="amountRmb" jdbcType="INTEGER" />
+    <result column="annualised" property="annualised" jdbcType="INTEGER" />
+    <result column="period" property="period" jdbcType="VARCHAR" />
+    <result column="invaild" property="invaild" jdbcType="TINYINT" />
+    <result column="product_found_day" property="productFoundDay" jdbcType="DATE" />
+    <result column="value_date" property="valueDate" jdbcType="DATE" />
+    <result column="product_expire_day" property="productExpireDay" jdbcType="DATE" />
+    <result column="expire_day" property="expireDay" jdbcType="DATE" />
+    <result column="bank" property="bank" jdbcType="VARCHAR" />
+    <result column="bank_account" property="bankAccount" jdbcType="VARCHAR" />
+    <result column="lot" property="lot" jdbcType="VARCHAR" />
+    <result column="duration_month" property="durationMonth" jdbcType="INTEGER" />
+    <result column="duration_day" property="durationDay" jdbcType="INTEGER" />
+    <result column="pub_agent" property="pubAgent" jdbcType="VARCHAR" />
+    <result column="branch_agent" property="branchAgent" jdbcType="VARCHAR" />
+    <result column="is_member" property="isMember" jdbcType="TINYINT" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="earning_rate" property="earningRate" jdbcType="VARCHAR" />
+    <result column="distribute_earning" property="distributeEarning" jdbcType="VARCHAR" />
+    <result column="payment" property="payment" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    `id`, `customer_id`, `product_id`, `type`, `amount`, `ctime`, `dead_date`, `payment_date`, 
+    `serial`, `customer_name`, `planner_id`, `buy_time`, `amount_usd`, `amount_rmb`, 
+    `annualised`, `period`, `invaild`, `product_found_day`, `value_date`, `product_expire_day`, 
+    `expire_day`, `bank`, `bank_account`, `lot`, `duration_month`, `duration_day`, `pub_agent`, 
+    `branch_agent`, `is_member`, `memo`, `earning_rate`, `distribute_earning`, `payment`
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.AssetsHistoryExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from `assets_history`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from `assets_history`
+    where `id` = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from `assets_history`
+    where `id` = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fhzc.app.dao.mybatis.model.AssetsHistoryExample" >
+    delete from `assets_history`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fhzc.app.dao.mybatis.model.AssetsHistory" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `assets_history` (`customer_id`, `product_id`, `type`, 
+      `amount`, `ctime`, `dead_date`, 
+      `payment_date`, `serial`, `customer_name`, 
+      `planner_id`, `buy_time`, `amount_usd`, 
+      `amount_rmb`, `annualised`, `period`, 
+      `invaild`, `product_found_day`, `value_date`, 
+      `product_expire_day`, `expire_day`, `bank`, 
+      `bank_account`, `lot`, `duration_month`, 
+      `duration_day`, `pub_agent`, `branch_agent`, 
+      `is_member`, `memo`, `earning_rate`, 
+      `distribute_earning`, `payment`)
+    values (#{customerId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{type,jdbcType=CHAR}, 
+      #{amount,jdbcType=INTEGER}, #{ctime,jdbcType=TIMESTAMP}, #{deadDate,jdbcType=DATE}, 
+      #{paymentDate,jdbcType=DATE}, #{serial,jdbcType=VARCHAR}, #{customerName,jdbcType=VARCHAR}, 
+      #{plannerId,jdbcType=INTEGER}, #{buyTime,jdbcType=DATE}, #{amountUsd,jdbcType=INTEGER}, 
+      #{amountRmb,jdbcType=INTEGER}, #{annualised,jdbcType=INTEGER}, #{period,jdbcType=VARCHAR}, 
+      #{invaild,jdbcType=TINYINT}, #{productFoundDay,jdbcType=DATE}, #{valueDate,jdbcType=DATE}, 
+      #{productExpireDay,jdbcType=DATE}, #{expireDay,jdbcType=DATE}, #{bank,jdbcType=VARCHAR}, 
+      #{bankAccount,jdbcType=VARCHAR}, #{lot,jdbcType=VARCHAR}, #{durationMonth,jdbcType=INTEGER}, 
+      #{durationDay,jdbcType=INTEGER}, #{pubAgent,jdbcType=VARCHAR}, #{branchAgent,jdbcType=VARCHAR}, 
+      #{isMember,jdbcType=TINYINT}, #{memo,jdbcType=VARCHAR}, #{earningRate,jdbcType=VARCHAR}, 
+      #{distributeEarning,jdbcType=VARCHAR}, #{payment,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.AssetsHistory" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `assets_history`
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="customerId != null" >
+        `customer_id`,
+      </if>
+      <if test="productId != null" >
+        `product_id`,
+      </if>
+      <if test="type != null" >
+        `type`,
+      </if>
+      <if test="amount != null" >
+        `amount`,
+      </if>
+      <if test="ctime != null" >
+        `ctime`,
+      </if>
+      <if test="deadDate != null" >
+        `dead_date`,
+      </if>
+      <if test="paymentDate != null" >
+        `payment_date`,
+      </if>
+      <if test="serial != null" >
+        `serial`,
+      </if>
+      <if test="customerName != null" >
+        `customer_name`,
+      </if>
+      <if test="plannerId != null" >
+        `planner_id`,
+      </if>
+      <if test="buyTime != null" >
+        `buy_time`,
+      </if>
+      <if test="amountUsd != null" >
+        `amount_usd`,
+      </if>
+      <if test="amountRmb != null" >
+        `amount_rmb`,
+      </if>
+      <if test="annualised != null" >
+        `annualised`,
+      </if>
+      <if test="period != null" >
+        `period`,
+      </if>
+      <if test="invaild != null" >
+        `invaild`,
+      </if>
+      <if test="productFoundDay != null" >
+        `product_found_day`,
+      </if>
+      <if test="valueDate != null" >
+        `value_date`,
+      </if>
+      <if test="productExpireDay != null" >
+        `product_expire_day`,
+      </if>
+      <if test="expireDay != null" >
+        `expire_day`,
+      </if>
+      <if test="bank != null" >
+        `bank`,
+      </if>
+      <if test="bankAccount != null" >
+        `bank_account`,
+      </if>
+      <if test="lot != null" >
+        `lot`,
+      </if>
+      <if test="durationMonth != null" >
+        `duration_month`,
+      </if>
+      <if test="durationDay != null" >
+        `duration_day`,
+      </if>
+      <if test="pubAgent != null" >
+        `pub_agent`,
+      </if>
+      <if test="branchAgent != null" >
+        `branch_agent`,
+      </if>
+      <if test="isMember != null" >
+        `is_member`,
+      </if>
+      <if test="memo != null" >
+        `memo`,
+      </if>
+      <if test="earningRate != null" >
+        `earning_rate`,
+      </if>
+      <if test="distributeEarning != null" >
+        `distribute_earning`,
+      </if>
+      <if test="payment != null" >
+        `payment`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="customerId != null" >
+        #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=CHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="ctime != null" >
+        #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deadDate != null" >
+        #{deadDate,jdbcType=DATE},
+      </if>
+      <if test="paymentDate != null" >
+        #{paymentDate,jdbcType=DATE},
+      </if>
+      <if test="serial != null" >
+        #{serial,jdbcType=VARCHAR},
+      </if>
+      <if test="customerName != null" >
+        #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="plannerId != null" >
+        #{plannerId,jdbcType=INTEGER},
+      </if>
+      <if test="buyTime != null" >
+        #{buyTime,jdbcType=DATE},
+      </if>
+      <if test="amountUsd != null" >
+        #{amountUsd,jdbcType=INTEGER},
+      </if>
+      <if test="amountRmb != null" >
+        #{amountRmb,jdbcType=INTEGER},
+      </if>
+      <if test="annualised != null" >
+        #{annualised,jdbcType=INTEGER},
+      </if>
+      <if test="period != null" >
+        #{period,jdbcType=VARCHAR},
+      </if>
+      <if test="invaild != null" >
+        #{invaild,jdbcType=TINYINT},
+      </if>
+      <if test="productFoundDay != null" >
+        #{productFoundDay,jdbcType=DATE},
+      </if>
+      <if test="valueDate != null" >
+        #{valueDate,jdbcType=DATE},
+      </if>
+      <if test="productExpireDay != null" >
+        #{productExpireDay,jdbcType=DATE},
+      </if>
+      <if test="expireDay != null" >
+        #{expireDay,jdbcType=DATE},
+      </if>
+      <if test="bank != null" >
+        #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccount != null" >
+        #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="lot != null" >
+        #{lot,jdbcType=VARCHAR},
+      </if>
+      <if test="durationMonth != null" >
+        #{durationMonth,jdbcType=INTEGER},
+      </if>
+      <if test="durationDay != null" >
+        #{durationDay,jdbcType=INTEGER},
+      </if>
+      <if test="pubAgent != null" >
+        #{pubAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="branchAgent != null" >
+        #{branchAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="isMember != null" >
+        #{isMember,jdbcType=TINYINT},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="earningRate != null" >
+        #{earningRate,jdbcType=VARCHAR},
+      </if>
+      <if test="distributeEarning != null" >
+        #{distributeEarning,jdbcType=VARCHAR},
+      </if>
+      <if test="payment != null" >
+        #{payment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fhzc.app.dao.mybatis.model.AssetsHistoryExample" resultType="java.lang.Integer" >
+    select count(*) from `assets_history`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update `assets_history`
+    <set >
+      <if test="record.id != null" >
+        `id` = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.customerId != null" >
+        `customer_id` = #{record.customerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.productId != null" >
+        `product_id` = #{record.productId,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null" >
+        `type` = #{record.type,jdbcType=CHAR},
+      </if>
+      <if test="record.amount != null" >
+        `amount` = #{record.amount,jdbcType=INTEGER},
+      </if>
+      <if test="record.ctime != null" >
+        `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deadDate != null" >
+        `dead_date` = #{record.deadDate,jdbcType=DATE},
+      </if>
+      <if test="record.paymentDate != null" >
+        `payment_date` = #{record.paymentDate,jdbcType=DATE},
+      </if>
+      <if test="record.serial != null" >
+        `serial` = #{record.serial,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerName != null" >
+        `customer_name` = #{record.customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.plannerId != null" >
+        `planner_id` = #{record.plannerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.buyTime != null" >
+        `buy_time` = #{record.buyTime,jdbcType=DATE},
+      </if>
+      <if test="record.amountUsd != null" >
+        `amount_usd` = #{record.amountUsd,jdbcType=INTEGER},
+      </if>
+      <if test="record.amountRmb != null" >
+        `amount_rmb` = #{record.amountRmb,jdbcType=INTEGER},
+      </if>
+      <if test="record.annualised != null" >
+        `annualised` = #{record.annualised,jdbcType=INTEGER},
+      </if>
+      <if test="record.period != null" >
+        `period` = #{record.period,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invaild != null" >
+        `invaild` = #{record.invaild,jdbcType=TINYINT},
+      </if>
+      <if test="record.productFoundDay != null" >
+        `product_found_day` = #{record.productFoundDay,jdbcType=DATE},
+      </if>
+      <if test="record.valueDate != null" >
+        `value_date` = #{record.valueDate,jdbcType=DATE},
+      </if>
+      <if test="record.productExpireDay != null" >
+        `product_expire_day` = #{record.productExpireDay,jdbcType=DATE},
+      </if>
+      <if test="record.expireDay != null" >
+        `expire_day` = #{record.expireDay,jdbcType=DATE},
+      </if>
+      <if test="record.bank != null" >
+        `bank` = #{record.bank,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankAccount != null" >
+        `bank_account` = #{record.bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lot != null" >
+        `lot` = #{record.lot,jdbcType=VARCHAR},
+      </if>
+      <if test="record.durationMonth != null" >
+        `duration_month` = #{record.durationMonth,jdbcType=INTEGER},
+      </if>
+      <if test="record.durationDay != null" >
+        `duration_day` = #{record.durationDay,jdbcType=INTEGER},
+      </if>
+      <if test="record.pubAgent != null" >
+        `pub_agent` = #{record.pubAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.branchAgent != null" >
+        `branch_agent` = #{record.branchAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isMember != null" >
+        `is_member` = #{record.isMember,jdbcType=TINYINT},
+      </if>
+      <if test="record.memo != null" >
+        `memo` = #{record.memo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.earningRate != null" >
+        `earning_rate` = #{record.earningRate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.distributeEarning != null" >
+        `distribute_earning` = #{record.distributeEarning,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payment != null" >
+        `payment` = #{record.payment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update `assets_history`
+    set `id` = #{record.id,jdbcType=INTEGER},
+      `customer_id` = #{record.customerId,jdbcType=INTEGER},
+      `product_id` = #{record.productId,jdbcType=INTEGER},
+      `type` = #{record.type,jdbcType=CHAR},
+      `amount` = #{record.amount,jdbcType=INTEGER},
+      `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
+      `dead_date` = #{record.deadDate,jdbcType=DATE},
+      `payment_date` = #{record.paymentDate,jdbcType=DATE},
+      `serial` = #{record.serial,jdbcType=VARCHAR},
+      `customer_name` = #{record.customerName,jdbcType=VARCHAR},
+      `planner_id` = #{record.plannerId,jdbcType=INTEGER},
+      `buy_time` = #{record.buyTime,jdbcType=DATE},
+      `amount_usd` = #{record.amountUsd,jdbcType=INTEGER},
+      `amount_rmb` = #{record.amountRmb,jdbcType=INTEGER},
+      `annualised` = #{record.annualised,jdbcType=INTEGER},
+      `period` = #{record.period,jdbcType=VARCHAR},
+      `invaild` = #{record.invaild,jdbcType=TINYINT},
+      `product_found_day` = #{record.productFoundDay,jdbcType=DATE},
+      `value_date` = #{record.valueDate,jdbcType=DATE},
+      `product_expire_day` = #{record.productExpireDay,jdbcType=DATE},
+      `expire_day` = #{record.expireDay,jdbcType=DATE},
+      `bank` = #{record.bank,jdbcType=VARCHAR},
+      `bank_account` = #{record.bankAccount,jdbcType=VARCHAR},
+      `lot` = #{record.lot,jdbcType=VARCHAR},
+      `duration_month` = #{record.durationMonth,jdbcType=INTEGER},
+      `duration_day` = #{record.durationDay,jdbcType=INTEGER},
+      `pub_agent` = #{record.pubAgent,jdbcType=VARCHAR},
+      `branch_agent` = #{record.branchAgent,jdbcType=VARCHAR},
+      `is_member` = #{record.isMember,jdbcType=TINYINT},
+      `memo` = #{record.memo,jdbcType=VARCHAR},
+      `earning_rate` = #{record.earningRate,jdbcType=VARCHAR},
+      `distribute_earning` = #{record.distributeEarning,jdbcType=VARCHAR},
+      `payment` = #{record.payment,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fhzc.app.dao.mybatis.model.AssetsHistory" >
+    update `assets_history`
+    <set >
+      <if test="customerId != null" >
+        `customer_id` = #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        `product_id` = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        `type` = #{type,jdbcType=CHAR},
+      </if>
+      <if test="amount != null" >
+        `amount` = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="ctime != null" >
+        `ctime` = #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deadDate != null" >
+        `dead_date` = #{deadDate,jdbcType=DATE},
+      </if>
+      <if test="paymentDate != null" >
+        `payment_date` = #{paymentDate,jdbcType=DATE},
+      </if>
+      <if test="serial != null" >
+        `serial` = #{serial,jdbcType=VARCHAR},
+      </if>
+      <if test="customerName != null" >
+        `customer_name` = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="plannerId != null" >
+        `planner_id` = #{plannerId,jdbcType=INTEGER},
+      </if>
+      <if test="buyTime != null" >
+        `buy_time` = #{buyTime,jdbcType=DATE},
+      </if>
+      <if test="amountUsd != null" >
+        `amount_usd` = #{amountUsd,jdbcType=INTEGER},
+      </if>
+      <if test="amountRmb != null" >
+        `amount_rmb` = #{amountRmb,jdbcType=INTEGER},
+      </if>
+      <if test="annualised != null" >
+        `annualised` = #{annualised,jdbcType=INTEGER},
+      </if>
+      <if test="period != null" >
+        `period` = #{period,jdbcType=VARCHAR},
+      </if>
+      <if test="invaild != null" >
+        `invaild` = #{invaild,jdbcType=TINYINT},
+      </if>
+      <if test="productFoundDay != null" >
+        `product_found_day` = #{productFoundDay,jdbcType=DATE},
+      </if>
+      <if test="valueDate != null" >
+        `value_date` = #{valueDate,jdbcType=DATE},
+      </if>
+      <if test="productExpireDay != null" >
+        `product_expire_day` = #{productExpireDay,jdbcType=DATE},
+      </if>
+      <if test="expireDay != null" >
+        `expire_day` = #{expireDay,jdbcType=DATE},
+      </if>
+      <if test="bank != null" >
+        `bank` = #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccount != null" >
+        `bank_account` = #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="lot != null" >
+        `lot` = #{lot,jdbcType=VARCHAR},
+      </if>
+      <if test="durationMonth != null" >
+        `duration_month` = #{durationMonth,jdbcType=INTEGER},
+      </if>
+      <if test="durationDay != null" >
+        `duration_day` = #{durationDay,jdbcType=INTEGER},
+      </if>
+      <if test="pubAgent != null" >
+        `pub_agent` = #{pubAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="branchAgent != null" >
+        `branch_agent` = #{branchAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="isMember != null" >
+        `is_member` = #{isMember,jdbcType=TINYINT},
+      </if>
+      <if test="memo != null" >
+        `memo` = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="earningRate != null" >
+        `earning_rate` = #{earningRate,jdbcType=VARCHAR},
+      </if>
+      <if test="distributeEarning != null" >
+        `distribute_earning` = #{distributeEarning,jdbcType=VARCHAR},
+      </if>
+      <if test="payment != null" >
+        `payment` = #{payment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where `id` = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fhzc.app.dao.mybatis.model.AssetsHistory" >
+    update `assets_history`
+    set `customer_id` = #{customerId,jdbcType=INTEGER},
+      `product_id` = #{productId,jdbcType=INTEGER},
+      `type` = #{type,jdbcType=CHAR},
+      `amount` = #{amount,jdbcType=INTEGER},
+      `ctime` = #{ctime,jdbcType=TIMESTAMP},
+      `dead_date` = #{deadDate,jdbcType=DATE},
+      `payment_date` = #{paymentDate,jdbcType=DATE},
+      `serial` = #{serial,jdbcType=VARCHAR},
+      `customer_name` = #{customerName,jdbcType=VARCHAR},
+      `planner_id` = #{plannerId,jdbcType=INTEGER},
+      `buy_time` = #{buyTime,jdbcType=DATE},
+      `amount_usd` = #{amountUsd,jdbcType=INTEGER},
+      `amount_rmb` = #{amountRmb,jdbcType=INTEGER},
+      `annualised` = #{annualised,jdbcType=INTEGER},
+      `period` = #{period,jdbcType=VARCHAR},
+      `invaild` = #{invaild,jdbcType=TINYINT},
+      `product_found_day` = #{productFoundDay,jdbcType=DATE},
+      `value_date` = #{valueDate,jdbcType=DATE},
+      `product_expire_day` = #{productExpireDay,jdbcType=DATE},
+      `expire_day` = #{expireDay,jdbcType=DATE},
+      `bank` = #{bank,jdbcType=VARCHAR},
+      `bank_account` = #{bankAccount,jdbcType=VARCHAR},
+      `lot` = #{lot,jdbcType=VARCHAR},
+      `duration_month` = #{durationMonth,jdbcType=INTEGER},
+      `duration_day` = #{durationDay,jdbcType=INTEGER},
+      `pub_agent` = #{pubAgent,jdbcType=VARCHAR},
+      `branch_agent` = #{branchAgent,jdbcType=VARCHAR},
+      `is_member` = #{isMember,jdbcType=TINYINT},
+      `memo` = #{memo,jdbcType=VARCHAR},
+      `earning_rate` = #{earningRate,jdbcType=VARCHAR},
+      `distribute_earning` = #{distributeEarning,jdbcType=VARCHAR},
+      `payment` = #{payment,jdbcType=VARCHAR}
+    where `id` = #{id,jdbcType=INTEGER}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.AssetsHistoryExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from `assets_history`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

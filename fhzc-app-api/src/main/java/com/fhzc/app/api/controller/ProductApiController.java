@@ -1,16 +1,12 @@
 package com.fhzc.app.api.controller;
 
-import com.fhzc.app.api.service.FocusService;
-import com.fhzc.app.api.service.ProductReservationService;
-import com.fhzc.app.api.service.ProductService;
+import com.fhzc.app.api.service.*;
 import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
 import com.fhzc.app.api.tools.ObjUtils;
-import com.fhzc.app.dao.mybatis.model.Focus;
-import com.fhzc.app.dao.mybatis.model.Product;
-import com.fhzc.app.dao.mybatis.model.ProductReservation;
-import com.fhzc.app.dao.mybatis.model.User;
+import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
+import com.fhzc.app.dao.mybatis.util.Const;
 import com.sun.javafx.collections.MappingChange;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,6 +33,12 @@ public class ProductApiController extends BaseController {
 
     @Resource
     private FocusService focusService;
+
+    @Resource
+    private AssetsService assetsService;
+
+    @Resource
+    private PlannerCustomerService plannerCustomerService;
 
     @RequestMapping(value = "/api/product",method = RequestMethod.GET)
     @ResponseBody
@@ -68,4 +73,48 @@ public class ProductApiController extends BaseController {
         }
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
     }
+
+    @RequestMapping(value = "/api/personal/assets",method = RequestMethod.GET)
+    @ResponseBody
+    public  ApiJsonResult personalAssets(Integer customer_id) {
+        User user = getCurrentUser();
+
+        //校验是否是登陆理财师的客户请求
+        if(user.getLoginRole() == Const.USER_ROLE.PLANNER) {
+            List<PlannerCustomer> plannerCustomers= plannerCustomerService.getPlannerCustomerList(user.getUid());
+            boolean isCustomer = false;
+            for (PlannerCustomer pl: plannerCustomers){
+                if(pl.getCustomerId() == customer_id){
+                    isCustomer = true;
+                    break;
+                }
+            }
+            if(!isCustomer){
+                return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST);
+            }
+        }
+
+        List<AssetsHistory> assetsHistoryList = assetsService.getHistory(customer_id);
+        List<Map> result = new ArrayList<>();
+        if(assetsHistoryList == null){
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
+        }
+        for (AssetsHistory asset:assetsHistoryList){
+            Map map = new HashMap();
+            map.put("productId",asset.getProductId());
+            map.put("assetType",asset.getType());
+            map.put("amount",asset.getAmount());
+            Product product = productService.getProduct(asset.getProductId());
+
+            map.put("name",product.getName());
+            map.put("found_day",product.getFoundDay());
+            map.put("value_day",product.getValueDay());
+            map.put("redeem_day",product.getRedeemDay());
+            map.put("dividend_day",product.getDividendDay());
+
+            result.add(map);
+        }
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
+    }
+
 }
