@@ -242,5 +242,8 @@ CHANGE COLUMN `phone` `phone` VARCHAR(45) NULL COMMENT '参加互动的客户电
 ALTER TABLE `bank`.`activity_apply`
 CHANGE COLUMN `phone` `phone` VARCHAR(45) NULL DEFAULT NULL COMMENT '为他人报名留下电话' ;
 
+ALTER TABLE `bank`.`rights`
+CHANGE COLUMN `level` `level` INT UNSIGNED NULL DEFAULT NULL COMMENT '需要的客户等级' ,
+CHANGE COLUMN `is_ recommend` `is_ recommend` INT UNSIGNED NULL DEFAULT '0' COMMENT '是否精选 1是|0否' ;
 
 

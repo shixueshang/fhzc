@@ -25,7 +25,7 @@ public class RightsServiceImpl implements RightsService {
     public PageableResult<Rights> findPageRights(int page, int size) {
         RightsExample example = new RightsExample();
         RightsExample.Criteria criteria = example.createCriteria();
-        criteria.andIsRecommendEqualTo((byte) 1);
+        criteria.andIsRecommendEqualTo(1);
 
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<Rights> list = rightsMapper.selectByExampleWithBLOBsWithRowbounds(example, rowBounds);
@@ -60,7 +60,7 @@ public class RightsServiceImpl implements RightsService {
     public List<Rights> getRecommend(){
         RightsExample example = new RightsExample();
         RightsExample.Criteria criteria = example.createCriteria();
-        criteria.andIsRecommendEqualTo((byte) 1);
+        criteria.andIsRecommendEqualTo(1);
         example.setOrderByClause("ctime desc");
         if (rightsMapper.countByExample(example) > 0) {
             return rightsMapper.selectByExample(example);

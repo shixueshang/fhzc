@@ -54,11 +54,17 @@ public class ActivityApiController extends BaseController{
             result.put("activityResult", activityApply.getResult());
             result.put("activityIsContact", activityApply.getIsContact());
             result.put("activityIsSure", activityApply.getIsSure());
+        }else{
+            result.put("activityResult", "");
+            result.put("activityIsContact", "");
+            result.put("activityIsSure", "");
         }
 
         Focus focus = focusService.getFocusByCond(user.getUid(),activityId,APIConstants.FocusType.Activity);
         if(focus != null){
             result.put("focusStatus",focus.getStatus());
+        }else{
+            result.put("focusStatus","");
         }
         ActivityApply apply= activityApplyService.getByUidActivityId(user.getUid(),activityId);
         if(apply!= null) {
@@ -66,6 +72,6 @@ public class ActivityApiController extends BaseController{
         }else{
             result.put("applyId", 0);
         }
-        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,activity);
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
     }
 }

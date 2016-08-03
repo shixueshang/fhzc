@@ -7,12 +7,12 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="spend_score" property="spendScore" jdbcType="INTEGER" />
     <result column="spend_type" property="spendType" jdbcType="CHAR" />
-    <result column="level" property="level" jdbcType="TINYINT" />
+    <result column="level" property="level" jdbcType="INTEGER" />
     <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
     <result column="supply" property="supply" jdbcType="VARCHAR" />
     <result column="cover" property="cover" jdbcType="VARCHAR" />
     <result column="url" property="url" jdbcType="VARCHAR" />
-    <result column="is_ recommend" property="isRecommend" jdbcType="TINYINT" />
+    <result column="is_ recommend" property="isRecommend" jdbcType="INTEGER" />
     <result column="notice" property="notice" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.fhzc.app.dao.mybatis.model.Rights" extends="BaseResultMap" >
@@ -141,9 +141,9 @@
       `is_ recommend`, `notice`, `summary`
       )
     values (#{cid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{spendScore,jdbcType=INTEGER}, 
-      #{spendType,jdbcType=CHAR}, #{level,jdbcType=TINYINT}, #{ctime,jdbcType=TIMESTAMP}, 
+      #{spendType,jdbcType=CHAR}, #{level,jdbcType=INTEGER}, #{ctime,jdbcType=TIMESTAMP}, 
       #{supply,jdbcType=VARCHAR}, #{cover,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
-      #{isRecommend,jdbcType=TINYINT}, #{notice,jdbcType=VARCHAR}, #{summary,jdbcType=LONGVARCHAR}
+      #{isRecommend,jdbcType=INTEGER}, #{notice,jdbcType=VARCHAR}, #{summary,jdbcType=LONGVARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.Rights" >
@@ -203,7 +203,7 @@
         #{spendType,jdbcType=CHAR},
       </if>
       <if test="level != null" >
-        #{level,jdbcType=TINYINT},
+        #{level,jdbcType=INTEGER},
       </if>
       <if test="ctime != null" >
         #{ctime,jdbcType=TIMESTAMP},
@@ -218,7 +218,7 @@
         #{url,jdbcType=VARCHAR},
       </if>
       <if test="isRecommend != null" >
-        #{isRecommend,jdbcType=TINYINT},
+        #{isRecommend,jdbcType=INTEGER},
       </if>
       <if test="notice != null" >
         #{notice,jdbcType=VARCHAR},
@@ -253,7 +253,7 @@
         `spend_type` = #{record.spendType,jdbcType=CHAR},
       </if>
       <if test="record.level != null" >
-        `level` = #{record.level,jdbcType=TINYINT},
+        `level` = #{record.level,jdbcType=INTEGER},
       </if>
       <if test="record.ctime != null" >
         `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
@@ -268,7 +268,7 @@
         `url` = #{record.url,jdbcType=VARCHAR},
       </if>
       <if test="record.isRecommend != null" >
-        `is_ recommend` = #{record.isRecommend,jdbcType=TINYINT},
+        `is_ recommend` = #{record.isRecommend,jdbcType=INTEGER},
       </if>
       <if test="record.notice != null" >
         `notice` = #{record.notice,jdbcType=VARCHAR},
@@ -288,12 +288,12 @@
       `name` = #{record.name,jdbcType=VARCHAR},
       `spend_score` = #{record.spendScore,jdbcType=INTEGER},
       `spend_type` = #{record.spendType,jdbcType=CHAR},
-      `level` = #{record.level,jdbcType=TINYINT},
+      `level` = #{record.level,jdbcType=INTEGER},
       `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
       `supply` = #{record.supply,jdbcType=VARCHAR},
       `cover` = #{record.cover,jdbcType=VARCHAR},
       `url` = #{record.url,jdbcType=VARCHAR},
-      `is_ recommend` = #{record.isRecommend,jdbcType=TINYINT},
+      `is_ recommend` = #{record.isRecommend,jdbcType=INTEGER},
       `notice` = #{record.notice,jdbcType=VARCHAR},
       `summary` = #{record.summary,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
@@ -307,12 +307,12 @@
       `name` = #{record.name,jdbcType=VARCHAR},
       `spend_score` = #{record.spendScore,jdbcType=INTEGER},
       `spend_type` = #{record.spendType,jdbcType=CHAR},
-      `level` = #{record.level,jdbcType=TINYINT},
+      `level` = #{record.level,jdbcType=INTEGER},
       `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
       `supply` = #{record.supply,jdbcType=VARCHAR},
       `cover` = #{record.cover,jdbcType=VARCHAR},
       `url` = #{record.url,jdbcType=VARCHAR},
-      `is_ recommend` = #{record.isRecommend,jdbcType=TINYINT},
+      `is_ recommend` = #{record.isRecommend,jdbcType=INTEGER},
       `notice` = #{record.notice,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -334,7 +334,7 @@
         `spend_type` = #{spendType,jdbcType=CHAR},
       </if>
       <if test="level != null" >
-        `level` = #{level,jdbcType=TINYINT},
+        `level` = #{level,jdbcType=INTEGER},
       </if>
       <if test="ctime != null" >
         `ctime` = #{ctime,jdbcType=TIMESTAMP},
@@ -349,7 +349,7 @@
         `url` = #{url,jdbcType=VARCHAR},
       </if>
       <if test="isRecommend != null" >
-        `is_ recommend` = #{isRecommend,jdbcType=TINYINT},
+        `is_ recommend` = #{isRecommend,jdbcType=INTEGER},
       </if>
       <if test="notice != null" >
         `notice` = #{notice,jdbcType=VARCHAR},
@@ -366,12 +366,12 @@
       `name` = #{name,jdbcType=VARCHAR},
       `spend_score` = #{spendScore,jdbcType=INTEGER},
       `spend_type` = #{spendType,jdbcType=CHAR},
-      `level` = #{level,jdbcType=TINYINT},
+      `level` = #{level,jdbcType=INTEGER},
       `ctime` = #{ctime,jdbcType=TIMESTAMP},
       `supply` = #{supply,jdbcType=VARCHAR},
       `cover` = #{cover,jdbcType=VARCHAR},
       `url` = #{url,jdbcType=VARCHAR},
-      `is_ recommend` = #{isRecommend,jdbcType=TINYINT},
+      `is_ recommend` = #{isRecommend,jdbcType=INTEGER},
       `notice` = #{notice,jdbcType=VARCHAR},
       `summary` = #{summary,jdbcType=LONGVARCHAR}
     where `id` = #{id,jdbcType=INTEGER}
@@ -382,12 +382,12 @@
       `name` = #{name,jdbcType=VARCHAR},
       `spend_score` = #{spendScore,jdbcType=INTEGER},
       `spend_type` = #{spendType,jdbcType=CHAR},
-      `level` = #{level,jdbcType=TINYINT},
+      `level` = #{level,jdbcType=INTEGER},
       `ctime` = #{ctime,jdbcType=TIMESTAMP},
       `supply` = #{supply,jdbcType=VARCHAR},
       `cover` = #{cover,jdbcType=VARCHAR},
       `url` = #{url,jdbcType=VARCHAR},
-      `is_ recommend` = #{isRecommend,jdbcType=TINYINT},
+      `is_ recommend` = #{isRecommend,jdbcType=INTEGER},
       `notice` = #{notice,jdbcType=VARCHAR}
     where `id` = #{id,jdbcType=INTEGER}
   </update>

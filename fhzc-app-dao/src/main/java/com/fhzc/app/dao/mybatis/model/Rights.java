@@ -13,7 +13,7 @@ public class Rights {
 
     private String spendType;
 
-    private Byte level;
+    private Integer level;
 
     private Date ctime;
 
@@ -23,7 +23,7 @@ public class Rights {
 
     private String url;
 
-    private Byte isRecommend;
+    private Integer isRecommend;
 
     private String notice;
 
@@ -69,11 +69,11 @@ public class Rights {
         this.spendType = spendType == null ? null : spendType.trim();
     }
 
-    public Byte getLevel() {
+    public Integer getLevel() {
         return level;
     }
 
-    public void setLevel(Byte level) {
+    public void setLevel(Integer level) {
         this.level = level;
     }
 
@@ -109,11 +109,11 @@ public class Rights {
         this.url = url == null ? null : url.trim();
     }
 
-    public Byte getIsRecommend() {
+    public Integer getIsRecommend() {
         return isRecommend;
     }
 
-    public void setIsRecommend(Byte isRecommend) {
+    public void setIsRecommend(Integer isRecommend) {
         this.isRecommend = isRecommend;
     }
 
