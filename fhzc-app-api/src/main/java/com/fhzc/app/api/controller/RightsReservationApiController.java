@@ -93,9 +93,11 @@ public class RightsReservationApiController extends BaseController {
         for(RightsReservation reserv : reservationList) {
             Rights rights = rightsService.getRights(reserv.getRightsId());
             Map map = new HashMap();
-            map.put("rights_id",reserv.getRightsId());
+
+            map.put("id",reserv.getId());
+            map.put("rightsId",reserv.getRightsId());
             map.put("cover",rights.getCover());
-            map.put("mark_date",reserv.getMarkDate());
+            map.put("markDate",reserv.getMarkDate());
             map.put("status",reserv.getStatus());
             result.add(map);
         }
