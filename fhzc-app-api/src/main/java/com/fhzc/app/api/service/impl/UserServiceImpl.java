@@ -43,7 +43,11 @@ public class UserServiceImpl implements UserService {
         UserExample.Criteria criteria1 = example.createCriteria();
         criteria1.andMobileEqualTo(loginName);
         example.or(criteria1);
-        return userMapper.selectByExample(example).get(0);
+        if(userMapper.countByExample(example) > 0){
+            return userMapper.selectByExample(example).get(0);
+        }else{
+            return null;
+        }
     }
 
     @Override
