@@ -42,10 +42,11 @@ public class MessageController extends BaseController {
      */
     @RequestMapping(value = "/api/message/publish", method = RequestMethod.POST)
     @ResponseBody
-    public ApiJsonResult publishMessage(Integer userId , Integer toUserId, @RequestParam(required = false) String text, String type, @RequestParam(required = false) String duration){
+    public ApiJsonResult publishMessage(Integer toUserId, @RequestParam(required = false) String text, String type, @RequestParam(required = false) String duration){
 
+            User user  = getCurrentUser();
             ImMessage message = new ImMessage();
-            message.setUserId(userId);
+            message.setUserId(user.getUid());
             message.setToUserId(toUserId);
             if(type.equals(APIConstants.Message_Type.Image)){
                 String savePath = TextUtils.getConfig(Const.CONFIG_KEY_IMAGE_SAVE_PATH, this);
@@ -59,7 +60,7 @@ public class MessageController extends BaseController {
             if(text == null) text = "";
             message.setContent(EmojiParser.parseToAliases(text));
             //查询对话历史,确定sessionId
-            String sessionId = messageService.hasChatHistory(userId, toUserId);
+            String sessionId = messageService.hasChatHistory(user.getUid(), toUserId);
             if(sessionId == null){
                     sessionId = UUID.randomUUID().toString();
                 }
@@ -83,10 +84,11 @@ public class MessageController extends BaseController {
      */
     @RequestMapping(value = "/api/message/yapull",  method = RequestMethod.GET)
     @ResponseBody
-    public ApiJsonResult yapull(long version, Integer userId){
+    public ApiJsonResult yapull(long version){
+        User user = getCurrentUser();
         Map<String, Object> result = new ConcurrentHashMap<String, Object>();
         result.put("version", new Date().getTime() /1000);
-        List<Map<String ,Object>> newMessages = newMessages(userId, version);
+        List<Map<String ,Object>> newMessages = newMessages(user.getUid(), version);
         result.put("groups", newMessages);
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
     }

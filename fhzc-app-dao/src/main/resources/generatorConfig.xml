@@ -46,11 +46,11 @@
 
         <!--生成对应表及类名 -->
 
-        <table tableName="customer"
+        <table tableName="assets_history"
                delimitAllColumns="true"
                delimitIdentifiers="true"
-               domainObjectName="Customer">
-            <generatedKey column="customer_id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
+               domainObjectName="AssetsHistory">
+            <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
         </table>
 
 

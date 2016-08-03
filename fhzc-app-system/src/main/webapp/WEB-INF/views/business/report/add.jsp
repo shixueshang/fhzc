@@ -189,6 +189,7 @@
 
         var reportType = '${report.cid}';
         var reportTypes = '${reportTypes}';
+        console.info(reportTypes);
         var pTypeJson= $.parseJSON(reportTypes);
         $.each(pTypeJson, function(i,val){
             $("#reportType").append("<option value='"+val.value+"'>"+val.key+"</option>");

@@ -46,10 +46,12 @@ public class MessageServiceImpl implements MessageService {
         ImMessageExample.Criteria criteria  = example.createCriteria();
 
         //如果version=0,则返回所有发给我的以及我发过的消息
-        if(version != 0){
-            criteria.andToUserIdEqualTo(userId);
+        if(version == 0){
+            ImMessageExample.Criteria criteria1  = example.createCriteria();
+            criteria1.andUserIdEqualTo(userId);
+            example.or(criteria1);
         }
-
+        criteria.andToUserIdEqualTo(userId);
         Date lastSyncDate = new Date(version * 1000L);
         criteria.andSendTimeGreaterThanOrEqualTo(lastSyncDate);
         example.setOrderByClause("id desc");

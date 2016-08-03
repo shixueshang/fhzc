@@ -3,6 +3,7 @@ package com.fhzc.app.api.controller;
 import com.fhzc.app.api.service.ActivityApplyService;
 import com.fhzc.app.api.service.ActivityService;
 import com.fhzc.app.api.service.FocusService;
+import com.fhzc.app.api.service.impl.ActivityServiceImpl;
 import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
 import com.fhzc.app.api.tools.ObjUtils;
@@ -58,6 +59,12 @@ public class ActivityApiController extends BaseController{
         Focus focus = focusService.getFocusByCond(user.getUid(),activityId,APIConstants.FocusType.Activity);
         if(focus != null){
             result.put("focusStatus",focus.getStatus());
+        }
+        ActivityApply apply= activityApplyService.getByUidActivityId(user.getUid(),activityId);
+        if(apply!= null) {
+            result.put("applyId", apply.getId());
+        }else{
+            result.put("applyId", 0);
         }
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,activity);
     }

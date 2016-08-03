@@ -50,8 +50,7 @@ public class OrganizationController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ModelAndView addOrUpdateDept(Department department){
-        ModelAndView mav = new ModelAndView("organization/department/department");
+    public String addOrUpdateDept(Department department){
         department.setCtime(new Date());
         department.setStatus(Const.Data_Status.DATA_NORMAL);
 
@@ -63,12 +62,7 @@ public class OrganizationController extends BaseController {
             departmentService.addOrUpdateDept(parentDept);
         }
 
-        departmentService.addOrUpdateDept(department);
-        PageableResult<Map<String, Object>> pageableResult =  departmentService.findPageDepts(page, size);
-        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
-        mav.addObject("depts", pageableResult.getItems());
-        mav.addObject("deptsForAdd", JSON.toJSON(pageableResult.getItems()));
-        return mav;
+        return "redirect:/organization/department/department";
     }
 
     /**

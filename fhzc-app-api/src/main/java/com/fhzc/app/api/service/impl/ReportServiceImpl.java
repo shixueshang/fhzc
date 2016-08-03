@@ -33,9 +33,12 @@ public class ReportServiceImpl implements ReportService {
     public List<Report> getRecommendReportList(){
         ReportExample example = new ReportExample();
         ReportExample.Criteria criteria = example.createCriteria();
+        example.setOrderByClause("ctime desc");
         criteria.andIsDisplayEqualTo(Const.YES_OR_NO.YES);
         criteria.andIsRecommendEqualTo(Const.YES_OR_NO.YES);
-        return reportMapper.selectByExampleWithBLOBs(example);
+        RowBounds rowBounds = new RowBounds(0, 3);
+
+        return reportMapper.selectByExampleWithRowbounds(example,rowBounds);
     }
 
     @Override
