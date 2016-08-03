@@ -180,17 +180,16 @@
                     </div>
                     <!-- END SAMPLE FORM PORTLET-->
                 </div>
+            </div>
+            <!--页面操作详细内容 开始-->
+
+        </div>
+    </div>
+</div>
 <script type="text/javascript" src="<%=contextPath%>/assets/jquery-validation/dist/jquery.validate.min.js"></script>
 
 <script>
     $(function(){
-        </div>
-        <!--页面操作详细内容 开始-->
-
-        </div>
-        </div>
-        </div>
-
         <jsp:include page="../../include/footer.jsp"/>
         var form1 = $('#form_sample_1');
         var error1 = $('.alert-error', form1);
