@@ -46,11 +46,11 @@ public class ExcelImporter {
 		return this;
 	}
 	
-	public Map<String, Object> importExcelFile(MultipartFile multipartFile)  throws IOException {
+	public Map<String, Object> importExcelFile(MultipartFile multipartFile)  throws Exception {
 	     return importExcelFile(multipartFile,0,2);
 	}
 
-	public Map<String, Object> importExcelFile(MultipartFile multipartFile, int startsheetno, int startrowno) throws IOException {
+	public Map<String, Object> importExcelFile(MultipartFile multipartFile, int startsheetno, int startrowno) throws Exception {
         Map<String, Object> importMap = new HashMap<String, Object>();
 
 		ImportConfig importConfig = this.getImportConfig();

@@ -3,6 +3,7 @@ package com.fhzc.app.system.service.impl;
 import com.fhzc.app.dao.mybatis.model.Contract;
 import com.fhzc.app.dao.mybatis.model.ContractExample;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
+import com.fhzc.app.dao.mybatis.util.EncryptUtils;
 import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.commons.util.excel.ExcelImporter;
 import com.fhzc.app.system.commons.util.excel.ImportCallBack;
@@ -25,7 +26,7 @@ import java.util.*;
 @Service("contractService")
 public class ContractServiceImpl implements ContractService {
 
-    private static final String IMPORT_SQL = "call sp_insert_financialDaily(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String IMPORT_SQL = "call sp_insert_financialDaily(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     @Resource
     private ExcelImporter importer;
@@ -66,29 +67,33 @@ public class ContractServiceImpl implements ContractService {
         }
 
         @Override
-        public List<Object[]> getImportData(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data) {
+        public List<Object[]> getImportData(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data) throws Exception {
         	List<Object[]> contractList = new ArrayList<Object[]>();
         	if(data.get(0).length>0){
         		for (Object[] objects : data) {
-	        		Object[] temData = new  Object[17];
-	        		temData[0] = TextUtils.IntToDouble(objects[5].toString());	// p_login
-	        		temData[1] = TextUtils.IntToDouble(objects[5].toString());	// p_password
-	 
+	        		Object[] temData = new  Object[19];
+	        		String phone = TextUtils.IntToDouble(objects[6].toString());
+	        		String pcode = objects[4].toString();
+	        		String key = pcode.substring(pcode.length()-8);
+	        		temData[0] = phone;								// p_login
+	        		temData[1] = EncryptUtils.encryptToMD5(phone);	// p_password
 	        		temData[2] = objects[1];	//产品名称 product_id
 	        		temData[3] = objects[2];	//基金管理人	
-	        		temData[4] = "身份证";		//证件类型
-	        		temData[5] = objects[3];	//证件号码，客户编号(不一定有)
-	        		temData[6] = objects[4];	//客户姓名 customer_id
-	        		temData[7] = TextUtils.IntToDouble(objects[5].toString());	//手机号码	
-	        		temData[8] = TextUtils.StringtoInteger(objects[6].toString());	//出借金额 amount_rmb
-	        		temData[9] = TextUtils.StringtoInteger(objects[7].toString());	//年化金额 annualised
-	        		temData[10] = objects[8];	//出借期限 period
-	        		temData[11] = objects[9];	//年化收益率 earning_rate
-	        		temData[12] = objects[10];	//到账日期 buy_time
-	        	    temData[13] = objects[11];	//分公司
-	        		temData[14] = objects[12];	//理财师 planner_id
-	        		temData[15] = objects[13];	//工号 work_num	
-	        		temData[16] = objects[20];	//备注 memo
+	        		temData[4] = objects[3];		//证件类型
+	        		temData[5] = EncryptUtils.encryptToDES(key, pcode);
+	        		temData[6] = objects[5];	//客户姓名 customer_id
+	        		temData[7] = EncryptUtils.encryptToDES(key, phone);	//手机号码	
+	        		temData[8] = objects[7];	//客户类型
+	        		temData[9] = TextUtils.StringtoInteger(objects[8].toString());	//出借金额 amount_rmb
+	        		temData[10] = TextUtils.StringtoInteger(objects[9].toString());	//年化金额 annualised
+	        		temData[11] = objects[10];	//出借期限 period
+	        		temData[12] = objects[11];	//年化收益率 earning_rate
+	        		temData[13] = objects[12];	//到账日期 buy_time
+	        	    temData[14] = objects[13];	//分公司
+	        		temData[15] = objects[14];	//理财师 planner_id
+	        		temData[16] = objects[15];	//工号 work_num	
+	        		temData[17] = objects[22];	//备注 memo
+	        		temData[18]	= key;
 	        		contractList.add(temData);
         		}
         	}
@@ -110,7 +115,7 @@ public class ContractServiceImpl implements ContractService {
             };
 
         }
-        }).importExcelFile(multipartFile);
+        }).importExcelFile(multipartFile,0,3);
 
         return importResult;
     }

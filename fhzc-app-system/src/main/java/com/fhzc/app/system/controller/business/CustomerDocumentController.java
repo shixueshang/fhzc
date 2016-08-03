@@ -30,9 +30,19 @@ public class CustomerDocumentController extends BaseController {
      * 个人客户导入页面
      * @return
      */
-    @RequestMapping(value = "/importor", method = RequestMethod.GET)
-    public ModelAndView importorCustomerDocument(){
-        ModelAndView mav = new ModelAndView("business/customerdocument/importor");
+    @RequestMapping(value = "/importorpersonal", method = RequestMethod.GET)
+    public ModelAndView importorPersonalCustomerDocument(){
+        ModelAndView mav = new ModelAndView("business/customerdocument/importorpersonal");
+        return mav;
+    }
+    
+    /**
+     * 机构客户导入页面
+     * @return
+     */
+    @RequestMapping(value = "/importoragent", method = RequestMethod.GET)
+    public ModelAndView importorAgentCustomerDocument(){
+        ModelAndView mav = new ModelAndView("business/customerdocument/importoragent");
         return mav;
     }
     
@@ -41,7 +51,7 @@ public class CustomerDocumentController extends BaseController {
      * @param multiFile
      * @return
      */
-    @RequestMapping(value = "/import", method = RequestMethod.POST)
+    @RequestMapping(value = "/importpersonal", method = RequestMethod.POST)
     @ResponseBody
 //    public Map<String, Map<String, Object>> importExcel(MultipartFile multiFile){
 //       	Map<String,Map<String,Object>> result = new HashMap<String,Map<String,Object>>();
@@ -58,10 +68,30 @@ public class CustomerDocumentController extends BaseController {
 //        }
 //        return result;
 //    }
-    public Map<String, Object> importExcelSpecial(MultipartFile multiFile){
+    public Map<String, Object> importExcelPersonal(MultipartFile multiFile){
         Map<String, Object> result = new HashMap<String, Object>();
         try {
             result = customerDocumentService.importExcelFilePersonal(multiFile);
+            result.put("success", true);
+        } catch (Exception e) {
+            logger.error("导入失败");
+            result.put("success", false);
+            e.printStackTrace();
+        }
+        return result;
+    }
+    
+    /**
+     * excel导入
+     * @param multiFile
+     * @return
+     */
+    @RequestMapping(value = "/importagent", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> importExcelAgent(MultipartFile multiFile){
+        Map<String, Object> result = new HashMap<String, Object>();
+        try {
+            result = customerDocumentService.importExcelFileAgent(multiFile);
             result.put("success", true);
         } catch (Exception e) {
             logger.error("导入失败");
