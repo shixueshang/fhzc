@@ -82,10 +82,37 @@ public class UserController extends BaseController {
             map.put("main",pc.getIsMain());
             List<ScoreHistory> scoreHistoryList = scoreService.getAvailableList(pc.getCustomerId());
             map.put("score",scoreService.sumScore(scoreHistoryList));
-
-
             result.add(map);
         }
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
+    }
+
+    /**
+     * 验证登陆名是否存在
+     */
+    @RequestMapping(value = "/api/login/exist", method = RequestMethod.GET)
+    @ResponseBody
+    public ApiJsonResult loginExist(String login){
+        User user =  userService.getUserByLogin(login);
+        Map map = new HashMap();
+        if(user != null){
+            map.put("isExist",true);
+        }else{
+            map.put("isExist",false);
+        }
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, map);
+    }
+
+    /**
+     * 修改登陆名
+     */
+    @RequestMapping(value = "/api/mod/login", method = RequestMethod.POST)
+    @ResponseBody
+    public ApiJsonResult modLogin(String login){
+        User user = super.getCurrentUser();
+        user.setLogin(login);
+        userService.updateUser(user);
+
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
     }
 }
