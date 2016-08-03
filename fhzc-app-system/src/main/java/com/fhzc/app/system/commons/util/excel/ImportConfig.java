@@ -35,9 +35,10 @@ public interface ImportConfig {
 	 * @param data
 	 *            原始Excel数据，以行进行划分
 	 * @return List&lt;Object[]&gt;转换后即将导入的数据
+	 * @throws Exception 
 	 */
 	@Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
-	List<Object[]> getImportData(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data);
+	List<Object[]> getImportData(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data) throws Exception;
 
 	/**
 	 * 获取导入操作回调接口

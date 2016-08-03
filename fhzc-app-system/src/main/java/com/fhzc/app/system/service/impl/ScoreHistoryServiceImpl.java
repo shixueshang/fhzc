@@ -1,6 +1,7 @@
 package com.fhzc.app.system.service.impl;
 
 import com.fhzc.app.dao.mybatis.inter.ScoreHistoryMapper;
+import com.fhzc.app.dao.mybatis.util.EncryptUtils;
 import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.commons.util.excel.ExcelImporter;
 import com.fhzc.app.system.commons.util.excel.ImportCallBack;
@@ -47,17 +48,19 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
         }
 
         @Override
-        public List<Object[]> getImportData(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data) {
+        public List<Object[]> getImportData(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data) throws Exception {
         	List<Object[]> scoreList = new ArrayList<Object[]>();
         	BaseController bc = new BaseController();
         	int operatorID = bc.getCurrentUser().getId();
         	if(data.get(0).length>0){
         		for (Object[] objects : data) {
-	        		Object[] temData = new  Object[10];
+        			Object[] temData = new  Object[10];
+	        		String pcode = objects[3].toString();
+	        		String key = pcode.substring(pcode.length()-8);
 	        		temData[0] = objects[0];	//姓名 
 	        		temData[1] = objects[1];	//性别 
 	        		temData[2] = objects[2];	//证件类型
-	        		temData[3] = objects[3];	//证件号码 
+	        		temData[3] = EncryptUtils.encryptToDES(key, pcode);	//证件号码 
 	        		temData[4] = objects[4];	//权益名称
 	        		temData[5] = objects[5];	//消费时间 
 	        		temData[6] = objects[6];	//消费地点
@@ -104,17 +107,19 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 		        }
 
 		        @Override
-		        public List<Object[]> getImportData(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data) {
+		        public List<Object[]> getImportData(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data) throws Exception {
 		        	List<Object[]> scoreList = new ArrayList<Object[]>();
 		        	BaseController bc = new BaseController();
 		        	int operatorID = bc.getCurrentUser().getId();
 		        	if(data.get(0).length>0){
 		        		for (Object[] objects : data) {
-			        		Object[] temData = new  Object[13];
+		        			Object[] temData = new  Object[13];
+			        		String pcode = objects[3].toString();
+			        		String key = pcode.substring(pcode.length()-8);
 			        		temData[0] = objects[0];	//姓名
 			        		temData[1] = objects[1];	//性别
 			        		temData[2] = objects[2];	//证件类型
-			        		temData[3] = objects[3];	//证件号码
+			        		temData[3] = EncryptUtils.encryptToDES(key, pcode);	//证件号码
 			        		temData[4] = objects[4];	//积分增减
 			        		temData[5] = objects[5];	//来源类型
 			        		temData[6] = objects[6];	//积分来源
