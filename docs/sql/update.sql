@@ -237,5 +237,10 @@ ADD COLUMN `notice` VARCHAR(255) NULL DEFAULT '无' COMMENT '报名须知' AFTER
 ALTER TABLE `bank`.`activity`
 ADD COLUMN `user_req` VARCHAR(255) NULL COMMENT '用户要求' AFTER `is_ recommend`;
 
+ALTER TABLE `bank`.`activity_apply`
+CHANGE COLUMN `phone` `phone` VARCHAR(45) NULL COMMENT '参加互动的客户电话（可以为别人）' ;
+ALTER TABLE `bank`.`activity_apply`
+CHANGE COLUMN `phone` `phone` VARCHAR(45) NULL DEFAULT NULL COMMENT '为他人报名留下电话' ;
+
 
 

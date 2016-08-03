@@ -1,6 +1,7 @@
 package com.fhzc.app.api.controller;
 
 import com.fhzc.app.api.service.FocusService;
+import com.fhzc.app.api.service.RightsReservationService;
 import com.fhzc.app.api.service.RightsService;
 import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
@@ -8,6 +9,7 @@ import com.fhzc.app.api.tools.ApiJsonResult;
 import com.fhzc.app.api.tools.ObjUtils;
 import com.fhzc.app.dao.mybatis.model.Focus;
 import com.fhzc.app.dao.mybatis.model.Rights;
+import com.fhzc.app.dao.mybatis.model.RightsReservation;
 import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import org.springframework.stereotype.Controller;
@@ -31,6 +33,9 @@ public class RightsApiController extends BaseController{
     @Resource
     private FocusService focusService;
 
+    @Resource
+    private RightsReservationService rightsReservationService;
+
     @RequestMapping(value = "/api/rights",method = RequestMethod.GET)
     @ResponseBody
     public ApiJsonResult rightsList(Integer cid){
@@ -53,9 +58,14 @@ public class RightsApiController extends BaseController{
         Rights rights = rightsService.getRights(rightsId);
         Map result = ObjUtils.objectToMap(rights);
         User user = super.getCurrentUser();
-        Focus focus = focusService.getFocusByCond(user.getUid(),rightsId,APIConstants.FocusType.Product);
+        Focus focus = focusService.getFocusByCond(user.getUid(),rightsId,APIConstants.FocusType.Rights);
         if(focus != null){
             result.put("focusStatus",focus.getStatus());
+        }
+        RightsReservation reservation = rightsReservationService.getUserRightsReservation(user.getUid(),rightsId);
+        if(reservation != null) {
+            result.put("reservationStatus", reservation.getStatus());
+            result.put("reservationId", reservation.getId());
         }
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,rights);
     }

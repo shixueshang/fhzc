@@ -42,6 +42,7 @@ public class ActivityApplyServiceImpl implements ActivityApplyService {
     public ActivityApply getByUidActivityId(Integer uid, Integer activityId) {
         ActivityApplyExample example = new ActivityApplyExample();
         ActivityApplyExample.Criteria criteria = example.createCriteria();
+        example.setOrderByClause("id desc");
         criteria.andCustomerIdEqualTo(uid);
         criteria.andActivityIdEqualTo(activityId);
         if(activityApplyMapper.countByExample(example) > 0){

@@ -1,9 +1,6 @@
 package com.fhzc.app.api.controller;
 
-import com.fhzc.app.api.service.CustomerService;
-import com.fhzc.app.api.service.DictionaryService;
-import com.fhzc.app.api.service.PlannerCustomerService;
-import com.fhzc.app.api.service.UserService;
+import com.fhzc.app.api.service.*;
 import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
 import com.fhzc.app.dao.mybatis.model.*;
@@ -38,6 +35,8 @@ public class UserController extends BaseController {
     @Resource
     private PlannerCustomerService plannerCustomerService;
 
+    @Resource
+    private ScoreService scoreService;
     /**
      * 获取登录用户信息
      * @return
@@ -81,6 +80,9 @@ public class UserController extends BaseController {
             map.put("phone",customer.getPhone());
             map.put("address",customer.getAddress());
             map.put("main",pc.getIsMain());
+            List<ScoreHistory> scoreHistoryList = scoreService.getAvailableList(pc.getCustomerId());
+            map.put("score",scoreService.sumScore(scoreHistoryList));
+
 
             result.add(map);
         }

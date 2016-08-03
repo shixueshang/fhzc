@@ -44,6 +44,7 @@ public class ProductReservationServiceImpl implements ProductReservationService 
     public ProductReservation getUserProductReservation(Integer uid, Integer productId){
         ProductReservationExample example = new ProductReservationExample();
         ProductReservationExample.Criteria criteria = example.createCriteria();
+        example.setOrderByClause("id desc");
         criteria.andCustomerIdEqualTo(uid);
         criteria.andProductIdEqualTo(productId);
         if(productReservationMapper.countByExample(example) > 0) {
