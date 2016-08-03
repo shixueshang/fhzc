@@ -1,6 +1,7 @@
 package com.fhzc.app.system.service.impl;
 
 import com.fhzc.app.dao.mybatis.inter.ScoreHistoryMapper;
+import com.fhzc.app.dao.mybatis.model.ScoreHistory;
 import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.commons.util.excel.ExcelImporter;
 import com.fhzc.app.system.commons.util.excel.ImportCallBack;
@@ -165,5 +166,10 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 	@Override
 	public Integer getScoreByUserId(Integer uid) {
 		return scoreHistoryMapper.getScoreByUid(uid);
+	}
+
+	@Override
+	public void addHistoryScore(ScoreHistory scoreHistory) {
+		scoreHistoryMapper.insert(scoreHistory);
 	}
 }
