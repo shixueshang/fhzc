@@ -180,7 +180,54 @@
                             </li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>
+
+                    <shiro:hasPermission name="/import"><li class="has-sub">
+                        <a href="javascript:;">
+                            <i class="icon-tasks"></i>
+                            <span class="title">导入管理</span>
+                            <span class="selected"></span>
+                            <span class="arrow open"></span>
+                        </a>
+
+                        <ul class="sub">
+                            <shiro:hasPermission name="/business/product/importor">
+                                <li>
+                                    <a href="<%=contextPath%>/business/product/importor">产品导入</a>
+                                </li></shiro:hasPermission>
+                            <shiro:hasPermission name="/personal/planner/importor"><li>
+                                <a href="/personal/planner/importor">理财师导入</a>
+                            </li></shiro:hasPermission>
+                            <shiro:hasPermission name="/business/plannerachivementsdaily/importor"><li>
+                                <a href="/business/plannerachivementsdaily/importor">理财师日业绩导入</a>
+                            </li></shiro:hasPermission>
+                            <shiro:hasPermission name="/business/plannerachivementsmonthly/importor"><li>
+                                <a href="/business/plannerachivementsmonthly/importor">理财师月业绩导入</a>
+                            </li></shiro:hasPermission>
+                            <shiro:hasPermission name="/business/contract/importor"><li>
+                                <a href="<%=contextPath%>/business/contract/importor">财务日表导入</a>
+                            </li></shiro:hasPermission>
+                            <shiro:hasPermission name="/business/payment/importor"><li>
+                                <a href="<%=contextPath%>/business/payment/importor">兑付记录导入</a>
+                            </li></shiro:hasPermission>
+                            <shiro:hasPermission name="/business/payment/importorspecial"><li>
+                                <a href="<%=contextPath%>/business/payment/importorspecial">鑫丰母兑付导入</a>
+                            </li></shiro:hasPermission>
+                            <shiro:hasPermission name="/business/customerdocument/importorpersonal"><li>
+                                <a href="<%=contextPath%>/business/customerdocument/importorpersonal">个人投资人档案表导入</a>
+                            </li></shiro:hasPermission>
+                            <shiro:hasPermission name="/business/customerdocument/importoragent"><li>
+                                <a href="<%=contextPath%>/business/customerdocument/importoragent">机构投资人档案表导入</a>
+                            </li></shiro:hasPermission>
+                            <shiro:hasPermission name="/business/scorehistory/importoradd"><li>
+                                <a href="<%=contextPath%>/business/scorehistory/importoradd">积分历史导入</a>
+                            </li></shiro:hasPermission>
+                            <shiro:hasPermission name="/business/scorehistory/importorconsume"><li>
+                                <a href="<%=contextPath%>/business/scorehistory/importorconsume">权益消费导入</a>
+                            </li></shiro:hasPermission>
+                        </ul>
+                    </li></shiro:hasPermission>
                 </ul>
+
                 <!-- END SIDEBAR MENU -->
             </div>
 
