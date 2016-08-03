@@ -39,6 +39,10 @@
                             <li>
                                 <a href="<%=contextPath%>/business/product/order/list">产品预约列表</a>
                             </li></shiro:hasPermission>
+                            <shiro:hasPermission name="/business/product/type">
+                                <li>
+                                    <a href="<%=contextPath%>/business/product/type">产品类型维护</a>
+                                </li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>
 

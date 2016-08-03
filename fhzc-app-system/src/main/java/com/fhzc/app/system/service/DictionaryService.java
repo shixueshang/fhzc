@@ -15,4 +15,12 @@ public interface DictionaryService {
      * @return
      */
     List<Dictionary> findDicByType(String cat);
+
+    /**
+     * 添加或修改
+     * @param dictionary
+     */
+    void addOrUpdate(Dictionary dictionary);
+
+    void delete(Integer id);
 }

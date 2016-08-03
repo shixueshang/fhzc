@@ -2,6 +2,7 @@ package com.fhzc.app.system.controller.business;
 
 import com.alibaba.fastjson.JSON;
 import com.fhzc.app.dao.mybatis.bo.ProductReservationBo;
+import com.fhzc.app.dao.mybatis.model.Dictionary;
 import com.fhzc.app.dao.mybatis.model.Product;
 import com.fhzc.app.dao.mybatis.model.ProductReserQuery;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
@@ -9,6 +10,7 @@ import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.commons.util.FileUtil;
 import com.fhzc.app.system.commons.util.TextUtils;
+import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.DepartmentService;
 import com.fhzc.app.system.service.DictionaryService;
@@ -229,6 +231,37 @@ public class ProductController extends BaseController {
                 }
             }
         }
+    }
+
+    /**
+     * 产品分类
+     * @return
+     */
+    @RequestMapping(value = "/type", method = RequestMethod.GET)
+    public ModelAndView listType(){
+        ModelAndView mav = new ModelAndView("business/product/productType");
+        mav.addObject("productTypes", dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_TYPE));
+        mav.addObject("url", "business/product");
+        return mav;
+    }
+
+    @RequestMapping(value = "/type/add", method = RequestMethod.POST)
+    public String add(Dictionary dictionary){
+
+        dictionary.setStatus(Const.Data_Status.DATA_NORMAL);
+        dictionary.setCat(Const.DIC_CAT.PRODUCT_TYPE);
+        dictionary.setIsDefault(Const.YES_OR_NO.NO);
+        dictionary.setIsModify(Const.YES_OR_NO.NO);
+        dictionary.setName("产品类型");
+        dictionaryService.addOrUpdate(dictionary);
+        return "redirect:/business/product/type";
+    }
+
+    @RequestMapping(value = "/type/delete/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public AjaxJson delete(@PathVariable(value = "id") Integer id){
+        dictionaryService.delete(id);
+        return new AjaxJson(true);
     }
 
 }
