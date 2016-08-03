@@ -27,6 +27,11 @@ public class ActivityApplyApiController extends BaseController {
     @Resource
     private ActivityService activityService;
 
+    /**
+     * 报名活动
+     * @param activityApply
+     * @return
+     */
     @RequestMapping(value = "/api/activity/join",method = RequestMethod.POST)
     @ResponseBody
     public ApiJsonResult activityApplyJoin(ActivityApply activityApply){
@@ -46,6 +51,11 @@ public class ActivityApplyApiController extends BaseController {
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
     }
 
+    /**
+     * 取消活动报名
+     * @param activityApplyId
+     * @return
+     */
     @RequestMapping(value = "/api/activity/cancel",method = RequestMethod.POST)
     @ResponseBody
     public ApiJsonResult activityApplyCancel(Integer activityApplyId){
@@ -57,19 +67,26 @@ public class ActivityApplyApiController extends BaseController {
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
     }
 
+    /**
+     * 我报名的活动
+     * @param customer_id
+     * @return
+     */
     @RequestMapping(value = "/api/personal/activity/apply",method = RequestMethod.GET)
     @ResponseBody
     public ApiJsonResult personalActivityApply(Integer customer_id){
         List<ActivityApply> activityApplyList = activityApplyService.getActivityApplyList(customer_id);
         List<Map> result = new ArrayList<>();
-        for(ActivityApply apply : activityApplyList) {
-            Activity activity = activityService.getActivity(apply.getActivityId());
-            Map map = new HashMap();
-            map.put("activity_id",apply.getActivityId());
-            map.put("cover",activity.getCover());
-            map.put("apply_end_time",activity.getApplyEndTime());
-            map.put("status",activity.getStatus());
-            result.add(map);
+        if(activityApplyList == null){
+            for(ActivityApply apply : activityApplyList) {
+                Activity activity = activityService.getActivity(apply.getActivityId());
+                Map map = new HashMap();
+                map.put("activity_id",apply.getActivityId());
+                map.put("cover",activity.getCover());
+                map.put("apply_end_time",activity.getApplyEndTime());
+                map.put("status",activity.getStatus());
+                result.add(map);
+            }
         }
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
     }

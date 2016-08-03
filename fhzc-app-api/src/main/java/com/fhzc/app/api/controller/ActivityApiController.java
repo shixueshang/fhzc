@@ -35,6 +35,10 @@ public class ActivityApiController extends BaseController{
     @Resource
     private FocusService focusService;
 
+    /**
+     * 活动列表
+     * @return
+     */
     @RequestMapping(value = "/api/activity", method = RequestMethod.GET)
     @ResponseBody
     public ApiJsonResult activityList(){
@@ -42,6 +46,12 @@ public class ActivityApiController extends BaseController{
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,activityList);
     }
 
+    /**
+     * 活动详情
+     * @param activityId
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/api/activity/detail",method = RequestMethod.GET)
     @ResponseBody
     public  ApiJsonResult activityDetail(Integer activityId) throws Exception {
