@@ -69,7 +69,7 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="portlet_tab1">
                                         <!-- BEGIN FORM-->
-                                        <form action="<%=contextPath%>/business/rights/reservation/add" id="form_sample_1" method="get" class="form-horizontal" onsubmit=" return checkInputs();">
+                                        <form action="<%=contextPath%>/business/rights/reservation/save" id="form_sample_1" method="get" class="form-horizontal" onsubmit=" return checkInputs();">
                                             <div class="alert alert-error hide">
                                                 <button class="close" data-dismiss="alert"></button>
                                                 您的表单有未完成的必填项,请检查.
@@ -186,11 +186,12 @@
         </div>
     </div>
 </div>
+
+<jsp:include page="../../include/footer.jsp"/>
 <script type="text/javascript" src="<%=contextPath%>/assets/jquery-validation/dist/jquery.validate.min.js"></script>
 
 <script>
     $(function(){
-        <jsp:include page="../../include/footer.jsp"/>
         var form1 = $('#form_sample_1');
         var error1 = $('.alert-error', form1);
         var success1 = $('.alert-success', form1);
@@ -314,19 +315,8 @@
             $("#reservationTime").parent().find("p").remove();
         }
     }
-    
+
     function checkInputs() {
-        if ($("#rightValid").val() == '0'){
-            validatePhoneError('请确认收入的手机号为有效客户的有效手机号');
-            $("html,body").animate({scrollTop:0});
-            return false;
-        }
-
-        if ($("#reservationRight").val() == ''){
-            validateRightsError("请选择权益");
-            return false;
-        }
-
         if ($("#reservationTime").val() == ''){
             validateDateError("请选择输入日期");
             return false;

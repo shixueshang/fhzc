@@ -243,4 +243,73 @@ public class RightsController extends BaseController{
         mav.addObject("providerInfo", rvo);
         return mav;
     }
+
+    /**
+     * 处理权益信息
+     * @return
+     */
+    @RequestMapping(value = "/reservation/save", method = RequestMethod.GET)
+    public ModelAndView saveReservation(String reservationRight, long id, Integer exchangeScore, Date reservationTime, long reservationStatus){
+        //RightsReservation reservation = new RightsReservation();
+        RightsReservation reservation = rightsService.getReservationById((int)id);
+        if (!reservation.getRightsId().toString().equals(reservationRight)){
+            reservation.setRightsId(Integer.parseInt(reservationRight));
+            reservation.setScoreCost(exchangeScore);
+        }
+
+        Integer oldStatus = reservation.getStatus();
+        reservation.setStatus((int)reservationStatus);
+        reservation.setMarkDate(reservationTime);
+        rightsService.updateReservation(reservation);
+
+        if (oldStatus != reservation.getStatus() && oldStatus != 4 && oldStatus != 5 && (reservationStatus == 4 || reservationStatus == 5)){
+            Customer customer = customerService.getCustomer(reservation.getCustomerId());
+
+            ScoreHistory scoreHistory = new ScoreHistory();
+            scoreHistory.setCtime(new Date());
+            scoreHistory.setUid(customer.getUid());
+            scoreHistory.setFromType("rights");
+            scoreHistory.setScore(0 - reservation.getScoreCost());
+            scoreHistory.setVaildTime(reservation.getMarkDate());
+            scoreHistory.setStatus("consume");
+            scoreHistory.setOperatorType("admin");
+            scoreHistory.setOperatorId(1);
+            scoreHistory.setIsApprove(1);
+            scoreHistory.setIsVaild(1);
+            if (reservationStatus == 4){
+                scoreHistory.setDetail("客户消费");
+            }
+
+            if (reservationStatus == 5){
+                scoreHistory.setDetail("客户缺席");
+            }
+            scoreHistoryService.addHistoryScore(scoreHistory);
+        }
+
+        ModelAndView mav = new ModelAndView("business/rights/reservationList");
+        PageableResult<RightsReservation> pageableResult = rightsService.listRightReservations(page, size);
+        List<RightsReservation> reservations = pageableResult.getItems();
+        List<RightReservationVo> vos = new LinkedList<RightReservationVo>();
+        if (!CollectionUtils.isEmpty(reservations)){
+            for (RightsReservation reser : reservations){
+                RightReservationVo vo = new RightReservationVo();
+                vo.setId(reser.getId());
+                Rights r = rightsService.getRights(reser.getRightsId());
+                vo.setRightName(r.getName());
+
+                Customer c = customerService.getCustomer(reser.getCustomerId());
+                User u = userService.getUser(c.getUid());
+                vo.setCustomerName(u.getRealname());
+                vo.setPhoneNum(u.getMobile());
+
+                vo.setScore(reser.getScoreCost());
+                vo.setReservationTime(reser.getMarkDate());
+                vos.add(vo);
+            }
+        }
+
+        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
+        mav.addObject("reservations", vos);
+        return mav;
+    }
 }
