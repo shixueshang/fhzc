@@ -186,11 +186,12 @@
         </div>
     </div>
 </div>
+
+<jsp:include page="../../include/footer.jsp"/>
 <script type="text/javascript" src="<%=contextPath%>/assets/jquery-validation/dist/jquery.validate.min.js"></script>
 
 <script>
     $(function(){
-        <jsp:include page="../../include/footer.jsp"/>
         var form1 = $('#form_sample_1');
         var error1 = $('.alert-error', form1);
         var success1 = $('.alert-success', form1);
@@ -314,7 +315,7 @@
             $("#reservationTime").parent().find("p").remove();
         }
     }
-    
+
     function checkInputs() {
         if ($("#rightValid").val() == '0'){
             validatePhoneError('请确认收入的手机号为有效客户的有效手机号');
