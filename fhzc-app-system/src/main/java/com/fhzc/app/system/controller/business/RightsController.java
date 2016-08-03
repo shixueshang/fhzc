@@ -3,6 +3,7 @@ package com.fhzc.app.system.controller.business;
 import com.alibaba.fastjson.JSON;
 import com.fhzc.app.dao.mybatis.bo.ActivityApplyBo;
 import com.fhzc.app.dao.mybatis.model.*;
+import com.fhzc.app.dao.mybatis.model.Dictionary;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
@@ -47,6 +48,9 @@ public class RightsController extends BaseController{
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private ScoreHistoryService scoreHistoryService;
 
     /**
      * 权益列表
@@ -206,6 +210,37 @@ public class RightsController extends BaseController{
 
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("reservations", vos);
+        return mav;
+    }
+
+    @RequestMapping(value = "/reservation/deal", method = RequestMethod.GET)
+    public ModelAndView dealReservation(long id){
+        ModelAndView mav = new ModelAndView("business/rights/dealReservation");
+        RightsReservation reservation = rightsService.getReservationById((int)id);
+        CustomerVo vo = new CustomerVo();
+        Customer customer = customerService.getCustomer(reservation.getCustomerId());
+        Dictionary dictionary = dictionaryService.findCustomerLevel(customer.getLevelId()+"");
+        vo.setCustomerId(customer.getCustomerId());
+        vo.setCustomerLevel(dictionary.getKey());
+
+        User user = userService.getUser(customer.getUid());
+        vo.setName(user.getRealname());
+
+        Integer score = scoreHistoryService.getScoreByUserId(user.getUid());
+        vo.setAvailableScore(score+"");
+
+        RightVo rvo = new RightVo();
+        Rights rights = rightsService.getRights((int)reservation.getRightsId());
+        rvo.setScore(rights.getSpendScore());
+        rvo.setProviderName(rights.getSupply());
+        rvo.setRightId(reservation.getRightsId());
+
+        PageableResult<Rights> pageableResult = rightsService.findPageRights(1, 500);
+        mav.addObject("reservation", reservation);
+        mav.addObject("rights", pageableResult.getItems());
+
+        mav.addObject("customer", vo);
+        mav.addObject("providerInfo", rvo);
         return mav;
     }
 }

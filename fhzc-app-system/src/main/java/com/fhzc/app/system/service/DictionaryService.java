@@ -25,4 +25,11 @@ public interface DictionaryService {
     Dictionary findCustomerLevel(String levelValue);
 
     void delete(Integer id);
+
+    /**
+     * 获取客户的level
+     * @param levelValue
+     * @return
+     */
+    Dictionary findCustomerLevel(String levelValue);
 }

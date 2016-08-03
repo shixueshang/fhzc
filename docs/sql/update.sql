@@ -231,7 +231,11 @@ ADD COLUMN `organ_name` VARCHAR(100) NULL COMMENT '机构全称' AFTER `customer
 ALTER TABLE `bank`.`customer`
 CHANGE COLUMN `cb_id` `cb_id` VARCHAR(45) NULL DEFAULT NULL COMMENT '客户号（来自excel）' ;
 
+ALTER TABLE `bank`.`rights`
+ADD COLUMN `notice` VARCHAR(255) NULL DEFAULT '无' COMMENT '报名须知' AFTER `is_ recommend`;
 
+ALTER TABLE `bank`.`activity`
+ADD COLUMN `user_req` VARCHAR(255) NULL COMMENT '用户要求' AFTER `is_ recommend`;
 
 
 

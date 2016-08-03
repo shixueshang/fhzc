@@ -29,6 +29,19 @@ public class DictionaryServiceImpl implements DictionaryService {
     }
 
     @Override
+    public Dictionary findCustomerLevel(String levelValue) {
+        List<Dictionary> dicts = findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL);
+
+        for(com.fhzc.app.dao.mybatis.model.Dictionary dict : dicts){
+            if(dict.getValue().equals(levelValue)){
+                return dict;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
     public void addOrUpdate(Dictionary dictionary) {
         Integer id = dictionary.getId();
         if(id == null){
