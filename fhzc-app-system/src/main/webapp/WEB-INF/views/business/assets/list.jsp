@@ -70,53 +70,61 @@
                                     <td>投资金额(美元)</td>
                                     <td>投资金额(人民币)</td>
                                     <td>理财师</td>
-                                    <td>操作</td>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach items="${admins}" var="admin">
+                                <c:forEach items="${assets}" var="asset">
                                     <tr>
-                                        <td>${admin.login}</td>
-                                        <td>${admin.realname}</td>
+                                        <td>${asset.serial}</td>
                                         <td>
-                                            <c:forEach items="${roles}" var="role" >
-                                                <c:if test="${admin.role == role.roleId}" >
-                                                    ${role.roleName}
+                                            <c:forEach items="${assetsStatus}" var="assetStat">
+                                                <c:if test="${asset.type == assetStat.value}">
+                                                    ${assetStat.key}
+                                                </c:if>
+                                            </c:forEach>
+                                        </td>
+                                        <td>
+                                            <c:forEach items="${customers}" var="customer" >
+                                                <c:if test="${asset.customerId == customer.customerId}" >
+                                                    <c:forEach items="${users}" var="user">
+                                                        <c:if test="${customer.uid == user.uid}">
+                                                            ${user.realname}
+                                                        </c:if>
+
+                                                    </c:forEach>
                                                 </c:if>
 
                                             </c:forEach>
                                         </td>
                                         <td>
-                                            <c:choose>
-                                                <c:when test="${admin.status == '1'}" >
-                                                    正常
-                                                </c:when>
-                                                <c:when test="${admin.status == '0'}" >
-                                                    禁用
-                                                </c:when>
-                                            </c:choose>
-                                        </td>
-                                        <td>
-                                            <c:forEach items="${departments}" var="department">
-                                                <c:if test="${admin.organ == department['id']}">
-                                                    ${department['name']}
+                                            <c:forEach items="${customers}" var="customer">
+                                                <c:if test="${asset.customerId == customer.customerId}">
+                                                    ${customer.cbId}
                                                 </c:if>
                                             </c:forEach>
-
                                         </td>
                                         <td>
-                                            <c:forEach items="${areas}" var="area" >
-                                                <c:if test="${admin.area == area.areaId}" >
-                                                    ${area.areaName}
+                                            <c:forEach items="${products}" var="product">
+                                                <c:if test="${asset.productId == product.pid}">
+                                                    ${product.name}
                                                 </c:if>
 
                                             </c:forEach>
-
                                         </td>
-                                        <td>${admin.mobile}</td>
                                         <td>
-                                            <a href="<%=contextPath%>/system/admin/detail/${admin.id}" class="btn mini purple"><i class="icon-edit"></i> 编辑</a>
-                                            <a href="<%=contextPath%>/system/admin/delete/${admin.id}" class="btn mini purple"><i class="icon-edit"></i> 删除</a>
+                                            ${asset.amountUsd}
+                                        </td>
+                                        <td>${asset.amountRmb}</td>
+                                        <td>
+                                            <c:forEach items="${planners}" var="planner">
+                                                <c:if test="${asset.plannerId == planner.id}">
+                                                    <c:forEach items="${users}" var="user">
+                                                        <c:if test="${planner.uid == user.uid}">
+                                                            ${user.realname}
+                                                        </c:if>
+                                                    </c:forEach>
+                                                </c:if>
+                                            </c:forEach>
                                         </td>
                                     </tr>
                                 </c:forEach>
