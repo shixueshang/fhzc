@@ -6,6 +6,7 @@ import com.fhzc.app.api.tools.ApiJsonResult;
 
 
 import com.fhzc.app.api.tools.ObjUtils;
+import com.fhzc.app.dao.mybatis.util.Const;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,17 +46,8 @@ public class IndexApiController extends BaseController {
         map.put("activity", activityService.getRecommendActivityList());
         map.put("report", reportService.getRecommendReportList());
 
-        Map<String, Object> banner_text = new HashMap<String,Object>();
-        banner_text.put("id",bannerService.getText1().getFromId());
-        banner_text.put("type",bannerService.getText1().getFromType());
-        banner_text.put("text",bannerService.getText1().getText());
-        map.put("banner_text",banner_text);//私行提示
-
-        Map<String,Object> banner_pic = new HashMap<String, Object>();
-        banner_pic.put("id",bannerService.getPic1().getFromId());
-        banner_pic.put("type",bannerService.getPic1().getFromType());
-        banner_pic.put("cover",bannerService.getPic1().getCover());
-        map.put("banner_pic",banner_pic);//私行提示下面的第一张图
+        map.put("banner_text",bannerService.get(Const.BANNER_TYPE.TEXT));//私行提示
+        map.put("banner_pic",bannerService.get(Const.BANNER_TYPE.PIC));//私行提示下面的第一张图
 
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,map);
     }
@@ -70,6 +62,7 @@ public class IndexApiController extends BaseController {
         map.put("rights", rightsService.getRecommend());
         map.put("activity", activityService.getRecommendActivityList());
         map.put("report", reportService.getRecommendReportList());
+        map.put("banner_pic",bannerService.get(Const.BANNER_TYPE.PIC));//私行提示下面的第一张图
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,map);
     }
 
