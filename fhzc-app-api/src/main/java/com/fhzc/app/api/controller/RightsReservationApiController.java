@@ -34,22 +34,14 @@ public class RightsReservationApiController extends BaseController {
 
     public static String GETSTATUS_FAIL_MESSAGE = "获取状态错误";
 
+    /**
+     * 权益兑换
+     * @param rightsReservation
+     * @return
+     */
     @RequestMapping(value = "/api/rights/exchange",method = RequestMethod.POST)
     @ResponseBody
     public ApiJsonResult rightsReservation(RightsReservation rightsReservation){
-
-//        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        Date markDateForm=null;
-//        try {
-//            markDateForm=sdf.parse(String.valueOf(rightsReservation.getMarkDate()));
-//        } catch (ParseException e) {
-//
-//        }
-//        if(markDateForm==null){
-//            return new ApiJsonResult(APIConstants.API_JSON_RESULT.FAILED,"date formart is error");
-//        }else {
-//            rightsReservation.setMarkDate(markDateForm);
-//        }
         Rights rights = rightsService.getRights(rightsReservation.getRightsId());
         rightsReservation.setCtime(new Date());
         rightsReservation.setScoreCost(rights.getSpendScore());
@@ -59,6 +51,12 @@ public class RightsReservationApiController extends BaseController {
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
     }
 
+    /**
+     * 取消权益兑换
+     * @param id
+     * @param response
+     * @return
+     */
     @RequestMapping(value = "/api/rights/exchange/cancel",method = RequestMethod.POST)
     @ResponseBody
     public ApiJsonResult rightsReservationExchange(Integer id ,HttpServletResponse response ){
@@ -85,6 +83,11 @@ public class RightsReservationApiController extends BaseController {
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
     }
 
+    /**
+     * 我预约的权益
+     * @param customer_id
+     * @return
+     */
     @RequestMapping(value = "/api/personal/right/order",method = RequestMethod.GET)
     @ResponseBody
     public ApiJsonResult personalRightOrder(Integer customer_id){

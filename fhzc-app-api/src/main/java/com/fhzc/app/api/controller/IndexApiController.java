@@ -37,6 +37,10 @@ public class IndexApiController extends BaseController {
     @Resource
     private BannerService bannerService;
 
+    /**
+     * 首页-精选
+     * @return
+     */
     @RequestMapping(value = "/api/index",method = RequestMethod.GET)
     @ResponseBody
     public ApiJsonResult indexList(){
@@ -52,7 +56,10 @@ public class IndexApiController extends BaseController {
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,map);
     }
 
-
+    /**
+     * 私行服务
+     * @return
+     */
     @RequestMapping(value = "/api/mybank",method = RequestMethod.GET)
     @ResponseBody
     public ApiJsonResult mybank(){

@@ -29,6 +29,10 @@ public class ReportApiController extends BaseController{
     @Resource
     private FocusService focusService;
 
+    /**
+     * 投研报告
+     * @return
+     */
     @RequestMapping(value = "/api/report",method = RequestMethod.GET)
     @ResponseBody
     public ApiJsonResult reportList(){
@@ -37,6 +41,12 @@ public class ReportApiController extends BaseController{
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,reportList);
     }
 
+    /**
+     * 报告详情
+     * @param reportId
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/api/report/detail",method = RequestMethod.GET)
     @ResponseBody
     public  ApiJsonResult reportDetail(Integer reportId) throws Exception {
