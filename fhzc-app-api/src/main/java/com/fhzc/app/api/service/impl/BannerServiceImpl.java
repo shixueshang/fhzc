@@ -19,20 +19,14 @@ public class BannerServiceImpl implements BannerService{
     BannerMapper bannerMapper;
 
     @Override
-    public Banner getText1() {
+    public List<Banner> get(String type) {
         BannerExample example = new BannerExample();
         BannerExample.Criteria criteria = example.createCriteria();
-        criteria.andTypeEqualTo("index_text");
-        List<Banner> bannerList = bannerMapper.selectByExample(example);
-        return bannerList.get(0);
-    }
-
-    @Override
-    public Banner getPic1() {
-        BannerExample example = new BannerExample();
-        BannerExample.Criteria criteria = example.createCriteria();
-        criteria.andTypeEqualTo("index_pic");
-        List<Banner> bannerList = bannerMapper.selectByExample(example);
-        return bannerList.get(0);
+        criteria.andTypeEqualTo(type);
+        if(bannerMapper.countByExample(example) > 0){
+            return bannerMapper.selectByExample(example);
+        }else {
+            return null;
+        }
     }
 }

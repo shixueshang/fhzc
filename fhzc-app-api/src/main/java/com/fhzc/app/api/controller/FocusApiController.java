@@ -36,7 +36,8 @@ public class FocusApiController extends BaseController {
 
     @Resource
     private DictionaryService dictionaryService;
-    /*
+
+    /**
      * uid 用户id
      * fid 被关注的资源id,可能是产品id、活动id等
      * ftype 关注类型
@@ -60,6 +61,13 @@ public class FocusApiController extends BaseController {
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
     }
 
+    /**
+     * 获取关注状态
+     * @param uid
+     * @param fid
+     * @param ftype
+     * @return
+     */
     @RequestMapping(value = "/api/focus/status", method = RequestMethod.GET)
     @ResponseBody
     public ApiJsonResult focusStatus(Integer uid, Integer fid, String ftype){
@@ -69,6 +77,11 @@ public class FocusApiController extends BaseController {
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,status);
     }
 
+    /**
+     * 我的关注
+     * @param uid
+     * @return
+     */
     @RequestMapping(value = "/api/focus/list", method = RequestMethod.GET)
     @ResponseBody
     public ApiJsonResult focusList(Integer uid){

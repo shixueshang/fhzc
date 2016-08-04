@@ -35,6 +35,7 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 	@Resource
 	private ScoreHistoryMapper scoreHistoryMapper;
 
+	//消费积分导入
     @Override
     public Map<String, Object> importExcelFileConsume(MultipartFile multipartFile) throws Exception {
        Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
@@ -58,16 +59,16 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
         			Object[] temData = new  Object[10];
 	        		String pcode = objects[3].toString();
 	        		String key = pcode.substring(pcode.length()-8);
-	        		temData[0] = objects[0];	//姓名 
-	        		temData[1] = objects[1];	//性别 
-	        		temData[2] = objects[2];	//证件类型
-	        		temData[3] = EncryptUtils.encryptToDES(key, pcode);	//证件号码
-	        		temData[4] = objects[4];	//权益名称
-	        		temData[5] = objects[5];	//消费时间 
-	        		temData[6] = objects[6];	//消费地点
+	        		temData[0] = objects[0];									//姓名 
+	        		temData[1] = objects[1];									//性别 
+	        		temData[2] = objects[2];									//证件类型
+	        		temData[3] = EncryptUtils.encryptToDES(key, pcode);			//证件号码
+	        		temData[4] = objects[4];									//权益名称
+	        		temData[5] = objects[5];									//消费时间 
+	        		temData[6] = objects[6];									//消费地点
 	        		temData[7] = TextUtils.FloatToInt(objects[7].toString());	//消费积分
 	        		temData[8] = TextUtils.FloatToInt(objects[8].toString());	//剩余积分
-	        		temData[9] = operatorID;			//operatorID
+	        		temData[9] = operatorID;									//operatorID
 	        		scoreList.add(temData);
         		}
         	}
@@ -94,6 +95,7 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
         return importResult;
     }
 
+    //积分历史
 	@Override
 	public Map<String, Object> importExcelFileAdd(MultipartFile multipartFile) throws Exception {
 		 Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
@@ -117,19 +119,19 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 		        			Object[] temData = new  Object[13];
 			        		String pcode = objects[3].toString();
 			        		String key = pcode.substring(pcode.length()-8);
-			        		temData[0] = objects[0];	//姓名
-			        		temData[1] = objects[1];	//性别
-			        		temData[2] = objects[2];	//证件类型
+			        		temData[0] = objects[0];							//姓名
+			        		temData[1] = objects[1];							//性别
+			        		temData[2] = objects[2];							//证件类型
 			        		temData[3] = EncryptUtils.encryptToDES(key, pcode);	//证件号码
-			        		temData[4] = objects[4];	//积分增减
-			        		temData[5] = objects[5];	//来源类型
-			        		temData[6] = objects[6];	//积分来源
-			        		temData[7] = objects[7];	//积分值
-			        		temData[8] = objects[10];	//有效期
-			        		temData[9] = operatorID;	//operatorID
-			        		temData[10] = objects[8];	//操作时间
-			        		temData[11] = objects[11];	//积分操作方式
-			        		temData[12] = objects[12];	//摘要
+			        		temData[4] = objects[4];							//积分增减
+			        		temData[5] = objects[5];							//来源类型
+			        		temData[6] = objects[6];							//积分来源
+			        		temData[7] = objects[7];							//积分值
+			        		temData[8] = objects[10];							//有效期
+			        		temData[9] = operatorID;							//operatorID
+			        		temData[10] = objects[8];							//操作时间
+			        		temData[11] = objects[11];							//积分操作方式
+			        		temData[12] = objects[12];							//摘要
 			        		scoreList.add(temData);
 		        		}
 		        	}

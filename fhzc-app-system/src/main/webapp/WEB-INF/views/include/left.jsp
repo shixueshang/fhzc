@@ -210,7 +210,10 @@
                                     <a href="<%=contextPath%>/business/product/importor">产品导入</a>
                                 </li></shiro:hasPermission>
                             <shiro:hasPermission name="/personal/planner/importor"><li>
-                                <a href="/personal/planner/importor">理财师导入</a>
+                                <a href="/personal/planner/importor">在职理财师导入</a>
+                            </li></shiro:hasPermission>
+                            <shiro:hasPermission name="/personal/planner/importoroff"><li>
+                                <a href="/personal/planner/importoroff">离职理财师导入</a>
                             </li></shiro:hasPermission>
                             <shiro:hasPermission name="/business/plannerachivementsdaily/importor"><li>
                                 <a href="/business/plannerachivementsdaily/importor">理财师日业绩导入</a>

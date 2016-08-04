@@ -38,6 +38,11 @@ public class RightsApiController extends BaseController{
     @Resource
     private DictionaryService dictionaryService;
 
+    /**
+     * 权益列表
+     * @param cid
+     * @return
+     */
     @RequestMapping(value = "/api/rights",method = RequestMethod.GET)
     @ResponseBody
     public ApiJsonResult rightsList(Integer cid){
@@ -46,6 +51,10 @@ public class RightsApiController extends BaseController{
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,rightsList);
     }
 
+    /**
+     * 精选权益
+     * @return
+     */
     @RequestMapping(value = "/api/rights/select",method = RequestMethod.GET)
     @ResponseBody
     public ApiJsonResult rightsSelectList(){
@@ -54,6 +63,12 @@ public class RightsApiController extends BaseController{
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,rightsList);
     }
 
+    /**
+     * 权益详情
+     * @param rightsId
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/api/rights/detail",method = RequestMethod.GET)
     @ResponseBody
     public  ApiJsonResult rightsDetail(Integer rightsId) throws Exception {

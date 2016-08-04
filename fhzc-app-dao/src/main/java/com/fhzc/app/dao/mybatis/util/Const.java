@@ -182,4 +182,9 @@ public class Const {
         public static final String PLANNER = "planner";
         public static final String CUSTOMER= "customer";
     }
+
+    public static class BANNER_TYPE{
+        public static final String TEXT= "index_text";
+        public static final String PIC= "index_pic";
+    }
 }

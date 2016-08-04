@@ -43,7 +43,7 @@
                             <a href="javascript:void(0);">客户管理</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li class="active"><a href="javascript:void(0);">投资人档案表导入</a></li>
+                        <li class="active"><a href="javascript:void(0);">个人客户投资人档案表导入</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
@@ -91,8 +91,10 @@
                                             </div>
                                         </form>
                                         <!-- END FORM-->
-                                        
                                     </div>
+                                     <c:if test="${success != null}">
+										<jsp:include page="../../include/alert.jsp"/>
+									 </c:if>
                                 </div>
                             </div>
                         </div>

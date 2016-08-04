@@ -93,15 +93,8 @@
                                         <!-- END FORM-->
                                     </div>
                                      <c:if test="${success != null}">
-                                     <script>
-                                     	alert(${totalRows});
-                                     </script>
-                                    	<div class="tab-pane active" id="portlet_tab1">
-		                                    <ul>
-		                                    <li>本次供操作记录${totalRows}条，其中成功${successRows}条，失败${failRows}条</li>
-		                                    </ul>
-	                                    </div>
-                                    </c:if>
+                                     	<jsp:include page="../../include/alert.jsp"/>
+                                     </c:if>
                                 </div>
                             </div>
                         </div>

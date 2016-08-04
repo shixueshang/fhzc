@@ -1,7 +1,5 @@
 package com.fhzc.app.system.controller.business;
 
-
-
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.PayMentService;
 
@@ -36,23 +34,26 @@ public class PayMentController extends BaseController {
     }
     
     /**
-     * excel导入
+     * 普通兑付excel导入
      * @param multiFile
      * @return
      */
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> importExcel(MultipartFile multiFile){
-        Map<String, Object> result = new HashMap<String, Object>();
+    public ModelAndView importExcel(MultipartFile multiFile){
+    	Map<String, Object> result = new HashMap<String, Object>();
+        ModelAndView mav = new ModelAndView("business/payment/importor");
         try {
             result = payMentService.importExcelFile(multiFile);
             result.put("success", true);
+            mav.addAllObjects(result);
         } catch (Exception e) {
-            logger.error("导入失败");
+            logger.error("导入失败" + e.getMessage() );
             result.put("success", false);
+            mav.addAllObjects(result);
             e.printStackTrace();
         }
-        return result;
+        return mav;
     }
     
     /**
@@ -64,24 +65,26 @@ public class PayMentController extends BaseController {
         ModelAndView mav = new ModelAndView("business/payment/importorspecial");
         return mav;
     }
+    
     /**
-     * excel导入
+     * 鑫丰母基金兑付excel导入
      * @param multiFile
      * @return
      */
     @RequestMapping(value = "/importspecial", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> importExcelSpecial(MultipartFile multiFile){
-        Map<String, Object> result = new HashMap<String, Object>();
+    public ModelAndView importExcelSpecial(MultipartFile multiFile){
+    	Map<String, Object> result = new HashMap<String, Object>();
+        ModelAndView mav = new ModelAndView("business/payment/importorspecial");
         try {
             result = payMentService.importExcelFileSpecial(multiFile);
             result.put("success", true);
+            mav.addAllObjects(result);
         } catch (Exception e) {
-            logger.error("导入失败");
+            logger.error("导入失败" + e.getMessage() );
             result.put("success", false);
-            e.printStackTrace();
+            mav.addAllObjects(result);
         }
-        return result;
+        return mav;
     }
-
 }

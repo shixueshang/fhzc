@@ -2,10 +2,11 @@ package com.fhzc.app.api.service;
 
 import com.fhzc.app.dao.mybatis.model.Banner;
 
+import java.util.List;
+
 /**
  * Created by freeman on 16/8/2.
  */
 public interface BannerService {
-    Banner getText1();
-    Banner getPic1();
+    List<Banner> get(String type);
 }

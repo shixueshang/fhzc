@@ -1,11 +1,8 @@
 package com.fhzc.app.system.controller.business;
 
 import com.fhzc.app.system.controller.BaseController;
-import com.fhzc.app.system.service.DepartmentService;
-import com.fhzc.app.system.service.DictionaryService;
 import com.fhzc.app.system.service.ContractService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,7 +27,7 @@ public class ContractController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/importor", method = RequestMethod.GET)
-    public ModelAndView importorProduct(){
+    public ModelAndView importorContract(){
         ModelAndView mav = new ModelAndView("business/contract/importor");
         return mav;
     }
@@ -42,16 +39,19 @@ public class ContractController extends BaseController {
      */
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> importExcel(MultipartFile multiFile){
-        Map<String, Object> result = new HashMap<String, Object>();
+    public ModelAndView importExcel(MultipartFile multiFile){
+    	Map<String, Object> result = new HashMap<String, Object>();
+        ModelAndView mav = new ModelAndView("business/contract/importor");
         try {
             result = contractService.importExcelFile(multiFile);
             result.put("success", true);
+            mav.addAllObjects(result);
         } catch (Exception e) {
-            logger.error("导入失败");
+            logger.error("导入失败" + e.getMessage() );
             result.put("success", false);
+            mav.addAllObjects(result);
             e.printStackTrace();
         }
-        return result;
+        return mav;
     }
 }

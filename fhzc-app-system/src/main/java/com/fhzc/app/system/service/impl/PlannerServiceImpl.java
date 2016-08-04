@@ -9,6 +9,8 @@ import com.fhzc.app.dao.mybatis.inter.PlannerMapper;
 import com.fhzc.app.dao.mybatis.model.Planner;
 import com.fhzc.app.dao.mybatis.model.PlannerExample;
 import com.fhzc.app.system.service.PlannerService;
+
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -24,9 +26,14 @@ import java.util.*;
  */
 @Service
 public class PlannerServiceImpl implements PlannerService {
-   
+	
+	//导入在职时先生成department
+	private static final String IMPORT_DEPART_SQL = "call sp_update_department_leader(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	
+	//在职理财师
 	private static final String IMPORT_SQL = "call sp_insert_planner(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-	    
+	
+	//离职理财师
 	private static final String IMPORT_OFF_SQL = "call sp_removeoffer_planner(?)";
 	
 	@Resource
@@ -62,8 +69,13 @@ public class PlannerServiceImpl implements PlannerService {
         }
     }
 
+    /**
+     * department导入
+     * @param multipartFile
+     * @return
+     */
     @Override
-    public Map<String, Object> importExcelFile(MultipartFile multipartFile) throws Exception {
+    public Map<String, Object> importDepartmentExcelFile(MultipartFile multipartFile) throws Exception {
        Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
         @Override
         public String validation(Workbook xwb) {
@@ -72,7 +84,7 @@ public class PlannerServiceImpl implements PlannerService {
 
         @Override
         public String getImportSQL() {
-        		return IMPORT_SQL;
+        		return IMPORT_DEPART_SQL;
         }
 
         @Override
@@ -81,24 +93,25 @@ public class PlannerServiceImpl implements PlannerService {
         	if(data.get(0).length>0){
 	        	for (Object[] objects : data) {
 	        		Object[] temData = new  Object[18];
-	        		temData[0] = objects[1];	//工号 work_num,作为初始登录名
-	        		temData[1] = EncryptUtils.encryptToMD5(objects[4].toString());	//手机号 mobile，作为初始密码	
-	        		temData[2] = objects[1];	//工号 work_num
-	        		temData[3] = objects[2];	//姓名 realname
-					temData[4] = objects[3];	//证件号
-					temData[5] = objects[4];	//手机号
-	        		temData[6] = objects[5];	//所属公司 company
-	        		temData[7] = objects[6];	//所属城市 area
-	        		temData[8] = objects[7];	//一级部门 dept1
-	        	    temData[9] = objects[8];	//负责人 dept1_leader	
-	        		temData[10] = objects[9];	//二级部门 dept2
-	        		temData[11] = objects[10];	//负责人 dept2_leader
-	        		temData[12] = objects[11];	//三级部门 dept3
-	        		temData[13] = objects[12];	//负责人 dept3_leader
-	        		temData[14] = objects[13];	//四级部门 dept14
-	        		temData[15] = objects[14];	//负责人 dept4_leader
-	        		temData[16] = objects[15];	//岗位名称 job_title_cn
-	        		temData[17] = objects[16];	//岗位序列 position
+	        		String phone = objects[4].toString();
+	        		temData[0] = objects[1];						//工号 work_num,作为初始登录名
+	        		temData[1] = DigestUtils.md5Hex(phone);			//手机号 mobile，作为初始密码	
+	        		temData[2] = objects[1];						//工号 work_num
+	        		temData[3] = objects[2];						//姓名 realname
+					temData[4] = objects[3];						//证件号
+					temData[5] = phone;								//手机号
+	        		temData[6] = objects[5];						//所属公司 company
+	        		temData[7] = objects[6];						//所属城市 area
+	        		temData[8] = objects[7];						//一级部门 dept1
+	        	    temData[9] = objects[8];						//负责人 dept1_leader	
+	        		temData[10] = objects[9];						//二级部门 dept2
+	        		temData[11] = objects[10];						//负责人 dept2_leader
+	        		temData[12] = objects[11];						//三级部门 dept3
+	        		temData[13] = objects[12];						//负责人 dept3_leader
+	        		temData[14] = objects[13];						//四级部门 dept14
+	        		temData[15] = objects[14];						//负责人 dept4_leader
+	        		temData[16] = objects[15];						//岗位名称 job_title_cn
+	        		temData[17] = objects[16];						//岗位序列 position
 	        		plannerList.add(temData);
 				}
         	}
@@ -125,8 +138,13 @@ public class PlannerServiceImpl implements PlannerService {
         return importResult;
     }
     
+    /**
+     * 在职理财师导入
+     * @param multipartFile
+     * @return
+     */
     @Override
-    public Map<String, Object> importExcelFileOff(MultipartFile multipartFile) throws Exception {
+    public Map<String, Object> importExcelFile(MultipartFile multipartFile) throws Exception {
        Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
         @Override
         public String validation(Workbook xwb) {
@@ -135,16 +153,34 @@ public class PlannerServiceImpl implements PlannerService {
 
         @Override
         public String getImportSQL() {
-        		return IMPORT_OFF_SQL;
+        		return IMPORT_SQL;
         }
 
         @Override
-        public List<Object[]> getImportData(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data) {
+        public List<Object[]> getImportData(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data)  {
         	List<Object[]> plannerList = new ArrayList<Object[]>();
         	if(data.get(0).length>0){
 	        	for (Object[] objects : data) {
-	        		Object[] temData = new  Object[1];
-	        		temData[0] = objects[1];	//工号 work_num
+	        		Object[] temData = new  Object[18];
+	        		String phone = objects[4].toString();
+	        		temData[0] = objects[1];						//工号 work_num,作为初始登录名
+	        		temData[1] = DigestUtils.md5Hex(phone);			//手机号 mobile，作为初始密码	
+	        		temData[2] = objects[1];						//工号 work_num
+	        		temData[3] = objects[2];						//姓名 realname
+					temData[4] = objects[3];						//证件号
+					temData[5] = phone;								//手机号
+	        		temData[6] = objects[5];						//所属公司 company
+	        		temData[7] = objects[6];						//所属城市 area
+	        		temData[8] = objects[7];						//一级部门 dept1
+	        	    temData[9] = objects[8];						//负责人 dept1_leader	
+	        		temData[10] = objects[9];						//二级部门 dept2
+	        		temData[11] = objects[10];						//负责人 dept2_leader
+	        		temData[12] = objects[11];						//三级部门 dept3
+	        		temData[13] = objects[12];						//负责人 dept3_leader
+	        		temData[14] = objects[13];						//四级部门 dept14
+	        		temData[15] = objects[14];						//负责人 dept4_leader
+	        		temData[16] = objects[15];						//岗位名称 job_title_cn
+	        		temData[17] = objects[16];						//岗位序列 position
 	        		plannerList.add(temData);
 				}
         	}
@@ -166,7 +202,58 @@ public class PlannerServiceImpl implements PlannerService {
             };
 
         }
-        }).importExcelFile(multipartFile,1,2);
+        }).importExcelFile(multipartFile);
+
+        return importResult;
+    }
+    
+    /**
+     * 离职理财师导入
+     * @param multipartFile
+     * @return
+     */
+    @Override
+    public Map<String, Object> importExcelFileOff(MultipartFile multipartFile) throws Exception {
+       Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
+        @Override
+        public String validation(Workbook xwb) {
+            return null;
+        }
+
+        @Override
+        public String getImportSQL() {
+        		return IMPORT_OFF_SQL;
+        }
+
+        @Override
+        public List<Object[]> getImportData(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data) {
+        	List<Object[]> plannerList = new ArrayList<Object[]>();
+        	if(data.get(0).length>0){
+	        	for (Object[] objects : data) {
+	        		Object[] temData = new  Object[1];
+	        		temData[0] = objects[1];		//工号 work_num
+	        		plannerList.add(temData);
+				}
+        	}
+            return plannerList;
+        }
+
+        @Override
+        public ImportCallBack getImportCallBack() {
+            return new ImportCallBack() {
+                @Override
+                public void preOperation(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data) {
+
+                }
+
+                @Override
+                public void postOperation (SqlSessionTemplate sqlSessionTemplate, List < Object[]>data){
+
+                }
+            };
+
+        }
+        }).importExcelFile(multipartFile);
 
         return importResult;
     }
@@ -178,7 +265,8 @@ public class PlannerServiceImpl implements PlannerService {
         criteria.andUidEqualTo(uid);
 		return plannerMapper.selectByExample(example).get(0);
 	}
-
+	
+	//在职离职理财师一起导入--未使用
 	@Override
 	public Map<String,Map<String, Object>> importExcel(MultipartFile multipartFile) throws Exception {
 		 Map<String, Object> importResultOn = new HashMap<String, Object>();

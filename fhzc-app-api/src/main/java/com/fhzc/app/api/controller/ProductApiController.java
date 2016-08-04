@@ -133,6 +133,7 @@ public class ProductApiController extends BaseController {
             map.put("value_day",product.getValueDay());
             map.put("redeem_day",product.getRedeemDay());
             map.put("dividend_day",product.getDividendDay());
+            map.put("dead_date",asset.getDeadDate());//截止日期
 
             result.add(map);
         }

@@ -27,6 +27,11 @@ public class ProductOrderApiController extends BaseController{
     @Resource
     private ProductService productService;
 
+    /**
+     * 预约产品
+     * @param productReservation
+     * @return
+     */
     @RequestMapping(value = "/api/product/order",method = RequestMethod.POST)
     @ResponseBody
     public ApiJsonResult productOrder(ProductReservation productReservation){
@@ -37,6 +42,11 @@ public class ProductOrderApiController extends BaseController{
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
     }
 
+    /**
+     * 取消预约产品
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "/api/product/order/cancel",method = RequestMethod.POST)
     @ResponseBody
     public ApiJsonResult productOrderCancel(Integer id){
@@ -48,6 +58,11 @@ public class ProductOrderApiController extends BaseController{
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
     }
 
+    /**
+     * 客户预约的产品
+     * @param customer_id
+     * @return
+     */
     @RequestMapping(value = "/api/personal/product/order",method = RequestMethod.GET)
     @ResponseBody
     public ApiJsonResult personalProductOrder(Integer customer_id){

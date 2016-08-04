@@ -43,7 +43,7 @@
                             <a href="javascript:void(0);">资产管理</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li class="active"><a href="javascript:void(0);">兑付导入</a></li>
+                        <li class="active"><a href="javascript:void(0);">普通兑付导入</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
@@ -92,6 +92,9 @@
                                         </form>
                                         <!-- END FORM-->
                                     </div>
+                                     <c:if test="${success != null}">
+										<jsp:include page="../../include/alert.jsp"/>
+									 </c:if>
                                 </div>
                             </div>
                         </div>

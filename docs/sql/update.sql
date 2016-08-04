@@ -245,5 +245,7 @@ CHANGE COLUMN `phone` `phone` VARCHAR(45) NULL DEFAULT NULL COMMENT '为他人�
 ALTER TABLE `bank`.`rights`
 CHANGE COLUMN `level` `level` INT UNSIGNED NULL DEFAULT NULL COMMENT '需要的客户等级' ,
 CHANGE COLUMN `is_ recommend` `is_ recommend` INT UNSIGNED NULL DEFAULT '0' COMMENT '是否精选 1是|0否' ;
+ALTER TABLE `bank`.`assets_history`
+CHANGE COLUMN `dead_date` `dead_date` DATE NOT NULL COMMENT '截至日期' ;
 
 

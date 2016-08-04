@@ -49,8 +49,13 @@ public class ExcelImporter {
 	public Map<String, Object> importExcelFile(MultipartFile multipartFile)  throws Exception {
 	     return importExcelFile(multipartFile,0,2);
 	}
+	
+	public Map<String, Object> importExcelFile(MultipartFile multipartFile, int startsheetno, int startrowno)  throws Exception {
+	     return importExcelFile(multipartFile,startsheetno,startrowno,0);
+	}
 
-	public Map<String, Object> importExcelFile(MultipartFile multipartFile, int startsheetno, int startrowno) throws Exception {
+
+	public Map<String, Object> importExcelFile(MultipartFile multipartFile, int startsheetno, int startrowno, int validcellno) throws Exception {
         Map<String, Object> importMap = new HashMap<String, Object>();
 
 		ImportConfig importConfig = this.getImportConfig();
@@ -69,11 +74,14 @@ public class ExcelImporter {
 			Row row = sheet.getRow(i);
 			Object[] tempData = new Object[cells];
 			//判断是否为空，如果为空则不处理
-			if (row != null && row.getCell(0) != null && StringUtils.isNotEmpty(getCellFormatValue(row.getCell(0)).trim())) {
+			if (row != null && row.getCell(validcellno) != null && StringUtils.isNotEmpty(getCellFormatValue(row.getCell(validcellno)).trim())) {
 				for (int j = 0; j < cells; j++) {
 					tempData[j] = getCellFormatValue(row.getCell(j));
 				}
 				preExecution.add(tempData);
+			}
+			else{
+				break;
 			}
 		}
 
