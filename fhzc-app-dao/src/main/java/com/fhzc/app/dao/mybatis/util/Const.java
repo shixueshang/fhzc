@@ -91,6 +91,11 @@ public class Const {
          * 证件类型
          */
         public static final String PASSPORT = "passport";
+
+        /**
+         * 订单状态
+         */
+        public static final String ASSETS_STATUS = "assets_status";
     }
 
     /**
