@@ -28,6 +28,10 @@ public class ScoreApiController extends BaseController {
     @Resource
     private ScoreService scoreService;
 
+    /**
+     * 积分记录
+     * @return
+     */
     @RequestMapping(value = "/api/personal/score",method = RequestMethod.GET)
     @ResponseBody
     public ApiJsonResult personalScore(){
@@ -48,6 +52,13 @@ public class ScoreApiController extends BaseController {
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, map);
     }
 
+    /**
+     * 积分详情查询
+     * @param type
+     * @param start
+     * @param end
+     * @return
+     */
     @RequestMapping(value = "/api/personal/score/detail",method = RequestMethod.GET)
     @ResponseBody
     public ApiJsonResult personalScoreDetail(String type, String start, String end){
