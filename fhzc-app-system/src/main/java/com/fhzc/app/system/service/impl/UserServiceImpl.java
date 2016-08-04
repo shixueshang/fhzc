@@ -145,6 +145,12 @@ public class UserServiceImpl implements UserService {
             if(user.getEmail() != null){
                 user.setEmail(EncryptUtils.decryptByDES(key, user.getEmail()));
             }
+            if(user.getPhone() != null){
+                user.setPhone(EncryptUtils.decryptByDES(key, user.getPhone()));
+            }
+            if(user.getPhoneExt() != null){
+                user.setPhoneExt(EncryptUtils.decryptByDES(key, user.getPhoneExt()));
+            }
         } catch (Exception e) {
             logger.error("解密失败");
             e.printStackTrace();

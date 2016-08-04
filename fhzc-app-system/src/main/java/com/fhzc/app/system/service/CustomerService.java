@@ -7,6 +7,7 @@ import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.system.commons.vo.CustomerVo;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -71,4 +72,10 @@ public interface CustomerService {
      * @return
      */
     CustomerVo getCustomerInfoByMobile(String mobileNum);
+
+    /**
+     * 根据客户id查询客户权益享用人
+     * @return
+     */
+    List<CustomerOrgan> findOrganCustomer(Integer customerId);
 }
