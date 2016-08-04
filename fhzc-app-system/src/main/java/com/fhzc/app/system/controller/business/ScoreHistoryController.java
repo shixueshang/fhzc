@@ -21,7 +21,6 @@ public class ScoreHistoryController extends BaseController {
     @Resource
     private ScoreHistoryService scoreHistoryService;
 
-
     /**
      * 积分历史导入页面
      * @return
@@ -29,6 +28,28 @@ public class ScoreHistoryController extends BaseController {
     @RequestMapping(value = "/importoradd", method = RequestMethod.GET)
     public ModelAndView importorAddScore(){
         ModelAndView mav = new ModelAndView("business/addscorehistory/importor");
+        return mav;
+    }
+    
+    /**
+     * 积分历史excel导入
+     * @param multiFile
+     * @return
+     */
+    @RequestMapping(value = "/importadd", method = RequestMethod.POST)
+    @ResponseBody
+    public ModelAndView importExcelAdd(MultipartFile multiFile){
+    	Map<String, Object> result = new HashMap<String, Object>();
+        ModelAndView mav = new ModelAndView("business/addscorehistory/importor");
+        try {
+            result = scoreHistoryService.importExcelFileAdd(multiFile);
+            result.put("success", true);
+            mav.addAllObjects(result);
+        } catch (Exception e) {
+            logger.error("导入失败" + e.getMessage() );
+            result.put("success", false);
+            mav.addAllObjects(result);
+        }
         return mav;
     }
     
@@ -43,59 +64,24 @@ public class ScoreHistoryController extends BaseController {
     }
     
     /**
-     * excel导入
+     * 权益消费excel导入
      * @param multiFile
      * @return
      */
     @RequestMapping(value = "/importconsume", method = RequestMethod.POST)
     @ResponseBody
-//    public Map<String, Map<String, Object>> importExcel(MultipartFile multiFile){
-//       	Map<String,Map<String,Object>> result = new HashMap<String,Map<String,Object>>();
-//       	Map<String,Object> map = new HashMap<String, Object>();
-//        try {
-//            result = scoreHistoryService.importExcel(multiFile);
-//            map.put("flag", true);
-//            result.put("success", map);
-//        } catch (Exception e) {
-//            logger.error("导入失败");
-//            map.put("flag", false);
-//            result.put("success", map);
-//            e.printStackTrace();
-//        }
-//        return result;
-//    }
-    public Map<String, Object> importExcelConsume(MultipartFile multiFile){
-        Map<String, Object> result = new HashMap<String, Object>();
+    public ModelAndView importExcelConsume(MultipartFile multiFile){
+    	Map<String, Object> result = new HashMap<String, Object>();
+        ModelAndView mav = new ModelAndView("business/consumescorehistory/importor");
         try {
             result = scoreHistoryService.importExcelFileConsume(multiFile);
             result.put("success", true);
+            mav.addAllObjects(result);
         } catch (Exception e) {
-            logger.error("导入失败");
+            logger.error("导入失败" + e.getMessage() );
             result.put("success", false);
-            e.printStackTrace();
+            mav.addAllObjects(result);
         }
-        return result;
-    }
-    
-    
-    /**
-     * excel导入
-     * @param multiFile
-     * @return
-     */
-    @RequestMapping(value = "/importadd", method = RequestMethod.POST)
-    @ResponseBody
-
-    public Map<String, Object> importExcelAdd(MultipartFile multiFile){
-        Map<String, Object> result = new HashMap<String, Object>();
-        try {
-            result = scoreHistoryService.importExcelFileAdd(multiFile);
-            result.put("success", true);
-        } catch (Exception e) {
-            logger.error("导入失败");
-            result.put("success", false);
-            e.printStackTrace();
-        }
-        return result;
+        return mav;
     }
 }

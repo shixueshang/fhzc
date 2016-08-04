@@ -1,7 +1,5 @@
 package com.fhzc.app.system.controller.business;
 
-
-
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.CustomerDocumentService;
 
@@ -25,7 +23,6 @@ public class CustomerDocumentController extends BaseController {
     @Resource
     private CustomerDocumentService customerDocumentService;
 
-
     /**
      * 个人客户导入页面
      * @return
@@ -33,6 +30,28 @@ public class CustomerDocumentController extends BaseController {
     @RequestMapping(value = "/importorpersonal", method = RequestMethod.GET)
     public ModelAndView importorPersonalCustomerDocument(){
         ModelAndView mav = new ModelAndView("business/customerdocument/importorpersonal");
+        return mav;
+    }
+    
+    /**
+     * 个人客户excel导入
+     * @param multiFile
+     * @return
+     */
+    @RequestMapping(value = "/importpersonal", method = RequestMethod.POST)
+    @ResponseBody
+    public ModelAndView importExcelPersonal(MultipartFile multiFile){
+    	Map<String, Object> result = new HashMap<String, Object>();
+        ModelAndView mav = new ModelAndView("business/customerdocument/importorpersonal");
+        try {
+            result = customerDocumentService.importExcelFilePersonal(multiFile);
+            result.put("success", true);
+            mav.addAllObjects(result);
+        } catch (Exception e) {
+            logger.error("导入失败" + e.getMessage() );
+            result.put("success", false);
+            mav.addAllObjects(result);
+        }
         return mav;
     }
     
@@ -47,58 +66,25 @@ public class CustomerDocumentController extends BaseController {
     }
     
     /**
-     * excel导入
-     * @param multiFile
-     * @return
-     */
-    @RequestMapping(value = "/importpersonal", method = RequestMethod.POST)
-    @ResponseBody
-//    public Map<String, Map<String, Object>> importExcel(MultipartFile multiFile){
-//       	Map<String,Map<String,Object>> result = new HashMap<String,Map<String,Object>>();
-//       	Map<String,Object> map = new HashMap<String, Object>();
-//        try {
-//            result = customerDocumentService.importExcel(multiFile);
-//            map.put("flag", true);
-//            result.put("success", map);
-//        } catch (Exception e) {
-//            logger.error("导入失败");
-//            map.put("flag", false);
-//            result.put("success", map);
-//            e.printStackTrace();
-//        }
-//        return result;
-//    }
-    public Map<String, Object> importExcelPersonal(MultipartFile multiFile){
-        Map<String, Object> result = new HashMap<String, Object>();
-        try {
-            result = customerDocumentService.importExcelFilePersonal(multiFile);
-            result.put("success", true);
-        } catch (Exception e) {
-            logger.error("导入失败");
-            result.put("success", false);
-            e.printStackTrace();
-        }
-        return result;
-    }
-    
-    /**
-     * excel导入
+     * 机构客户excel导入
      * @param multiFile
      * @return
      */
     @RequestMapping(value = "/importagent", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> importExcelAgent(MultipartFile multiFile){
-        Map<String, Object> result = new HashMap<String, Object>();
+    public ModelAndView importExcelAgent(MultipartFile multiFile){
+    	Map<String, Object> result = new HashMap<String, Object>();
+        ModelAndView mav = new ModelAndView("business/customerdocument/importoragent");
         try {
             result = customerDocumentService.importExcelFileAgent(multiFile);
             result.put("success", true);
+            mav.addAllObjects(result);
         } catch (Exception e) {
-            logger.error("导入失败");
+            logger.error("导入失败" + e.getMessage() );
             result.put("success", false);
+            mav.addAllObjects(result);
             e.printStackTrace();
         }
-        return result;
+        return mav;
     }
-
 }

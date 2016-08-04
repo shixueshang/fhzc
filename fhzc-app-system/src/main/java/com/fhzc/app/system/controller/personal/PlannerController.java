@@ -75,9 +75,8 @@ public class PlannerController extends BaseController {
         return mav;
     }
 
-
     /**
-     * 理财师导入页面
+     * 在职理财师导入页面
      * @return
      */
     @RequestMapping(value = "/importor", method = RequestMethod.GET)
@@ -85,50 +84,58 @@ public class PlannerController extends BaseController {
         ModelAndView mav = new ModelAndView("personal/planner/importor");
         return mav;
     }
-
+    
     /**
-     * excel导入
+     * excel导入--在职
      * @param multiFile
      * @return
      */
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     @ResponseBody
-//    public Map<String, Object> importExcel(MultipartFile multiFile){
-//        Map<String, Object> result = new HashMap<String, Object>();
-//        try {
-//            result = plannerService.importExcelFile(multiFile);
-//            result.put("success", true);
-//        } catch (Exception e) {
-//            logger.error("导入失败");
-//            result.put("success", false);
-//            e.printStackTrace();
-//        }
-//        return result;
-//    }
     public ModelAndView importExcel(MultipartFile multiFile){
     	ModelAndView mav = new ModelAndView("personal/planner/importor");
-//    	Map<String, Object> result = new HashMap<String, Object>();
-//        try {
-//            result = plannerService.importExcelFile(multiFile);
-//            result.put("success", true);
-//        } catch (Exception e) {
-//            logger.error("导入失败");
-//            result.put("success", false);
-//            e.printStackTrace();
-//        }
-//        mav.addObject("result", result);
-    	
-    	Map<String,Map<String,Object>> result = new HashMap<String,Map<String,Object>>();
-	      try {
-	      result = plannerService.importExcel(multiFile);
-//	      result.put("success", true);
-	      } catch (Exception e) {
-	      logger.error("导入失败");
-//	      result.put("success", false);
-	      e.printStackTrace();
-	      }
-	      mav.addObject("result", result);
+    	Map<String,Object> result = new HashMap<String,Object>();
+        try {
+            result = plannerService.importExcelFile(multiFile);
+            result.put("success", true);
+            mav.addAllObjects(result);
+        } catch (Exception e) {
+            logger.error("导入失败" + e.getMessage() );
+            result.put("success", false);
+            mav.addAllObjects(result);
+        }
         return mav;
     }
 
+    /**
+     * 离职理财师导入页面
+     * @return
+     */
+    @RequestMapping(value = "/importoroff", method = RequestMethod.GET)
+    public ModelAndView importOffPlanner(){
+        ModelAndView mav = new ModelAndView("personal/planner/importoroff");
+        return mav;
+    }
+    
+    /**
+     * excel导入--离职
+     * @param multiFile
+     * @return
+     */
+    @RequestMapping(value = "/importoff", method = RequestMethod.POST)
+    @ResponseBody
+    public ModelAndView importOffExcel(MultipartFile multiFile){
+    	ModelAndView mav = new ModelAndView("personal/planner/importoroff");
+    	Map<String,Object> result = new HashMap<String,Object>();
+        try {
+            result = plannerService.importExcelFileOff(multiFile);
+            result.put("success", true);
+            mav.addAllObjects(result);
+        } catch (Exception e) {
+            logger.error("导入失败" + e.getMessage() );
+            result.put("success", false);
+            mav.addAllObjects(result);
+        }
+        return mav;
+    }
 }

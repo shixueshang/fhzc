@@ -11,6 +11,7 @@ import com.fhzc.app.system.commons.util.excel.ImportConfig;
 import com.fhzc.app.dao.mybatis.inter.ContractMapper;
 import com.fhzc.app.system.service.ContractService;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -33,7 +34,6 @@ public class ContractServiceImpl implements ContractService {
 
     @Resource
     private ContractMapper contractMapper;
-    
     
     @Override
     public PageableResult<Contract> findPageContracts(int page, int size) {
@@ -75,24 +75,24 @@ public class ContractServiceImpl implements ContractService {
 	        		String phone = TextUtils.IntToDouble(objects[6].toString());
 	        		String pcode = objects[4].toString();
 	        		String key = pcode.substring(pcode.length()-8);
-	        		temData[0] = phone;								// p_login
-	        		temData[1] = EncryptUtils.encryptToMD5(phone);	// p_password
-	        		temData[2] = objects[1];	//产品名称 product_id
-	        		temData[3] = objects[2];	//基金管理人	
-	        		temData[4] = objects[3];		//证件类型
-	        		temData[5] = EncryptUtils.encryptToDES(key, pcode);
-	        		temData[6] = objects[5];	//客户姓名 customer_id
-	        		temData[7] = EncryptUtils.encryptToDES(key, phone);	//手机号码	
-	        		temData[8] = objects[7];	//客户类型
+	        		temData[0] = phone;												// p_login
+	        		temData[1] = DigestUtils.md5Hex(phone);							// p_password
+	        		temData[2] = objects[1];										//产品名称 product_id
+	        		temData[3] = objects[2];										//基金管理人	
+	        		temData[4] = objects[3];										//证件类型
+	        		temData[5] = EncryptUtils.encryptToDES(key, pcode);				//证件号码
+	        		temData[6] = objects[5];										//客户姓名 customer_id
+	        		temData[7] = EncryptUtils.encryptToDES(key, phone);				//手机号码	
+	        		temData[8] = objects[7];										//客户类型
 	        		temData[9] = TextUtils.StringtoInteger(objects[8].toString());	//出借金额 amount_rmb
 	        		temData[10] = TextUtils.StringtoInteger(objects[9].toString());	//年化金额 annualised
-	        		temData[11] = objects[10];	//出借期限 period
-	        		temData[12] = objects[11];	//年化收益率 earning_rate
-	        		temData[13] = objects[12];	//到账日期 buy_time
-	        	    temData[14] = objects[13];	//分公司
-	        		temData[15] = objects[14];	//理财师 planner_id
-	        		temData[16] = objects[15];	//工号 work_num	
-	        		temData[17] = objects[22];	//备注 memo
+	        		temData[11] = objects[10];										//出借期限 period
+	        		temData[12] = objects[11];										//年化收益率 earning_rate
+	        		temData[13] = objects[12];										//到账日期 buy_time
+	        	    temData[14] = objects[13];										//分公司
+	        		temData[15] = objects[14];										//理财师 planner_id
+	        		temData[16] = objects[15];										//工号 work_num	
+	        		temData[17] = objects[22];										//备注 memo
 	        		temData[18]	= key;
 	        		contractList.add(temData);
         		}
