@@ -70,19 +70,21 @@ public class UserController extends BaseController {
 
         List<Map> result = new ArrayList<>();
 
-        for (PlannerCustomer pc: plannerCustomers){
-            Map map = new HashMap();
-            User customer = userService.getUser(pc.getCustomerId());
-            map.put("uid",pc.getCustomerId());
-            map.put("avatar",customer.getAvatar());
-            map.put("realname",customer.getRealname());
-            map.put("mobile",customer.getMobile());
-            map.put("phone",customer.getPhone());
-            map.put("address",customer.getAddress());
-            map.put("main",pc.getIsMain());
-            List<ScoreHistory> scoreHistoryList = scoreService.getAvailableList(pc.getCustomerId());
-            map.put("score",scoreService.sumScore(scoreHistoryList));
-            result.add(map);
+        if(plannerCustomers != null) {
+            for (PlannerCustomer pc : plannerCustomers) {
+                Map map = new HashMap();
+                User customer = userService.getUser(pc.getCustomerId());
+                map.put("uid", pc.getCustomerId());
+                map.put("avatar", customer.getAvatar());
+                map.put("realname", customer.getRealname());
+                map.put("mobile", customer.getMobile());
+                map.put("phone", customer.getPhone());
+                map.put("address", customer.getAddress());
+                map.put("main", pc.getIsMain());
+                List<ScoreHistory> scoreHistoryList = scoreService.getAvailableList(pc.getCustomerId());
+                map.put("score", scoreService.sumScore(scoreHistoryList));
+                result.add(map);
+            }
         }
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
     }
