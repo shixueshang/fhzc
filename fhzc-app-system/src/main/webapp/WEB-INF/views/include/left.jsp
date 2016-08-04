@@ -157,6 +157,22 @@
                         </ul>
                     </li></shiro:hasPermission>
 
+                    <shiro:hasPermission name="/business/assets"><li class="has-sub">
+                        <a href="javascript:;">
+                            <i class="icon-sitemap"></i>
+                            <span class="title">订单管理</span>
+                            <span class="selected"></span>
+                            <span class="arrow open"></span>
+                        </a>
+
+                        <ul class="sub">
+                            <shiro:hasPermission name="/business/assets/list"><li>
+                                <a href="<%=contextPath%>/business/assets/list">订单列表</a>
+                            </li></shiro:hasPermission>
+                        </ul>
+                    </li></shiro:hasPermission>
+
+
                     <shiro:hasPermission name="/system"><li class="has-sub">
                         <a href="javascript:;">
                             <i class="icon-wrench"></i>

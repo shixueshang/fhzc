@@ -341,7 +341,7 @@ CREATE TABLE IF NOT EXISTS `bank`.`assets_history` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `customer_id` INT NOT NULL,
   `product_id` INT NOT NULL,
-  `type` ENUM('dividend','purchase','renew','redemption') NOT NULL DEFAULT 'purchase',
+  `type` ENUM('dividend','purchase','renew','redemption') NOT NULL DEFAULT 'purchase' COMMENT 'dividend:派息,purchase:购买,renew:去存,redemption:赎回',
   `ctime` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `customer_index` (`customer_id` ASC))
