@@ -92,7 +92,7 @@
                                         </form>
                                         <!-- END FORM-->
                                     </div>
-                                     <c:if test="${success != null}">
+                                    <c:if test="${success != null}">
 										<jsp:include page="../../include/alert.jsp"/>
 									 </c:if>
                                 </div>
