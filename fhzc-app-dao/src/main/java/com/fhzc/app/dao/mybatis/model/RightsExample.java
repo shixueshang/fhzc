@@ -435,52 +435,52 @@ public class RightsExample {
             return (Criteria) this;
         }
 
-        public Criteria andLevelEqualTo(Byte value) {
+        public Criteria andLevelEqualTo(Integer value) {
             addCriterion("`level` =", value, "level");
             return (Criteria) this;
         }
 
-        public Criteria andLevelNotEqualTo(Byte value) {
+        public Criteria andLevelNotEqualTo(Integer value) {
             addCriterion("`level` <>", value, "level");
             return (Criteria) this;
         }
 
-        public Criteria andLevelGreaterThan(Byte value) {
+        public Criteria andLevelGreaterThan(Integer value) {
             addCriterion("`level` >", value, "level");
             return (Criteria) this;
         }
 
-        public Criteria andLevelGreaterThanOrEqualTo(Byte value) {
+        public Criteria andLevelGreaterThanOrEqualTo(Integer value) {
             addCriterion("`level` >=", value, "level");
             return (Criteria) this;
         }
 
-        public Criteria andLevelLessThan(Byte value) {
+        public Criteria andLevelLessThan(Integer value) {
             addCriterion("`level` <", value, "level");
             return (Criteria) this;
         }
 
-        public Criteria andLevelLessThanOrEqualTo(Byte value) {
+        public Criteria andLevelLessThanOrEqualTo(Integer value) {
             addCriterion("`level` <=", value, "level");
             return (Criteria) this;
         }
 
-        public Criteria andLevelIn(List<Byte> values) {
+        public Criteria andLevelIn(List<Integer> values) {
             addCriterion("`level` in", values, "level");
             return (Criteria) this;
         }
 
-        public Criteria andLevelNotIn(List<Byte> values) {
+        public Criteria andLevelNotIn(List<Integer> values) {
             addCriterion("`level` not in", values, "level");
             return (Criteria) this;
         }
 
-        public Criteria andLevelBetween(Byte value1, Byte value2) {
+        public Criteria andLevelBetween(Integer value1, Integer value2) {
             addCriterion("`level` between", value1, value2, "level");
             return (Criteria) this;
         }
 
-        public Criteria andLevelNotBetween(Byte value1, Byte value2) {
+        public Criteria andLevelNotBetween(Integer value1, Integer value2) {
             addCriterion("`level` not between", value1, value2, "level");
             return (Criteria) this;
         }
@@ -765,52 +765,52 @@ public class RightsExample {
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendEqualTo(Byte value) {
+        public Criteria andIsRecommendEqualTo(Integer value) {
             addCriterion("`is_ recommend` =", value, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendNotEqualTo(Byte value) {
+        public Criteria andIsRecommendNotEqualTo(Integer value) {
             addCriterion("`is_ recommend` <>", value, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendGreaterThan(Byte value) {
+        public Criteria andIsRecommendGreaterThan(Integer value) {
             addCriterion("`is_ recommend` >", value, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendGreaterThanOrEqualTo(Byte value) {
+        public Criteria andIsRecommendGreaterThanOrEqualTo(Integer value) {
             addCriterion("`is_ recommend` >=", value, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendLessThan(Byte value) {
+        public Criteria andIsRecommendLessThan(Integer value) {
             addCriterion("`is_ recommend` <", value, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendLessThanOrEqualTo(Byte value) {
+        public Criteria andIsRecommendLessThanOrEqualTo(Integer value) {
             addCriterion("`is_ recommend` <=", value, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendIn(List<Byte> values) {
+        public Criteria andIsRecommendIn(List<Integer> values) {
             addCriterion("`is_ recommend` in", values, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendNotIn(List<Byte> values) {
+        public Criteria andIsRecommendNotIn(List<Integer> values) {
             addCriterion("`is_ recommend` not in", values, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendBetween(Byte value1, Byte value2) {
+        public Criteria andIsRecommendBetween(Integer value1, Integer value2) {
             addCriterion("`is_ recommend` between", value1, value2, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendNotBetween(Byte value1, Byte value2) {
+        public Criteria andIsRecommendNotBetween(Integer value1, Integer value2) {
             addCriterion("`is_ recommend` not between", value1, value2, "isRecommend");
             return (Criteria) this;
         }

@@ -36,7 +36,11 @@ public class ActivityApplyServiceImpl implements ActivityApplyService {
         ActivityApplyExample example = new ActivityApplyExample();
         ActivityApplyExample.Criteria criteria = example.createCriteria();
         criteria.andCustomerIdEqualTo(customer_id);
-        return activityApplyMapper.selectByExample(example);
+        if(activityApplyMapper.countByExample(example) > 0){
+            return activityApplyMapper.selectByExample(example);
+        }else{
+            return null;
+        }
     }
     @Override
     public ActivityApply getByUidActivityId(Integer uid, Integer activityId) {

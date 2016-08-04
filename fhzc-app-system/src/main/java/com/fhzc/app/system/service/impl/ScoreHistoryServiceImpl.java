@@ -1,6 +1,7 @@
 package com.fhzc.app.system.service.impl;
 
 import com.fhzc.app.dao.mybatis.inter.ScoreHistoryMapper;
+import com.fhzc.app.dao.mybatis.model.ScoreHistory;
 import com.fhzc.app.dao.mybatis.util.EncryptUtils;
 import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.commons.util.excel.ExcelImporter;
@@ -60,7 +61,7 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 	        		temData[0] = objects[0];	//姓名 
 	        		temData[1] = objects[1];	//性别 
 	        		temData[2] = objects[2];	//证件类型
-	        		temData[3] = EncryptUtils.encryptToDES(key, pcode);	//证件号码 
+	        		temData[3] = EncryptUtils.encryptToDES(key, pcode);	//证件号码
 	        		temData[4] = objects[4];	//权益名称
 	        		temData[5] = objects[5];	//消费时间 
 	        		temData[6] = objects[6];	//消费地点
@@ -170,5 +171,10 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 	@Override
 	public Integer getScoreByUserId(Integer uid) {
 		return scoreHistoryMapper.getScoreByUid(uid);
+	}
+
+	@Override
+	public void addHistoryScore(ScoreHistory scoreHistory) {
+		scoreHistoryMapper.insert(scoreHistory);
 	}
 }

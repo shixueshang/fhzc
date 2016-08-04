@@ -1,5 +1,6 @@
 package com.fhzc.app.system.service;
 
+import com.fhzc.app.dao.mybatis.model.ScoreHistory;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
@@ -39,4 +40,10 @@ public interface ScoreHistoryService {
      * @return
      */
     Integer getScoreByUserId(Integer uid);
+
+    /**
+     * 添加积分记录
+     * @param scoreHistory
+     */
+    void addHistoryScore(ScoreHistory scoreHistory);
 }

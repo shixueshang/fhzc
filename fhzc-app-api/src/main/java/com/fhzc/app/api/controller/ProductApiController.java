@@ -40,6 +40,11 @@ public class ProductApiController extends BaseController {
     @Resource
     private PlannerCustomerService plannerCustomerService;
 
+    /**
+     * 产品列表
+     * @param userId
+     * @return
+     */
     @RequestMapping(value = "/api/product",method = RequestMethod.GET)
     @ResponseBody
     public ApiJsonResult productList(Integer userId){
@@ -48,6 +53,11 @@ public class ProductApiController extends BaseController {
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,productList);
     }
 
+    /**
+     * 精选基金列表
+     * @param userId
+     * @return
+     */
     @RequestMapping(value = "/api/product/select",method = RequestMethod.GET)
     @ResponseBody
     public ApiJsonResult productListSelect(Integer userId){
@@ -56,6 +66,12 @@ public class ProductApiController extends BaseController {
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,productList);
     }
 
+    /**
+     * 产品详情
+     * @param productId
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/api/product/detail",method = RequestMethod.GET)
     @ResponseBody
     public  ApiJsonResult productDetail(Integer productId) throws Exception {
@@ -64,6 +80,7 @@ public class ProductApiController extends BaseController {
         User user = super.getCurrentUser();
         ProductReservation reservation = productReservationService.getUserProductReservation(user.getUid(),productId);
         if(reservation != null) {
+            result.put("reservationId", reservation.getId());
             result.put("reservationResult", reservation.getResult());
         }
 
@@ -74,6 +91,11 @@ public class ProductApiController extends BaseController {
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
     }
 
+    /**
+     * 我的财富
+     * @param customer_id
+     * @return
+     */
     @RequestMapping(value = "/api/personal/assets",method = RequestMethod.GET)
     @ResponseBody
     public  ApiJsonResult personalAssets(Integer customer_id) {
@@ -116,5 +138,4 @@ public class ProductApiController extends BaseController {
         }
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
     }
-
 }
