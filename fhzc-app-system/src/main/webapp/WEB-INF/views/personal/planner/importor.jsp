@@ -43,7 +43,7 @@
                             <a href="javascript:void(0);">理财师管理</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li class="active"><a href="javascript:void(0);">理财师导入</a></li>
+                        <li class="active"><a href="javascript:void(0);">在职理财师导入</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
@@ -92,21 +92,20 @@
                                         </form>
                                         <!-- END FORM-->
                                     </div>
+                                     <c:if test="${success != null}">
+										<jsp:include page="../../include/alert.jsp"/>
+									 </c:if>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- END SAMPLE FORM PORTLET-->
-					<div>
-						共导入${result.totalRows}
-						成功${result.successRows}
-						失败${result.failRows}
-					</div>>
+	
                     <div class="portlet box yellow">
                         <div class="portlet-title">
                             <h4><i class="icon-reorder">导入列表</i></h4>
                         </div>
-                        <div class="portlet-body">${result}
+                        <div class="portlet-body">
                             <table class="table table-bordered table-hover">
                                 <thead>
                                 <tr>

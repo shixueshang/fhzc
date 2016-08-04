@@ -40,10 +40,10 @@
                     <ul class="breadcrumb">
                         <li>
                             <i class="icon-home"></i>
-                            <a href="javascript:void(0);">客户管理</a>
+                            <a href="javascript:void(0);">理财师管理</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li class="active"><a href="javascript:void(0);">机构客户投资人档案表导入</a></li>
+                        <li class="active"><a href="javascript:void(0);">离职理财师导入</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
@@ -66,7 +66,7 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="portlet_tab1">
                                         <!-- BEGIN FORM-->
-                                        <form action="importagent" enctype="multipart/form-data" method="POST" class="form-horizontal">
+                                        <form action="importoff" enctype="multipart/form-data" method="POST" class="form-horizontal">
                                             <div class="control-group">
                                             </div>
                                             <div class="controls">
@@ -100,7 +100,7 @@
                         </div>
                     </div>
                     <!-- END SAMPLE FORM PORTLET-->
-
+	
                     <div class="portlet box yellow">
                         <div class="portlet-title">
                             <h4><i class="icon-reorder">导入列表</i></h4>
@@ -146,5 +146,4 @@
         </div>
     </div>
 </div>
-
 <jsp:include page="../../include/footer.jsp"/>

@@ -43,7 +43,7 @@
                             <a href="javascript:void(0);">资产管理</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li class="active"><a href="javascript:void(0);">日表导入</a></li>
+                        <li class="active"><a href="javascript:void(0);">权益消费导入</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
@@ -92,14 +92,14 @@
                                         </form>
                                         <!-- END FORM-->
                                     </div>
+                                     <c:if test="${success != null}">
+										<jsp:include page="../../include/alert.jsp"/>
+									 </c:if>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- END SAMPLE FORM PORTLET-->
-					<div>
-						${result}
-					</div>
                     <div class="portlet box yellow">
                         <div class="portlet-title">
                             <h4><i class="icon-reorder">导入列表</i></h4>
