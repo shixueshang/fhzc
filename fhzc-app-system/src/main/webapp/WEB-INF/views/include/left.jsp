@@ -126,8 +126,7 @@
                         </ul>
                     </li></shiro:hasPermission>
 
-                    <shiro:hasPermission name="/personal/planner">
-                    <li class="has-sub">
+                    <shiro:hasPermission name="/personal/planner"><li class="has-sub">
                         <a href="javascript:">
                             <i class="icon-group"></i>
                             <span class="title">理财师管理</span>
