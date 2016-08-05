@@ -92,6 +92,12 @@ public class ExcelImporter {
 
 		// 处理Excel中的数据
 		final List<Object[]> batchArgs = importConfig.getImportData(sqlSessionTemplate, preExecution);
+		
+		//判断结果是否包含错误，如果出错，抛出错误信息
+		if(batchArgs.size()==1 && batchArgs.get(0)[0] == "error" ){
+			throw new RuntimeException(batchArgs.get(0)[1].toString());
+		}
+		
 		// 执行导入过程
 		int[] success = jdbcTemplate.batchUpdate(importConfig.getImportSQL(), new BatchPreparedStatementSetter() {
 			@Override
