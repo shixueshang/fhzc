@@ -130,8 +130,12 @@ public class ProductApiController extends BaseController {
             if(product == null) continue;
 
             map.put("productId",asset.getProductId());
+            map.put("serial",asset.getSerial());
             map.put("assetType",asset.getType());
             map.put("amount",asset.getAmount());
+            map.put("amountUsd",asset.getAmountUsd());
+            map.put("amountRMB",asset.getAmountRmb());
+            map.put("period",asset.getPeriod());
 
             map.put("name",product.getName());
             map.put("found_day",product.getFoundDay());
