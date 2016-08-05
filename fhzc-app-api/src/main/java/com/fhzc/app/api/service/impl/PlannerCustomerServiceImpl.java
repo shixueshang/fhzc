@@ -39,4 +39,18 @@ public class PlannerCustomerServiceImpl implements PlannerCustomerService {
             return null;
         }
     }
+
+    @Override
+    public List<PlannerCustomer> getCustomerPlannerList(Integer customer_id){
+        PlannerCustomerExample example = new PlannerCustomerExample();
+        PlannerCustomerExample.Criteria criteria = example.createCriteria();
+        criteria.andCustomerIdEqualTo(customer_id);
+
+        if(plannerCustomerMapper.countByExample(example) > 0){
+            List<PlannerCustomer> list = plannerCustomerMapper.selectByExample(example);
+            return list;
+        }else{
+            return null;
+        }
+    }
 }

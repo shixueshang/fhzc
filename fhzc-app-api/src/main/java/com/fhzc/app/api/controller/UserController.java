@@ -3,6 +3,7 @@ package com.fhzc.app.api.controller;
 import com.fhzc.app.api.service.*;
 import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
+import com.fhzc.app.api.tools.ObjUtils;
 import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.util.Const;
 import org.springframework.stereotype.Controller;
@@ -43,7 +44,7 @@ public class UserController extends BaseController {
      */
     @RequestMapping(value = "/api/user/info", method = RequestMethod.GET)
     @ResponseBody
-    public ApiJsonResult getUserInfo(){
+    public ApiJsonResult getUserInfo() throws Exception {
         User user  = getCurrentUser();
         Customer customer = customerService.getCustomerByUid(user.getUid());
         if(customer != null){
@@ -55,7 +56,10 @@ public class UserController extends BaseController {
             }
         }
 
-        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, user);
+        Map result = ObjUtils.objectToMap(user);
+        List<PlannerCustomer> plannerCustomers = plannerCustomerService.getCustomerPlannerList(user.getUid());
+        result.put("planners",plannerCustomers);
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
     }
 
      /**
