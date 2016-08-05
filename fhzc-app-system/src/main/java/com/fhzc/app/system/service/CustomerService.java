@@ -78,4 +78,23 @@ public interface CustomerService {
      * @return
      */
     List<CustomerOrgan> findOrganCustomer(Integer customerId);
+
+    /**
+     * 添加或修改机构客户权益享用人
+     * @param customerOrgan
+     */
+    void addOrUpdateOrganCustomer(CustomerOrgan customerOrgan);
+
+    /**
+     * 根据id获得权益享用人
+     * @param id
+     * @return
+     */
+    CustomerOrgan getRightsEnjoyPerson(Integer id);
+
+    /**
+     * 删除权益享用人
+     * @param id
+     */
+    void delete(Integer id);
 }

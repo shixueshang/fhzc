@@ -204,4 +204,24 @@ public class CustomerServiceImpl implements CustomerService {
         criteria.andCustomerIdEqualTo(customerId);
         return customerOrganMapper.selectByExample(example);
     }
+
+    @Override
+    public void addOrUpdateOrganCustomer(CustomerOrgan customerOrgan) {
+        Integer id = customerOrgan.getId();
+        if(id == null){
+            customerOrganMapper.insert(customerOrgan);
+        }else{
+            customerOrganMapper.updateByPrimaryKey(customerOrgan);
+        }
+    }
+
+    @Override
+    public CustomerOrgan getRightsEnjoyPerson(Integer id) {
+        return customerOrganMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        customerOrganMapper.deleteByPrimaryKey(id);
+    }
 }
