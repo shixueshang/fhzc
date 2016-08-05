@@ -138,11 +138,19 @@ public class ProductApiController extends BaseController {
             map.put("period",asset.getPeriod());
 
             map.put("name",product.getName());
-            map.put("found_day",product.getFoundDay());
-            map.put("value_day",product.getValueDay());
-            map.put("redeem_day",product.getRedeemDay());
-            map.put("dividend_day",product.getDividendDay());
-            map.put("dead_date",asset.getDeadDate());//截止日期
+            map.put("foundDay",product.getFoundDay());
+            map.put("valueDay",product.getValueDay());
+            map.put("redeemDay",product.getRedeemDay());
+            map.put("dividendDay",product.getDividendDay());
+            map.put("annualYield",product.getAnnualYield());//年化收益率
+            map.put("buyDay",product.getBuyDay());//开放申购日
+            map.put("deadDate",asset.getDeadDate());//截止日期
+            map.put("paymentDate",asset.getPaymentDate());//预期到账时间
+            map.put("buyTime",asset.getBuyTime());//开放认购时间
+
+
+            map.put("notice",product.getNotice());//产品成立公告
+            map.put("proveUrl",product.getProveUrl());//备案证明
 
             result.add(map);
         }
