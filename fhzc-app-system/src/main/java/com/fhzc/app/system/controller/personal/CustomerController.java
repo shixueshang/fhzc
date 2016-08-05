@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -181,10 +182,15 @@ public class CustomerController extends BaseController {
         return mav;
     }
 
+    /**
+     * 权益享用人列表
+     * @param customerId
+     * @return
+     */
     @RequestMapping(value = "/organ/enjoy/list/{id}", method = RequestMethod.GET)
     public ModelAndView listEnjoy(@PathVariable(value = "id") Integer customerId){
         ModelAndView mav = new ModelAndView("/personal/customer/rightsEnjoy");
-
+        mav.addObject("customerId", customerId);
         mav.addObject("enjoyPersons", JSON.toJSON(customerService.findOrganCustomer(customerId)));
         mav.addObject("passportTypes", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.PASSPORT)));
         mav.addObject("url", "personal/customer");
@@ -192,11 +198,47 @@ public class CustomerController extends BaseController {
         return mav;
     }
 
+    /**
+     * 添加或修改权益享用人
+     * @param customerOrgan
+     * @param attr
+     * @return
+     */
     @RequestMapping(value = "/organ/enjoy/add", method = RequestMethod.POST)
-    public ModelAndView add(CustomerOrgan customerOrgan){
-        ModelAndView mav = new ModelAndView();
+    public String addOrUpdate(CustomerOrgan customerOrgan, RedirectAttributes attr){
+        customerService.addOrUpdateOrganCustomer(customerOrgan);
+        attr.addAttribute("id", customerOrgan.getCustomerId());
+        return "redirect:/personal/customer/organ/enjoy/list/{id}";
+    }
 
+    /**
+     * 权益享用人详情
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/organ/enjoy/detail/{id}", method = RequestMethod.GET)
+    public ModelAndView edit(@PathVariable(value = "id") Integer id){
+        ModelAndView mav = new ModelAndView("/personal/customer/rightsEnjoy");
+        CustomerOrgan customerOrgan = customerService.getRightsEnjoyPerson(id);
+        mav.addObject("customerId", customerOrgan.getCustomerId());
+        mav.addObject("enjoy", customerOrgan);
+        mav.addObject("passportTypes", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.PASSPORT)));
+        mav.addObject("enjoyPersons", JSON.toJSON(customerService.findOrganCustomer(customerOrgan.getCustomerId())));
+        mav.addObject("url", "personal/customer");
         return mav;
+    }
+
+    /**
+     * 权益享用人删除
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/organ/enjoy/delete/{id}", method = RequestMethod.GET)
+    public String delete(@PathVariable(value = "id") Integer id, RedirectAttributes attr){
+        CustomerOrgan customerOrgan = customerService.getRightsEnjoyPerson(id);
+        customerService.delete(id);
+        attr.addAttribute("id", customerOrgan.getCustomerId());
+        return "redirect:/personal/customer/organ/enjoy/list/{id}";
     }
 
 }

@@ -104,6 +104,9 @@ public class ProductApiController extends BaseController {
         //校验是否是登陆理财师的客户请求
         if(user.getLoginRole() == Const.USER_ROLE.PLANNER) {
             List<PlannerCustomer> plannerCustomers= plannerCustomerService.getPlannerCustomerList(user.getUid());
+            if(plannerCustomers == null){
+                return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST);
+            }
             boolean isCustomer = false;
             for (PlannerCustomer pl: plannerCustomers){
                 if(pl.getCustomerId() == customer_id){
@@ -123,10 +126,16 @@ public class ProductApiController extends BaseController {
         }
         for (AssetsHistory asset:assetsHistoryList){
             Map map = new HashMap();
+            Product product = productService.getProduct(asset.getProductId());
+            if(product == null) continue;
+
             map.put("productId",asset.getProductId());
+            map.put("serial",asset.getSerial());
             map.put("assetType",asset.getType());
             map.put("amount",asset.getAmount());
-            Product product = productService.getProduct(asset.getProductId());
+            map.put("amountUsd",asset.getAmountUsd());
+            map.put("amountRMB",asset.getAmountRmb());
+            map.put("period",asset.getPeriod());
 
             map.put("name",product.getName());
             map.put("found_day",product.getFoundDay());

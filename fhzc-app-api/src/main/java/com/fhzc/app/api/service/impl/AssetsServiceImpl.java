@@ -23,6 +23,7 @@ public class AssetsServiceImpl implements AssetsService{
         AssetsHistoryExample example = new AssetsHistoryExample();
         AssetsHistoryExample.Criteria criteria = example.createCriteria();
         criteria.andCustomerIdEqualTo(customer_id);
+        criteria.andInvaildEqualTo((byte) 1);
         if(assetsHistoryMapper.countByExample(example) > 0){
             return assetsHistoryMapper.selectByExample(example);
         }

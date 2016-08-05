@@ -49,7 +49,6 @@
                         </li>
                         <li>
                             <a href="#">权益享用人</a>
-                            <i class="icon-angle-right"></i>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
@@ -78,7 +77,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">权益受益人</label>
                                                 <div class="controls">
-                                                    <input type="name" name="rightsEnjoyPerson" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="rightsEnjoyPerson" value="${enjoy.rightsEnjoyPerson}" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -92,18 +91,20 @@
                                             <div class="control-group">
                                                 <label class="control-label">证件号码</label>
                                                 <div class="controls">
-                                                    <input type="text" name="passportCode" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="passportCode" value="${enjoy.passportCode}" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
                                             <div class="control-group">
                                                 <label class="control-label">手机号</label>
                                                 <div class="controls">
-                                                    <input type="text" name="mobile" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="mobile" maxlength="11" value="${enjoy.mobile}" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
                                             <div class="form-actions">
+                                                <input type="hidden" name="id" id="customerOrganId">
+                                                <input type="hidden" name="customerId" id="customerId">
                                                 <button type="submit" class="btn blue"><i class="icon-ok"></i> 保存</button>
                                             </div>
                                         </form>
@@ -132,14 +133,21 @@
                                 </thead>
                                 <tbody>
 
-                                <c:forEach items="${productTypes}" var="productType">
+                                <c:forEach items="${enjoyPersons}" var="enjoy">
                                     <tr>
-                                        <td>${productType.value}</td>
-                                        <td>${productType.key}</td>
+                                        <td>${enjoy.rightsEnjoyPerson}</td>
                                         <td>
-
-                                            <a href="#" ><i class="icon-edit"></i> 修改</a>
-                                            <a href="#"  ><i class="icon-trash"></i> 删除</a>
+                                            <c:forEach items="${passportTypes}" var="passport">
+                                                <c:if test="${enjoy.passportTypeId == passport.value}">
+                                                    ${passport.key}
+                                                </c:if>
+                                            </c:forEach>
+                                        </td>
+                                        <td>${enjoy.passportCode}</td>
+                                        <td>${enjoy.mobile}</td>
+                                        <td>
+                                            <a href="<%=contextPath%>/personal/customer/organ/enjoy/detail/${enjoy.id}" class="btn mini purple"><i class="icon-edit"></i> 修改</a>
+                                            <a href="<%=contextPath%>/personal/customer/organ/enjoy/delete/${enjoy.id}" class="btn mini purple" ><i class="icon-trash"></i> 删除</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -159,6 +167,11 @@
 
     $(function(){
 
+        var customerId = '${customerId}';
+        $("#customerId").val(customerId);
+
+        $("#customerOrganId").val(${enjoy.id});
+
         var passportType = '${enjoy.passportTypeId}';
         var passports = '${passportTypes}';
         var typeJson= $.parseJSON(passports);
@@ -169,10 +182,7 @@
             }
         });
 
-
     })
-
-
 
 </script>
 
