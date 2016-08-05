@@ -26,7 +26,12 @@
 	         </c:if>
 			 <c:if test="${success == false}">
 			 <div class="modal-body">
+			  <c:if test="${error_message == ''}">
 				操作失败，请确认Excel中的数据正确且符合要求后重新导入！
+			  </c:if>
+			  <c:if test="${error_message != ''}">
+				操作失败，${error_message}
+			  </c:if>			  
 			 </div>
 			 </c:if>
 	         <div class="modal-footer">
