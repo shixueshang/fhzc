@@ -4,48 +4,63 @@ TRUNCATE TABLE `admin`;
 TRUNCATE TABLE `admin_role`;
 TRUNCATE TABLE `system_module`;
 TRUNCATE TABLE `system_admin_module`;
-/*
--- Query: SELECT * FROM bank.admin_role
--- Date: 2016-07-08 18:08
-*/
-INSERT INTO `admin_role` (`role_id`,`role_name`) VALUES (2,'分总');
-INSERT INTO `admin_role` (`role_id`,`role_name`) VALUES (1,'区总');
 
 /*
 -- Query: SELECT * FROM bank.admin
 -- Date: 2016-07-08 16:31
 */
 INSERT INTO `admin` (`id`,`login`,`password`,`realname`,`role`,`login_ip`,`last_login_time`) VALUES (1,'admin','098f6bcd4621d373cade4e832627b4f6','管理员',1,NULL,NULL);
-INSERT INTO `admin` (`id`,`login`,`password`,`realname`,`role`,`login_ip`,`last_login_time`) VALUES (2,'test','098f6bcd4621d373cade4e832627b4f6','测试',1,NULL,NULL);
-
 
 /*
 -- Query: SELECT * FROM bank.system_module
--- Date: 2016-07-08 16:28
+-- Date: 2016-08-05 14:27
 */
-INSERT INTO `system_module` (`id`,`name`,`parent_module_id`,`is_valid`,`url`) VALUES (1,'顶级节点',0,1,'/');
-INSERT INTO `system_module` (`id`,`name`,`parent_module_id`,`is_valid`,`url`) VALUES (2,'业务管理',1,1,'/business/manage');
-INSERT INTO `system_module` (`id`,`name`,`parent_module_id`,`is_valid`,`url`) VALUES (3,'业绩管理',1,1,'/performance/manage');
-INSERT INTO `system_module` (`id`,`name`,`parent_module_id`,`is_valid`,`url`) VALUES (4,'订单管理',1,1,'/order/manage');
-INSERT INTO `system_module` (`id`,`name`,`parent_module_id`,`is_valid`,`url`) VALUES (5,'理财师管理',1,1,'/financial/manage');
-INSERT INTO `system_module` (`id`,`name`,`parent_module_id`,`is_valid`,`url`) VALUES (6,'组织架构管理',1,1,'/organization/manage');
-INSERT INTO `system_module` (`id`,`name`,`parent_module_id`,`is_valid`,`url`) VALUES (7,'客户管理',1,1,'/user/manage');
-INSERT INTO `system_module` (`id`,`name`,`parent_module_id`,`is_valid`,`url`) VALUES (8,'产品管理',2,1,'/business/product');
-INSERT INTO `system_module` (`id`,`name`,`parent_module_id`,`is_valid`,`url`) VALUES (9,'产品列表',8,1,'/business/product/list');
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (1,'顶级节点','/',NULL,NULL,1,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (2,'产品管理','/business/product',NULL,1,2,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (3,'产品列表','/business/product/list',NULL,2,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (4,'产品新增','/business/product/pub',NULL,2,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (5,'投研报告管理','/business/report',NULL,1,2,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (6,'报告列表','/business/report/list',NULL,5,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (7,'新增报告','/business/report/pub',NULL,5,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (8,'活动管理','/business/activity',NULL,1,2,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (9,'活动列表','/business/activity/list',NULL,8,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (10,'活动新增','/business/activity/pub',NULL,8,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (11,'权益管理','/business/rights',NULL,1,2,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (12,'权益列表','/business/rights/list',NULL,11,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (13,'权益新增','/business/rights/pub',NULL,11,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (14,'机构管理','/organization/department',NULL,1,2,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (15,'机构配置','/organization/department/department',NULL,14,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (16,'系统管理','/system',NULL,1,2,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (19,'角色列表','/system/role/list',NULL,16,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (20,'角色新增','/system/role/pub',NULL,16,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (21,'管理员列表','/system/admin/list',NULL,16,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (22,'管理员新增','/system/admin/pub',NULL,16,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (23,'产品预约列表','/business/product/order/list',NULL,16,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (24,'活动报名','/business/activity/registers','',8,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (25,'理财师管理','/personal/planner',NULL,1,2,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (26,'理财师列表','/personal/planner/list',NULL,25,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (27,'客户管理','/personal/customer',NULL,1,2,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (28,'个人客户列表','/personal/customer/single/list',NULL,27,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (29,'添加权益预约','/business/rights/reservation/pub',NULL,11,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (30,'权益预约列表','/business/rights/reservations',NULL,11,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (31,'机构客户列表','/personal/customer/organ/list',NULL,27,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (32,'产品分类维护','/business/product/type',NULL,2,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (33,'导入管理','/import',NULL,1,2,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (34,'产品导入','/business/product/importor',NULL,33,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (35,'在职理财师导入','/personal/planner/importor',NULL,33,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (36,'理财师日业绩导入','/business/plannerachivementsdaily/importor',NULL,33,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (37,'理财师月业绩导入','/business/plannerachivementsmonthly/importor',NULL,33,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (38,'财务日表导入','/business/contract/importor',NULL,33,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (39,'兑付记录导入','/business/payment/importor',NULL,33,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (40,'鑫丰母兑付导入','/business/payment/importorspecial',NULL,33,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (41,'个人投资人档案表导入','/business/customerdocument/importorpersonal',NULL,33,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (42,'机构投资人档案表导入','/business/customerdocument/importoragent',NULL,33,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (43,'积分历史导入','/business/scorehistory/importoradd',NULL,33,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (44,'权益消费导入','/business/scorehistory/importorconsume',NULL,33,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (45,'订单管理','/business/assets',NULL,1,2,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (46,'订单列表','/business/assets/list',NULL,45,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (47,'离职理财师导入','/personal/planner/importoroff',NULL,33,3,1);
 
-/*
--- Query: select * FROM bank.system_admin_module
--- Date: 2016-07-08 16:32
-*/
-INSERT INTO `system_admin_module` (`id`,`admin_id`,`module_id`,`mode`) VALUES (1,1,1,'r');
-INSERT INTO `system_admin_module` (`id`,`admin_id`,`module_id`,`mode`) VALUES (2,1,2,'r');
-INSERT INTO `system_admin_module` (`id`,`admin_id`,`module_id`,`mode`) VALUES (3,1,3,'r');
-INSERT INTO `system_admin_module` (`id`,`admin_id`,`module_id`,`mode`) VALUES (4,1,4,'r');
-INSERT INTO `system_admin_module` (`id`,`admin_id`,`module_id`,`mode`) VALUES (5,1,5,'r');
-INSERT INTO `system_admin_module` (`id`,`admin_id`,`module_id`,`mode`) VALUES (6,1,6,'r');
-INSERT INTO `system_admin_module` (`id`,`admin_id`,`module_id`,`mode`) VALUES (7,1,7,'r');
-INSERT INTO `system_admin_module` (`id`,`admin_id`,`module_id`,`mode`) VALUES (8,2,2,'r');
-INSERT INTO `system_admin_module` (`id`,`admin_id`,`module_id`,`mode`) VALUES (9,2,3,'r');
 
 
 /*
@@ -152,3 +167,30 @@ INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('西南区区域总经理')
 INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('资深理财顾问');
 INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('资深理财规划师');
 INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('青渝总经理');
+
+
+/*
+-- Query: SELECT * FROM bank.department
+-- Date: 2016-08-05 14:30
+*/
+TRUNCATE TABLE `department`;
+INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf`,`status`,`leader_uid`) VALUES (1,'复华资产',NULL,'2016-07-22 20:25:08',0,0,NULL);
+INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf`,`status`,`leader_uid`) VALUES (2,'华北区',1,'2016-07-22 20:25:08',0,0,NULL);
+INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf`,`status`,`leader_uid`) VALUES (3,'华南区',1,'2016-07-22 20:25:08',0,0,NULL);
+INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf`,`status`,`leader_uid`) VALUES (9,'西南区',1,'2016-07-22 20:25:08',0,0,NULL);
+INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf`,`status`,`leader_uid`) VALUES (10,'华东区',1,'2016-07-22 20:25:08',0,0,NULL);
+INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf`,`status`,`leader_uid`) VALUES (11,'青渝区',1,'2016-07-22 20:25:08',0,0,NULL);
+INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf`,`status`,`leader_uid`) VALUES (12,'北京分公司',2,'2016-07-22 20:25:08',0,0,255);
+INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf`,`status`,`leader_uid`) VALUES (13,'天津分公司',2,'2016-07-22 20:25:08',1,0,NULL);
+INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf`,`status`,`leader_uid`) VALUES (14,'广州分公司',3,'2016-07-22 20:25:08',1,0,NULL);
+INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf`,`status`,`leader_uid`) VALUES (15,'深圳分公司',3,'2016-07-22 20:25:08',1,0,NULL);
+INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf`,`status`,`leader_uid`) VALUES (16,'成都分公司',9,'2016-07-22 20:25:08',1,0,NULL);
+INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf`,`status`,`leader_uid`) VALUES (17,'重庆分公司',9,'2016-07-22 20:25:08',1,0,NULL);
+INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf`,`status`,`leader_uid`) VALUES (18,'杭州分公司',10,'2016-07-22 20:25:08',1,0,NULL);
+INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf`,`status`,`leader_uid`) VALUES (19,'上海分公司',10,'2016-07-22 20:25:08',1,0,NULL);
+INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf`,`status`,`leader_uid`) VALUES (20,'苏州分公司',10,'2016-07-22 20:25:08',1,0,NULL);
+INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf`,`status`,`leader_uid`) VALUES (21,'青岛分公司',11,'2016-07-22 20:25:08',0,0,NULL);
+INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf`,`status`,`leader_uid`) VALUES (22,'李鹏直属团队',12,'2016-07-22 20:25:08',1,0,256);
+INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf`,`status`,`leader_uid`) VALUES (23,'杨辉直属团队',12,'2016-07-22 20:25:08',1,1,NULL);
+INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf`,`status`,`leader_uid`) VALUES (24,'高峰团队',12,'2016-07-22 20:25:08',1,1,NULL);
+INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf`,`status`,`leader_uid`) VALUES (26,'青岛团队ee',21,'2016-07-25 20:24:08',1,0,NULL);
