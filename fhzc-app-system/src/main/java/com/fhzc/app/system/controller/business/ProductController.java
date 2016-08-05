@@ -135,6 +135,7 @@ public class ProductController extends BaseController {
         mav.addObject("productIssueType", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_ISSUE_TYPE)));
         mav.addObject("customerLevel", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL)));
         mav.addObject("riskLevel", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.RISK_LEVEL)));
+        mav.addObject("url", "business/product");
         return mav;
     }
 
@@ -185,7 +186,7 @@ public class ProductController extends BaseController {
 
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("reservations", pageableResult.getItems());
-
+        mav.addObject("url", "business/product");
         return mav;
     }
 

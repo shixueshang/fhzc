@@ -61,7 +61,7 @@
                                 &nbsp;
                             </h4>
                         </div>
-                        <div class="portlet-body form">
+                        <div class="portlet-body form" style="height: 730px; overflow-y: scroll">
                             <div class="tabbable portlet-tabs">
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="portlet_tab1">
@@ -219,7 +219,8 @@
 
         var dispalyImg = $("#default_img");
         var imgUrl = "<%=contextPath%>${report.cover}";
-        if(imgUrl != ""){
+        var defaultImg = "/static/image/no-image.png";
+        if(imgUrl != defaultImg){
             dispalyImg.attr("src", imgUrl);
         }
 
@@ -257,13 +258,11 @@
             },
 
             unhighlight: function (element) { // revert the change dony by hightlight
-                $(element)
-                        .closest('.control-group').removeClass('error'); // set error class to the control group
+                $(element).closest('.control-group').removeClass('error'); // set error class to the control group
             },
 
             success: function (label) {
-                label
-                        .addClass('valid').addClass('help-inline ok') // mark the current input as valid and display OK icon
+                label.addClass('valid').addClass('help-inline ok') // mark the current input as valid and display OK icon
                         .closest('.control-group').removeClass('error').addClass('success'); // set success class to the control group
             },
 

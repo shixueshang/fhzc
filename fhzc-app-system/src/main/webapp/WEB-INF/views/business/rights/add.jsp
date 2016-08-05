@@ -61,7 +61,7 @@
                                 &nbsp;
                             </h4>
                         </div>
-                        <div class="portlet-body form">
+                        <div class="portlet-body form" style="height: 700px; overflow-y: scroll">
                             <div class="tabbable portlet-tabs">
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="portlet_tab1">
@@ -228,7 +228,8 @@
 
         var dispalyImg = $("#default_img");
         var imgUrl = "<%=contextPath%>${right.cover}";
-        if(imgUrl != ""){
+        var defaultImg = "/static/image/no-image.png";
+        if(imgUrl != defaultImg){
             dispalyImg.attr("src", imgUrl);
         }
 
