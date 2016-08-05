@@ -39,8 +39,12 @@ public class ProductServiceImpl implements ProductService {
         if(is_recommend) {
             criteria.andIsRecommendEqualTo((byte) 1);
         }
-        List<Product> list = productMapper.selectByExample(example);
-        return new PageableResult<Product>(0, 100, list.size(), list);
+        if(productMapper.countByExample(example) > 0) {
+            List<Product> list = productMapper.selectByExample(example);
+            return new PageableResult<Product>(0, 100, list.size(), list);
+        }else{
+            return null;
+        }
     }
 
     @Override
@@ -49,7 +53,11 @@ public class ProductServiceImpl implements ProductService {
         ProductExample.Criteria criteria = example.createCriteria();
         criteria.andIsDisplayEqualTo((byte) 1);
         criteria.andIsRecommendEqualTo((byte) 1);
-        return productMapper.selectByExample(example);
+        if(productMapper.countByExample(example) > 0) {
+            return productMapper.selectByExample(example);
+        }else{
+            return null;
+        }
     }
 
     @Override
@@ -72,7 +80,11 @@ public class ProductServiceImpl implements ProductService {
         example.setOrderByClause("ctime desc");
 
         criteria.andIsDisplayEqualTo((byte) 1);
-        return productMapper.selectByExample(example);
+        if(productMapper.countByExample(example) > 0) {
+            return productMapper.selectByExample(example);
+        }else{
+            return null;
+        }
     }
 
     @Override

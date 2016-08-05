@@ -111,6 +111,9 @@ public class UserController extends BaseController {
     @RequestMapping(value = "/api/mod/login", method = RequestMethod.POST)
     @ResponseBody
     public ApiJsonResult modLogin(String login){
+        if(login.trim() == ""){
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST);
+        }
         User user = super.getCurrentUser();
         user.setLogin(login);
         userService.updateUser(user);
