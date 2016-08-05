@@ -9,4 +9,6 @@ import java.util.List;
  */
 public interface PlannerCustomerService {
     List<PlannerCustomer> getPlannerCustomerList(Integer planner_id);
+
+    List<PlannerCustomer> getCustomerPlannerList(Integer customer_id);
 }
