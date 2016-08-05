@@ -3,6 +3,7 @@ package com.fhzc.app.api.controller;
 import com.fhzc.app.api.service.*;
 import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
+import com.fhzc.app.api.tools.ObjUtils;
 import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.util.Const;
 import org.springframework.stereotype.Controller;
@@ -37,13 +38,14 @@ public class UserController extends BaseController {
 
     @Resource
     private ScoreService scoreService;
+
     /**
      * 获取登录用户信息
      * @return
      */
     @RequestMapping(value = "/api/user/info", method = RequestMethod.GET)
     @ResponseBody
-    public ApiJsonResult getUserInfo(){
+    public ApiJsonResult getUserInfo() throws Exception {
         User user  = getCurrentUser();
         Customer customer = customerService.getCustomerByUid(user.getUid());
         if(customer != null){
@@ -55,7 +57,21 @@ public class UserController extends BaseController {
             }
         }
 
-        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, user);
+        Map result = ObjUtils.objectToMap(user);
+        List<PlannerCustomer> plannerCustomers = plannerCustomerService.getCustomerPlannerList(user.getUid());
+        List<Map> planners = new ArrayList<>();
+        for (PlannerCustomer pl : plannerCustomers){
+            Map planner = new HashMap();
+            User plannerUser = userService.getUser(pl.getPlannerId());
+            planner.put("plannerId",pl.getPlannerId());
+            planner.put("plannerName",plannerUser.getRealname());
+            planner.put("isMain",pl.getIsMain());
+            planners.add(planner);
+        }
+        result.put("planners",planners);
+        result.put("cb_id",customer.getCbId());
+
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
     }
 
      /**

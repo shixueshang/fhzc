@@ -71,13 +71,25 @@ public class PlannerAchivementsDailyImpl implements PlannerAchivementsDailyServi
 	        public List<Object[]> getImportData(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data) {
 
 	        	List<Object[]> sqldata  = new LinkedList<Object[]>();
+	        	
 	
 	        	for (int i = 0, length = data.size(); i < length; i++) {
 	        		
 	    			Object[] tempData = data.get(i);
+	    			//判断是否为空，如果为空则不处理
 	    			if(tempData[0] != null && !tempData[0].toString().trim().equals("")){
 		    			Object[] newData = new Object[9];
-		    			//判断是否为空，如果为空则不处理
+		    			
+		    			Object[] error_Data = new Object[2];
+		    			//错误检验处理
+		    			if (tempData[5] == null || tempData[5].toString().trim().equals("") )
+		    			{
+		    				List<Object[]> errordata  = new LinkedList<Object[]>();
+		    				errordata.add(new Object[]{"error","第" + String.valueOf(i+1) + "行第"+ String.valueOf(6) +"列产品信息为空!"});
+		    				return errordata;
+
+		    			}
+		    			
 		    			newData[0] = tempData[0];		//业绩日期
 		    			String strtmp = tempData[6].toString();
 		    			newData[1] = TextUtils.Stringto10kInteger(strtmp);		//年化业绩
@@ -102,8 +114,10 @@ public class PlannerAchivementsDailyImpl implements PlannerAchivementsDailyServi
 	    			}
 
 	        	}
+	        	
+	       		return sqldata;
 
-	            return sqldata;
+	            
 	        }
 
 	        @Override

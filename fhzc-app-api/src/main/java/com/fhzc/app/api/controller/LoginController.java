@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by lihongde on 2016/7/20 17:21
@@ -74,8 +76,12 @@ public class LoginController extends BaseController {
             User user = userService.getUserByLogin(username);
             Session session = subject.getSession(true);
             session.setAttribute("user", user);
+            Map map = new HashMap<>();
+            map.put("uid",user.getUid());
+            map.put("realname",user.getRealname());
+            map.put("role",user.getLoginRole());
 
-            return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, map);
         } catch (UnknownAccountException e) {
             return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST, "账号不存在");
         } catch (IncorrectCredentialsException e) {

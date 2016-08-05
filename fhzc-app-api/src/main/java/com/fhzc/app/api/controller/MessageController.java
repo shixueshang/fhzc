@@ -32,6 +32,8 @@ public class MessageController extends BaseController {
     @Resource
     private UserService userService;
 
+    private static final String SHARE = "share_";
+
     /**
      * 发送消息
      * @param toUserId  接收人
@@ -169,30 +171,32 @@ public class MessageController extends BaseController {
     /**
      * 存储分享信息
      * @param toUserId
-     * @param Id
+     * @param id
      * @param type
      * @return
      */
     @RequestMapping(value = "/api/share", method = RequestMethod.POST)
     @ResponseBody
-    public ApiJsonResult share(Integer toUserId, Integer Id, String type){
-        User user  = getCurrentUser();
-        ImMessage message = new ImMessage();
-        message.setUserId(user.getUid());
-        message.setToUserId(toUserId);
-        String text = "share_".concat(type).concat("_").concat(Id.toString());
-        message.setContent(text);
-        //查询对话历史,确定sessionId
-        String sessionId = messageService.hasChatHistory(user.getUid(), toUserId);
-        if(sessionId == null){
+    public ApiJsonResult share(@RequestParam(value="toUserId[]") Integer[] toUserId, Integer id, String type){
+        for (Integer toUser : toUserId) {
+            User user = getCurrentUser();
+            ImMessage message = new ImMessage();
+            message.setUserId(user.getUid());
+            message.setToUserId(toUser);
+            String text = this.SHARE.concat(type).concat("_").concat(id.toString());
+            message.setContent(text);
+            //查询对话历史,确定sessionId
+            String sessionId = messageService.hasChatHistory(user.getUid(), toUser);
+            if (sessionId == null) {
                 sessionId = UUID.randomUUID().toString();
             }
-        message.setSessionId(sessionId);
-        message.setMessageType(type);
-        message.setSendTime(new Date());
+            message.setSessionId(sessionId);
+            message.setMessageType("text");
+            message.setSendTime(new Date());
 
-        ImMessage result = messageService.sendMessgeToSession(message);
-        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
+            ImMessage result = messageService.sendMessgeToSession(message);
+        }
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
     }
 
 }
