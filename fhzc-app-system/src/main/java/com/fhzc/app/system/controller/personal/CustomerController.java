@@ -1,19 +1,18 @@
 package com.fhzc.app.system.controller.personal;
 
 import com.alibaba.fastjson.JSON;
-import com.fhzc.app.dao.mybatis.model.Customer;
-import com.fhzc.app.dao.mybatis.model.Planner;
-import com.fhzc.app.dao.mybatis.model.PlannerCustomer;
-import com.fhzc.app.dao.mybatis.model.User;
+import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
+import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -179,6 +178,24 @@ public class CustomerController extends BaseController {
             mav.addObject("planner", JSON.toJSON(planner));
             mav.addObject("plannerUser", JSON.toJSON(userService.getUser(planner.getUid())));
         }
+        return mav;
+    }
+
+    @RequestMapping(value = "/organ/enjoy/list/{id}", method = RequestMethod.GET)
+    public ModelAndView listEnjoy(@PathVariable(value = "id") Integer customerId){
+        ModelAndView mav = new ModelAndView("/personal/customer/rightsEnjoy");
+
+        mav.addObject("enjoyPersons", JSON.toJSON(customerService.findOrganCustomer(customerId)));
+        mav.addObject("passportTypes", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.PASSPORT)));
+        mav.addObject("url", "personal/customer");
+
+        return mav;
+    }
+
+    @RequestMapping(value = "/organ/enjoy/add", method = RequestMethod.POST)
+    public ModelAndView add(CustomerOrgan customerOrgan){
+        ModelAndView mav = new ModelAndView();
+
         return mav;
     }
 

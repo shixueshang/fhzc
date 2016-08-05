@@ -40,10 +40,16 @@
                     <ul class="breadcrumb">
                         <li>
                             <i class="icon-home"></i>
-                            <a href="javascript:void(0);">理财师管理</a>
+                            <a href="javascript:void(0);">客户管理</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li class="active"><a href="javascript:void(0);">离职理财师导入</a></li>
+                        <li>
+                            <a href="#">机构客户</a>
+                            <i class="icon-angle-right"></i>
+                        </li>
+                        <li>
+                            <a href="#">权益享用人</a>
+                            <i class="icon-angle-right"></i>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
@@ -57,7 +63,7 @@
                         <div class="portlet-title">
                             <h4>
                                 <i class="icon-plus"></i>
-                                <span class="hidden-480">导入</span>
+                                <span class="hidden-480"></span>
                                 &nbsp;
                             </h4>
                         </div>
@@ -66,73 +72,75 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="portlet_tab1">
                                         <!-- BEGIN FORM-->
-                                        <form action="importoff" enctype="multipart/form-data" method="POST" class="form-horizontal">
+                                        <form action="<%=contextPath%>/personal/customer/organ/enjoy/add" method="POST" class="form-horizontal">
                                             <div class="control-group">
                                             </div>
-                                            <div class="controls">
-                                                <div class="fileupload fileupload-new" data-provides="fileupload"><input type="hidden" value="" name="">
-                                                    <div class="input-append">
-                                                        <div class="uneditable-input">
-                                                            <i class="icon-file fileupload-exists"></i>
-                                                            <span class="fileupload-preview"></span>
-                                                        </div>
-                                                       <span class="btn btn-file">
-                                                       <span class="fileupload-new">点击选择</span>
-                                                       <span class="fileupload-exists">更换</span>
-                                                       <input type="file"name="multiFile" class="default" name="">
-                                                       </span>
-                                                        <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
-                                                    </div>
+                                            <div class="control-group">
+                                                <label class="control-label">权益受益人</label>
+                                                <div class="controls">
+                                                    <input type="name" name="rightsEnjoyPerson" placeholder="" class="m-wrap large">
+                                                    <span class="help-inline"></span>
                                                 </div>
                                             </div>
-
+                                            <div class="control-group">
+                                                <label class="control-label">证件类型</label>
+                                                <div class="controls">
+                                                    <select class="large m-wrap" name="passportTypeId" id="passportTypeId" tabindex="1">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <label class="control-label">证件号码</label>
+                                                <div class="controls">
+                                                    <input type="text" name="passportCode" placeholder="" class="m-wrap large">
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <label class="control-label">手机号</label>
+                                                <div class="controls">
+                                                    <input type="text" name="mobile" placeholder="" class="m-wrap large">
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
                                             <div class="form-actions">
-                                                <button type="submit" class="btn blue"><i class="icon-ok"></i> 添加</button>
+                                                <button type="submit" class="btn blue"><i class="icon-ok"></i> 保存</button>
                                             </div>
                                         </form>
                                         <!-- END FORM-->
                                     </div>
-                                    <c:if test="${success != null}">
-										<jsp:include page="../../include/alert.jsp"/>
-									 </c:if>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- END SAMPLE FORM PORTLET-->
-	
+
                     <div class="portlet box yellow">
                         <div class="portlet-title">
-                            <h4><i class="icon-reorder">导入列表</i></h4>
+                            <h4><i class="icon-reorder"></i></h4>
                         </div>
                         <div class="portlet-body">
                             <table class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <td><input type="checkbox" id="checkAll"/>全选</td>
-                                    <td>产品名称</td>
-                                    <td>状态</td>
-                                    <td>起息日</td>
-                                    <td>到期日</td>
-                                    <td>派息日</td>
-                                    <td>添加时间</td>
-                                    <td>客户等级</td>
-                                    <td>客户风险等级</td>
-                                    <td>编辑</td>
+                                    <td>权益受益人</td>
+                                    <td>证件类型</td>
+                                    <td>证件号码</td>
+                                    <td>手机号</td>
+                                    <td>操作</td>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach items="${products}" var="product">
+
+                                <c:forEach items="${productTypes}" var="productType">
                                     <tr>
-                                        <td>${product.name}</td>
-                                        <td>${product.status}</td>
-                                        <td>${data.website}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>${data.title}</td>
-                                        <td>${fn:substring(data.createTime, 0, 10)}</td>
-                                        <td>${fn:substring(data.expireTime, 0, 10)}</td>
-                                        <td><a href="business/product/detail/${data.id}">编辑</a></td>
+                                        <td>${productType.value}</td>
+                                        <td>${productType.key}</td>
+                                        <td>
+
+                                            <a href="#" ><i class="icon-edit"></i> 修改</a>
+                                            <a href="#"  ><i class="icon-trash"></i> 删除</a>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>
@@ -146,4 +154,26 @@
         </div>
     </div>
 </div>
+
+<script>
+
+    $(function(){
+
+        var passportType = '${enjoy.passportTypeId}';
+        var passports = '${passportTypes}';
+        var typeJson= $.parseJSON(passports);
+        $.each(typeJson, function(i,val){
+            $("#passportTypeId").append("<option value='"+val.value+"'>"+val.key+"</option>");
+            if(passportType == val.value){
+                $("#passportTypeId").val(passportType);
+            }
+        });
+
+
+    })
+
+
+
+</script>
+
 <jsp:include page="../../include/footer.jsp"/>

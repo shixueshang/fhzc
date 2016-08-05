@@ -134,7 +134,9 @@
                                                 </c:if>
                                             </c:forEach>
                                         </td>
-                                        <td><a href="<%=contextPath%>/personal/customer/organ/detail/${customer.customerId}" class="btn mini purple"><i class="icon-edit"></i>编辑</a></td>
+                                        <td><a href="<%=contextPath%>/personal/customer/organ/detail/${customer.customerId}" class="btn mini purple"><i class="icon-edit"></i>编辑</a>
+                                            <a href="<%=contextPath%>/personal/customer/organ/enjoy/list/${customer.customerId}"  class="btn mini purple" ><i class="icon-share-alt"></i>权益享用人</a>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>
@@ -143,7 +145,6 @@
                     </div>
                 </div>
             </div>
-            <!--页面操作详细内容 开始-->
 
         </div>
         <jsp:include page="../../include/page.jsp"/>

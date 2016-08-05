@@ -32,6 +32,13 @@ public interface PlannerService {
     void addOrUpdatePlanner(Planner planner);
 
     /**
+     * department导入
+     * @param multipartFile
+     * @return
+     * @throws Exception
+     */
+    Map<String, Object> importDepartmentExcelFile(MultipartFile multipartFile) throws Exception;
+    /**
      * 在职理财师导入
      * @param multipartFile
      * @return

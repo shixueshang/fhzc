@@ -19,9 +19,16 @@
 	              	 导入结果
 	            </h4>
 	         </div>
+	         <c:if test="${success == true}">
 	         <div class="modal-body">
 	            	本次供操作记录${totalRows}条，其中成功${successRows}条，失败${failRows}条
 	         </div>
+	         </c:if>
+			 <c:if test="${success == false}">
+			 <div class="modal-body">
+				操作失败，请确认Excel中的数据正确且符合要求后重新导入！
+			 </div>
+			 </c:if>
 	         <div class="modal-footer">
 	            <button type="button" class="btn btn-default" 
 	               data-dismiss="modal">关闭

@@ -96,8 +96,9 @@ public class PlannerController extends BaseController {
     	ModelAndView mav = new ModelAndView("personal/planner/importor");
     	Map<String,Object> result = new HashMap<String,Object>();
         try {
-            result = plannerService.importExcelFile(multiFile);
-            result.put("success", true);
+        	result = plannerService.importExcelFile(multiFile);
+        	result = plannerService.importDepartmentExcelFile(multiFile);
+        	result.put("success", true);
             mav.addAllObjects(result);
         } catch (Exception e) {
             logger.error("导入失败" + e.getMessage() );

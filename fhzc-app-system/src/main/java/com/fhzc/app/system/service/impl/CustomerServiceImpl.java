@@ -1,17 +1,13 @@
 package com.fhzc.app.system.service.impl;
 
-import com.fhzc.app.dao.mybatis.inter.DictionaryMapper;
-import com.fhzc.app.dao.mybatis.inter.ScoreHistoryMapper;
-import com.fhzc.app.dao.mybatis.inter.UserMapper;
+import com.fhzc.app.dao.mybatis.inter.*;
 import com.fhzc.app.dao.mybatis.model.*;
-import com.fhzc.app.dao.mybatis.inter.PlannerCustomerMapper;
 import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.commons.util.excel.ExcelImporter;
 import com.fhzc.app.system.commons.util.excel.ImportCallBack;
 import com.fhzc.app.system.commons.util.excel.ImportConfig;
-import com.fhzc.app.dao.mybatis.inter.CustomerMapper;
 import com.fhzc.app.system.commons.vo.CustomerVo;
 import com.fhzc.app.system.service.CustomerService;
 import com.fhzc.app.system.service.*;
@@ -48,8 +44,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Resource
     private ScoreHistoryMapper scoreHistoryMapper;
+
     @Resource
     private PlannerCustomerMapper plannerCustomerMapper;
+
+    @Resource
+    private CustomerOrganMapper customerOrganMapper;
 
 
     @Override
@@ -195,5 +195,13 @@ public class CustomerServiceImpl implements CustomerService {
         }
 
         return null;
+    }
+
+    @Override
+    public List<CustomerOrgan> findOrganCustomer(Integer customerId) {
+        CustomerOrganExample example = new CustomerOrganExample();
+        CustomerOrganExample.Criteria criteria = example.createCriteria();
+        criteria.andCustomerIdEqualTo(customerId);
+        return customerOrganMapper.selectByExample(example);
     }
 }
