@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,37 +49,19 @@ public class AssetsController extends BaseController {
         ModelAndView mav = new ModelAndView("/business/assets/list");
         PageableResult<AssetsHistory> pageableResult = assetsService.findPageAssets(page, size);
 
-        List<Customer> customers = new ArrayList<Customer>();
         List<AssetsHistory> assets = pageableResult.getItems();
         for(AssetsHistory assetsHistory : assets){
             Customer customer = customerService.getCustomer(assetsHistory.getCustomerId());
-            customers.add(customer);
+            assetsHistory.setCustomerNum(customer.getCbId());
+            Planner planner = plannerService.getPlanner(assetsHistory.getPlannerId());
+            assetsHistory.setPlanner(userService.getUser(planner.getUid()).getRealname());
+            Product product = productService.getProduct(assetsHistory.getProductId());
+            assetsHistory.setProductName(product.getName());
         }
 
-        List<User> users = new ArrayList<User>();
-        for(Customer customer : customers){
-            User user = userService.getUser(customer.getUid());
-            users.add(user);
-        }
-
-        List<Planner> planners = new ArrayList<Planner>();
-        for(Customer customer : customers){
-            PlannerCustomer plannerCustomer = customerService.getPlannerByCustomerId(customer.getCustomerId());
-            planners.add(plannerService.getPlanner(plannerCustomer.getPlannerId()));
-        }
-
-        List<Product> products = new ArrayList<Product>();
-        for(AssetsHistory assetsHistory : assets){
-            products.add(productService.getProduct(assetsHistory.getProductId()));
-        }
-
-        mav.addObject("customers", customers);
-        mav.addObject("users", users);
-        mav.addObject("planners", planners);
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
-        mav.addObject("assets", pageableResult.getItems());
+        mav.addObject("assets", assets);
         mav.addObject("assetsStatus", dictionaryService.findDicByType(Const.DIC_CAT.ASSETS_STATUS));
-        mav.addObject("products", products);
         mav.addObject("url", "/business/assets");
         return mav;
     }

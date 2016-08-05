@@ -13,7 +13,7 @@
                         <div class="sidebar-toggler hidden-phone" style="margin-bottom:5px;"></div>
                         <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
                     </li>
-                    <li class="start active ">
+                    <li class="start">
                         <a href="<%=contextPath%>/system/home">
                             <i class="icon-home"></i>
                             <span class="title">Dashboard</span>
@@ -158,7 +158,7 @@
 
                     <shiro:hasPermission name="/business/assets"><li class="has-sub">
                         <a href="javascript:;">
-                            <i class="icon-sitemap"></i>
+                            <i class="icon-shopping-cart"></i>
                             <span class="title">订单管理</span>
                             <span class="selected"></span>
                             <span class="arrow open"></span>

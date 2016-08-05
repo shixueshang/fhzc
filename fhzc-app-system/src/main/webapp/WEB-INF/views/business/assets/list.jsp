@@ -57,7 +57,7 @@
                         <div class="portlet-title">
                             <h4><i class="icon-reorder"></i></h4>
                         </div>
-                        <div class="portlet-body">
+                        <div class="portlet-body" style="height: 630px; overflow: scroll">
                             <table class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
@@ -83,49 +83,13 @@
                                                 </c:if>
                                             </c:forEach>
                                         </td>
-                                        <td>
-                                            <c:forEach items="${customers}" var="customer" >
-                                                <c:if test="${asset.customerId == customer.customerId}" >
-                                                    <c:forEach items="${users}" var="user">
-                                                        <c:if test="${customer.uid == user.uid}">
-                                                            ${user.realname}
-                                                        </c:if>
-
-                                                    </c:forEach>
-                                                </c:if>
-
-                                            </c:forEach>
-                                        </td>
-                                        <td>
-                                            <c:forEach items="${customers}" var="customer">
-                                                <c:if test="${asset.customerId == customer.customerId}">
-                                                    ${customer.cbId}
-                                                </c:if>
-                                            </c:forEach>
-                                        </td>
-                                        <td>
-                                            <c:forEach items="${products}" var="product">
-                                                <c:if test="${asset.productId == product.pid}">
-                                                    ${product.name}
-                                                </c:if>
-
-                                            </c:forEach>
-                                        </td>
-                                        <td>
-                                            ${asset.amountUsd}
-                                        </td>
+                                        <td>${asset.customerNum}</td>
+                                        <td>${asset.customerName}</td>
+                                        <td>${asset.productName}</td>
+                                        <td>${asset.productCode}</td>
+                                        <td>${asset.amountUsd}</td>
                                         <td>${asset.amountRmb}</td>
-                                        <td>
-                                            <c:forEach items="${planners}" var="planner">
-                                                <c:if test="${asset.plannerId == planner.id}">
-                                                    <c:forEach items="${users}" var="user">
-                                                        <c:if test="${planner.uid == user.uid}">
-                                                            ${user.realname}
-                                                        </c:if>
-                                                    </c:forEach>
-                                                </c:if>
-                                            </c:forEach>
-                                        </td>
+                                        <td>${asset.planner}</td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>

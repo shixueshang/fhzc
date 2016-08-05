@@ -69,6 +69,46 @@ public class AssetsHistory {
 
     private String payment;
 
+    private String productName;
+
+    private String productCode;
+
+    private String planner;
+
+    private String customerNum;
+
+    public String getCustomerNum() {
+        return customerNum;
+    }
+
+    public void setCustomerNum(String customerNum) {
+        this.customerNum = customerNum;
+    }
+
+    public String getPlanner() {
+        return planner;
+    }
+
+    public void setPlanner(String planner) {
+        this.planner = planner;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getProductCode() {
+        return productCode;
+    }
+
+    public void setProductCode(String productCode) {
+        this.productCode = productCode;
+    }
+
     public Integer getId() {
         return id;
     }

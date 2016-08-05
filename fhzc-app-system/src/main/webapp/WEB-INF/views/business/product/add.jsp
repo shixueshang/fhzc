@@ -61,7 +61,7 @@
                                 &nbsp;
                             </h4>
                         </div>
-                        <div class="portlet-body form">
+                        <div class="portlet-body form" style="height: 730px; overflow-y: scroll">
                             <div class="tabbable portlet-tabs">
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="portlet_tab1">
@@ -293,7 +293,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">产品简介</label>
                                                 <div class="controls">
-                                                    <textarea name="desc"  class="span12 ckeditor m-wrap" rows="3"></textarea>
+                                                    <textarea name="desc"  class="span12 ckeditor m-wrap" rows="3">${product.desc}</textarea>
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -362,14 +362,14 @@
                                             <div class="control-group">
                                                 <label class="control-label">详细内容</label>
                                                 <div class="controls">
-                                                    <textarea name="detailContent" class="span12 ckeditor m-wrap" rows="3"></textarea>
+                                                    <textarea name="detailContent" class="span12 ckeditor m-wrap" rows="3">${product.detailContent}</textarea>
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
                                             <div class="control-group">
                                                 <label class="control-label">详情链接</label>
                                                 <div class="controls">
-                                                    <input type="text" name="detailUrl" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="detailUrl" value="${product.detailUrl}" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -496,7 +496,8 @@ $(function(){
 
     var dispalyImg = $("#default_img");
     var imgUrl = "<%=contextPath%>${product.cover}";
-    if(imgUrl != ""){
+    var defaultImg = "/static/image/no-image.png";
+    if(imgUrl != defaultImg){
         dispalyImg.attr("src", imgUrl);
     }
 
