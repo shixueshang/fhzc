@@ -96,6 +96,16 @@ public class Const {
          * 订单状态
          */
         public static final String ASSETS_STATUS = "assets_status";
+
+        /**
+         * 积分状态
+         */
+        public static final String SCORE_STATUS = "score_status";
+
+        /**
+         * 积分来源类型
+         */
+        public static final String SCORE_FROM_TYPE = "score_from_type";
     }
 
     /**
@@ -186,5 +196,20 @@ public class Const {
     public static class BANNER_TYPE{
         public static final String TEXT= "index_text";
         public static final String PIC= "index_pic";
+    }
+
+    /**
+     * 积分审批状态
+     */
+    public static class APPROVE_STATUS{
+        /**
+         * 待审批
+         */
+        public static final Integer WATTING_APPROVE = 0;
+
+        /**
+         * 已审批
+         */
+        public static final Integer APPROVED = 1;
     }
 }
