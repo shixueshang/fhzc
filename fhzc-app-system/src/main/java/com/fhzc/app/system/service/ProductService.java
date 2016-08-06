@@ -73,4 +73,11 @@ public interface ProductService {
      * @return
      */
     PageableResult<ProductReservationBo> findPageProductReservations(ProductReserQuery query, int page, int size);
+
+    /**
+     * 添加产品预约
+     * @param productReservation
+     * @return
+     */
+    int addProductReservation(ProductReservation productReservation);
 }

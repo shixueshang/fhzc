@@ -9,6 +9,7 @@
     <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
     <result column="result" property="result" jdbcType="CHAR" />
     <result column="amount" property="amount" jdbcType="INTEGER" />
+    <result column="apply_time" property="applyTime" jdbcType="TIMESTAMP" />
   </resultMap>
 
   <resultMap id="ViewResultMap" type="com.fhzc.app.dao.mybatis.bo.ProductReservationBo" >

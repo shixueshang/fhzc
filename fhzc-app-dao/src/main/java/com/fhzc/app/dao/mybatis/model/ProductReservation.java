@@ -17,6 +17,8 @@ public class ProductReservation {
 
     private Integer amount;
 
+    private Date applyTime;
+
     public Integer getId() {
         return id;
     }
@@ -71,5 +73,13 @@ public class ProductReservation {
 
     public void setAmount(Integer amount) {
         this.amount = amount;
+    }
+
+    public Date getApplyTime() {
+        return applyTime;
+    }
+
+    public void setApplyTime(Date applyTime) {
+        this.applyTime = applyTime;
     }
 }

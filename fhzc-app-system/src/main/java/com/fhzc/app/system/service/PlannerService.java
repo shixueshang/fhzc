@@ -68,4 +68,11 @@ public interface PlannerService {
      * @return
      */
     Planner getPlannerByUid(Integer uid);
+
+    /**
+     * 获得理财师信息
+     * @param workNum
+     * @return
+     */
+    Planner getPlannerByWorkNum(String workNum);
 }

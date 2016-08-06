@@ -278,4 +278,9 @@ public class PlannerServiceImpl implements PlannerService {
 		 map.put("off", importResultOff);
 		 return map;
 	}
+
+    @Override
+    public Planner getPlannerByWorkNum(String workNum) {
+        return plannerMapper.selectByWorkNum(workNum);
+    }
 }

@@ -2,9 +2,7 @@ package com.fhzc.app.system.controller.business;
 
 import com.alibaba.fastjson.JSON;
 import com.fhzc.app.dao.mybatis.bo.ProductReservationBo;
-import com.fhzc.app.dao.mybatis.model.Dictionary;
-import com.fhzc.app.dao.mybatis.model.Product;
-import com.fhzc.app.dao.mybatis.model.ProductReserQuery;
+import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
@@ -48,6 +46,9 @@ public class ProductController extends BaseController {
 
     @Resource
     private DepartmentService departmentService;
+
+    @Resource
+    private PlannerService plannerService;
 
     /**
      * 产品列表
@@ -271,4 +272,52 @@ public class ProductController extends BaseController {
         return new AjaxJson(true);
     }
 
+    /**
+     * 产品预约
+     * @param pid
+     * @return
+     */
+    @RequestMapping(value="/order/{pid}", method = RequestMethod.GET)
+    public ModelAndView reservationPub(@PathVariable(value = "pid") Integer pid){
+        ModelAndView mav = new ModelAndView("business/product/addReservation");
+        mav.addObject("product", productService.getProduct(pid));
+        return mav;
+    }
+
+    /**
+     * 产品预约
+     * @param customerId
+     * @param reservationAmount
+     * @param reservationTime
+     * @param productId
+     * @return
+     */
+    @RequestMapping(value="/reservationSave", method = RequestMethod.GET)
+    @ResponseBody
+    public boolean reservationSave(long customerId, long reservationAmount, Date reservationTime, long productId, String workNum){
+        Planner planner = plannerService.getPlannerByWorkNum(workNum);
+        ProductReservation productReservation = new ProductReservation();
+        productReservation.setCtime(new Date());
+        productReservation.setAmount((int)reservationAmount);
+        productReservation.setCustomerId((int)customerId);
+        productReservation.setApplyTime(reservationTime);
+        productReservation.setPlannerId(planner.getId());
+        productReservation.setProductId((int)productId);
+        productReservation.setResult("success");
+        productService.addProductReservation(productReservation);
+
+        //ModelAndView mav = new ModelAndView("business/product/addReservation");
+        return true;
+    }
+
+    @RequestMapping(value = "/validateWorkNum", method = RequestMethod.GET)
+    @ResponseBody
+    public boolean validateWorkNum(String workNum){
+        Planner planner = plannerService.getPlannerByWorkNum(workNum);
+        if (planner == null){
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
