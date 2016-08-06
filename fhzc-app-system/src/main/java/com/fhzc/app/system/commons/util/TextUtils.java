@@ -174,10 +174,4 @@ public class TextUtils {
     	}
     }
   
-    /**
-     * 截取小数点之前的整数，适用于常规格式的数字转换
-     */
-    public static int FloatToInt(String value){
-    	return Integer.parseInt((value.contains(".")?value.substring(0,value.indexOf(".")):value));
-    }
 }
