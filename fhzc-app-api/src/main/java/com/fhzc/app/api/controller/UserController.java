@@ -50,14 +50,7 @@ public class UserController extends BaseController {
         Map result = ObjUtils.objectToMap(user);
         if(user.getLoginRole().equals(Const.USER_ROLE.CUSTOMER)) {
             Customer customer = customerService.getCustomerByUid(user.getUid());
-            if (customer != null) {
-                List<Dictionary> dicts = dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL);
-                for (Dictionary dict : dicts) {
-                    if (dict.getValue().equals(customer.getLevelId().toString())) {
-                        user.setLevel(dict.getKey());
-                    }
-                }
-            }
+            user.setLevel(this.getCustomerLevel(user.getUid()));
 
             List<PlannerCustomer> plannerCustomers = plannerCustomerService.getCustomerPlannerList(user.getUid());
             List<Map> planners = new ArrayList<>();
@@ -101,10 +94,30 @@ public class UserController extends BaseController {
                 map.put("main", pc.getIsMain());
                 List<ScoreHistory> scoreHistoryList = scoreService.getAvailableList(pc.getCustomerId());
                 map.put("score", scoreService.sumScore(scoreHistoryList));
+                map.put("level", this.getCustomerLevel(pc.getCustomerId()));
+
                 result.add(map);
             }
         }
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
+    }
+
+    /**
+     * 获得用户等级信息明文
+     * @param uid
+     * @return
+     */
+    public String getCustomerLevel(Integer uid){
+        Customer customer= customerService.getCustomerByUid(uid);
+        if (customer != null) {
+            List<Dictionary> dicts = dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL);
+            for (Dictionary dict : dicts) {
+                if (dict.getValue().equals(customer.getLevelId().toString())) {
+                    return dict.getKey();
+                }
+            }
+        }
+        return "";
     }
 
     /**
