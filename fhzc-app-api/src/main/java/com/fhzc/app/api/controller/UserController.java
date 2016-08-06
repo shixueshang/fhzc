@@ -120,6 +120,22 @@ public class UserController extends BaseController {
         return "";
     }
 
+
+    /**
+     * 获得用户等级信息明文
+     * @param passport_type_id
+     * @return
+     */
+    public String getPassportTypeName(Integer passport_type_id){
+        List<Dictionary> dicts = dictionaryService.findDicByType(Const.DIC_CAT.PASSPORT);
+        for (Dictionary dict : dicts) {
+            if (dict.getValue().equals(passport_type_id)) {
+                return dict.getKey();
+            }
+        }
+        return "";
+    }
+
     /**
      * 验证登陆名是否存在
      */
@@ -150,5 +166,55 @@ public class UserController extends BaseController {
         userService.updateUser(user);
 
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
+    }
+
+
+    /**
+     * 获取登录用户信息
+     * @return
+     */
+    @RequestMapping(value = "/api/customer/info", method = RequestMethod.GET)
+    @ResponseBody
+    public ApiJsonResult getCustomerInfo(Integer customer_id) throws Exception {
+        User user  = getCurrentUser();
+        if(user.getLoginRole().equals(Const.USER_ROLE.PLANNER)) {
+            User customer = userService.getUser(customer_id);
+            Customer customerInfo = customerService.getCustomerByUid(customer_id);
+            Map result= new HashMap();
+            result.put("name", customer.getRealname());
+
+            if (customerInfo.getCustomerType() == Const.CUSTOMER_TYPE.ORGAN_CUSTOMER) {
+                result.put("type",Const.CUSTOMER_TYPE.ORGAN_CUSTOMER_ZH);
+            }
+            if (customerInfo.getCustomerType() == Const.CUSTOMER_TYPE.SINGLE_CUSTOMER) {
+                result.put("type",Const.CUSTOMER_TYPE.SINGLE_CUSTOMER_ZH);
+            }
+
+            result.put("level", this.getCustomerLevel(customer_id));
+            result.put("risk", customerInfo.getRisk());
+            result.put("passportType", this.getPassportTypeName(customer.getPassportTypeId()));
+            result.put("passportTypeId", customer.getPassportTypeId());
+
+            StringBuilder sb1 = new StringBuilder(customer.getPassportCode());
+            result.put("passportCode", sb1.replace(3,7,"****"));
+            result.put("passportAddress", customer.getPassportAddress());
+            result.put("birthday", customer.getBirthday());
+            if (customer.getGender() == Const.GENDER.MALE) {
+                result.put("gender", Const.GENDER.MALE_ZH);
+            }
+
+            if (customer.getGender() == Const.GENDER.FEMALE) {
+                result.put("gender", Const.GENDER.FEMALE_ZH);
+            }
+            StringBuilder sb2 = new StringBuilder(customer.getMobile());
+            result.put("mobile", sb2.replace(3,6,"***"));
+
+            result.put("email",customer.getEmail());
+
+            result.put("address",customer.getAddress());
+
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
+        }
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST);
     }
 }

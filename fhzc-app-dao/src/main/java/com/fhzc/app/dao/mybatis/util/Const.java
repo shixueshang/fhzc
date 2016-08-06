@@ -159,11 +159,13 @@ public class Const {
          * 单人客户
          */
         public static final String SINGLE_CUSTOMER = "single";
+        public static final String SINGLE_CUSTOMER_ZH = "个人";
 
         /**
          * 机构客户
          */
         public static final String ORGAN_CUSTOMER = "organ";
+        public static final String ORGAN_CUSTOMER_ZH = "机构";
     }
 
     public static class ASSETS_TYPE{
@@ -211,5 +213,21 @@ public class Const {
          * 已审批
          */
         public static final Integer APPROVED = 1;
+    }
+
+    public static class RISK{
+
+        public static final String low= "low";
+
+    }
+
+     public static class GENDER{
+
+        public static final String MALE= "male";
+        public static final String MALE_ZH= "男";
+
+         public static final String FEMALE= "female";
+         public static final String FEMALE_ZH= "女";
+
     }
 }
