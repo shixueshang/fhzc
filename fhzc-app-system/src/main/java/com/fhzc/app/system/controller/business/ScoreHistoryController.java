@@ -1,8 +1,15 @@
 package com.fhzc.app.system.controller.business;
 
+import com.fhzc.app.dao.mybatis.model.ScoreHistory;
+import com.fhzc.app.dao.mybatis.page.PageHelper;
+import com.fhzc.app.dao.mybatis.page.PageableResult;
+import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.controller.BaseController;
+import com.fhzc.app.system.service.DictionaryService;
 import com.fhzc.app.system.service.ScoreHistoryService;
+import com.fhzc.app.system.service.ScoreService;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,11 +22,17 @@ import java.util.*;
  * Created by Double_J on 2016/7/29
  */
 @Controller
-@RequestMapping(value = "business/scorehistory")
+@RequestMapping(value = "business/score")
 public class ScoreHistoryController extends BaseController {
 
     @Resource
     private ScoreHistoryService scoreHistoryService;
+
+    @Resource
+    private ScoreService scoreService;
+
+    @Resource
+    private DictionaryService dictionaryService;
 
     /**
      * 积分历史导入页面
@@ -83,5 +96,23 @@ public class ScoreHistoryController extends BaseController {
             mav.addAllObjects(result);
         }
         return mav;
+    }
+
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public ModelAndView listScore(){
+        ModelAndView mav = new ModelAndView("business/score/list");
+        PageableResult<ScoreHistory> pageableResult = scoreService.findPageScore(page, size);
+        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
+        mav.addObject("scores", pageableResult.getItems());
+        mav.addObject("scoreStatus", dictionaryService.findDicByType(Const.DIC_CAT.SCORE_STATUS));
+        mav.addObject("fromTypes", dictionaryService.findDicByType(Const.DIC_CAT.SCORE_FROM_TYPE));
+        mav.addObject("url", "business/score");
+        return mav;
+    }
+
+    @RequestMapping(value = "/approve/{id}", method = RequestMethod.GET)
+    public String approve(@PathVariable(value = "id") Integer scoreId){
+        scoreService.approve(scoreId);
+        return "redirect:/business/score/list";
     }
 }
