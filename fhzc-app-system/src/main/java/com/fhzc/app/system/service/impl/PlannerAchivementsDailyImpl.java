@@ -130,7 +130,7 @@ public class PlannerAchivementsDailyImpl implements PlannerAchivementsDailyServi
 	    					}
 	    				}
 			    		if(!isExist){
-		    				errordata = TextUtils.setErrorMessage(i+1, 3, " 该理财师编号不存在！");
+		    				errordata = TextUtils.setErrorMessage(i+1, 4, " 该理财师编号不存在！");
 		    				return errordata;
 		    			}
 		    			

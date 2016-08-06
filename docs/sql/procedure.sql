@@ -725,3 +725,24 @@ END
 ;;
 DELIMITER ;
 
+-- ----------------------------
+-- Procedure structure for sp_add_plannerachivementmonthly
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `sp_add_plannerachivementmonthly`;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_add_plannerachivementmonthly`(p_planner_wornum varchar(45),p_planner_percent varchar(5)
+,p_mannager_wornum varchar(45),p_mannager_percent varchar(45),p_product_name varchar(45)
+,p_realname varchar(45),p_customer_buy int, p_annualised int,p_product_cycle int,p_transfer_date varchar(20),p_memo varchar(45)
+)
+BEGIN
+	-- 理财师业绩月报
+	insert into `planner_achivements_monthly` (`planner_uid`, `planner_percent`, `manager_uid`,`mannager_percent`, 
+	   `product_id`, `product_type`,`customer_uid`, `customer_name`,`customer_buy`, `annualised`, `product_cycle`, `transfer_date`, `memo`, `ctime`, `area_id`) 
+		select planner1.uid,p_planner_percent,planner2.uid,p_mannager_percent,p.pid,p.product_type,-1,p_realname,p_customer_buy,p_annualised,p_product_cycle,p_transfer_date,p_memo,NOW(),null from planner planner1
+		left join planner planner2 on planner2.work_num=p_mannager_wornum 
+		left join product p on p.name=p_product_name
+		where  planner1.work_num=p_planner_wornum;
+END
+;;
+DELIMITER ;
+
