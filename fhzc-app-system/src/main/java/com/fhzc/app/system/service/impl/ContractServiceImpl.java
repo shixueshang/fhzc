@@ -86,7 +86,7 @@ public class ContractServiceImpl implements ContractService {
 	        		temData[8] = objects[7];										//客户类型
 	        		temData[9] = TextUtils.StringtoInteger(objects[8].toString());	//出借金额 amount_rmb
 	        		temData[10] = TextUtils.StringtoInteger(objects[9].toString());	//年化金额 annualised
-	        		temData[11] = objects[10];										//出借期限 period
+	        		temData[11] = TextUtils.StringtoInteger(objects[10].toString());//出借期限 period
 	        		temData[12] = objects[11];										//年化收益率 earning_rate
 	        		temData[13] = objects[12];										//到账日期 buy_time
 	        	    temData[14] = objects[13];										//分公司

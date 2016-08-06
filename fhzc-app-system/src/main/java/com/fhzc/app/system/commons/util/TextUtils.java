@@ -226,6 +226,7 @@ public class TextUtils {
     	}
     }
   
+
     /**
      * 截取小数点之前的整数，适用于常规格式的数字转换
      */
@@ -340,4 +341,5 @@ public class TextUtils {
 		return errordata;
 
     }
+
 }
