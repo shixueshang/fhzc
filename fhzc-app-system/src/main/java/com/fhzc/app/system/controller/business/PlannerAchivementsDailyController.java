@@ -89,7 +89,7 @@ public class PlannerAchivementsDailyController  extends BaseController  {
             mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
             mav.addObject("plannerAchivementsDailys", pageableResult.getItems());
             
-            mav.addAllObjects(result);
+           mav.addAllObjects(result);
 
             return mav;
 

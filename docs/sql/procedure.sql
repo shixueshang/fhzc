@@ -51,11 +51,11 @@ BEGIN
 	end if;
 	if p_addflag ='增' then
 		insert into score_history(uid,score,event_id,status,operator_type,operator_id,detail,from_type,vaild_time,ctime,is_vaild,is_approve)
-		  values(_customer_Id,p_consume_score,_event_id,_status,'admin',p_operator_id, '积分'+ p_addflag + '，类型：' +p_type +',名称：' + p_from
+		  values(_customer_Id,p_consume_score,_event_id,_status,'admin',p_operator_id, CONCAT('积分', p_addflag , '，类型：',p_type ,',名称：' , p_from)
 			,_from_type,p_vaild_time,p_operate_time,1,1);
 	else
 		insert into score_history(uid,score,event_id,status,operator_type,operator_id,detail,from_type,ctime,is_vaild,is_approve)
-		  values(_customer_Id,p_consume_score,_event_id,_status,'admin',p_operator_id, '积分'+ p_addflag + '，类型：' +p_type +',名称：' + p_from
+		  values(_customer_Id,p_consume_score,_event_id,_status,'admin',p_operator_id, CONCAT('积分', p_addflag , '，类型：',p_type ,',名称：' , p_from)
 			,_from_type,p_operate_time,1,1);
 	End if;
 
@@ -89,7 +89,7 @@ BEGIN
 	if _rights_id >0 then 
 
 		insert into score_history(uid,score,event_id,status,operator_type,operator_id,detail,from_type,ctime,is_vaild,is_approve)
-		  values(_customer_Id,-1*p_consume_score,_rights_id,'consume','admin',p_operator_id,'积分减，类型：权益消费,名称：' + p_rightsname,'rights',now(),1,1);
+		  values(_customer_Id,-1*p_consume_score,_rights_id,'consume','admin',p_operator_id,CONCAT('积分减，类型：权益消费,名称：',p_rightsname),'rights',now(),1,1);
 
 	end if;
 END
