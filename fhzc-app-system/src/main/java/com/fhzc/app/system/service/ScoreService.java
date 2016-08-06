@@ -1,6 +1,7 @@
 package com.fhzc.app.system.service;
 
 import com.fhzc.app.dao.mybatis.model.ScoreHistory;
+import com.fhzc.app.dao.mybatis.page.PageableResult;
 
 import java.util.List;
 
@@ -52,5 +53,9 @@ public interface ScoreService {
      * @return
      */
     Integer sumScore(List<ScoreHistory> scoreHistories);
+
+    PageableResult<ScoreHistory> findPageScore(int page, int size);
+
+    void approve(Integer id);
 
 }

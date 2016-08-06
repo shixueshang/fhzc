@@ -23,7 +23,7 @@
     <result column="planner_name" jdbcType="VARCHAR" property="plannerName" />
     <result column="planner_work_num" jdbcType="VARCHAR" property="plannerWorkNum" />
     <result column="manager_name" jdbcType="VARCHAR" property="managerName" />
-    <result column="manager_work_num" jdbcType="VARCHAR" property="managerWorkNum" />         
+    <result column="manager_work_num" jdbcType="VARCHAR" property="managerWorkNum" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -394,18 +394,18 @@
     <if test="distinct" >
       distinct
     </if>
-    p.id, p.planner_uid, p.planner_percent, p.manager_uid, p.mannager_percent, p.product_id, 
-    p.product_type, p.customer_uid, p.customer_name, p.customer_buy, p.annualised, p.product_cycle, p.transfer_date, 
+    p.id, p.planner_uid, p.planner_percent, p.manager_uid, p.mannager_percent, p.product_id,
+    p.product_type, p.customer_uid, p.customer_name, p.customer_buy, p.annualised, p.product_cycle, p.transfer_date,
     p.memo, p.ctime, p.area_id
     , areas.area_name, product.name product_name, user.realname planner_name, planner.work_num planner_work_num
     , manager_user.realname manager_name, manager.work_num manager_work_num
-    from planner_achivements_monthly p 
+    from planner_achivements_monthly p
     left join areas on p.area_id=areas.area_id
     left join product on p.product_id=product.pid
     left join user on p.planner_uid = user.uid
     left join planner on p.planner_uid = planner.uid
     left join user manager_user on p.planner_uid = manager_user.uid
-    left join planner manager on p.planner_uid = manager.uid    
+    left join planner manager on p.planner_uid = manager.uid
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>

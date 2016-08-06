@@ -47,29 +47,24 @@ public class UserController extends BaseController {
     @ResponseBody
     public ApiJsonResult getUserInfo() throws Exception {
         User user  = getCurrentUser();
-        Customer customer = customerService.getCustomerByUid(user.getUid());
-        if(customer != null){
-            List<Dictionary> dicts = dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL);
-            for(Dictionary dict : dicts){
-                if(dict.getValue().equals(customer.getLevelId().toString())){
-                    user.setLevel(dict.getKey());
-                }
-            }
-        }
-
         Map result = ObjUtils.objectToMap(user);
-        List<PlannerCustomer> plannerCustomers = plannerCustomerService.getCustomerPlannerList(user.getUid());
-        List<Map> planners = new ArrayList<>();
-        for (PlannerCustomer pl : plannerCustomers){
-            Map planner = new HashMap();
-            User plannerUser = userService.getUser(pl.getPlannerId());
-            planner.put("plannerId",pl.getPlannerId());
-            planner.put("plannerName",plannerUser.getRealname());
-            planner.put("isMain",pl.getIsMain());
-            planners.add(planner);
+        if(user.getLoginRole().equals(Const.USER_ROLE.CUSTOMER)) {
+            Customer customer = customerService.getCustomerByUid(user.getUid());
+            user.setLevel(this.getCustomerLevel(user.getUid()));
+
+            List<PlannerCustomer> plannerCustomers = plannerCustomerService.getCustomerPlannerList(user.getUid());
+            List<Map> planners = new ArrayList<>();
+            for (PlannerCustomer pl : plannerCustomers) {
+                Map planner = new HashMap();
+                User plannerUser = userService.getUser(pl.getPlannerId());
+                planner.put("plannerId", pl.getPlannerId());
+                planner.put("plannerName", plannerUser.getRealname());
+                planner.put("isMain", pl.getIsMain());
+                planners.add(planner);
+            }
+            result.put("planners", planners);
+            result.put("cb_id", customer.getCbId());
         }
-        result.put("planners",planners);
-        result.put("cb_id",customer.getCbId());
 
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
     }
@@ -99,10 +94,46 @@ public class UserController extends BaseController {
                 map.put("main", pc.getIsMain());
                 List<ScoreHistory> scoreHistoryList = scoreService.getAvailableList(pc.getCustomerId());
                 map.put("score", scoreService.sumScore(scoreHistoryList));
+                map.put("level", this.getCustomerLevel(pc.getCustomerId()));
+
                 result.add(map);
             }
         }
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
+    }
+
+    /**
+     * 获得用户等级信息明文
+     * @param uid
+     * @return
+     */
+    public String getCustomerLevel(Integer uid){
+        Customer customer= customerService.getCustomerByUid(uid);
+        if (customer != null) {
+            List<Dictionary> dicts = dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL);
+            for (Dictionary dict : dicts) {
+                if (dict.getValue().equals(customer.getLevelId().toString())) {
+                    return dict.getKey();
+                }
+            }
+        }
+        return "";
+    }
+
+
+    /**
+     * 获得用户等级信息明文
+     * @param passport_type_id
+     * @return
+     */
+    public String getPassportTypeName(Integer passport_type_id){
+        List<Dictionary> dicts = dictionaryService.findDicByType(Const.DIC_CAT.PASSPORT);
+        for (Dictionary dict : dicts) {
+            if (dict.getValue().equals(passport_type_id)) {
+                return dict.getKey();
+            }
+        }
+        return "";
     }
 
     /**
@@ -135,5 +166,55 @@ public class UserController extends BaseController {
         userService.updateUser(user);
 
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
+    }
+
+
+    /**
+     * 获取登录用户信息
+     * @return
+     */
+    @RequestMapping(value = "/api/customer/info", method = RequestMethod.GET)
+    @ResponseBody
+    public ApiJsonResult getCustomerInfo(Integer customer_id) throws Exception {
+        User user  = getCurrentUser();
+        if(user.getLoginRole().equals(Const.USER_ROLE.PLANNER)) {
+            User customer = userService.getUser(customer_id);
+            Customer customerInfo = customerService.getCustomerByUid(customer_id);
+            Map result= new HashMap();
+            result.put("name", customer.getRealname());
+
+            if (customerInfo.getCustomerType() == Const.CUSTOMER_TYPE.ORGAN_CUSTOMER) {
+                result.put("type",Const.CUSTOMER_TYPE.ORGAN_CUSTOMER_ZH);
+            }
+            if (customerInfo.getCustomerType() == Const.CUSTOMER_TYPE.SINGLE_CUSTOMER) {
+                result.put("type",Const.CUSTOMER_TYPE.SINGLE_CUSTOMER_ZH);
+            }
+
+            result.put("level", this.getCustomerLevel(customer_id));
+            result.put("risk", customerInfo.getRisk());
+            result.put("passportType", this.getPassportTypeName(customer.getPassportTypeId()));
+            result.put("passportTypeId", customer.getPassportTypeId());
+
+            StringBuilder sb1 = new StringBuilder(customer.getPassportCode());
+            result.put("passportCode", sb1.replace(3,7,"****"));
+            result.put("passportAddress", customer.getPassportAddress());
+            result.put("birthday", customer.getBirthday());
+            if (customer.getGender() == Const.GENDER.MALE) {
+                result.put("gender", Const.GENDER.MALE_ZH);
+            }
+
+            if (customer.getGender() == Const.GENDER.FEMALE) {
+                result.put("gender", Const.GENDER.FEMALE_ZH);
+            }
+            StringBuilder sb2 = new StringBuilder(customer.getMobile());
+            result.put("mobile", sb2.replace(3,6,"***"));
+
+            result.put("email",customer.getEmail());
+
+            result.put("address",customer.getAddress());
+
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
+        }
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST);
     }
 }

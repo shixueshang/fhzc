@@ -96,6 +96,16 @@ public class Const {
          * 订单状态
          */
         public static final String ASSETS_STATUS = "assets_status";
+
+        /**
+         * 积分状态
+         */
+        public static final String SCORE_STATUS = "score_status";
+
+        /**
+         * 积分来源类型
+         */
+        public static final String SCORE_FROM_TYPE = "score_from_type";
     }
 
     /**
@@ -149,11 +159,13 @@ public class Const {
          * 单人客户
          */
         public static final String SINGLE_CUSTOMER = "single";
+        public static final String SINGLE_CUSTOMER_ZH = "个人";
 
         /**
          * 机构客户
          */
         public static final String ORGAN_CUSTOMER = "organ";
+        public static final String ORGAN_CUSTOMER_ZH = "机构";
     }
 
     public static class ASSETS_TYPE{
@@ -186,5 +198,36 @@ public class Const {
     public static class BANNER_TYPE{
         public static final String TEXT= "index_text";
         public static final String PIC= "index_pic";
+    }
+
+    /**
+     * 积分审批状态
+     */
+    public static class APPROVE_STATUS{
+        /**
+         * 待审批
+         */
+        public static final Integer WATTING_APPROVE = 0;
+
+        /**
+         * 已审批
+         */
+        public static final Integer APPROVED = 1;
+    }
+
+    public static class RISK{
+
+        public static final String low= "low";
+
+    }
+
+     public static class GENDER{
+
+        public static final String MALE= "male";
+        public static final String MALE_ZH= "男";
+
+         public static final String FEMALE= "female";
+         public static final String FEMALE_ZH= "女";
+
     }
 }

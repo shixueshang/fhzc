@@ -171,6 +171,21 @@
                         </ul>
                     </li></shiro:hasPermission>
 
+                    <shiro:hasPermission name="/business/score"><li class="has-sub">
+                        <a href="javascript:;">
+                            <i class="icon-shopping-cart"></i>
+                            <span class="title">积分管理</span>
+                            <span class="selected"></span>
+                            <span class="arrow open"></span>
+                        </a>
+
+                        <ul class="sub">
+                            <shiro:hasPermission name="/business/score/list"><li>
+                                <a href="<%=contextPath%>/business/score/list">积分列表</a>
+                            </li></shiro:hasPermission>
+                        </ul>
+                    </li></shiro:hasPermission>
+
 
                     <shiro:hasPermission name="/system"><li class="has-sub">
                         <a href="javascript:;">

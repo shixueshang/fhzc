@@ -3,8 +3,10 @@ package com.fhzc.app.system.service.impl;
 import com.fhzc.app.dao.mybatis.inter.ScoreHistoryMapper;
 import com.fhzc.app.dao.mybatis.model.ScoreHistory;
 import com.fhzc.app.dao.mybatis.model.ScoreHistoryExample;
+import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.service.ScoreService;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -82,7 +84,24 @@ public class ScoreServiceImpl implements ScoreService {
         return sum;
     }
 
+    @Override
+    public PageableResult<ScoreHistory> findPageScore(int page, int size) {
+        ScoreHistoryExample example = new ScoreHistoryExample();
+        ScoreHistoryExample.Criteria criteria = example.createCriteria();
+        criteria.andIsApproveEqualTo(Const.APPROVE_STATUS.WATTING_APPROVE);
+        criteria.andIsVaildEqualTo(Const.Data_Status.DATA_NORMAL);
+        RowBounds rowBounds = new RowBounds((page - 1) * size, size);
+        List<ScoreHistory> list = scoreHistoryMapper.selectByExampleWithRowbounds(example, rowBounds);
+        return new PageableResult<ScoreHistory>(page, size, scoreHistoryMapper.countByExample(example), list);
+    }
 
+    @Override
+    public void approve(Integer id) {
+        ScoreHistory scoreHistory = scoreHistoryMapper.selectByPrimaryKey(id);
+        scoreHistory.setIsApprove(Const.APPROVE_STATUS.APPROVED);
+        scoreHistoryMapper.updateByPrimaryKey(scoreHistory);
+
+    }
 
 
 }

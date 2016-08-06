@@ -552,63 +552,63 @@ public class PlannerAchivementsDailyExample {
             return (Criteria) this;
         }
 
-        public Criteria andExpireDateIsNull() {
-            addCriterion("`expire_date` is null");
+        public Criteria andPeriodIsNull() {
+            addCriterion("`period` is null");
             return (Criteria) this;
         }
 
-        public Criteria andExpireDateIsNotNull() {
-            addCriterion("`expire_date` is not null");
+        public Criteria andPeriodIsNotNull() {
+            addCriterion("`period` is not null");
             return (Criteria) this;
         }
 
-        public Criteria andExpireDateEqualTo(Date value) {
-            addCriterionForJDBCDate("`expire_date` =", value, "expireDate");
+        public Criteria andPeriodEqualTo(Integer value) {
+            addCriterion("`period` =", value, "period");
             return (Criteria) this;
         }
 
-        public Criteria andExpireDateNotEqualTo(Date value) {
-            addCriterionForJDBCDate("`expire_date` <>", value, "expireDate");
+        public Criteria andPeriodNotEqualTo(Integer value) {
+            addCriterion("`period` <>", value, "period");
             return (Criteria) this;
         }
 
-        public Criteria andExpireDateGreaterThan(Date value) {
-            addCriterionForJDBCDate("`expire_date` >", value, "expireDate");
+        public Criteria andPeriodGreaterThan(Integer value) {
+            addCriterion("`period` >", value, "period");
             return (Criteria) this;
         }
 
-        public Criteria andExpireDateGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("`expire_date` >=", value, "expireDate");
+        public Criteria andPeriodGreaterThanOrEqualTo(Integer value) {
+            addCriterion("`period` >=", value, "period");
             return (Criteria) this;
         }
 
-        public Criteria andExpireDateLessThan(Date value) {
-            addCriterionForJDBCDate("`expire_date` <", value, "expireDate");
+        public Criteria andPeriodLessThan(Integer value) {
+            addCriterion("`period` <", value, "period");
             return (Criteria) this;
         }
 
-        public Criteria andExpireDateLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("`expire_date` <=", value, "expireDate");
+        public Criteria andPeriodLessThanOrEqualTo(Integer value) {
+            addCriterion("`period` <=", value, "period");
             return (Criteria) this;
         }
 
-        public Criteria andExpireDateIn(List<Date> values) {
-            addCriterionForJDBCDate("`expire_date` in", values, "expireDate");
+        public Criteria andPeriodIn(List<Integer> values) {
+            addCriterion("`period` in", values, "period");
             return (Criteria) this;
         }
 
-        public Criteria andExpireDateNotIn(List<Date> values) {
-            addCriterionForJDBCDate("`expire_date` not in", values, "expireDate");
+        public Criteria andPeriodNotIn(List<Integer> values) {
+            addCriterion("`period` not in", values, "period");
             return (Criteria) this;
         }
 
-        public Criteria andExpireDateBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("`expire_date` between", value1, value2, "expireDate");
+        public Criteria andPeriodBetween(Integer value1, Integer value2) {
+            addCriterion("`period` between", value1, value2, "period");
             return (Criteria) this;
         }
 
-        public Criteria andExpireDateNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("`expire_date` not between", value1, value2, "expireDate");
+        public Criteria andPeriodNotBetween(Integer value1, Integer value2) {
+            addCriterion("`period` not between", value1, value2, "period");
             return (Criteria) this;
         }
 

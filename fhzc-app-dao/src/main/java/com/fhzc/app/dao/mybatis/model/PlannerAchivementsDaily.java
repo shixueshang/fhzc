@@ -17,21 +17,21 @@ public class PlannerAchivementsDaily {
 
     private Integer contractAmount;
 
-    private Date expireDate;
+    private Integer period;
 
     private String productType;
 
     private String memo;
 
     private Date ctime;
-    
-    
+
+
     private String areaName;
     private String productName;
     private String plannerName;
     private String workNum;
-    
-    
+
+
 
     public String getWorkNum() {
 		return workNum;
@@ -121,12 +121,12 @@ public class PlannerAchivementsDaily {
         this.contractAmount = contractAmount;
     }
 
-    public Date getExpireDate() {
-        return expireDate;
+    public Integer getPeriod() {
+        return period;
     }
 
-    public void setExpireDate(Date expireDate) {
-        this.expireDate = expireDate;
+    public void setPeriod(Integer period) {
+        this.period = period;
     }
 
     public String getProductType() {

@@ -9,7 +9,7 @@
     <result column="product_id" property="productId" jdbcType="INTEGER" />
     <result column="annualised" property="annualised" jdbcType="INTEGER" />
     <result column="contract_amount" property="contractAmount" jdbcType="INTEGER" />
-    <result column="expire_date" property="expireDate" jdbcType="DATE" />
+    <result column="period" property="period" jdbcType="INTEGER" />
     <result column="product_type" property="productType" jdbcType="VARCHAR" />
     <result column="memo" property="memo" jdbcType="VARCHAR" />
     <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
@@ -78,7 +78,7 @@
   </sql>
   <sql id="Base_Column_List" >
     `id`, `transfer_date`, `area_id`, `planner_uid`, `product_id`, `annualised`, `contract_amount`, 
-    `expire_date`, `product_type`, `memo`, `ctime`
+    `period`, `product_type`, `memo`, `ctime`
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.PlannerAchivementsDailyExample" >
     select
@@ -111,16 +111,22 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.fhzc.app.dao.mybatis.model.PlannerAchivementsDaily" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into `planner_achivements_daily` (`transfer_date`, `area_id`, `planner_uid`, 
       `product_id`, `annualised`, `contract_amount`, 
-      `expire_date`, `product_type`, `memo`, 
+      `period`, `product_type`, `memo`, 
       `ctime`)
     values (#{transferDate,jdbcType=DATE}, #{areaId,jdbcType=INTEGER}, #{plannerUid,jdbcType=INTEGER}, 
       #{productId,jdbcType=INTEGER}, #{annualised,jdbcType=INTEGER}, #{contractAmount,jdbcType=INTEGER}, 
-      #{expireDate,jdbcType=DATE}, #{productType,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, 
+      #{period,jdbcType=INTEGER}, #{productType,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, 
       #{ctime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.PlannerAchivementsDaily" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into `planner_achivements_daily`
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="transferDate != null" >
@@ -141,8 +147,8 @@
       <if test="contractAmount != null" >
         `contract_amount`,
       </if>
-      <if test="expireDate != null" >
-        `expire_date`,
+      <if test="period != null" >
+        `period`,
       </if>
       <if test="productType != null" >
         `product_type`,
@@ -173,8 +179,8 @@
       <if test="contractAmount != null" >
         #{contractAmount,jdbcType=INTEGER},
       </if>
-      <if test="expireDate != null" >
-        #{expireDate,jdbcType=DATE},
+      <if test="period != null" >
+        #{period,jdbcType=INTEGER},
       </if>
       <if test="productType != null" >
         #{productType,jdbcType=VARCHAR},
@@ -217,8 +223,8 @@
       <if test="record.contractAmount != null" >
         `contract_amount` = #{record.contractAmount,jdbcType=INTEGER},
       </if>
-      <if test="record.expireDate != null" >
-        `expire_date` = #{record.expireDate,jdbcType=DATE},
+      <if test="record.period != null" >
+        `period` = #{record.period,jdbcType=INTEGER},
       </if>
       <if test="record.productType != null" >
         `product_type` = #{record.productType,jdbcType=VARCHAR},
@@ -243,7 +249,7 @@
       `product_id` = #{record.productId,jdbcType=INTEGER},
       `annualised` = #{record.annualised,jdbcType=INTEGER},
       `contract_amount` = #{record.contractAmount,jdbcType=INTEGER},
-      `expire_date` = #{record.expireDate,jdbcType=DATE},
+      `period` = #{record.period,jdbcType=INTEGER},
       `product_type` = #{record.productType,jdbcType=VARCHAR},
       `memo` = #{record.memo,jdbcType=VARCHAR},
       `ctime` = #{record.ctime,jdbcType=TIMESTAMP}
@@ -272,8 +278,8 @@
       <if test="contractAmount != null" >
         `contract_amount` = #{contractAmount,jdbcType=INTEGER},
       </if>
-      <if test="expireDate != null" >
-        `expire_date` = #{expireDate,jdbcType=DATE},
+      <if test="period != null" >
+        `period` = #{period,jdbcType=INTEGER},
       </if>
       <if test="productType != null" >
         `product_type` = #{productType,jdbcType=VARCHAR},
@@ -295,7 +301,7 @@
       `product_id` = #{productId,jdbcType=INTEGER},
       `annualised` = #{annualised,jdbcType=INTEGER},
       `contract_amount` = #{contractAmount,jdbcType=INTEGER},
-      `expire_date` = #{expireDate,jdbcType=DATE},
+      `period` = #{period,jdbcType=INTEGER},
       `product_type` = #{productType,jdbcType=VARCHAR},
       `memo` = #{memo,jdbcType=VARCHAR},
       `ctime` = #{ctime,jdbcType=TIMESTAMP}
@@ -306,8 +312,8 @@
     <if test="distinct" >
       distinct
     </if>
-    p.id, p.transfer_date, p.area_id, p.planner_uid, p.product_id, p.annualised, p.contract_amount, p.expire_date, p.product_type, p.memo, p.ctime
-    ,areas.area_name, product.name product_name, user.realname planner_name, planner.work_num 
+    p.id, p.transfer_date, p.area_id, p.planner_uid, p.product_id, p.annualised, p.contract_amount, p.period, p.product_type, p.memo, p.ctime
+    ,areas.area_name, product.name product_name, user.realname planner_name, planner.work_num
     from planner_achivements_daily p
     left join areas on p.area_id=areas.area_id
     left join product on p.product_id=product.pid
