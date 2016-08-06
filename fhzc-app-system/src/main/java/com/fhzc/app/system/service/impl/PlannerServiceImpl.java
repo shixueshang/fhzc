@@ -1,7 +1,7 @@
 package com.fhzc.app.system.service.impl;
 
 import com.fhzc.app.dao.mybatis.page.PageableResult;
-import com.fhzc.app.dao.mybatis.util.EncryptUtils;
+import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.commons.util.excel.ExcelImporter;
 import com.fhzc.app.system.commons.util.excel.ImportCallBack;
 import com.fhzc.app.system.commons.util.excel.ImportConfig;
@@ -93,7 +93,7 @@ public class PlannerServiceImpl implements PlannerService {
         	if(data.get(0).length>0){
 	        	for (Object[] objects : data) {
 	        		Object[] temData = new  Object[18];
-	        		String phone = objects[4].toString();
+	        		String phone = TextUtils.IntToDouble(objects[4].toString());
 	        		temData[0] = objects[1];						//工号 work_num,作为初始登录名
 	        		temData[1] = DigestUtils.md5Hex(phone);			//手机号 mobile，作为初始密码	
 	        		temData[2] = objects[1];						//工号 work_num
@@ -162,7 +162,7 @@ public class PlannerServiceImpl implements PlannerService {
         	if(data.get(0).length>0){
 	        	for (Object[] objects : data) {
 	        		Object[] temData = new  Object[18];
-	        		String phone = objects[4].toString();
+	        		String phone = TextUtils.IntToDouble(objects[4].toString());
 	        		temData[0] = objects[1];						//工号 work_num,作为初始登录名
 	        		temData[1] = DigestUtils.md5Hex(phone);			//手机号 mobile，作为初始密码	
 	        		temData[2] = objects[1];						//工号 work_num

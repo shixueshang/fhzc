@@ -47,29 +47,31 @@ public class UserController extends BaseController {
     @ResponseBody
     public ApiJsonResult getUserInfo() throws Exception {
         User user  = getCurrentUser();
-        Customer customer = customerService.getCustomerByUid(user.getUid());
-        if(customer != null){
-            List<Dictionary> dicts = dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL);
-            for(Dictionary dict : dicts){
-                if(dict.getValue().equals(customer.getLevelId().toString())){
-                    user.setLevel(dict.getKey());
+        Map result = ObjUtils.objectToMap(user);
+        if(user.getLoginRole().equals(Const.USER_ROLE.CUSTOMER)) {
+            Customer customer = customerService.getCustomerByUid(user.getUid());
+            if (customer != null) {
+                List<Dictionary> dicts = dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL);
+                for (Dictionary dict : dicts) {
+                    if (dict.getValue().equals(customer.getLevelId().toString())) {
+                        user.setLevel(dict.getKey());
+                    }
                 }
             }
-        }
 
-        Map result = ObjUtils.objectToMap(user);
-        List<PlannerCustomer> plannerCustomers = plannerCustomerService.getCustomerPlannerList(user.getUid());
-        List<Map> planners = new ArrayList<>();
-        for (PlannerCustomer pl : plannerCustomers){
-            Map planner = new HashMap();
-            User plannerUser = userService.getUser(pl.getPlannerId());
-            planner.put("plannerId",pl.getPlannerId());
-            planner.put("plannerName",plannerUser.getRealname());
-            planner.put("isMain",pl.getIsMain());
-            planners.add(planner);
+            List<PlannerCustomer> plannerCustomers = plannerCustomerService.getCustomerPlannerList(user.getUid());
+            List<Map> planners = new ArrayList<>();
+            for (PlannerCustomer pl : plannerCustomers) {
+                Map planner = new HashMap();
+                User plannerUser = userService.getUser(pl.getPlannerId());
+                planner.put("plannerId", pl.getPlannerId());
+                planner.put("plannerName", plannerUser.getRealname());
+                planner.put("isMain", pl.getIsMain());
+                planners.add(planner);
+            }
+            result.put("planners", planners);
+            result.put("cb_id", customer.getCbId());
         }
-        result.put("planners",planners);
-        result.put("cb_id",customer.getCbId());
 
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
     }

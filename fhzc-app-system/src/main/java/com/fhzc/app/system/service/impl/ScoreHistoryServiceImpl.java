@@ -59,16 +59,16 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
         			Object[] temData = new  Object[10];
 	        		String pcode = objects[3].toString();
 	        		String key = pcode.substring(pcode.length()-8);
-	        		temData[0] = objects[0];									//姓名 
-	        		temData[1] = objects[1];									//性别 
-	        		temData[2] = objects[2];									//证件类型
-	        		temData[3] = EncryptUtils.encryptToDES(key, pcode);			//证件号码
-	        		temData[4] = objects[4];									//权益名称
-	        		temData[5] = objects[5];									//消费时间 
-	        		temData[6] = objects[6];									//消费地点
-	        		temData[7] = TextUtils.FloatToInt(objects[7].toString());	//消费积分
-	        		temData[8] = TextUtils.FloatToInt(objects[8].toString());	//剩余积分
-	        		temData[9] = operatorID;									//operatorID
+	        		temData[0] = objects[0];										//姓名 
+	        		temData[1] = objects[1];										//性别 
+	        		temData[2] = objects[2];										//证件类型
+	        		temData[3] = EncryptUtils.encryptToDES(key, pcode);				//证件号码
+	        		temData[4] = objects[4];										//权益名称
+	        		temData[5] = objects[5];										//消费时间 
+	        		temData[6] = objects[6];										//消费地点
+	        		temData[7] = TextUtils.StringtoInteger(objects[7].toString());	//消费积分
+	        		temData[8] = TextUtils.StringtoInteger(objects[8].toString());	//剩余积分
+	        		temData[9] = operatorID;										//operatorID
 	        		scoreList.add(temData);
         		}
         	}

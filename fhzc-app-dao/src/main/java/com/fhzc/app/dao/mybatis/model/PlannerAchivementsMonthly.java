@@ -34,16 +34,16 @@ public class PlannerAchivementsMonthly {
     private Date ctime;
 
     private Integer areaId;
-    
-    
+
+
     private String areaName;
     private String productName;
     private String plannerName;
-    private String plannerWorkNum; 
+    private String plannerWorkNum;
     private String managerName;
-    private String managerWorkNum; 
-    
-    
+    private String managerWorkNum;
+
+
 
     public String getAreaName() {
 		return areaName;
