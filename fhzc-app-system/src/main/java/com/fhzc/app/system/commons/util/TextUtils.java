@@ -5,6 +5,11 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -132,6 +137,53 @@ public class TextUtils {
     }
     
     /**
+     * 判断字符串是否是日期
+     */
+    public static boolean isValidDate(String str) {
+	     boolean convertSuccess=true;
+	     	// 指定日期格式为四位年/两位月份/两位日期，注意yyyy/MM/dd区分大小写；
+	        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+	        try {
+	        	// 设置lenient为false. 否则SimpleDateFormat会比较宽松地验证日期，比如2007/02/29会被接受，并转换成2007/03/01
+	           format.setLenient(false);
+	           format.parse(str);
+	         } catch (ParseException e) {
+	        	 // e.printStackTrace();
+	        	 // 如果throw java.text.ParseException或者NullPointerException，就说明格式不对
+	        	 convertSuccess=false;
+	        } 
+	        return convertSuccess;
+    	}
+    
+	/**
+	 * 验证时间字符串格式输入是否正确
+	 * @param timeStr
+	 * @return
+	 */
+	public static boolean valiDateTimeWithShortFormat(String timeStr) {
+		String format = "((19|20)[0-9]{2})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])";
+		Pattern pattern = Pattern.compile(format);
+		Matcher matcher = pattern.matcher(timeStr);
+		if (matcher.matches()) {
+			pattern = Pattern.compile("(\\d{4})-(\\d+)-(\\d+).*");
+			matcher = pattern.matcher(timeStr);
+			if (matcher.matches()) {
+				int y = Integer.valueOf(matcher.group(1));
+				int m = Integer.valueOf(matcher.group(2));
+				int d = Integer.valueOf(matcher.group(3));
+				if (d > 28) {
+					Calendar c = Calendar.getInstance();
+					c.set(y, m-1, 1);
+					int lastDay = c.getActualMaximum(Calendar.DAY_OF_MONTH);
+					return (lastDay >= d);
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+    
+    /**
      * 字符串直接转换成整数，如果为空，直接为0
      */
     public static int StringtoInteger(String value) {
@@ -174,4 +226,120 @@ public class TextUtils {
     	}
     }
   
+
+    /**
+     * 截取小数点之前的整数，适用于常规格式的数字转换
+     */
+    public static int FloatToInt(String value){
+    	return Integer.parseInt((value.contains(".")?value.substring(0,value.indexOf(".")):value));
+    }
+    
+    
+    /**
+     * 检查日期
+     * @param rowNum 行数
+     * @param colNum	列数
+     * @param errorMessage	错误消息
+     * @return
+     */
+    public static List<Object[]> checkDateString(int rowNum, int colNum, Object value, boolean allowEmpty){
+    	List<Object[]> checkResult = new LinkedList<Object[]>();
+    	if(!allowEmpty){
+	    	if(value == null || value.toString().trim().equals("") ){
+	    		String errorMessage = "不能为空!";
+	    		
+	    		return setErrorMessage(rowNum,colNum,errorMessage);
+	    	}
+	    	
+    	}
+    	if(value != null && ! value.toString().trim().equals("")){
+    		if(!valiDateTimeWithShortFormat(value.toString())){
+	    		String errorMessage = "不是合法的日期格式 年-月-日!";
+	    		return setErrorMessage(rowNum,colNum,errorMessage);
+    		}
+ 		
+    	}
+    	
+    	return checkResult;
+
+    }
+    
+    
+    /**
+     * 检查数字
+     * @param rowNum 行数
+     * @param colNum	列数
+     * @param errorMessage	错误消息
+     * @return
+     */
+    public static List<Object[]> checkNumber(int rowNum, int colNum, Object value, boolean allowEmpty){
+    	List<Object[]> checkResult = new LinkedList<Object[]>();
+    	if(!allowEmpty){
+	    	if(value == null || value.toString().trim().equals("") ){
+	    		String errorMessage = "不能为空!";
+	    		
+	    		return setErrorMessage(rowNum,colNum,errorMessage);
+	    	}
+	    	
+    	}
+    	if(value != null && ! value.toString().trim().equals("")){
+    		if(!isNumber(value.toString())){
+	    		String errorMessage = "不是数字!";
+	    		return setErrorMessage(rowNum,colNum,errorMessage);
+    		}
+ 		
+    	}
+    	
+    	return checkResult;
+
+    }
+    
+    /**
+     * 检查字符串
+     * @param rowNum 行数
+     * @param colNum	列数
+     * @param errorMessage	错误消息
+     * @return
+     */
+    public static List<Object[]> checkEmptyString(int rowNum, int colNum, Object value){
+    
+    	if(value == null || value.toString().trim().equals("") ){
+    		String errorMessage = "不能为空!";
+    		
+    		return setErrorMessage(rowNum,colNum,errorMessage);
+    	}
+    	else{
+    		return new LinkedList<Object[]>();
+    	}
+
+    }
+
+    
+    /**
+     * 设置错误的消息
+     * @param rowNum 行数
+     * @param colNum	列数
+     * @param errorMessage	错误消息
+     * @return
+     */
+    public static List<Object[]> setErrorMessage(int rowNum, int colNum, String errorMessage){
+		errorMessage = "第" + String.valueOf(rowNum) + "行第"+ String.valueOf(colNum) +"列," + errorMessage ;
+		return setErrorMessage(errorMessage);
+
+    }
+
+    
+    /**
+     * 设置错误的消息
+     * @param errorMessage
+     * @return
+     */
+    public static List<Object[]> setErrorMessage(String errorMessage){
+		List<Object[]> errordata  = new LinkedList<Object[]>();
+		//errordata.add(new Object[]{"error","第" + String.valueOf(i+1) + "行第"+ String.valueOf(6) +"列产品信息为空!"});
+		errordata.add(new Object[]{"error",errorMessage});
+		return errordata;
+
+    }
+
 }

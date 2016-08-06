@@ -312,7 +312,7 @@
     <if test="distinct" >
       distinct
     </if>
-    p.id, p.transfer_date, p.area_id, p.planner_uid, p.product_id, p.annualised, p.contract_amount, p.expire_date, p.product_type, p.memo, p.ctime
+    p.id, p.transfer_date, p.area_id, p.planner_uid, p.product_id, p.annualised, p.contract_amount, p.period, p.product_type, p.memo, p.ctime
     ,areas.area_name, product.name product_name, user.realname planner_name, planner.work_num
     from planner_achivements_daily p
     left join areas on p.area_id=areas.area_id

@@ -51,11 +51,11 @@ BEGIN
 	end if;
 	if p_addflag ='增' then
 		insert into score_history(uid,score,event_id,status,operator_type,operator_id,detail,from_type,vaild_time,ctime,is_vaild,is_approve)
-		  values(_customer_Id,p_consume_score,_event_id,_status,'admin',p_operator_id, '积分'+ p_addflag + '，类型：' +p_type +',名称：' + p_from
+		  values(_customer_Id,p_consume_score,_event_id,_status,'admin',p_operator_id, CONCAT('积分', p_addflag , '，类型：',p_type ,',名称：' , p_from)
 			,_from_type,p_vaild_time,p_operate_time,1,1);
 	else
 		insert into score_history(uid,score,event_id,status,operator_type,operator_id,detail,from_type,ctime,is_vaild,is_approve)
-		  values(_customer_Id,p_consume_score,_event_id,_status,'admin',p_operator_id, '积分'+ p_addflag + '，类型：' +p_type +',名称：' + p_from
+		  values(_customer_Id,p_consume_score,_event_id,_status,'admin',p_operator_id, CONCAT('积分', p_addflag , '，类型：',p_type ,',名称：' , p_from)
 			,_from_type,p_operate_time,1,1);
 	End if;
 
@@ -89,7 +89,7 @@ BEGIN
 	if _rights_id >0 then 
 
 		insert into score_history(uid,score,event_id,status,operator_type,operator_id,detail,from_type,ctime,is_vaild,is_approve)
-		  values(_customer_Id,-1*p_consume_score,_rights_id,'consume','admin',p_operator_id,'积分减，类型：权益消费,名称：' + p_rightsname,'rights',now(),1,1);
+		  values(_customer_Id,-1*p_consume_score,_rights_id,'consume','admin',p_operator_id,CONCAT('积分减，类型：权益消费,名称：',p_rightsname),'rights',now(),1,1);
 
 	end if;
 END
@@ -704,3 +704,24 @@ BEGIN
 END
 ;;
 DELIMITER ;
+
+
+-- ----------------------------
+-- Procedure structure for sp_add_plannerachivementdaily
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `sp_add_plannerachivementdaily`;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_add_plannerachivementdaily`(p_transfer_date varchar(45),p_area_name varchar(45),p_realname varchar(45),p_work_num varchar(45)
+, p_belong_manager varchar(45),p_product_name varchar(20),p_annualised int,p_contract_amount int, p_period int, p_product_type varchar(45), p_memo varchar(45)
+)
+BEGIN
+	-- 理财师业绩日报
+	
+	insert into `planner_achivements_daily` (`transfer_date`, `area_id`, `planner_uid`, 
+       `product_id`, `annualised`, `contract_amount`,`period`, `product_type`, `memo`, `ctime`) 
+        select p_transfer_date,area_id,uid,pid,p_annualised,p_contract_amount,p_period,p_product_type,p_memo,NOW() 
+	   from planner left join areas on area_name=p_area_name left join product on product.name=p_product_name where work_num=p_work_num;
+END
+;;
+DELIMITER ;
+

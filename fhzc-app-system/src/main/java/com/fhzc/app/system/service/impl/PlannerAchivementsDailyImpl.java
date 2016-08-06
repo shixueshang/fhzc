@@ -15,9 +15,13 @@ import com.fhzc.app.system.commons.util.excel.ExcelImporter;
 import com.fhzc.app.system.commons.util.excel.ImportCallBack;
 import com.fhzc.app.system.commons.util.excel.ImportConfig;
 import com.fhzc.app.dao.mybatis.inter.PlannerAchivementsDailyMapper;
+import com.fhzc.app.dao.mybatis.model.Planner;
 import com.fhzc.app.dao.mybatis.model.PlannerAchivementsDaily;
 import com.fhzc.app.dao.mybatis.model.PlannerAchivementsDailyExample;
+import com.fhzc.app.dao.mybatis.model.Product;
 import com.fhzc.app.system.service.PlannerAchivementsDailyService;
+import com.fhzc.app.system.service.PlannerService;
+import com.fhzc.app.system.service.ProductService;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
@@ -33,13 +37,17 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class PlannerAchivementsDailyImpl implements PlannerAchivementsDailyService {
 	
-	   private static final String IMPORT_SQL = "insert into `planner_achivements_daily` (`transfer_date`, `area_id`, `planner_uid`," 
-       + "`product_id`, `annualised`, `contract_amount`,`expire_date`, `product_type`, `memo`, `ctime`) "
-       + " select ?,area_id,uid,pid,?,?,?,?,?,NOW() from planner left join areas on area_name=? left join product on product.name=? where work_num=? ";
+	   private static final String IMPORT_SQL = " call sp_add_plannerachivementdaily(?,?,?,?,?,?,?,?,?,?,?)";
 
 
 	    @Resource
 	    private ExcelImporter importer;
+	    
+	    @Resource
+	    private ProductService productService;
+	    
+	    @Resource
+	    private PlannerService plannerService;
 
 	    @Resource
 	    private PlannerAchivementsDailyMapper plannerAchivementsDailyMapper;
@@ -50,6 +58,9 @@ public class PlannerAchivementsDailyImpl implements PlannerAchivementsDailyServi
 	@Override
 	public Map<String, Object> importDailyExcelFile(MultipartFile multipartFile) throws Exception {
 		// TODO Auto-generated method stub
+		PageableResult<Product> prs = productService.findPageProducts(0, 10000);
+		PageableResult<Planner> planners =  plannerService.findPagePlanners(0, 10000);
+		
 	    Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
 	        @Override
 	        public String validation(Workbook xwb) {
@@ -78,37 +89,99 @@ public class PlannerAchivementsDailyImpl implements PlannerAchivementsDailyServi
 	    			Object[] tempData = data.get(i);
 	    			//判断是否为空，如果为空则不处理
 	    			if(tempData[0] != null && !tempData[0].toString().trim().equals("")){
-		    			Object[] newData = new Object[9];
+		    			Object[] newData = new Object[11];
 		    			
-		    			Object[] error_Data = new Object[2];
 		    			//错误检验处理
-		    			if (tempData[5] == null || tempData[5].toString().trim().equals("") )
+		    			
+		    			//检测产品
+		    			List<Object[]> errordata  = TextUtils.checkEmptyString(i+1, 6, tempData[5]);
+		    			boolean isExist = false;
+		    			if (errordata.size() >0)
 		    			{
-		    				List<Object[]> errordata  = new LinkedList<Object[]>();
-		    				errordata.add(new Object[]{"error","第" + String.valueOf(i+1) + "行第"+ String.valueOf(6) +"列产品信息为空!"});
 		    				return errordata;
-
 		    			}
+		    			
+		    			//检测是否存在
+		    			isExist = false;
+	    				for(Product product :prs.getItems()){
+	    					if(product.getName().equals(tempData[5].toString())){
+	    						isExist = true;
+	    						break;
+	    					}
+	    				}
+	    				
+			    		if(!isExist){
+		    				errordata = TextUtils.setErrorMessage(i+1, 6, " 该产品不存在！");
+		    				return errordata;
+		    			}
+
+		    			//检查理财师编号
+		    			errordata  = TextUtils.checkEmptyString(i+1, 4, tempData[3]);
+		    			if (errordata.size() >0)
+		    			{
+		    				return errordata;
+		    			}
+		    			//检测理财师编号是否存在
+		    			isExist = false;
+	    				for(Planner planner :planners.getItems()){
+	    					if(planner.getWorkNum().equals(tempData[3].toString())){
+	    						isExist = true;
+	    						break;
+	    					}
+	    				}
+			    		if(!isExist){
+		    				errordata = TextUtils.setErrorMessage(i+1, 3, " 该理财师编号不存在！");
+		    				return errordata;
+		    			}
+		    			
+		    			//检测日期
+		    			errordata  = TextUtils.checkDateString(i+1, 1, tempData[0],false);
+		    			if (errordata.size() >0)
+		    			{
+		    				return errordata;
+		    			} 			
+		    			
+		    			//检查年化业绩
+		    			errordata  = TextUtils.checkNumber(i+1, 7, tempData[6],false);
+		    			if (errordata.size() >0)
+		    			{
+		    				return errordata;
+		    			} 	
+		    			
+		    			//检查合同金额
+		    			errordata  = TextUtils.checkNumber(i+1, 8, tempData[7],true);
+		    			if (errordata.size() >0)
+		    			{
+		    				return errordata;
+		    			} 	
+
+		    			
+		    			//检查期限
+		    			errordata  = TextUtils.checkNumber(i+1, 9, tempData[8],true);
+		    			if (errordata.size() >0)
+		    			{
+		    				return errordata;
+		    			} 
 		    			
 		    			newData[0] = tempData[0];		//业绩日期
+		    			newData[1] = tempData[1];		//地区
+		    			newData[2] = tempData[2];		//理财师姓名
+		    			newData[3] = tempData[3];		//理财师工号
+		    			newData[4] = tempData[4];		//所属市场总监
+		    			newData[5] = tempData[5];		//产品名称
 		    			String strtmp = tempData[6].toString();
-		    			newData[1] = TextUtils.Stringto10kInteger(strtmp);		//年化业绩
+		    			newData[6] = TextUtils.Stringto10kInteger(strtmp);		//年化业绩
 		    			
 		    			strtmp = tempData[7].toString();
-		    			newData[2] = TextUtils.Stringto10kInteger(strtmp);		//合同金额
+		    			newData[7] = TextUtils.Stringto10kInteger(strtmp);		//合同金额
 		    			
-		    			//失效日期
-		    			if(tempData[8] != null && !tempData[8].toString().trim().equals("")){
-		    				newData[3] = tempData[8];	
-		    			}
-		    			else{
-		    				newData[3] = null;
-		    			}
-		    			newData[4] = tempData[9];		//产品类型
-		    			newData[5] = tempData[10];		//备注
-		    			newData[6] = tempData[1];		//地区
-		    			newData[7] = tempData[5];		//产品名称
-		    			newData[8] = tempData[3];		//理财师工号
+		    			//期限
+		    			strtmp = tempData[8].toString();
+		    			newData[8] = TextUtils.StringtoInteger(strtmp);		//合同金额	
+
+		    			newData[9] = tempData[9];		//产品类型
+		    			newData[10] = tempData[10];		//备注
+		    			
 		    			
 		    			sqldata.add(newData);
 	    			}

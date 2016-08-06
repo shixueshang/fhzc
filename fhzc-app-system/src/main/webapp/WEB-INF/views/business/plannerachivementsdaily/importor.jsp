@@ -131,7 +131,7 @@
                                         <td>${plannerAchivementsDaily.productName}</td>
                                         <td>${plannerAchivementsDaily.annualised}</td>
                                         <td>${plannerAchivementsDaily.contractAmount}</td>
-                                        <td>${fn:substring(plannerAchivementsDaily.expireDate, 0, 10)}</td>
+                                        <td>${plannerAchivementsDaily.period}</td>
                                         <td></td>
                                         <td>${plannerAchivementsDaily.memo}</td>
                                     </tr>
