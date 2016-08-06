@@ -89,7 +89,7 @@ public class PlannerAchivementsDailyImpl implements PlannerAchivementsDailyServi
 	    			Object[] tempData = data.get(i);
 	    			//判断是否为空，如果为空则不处理
 	    			if(tempData[0] != null && !tempData[0].toString().trim().equals("")){
-		    			Object[] newData = new Object[9];
+		    			Object[] newData = new Object[11];
 		    			
 		    			//错误检验处理
 		    			
@@ -176,7 +176,8 @@ public class PlannerAchivementsDailyImpl implements PlannerAchivementsDailyServi
 		    			newData[7] = TextUtils.Stringto10kInteger(strtmp);		//合同金额
 		    			
 		    			//期限
-		    			newData[8] = TextUtils.StringtoInteger(newData[8].toString());		//合同金额	
+		    			strtmp = tempData[8].toString();
+		    			newData[8] = TextUtils.StringtoInteger(strtmp);		//合同金额	
 
 		    			newData[9] = tempData[9];		//产品类型
 		    			newData[10] = tempData[10];		//备注

@@ -116,6 +116,7 @@
                                     <td>产品名称</td>
                                     <td>年化金额</td>
                                     <td>合同金额</td>
+                                    <td>期限</td>
                                     <td>产品类型</td>
                                     <td>备注</td>
                                 </tr>
@@ -130,6 +131,7 @@
                                         <td>${plannerAchivementsDaily.productName}</td>
                                         <td>${plannerAchivementsDaily.annualised}</td>
                                         <td>${plannerAchivementsDaily.contractAmount}</td>
+                                        <td>${plannerAchivementsDaily.period}</td>
                                         <td></td>
                                         <td>${plannerAchivementsDaily.memo}</td>
                                     </tr>
