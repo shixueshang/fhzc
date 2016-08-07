@@ -109,7 +109,7 @@
                             <table class="table table-striped table-bordered table-hover" id="score_table">
                                 <thead>
                                 <tr>
-                                    <td><input type="checkbox" id="checkAll" class="group-checkable" data-set="#score_table.checkboxes" />全选</td>
+                                    <td><input type="checkbox" id="checkAll" name="checkAll" />全选</td>
                                     <td>积分</td>
                                     <td>积分状态</td>
                                     <td>描述</td>
@@ -122,7 +122,7 @@
                                 <tbody>
                                 <c:forEach items="${scores}" var="score">
                                     <tr>
-                                        <td><input type="checkbox" name="subBox" class="checkboxes" value="${score.id}"/></td>
+                                        <td><input type="checkbox" name="subBox" value="${score.id}"/></td>
                                         <td>${score.score}</td>
                                         <td>
                                             <c:forEach items="${scoreStatus}" var="scoreStat">
@@ -169,16 +169,14 @@
 <script>
     $(function(){
 
-      /*  //全选/全不选
-        $("#checkAll").click(function() {
-            //$("input[name='subBox']:checkbox").prop("checked", this.checked);
-            $("#uniform-undefined").find("span").addClass("checked");
+        $('#checkAll').click(function () {
+            $('table tr input').prop('checked', $(this).is(":checked"));
+            if ($(this).is(":checked")) {
+                $('table tr input').closest('span').addClass('checked');
+            } else {
+                $('table tr input').closest('span').removeClass('checked');
+            }
         });
-        var $subBox = $("input[name='subBox']");
-        $subBox.click(function(){
-            $("#checkAll").prop("checked",$subBox.length == $("input[name='subBox']:checked").length ? true : false);
-        });
-*/
     })
 
     function approveById(url){
