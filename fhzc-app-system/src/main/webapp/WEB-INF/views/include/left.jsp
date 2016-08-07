@@ -23,7 +23,7 @@
 
                     <shiro:hasPermission name="/business/product"><li class="has-sub">
                         <a href="javascript:;">
-                            <i class="icon-money"></i>
+                            <i class="icon-reorder"></i>
                             <span class="title">产品管理</span>
                             <span class="selected"></span>
                             <span class="arrow open"></span>
@@ -173,7 +173,7 @@
 
                     <shiro:hasPermission name="/business/score"><li class="has-sub">
                         <a href="javascript:;">
-                            <i class="icon-shopping-cart"></i>
+                            <i class="icon-money"></i>
                             <span class="title">积分管理</span>
                             <span class="selected"></span>
                             <span class="arrow open"></span>

@@ -9,10 +9,7 @@ import com.fhzc.app.system.service.DictionaryService;
 import com.fhzc.app.system.service.ScoreHistoryService;
 import com.fhzc.app.system.service.ScoreService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
@@ -98,6 +95,10 @@ public class ScoreHistoryController extends BaseController {
         return mav;
     }
 
+    /**
+     * 积分列表
+     * @return
+     */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView listScore(){
         ModelAndView mav = new ModelAndView("business/score/list");
@@ -110,9 +111,28 @@ public class ScoreHistoryController extends BaseController {
         return mav;
     }
 
+    /**
+     * 积分审批
+     * @param scoreId
+     * @return
+     */
     @RequestMapping(value = "/approve/{id}", method = RequestMethod.GET)
     public String approve(@PathVariable(value = "id") Integer scoreId){
         scoreService.approve(scoreId);
         return "redirect:/business/score/list";
+    }
+
+    /**
+     * 批量审批
+     * @param ids
+     * @return
+     */
+    @RequestMapping(value = "/batchApprove", method = RequestMethod.GET)
+    @ResponseBody
+    public Object batchApprove(@RequestParam(value = "ids[]") Integer[] ids){
+        for(Integer id : ids){
+            scoreService.approve(id);
+        }
+        return true;
     }
 }

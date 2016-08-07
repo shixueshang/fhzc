@@ -5,9 +5,6 @@
     <a href="http://www.foriseassets.com" style="color: #fff">
         复华资产
     </a> Copyright.
-    <div class="span pull-right">
-        <span class="go-top"><i class="icon-angle-up"></i></span>
-    </div>
 </div>
 <!-- END FOOTER -->
 
