@@ -81,13 +81,15 @@ public class ActivityApplyApiController extends BaseController {
             for(ActivityApply apply : activityApplyList) {
                 Activity activity = activityService.getActivity(apply.getActivityId());
                 Map map = new HashMap();
-                map.put("activityApplyId",apply.getId());
-                map.put("activityId",apply.getActivityId());
-                map.put("name",activity.getName());
-                map.put("cover",activity.getCover());
-                map.put("applyEndTime",activity.getApplyEndTime());
-                map.put("status",activity.getStatus());
-                result.add(map);
+                if(activity != null) {
+                    map.put("activityApplyId", apply.getId());
+                    map.put("activityId", apply.getActivityId());
+                    map.put("name", activity.getName());
+                    map.put("cover", activity.getCover());
+                    map.put("applyEndTime", activity.getApplyEndTime());
+                    map.put("status", activity.getStatus());
+                    result.add(map);
+                }
             }
         }
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
