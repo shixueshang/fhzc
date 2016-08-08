@@ -138,6 +138,10 @@
                         <shiro:hasPermission name="/personal/planner/list"><li>
                                 <a href="/personal/planner/list">理财师列表</a>
                             </li></shiro:hasPermission>
+                        <shiro:hasPermission name="/personal/planner/achivement"><li>
+                                <a href="/personal/planner/achivement">理财师业绩</a>
+                            </li></shiro:hasPermission>
+
                         </ul>
                     </li></shiro:hasPermission>
 

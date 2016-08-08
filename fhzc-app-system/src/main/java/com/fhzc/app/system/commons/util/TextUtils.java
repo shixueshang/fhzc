@@ -341,5 +341,41 @@ public class TextUtils {
 		return errordata;
 
     }
+    
+    /**
+     * 检验手机号码
+     * @param phone
+     * @return
+     */
+    public static List<Object[]> validPhoneNum(int rowNum, int colNum, String phone){
+    	List<Object[]> checkResult = new LinkedList<Object[]>();
+    	Pattern pattern = Pattern.compile("^1[34578]\\d{9}$");
+		Matcher matcher = pattern.matcher(phone);
+    	if((phone.length() != 11) ||(! matcher.matches())){
+    		String errorMessage = "手机号码格式有误!";
+    		return setErrorMessage(rowNum,colNum,errorMessage);
+    	}else{
+    		return checkResult;	
+    	}
+    } 
+    
+    /**
+     * 校验excel表头
+     * @param title
+     * @param str
+     * @return
+     */
+    public static boolean validWorkbookTitle(Object title ,String str){
+    	if(title != null){
+	    	if(title.toString().contains(str)){
+	        	return true;
+	        }else{
+	    		return false;
+	    	}
+    	}
+    	else{
+    		return false;
+    	}
+    }
 
 }
