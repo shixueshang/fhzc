@@ -96,6 +96,14 @@
     from `planner`
     where `id` = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectByWorkNum" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from `planner`
+    where `work_num` = #{workNum}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from `planner`
     where `id` = #{id,jdbcType=INTEGER}

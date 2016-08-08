@@ -139,4 +139,9 @@ public class ProductServiceImpl implements ProductService {
         List<ProductReservationBo> list = productReservationMapper.selectReservations(query, rowBounds);
         return new PageableResult<ProductReservationBo>(page, size, productReservationMapper.countReservations(query), list);
     }
+
+    @Override
+    public int addProductReservation(ProductReservation productReservation) {
+        return productReservationMapper.insert(productReservation);
+    }
 }

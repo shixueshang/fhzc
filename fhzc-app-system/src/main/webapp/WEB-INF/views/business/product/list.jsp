@@ -123,7 +123,7 @@
                                         <td></td>
                                         <td>
                                             <a href="<%=contextPath%>/business/product/detail/${product.pid}" class="btn mini purple"><i class="icon-edit"></i> 编辑</a>
-                                            <a href="#" class="btn mini blue"><i class="icon-share"></i> 预约</a>
+                                            <a href="<%=contextPath%>/business/product/order/${product.pid}" class="btn mini blue"><i class="icon-share"></i> 预约</a>
                                         </td>
                                     </tr>
                                 </c:forEach>

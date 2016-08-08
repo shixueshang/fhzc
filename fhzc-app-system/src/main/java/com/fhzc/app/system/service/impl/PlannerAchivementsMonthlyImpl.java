@@ -68,8 +68,8 @@ public class PlannerAchivementsMonthlyImpl implements PlannerAchivementsMonthlyS
 				Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
 			        @Override
 			        public String validation(Workbook xwb) {
-			        	if(xwb.getSheetAt(0).getRow(0).getCell(0) == null ){
-			        		return "报表错误！";
+			        	if(!TextUtils.validWorkbookTitle(xwb.getSheetAt(0).getRow(0).getCell(0).toString(), "业绩统计汇总表") ){
+			        		return "报表第1个sheet不是正确的报表！";
 			        	}
 			        	else{
 			        		return null;

@@ -1,11 +1,14 @@
 package com.fhzc.app.system.controller.personal;
 
+import com.alibaba.fastjson.JSON;
 import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 
 
+import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.dao.mybatis.util.EncryptUtils;
+import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.dao.mybatis.model.Planner;
 import com.fhzc.app.system.service.AreasService;
@@ -139,4 +142,19 @@ public class PlannerController extends BaseController {
         }
         return mav;
     }
+
+    @RequestMapping(value = "/achivement")
+    public ModelAndView achivement(){
+        ModelAndView mav = new ModelAndView("personal/planner/achivement");
+        mav.addObject("area", JSON.toJSON(departmentService.findChildren(Const.ROOT_DEPT_ID)));
+        return mav;
+    }
+
+    @RequestMapping(value = "/achivement/getDepartment", method = RequestMethod.GET)
+    @ResponseBody
+    public AjaxJson getDepartment(Integer departmentId){
+
+        return new AjaxJson(true, departmentService.findChildren(departmentId));
+    }
+
 }
