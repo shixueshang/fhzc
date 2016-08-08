@@ -254,7 +254,7 @@ public class TextUtils {
     	}
     	if(value != null && ! value.toString().trim().equals("")){
     		if(!valiDateTimeWithShortFormat(value.toString())){
-	    		String errorMessage = "不是合法的日期格式 年-月-日!";
+	    		String errorMessage = value + "不是合法的日期格式 年-月-日!";
 	    		return setErrorMessage(rowNum,colNum,errorMessage);
     		}
  		
@@ -284,7 +284,7 @@ public class TextUtils {
     	}
     	if(value != null && ! value.toString().trim().equals("")){
     		if(!isNumber(value.toString())){
-	    		String errorMessage = "不是数字!";
+	    		String errorMessage = value + " 不是数字!";
 	    		return setErrorMessage(rowNum,colNum,errorMessage);
     		}
  		
@@ -352,7 +352,7 @@ public class TextUtils {
     	Pattern pattern = Pattern.compile("^1[34578]\\d{9}$");
 		Matcher matcher = pattern.matcher(phone);
     	if((phone.length() != 11) ||(! matcher.matches())){
-    		String errorMessage = "手机号码格式有误!";
+    		String errorMessage = "手机号码:"+ phone +" 格式有误!";
     		return setErrorMessage(rowNum,colNum,errorMessage);
     	}else{
     		return checkResult;	

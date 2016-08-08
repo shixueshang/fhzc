@@ -207,7 +207,7 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
 		            };
 
 		        }
-		        }).importExcelFile(multipartFile,1,2);
+		        }).importExcelFile(multipartFile,0,2);
 
 		        return importResult;
 	}
