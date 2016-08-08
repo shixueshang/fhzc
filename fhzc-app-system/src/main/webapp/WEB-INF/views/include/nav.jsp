@@ -22,14 +22,13 @@
                     <!-- BEGIN TOP NAVIGATION MENU -->
                     <ul class="nav pull-right">
 
-                        <!--网站首页 begin-->
+                        <!--未读消息-->
                         <li class="dropdown">
-                            <a href="#" target="_blank" class="dropdown-toggle" title="网站首页" >
-                                <i class="icon-home"></i>
-                                <span class="badge"></span>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-envelope-alt"></i>
+                                <span class="badge">5</span>
                             </a>
                         </li>
-                        <!--网站首页 end-->
 
                         <li class="dropdown user">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
