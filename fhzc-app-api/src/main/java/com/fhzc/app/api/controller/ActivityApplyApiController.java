@@ -77,14 +77,15 @@ public class ActivityApplyApiController extends BaseController {
     public ApiJsonResult personalActivityApply(Integer customer_id){
         List<ActivityApply> activityApplyList = activityApplyService.getActivityApplyList(customer_id);
         List<Map> result = new ArrayList<>();
-        if(activityApplyList.size() > 0){
+        if(activityApplyList != null){
             for(ActivityApply apply : activityApplyList) {
                 Activity activity = activityService.getActivity(apply.getActivityId());
                 Map map = new HashMap();
-                map.put("activity_id",apply.getActivityId());
+                map.put("activityApplyId",apply.getId());
+                map.put("activityId",apply.getActivityId());
                 map.put("name",activity.getName());
                 map.put("cover",activity.getCover());
-                map.put("apply_end_time",activity.getApplyEndTime());
+                map.put("applyEndTime",activity.getApplyEndTime());
                 map.put("status",activity.getStatus());
                 result.add(map);
             }
