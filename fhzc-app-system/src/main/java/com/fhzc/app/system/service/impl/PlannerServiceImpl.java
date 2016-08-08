@@ -79,7 +79,7 @@ public class PlannerServiceImpl implements PlannerService {
        Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
         @Override
         public String validation(Workbook xwb) {
-            return null;
+        	return null;
         }
 
         @Override
@@ -133,7 +133,7 @@ public class PlannerServiceImpl implements PlannerService {
             };
 
         }
-        }).importExcelFile(multipartFile);
+        }).importExcelFile(multipartFile,0,2);
 
         return importResult;
     }
@@ -148,7 +148,11 @@ public class PlannerServiceImpl implements PlannerService {
        Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
         @Override
         public String validation(Workbook xwb) {
-            return null;
+    		if(!TextUtils.validWorkbookTitle(xwb.getSheetAt(0).getRow(0).getCell(0).toString(), "在职")){
+    			return "请查看Excel表头确认导入的报表是否是《在职理财师花名册》！";
+         	}else{
+         		return null;
+         	}
         }
 
         @Override
@@ -160,9 +164,21 @@ public class PlannerServiceImpl implements PlannerService {
         public List<Object[]> getImportData(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data)  {
         	List<Object[]> plannerList = new ArrayList<Object[]>();
         	if(data.get(0).length>0){
+        		int i = 0;
 	        	for (Object[] objects : data) {
 	        		Object[] temData = new  Object[18];
 	        		String phone = TextUtils.IntToDouble(objects[4].toString());
+	        		//校验工号不能为空
+	        		if(objects[1] == null || objects[1].toString().trim().equals("")){
+	        			String errorMessage = "工号不能为空!";
+	        			return TextUtils.setErrorMessage(i+3,2,errorMessage);
+	        		} 
+	        		//校验手机号
+	        		List<Object[]> errordata  = TextUtils.validPhoneNum(i+3, 5, phone);
+	        		if (errordata.size() >0)
+	    			{
+	    				return errordata;
+	    			}
 	        		temData[0] = objects[1];						//工号 work_num,作为初始登录名
 	        		temData[1] = DigestUtils.md5Hex(phone);			//手机号 mobile，作为初始密码	
 	        		temData[2] = objects[1];						//工号 work_num
@@ -182,6 +198,7 @@ public class PlannerServiceImpl implements PlannerService {
 	        		temData[16] = objects[15];						//岗位名称 job_title_cn
 	        		temData[17] = objects[16];						//岗位序列 position
 	        		plannerList.add(temData);
+	        		i++;
 				}
         	}
             return plannerList;
@@ -202,7 +219,7 @@ public class PlannerServiceImpl implements PlannerService {
             };
 
         }
-        }).importExcelFile(multipartFile);
+        }).importExcelFile(multipartFile,0,2);
 
         return importResult;
     }
@@ -217,7 +234,11 @@ public class PlannerServiceImpl implements PlannerService {
        Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
         @Override
         public String validation(Workbook xwb) {
-            return null;
+        	if(!TextUtils.validWorkbookTitle(xwb.getSheetAt(0).getRow(0).getCell(0).toString(), "离职")){
+    			return "请查看Excel表头确认导入的报表是否是《离职理财师花名册》！";
+         	}else{
+         		return null;
+         	}
         }
 
         @Override
@@ -228,11 +249,33 @@ public class PlannerServiceImpl implements PlannerService {
         @Override
         public List<Object[]> getImportData(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data) {
         	List<Object[]> plannerList = new ArrayList<Object[]>();
+        	PageableResult<Planner> planners =  findPagePlanners(0, 10000);
         	if(data.get(0).length>0){
+        		int i = 0;
 	        	for (Object[] objects : data) {
 	        		Object[] temData = new  Object[1];
+	        		//检查理财师编号
+	        		List<Object[]> errordata  = TextUtils.checkEmptyString(i+3, 2, objects[1]);
+	        		boolean isExist = false;
+	    			if (errordata.size() >0)
+	    			{
+	    				return errordata;
+	    			}
+	    			//检测理财师编号是否存在
+	    			isExist = false;
+    				for(Planner planner :planners.getItems()){
+    					if(planner.getWorkNum().equals(objects[1].toString())){
+    						isExist = true;
+    						break;
+    					}
+    				}
+		    		if(!isExist){
+	    				errordata = TextUtils.setErrorMessage(i+3, 2, " 理财师编号"+objects[1].toString()+"不存在！");
+	    				return errordata;
+	    			}
 	        		temData[0] = objects[1];		//工号 work_num
 	        		plannerList.add(temData);
+	        		i++;
 				}
         	}
             return plannerList;

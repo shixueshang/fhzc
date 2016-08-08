@@ -14,6 +14,8 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class TextUtils {
 	
 	/**
@@ -377,5 +379,19 @@ public class TextUtils {
     		return false;
     	}
     }
-
+    
+    /**
+     * 校验上传文件的类型
+     * @param multiFile
+     * @return
+     */
+    public static boolean validDocType(MultipartFile multiFile){
+    	String fileName = multiFile.getOriginalFilename();
+		String suffix = fileName.substring(fileName.lastIndexOf(".")+1);
+		if("xlsx".equals(suffix)||"xls".equals(suffix)){
+			return true;
+		}else{
+			return false;
+		}
+    }
 }

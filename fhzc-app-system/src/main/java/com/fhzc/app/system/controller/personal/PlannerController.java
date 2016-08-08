@@ -8,6 +8,7 @@ import com.fhzc.app.dao.mybatis.page.PageableResult;
 
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.dao.mybatis.util.EncryptUtils;
+import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.dao.mybatis.model.Planner;
@@ -106,6 +107,7 @@ public class PlannerController extends BaseController {
         } catch (Exception e) {
             logger.error("导入失败" + e.getMessage() );
             result.put("success", false);
+            result.put("error_message", e.getMessage());
             mav.addAllObjects(result);
         }
         return mav;
@@ -138,6 +140,7 @@ public class PlannerController extends BaseController {
         } catch (Exception e) {
             logger.error("导入失败" + e.getMessage() );
             result.put("success", false);
+            result.put("error_message", e.getMessage());
             mav.addAllObjects(result);
         }
         return mav;
