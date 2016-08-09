@@ -76,10 +76,12 @@ public class PlannerServiceImpl implements PlannerService {
      */
     @Override
     public Map<String, Object> importDepartmentExcelFile(MultipartFile multipartFile) throws Exception {
-       Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
+        int sheetnum = 0;
+        int rownum = 2;
+    	Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
         @Override
         public String validation(Workbook xwb) {
-            return null;
+        	return null;
         }
 
         @Override
@@ -133,7 +135,7 @@ public class PlannerServiceImpl implements PlannerService {
             };
 
         }
-        }).importExcelFile(multipartFile);
+        }).importExcelFile(multipartFile,sheetnum,rownum);
 
         return importResult;
     }
@@ -145,10 +147,23 @@ public class PlannerServiceImpl implements PlannerService {
      */
     @Override
     public Map<String, Object> importExcelFile(MultipartFile multipartFile) throws Exception {
-       Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
+    	int sheetnum =0;
+		int rownum =2;
+    	Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
         @Override
         public String validation(Workbook xwb) {
-            return null;
+        	if(!TextUtils.validWorkbookTitle(xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString(), "在职") ){
+        		if(xwb.getSheetAt(sheetnum).getRow(0).getCell(0) != null){
+        			return "报表第" + String.valueOf(sheetnum+1) +"个sheet,表头为："+ xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString() +" 不是正确的报表！";
+        		}
+        		else
+        		{
+        			return "报表第" + String.valueOf(sheetnum+1) +"个sheet, 不是正确的报表！";
+        		}
+        	}
+        	else{
+        		return null;
+        	}
         }
 
         @Override
@@ -160,9 +175,22 @@ public class PlannerServiceImpl implements PlannerService {
         public List<Object[]> getImportData(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data)  {
         	List<Object[]> plannerList = new ArrayList<Object[]>();
         	if(data.get(0).length>0){
+        		int i = 0;
 	        	for (Object[] objects : data) {
 	        		Object[] temData = new  Object[18];
 	        		String phone = TextUtils.IntToDouble(objects[4].toString());
+	        		//校验工号不能为空
+	        		List<Object[]> errordata  = TextUtils.checkEmptyString(i+3, 2, objects[1]);
+	    			if (errordata.size() >0)
+	    			{
+	    				return errordata;
+	    			}
+	        		//校验手机号
+	        		errordata  = TextUtils.validPhoneNum(i+3, 5, phone);
+	        		if (errordata.size() >0)
+	    			{
+	    				return errordata;
+	    			}
 	        		temData[0] = objects[1];						//工号 work_num,作为初始登录名
 	        		temData[1] = DigestUtils.md5Hex(phone);			//手机号 mobile，作为初始密码	
 	        		temData[2] = objects[1];						//工号 work_num
@@ -182,6 +210,7 @@ public class PlannerServiceImpl implements PlannerService {
 	        		temData[16] = objects[15];						//岗位名称 job_title_cn
 	        		temData[17] = objects[16];						//岗位序列 position
 	        		plannerList.add(temData);
+	        		i++;
 				}
         	}
             return plannerList;
@@ -202,7 +231,7 @@ public class PlannerServiceImpl implements PlannerService {
             };
 
         }
-        }).importExcelFile(multipartFile);
+        }).importExcelFile(multipartFile,sheetnum,rownum);
 
         return importResult;
     }
@@ -214,10 +243,23 @@ public class PlannerServiceImpl implements PlannerService {
      */
     @Override
     public Map<String, Object> importExcelFileOff(MultipartFile multipartFile) throws Exception {
-       Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
+    	int sheetnum = 0;
+    	int rownum = 2;
+    	Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
         @Override
         public String validation(Workbook xwb) {
-            return null;
+        	if(!TextUtils.validWorkbookTitle(xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString(), "离职") ){
+        		if(xwb.getSheetAt(sheetnum).getRow(0).getCell(0) != null){
+        			return "报表第" + String.valueOf(sheetnum+1) +"个sheet,表头为："+ xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString() +" 不是正确的报表！";
+        		}
+        		else
+        		{
+        			return "报表第" + String.valueOf(sheetnum+1) +"个sheet, 不是正确的报表！";
+        		}
+        	}
+        	else{
+        		return null;
+        	}
         }
 
         @Override
@@ -228,11 +270,33 @@ public class PlannerServiceImpl implements PlannerService {
         @Override
         public List<Object[]> getImportData(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data) {
         	List<Object[]> plannerList = new ArrayList<Object[]>();
+        	PageableResult<Planner> planners = findPagePlanners(0, 10000);
         	if(data.get(0).length>0){
+        		int i = 0;
 	        	for (Object[] objects : data) {
 	        		Object[] temData = new  Object[1];
+	        		//检查理财师编号
+	        		List<Object[]> errordata  = TextUtils.checkEmptyString(i+3, 2, objects[1]);
+	        		boolean isExist = false;
+	    			if (errordata.size() >0)
+	    			{
+	    				return errordata;
+	    			}
+	    			//检测理财师编号是否存在
+	    			isExist = false;
+    				for(Planner planner :planners.getItems()){
+    					if(planner.getWorkNum().equals(objects[1].toString())){
+    						isExist = true;
+    						break;
+    					}
+    				}
+		    		if(!isExist){
+	    				errordata = TextUtils.setErrorMessage(i+3, 2, " 理财师编号"+objects[1].toString()+"不存在！");
+	    				return errordata;
+	    			}
 	        		temData[0] = objects[1];		//工号 work_num
 	        		plannerList.add(temData);
+	        		i++;
 				}
         	}
             return plannerList;
@@ -253,7 +317,7 @@ public class PlannerServiceImpl implements PlannerService {
             };
 
         }
-        }).importExcelFile(multipartFile);
+        }).importExcelFile(multipartFile,sheetnum,rownum);
 
         return importResult;
     }
@@ -282,5 +346,13 @@ public class PlannerServiceImpl implements PlannerService {
     @Override
     public Planner getPlannerByWorkNum(String workNum) {
         return plannerMapper.selectByWorkNum(workNum);
+    }
+
+    @Override
+    public List<Planner> findPlannerByDepartment(List<Integer> departments) {
+        PlannerExample example = new PlannerExample();
+        PlannerExample.Criteria criteria = example.createCriteria();
+        criteria.andDepartmentIdIn(departments);
+        return plannerMapper.selectByExample(example);
     }
 }

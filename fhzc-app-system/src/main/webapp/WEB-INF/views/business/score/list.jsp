@@ -29,6 +29,11 @@
     <!-- BEGIN PAGE -->
     <div class="page-content">
 
+        <!-- 审批结果提示 -->
+        <div class="alert alert-success" id="approve_success" role="alert" style="display: none">成功</div>
+        <div class="alert alert-warning" id="approve_fail" role="alert" style="display: none">失败</div>
+
+
         <!-- BEGIN PAGE CONTAINER 主体内容 -->
         <div class="container-fluid">
             <!-- BEGIN PAGE HEADER 面包屑导航 -->
@@ -49,18 +54,62 @@
                 </div>
             </div>
 
+            <!-- 审批确认 -->
+            <div class="modal fade" id="approveModel">
+                <div class="modal-dialog">
+                    <div class="modal-content message_align">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">提示信息</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>您确认要审批吗？</p>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="hidden" id="url"/>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <a  onclick="urlSubmit()" class="btn btn-success" data-dismiss="modal">确定</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 批量审批确认 -->
+            <div class="modal fade" id="batchApproveModel">
+                <div class="modal-dialog">
+                    <div class="modal-content message_align">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">提示信息</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>您确认要审批选中记录吗？</p>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="hidden" id="batchUrl"/>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <a  onclick="batchUrlSubmit()" class="btn btn-success" data-dismiss="modal">确定</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
             <!--页面操作详细内容 开始-->
             <div class="row-fluid">
                 <div class="span12">
 
                     <div class="portlet box blue">
                         <div class="portlet-title">
-                            <h4><i class="icon-reorder"></i></h4>
+                            <h4><i class="icon-reorder">
+                            </i></h4>
+                            <button type="button" class="btn blue" onclick="batchApprove('<%=contextPath%>/business/score/batchApprove')" data-toggle="modal" data-target="#confirm-approve">批量审批</button>
                         </div>
                         <div class="portlet-body" style="height: 630px; overflow: scroll">
-                            <table class="table table-bordered table-hover">
+                            <table class="table table-striped table-bordered table-hover" id="score_table">
                                 <thead>
                                 <tr>
+                                    <td><input type="checkbox" id="checkAll" name="checkAll" />全选</td>
                                     <td>积分</td>
                                     <td>积分状态</td>
                                     <td>描述</td>
@@ -73,6 +122,7 @@
                                 <tbody>
                                 <c:forEach items="${scores}" var="score">
                                     <tr>
+                                        <td><input type="checkbox" name="subBox" value="${score.id}"/></td>
                                         <td>${score.score}</td>
                                         <td>
                                             <c:forEach items="${scoreStatus}" var="scoreStat">
@@ -100,7 +150,7 @@
                                                 </c:when>
                                             </c:choose>
                                         </td>
-                                        <td><a href="<%=contextPath%>/business/score/approve/${score.id}" class="btn mini purple"><i class="icon-edit"></i>审批</a></td>
+                                        <td><a href="javascript:void(0)" onclick="approveById('<%=contextPath%>/business/score/approve/${score.id}')" class="btn mini purple" data-toggle="modal" data-target="#confirm-delete"><i class="icon-edit"></i>审批</a></td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>
@@ -115,5 +165,88 @@
         <jsp:include page="../../include/page.jsp"/>
     </div>
 </div>
+
+<script>
+    $(function(){
+
+        $('#checkAll').click(function () {
+            $('table tr input').prop('checked', $(this).is(":checked"));
+            if ($(this).is(":checked")) {
+                $('table tr input').closest('span').addClass('checked');
+            } else {
+                $('table tr input').closest('span').removeClass('checked');
+            }
+        });
+    })
+
+    function approveById(url){
+        $('#url').val(url);//给会话中的隐藏属性URL赋值
+        $('#approveModel').modal();
+    }
+
+    function urlSubmit(){
+        var url = $.trim($("#url").val());//获取会话中的隐藏属性URL
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function(result) {
+                if(result){
+                    $("#approve_success").css("display", "block").hide(3000);
+                    window.location.reload();
+                }
+            },
+            error: function(xhr, textStatus, errorThrown){
+                $("#approve_fail").css("display", "block").hide(3000);
+            }
+        });
+    }
+
+    function batchApprove(batchUrl){
+
+        var arr = new Array();
+        $("input[name='subBox']:checked").each(function(){
+            arr.push($(this).val());
+        });
+
+        if(arr.length == 0){
+            BootstrapDialog.show({
+                title: '提示',
+                message: '请选择要审批的记录!'
+            });
+
+            return false;
+        }
+
+        $('#batchUrl').val(batchUrl);//给会话中的隐藏属性URL赋值
+        $('#batchApproveModel').modal();
+    }
+
+    function batchUrlSubmit(){
+        var url = $.trim($("#batchUrl").val());//获取会话中的隐藏属性URL
+
+        var arr = new Array();
+        $("input[name='subBox']:checked").each(function(){
+            arr.push($(this).val());
+        });
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            data: {"ids" : arr},
+            dataType: "json",
+            contentType : 'application/json;charset=utf-8', //设置请求头信息
+            success: function(result) {
+                if(result){
+                    $("#approve_success").css("display", "block").hide(3000);
+                    window.location.reload();
+                }
+            },
+            error: function(xhr, textStatus, errorThrown){
+                $("#approve_fail").css("display", "block").hide(3000);
+            }
+        });
+    }
+</script>
+
 
 <jsp:include page="../../include/footer.jsp"/>

@@ -55,11 +55,13 @@ INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (40,'鑫丰母兑付导入','/business/payment/importorspecial',NULL,33,3,1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (41,'个人投资人档案表导入','/business/customerdocument/importorpersonal',NULL,33,3,1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (42,'机构投资人档案表导入','/business/customerdocument/importoragent',NULL,33,3,1);
-INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (43,'积分历史导入','/business/scorehistory/importoradd',NULL,33,3,1);
-INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (44,'权益消费导入','/business/scorehistory/importorconsume',NULL,33,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (43,'积分历史导入','/business/score/importoradd',NULL,33,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (44,'权益消费导入','/business/score/importorconsume',NULL,33,3,1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (45,'订单管理','/business/assets',NULL,1,2,1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (46,'订单列表','/business/assets/list',NULL,45,3,1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (47,'离职理财师导入','/personal/planner/importoroff',NULL,33,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (48,'积分管理','/business/score',NULL,1,2,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (49,'积分列表','/business/score/list',NULL,48,3,1);
 
 
 
@@ -118,6 +120,19 @@ INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,
 INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (57,'passport','证件类型','香港身份证','5',0,0,0,NULL,NULL);
 INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (58,'passport','证件类型','营业执照','6',0,0,0,NULL,NULL);
 INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (59,'passport','证件类型','基金会法人登记证书','7',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (60,'assets_status','资产状态','派息','dividend',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (61,'assets_status','资产状态','购买','purchase',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (62,'assets_status','资产状态','去存','renew',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (63,'assets_status','资产状态','赎回','redemption',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (64,'product_type','产品类型','权益投资','4',0,0,0,'2016-08-05 17:43:58','2016-08-05 17:43:58');
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (65,'score_status','积分状态','增加','add',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (66,'score_status','积分状态','消费','consume',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (67,'score_status','积分状态','冻结','frozen',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (68,'score_status','积分状态','过期','expire',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (69,'score_from_type','积分来源','产品','product',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (70,'score_from_type','积分来源','活动','activity',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (71,'score_from_type','积分来源','权益','rights',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (72,'score_from_type','积分来源','其他','other',0,0,0,NULL,NULL);
 
 
 TRUNCATE TABLE `areas`;

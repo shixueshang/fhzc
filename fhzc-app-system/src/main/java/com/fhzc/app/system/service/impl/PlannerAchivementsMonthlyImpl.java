@@ -61,6 +61,10 @@ public class PlannerAchivementsMonthlyImpl implements PlannerAchivementsMonthlyS
 			@Override
 			public Map<String, Object> importDailyExcelFile(MultipartFile multipartFile) throws Exception {
 				// TODO Auto-generated method stub
+				
+				int sheetnum =0;
+				int rownum =3;
+				
 				PageableResult<Product> prs = productService.findPageProducts(0, 10000);
 				PageableResult<Planner> planners =  plannerService.findPagePlanners(0, 10000);
 
@@ -68,8 +72,14 @@ public class PlannerAchivementsMonthlyImpl implements PlannerAchivementsMonthlyS
 				Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
 			        @Override
 			        public String validation(Workbook xwb) {
-			        	if(!TextUtils.validWorkbookTitle(xwb.getSheetAt(0).getRow(0).getCell(0).toString(), "业绩统计汇总表") ){
-			        		return "报表第1个sheet不是正确的报表！";
+			        	if(!TextUtils.validWorkbookTitle(xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString(), "业绩统计汇总表") ){
+			        		if(xwb.getSheetAt(sheetnum).getRow(0).getCell(0) != null){
+			        			return "报表第" + String.valueOf(sheetnum+1) +"个sheet,表头为："+ xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString() +" 不是正确的报表！";
+			        		}
+			        		else
+			        		{
+			        			return "报表第" + String.valueOf(sheetnum+1) +"个sheet, 不是正确的报表！";
+			        		}
 			        	}
 			        	else{
 			        		return null;
@@ -97,7 +107,7 @@ public class PlannerAchivementsMonthlyImpl implements PlannerAchivementsMonthlyS
 				    			//错误检验处理
 				    			
 				    			//检测产品
-				    			List<Object[]> errordata  = TextUtils.checkEmptyString(i+1, 13, tempData[12]);
+				    			List<Object[]> errordata  = TextUtils.checkEmptyString(rownum+i+1, 13, tempData[12]);
 				    			boolean isExist = false;
 				    			if (errordata.size() >0)
 				    			{
@@ -107,19 +117,19 @@ public class PlannerAchivementsMonthlyImpl implements PlannerAchivementsMonthlyS
 				    			//检测是否存在
 				    			isExist = false;
 			    				for(Product product :prs.getItems()){
-			    					if(product.getName().equals(tempData[12].toString())){
+			    					if(product.getName().equals(tempData[12].toString().trim())){
 			    						isExist = true;
 			    						break;
 			    					}
 			    				}
 			    				
 					    		if(!isExist){
-				    				errordata = TextUtils.setErrorMessage(i+1, 13, " 该产品不存在！");
+				    				errordata = TextUtils.setErrorMessage(rownum+i+1, 13, tempData[12].toString()+ "，该产品不存在！");
 				    				return errordata;
 				    			}
 
 				    			//检查理财师编号
-				    			errordata  = TextUtils.checkEmptyString(i+1, 3, tempData[2]);
+				    			errordata  = TextUtils.checkEmptyString(rownum+i+1, 3, tempData[2]);
 				    			if (errordata.size() >0)
 				    			{
 				    				return errordata;
@@ -127,13 +137,13 @@ public class PlannerAchivementsMonthlyImpl implements PlannerAchivementsMonthlyS
 				    			//检测理财师编号是否存在
 				    			isExist = false;
 			    				for(Planner planner :planners.getItems()){
-			    					if(planner.getWorkNum().equals(tempData[2].toString())){
+			    					if(planner.getWorkNum().equals(tempData[2].toString().trim())){
 			    						isExist = true;
 			    						break;
 			    					}
 			    				}
 					    		if(!isExist){
-				    				errordata = TextUtils.setErrorMessage(i+1, 3, " 该理财师编号不存在！");
+				    				errordata = TextUtils.setErrorMessage(rownum+i+1, 3, tempData[2].toString()+",该理财师编号不存在！");
 				    				return errordata;
 				    			}
 				    			
@@ -142,20 +152,20 @@ public class PlannerAchivementsMonthlyImpl implements PlannerAchivementsMonthlyS
 					    		if(!tempData[6].toString().trim().equals("")){
 					    			isExist = false;
 				    				for(Planner planner :planners.getItems()){
-				    					if(planner.getWorkNum().equals(tempData[6].toString())){
+				    					if(planner.getWorkNum().equals(tempData[6].toString().trim())){
 				    						isExist = true;
 				    						break;
 				    					}
 				    				}
 						    		if(!isExist){
-					    				errordata = TextUtils.setErrorMessage(i+1, 7, " 该理财师编号不存在！");
+					    				errordata = TextUtils.setErrorMessage(rownum+i+1, 7, tempData[6].toString() + "，该客户经理编号不存在！");
 					    				return errordata;
 					    			}
 					    		}
 
 				    			
 				    			//检查认购金额
-				    			errordata  = TextUtils.checkNumber(i+1, 15, tempData[14],false);
+				    			errordata  = TextUtils.checkNumber(rownum+i+1, 15, tempData[14],false);
 				    			if (errordata.size() >0)
 				    			{
 				    				return errordata;
@@ -163,14 +173,14 @@ public class PlannerAchivementsMonthlyImpl implements PlannerAchivementsMonthlyS
 
 				    			
 				    			//检查期限
-				    			errordata  = TextUtils.checkNumber(i+1, 16, tempData[15],false);
+				    			errordata  = TextUtils.checkNumber(rownum+i+1, 16, tempData[15],false);
 				    			if (errordata.size() >0)
 				    			{
 				    				return errordata;
 				    			} 
 				    			
 				    			//检测到账日期
-				    			errordata  = TextUtils.checkDateString(i+1, 17, tempData[16],false);
+				    			errordata  = TextUtils.checkDateString(rownum+i+1, 17, tempData[16],false);
 				    			if (errordata.size() >0)
 				    			{
 				    				return errordata;
@@ -187,7 +197,7 @@ public class PlannerAchivementsMonthlyImpl implements PlannerAchivementsMonthlyS
 				    			newData[7] = TextUtils.StringtoInteger(tempData[14].toString())* TextUtils.StringtoInteger(tempData[15].toString())/12;	//业绩
 				    			newData[8] = tempData[15];	//周期
 				    			newData[9] = tempData[16];	//到账日期
-				    			newData[10] = tempData[17];	//备注
+				    			newData[10] = tempData[17].toString().trim();	//备注
 				    			
 				    			
 				    			
@@ -215,7 +225,7 @@ public class PlannerAchivementsMonthlyImpl implements PlannerAchivementsMonthlyS
 			            };
 
 			        }
-			        }).importExcelFile(multipartFile,0,3);
+			        }).importExcelFile(multipartFile,sheetnum,rownum);
 
 			        return importResult;
 			}

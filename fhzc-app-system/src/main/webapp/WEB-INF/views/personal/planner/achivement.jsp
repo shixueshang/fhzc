@@ -52,18 +52,20 @@
             <div class="row-fluid">
                 <form  class="form-inline" action="<%=contextPath%>/personal/planner/achivement/find" method="GET">
                     <div class="form-group">
-                        <label class="control-label">区总</label>
-                        <select class="form-control" onchange="onAreaChange()" id="area"  name="area" style="width:150px"></select>
+                        <label class="control-label" style="margin-left: 20px">区总</label>
+                        <select class="form-control"  id="area"  name="area" style="width:180px;"></select>
 
-                        <label class="control-label">分公司</label>
-                        <select class="form-control" onchange="onSubCompanyChange()" id="subCompany"  name="subCompany" style="width:120px"></select>
+                        <label class="control-label" style="margin-left: 20px">分公司</label>
+                        <select class="form-control"  id="subCompany"  name="subCompany" style="width:180px;"></select>
 
-                        <label class="control-label">团队</label>
-                        <select class="form-control" id="team"  name="team" style="width:120px"></select>
+                        <label class="control-label" style="margin-left: 20px">团队</label>
+                        <select class="form-control" id="team"  name="team" style="width:180px;"></select>
 
-                        <label class="control-label">月份</label>
-                        <input type="text" class="m-wrap m-ctrl-medium date-picker"  id="startDate"  name="startDate" style="width:120px"/>
-
+                        <label class="control-label" style="margin-left: 20px">月份</label>
+                        <input type="text" class="form-control form_datetime"  data-date-format="yyyy-mm"  id="startDate"  name="startDate" style="width:180px;"/>
+                        <script>
+                            $("#startDate").datepicker({ dateFormat: 'yy-mm',startView: 3, minView: 3, autoclose: true });
+                        </script>
                         <button type="submit">查询</button>
                     </div>
                 </form>
@@ -71,8 +73,9 @@
 
             <!--页面操作详细内容 开始-->
             <div class="row-fluid">
-                <div id="graph_3" class="chart"></div>
+                <div class="portlet-body">
 
+                </div>
             </div>
             <!--页面操作详细内容 开始-->
 
@@ -84,8 +87,9 @@
 <jsp:include page="../../include/footer.jsp"/>
 
 <script>
-    $(function(){
 
+$(function(){
+        $("#startDate").datepicker({ dateFormat: 'yy-mm',startView: 3, minView: 3, autoclose: true });
 
         var area = '${area}';
         var json= $.parseJSON(area);
@@ -93,29 +97,60 @@
             $("#area").append("<option value='"+val.departmentId+"'>"+val.title+"</option>");
         });
 
-    })
 
-    function onAreaChange(){
-        var area = $('#area').val();
-        $.ajax({
-            type: "GET",
-            url: "<%=contextPath%>/personal/planner/achivement/getDepartment",    //请求的url地址
-            dataType: "json",
-            data: { "departmentId": area },
-            success: function(req) {
-                $("#subCompany").empty();
-                $.each(req.children, function(i,val){
-                    $("#subCompany").append("<option value='"+val.departmentId+"'>"+val.title+"</option>");
-                });
-            },
-            error: function() {
-                //请求出错处理
-            }
+        $('#area').change(function(){
+            var area = $('#area').val();
+            $.ajax({
+                type: "GET",
+                url: "<%=contextPath%>/personal/planner/achivement/getDepartment",
+                dataType: "json",
+                data: { "departmentId": area },
+                success: function(req) {
+                    $("#subCompany").empty();
+                    $.each(req.children, function(i,val){
+                        $("#subCompany").append("<option value='"+val.departmentId+"'>"+val.title+"</option>");
+                    });
+
+                    var team = $('#team').val();
+                    if(team == null || team == ''){
+                        $("#team").prepend("<option value='0'>全部</option>");
+                    }
+                },
+                error: function() {
+
+                }
+            });
         });
-    }
 
-    function onSubCompanyChange(){
+        $('#subCompany').change(function(){
+            var subCompany = $('#subCompany').val();
+            $.ajax({
+                type: "GET",
+                url: "<%=contextPath%>/personal/planner/achivement/getDepartment",
+                dataType: "json",
+                data: { "departmentId": subCompany },
+                success: function(req) {
+                    $("#team").empty();
+                    $.each(req.children, function(i,val){
+                        $("#team").append("<option value='"+val.departmentId+"'>"+val.title+"</option>");
+                    });
 
-    }
+                    var team = $('#team').val();
+                    if(team == null || team == ''){
+                        $("#team").prepend("<option value='0'>全部</option>");
+                    }
+                },
+                error: function() {
+
+                }
+            });
+        });
+
+        var team = $('#team').val();
+        if(team == null || team == ''){
+            $("#team").prepend("<option value='0'>全部</option>");
+        }
+
+    });
 
 </script>

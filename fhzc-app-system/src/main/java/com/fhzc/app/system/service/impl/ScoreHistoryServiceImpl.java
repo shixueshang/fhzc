@@ -90,7 +90,7 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
             };
 
         }
-        }).importExcelFile(multipartFile);
+        }).importExcelFile(multipartFile,0,2);
 
         return importResult;
     }
@@ -153,7 +153,7 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 		            };
 
 		        }
-		        }).importExcelFile(multipartFile);
+		        }).importExcelFile(multipartFile,0,2);
 
 		        return importResult;
 	}
