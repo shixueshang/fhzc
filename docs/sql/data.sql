@@ -55,8 +55,8 @@ INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (40,'鑫丰母兑付导入','/business/payment/importorspecial',NULL,33,3,1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (41,'个人投资人档案表导入','/business/customerdocument/importorpersonal',NULL,33,3,1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (42,'机构投资人档案表导入','/business/customerdocument/importoragent',NULL,33,3,1);
-INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (43,'积分历史导入','/business/scorehistory/importoradd',NULL,33,3,1);
-INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (44,'权益消费导入','/business/scorehistory/importorconsume',NULL,33,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (43,'积分历史导入','/business/score/importoradd',NULL,33,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (44,'权益消费导入','/business/score/importorconsume',NULL,33,3,1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (45,'订单管理','/business/assets',NULL,1,2,1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (46,'订单列表','/business/assets/list',NULL,45,3,1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (47,'离职理财师导入','/personal/planner/importoroff',NULL,33,3,1);

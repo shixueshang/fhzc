@@ -1,6 +1,7 @@
 package com.fhzc.app.system.controller.personal;
 
 import com.alibaba.fastjson.JSON;
+import com.fhzc.app.dao.mybatis.model.Department;
 import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
@@ -9,6 +10,7 @@ import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.dao.mybatis.util.EncryptUtils;
 import com.fhzc.app.system.commons.util.TextUtils;
+import com.fhzc.app.system.commons.util.DateUtil;
 import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.dao.mybatis.model.Planner;
@@ -88,7 +90,7 @@ public class PlannerController extends BaseController {
         ModelAndView mav = new ModelAndView("personal/planner/importor");
         return mav;
     }
-    
+
     /**
      * excel导入--在职
      * @param multiFile
@@ -122,7 +124,7 @@ public class PlannerController extends BaseController {
         ModelAndView mav = new ModelAndView("personal/planner/importoroff");
         return mav;
     }
-    
+
     /**
      * excel导入--离职
      * @param multiFile
@@ -158,6 +160,35 @@ public class PlannerController extends BaseController {
     public AjaxJson getDepartment(Integer departmentId){
 
         return new AjaxJson(true, departmentService.findChildren(departmentId));
+    }
+
+    /**
+     * 理财师业绩数据
+     * @param area
+     * @param subCompany
+     * @param team
+     * @param startDate
+     * @return
+     */
+    @RequestMapping(value = "/achivement/find", method = RequestMethod.GET)
+    @ResponseBody
+    public AjaxJson achivementData(Integer area, Integer subCompany, Integer team, String startDate){
+        //判断是否为当前月份 如果是则从日表取数据，否则从月表取
+        String nowMonth = DateUtil.formatDate(new Date(), "yyyy-MM");
+        if(nowMonth.equals(startDate)){
+            //找到该团队下的所有理财师
+            List<Department> departments = departmentService.findChildren(team);
+            if(departments.size() > 0){
+                List<Integer> departmentIds = new ArrayList<Integer>();
+                for(Department department : departments){
+                    departmentIds.add(department.getDepartmentId());
+                }
+
+            List<Planner> planners = plannerService.findPlannerByDepartment(departmentIds);
+            }
+
+        }
+        return new AjaxJson(true);
     }
 
 }

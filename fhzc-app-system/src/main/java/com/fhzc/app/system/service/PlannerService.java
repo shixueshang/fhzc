@@ -3,6 +3,8 @@ package com.fhzc.app.system.service;
 import com.fhzc.app.dao.mybatis.model.Planner;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -75,4 +77,11 @@ public interface PlannerService {
      * @return
      */
     Planner getPlannerByWorkNum(String workNum);
+
+    /**
+     * 查询某团队的理财师
+     * @param departments
+     * @return
+     */
+    List<Planner> findPlannerByDepartment(List<Integer> departments);
 }
