@@ -79,7 +79,7 @@
                                                        <span class="btn btn-file">
                                                        <span class="fileupload-new">点击选择</span>
                                                        <span class="fileupload-exists">更换</span>
-                                                       <input type="file"name="multiFile" class="default" name="">
+                                                       <input type="file" name="multiFile" class="default" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" >
                                                        </span>
                                                         <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
                                                     </div>
@@ -87,7 +87,7 @@
                                             </div>
 
                                             <div class="form-actions">
-                                                <button type="submit" class="btn blue"><i class="icon-ok"></i> 添加</button>
+                                                <button type="submit" id="add"  class="btn blue"><i class="icon-ok"></i> 添加</button>
                                             </div>
                                         </form>
                                         <!-- END FORM-->
@@ -151,5 +151,24 @@
         </div>
     </div>
 </div>
+
+
+<script>
+	$("#add").click(function() { 
+		var filename=$("input[name='multiFile']").val();
+		var extStart=filename.lastIndexOf("."); 
+		var ext=filename.substring(extStart,filename .length);
+		if(filename.trim().length <=1 ){
+			 alert("请选择要导入的Excel文件!"); 
+		     return false; 
+		}		
+	    if(ext != ".xlsx" && ext != ".xls"){ 
+			 alert("添加的文件不是Excel!"); 
+		     return false; 
+	    }else{
+	    	return true; 
+	    }
+	}); 
+</script>
 
 <jsp:include page="../../include/footer.jsp"/>

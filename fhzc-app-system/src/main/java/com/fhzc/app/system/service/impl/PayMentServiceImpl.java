@@ -91,7 +91,7 @@ public class PayMentServiceImpl implements PayMentService {
             };
 
         }
-        }).importExcelFile(multipartFile);
+        }).importExcelFile(multipartFile,0,2);
 
         return importResult;
     }
@@ -157,7 +157,7 @@ public class PayMentServiceImpl implements PayMentService {
             };
 
         }
-        }).importExcelFile(multipartFile);
+        }).importExcelFile(multipartFile,0,2);
 
         return importResult;
     }

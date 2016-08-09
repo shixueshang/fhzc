@@ -255,11 +255,11 @@
                             <shiro:hasPermission name="/business/customerdocument/importoragent"><li>
                                 <a href="<%=contextPath%>/business/customerdocument/importoragent">机构投资人档案表导入</a>
                             </li></shiro:hasPermission>
-                            <shiro:hasPermission name="/business/scorehistory/importoradd"><li>
-                                <a href="<%=contextPath%>/business/scorehistory/importoradd">积分历史导入</a>
+                            <shiro:hasPermission name="/business/score/importoradd"><li>
+                                <a href="<%=contextPath%>/business/score/importoradd">积分历史导入</a>
                             </li></shiro:hasPermission>
-                            <shiro:hasPermission name="/business/scorehistory/importorconsume"><li>
-                                <a href="<%=contextPath%>/business/scorehistory/importorconsume">权益消费导入</a>
+                            <shiro:hasPermission name="/business/score/importorconsume"><li>
+                                <a href="<%=contextPath%>/business/score/importorconsume">权益消费导入</a>
                             </li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>

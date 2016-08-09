@@ -66,7 +66,7 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="portlet_tab1">
                                         <!-- BEGIN FORM-->
-                                        <form action="importoff" enctype="multipart/form-data" method="POST" class="form-horizontal">
+                                        <form action="importoff" enctype="multipart/form-data" method="POST" class="form-horizontal" >
                                             <div class="control-group">
                                             </div>
                                             <div class="controls">
@@ -79,7 +79,7 @@
                                                        <span class="btn btn-file">
                                                        <span class="fileupload-new">点击选择</span>
                                                        <span class="fileupload-exists">更换</span>
-                                                       <input type="file"name="multiFile" class="default" name="">
+                                                       <input id="attachment" type="file" name="multiFile" class="default" name="">
                                                        </span>
                                                         <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
                                                     </div>
@@ -87,7 +87,7 @@
                                             </div>
 
                                             <div class="form-actions">
-                                                <button type="submit" class="btn blue"><i class="icon-ok"></i> 添加</button>
+                                                <button type="submit" id="add" class="btn blue"><i class="icon-ok"></i> 添加</button>
                                             </div>
                                         </form>
                                         <!-- END FORM-->
@@ -147,3 +147,17 @@
     </div>
 </div>
 <jsp:include page="../../include/footer.jsp"/>
+
+<script>
+	$("#add").click(function() { 
+		var filename=$("input[name='multiFile']").val();
+		var extStart=filename.lastIndexOf("."); 
+		var ext=filename.substring(extStart,filename .length);
+	    if(ext != ".xlsx" && ext != ".xls"){ 
+			 alert("添加的文件不是Excel"); 
+		     return false; 
+	    }else{
+	    	return true; 
+	    }
+	}); 
+</script>

@@ -14,6 +14,8 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class TextUtils {
 	
 	/**
@@ -254,7 +256,7 @@ public class TextUtils {
     	}
     	if(value != null && ! value.toString().trim().equals("")){
     		if(!valiDateTimeWithShortFormat(value.toString())){
-	    		String errorMessage = "不是合法的日期格式 年-月-日!";
+	    		String errorMessage = value + "不是合法的日期格式 年-月-日!";
 	    		return setErrorMessage(rowNum,colNum,errorMessage);
     		}
  		
@@ -284,7 +286,7 @@ public class TextUtils {
     	}
     	if(value != null && ! value.toString().trim().equals("")){
     		if(!isNumber(value.toString())){
-	    		String errorMessage = "不是数字!";
+	    		String errorMessage = value + " 不是数字!";
 	    		return setErrorMessage(rowNum,colNum,errorMessage);
     		}
  		
@@ -352,7 +354,7 @@ public class TextUtils {
     	Pattern pattern = Pattern.compile("^1[34578]\\d{9}$");
 		Matcher matcher = pattern.matcher(phone);
     	if((phone.length() != 11) ||(! matcher.matches())){
-    		String errorMessage = "手机号码格式有误!";
+    		String errorMessage = "手机号码:"+ phone +" 格式有误!";
     		return setErrorMessage(rowNum,colNum,errorMessage);
     	}else{
     		return checkResult;	
@@ -377,5 +379,19 @@ public class TextUtils {
     		return false;
     	}
     }
-
+    
+    /**
+     * 校验上传文件的类型
+     * @param multiFile
+     * @return
+     */
+    public static boolean validDocType(MultipartFile multiFile){
+    	String fileName = multiFile.getOriginalFilename();
+		String suffix = fileName.substring(fileName.lastIndexOf(".")+1);
+		if("xlsx".equals(suffix)||"xls".equals(suffix)){
+			return true;
+		}else{
+			return false;
+		}
+    }
 }
