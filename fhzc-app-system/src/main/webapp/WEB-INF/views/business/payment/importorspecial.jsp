@@ -79,7 +79,7 @@
                                                        <span class="btn btn-file">
                                                        <span class="fileupload-new">点击选择</span>
                                                        <span class="fileupload-exists">更换</span>
-                                                       <input type="file"name="multiFile" class="default" name="">
+                                                       <input type="file"name="multiFile" class="default" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                                                        </span>
                                                         <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
                                                     </div>
@@ -87,7 +87,7 @@
                                             </div>
 
                                             <div class="form-actions">
-                                                <button type="submit" class="btn blue"><i class="icon-ok"></i> 添加</button>
+                                                <button type="submit" id="add" class="btn blue"><i class="icon-ok"></i> 添加</button>
                                             </div>
                                         </form>
                                         <!-- END FORM-->
@@ -101,44 +101,7 @@
                     </div>
                     <!-- END SAMPLE FORM PORTLET-->
 
-                    <div class="portlet box yellow">
-                        <div class="portlet-title">
-                            <h4><i class="icon-reorder">导入列表</i></h4>
-                        </div>
-                        <div class="portlet-body">
-                            <table class="table table-bordered table-hover">
-                                <thead>
-                                <tr>
-                                    <td><input type="checkbox" id="checkAll"/>全选</td>
-                                    <td>产品名称</td>
-                                    <td>状态</td>
-                                    <td>起息日</td>
-                                    <td>到期日</td>
-                                    <td>派息日</td>
-                                    <td>添加时间</td>
-                                    <td>客户等级</td>
-                                    <td>客户风险等级</td>
-                                    <td>编辑</td>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <c:forEach items="${products}" var="product">
-                                    <tr>
-                                        <td>${product.name}</td>
-                                        <td>${product.status}</td>
-                                        <td>${data.website}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>${data.title}</td>
-                                        <td>${fn:substring(data.createTime, 0, 10)}</td>
-                                        <td>${fn:substring(data.expireTime, 0, 10)}</td>
-                                        <td><a href="business/product/detail/${data.id}">编辑</a></td>
-                                    </tr>
-                                </c:forEach>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+ 
                 </div>
             </div>
             <!--页面操作详细内容 开始-->
@@ -146,5 +109,24 @@
         </div>
     </div>
 </div>
+
+
+<script>
+	$("#add").click(function() { 
+		var filename=$("input[name='multiFile']").val();
+		var extStart=filename.lastIndexOf("."); 
+		var ext=filename.substring(extStart,filename.length);
+		if(filename.trim().length <=1 ){
+			 alert("请选择要导入的Excel文件!"); 
+		     return false; 
+		}
+	    if(ext != ".xlsx" && ext != ".xls"){ 
+			 alert("添加的文件不是Excel!"); 
+		     return false; 
+	    }else{
+	    	return true; 
+	    }
+	}); 
+</script>
 
 <jsp:include page="../../include/footer.jsp"/>
