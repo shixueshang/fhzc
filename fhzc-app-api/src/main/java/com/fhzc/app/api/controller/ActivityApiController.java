@@ -3,7 +3,6 @@ package com.fhzc.app.api.controller;
 import com.fhzc.app.api.service.ActivityApplyService;
 import com.fhzc.app.api.service.ActivityService;
 import com.fhzc.app.api.service.FocusService;
-import com.fhzc.app.api.service.impl.ActivityServiceImpl;
 import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
 import com.fhzc.app.api.tools.ObjUtils;

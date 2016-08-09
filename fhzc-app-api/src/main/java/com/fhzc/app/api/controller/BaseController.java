@@ -1,5 +1,8 @@
 package com.fhzc.app.api.controller;
 
+import com.fhzc.app.api.service.DictionaryService;
+import com.fhzc.app.dao.mybatis.model.Customer;
+import com.fhzc.app.dao.mybatis.model.Dictionary;
 import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.dao.mybatis.util.DateEditor;
@@ -13,10 +16,12 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.List;
 
 
 public class BaseController {
@@ -28,6 +33,9 @@ public class BaseController {
 	protected String basePath;
 	protected Integer page;
 	protected Integer size;
+
+	@Resource
+	private DictionaryService dictionaryService;
 
 	public BaseController() {
 		super();
@@ -73,6 +81,51 @@ public class BaseController {
         Subject subject = SecurityUtils.getSubject();
         User user  = (User)subject.getSession().getAttribute("user");
         return user;
+    }
+
+	/**
+	 * 获得用户等级信息明文
+	 * @param level
+	 * @return
+     */
+    public String getLevelName(Integer level){
+        List<Dictionary> dicts = dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL);
+        for (Dictionary dict : dicts) {
+            if (dict.getValue().equals(level.toString())) {
+                return dict.getKey();
+            }
+        }
+        return "";
+    }
+
+	/**
+	 * 获得风险等级汉字
+	 * @param risk
+	 * @return
+     */
+    public String getRiskName(Integer risk){
+        List<Dictionary> dicts = dictionaryService.findDicByType(Const.DIC_CAT.RISK_LEVEL);
+        for (Dictionary dict : dicts) {
+            if (dict.getValue().equals(risk.toString())) {
+                return dict.getKey();
+            }
+        }
+        return "";
+    }
+
+    /**
+     * 获得用户证件类型明文
+     * @param passport_type_id
+     * @return
+     */
+    public String getPassportTypeName(Integer passport_type_id){
+        List<Dictionary> dicts = dictionaryService.findDicByType(Const.DIC_CAT.PASSPORT);
+        for (Dictionary dict : dicts) {
+            if (dict.getValue().equals(passport_type_id.toString())) {
+                return dict.getKey();
+            }
+        }
+        return "";
     }
 
 }

@@ -42,6 +42,7 @@ public class ActivityApplyServiceImpl implements ActivityApplyService {
             return null;
         }
     }
+
     @Override
     public ActivityApply getByUidActivityId(Integer uid, Integer activityId) {
         ActivityApplyExample example = new ActivityApplyExample();

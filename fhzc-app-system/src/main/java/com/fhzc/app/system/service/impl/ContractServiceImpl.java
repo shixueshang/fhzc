@@ -110,11 +110,36 @@ public class ContractServiceImpl implements ContractService {
         		int i = 0;
         		for (Object[] objects : data) {
 	        		Object[] temData = new  Object[19];
-	        		String phone = TextUtils.IntToDouble(objects[6].toString());
-	        		String pcode = objects[4].toString();
-	        		String key = pcode.substring(pcode.length()-8);
+	        		String pcode = "";
+	        		String phone = "";
+	        		String key = "";
+	        		String enpcode = "";
+	        		String enphone = "";
+	        		List<Object[]> errordata =new ArrayList<Object[]>();
+	        		if(objects[4]==null||objects[4].toString().trim().equals("")){
+	        			enpcode = "";
+	        			enphone = TextUtils.IntToDouble(objects[6].toString());
+		        		//校验手机号
+		        		errordata  = TextUtils.validPhoneNum(i+4, 7, enphone,true);
+		        		if (errordata.size() >0)
+		    			{
+		    				return errordata;
+		    			}
+	        		}else{
+	        			pcode = objects[4].toString();
+	        			key = pcode.substring(pcode.length()-8);
+	        			enpcode = EncryptUtils.encryptToDES(key, pcode);
+	        			phone = TextUtils.IntToDouble(objects[6].toString());
+	        			errordata  = TextUtils.validPhoneNum(i+4, 7, phone,true);
+		        		if (errordata.size() >0)
+		    			{
+		    				return errordata;
+		    			}
+		        		enphone = EncryptUtils.encryptToDES(key, phone);
+	        		}
+	        		
 	        		//检验产品列不为空,且购买产品存在
-	        		List<Object[]> errordata  = TextUtils.checkEmptyString(i+4, 2, objects[1]);
+	        		errordata  = TextUtils.checkEmptyString(i+4, 2, objects[1]);
 	    			boolean isExist = false;
 	    			if (errordata.size() >0)
 	    			{
@@ -146,12 +171,6 @@ public class ContractServiceImpl implements ContractService {
     				}
 		    		if(!isExist){
 	    				errordata = TextUtils.setErrorMessage(i+4, 4, objects[3].toString()+ ", 该证件类型不存在！");
-	    				return errordata;
-	    			}
-	        		//校验手机号
-	        		errordata  = TextUtils.validPhoneNum(i+4, 7, phone);
-	        		if (errordata.size() >0)
-	    			{
 	    				return errordata;
 	    			}
 	        		//检验理财师是否存在
@@ -189,7 +208,7 @@ public class ContractServiceImpl implements ContractService {
 	    				return errordata;
 	    			} 
 	        		//投资期限必填
-	    			errordata  = TextUtils.checkEmptyString(i+4, 11, objects[10]);
+	    			errordata  = TextUtils.checkNumber(i+4, 11, objects[10],false);
 	    			if (errordata.size() >0)
 	    			{
 	    				return errordata; 
@@ -217,9 +236,9 @@ public class ContractServiceImpl implements ContractService {
 	        		temData[2] = objects[1];										//产品名称 product_id
 	        		temData[3] = objects[2];										//基金管理人	
 	        		temData[4] = objects[3];										//证件类型
-	        		temData[5] = EncryptUtils.encryptToDES(key, pcode);				//证件号码
+	        		temData[5] = enpcode;											//证件号码
 	        		temData[6] = objects[5];										//客户姓名 customer_id
-	        		temData[7] = EncryptUtils.encryptToDES(key, phone);				//手机号码	
+	        		temData[7] = enphone;											//手机号码	
 	        		temData[8] = objects[7];										//客户类型
 	        		temData[9] = TextUtils.StringtoInteger(objects[8].toString());	//出借金额 amount_rmb
 	        		temData[10] = TextUtils.StringtoInteger(objects[9].toString());	//年化金额 annualised

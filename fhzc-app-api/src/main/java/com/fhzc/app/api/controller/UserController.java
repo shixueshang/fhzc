@@ -28,7 +28,7 @@ public class UserController extends BaseController {
     private CustomerService customerService;
 
     @Resource
-    private DictionaryService dictionaryService;
+    private PlannerService plannerService;
 
     @Resource
     private UserService userService;
@@ -50,7 +50,7 @@ public class UserController extends BaseController {
         Map result = ObjUtils.objectToMap(user);
         if(user.getLoginRole().equals(Const.USER_ROLE.CUSTOMER)) {
             Customer customer = customerService.getCustomerByUid(user.getUid());
-            user.setLevel(this.getCustomerLevel(user.getUid()));
+            user.setLevel(super.getLevelName(customer.getLevelId()));
 
             List<PlannerCustomer> plannerCustomers = plannerCustomerService.getCustomerPlannerList(user.getUid());
             List<Map> planners = new ArrayList<>();
@@ -85,6 +85,8 @@ public class UserController extends BaseController {
             for (PlannerCustomer pc : plannerCustomers) {
                 Map map = new HashMap();
                 User customer = userService.getUser(pc.getCustomerId());
+                Customer customerInfo = customerService.getCustomerByUid(pc.getCustomerId());
+                map.put("id", pc.getId());
                 map.put("uid", pc.getCustomerId());
                 map.put("avatar", customer.getAvatar());
                 map.put("realname", customer.getRealname());
@@ -92,9 +94,10 @@ public class UserController extends BaseController {
                 map.put("phone", customer.getPhone());
                 map.put("address", customer.getAddress());
                 map.put("main", pc.getIsMain());
+                map.put("memo", pc.getMemo());
                 List<ScoreHistory> scoreHistoryList = scoreService.getAvailableList(pc.getCustomerId());
                 map.put("score", scoreService.sumScore(scoreHistoryList));
-                map.put("level", this.getCustomerLevel(pc.getCustomerId()));
+                map.put("level", super.getLevelName(customerInfo.getLevelId()));
 
                 result.add(map);
             }
@@ -103,37 +106,22 @@ public class UserController extends BaseController {
     }
 
     /**
-     * 获得用户等级信息明文
-     * @param uid
+     * 更新理财师对客户的备注
+     * @param id
+     * @param memo
      * @return
      */
-    public String getCustomerLevel(Integer uid){
-        Customer customer= customerService.getCustomerByUid(uid);
-        if (customer != null) {
-            List<Dictionary> dicts = dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL);
-            for (Dictionary dict : dicts) {
-                if (dict.getValue().equals(customer.getLevelId().toString())) {
-                    return dict.getKey();
-                }
-            }
+    @RequestMapping(value = "/api/planner/memo", method = RequestMethod.POST)
+    @ResponseBody
+    public ApiJsonResult updatePlannerMemo(Integer id, String memo){
+        User user  = getCurrentUser();
+        if(user.getLoginRole() == Const.USER_ROLE.CUSTOMER){
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST);
         }
-        return "";
-    }
-
-
-    /**
-     * 获得用户等级信息明文
-     * @param passport_type_id
-     * @return
-     */
-    public String getPassportTypeName(Integer passport_type_id){
-        List<Dictionary> dicts = dictionaryService.findDicByType(Const.DIC_CAT.PASSPORT);
-        for (Dictionary dict : dicts) {
-            if (dict.getValue().equals(passport_type_id)) {
-                return dict.getKey();
-            }
-        }
-        return "";
+        PlannerCustomer plannerCustomer = plannerCustomerService.getRow(id);
+        plannerCustomer.setMemo(memo);
+        plannerCustomerService.updatePlannerCustomer(plannerCustomer);
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
     }
 
     /**
@@ -170,7 +158,7 @@ public class UserController extends BaseController {
 
 
     /**
-     * 获取登录用户信息
+     * 获取客户信息
      * @return
      */
     @RequestMapping(value = "/api/customer/info", method = RequestMethod.GET)
@@ -190,8 +178,8 @@ public class UserController extends BaseController {
                 result.put("type",Const.CUSTOMER_TYPE.SINGLE_CUSTOMER_ZH);
             }
 
-            result.put("level", this.getCustomerLevel(customer_id));
-            result.put("risk", customerInfo.getRisk());
+            result.put("level", super.getLevelName(customerInfo.getLevelId()));
+            result.put("risk", super.getRiskName(customerInfo.getRisk()));
             result.put("passportType", this.getPassportTypeName(customer.getPassportTypeId()));
             result.put("passportTypeId", customer.getPassportTypeId());
 
@@ -217,4 +205,33 @@ public class UserController extends BaseController {
         }
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST);
     }
+
+    /**
+     * 获取理财师信息
+     * @return
+     */
+    @RequestMapping(value = "/api/planner/info", method = RequestMethod.GET)
+    @ResponseBody
+    public ApiJsonResult getPlannerInfo(Integer planner_id) throws Exception {
+        User user = userService.getUser(planner_id);
+        if(user == null){
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST);
+        }
+        Planner planner = plannerService.getPlanner(planner_id);
+        Map result = new HashMap();
+        if(planner != null) {
+            result.put("name", user.getRealname());
+            result.put("avatar", user.getAvatar());
+            result.put("workNum", planner.getWorkNum());
+            result.put("departmentId", planner.getDepartmentId());
+            result.put("status", planner.getStatus());
+            result.put("roleId", planner.getRoleId());
+            result.put("entryTime", planner.getEntryTime());
+            result.put("jobTitleCn", planner.getJobTitleCn());
+            result.put("position", planner.getPosition());
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
+        }
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
+    }
 }
+

@@ -11,4 +11,8 @@ public interface PlannerCustomerService {
     List<PlannerCustomer> getPlannerCustomerList(Integer planner_id);
 
     List<PlannerCustomer> getCustomerPlannerList(Integer customer_id);
+
+    int updatePlannerCustomer(PlannerCustomer plannerCustomer);
+
+    PlannerCustomer getRow(Integer id);
 }

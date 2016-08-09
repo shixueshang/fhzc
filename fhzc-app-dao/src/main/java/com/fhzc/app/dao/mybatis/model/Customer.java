@@ -9,7 +9,7 @@ public class Customer {
 
     private Integer levelId;
 
-    private String risk;
+    private Integer risk;
 
     private Integer departmentId;
 
@@ -59,12 +59,12 @@ public class Customer {
         this.levelId = levelId;
     }
 
-    public String getRisk() {
+    public Integer getRisk() {
         return risk;
     }
 
-    public void setRisk(String risk) {
-        this.risk = risk == null ? null : risk.trim();
+    public void setRisk(Integer risk) {
+        this.risk = risk;
     }
 
     public Integer getDepartmentId() {

@@ -10,6 +10,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,7 +28,8 @@ public class ActivityServiceImpl implements ActivityService {
         ActivityExample.Criteria criteria = example.createCriteria();
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<Activity> list = activityMapper.selectByExampleWithBLOBsWithRowbounds(example, rowBounds);
-        return new PageableResult<Activity>(page, size, list.size(), list);
+        List<Activity> result = this.setActivityListStatus(list);
+        return new PageableResult<Activity>(page, size, list.size(), result);
     }
     
     @Override
@@ -36,7 +38,11 @@ public class ActivityServiceImpl implements ActivityService {
         ActivityExample.Criteria criteria = example.createCriteria();
         criteria.andIsDisplayEqualTo(Const.YES_OR_NO.YES);
         criteria.andIsRecommendEqualTo(Const.YES_OR_NO.YES);
-        return activityMapper.selectByExample(example);
+        if (activityMapper.countByExample(example) > 0) {
+            List<Activity> activityList= activityMapper.selectByExample(example);
+            return this.setActivityListStatus(activityList);
+        }
+        return null;
     }
 
     @Override
@@ -45,12 +51,38 @@ public class ActivityServiceImpl implements ActivityService {
         ActivityExample.Criteria criteria = example.createCriteria();
         criteria.andIdEqualTo(id);
         if(activityMapper.countByExample(example) > 0){
-            return activityMapper.selectByPrimaryKey(id);
+            Activity activity = activityMapper.selectByPrimaryKey(id);
+            activity.setStatus(this.getActivityStatus(activity));
+            return activity;
         }else{
             return null;
         }
-
     }
 
+    @Override
+    public List<Activity> setActivityListStatus(List<Activity> list){
+        List<Activity> result = new ArrayList<Activity>();
+        for(Activity activity : list){
+            Integer status = this.getActivityStatus(activity);
+            activity.setStatus(status);
+            result.add(activity);
+        }
+        return result;
+    }
+
+    @Override
+    public Integer getActivityStatus(Activity activity){
+        if(System.currentTimeMillis() < activity.getApplyBeginTime().getTime()){
+            return Const.ACTIVITY_STATUS.WILL;
+        }else if(System.currentTimeMillis() > activity.getApplyBeginTime().getTime() && System.currentTimeMillis() < activity.getApplyEndTime().getTime() ){
+            return Const.ACTIVITY_STATUS.GOING;
+        }else if(System.currentTimeMillis() > activity.getApplyEndTime().getTime()){
+            return Const.ACTIVITY_STATUS.APP_OVER;
+        }else if(System.currentTimeMillis() > activity.getEndTime().getTime()){
+            return Const.ACTIVITY_STATUS.ACT_OVER;
+        }else{
+            return Const.ACTIVITY_STATUS.WILL;
+        }
+    }
 
 }

@@ -178,7 +178,6 @@ public class PlannerServiceImpl implements PlannerService {
         		int i = 0;
 	        	for (Object[] objects : data) {
 	        		Object[] temData = new  Object[18];
-	        		String phone = TextUtils.IntToDouble(objects[4].toString());
 	        		//校验工号不能为空
 	        		List<Object[]> errordata  = TextUtils.checkEmptyString(i+3, 2, objects[1]);
 	    			if (errordata.size() >0)
@@ -186,11 +185,12 @@ public class PlannerServiceImpl implements PlannerService {
 	    				return errordata;
 	    			}
 	        		//校验手机号
-	        		errordata  = TextUtils.validPhoneNum(i+3, 5, phone);
+	        		errordata  = TextUtils.validPhoneNum(i+3, 5, objects[4].toString(),false);
 	        		if (errordata.size() >0)
 	    			{
 	    				return errordata;
 	    			}
+	        		String phone = TextUtils.IntToDouble(objects[4].toString());
 	        		temData[0] = objects[1];						//工号 work_num,作为初始登录名
 	        		temData[1] = DigestUtils.md5Hex(phone);			//手机号 mobile，作为初始密码	
 	        		temData[2] = objects[1];						//工号 work_num
