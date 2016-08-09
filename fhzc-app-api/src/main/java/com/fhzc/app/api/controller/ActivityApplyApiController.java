@@ -6,6 +6,7 @@ import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
 import com.fhzc.app.dao.mybatis.model.Activity;
 import com.fhzc.app.dao.mybatis.model.ActivityApply;
+import com.fhzc.app.dao.mybatis.util.Const;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -81,13 +82,14 @@ public class ActivityApplyApiController extends BaseController {
             for(ActivityApply apply : activityApplyList) {
                 Activity activity = activityService.getActivity(apply.getActivityId());
                 Map map = new HashMap();
+
                 if(activity != null) {
                     map.put("activityApplyId", apply.getId());
                     map.put("activityId", apply.getActivityId());
                     map.put("name", activity.getName());
                     map.put("cover", activity.getCover());
                     map.put("applyEndTime", activity.getApplyEndTime());
-                    map.put("status", activity.getStatus());
+                    map.put("status", activityService.getActivityStatus(activity));
                     result.add(map);
                 }
             }

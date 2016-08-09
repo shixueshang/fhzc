@@ -99,7 +99,11 @@ public class RightsReservationApiController extends BaseController {
 
             map.put("id",reserv.getId());
             map.put("rightsId",reserv.getRightsId());
+            map.put("name",rights.getName());
             map.put("cover",rights.getCover());
+            map.put("spendScore",rights.getSpendScore());
+            map.put("level",rights.getLevel());
+            map.put("levelName",super.getLevelName(rights.getLevel()));
             map.put("markDate",reserv.getMarkDate());
             map.put("status",reserv.getStatus());
             result.add(map);

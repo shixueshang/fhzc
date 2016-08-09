@@ -31,4 +31,18 @@ public interface ActivityService {
      * @return
      */
     Activity getActivity(Integer id);
+
+    /**
+     * 计算活动状态
+     * @param activity
+     * @return
+     */
+    Integer getActivityStatus(Activity activity);
+
+    /**
+     * 给活动列表批量修改状态
+     * @param list
+     * @return
+     */
+    List<Activity> setActivityListStatus(List<Activity> list);
 }

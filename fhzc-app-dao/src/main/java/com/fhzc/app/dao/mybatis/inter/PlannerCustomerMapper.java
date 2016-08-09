@@ -17,6 +17,10 @@ public interface PlannerCustomerMapper {
 
     int insertSelective(PlannerCustomer record);
 
+    List<PlannerCustomer> selectByExampleWithBLOBsWithRowbounds(PlannerCustomerExample example, RowBounds rowBounds);
+
+    List<PlannerCustomer> selectByExampleWithBLOBs(PlannerCustomerExample example);
+
     List<PlannerCustomer> selectByExampleWithRowbounds(PlannerCustomerExample example, RowBounds rowBounds);
 
     List<PlannerCustomer> selectByExample(PlannerCustomerExample example);
@@ -25,9 +29,13 @@ public interface PlannerCustomerMapper {
 
     int updateByExampleSelective(@Param("record") PlannerCustomer record, @Param("example") PlannerCustomerExample example);
 
+    int updateByExampleWithBLOBs(@Param("record") PlannerCustomer record, @Param("example") PlannerCustomerExample example);
+
     int updateByExample(@Param("record") PlannerCustomer record, @Param("example") PlannerCustomerExample example);
 
     int updateByPrimaryKeySelective(PlannerCustomer record);
+
+    int updateByPrimaryKeyWithBLOBs(PlannerCustomer record);
 
     int updateByPrimaryKey(PlannerCustomer record);
 }

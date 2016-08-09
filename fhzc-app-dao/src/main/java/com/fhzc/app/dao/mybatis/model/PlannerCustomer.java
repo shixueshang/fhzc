@@ -9,6 +9,8 @@ public class PlannerCustomer {
 
     private Byte isMain;
 
+    private String memo;
+
     public Integer getId() {
         return id;
     }
@@ -39,5 +41,13 @@ public class PlannerCustomer {
 
     public void setIsMain(Byte isMain) {
         this.isMain = isMain;
+    }
+
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo == null ? null : memo.trim();
     }
 }

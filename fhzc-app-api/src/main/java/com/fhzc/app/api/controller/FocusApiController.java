@@ -5,9 +5,11 @@ import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
 import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.model.Dictionary;
+import com.fhzc.app.dao.mybatis.util.Const;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -58,6 +60,84 @@ public class FocusApiController extends BaseController {
         focus.setFtype(ftype);
         focus.setStatus(status);
         focusService.addOrUpdateFocus(focus);
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
+    }
+
+    /**
+     * 批量取消关注
+     * @param productIds
+     * @param reportIds
+     * @param activityIds
+     * @param rightsIds
+     * @return
+     */
+    @RequestMapping(value = "/api/nofocus", method = RequestMethod.POST)
+    @ResponseBody
+    public ApiJsonResult nofocus(@RequestParam(value="productIds[]") Integer[] productIds,
+                                 @RequestParam(value="reportIds[]") Integer[] reportIds,
+                                 @RequestParam(value="activityIds[]") Integer[] activityIds,
+                                 @RequestParam(value="rightsIds[]") Integer[] rightsIds
+                                 ) {
+        Integer uid = super.getCurrentUser().getUid();
+        if(productIds != null) for (Integer productId: productIds) {
+            Focus focus = new Focus();
+            Focus focusExist = focusService.getFocusByCond(uid,productId, Const.FOCUS_TYPE.PRODUCT);
+            if (focusExist != null) {
+                focus.setId(focusExist.getId());
+            }
+
+            focus.setCtime(new Date());
+            focus.setUid(uid);
+            focus.setFid(productId);
+            focus.setFtype(Const.FOCUS_TYPE.PRODUCT);
+            focus.setStatus(Const.FOCUS_STATUS.OFF);
+            focusService.addOrUpdateFocus(focus);
+        }
+
+        if(activityIds!= null) for (Integer activityId: activityIds) {
+            Focus focus = new Focus();
+            Focus focusExist = focusService.getFocusByCond(uid,activityId, Const.FOCUS_TYPE.ACTIVITY);
+            if (focusExist != null) {
+                focus.setId(focusExist.getId());
+            }
+
+            focus.setCtime(new Date());
+            focus.setUid(uid);
+            focus.setFid(activityId);
+            focus.setFtype(Const.FOCUS_TYPE.ACTIVITY);
+            focus.setStatus(Const.FOCUS_STATUS.OFF);
+            focusService.addOrUpdateFocus(focus);
+        }
+
+        if(reportIds!= null) for (Integer reportId: reportIds) {
+            Focus focus = new Focus();
+            Focus focusExist = focusService.getFocusByCond(uid,reportId, Const.FOCUS_TYPE.REPORT);
+            if (focusExist != null) {
+                focus.setId(focusExist.getId());
+            }
+
+            focus.setCtime(new Date());
+            focus.setUid(uid);
+            focus.setFid(reportId);
+            focus.setFtype(Const.FOCUS_TYPE.REPORT);
+            focus.setStatus(Const.FOCUS_STATUS.OFF);
+            focusService.addOrUpdateFocus(focus);
+        }
+
+        if(rightsIds!= null) for (Integer rightsId: rightsIds) {
+            Focus focus = new Focus();
+            Focus focusExist = focusService.getFocusByCond(uid,rightsId, Const.FOCUS_TYPE.RIGHTS);
+            if (focusExist != null) {
+                focus.setId(focusExist.getId());
+            }
+
+            focus.setCtime(new Date());
+            focus.setUid(uid);
+            focus.setFid(rightsId);
+            focus.setFtype(Const.FOCUS_TYPE.RIGHTS);
+            focus.setStatus(Const.FOCUS_STATUS.OFF);
+            focusService.addOrUpdateFocus(focus);
+        }
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
     }
 
