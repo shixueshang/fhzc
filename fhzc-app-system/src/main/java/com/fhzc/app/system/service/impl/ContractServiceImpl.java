@@ -2,6 +2,10 @@ package com.fhzc.app.system.service.impl;
 
 import com.fhzc.app.dao.mybatis.model.Contract;
 import com.fhzc.app.dao.mybatis.model.ContractExample;
+import com.fhzc.app.dao.mybatis.model.Department;
+import com.fhzc.app.dao.mybatis.model.Dictionary;
+import com.fhzc.app.dao.mybatis.model.Planner;
+import com.fhzc.app.dao.mybatis.model.Product;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.EncryptUtils;
 import com.fhzc.app.system.commons.util.TextUtils;
@@ -10,6 +14,10 @@ import com.fhzc.app.system.commons.util.excel.ImportCallBack;
 import com.fhzc.app.system.commons.util.excel.ImportConfig;
 import com.fhzc.app.dao.mybatis.inter.ContractMapper;
 import com.fhzc.app.system.service.ContractService;
+import com.fhzc.app.system.service.DepartmentService;
+import com.fhzc.app.system.service.DictionaryService;
+import com.fhzc.app.system.service.PlannerService;
+import com.fhzc.app.system.service.ProductService;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.ibatis.session.RowBounds;
@@ -35,6 +43,18 @@ public class ContractServiceImpl implements ContractService {
     @Resource
     private ContractMapper contractMapper;
     
+    @Resource
+    private ProductService productService;
+    
+    @Resource
+    private PlannerService plannerService;
+    
+    @Resource
+    private DictionaryService dictionaryService;
+    
+    @Resource
+    private DepartmentService departmentService;
+    
     @Override
     public PageableResult<Contract> findPageContracts(int page, int size) {
         ContractExample example = new ContractExample();
@@ -55,10 +75,27 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public Map<String, Object> importExcelFile(MultipartFile multipartFile) throws Exception {
-       Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
+    	PageableResult<Product> prs = productService.findPageProducts(0, 10000);
+    	PageableResult<Planner> planners =  plannerService.findPagePlanners(0, 10000);
+    	List<Dictionary> dics = dictionaryService.findDicByType("passport");
+    	PageableResult<Department> deps = departmentService.findPageDepartments(0, 10000);
+    	int sheetnum = 0;
+    	int rownum = 3;
+    	Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
         @Override
         public String validation(Workbook xwb) {
-            return null;
+        	if(!TextUtils.validWorkbookTitle(xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString(), "发行产品统计表") ){
+        		if(xwb.getSheetAt(sheetnum).getRow(0).getCell(0) != null){
+        			return "报表第" + String.valueOf(sheetnum+1) +"个sheet,表头为："+ xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString() +" 不是正确的报表！";
+        		}
+        		else
+        		{
+        			return "报表第" + String.valueOf(sheetnum+1) +"个sheet, 不是正确的报表！";
+        		}
+        	}
+        	else{
+        		return null;
+        	}
         }
 
         @Override
@@ -70,11 +107,111 @@ public class ContractServiceImpl implements ContractService {
         public List<Object[]> getImportData(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data) throws Exception {
         	List<Object[]> contractList = new ArrayList<Object[]>();
         	if(data.get(0).length>0){
+        		int i = 0;
         		for (Object[] objects : data) {
 	        		Object[] temData = new  Object[19];
 	        		String phone = TextUtils.IntToDouble(objects[6].toString());
 	        		String pcode = objects[4].toString();
 	        		String key = pcode.substring(pcode.length()-8);
+	        		//检验产品列不为空,且购买产品存在
+	        		List<Object[]> errordata  = TextUtils.checkEmptyString(i+4, 2, objects[1]);
+	    			boolean isExist = false;
+	    			if (errordata.size() >0)
+	    			{
+	    				return errordata;
+	    			}
+	    			isExist = false;
+    				for(Product product :prs.getItems()){
+    					if(product.getName().equals(objects[1].toString().trim())){
+    						isExist = true;
+    						break;
+    					}
+    				}
+		    		if(!isExist){
+	    				errordata = TextUtils.setErrorMessage(i+4, 2, objects[1].toString() +",该产品不存在！");
+	    				return errordata;
+	    			}
+	        		//判断证件类型的写法与数据库保持一致
+		    		errordata  = TextUtils.checkEmptyString(i+4, 4, objects[3]);
+	    			if (errordata.size() >0)
+	    			{
+	    				return errordata;
+	    			}
+	    			isExist = false;
+    				for(Dictionary dictionary : dics){
+    					if(dictionary.getKey().equals(objects[3].toString().trim())){
+    						isExist = true;
+    						break;
+    					}
+    				}
+		    		if(!isExist){
+	    				errordata = TextUtils.setErrorMessage(i+4, 4, objects[3].toString()+ ", 该证件类型不存在！");
+	    				return errordata;
+	    			}
+	        		//校验手机号
+	        		errordata  = TextUtils.validPhoneNum(i+4, 7, phone);
+	        		if (errordata.size() >0)
+	    			{
+	    				return errordata;
+	    			}
+	        		//检验理财师是否存在
+	    			errordata  = TextUtils.checkEmptyString(i+4, 16, objects[15]);
+	    			if (errordata.size() >0)
+	    			{
+	    				return errordata;
+	    			}
+	    			isExist = false;
+    				for(Planner planner :planners.getItems()){
+    					if(planner.getWorkNum().equals(objects[15].toString().trim())){
+    						isExist = true;
+    						break;
+    					}
+    				}
+		    		if(!isExist){
+	    				errordata = TextUtils.setErrorMessage(i+4, 16, objects[15].toString()+ ", 该理财师编号不存在！");
+	    				return errordata;
+	    			}
+	        		//校验日期格式，到账日期不能为空
+		    		errordata  = TextUtils.checkDateString(i+4, 13, objects[12],false);
+	    			if (errordata.size() >0)
+	    			{
+	    				return errordata;
+	    			} 
+	        		//校验金额格式，投资额,年化金额不能为空
+	    			errordata  = TextUtils.checkNumber(i+4, 9, objects[8],false);
+	    			if (errordata.size() >0)
+	    			{
+	    				return errordata;
+	    			}
+	    			errordata  = TextUtils.checkNumber(i+4, 10, objects[9],false);
+	    			if (errordata.size() >0)
+	    			{
+	    				return errordata;
+	    			} 
+	        		//投资期限必填
+	    			errordata  = TextUtils.checkEmptyString(i+4, 11, objects[10]);
+	    			if (errordata.size() >0)
+	    			{
+	    				return errordata; 
+	    			}
+	    			//校验分公司
+	    			errordata  = TextUtils.checkEmptyString(i+4, 14, objects[13]);
+	    			if (errordata.size() >0)
+	    			{
+	    				return errordata;
+	    			}
+	    			isExist = false;
+    				for(Department department :deps.getItems()){
+    					if(department.getTitle().equals(objects[13].toString().trim())){
+    						isExist = true;
+    						break;
+    					}
+    				}
+		    		if(!isExist){
+	    				errordata = TextUtils.setErrorMessage(i+4, 14, objects[13].toString()+ ", 该分公司不存在！");
+	    				return errordata;
+	    			}
+		    		
 	        		temData[0] = phone;												// p_login
 	        		temData[1] = DigestUtils.md5Hex(phone);							// p_password
 	        		temData[2] = objects[1];										//产品名称 product_id
@@ -95,6 +232,7 @@ public class ContractServiceImpl implements ContractService {
 	        		temData[17] = objects[22];										//备注 memo
 	        		temData[18]	= key;
 	        		contractList.add(temData);
+	        		i++;
         		}
         	}
             return contractList; 
@@ -115,7 +253,7 @@ public class ContractServiceImpl implements ContractService {
             };
 
         }
-        }).importExcelFile(multipartFile,0,3);
+        }).importExcelFile(multipartFile,sheetnum,rownum);
 
         return importResult;
     }

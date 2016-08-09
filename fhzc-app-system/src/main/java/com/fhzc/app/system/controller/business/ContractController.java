@@ -49,6 +49,7 @@ public class ContractController extends BaseController {
         } catch (Exception e) {
             logger.error("导入失败" + e.getMessage() );
             result.put("success", false);
+            result.put("error_message", e.getMessage());
             mav.addAllObjects(result);
             e.printStackTrace();
         }

@@ -3,6 +3,8 @@ package com.fhzc.app.system.service.impl;
 import com.fhzc.app.dao.mybatis.inter.DepartmentMapper;
 import com.fhzc.app.dao.mybatis.model.Department;
 import com.fhzc.app.dao.mybatis.model.DepartmentExample;
+import com.fhzc.app.dao.mybatis.model.Planner;
+import com.fhzc.app.dao.mybatis.model.PlannerExample;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.service.DepartmentService;
@@ -209,5 +211,12 @@ public class DepartmentServiceImpl implements DepartmentService{
         criteria.andTitleEqualTo(name);
         return departmentMapper.selectByExample(example).get(0);
     }
-
+    
+    @Override
+    public PageableResult<Department> findPageDepartments(int page, int size) {
+    	DepartmentExample example = new DepartmentExample();
+        RowBounds rowBounds = new RowBounds((page - 1) * size, size);
+        List<Department> list = departmentMapper.selectByExampleWithRowbounds(example, rowBounds);
+        return new PageableResult<Department>(page, size, departmentMapper.countByExample(example), list);
+    }
 }

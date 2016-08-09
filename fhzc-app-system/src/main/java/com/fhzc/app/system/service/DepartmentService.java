@@ -65,4 +65,12 @@ public interface DepartmentService {
      * @return
      */
     Department getDeparent(String name);
+    
+    /**
+     * 直接查询所有机构信息
+     * @param page
+     * @param size
+     * @return
+     */
+    PageableResult<Department> findPageDepartments(int page, int size);
 }

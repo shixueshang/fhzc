@@ -76,7 +76,9 @@ public class PlannerServiceImpl implements PlannerService {
      */
     @Override
     public Map<String, Object> importDepartmentExcelFile(MultipartFile multipartFile) throws Exception {
-       Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
+        int sheetnum = 0;
+        int rownum = 2;
+    	Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
         @Override
         public String validation(Workbook xwb) {
         	return null;
@@ -133,7 +135,7 @@ public class PlannerServiceImpl implements PlannerService {
             };
 
         }
-        }).importExcelFile(multipartFile,0,2);
+        }).importExcelFile(multipartFile,sheetnum,rownum);
 
         return importResult;
     }
@@ -145,14 +147,23 @@ public class PlannerServiceImpl implements PlannerService {
      */
     @Override
     public Map<String, Object> importExcelFile(MultipartFile multipartFile) throws Exception {
-       Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
+    	int sheetnum =0;
+		int rownum =2;
+    	Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
         @Override
         public String validation(Workbook xwb) {
-    		if(!TextUtils.validWorkbookTitle(xwb.getSheetAt(0).getRow(0).getCell(0).toString(), "在职")){
-    			return "请查看Excel表头确认导入的报表是否是《在职理财师花名册》！";
-         	}else{
-         		return null;
-         	}
+        	if(!TextUtils.validWorkbookTitle(xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString(), "在职") ){
+        		if(xwb.getSheetAt(sheetnum).getRow(0).getCell(0) != null){
+        			return "报表第" + String.valueOf(sheetnum+1) +"个sheet,表头为："+ xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString() +" 不是正确的报表！";
+        		}
+        		else
+        		{
+        			return "报表第" + String.valueOf(sheetnum+1) +"个sheet, 不是正确的报表！";
+        		}
+        	}
+        	else{
+        		return null;
+        	}
         }
 
         @Override
@@ -169,12 +180,13 @@ public class PlannerServiceImpl implements PlannerService {
 	        		Object[] temData = new  Object[18];
 	        		String phone = TextUtils.IntToDouble(objects[4].toString());
 	        		//校验工号不能为空
-	        		if(objects[1] == null || objects[1].toString().trim().equals("")){
-	        			String errorMessage = "工号不能为空!";
-	        			return TextUtils.setErrorMessage(i+3,2,errorMessage);
-	        		} 
+	        		List<Object[]> errordata  = TextUtils.checkEmptyString(i+3, 2, objects[1]);
+	    			if (errordata.size() >0)
+	    			{
+	    				return errordata;
+	    			}
 	        		//校验手机号
-	        		List<Object[]> errordata  = TextUtils.validPhoneNum(i+3, 5, phone);
+	        		errordata  = TextUtils.validPhoneNum(i+3, 5, phone);
 	        		if (errordata.size() >0)
 	    			{
 	    				return errordata;
@@ -219,7 +231,7 @@ public class PlannerServiceImpl implements PlannerService {
             };
 
         }
-        }).importExcelFile(multipartFile,0,2);
+        }).importExcelFile(multipartFile,sheetnum,rownum);
 
         return importResult;
     }
@@ -231,14 +243,23 @@ public class PlannerServiceImpl implements PlannerService {
      */
     @Override
     public Map<String, Object> importExcelFileOff(MultipartFile multipartFile) throws Exception {
-       Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
+    	int sheetnum = 0;
+    	int rownum = 2;
+    	Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
         @Override
         public String validation(Workbook xwb) {
-        	if(!TextUtils.validWorkbookTitle(xwb.getSheetAt(0).getRow(0).getCell(0).toString(), "离职")){
-    			return "请查看Excel表头确认导入的报表是否是《离职理财师花名册》！";
-         	}else{
-         		return null;
-         	}
+        	if(!TextUtils.validWorkbookTitle(xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString(), "离职") ){
+        		if(xwb.getSheetAt(sheetnum).getRow(0).getCell(0) != null){
+        			return "报表第" + String.valueOf(sheetnum+1) +"个sheet,表头为："+ xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString() +" 不是正确的报表！";
+        		}
+        		else
+        		{
+        			return "报表第" + String.valueOf(sheetnum+1) +"个sheet, 不是正确的报表！";
+        		}
+        	}
+        	else{
+        		return null;
+        	}
         }
 
         @Override
@@ -249,7 +270,7 @@ public class PlannerServiceImpl implements PlannerService {
         @Override
         public List<Object[]> getImportData(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data) {
         	List<Object[]> plannerList = new ArrayList<Object[]>();
-        	PageableResult<Planner> planners =  findPagePlanners(0, 10000);
+        	PageableResult<Planner> planners = findPagePlanners(0, 10000);
         	if(data.get(0).length>0){
         		int i = 0;
 	        	for (Object[] objects : data) {
@@ -296,7 +317,7 @@ public class PlannerServiceImpl implements PlannerService {
             };
 
         }
-        }).importExcelFile(multipartFile);
+        }).importExcelFile(multipartFile,sheetnum,rownum);
 
         return importResult;
     }

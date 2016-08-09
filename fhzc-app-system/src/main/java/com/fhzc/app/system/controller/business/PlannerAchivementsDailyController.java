@@ -98,7 +98,6 @@ public class PlannerAchivementsDailyController  extends BaseController  {
             result.put("success", false);
             result.put("error_message", e.getMessage());
             mav.addAllObjects(result);
-           // e.printStackTrace();
             return mav;
         }
 

@@ -79,7 +79,7 @@
                                                        <span class="btn btn-file">
                                                        <span class="fileupload-new">点击选择</span>
                                                        <span class="fileupload-exists">更换</span>
-                                                       <input id="attachment" type="file" name="multiFile" class="default" name="">
+                                                       <input id="attachment" type="file" name="multiFile" class="default" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                                                        </span>
                                                         <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
                                                     </div>
@@ -100,7 +100,7 @@
                         </div>
                     </div>
                     <!-- END SAMPLE FORM PORTLET-->
-	
+	<!--  
                     <div class="portlet box yellow">
                         <div class="portlet-title">
                             <h4><i class="icon-reorder">导入列表</i></h4>
@@ -138,7 +138,7 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
             </div>
             <!--页面操作详细内容 开始-->
@@ -147,7 +147,6 @@
     </div>
 </div>
 <jsp:include page="../../include/footer.jsp"/>
-
 <script>
 	$("#add").click(function() { 
 		var filename=$("input[name='multiFile']").val();
