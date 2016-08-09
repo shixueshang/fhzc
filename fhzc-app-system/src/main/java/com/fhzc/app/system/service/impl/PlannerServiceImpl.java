@@ -283,4 +283,12 @@ public class PlannerServiceImpl implements PlannerService {
     public Planner getPlannerByWorkNum(String workNum) {
         return plannerMapper.selectByWorkNum(workNum);
     }
+
+    @Override
+    public List<Planner> findPlannerByDepartment(List<Integer> departments) {
+        PlannerExample example = new PlannerExample();
+        PlannerExample.Criteria criteria = example.createCriteria();
+        criteria.andDepartmentIdIn(departments);
+        return plannerMapper.selectByExample(example);
+    }
 }

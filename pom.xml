@@ -42,6 +42,7 @@
         <commons-codec.version>1.10</commons-codec.version>
         <poi.version>3.11</poi.version>
         <emoji.version>3.0.0</emoji.version>
+        <httpclient.version>4.3.5</httpclient.version>
     </properties>
 
     <dependencies>
@@ -253,6 +254,13 @@
             <artifactId>emoji-java</artifactId>
             <version>${emoji.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${httpclient.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
