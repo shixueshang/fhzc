@@ -80,8 +80,8 @@ public interface PlannerService {
 
     /**
      * 查询某团队的理财师
-     * @param departments
+     * @param departmentId
      * @return
      */
-    List<Planner> findPlannerByDepartment(List<Integer> departments);
+    List<Planner> findPlannerByDepartment(Integer departmentId);
 }

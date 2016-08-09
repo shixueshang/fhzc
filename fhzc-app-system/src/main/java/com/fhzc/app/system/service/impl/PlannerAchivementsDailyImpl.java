@@ -3,6 +3,7 @@
  */
 package com.fhzc.app.system.service.impl;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -233,5 +234,12 @@ public class PlannerAchivementsDailyImpl implements PlannerAchivementsDailyServi
         List<PlannerAchivementsDaily> list = plannerAchivementsDailyMapper.selectByExampleWithRowbounds(example, rowBounds);
         return new PageableResult<PlannerAchivementsDaily>(page, size, list.size(), list);
 	}
+
+    @Override
+    public List<PlannerAchivementsDaily> findAchivementsDaily(List<Integer> planners) {
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("plannerIds", planners);
+        return plannerAchivementsDailyMapper.getAchivementsData(param);
+    }
 
 }

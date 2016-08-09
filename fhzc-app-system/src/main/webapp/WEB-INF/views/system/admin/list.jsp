@@ -114,7 +114,7 @@
                                         <td>${admin.mobile}</td>
                                         <td>
                                             <a href="<%=contextPath%>/system/admin/detail/${admin.id}" class="btn mini purple"><i class="icon-edit"></i> 编辑</a>
-                                            <a href="<%=contextPath%>/system/admin/delete/${admin.id}" class="btn mini purple"><i class="icon-edit"></i> 删除</a>
+                                            <a href="<%=contextPath%>/system/admin/delete/${admin.id}" class="btn mini purple"><i class="icon-trash"></i> 删除</a>
                                         </td>
                                     </tr>
                                 </c:forEach>

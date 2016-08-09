@@ -10,6 +10,19 @@ public class Const {
     public static final String CONFIG_KEY_SYSTEM_IMAGE_SAVE_PATH =  "system_image_save_path";
 
     /**
+     * 发短信的参数
+     */
+    public static class SMS_PARAM{
+
+        public static final String SMS_USERNAME = "lixs";
+
+        public static final String SMS_PASSWORD = "6572BDAFF799084B973320F43F09B363";
+
+        public static final String SMS_APPIKEY = "2eb2712e29a0838998705ddc3f66b973";
+    }
+
+
+    /**
      * 顶级机构id
      */
     public static final Integer ROOT_DEPT_ID = 1;

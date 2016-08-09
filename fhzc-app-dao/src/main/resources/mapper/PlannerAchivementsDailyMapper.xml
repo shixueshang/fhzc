@@ -80,7 +80,16 @@
     `id`, `transfer_date`, `area_id`, `planner_uid`, `product_id`, `annualised`, `contract_amount`, 
     `period`, `product_type`, `memo`, `ctime`
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.PlannerAchivementsDailyExample" >
+
+    <select id="getAchivementsData" resultMap="BaseResultMap" parameterType="Map">
+        SELECT transfer_date,planner_uid, sum(contract_amount) as contract_amount FROM bank.planner_achivements_daily where planner_uid in
+        <foreach item="item" index="index" collection="plannerIds" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        group by planner_uid;
+    </select>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.PlannerAchivementsDailyExample" >
     select
     <if test="distinct" >
       distinct

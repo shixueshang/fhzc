@@ -54,7 +54,9 @@ public class AssetsController extends BaseController {
             Customer customer = customerService.getCustomer(assetsHistory.getCustomerId());
             assetsHistory.setCustomerNum(customer.getCbId());
             Planner planner = plannerService.getPlanner(assetsHistory.getPlannerId());
-            assetsHistory.setPlanner(userService.getUser(planner.getUid()).getRealname());
+            if(planner != null){
+                assetsHistory.setPlanner(userService.getUser(planner.getUid()).getRealname());
+            }
             Product product = productService.getProduct(assetsHistory.getProductId());
             assetsHistory.setProductName(product.getName());
         }

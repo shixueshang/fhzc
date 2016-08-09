@@ -50,7 +50,7 @@
             </div>
 
             <div class="row-fluid">
-                <form  class="form-inline" action="<%=contextPath%>/personal/planner/achivement/find" method="GET">
+                <form  class="form-inline" id="achive_form">
                     <div class="form-group">
                         <label class="control-label" style="margin-left: 20px">区总</label>
                         <select class="form-control"  id="area"  name="area" style="width:180px;"></select>
@@ -66,7 +66,7 @@
                         <script>
                             $("#startDate").datepicker({ dateFormat: 'yy-mm',startView: 3, minView: 3, autoclose: true });
                         </script>
-                        <button type="submit">查询</button>
+                        <input type="button" id="button_search" onclick="formSubmit()" value="查询"/>
                     </div>
                 </form>
             </div>
@@ -74,7 +74,25 @@
             <!--页面操作详细内容 开始-->
             <div class="row-fluid">
                 <div class="portlet-body">
+                   <div class="span6" style="margin-top: 20px">
+                        <div id="contanis" style="height: 600px"></div>
+                   </div>
 
+                    <div  class="span4" style="margin-top: 100px">
+                        <table class="table table-bordered table-hover " id="dd-table">
+                            <thead>
+                                <tr>
+                                    <td>维度</td>
+                                    <td>月份</td>
+                                    <td>年化金额(万元)</td>
+                                    <td>占比</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             <!--页面操作详细内容 开始-->
@@ -85,6 +103,7 @@
 </div>
 
 <jsp:include page="../../include/footer.jsp"/>
+<script type="text/javascript" src="<%=contextPath%>/static/Echarts/echarts.js"></script>
 
 <script>
 
@@ -153,4 +172,67 @@ $(function(){
 
     });
 
+
+    function formSubmit(){
+        $.ajax({
+            type: "GET",
+            url: "<%=contextPath%>/personal/planner/achivement/find",
+            data : $('#achive_form').serialize(),
+            success : function(result){
+               var option = {
+                    title : {
+                        text: '理财师业绩',
+                        x:'center'
+                    },
+                    tooltip : {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    series : [
+                        {
+                            name: '业绩',
+                            type: 'pie',
+                            radius : '55%',
+                            center: ['50%', '60%'],
+                            data:result.data,
+                            itemStyle: {
+                                emphasis: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }
+                    ]
+                };
+
+                var dom = document.getElementById('contanis');
+                var mycharts = echarts.init(dom);
+                mycharts.setOption(option);
+
+
+                for(var i=0;i<result.data.length;i++){
+                    var name = result.data[i].name;
+                    var value = result.data[i].value;
+                    var percent = result.data[i].percent;
+                    var date = new Date(result.data[i].date);
+                    var ddd = "<tr> <td>"+name+"</td> <td>"+getFormatDate(date)+"</td> <td>"+value+"</td> <td>"+percent+"</td></tr>";
+                    $("#dd-table tbody").append(ddd);
+                }
+
+
+
+            }
+        })
+    }
+
+
+    function getFormatDate(date) {
+        var seperator1 = "-";
+        var month = date.getMonth() + 1;
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        return date.getFullYear() + seperator1 + month;
+    }
 </script>

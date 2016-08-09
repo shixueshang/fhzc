@@ -94,6 +94,15 @@ public class TextUtils {
         String preix = name.substring(0, name.lastIndexOf(".")) ;
         return preix + "_" + width + "x" + height + "." + suffix;
     }
+    public static String generateRandomString(int length){
 
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0 ;i<length;i++){
+            int currentLetter = (int) (Math.random() * 10);
+            System.out.println("currentLetter is = " + currentLetter);
+            sb.append(currentLetter);
+        }
+        return sb.toString();
+    }
 
 }

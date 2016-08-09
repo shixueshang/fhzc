@@ -394,4 +394,14 @@ public class TextUtils {
 			return false;
 		}
     }
+
+    public static String generateRandomString(int length){
+
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0 ;i<length;i++){
+            int currentLetter = (int) (Math.random() * 10);
+            sb.append(currentLetter);
+        }
+        return sb.toString();
+    }
 }

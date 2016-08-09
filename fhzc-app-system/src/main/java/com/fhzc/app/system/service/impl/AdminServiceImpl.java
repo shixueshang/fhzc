@@ -4,6 +4,7 @@ import com.fhzc.app.dao.mybatis.inter.AdminMapper;
 import com.fhzc.app.dao.mybatis.model.Admin;
 import com.fhzc.app.dao.mybatis.model.AdminExample;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
+import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.service.AdminService;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,8 @@ public class AdminServiceImpl implements AdminService{
     @Override
     public PageableResult<Admin> findPageAdmins(int page, int size) {
         AdminExample example = new AdminExample();
+        AdminExample.Criteria criteria = example.createCriteria();
+        criteria.andLoginNotEqualTo(Const.ADMIN_USER);
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<Admin> list = adminMapper.selectByExampleWithRowbounds(example, rowBounds);
         return new PageableResult<Admin>(page, size, adminMapper.countByExample(example), list);

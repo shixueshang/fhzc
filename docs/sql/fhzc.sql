@@ -152,7 +152,7 @@ CREATE TABLE IF NOT EXISTS `bank`.`assets_history` (
   `type` ENUM('dividend', 'purchase', 'renew', 'redemption') NOT NULL DEFAULT 'purchase',
   `amount` INT(11) NULL DEFAULT NULL COMMENT '金额',
   `ctime` DATETIME NOT NULL,
-  `dead_date` DATE NOT NULL COMMENT '截至日期',
+  `dead_date` DATE COMMENT '截至日期',
   `payment_date` DATE NULL DEFAULT NULL COMMENT '到账日期',
   `serial` VARCHAR(45) NOT NULL COMMENT '合同编号',
   `customer_name` VARCHAR(45) NULL DEFAULT NULL,
@@ -920,6 +920,16 @@ CREATE TABLE `bank`.`push_token` (
   ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8
   COMMENT = '消息推送';
+
+DROP TABLE IF EXISTS `bank`.`verify_code` ;
+CREATE TABLE IF NOT EXISTS `verify_code` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `mobile` varchar(30) DEFAULT '' COMMENT '手机号',
+  `code_value` varchar(6) DEFAULT '' COMMENT '验证码内容',
+  `send_date` datetime DEFAULT NULL COMMENT '发送时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8
+  COMMENT='短信验证码';
 
 
 

@@ -64,7 +64,7 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="portlet_tab1">
                                         <!-- BEGIN FORM-->
-                                        <form action="<%=contextPath%>/system/admin/add" id="form_sample_1" enctype="multipart/form-data" method="POST" class="form-horizontal">
+                                        <form action="<%=contextPath%>/system/admin/add" id="form_sample_1"  method="POST" class="form-horizontal">
                                             <div class="alert alert-error hide">
                                                 <button class="close" data-dismiss="alert"></button>
                                                 您的表单有未完成的必填项,请检查.
@@ -78,14 +78,14 @@
                                             <div class="control-group">
                                                 <label class="control-label">用户名<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <input type="text" name="login" value="${admin.login}" data-required="1" placeholder="请填写登录名" class="m-wrap large">
+                                                    <input type="text" name="login" id="login"  data-required="1" placeholder="请填写登录名" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
                                             <div class="control-group">
                                                 <label class="control-label">用户密码</label>
                                                 <div class="controls">
-                                                    <input type="password" name="password" value="${admin.password}" placeholder="请填写密码" class="large m-wrap" >
+                                                    <input type="password" name="password" id="password"  placeholder="请填写密码" class="large m-wrap" >
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -93,7 +93,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">用户真实姓名</label>
                                                 <div class="controls">
-                                                    <input type="text" name="realname" value="${admin.realname}" placeholder="请填写真实姓名" class="large m-wrap" >
+                                                    <input type="text" name="realname" id="realname" placeholder="请填写真实姓名" class="large m-wrap" >
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -126,7 +126,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">手机号</label>
                                                 <div class="controls">
-                                                    <input type="text" name="mobile" value="${admin.mobile}" placeholder="请填写手机号" class="large m-wrap" >
+                                                    <input type="text" name="mobile" id="mobile" placeholder="请填写手机号" class="large m-wrap" >
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -147,7 +147,7 @@
 
 
                                             <div class="form-actions">
-                                                <input name="id" type="hidden" value="${admin.id}" />
+                                                <input name="id" type="hidden" id="adminId"/>
                                                 <button type="submit" class="btn blue"><i class="icon-ok"></i> 保存</button>
                                             </div>
                                         </form>
@@ -172,12 +172,18 @@
 <script>
     $(function(){
 
-        var adminId =  '${admin.id}';
+        var adminId =  '${adminUser.id}';
+        console.info(adminId)
         if(adminId != null && adminId != ''){
             $('#admin_title').text('编辑管理员');
+            $('#adminId').val(adminId);
+            $('#login').val('${adminUser.login}');
+            $('#password').val('${adminUser.password}');
+            $('#realname').val('${adminUser.realname}');
+            $('#mobile').val('${adminUser.mobile}');
         }
 
-        var role = '${admin.role}';
+        var role = '${adminUser.role}';
         var roles = '${roles}';
         var rolesJson= $.parseJSON(roles);
         $.each(rolesJson, function(i,val){
@@ -187,7 +193,7 @@
             }
         });
 
-        var areasVal = '${admin.area}';
+        var areasVal = '${adminUser.area}';
         var areas = '${areas}';
         var areasJson= $.parseJSON(areas);
         $.each(areasJson, function(i,val){
@@ -197,7 +203,7 @@
             }
         });
 
-        var organVal = '${admin.organ}';
+        var organVal = '${adminUser.organ}';
         var departments = '${departments}';
         var deptsJson= $.parseJSON(departments);
         $.each(deptsJson, function(i,val){
@@ -207,19 +213,13 @@
             }
         });
 
-        var status = '${admin.status}';
+        var status = '${adminUser.status}';
         if(status == 1 || status == null || status == ""){
             $.uniform.update($("input[name='status'][value='1']").attr("checked", true));
             $.uniform.update($("input[name='status'][value='0']").attr("checked", false));
         }else{
             $.uniform.update($("input[name='status'][value='1']").attr("checked", false));
             $.uniform.update($("input[name='status'][value='0']").attr("checked", true));
-        }
-
-        var dispalyImg = $("#default_img");
-        var imgUrl = "<%=contextPath%>${activity.cover}";
-        if(imgUrl != ""){
-            dispalyImg.attr("src", imgUrl);
         }
 
         var form1 = $('#form_sample_1');

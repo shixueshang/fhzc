@@ -2,6 +2,7 @@ package com.fhzc.app.system.controller.personal;
 
 import com.alibaba.fastjson.JSON;
 import com.fhzc.app.dao.mybatis.model.Department;
+import com.fhzc.app.dao.mybatis.model.PlannerAchivementsDaily;
 import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
@@ -9,16 +10,12 @@ import com.fhzc.app.dao.mybatis.page.PageableResult;
 
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.dao.mybatis.util.EncryptUtils;
-import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.commons.util.DateUtil;
 import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.dao.mybatis.model.Planner;
-import com.fhzc.app.system.service.AreasService;
-import com.fhzc.app.system.service.DepartmentService;
-import com.fhzc.app.system.service.PlannerService;
+import com.fhzc.app.system.service.*;
 
-import com.fhzc.app.system.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.text.DecimalFormat;
 import java.util.*;
 
 /**
@@ -47,6 +45,9 @@ public class PlannerController extends BaseController {
 
     @Resource
     private AreasService areasService;
+
+    @Resource
+    private PlannerAchivementsDailyService plannerAchivementsDailyService;
 
     /**
      * 理财师列表
@@ -173,22 +174,39 @@ public class PlannerController extends BaseController {
     @RequestMapping(value = "/achivement/find", method = RequestMethod.GET)
     @ResponseBody
     public AjaxJson achivementData(Integer area, Integer subCompany, Integer team, String startDate){
+        List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
         //判断是否为当前月份 如果是则从日表取数据，否则从月表取
         String nowMonth = DateUtil.formatDate(new Date(), "yyyy-MM");
         if(nowMonth.equals(startDate)){
             //找到该团队下的所有理财师
-            List<Department> departments = departmentService.findChildren(team);
-            if(departments.size() > 0){
-                List<Integer> departmentIds = new ArrayList<Integer>();
-                for(Department department : departments){
-                    departmentIds.add(department.getDepartmentId());
+            if(team != 0){
+                List<Planner> planners = plannerService.findPlannerByDepartment(team);
+                List<Integer> plannerIds = new ArrayList<Integer>();
+                for(Planner planner : planners){
+                    plannerIds.add(planner.getId());
+                }
+                if(plannerIds.size() > 0){
+                    List<PlannerAchivementsDaily> achivementsDailies = plannerAchivementsDailyService.findAchivementsDaily(plannerIds);
+                    Integer totalAmount  = 0;
+                    for(PlannerAchivementsDaily achivementsDaily : achivementsDailies){
+                        Map<String, Object> map = new HashMap<String, Object>();
+                        totalAmount += achivementsDaily.getContractAmount();
+                        DecimalFormat format = new DecimalFormat("#0.00");
+                        String percent = format.format(achivementsDaily.getContractAmount().doubleValue() / totalAmount.doubleValue() * 100);
+                        map.put("value", achivementsDaily.getContractAmount() / 10000);
+                        map.put("percent", percent);
+                        map.put("date", achivementsDaily.getTransferDate());
+                        User user = userService.getUser(plannerService.getPlanner(achivementsDaily.getPlannerUid()).getUid());
+                        map.put("name", user.getRealname());
+                        result.add(map);
+                    }
                 }
 
-            List<Planner> planners = plannerService.findPlannerByDepartment(departmentIds);
             }
 
+
         }
-        return new AjaxJson(true);
+        return new AjaxJson(true, result);
     }
 
 }

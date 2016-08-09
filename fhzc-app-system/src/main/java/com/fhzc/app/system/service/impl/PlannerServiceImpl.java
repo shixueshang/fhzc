@@ -328,10 +328,10 @@ public class PlannerServiceImpl implements PlannerService {
     }
 
     @Override
-    public List<Planner> findPlannerByDepartment(List<Integer> departments) {
+    public List<Planner> findPlannerByDepartment(Integer departmentId) {
         PlannerExample example = new PlannerExample();
         PlannerExample.Criteria criteria = example.createCriteria();
-        criteria.andDepartmentIdIn(departments);
+        criteria.andDepartmentIdEqualTo(departmentId);
         return plannerMapper.selectByExample(example);
     }
 }

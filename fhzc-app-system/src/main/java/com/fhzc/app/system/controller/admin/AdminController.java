@@ -53,7 +53,7 @@ public class AdminController extends BaseController {
         return mav;
     }
 
-    @RequestMapping(value = "/pub")
+    @RequestMapping(value = "/pub", method = RequestMethod.GET)
     public ModelAndView pub(){
         ModelAndView mav = new ModelAndView("system/admin/add");
         mav.addObject("roles", JSON.toJSON(adminRoleService.getAllRoles()));
@@ -74,10 +74,11 @@ public class AdminController extends BaseController {
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
     public ModelAndView edit(@PathVariable(value = "id") Integer id){
         ModelAndView mav = new ModelAndView("system/admin/add");
-        mav.addObject("admin", adminService.findAdminById(id));
+        mav.addObject("adminUser", adminService.findAdminById(id));
         mav.addObject("roles", JSON.toJSON(adminRoleService.getAllRoles()));
         mav.addObject("departments", JSON.toJSON(departmentService.findDeptByParent(Const.ROOT_DEPT_ID)));
         mav.addObject("areas", JSON.toJSON(areasService.getAllAreas()));
+        mav.addObject("url", "system/admin");
         return mav;
     }
 
