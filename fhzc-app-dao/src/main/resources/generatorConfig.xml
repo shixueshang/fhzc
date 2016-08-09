@@ -46,11 +46,11 @@
 
         <!--生成对应表及类名 -->
 
-        <table tableName="planner_customer"
+        <table tableName="customer"
                delimitAllColumns="true"
                delimitIdentifiers="true"
-               domainObjectName="PlannerCustomer">
-            <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
+               domainObjectName="Customer">
+            <generatedKey column="customer_id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
         </table>
 
 

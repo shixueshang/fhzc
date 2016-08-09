@@ -179,7 +179,7 @@ public class UserController extends BaseController {
             }
 
             result.put("level", super.getLevelName(customerInfo.getLevelId()));
-            result.put("risk", customerInfo.getRisk());
+            result.put("risk", super.getRiskName(customerInfo.getRisk()));
             result.put("passportType", this.getPassportTypeName(customer.getPassportTypeId()));
             result.put("passportTypeId", customer.getPassportTypeId());
 

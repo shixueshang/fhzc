@@ -98,6 +98,20 @@ public class BaseController {
         return "";
     }
 
+	/**
+	 * 获得风险等级汉字
+	 * @param risk
+	 * @return
+     */
+    public String getRiskName(Integer risk){
+        List<Dictionary> dicts = dictionaryService.findDicByType(Const.DIC_CAT.RISK_LEVEL);
+        for (Dictionary dict : dicts) {
+            if (dict.getValue().equals(risk.toString())) {
+                return dict.getKey();
+            }
+        }
+        return "";
+    }
 
     /**
      * 获得用户证件类型明文
@@ -107,7 +121,7 @@ public class BaseController {
     public String getPassportTypeName(Integer passport_type_id){
         List<Dictionary> dicts = dictionaryService.findDicByType(Const.DIC_CAT.PASSPORT);
         for (Dictionary dict : dicts) {
-            if (dict.getValue().equals(passport_type_id)) {
+            if (dict.getValue().equals(passport_type_id.toString())) {
                 return dict.getKey();
             }
         }

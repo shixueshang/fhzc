@@ -6,7 +6,7 @@
     <result column="uid" property="uid" jdbcType="INTEGER" />
     <result column="cb_id" property="cbId" jdbcType="VARCHAR" />
     <result column="level_id" property="levelId" jdbcType="INTEGER" />
-    <result column="risk" property="risk" jdbcType="VARCHAR" />
+    <result column="risk" property="risk" jdbcType="INTEGER" />
     <result column="department_id" property="departmentId" jdbcType="INTEGER" />
     <result column="bank_info_id" property="bankInfoId" jdbcType="INTEGER" />
     <result column="organ_name" property="organName" jdbcType="VARCHAR" />
@@ -119,7 +119,7 @@
       `account_license`, `contact_relation`, `entrusted_letter`
       )
     values (#{uid,jdbcType=INTEGER}, #{cbId,jdbcType=VARCHAR}, #{levelId,jdbcType=INTEGER}, 
-      #{risk,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER}, #{bankInfoId,jdbcType=INTEGER}, 
+      #{risk,jdbcType=INTEGER}, #{departmentId,jdbcType=INTEGER}, #{bankInfoId,jdbcType=INTEGER}, 
       #{organName,jdbcType=VARCHAR}, #{customerType,jdbcType=CHAR}, #{businessLicense,jdbcType=VARCHAR}, 
       #{accountLicense,jdbcType=VARCHAR}, #{contactRelation,jdbcType=VARCHAR}, #{entrustedLetter,jdbcType=VARCHAR}
       )
@@ -178,7 +178,7 @@
         #{levelId,jdbcType=INTEGER},
       </if>
       <if test="risk != null" >
-        #{risk,jdbcType=VARCHAR},
+        #{risk,jdbcType=INTEGER},
       </if>
       <if test="departmentId != null" >
         #{departmentId,jdbcType=INTEGER},
@@ -228,7 +228,7 @@
         `level_id` = #{record.levelId,jdbcType=INTEGER},
       </if>
       <if test="record.risk != null" >
-        `risk` = #{record.risk,jdbcType=VARCHAR},
+        `risk` = #{record.risk,jdbcType=INTEGER},
       </if>
       <if test="record.departmentId != null" >
         `department_id` = #{record.departmentId,jdbcType=INTEGER},
@@ -265,7 +265,7 @@
       `uid` = #{record.uid,jdbcType=INTEGER},
       `cb_id` = #{record.cbId,jdbcType=VARCHAR},
       `level_id` = #{record.levelId,jdbcType=INTEGER},
-      `risk` = #{record.risk,jdbcType=VARCHAR},
+      `risk` = #{record.risk,jdbcType=INTEGER},
       `department_id` = #{record.departmentId,jdbcType=INTEGER},
       `bank_info_id` = #{record.bankInfoId,jdbcType=INTEGER},
       `organ_name` = #{record.organName,jdbcType=VARCHAR},
@@ -291,7 +291,7 @@
         `level_id` = #{levelId,jdbcType=INTEGER},
       </if>
       <if test="risk != null" >
-        `risk` = #{risk,jdbcType=VARCHAR},
+        `risk` = #{risk,jdbcType=INTEGER},
       </if>
       <if test="departmentId != null" >
         `department_id` = #{departmentId,jdbcType=INTEGER},
@@ -325,7 +325,7 @@
     set `uid` = #{uid,jdbcType=INTEGER},
       `cb_id` = #{cbId,jdbcType=VARCHAR},
       `level_id` = #{levelId,jdbcType=INTEGER},
-      `risk` = #{risk,jdbcType=VARCHAR},
+      `risk` = #{risk,jdbcType=INTEGER},
       `department_id` = #{departmentId,jdbcType=INTEGER},
       `bank_info_id` = #{bankInfoId,jdbcType=INTEGER},
       `organ_name` = #{organName,jdbcType=VARCHAR},

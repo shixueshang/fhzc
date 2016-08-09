@@ -22,3 +22,8 @@ CREATE TABLE `bank`.`push_token` (
   ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8
   COMMENT = '消息推送';
+
+ALTER TABLE `bank`.`dictionary`
+CHANGE COLUMN `id` `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ;
+ALTER TABLE `bank`.`customer`
+CHANGE COLUMN `risk` `risk` INT NULL DEFAULT 1 ;
