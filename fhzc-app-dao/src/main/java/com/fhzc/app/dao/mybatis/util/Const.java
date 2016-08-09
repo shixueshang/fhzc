@@ -243,4 +243,29 @@ public class Const {
          public static final String FEMALE_ZH= "女";
 
     }
+
+    /**
+     * 活动状态
+     */
+    public static class ACTIVITY_STATUS{
+
+        public static final Integer WILL= 0;    //待开始
+        public static final Integer GOING= 1;   //报名中
+        public static final Integer APP_OVER= 2;//报名结束
+        public static final Integer ACT_OVER= 3;//活动结束
+
+    }
+
+    public static class FOCUS_TYPE{
+        public static final String PRODUCT= "product";
+        public static final String ACTIVITY= "activity";
+        public static final String REPORT= "report";
+        public static final String RIGHTS= "rights";
+
+    }
+
+    public static class FOCUS_STATUS{
+        public static final Integer ON= 1;
+        public static final Integer OFF= 0;
+    }
 }

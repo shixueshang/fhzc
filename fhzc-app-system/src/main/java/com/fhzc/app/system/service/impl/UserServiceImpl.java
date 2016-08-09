@@ -1,5 +1,7 @@
 package com.fhzc.app.system.service.impl;
 
+import com.fhzc.app.dao.mybatis.model.Planner;
+import com.fhzc.app.dao.mybatis.model.PlannerExample;
 import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.model.UserExample;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
@@ -47,6 +49,14 @@ public class UserServiceImpl implements UserService {
         List<User> list = userMapper.selectByExampleWithRowbounds(example, rowBounds);
 
         return new PageableResult<User>(page, size, userMapper.countByExample(example), decryptUser(list));
+    }
+    
+    @Override
+    public PageableResult<User> findPageUsers(int page, int size) {
+    	UserExample example = new UserExample();
+        RowBounds rowBounds = new RowBounds((page - 1) * size, size);
+        List<User> list = userMapper.selectByExampleWithRowbounds(example, rowBounds);
+        return new PageableResult<User>(page, size, userMapper.countByExample(example), list);
     }
 
     @Override

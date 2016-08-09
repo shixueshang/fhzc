@@ -349,16 +349,24 @@ public class TextUtils {
      * @param phone
      * @return
      */
-    public static List<Object[]> validPhoneNum(int rowNum, int colNum, String phone){
+    public static List<Object[]> validPhoneNum(int rowNum, int colNum, String phone, boolean allowEmpty){
     	List<Object[]> checkResult = new LinkedList<Object[]>();
     	Pattern pattern = Pattern.compile("^1[34578]\\d{9}$");
 		Matcher matcher = pattern.matcher(phone);
-    	if((phone.length() != 11) ||(! matcher.matches())){
-    		String errorMessage = "手机号码:"+ phone +" 格式有误!";
-    		return setErrorMessage(rowNum,colNum,errorMessage);
-    	}else{
-    		return checkResult;	
+    	if(!allowEmpty){
+    		if(phone == null || phone.trim().equals("")){
+    			String errorMessage = "手机号码不能为空";
+    			return setErrorMessage(rowNum,colNum,errorMessage);
+    		}
     	}
+    	if((phone != null) && (!phone.trim().equals(""))){
+    		if((phone.trim().length() != 11) ||(! matcher.matches())){
+        		String errorMessage = "手机号码:"+ phone +" 格式有误!";
+        		return setErrorMessage(rowNum,colNum,errorMessage);
+        	}
+    	}
+    	return checkResult;	
+
     } 
     
     /**

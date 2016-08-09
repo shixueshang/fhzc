@@ -50,4 +50,6 @@ public interface UserService {
      * @return
      */
     User getUserByMobile(String mobileNum);
+
+	PageableResult<User> findPageUsers(int page, int size);
 }

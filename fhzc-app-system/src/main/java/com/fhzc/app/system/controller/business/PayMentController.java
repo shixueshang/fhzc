@@ -50,8 +50,9 @@ public class PayMentController extends BaseController {
         } catch (Exception e) {
             logger.error("导入失败" + e.getMessage() );
             result.put("success", false);
+            result.put("error_message", e.getMessage());
             mav.addAllObjects(result);
-            e.printStackTrace();
+            return mav;
         }
         return mav;
     }
@@ -80,11 +81,14 @@ public class PayMentController extends BaseController {
             result = payMentService.importExcelFileSpecial(multiFile);
             result.put("success", true);
             mav.addAllObjects(result);
+            return mav;
         } catch (Exception e) {
             logger.error("导入失败" + e.getMessage() );
             result.put("success", false);
+            result.put("error_message", e.getMessage());
             mav.addAllObjects(result);
+            return mav;
         }
-        return mav;
+ 
     }
 }

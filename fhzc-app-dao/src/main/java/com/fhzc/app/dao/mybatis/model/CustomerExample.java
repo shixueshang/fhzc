@@ -364,62 +364,52 @@ public class CustomerExample {
             return (Criteria) this;
         }
 
-        public Criteria andRiskEqualTo(String value) {
+        public Criteria andRiskEqualTo(Integer value) {
             addCriterion("`risk` =", value, "risk");
             return (Criteria) this;
         }
 
-        public Criteria andRiskNotEqualTo(String value) {
+        public Criteria andRiskNotEqualTo(Integer value) {
             addCriterion("`risk` <>", value, "risk");
             return (Criteria) this;
         }
 
-        public Criteria andRiskGreaterThan(String value) {
+        public Criteria andRiskGreaterThan(Integer value) {
             addCriterion("`risk` >", value, "risk");
             return (Criteria) this;
         }
 
-        public Criteria andRiskGreaterThanOrEqualTo(String value) {
+        public Criteria andRiskGreaterThanOrEqualTo(Integer value) {
             addCriterion("`risk` >=", value, "risk");
             return (Criteria) this;
         }
 
-        public Criteria andRiskLessThan(String value) {
+        public Criteria andRiskLessThan(Integer value) {
             addCriterion("`risk` <", value, "risk");
             return (Criteria) this;
         }
 
-        public Criteria andRiskLessThanOrEqualTo(String value) {
+        public Criteria andRiskLessThanOrEqualTo(Integer value) {
             addCriterion("`risk` <=", value, "risk");
             return (Criteria) this;
         }
 
-        public Criteria andRiskLike(String value) {
-            addCriterion("`risk` like", value, "risk");
-            return (Criteria) this;
-        }
-
-        public Criteria andRiskNotLike(String value) {
-            addCriterion("`risk` not like", value, "risk");
-            return (Criteria) this;
-        }
-
-        public Criteria andRiskIn(List<String> values) {
+        public Criteria andRiskIn(List<Integer> values) {
             addCriterion("`risk` in", values, "risk");
             return (Criteria) this;
         }
 
-        public Criteria andRiskNotIn(List<String> values) {
+        public Criteria andRiskNotIn(List<Integer> values) {
             addCriterion("`risk` not in", values, "risk");
             return (Criteria) this;
         }
 
-        public Criteria andRiskBetween(String value1, String value2) {
+        public Criteria andRiskBetween(Integer value1, Integer value2) {
             addCriterion("`risk` between", value1, value2, "risk");
             return (Criteria) this;
         }
 
-        public Criteria andRiskNotBetween(String value1, String value2) {
+        public Criteria andRiskNotBetween(Integer value1, Integer value2) {
             addCriterion("`risk` not between", value1, value2, "risk");
             return (Criteria) this;
         }
