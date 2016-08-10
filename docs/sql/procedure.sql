@@ -24,32 +24,28 @@ BEGIN
 	select dictionary.value into _passport_type_id from dictionary where cat='passport' and dictionary.key=p_passport_type;
 	select customer_Id into _customer_Id from customer,user where customer.uid =user.uid and user.passport_type_id=_passport_type_id and passport_code = p_passport_code;
 	
-	if p_addflag ='减' then
-		set p_consume_score = -1* p_consume_score;
-		set _status ='consume';
-	end if ;
+	select dictionary.value into _status from dictionary where cat='score_status' and dictionary.key=p_addflag;
+
+	select dictionary.value into _from_type from dictionary where cat='score_from_type' and dictionary.key=p_type;
 	
-	if p_type='活动积分' then
+	if _from_type='activity' then
 		select  id into _event_id from activity where name=p_from limit 1;
-		set _from_type = 'activity';
 	end if;
-	if p_type='产品积分' then
+	
+	if _from_type='product' then
 		select  pid into _event_id from product where name=p_from limit 1;
-		set _from_type = 'product';
 	end if;
-	if p_type='权益消费' then
+	
+	if _from_type='rights' then
 		select  id into _event_id from rights where name=p_from limit 1;
-		set _from_type = 'rights';
 	end if;  
-	if p_type='人工调整积分' then
+	
+	if  _from_type='other' then
 		set _event_id = -1;
-		set _from_type = 'other' ;
 	end if;
-	-- 其他的情况
-	if _event_id = -1 then 
-		set _from_type = 'other' ;
-	end if;
-	if p_addflag ='增' then
+	
+	
+	if _status ='add' then
 		insert into score_history(uid,score,event_id,status,operator_type,operator_id,detail,from_type,vaild_time,ctime,is_vaild,is_approve)
 		  values(_customer_Id,p_consume_score,_event_id,_status,'admin',p_operator_id, CONCAT('积分', p_addflag , '，类型：',p_type ,',名称：' , p_from)
 			,_from_type,p_vaild_time,p_operate_time,1,1);
