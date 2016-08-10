@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -45,10 +46,18 @@ public class RightsApiController extends BaseController{
      */
     @RequestMapping(value = "/api/rights",method = RequestMethod.GET)
     @ResponseBody
-    public ApiJsonResult rightsList(Integer cid){
+    public ApiJsonResult rightsList(Integer cid) throws Exception {
         List<Rights> rightsList =  rightsService.getListByCid(cid);
-
-        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,rightsList);
+        List<Object> result = new ArrayList<>();
+        if(rightsList != null){
+            for (Rights rights:rightsList){
+                String levelName = super.getLevelName(rights.getLevel());
+                Map map = ObjUtils.objectToMap(rights);
+                map.put("levelName", levelName);
+                result.add(map);
+            }
+        }
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
     }
 
     /**
@@ -77,13 +86,8 @@ public class RightsApiController extends BaseController{
         User user = super.getCurrentUser();
         Focus focus = focusService.getFocusByCond(user.getUid(),rightsId,APIConstants.FocusType.Rights);
         List<Dictionary> dictionaryList = dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL);
-        result.put("levelNeed","");
-        for (Dictionary di:dictionaryList){
-            if(rights.getLevel().toString().equals(di.getValue())){
-                result.put("levelNeed",di.getKey());
-                break;
-            }
-        }
+        result.put("levelNeed",super.getLevelName(rights.getLevel()));
+
         if(focus != null){
             result.put("focusStatus",focus.getStatus());
         }else{

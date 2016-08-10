@@ -36,6 +36,7 @@ public class RightsReservationServiceImpl implements RightsReservationService{
     public List<RightsReservation> getUserRightsList(Integer customer_id) {
         RightsReservationExample example = new  RightsReservationExample();
         RightsReservationExample.Criteria criteria = example.createCriteria();
+        example.setOrderByClause("ctime desc");
         criteria.andCustomerIdEqualTo(customer_id);
         return rightsReservationMapper.selectByExample(example);
     }

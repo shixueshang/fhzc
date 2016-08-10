@@ -51,19 +51,21 @@ public class UserController extends BaseController {
         if(user.getLoginRole().equals(Const.USER_ROLE.CUSTOMER)) {
             Customer customer = customerService.getCustomerByUid(user.getUid());
             user.setLevel(super.getLevelName(customer.getLevelId()));
+            result.put("cb_id", customer.getCbId());
 
             List<PlannerCustomer> plannerCustomers = plannerCustomerService.getCustomerPlannerList(user.getUid());
-            List<Map> planners = new ArrayList<>();
-            for (PlannerCustomer pl : plannerCustomers) {
-                Map planner = new HashMap();
-                User plannerUser = userService.getUser(pl.getPlannerId());
-                planner.put("plannerId", pl.getPlannerId());
-                planner.put("plannerName", plannerUser.getRealname());
-                planner.put("isMain", pl.getIsMain());
-                planners.add(planner);
+            if(plannerCustomers != null) {
+                List<Map> planners = new ArrayList<>();
+                for (PlannerCustomer pl : plannerCustomers) {
+                    Map planner = new HashMap();
+                    User plannerUser = userService.getUser(pl.getPlannerId());
+                    planner.put("plannerId", pl.getPlannerId());
+                    planner.put("plannerName", plannerUser.getRealname());
+                    planner.put("isMain", pl.getIsMain());
+                    planners.add(planner);
+                }
+                result.put("planners", planners);
             }
-            result.put("planners", planners);
-            result.put("cb_id", customer.getCbId());
         }
 
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
