@@ -87,13 +87,11 @@ public class ContractServiceImpl implements ContractService {
         	if(!TextUtils.validWorkbookTitle(xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString(), "发行产品统计表") ){
         		if(xwb.getSheetAt(sheetnum).getRow(0).getCell(0) != null){
         			return "报表第" + String.valueOf(sheetnum+1) +"个sheet,表头为："+ xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString() +" 不是正确的报表！";
-        		}
-        		else
+        		}else
         		{
         			return "报表第" + String.valueOf(sheetnum+1) +"个sheet, 不是正确的报表！";
         		}
-        	}
-        	else{
+        	}else{
         		return null;
         	}
         }
@@ -121,8 +119,7 @@ public class ContractServiceImpl implements ContractService {
 	        			enphone = TextUtils.IntToDouble(objects[6].toString());
 		        		//校验手机号
 		        		errordata  = TextUtils.validPhoneNum(i+4, 7, enphone,true);
-		        		if (errordata.size() >0)
-		    			{
+		        		if (errordata.size() >0){
 		    				return errordata;
 		    			}
 	        		}else{
@@ -131,8 +128,7 @@ public class ContractServiceImpl implements ContractService {
 	        			enpcode = EncryptUtils.encryptToDES(key, pcode);
 	        			phone = TextUtils.IntToDouble(objects[6].toString());
 	        			errordata  = TextUtils.validPhoneNum(i+4, 7, phone,true);
-		        		if (errordata.size() >0)
-		    			{
+		        		if (errordata.size() >0){
 		    				return errordata;
 		    			}
 		        		enphone = EncryptUtils.encryptToDES(key, phone);
@@ -141,8 +137,7 @@ public class ContractServiceImpl implements ContractService {
 	        		//检验产品列不为空,且购买产品存在
 	        		errordata  = TextUtils.checkEmptyString(i+4, 2, objects[1]);
 	    			boolean isExist = false;
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			}
 	    			isExist = false;
@@ -158,8 +153,7 @@ public class ContractServiceImpl implements ContractService {
 	    			}
 	        		//判断证件类型的写法与数据库保持一致
 		    		errordata  = TextUtils.checkEmptyString(i+4, 4, objects[3]);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			}
 	    			isExist = false;
@@ -175,8 +169,7 @@ public class ContractServiceImpl implements ContractService {
 	    			}
 	        		//检验理财师是否存在
 	    			errordata  = TextUtils.checkEmptyString(i+4, 16, objects[15]);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			}
 	    			isExist = false;
@@ -192,31 +185,26 @@ public class ContractServiceImpl implements ContractService {
 	    			}
 	        		//校验日期格式，到账日期不能为空
 		    		errordata  = TextUtils.checkDateString(i+4, 13, objects[12],false);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			} 
 	        		//校验金额格式，投资额,年化金额不能为空
 	    			errordata  = TextUtils.checkNumber(i+4, 9, objects[8],false);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			}
 	    			errordata  = TextUtils.checkNumber(i+4, 10, objects[9],false);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			} 
 	        		//投资期限必填
 	    			errordata  = TextUtils.checkNumber(i+4, 11, objects[10],false);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata; 
 	    			}
 	    			//校验分公司
 	    			errordata  = TextUtils.checkEmptyString(i+4, 14, objects[13]);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			}
 	    			isExist = false;

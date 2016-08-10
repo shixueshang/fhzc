@@ -48,27 +48,6 @@ public class PlannerAchivementsMonthlyController   extends BaseController  {
         return mav;
     }
     
-//    /**
-//     * excel导入
-//     * @param multiFile
-//     * @return
-//     */
-//    @RequestMapping(value = "/import", method = RequestMethod.POST)
-//    @ResponseBody
-//    public Map<String, Object> importExcel(MultipartFile multiFile){
-//        Map<String, Object> result = new HashMap<String, Object>();
-//        try {
-//            result = plannerAchivementsMonthlyService.importDailyExcelFile(multiFile);
-//            
-//            result.put("success", true);
-//        } catch (Exception e) {
-//            logger.error("导入失败");
-//            result.put("success", false);
-//            e.printStackTrace();
-//        }
-//        return result;
-//    }
-//    
     
     /**
      * excel导入
@@ -97,7 +76,6 @@ public class PlannerAchivementsMonthlyController   extends BaseController  {
             result.put("success", false);
             result.put("error_message", e.getMessage());
             mav.addAllObjects(result);
-           // e.printStackTrace();
             return mav;
         }
 

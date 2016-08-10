@@ -1,6 +1,5 @@
 package com.fhzc.app.system.service.impl;
 
-import com.fhzc.app.dao.mybatis.model.Planner;
 import com.fhzc.app.dao.mybatis.model.AssetsHistory;
 import com.fhzc.app.dao.mybatis.model.Dictionary;
 import com.fhzc.app.dao.mybatis.model.Product;
@@ -59,13 +58,10 @@ public class PayMentServiceImpl implements PayMentService {
     // 一般兑付表导入
     @Override
     public Map<String, Object> importExcelFile(MultipartFile multipartFile) throws Exception {
-    	
 		int sheetnum =0;
 		int rownum =2;
-		
 		PageableResult<Product> prs = productService.findPageProducts(0, 10000);
 		PageableResult<AssetsHistory> ahs =  assetsService.findPageAssets(0, 1000000);
-
 		
        Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
         @Override
@@ -73,16 +69,12 @@ public class PayMentServiceImpl implements PayMentService {
         	if(!TextUtils.validWorkbookTitle(xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString(), "投资兑付明细表") ){
         		if(xwb.getSheetAt(sheetnum).getRow(0).getCell(0) != null){
         			return "报表第" + String.valueOf(sheetnum+1) +"个sheet,表头为："+ xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString() +" 不是正确的报表！";
-        		}
-        		else
-        		{
+        		}else{
         			return "报表第" + String.valueOf(sheetnum+1) +"个sheet, 不是正确的报表！";
         		}
-        	}
-        	else{
+        	}else{
         		return null;
         	}
-            
         }
 
         @Override
@@ -106,8 +98,7 @@ public class PayMentServiceImpl implements PayMentService {
 	    			//检测产品
 	    			List<Object[]> errordata  = TextUtils.checkEmptyString(rownum+i+1, 3, objects[2]);
 	    			boolean isExist = false;
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			}
 	    			
@@ -127,8 +118,7 @@ public class PayMentServiceImpl implements PayMentService {
 
 	    			//检查合同编号是否为空
 	    			errordata  = TextUtils.checkEmptyString(rownum+i+1, 2, objects[1]);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			}
 	    			//检测合同编号是否存在
@@ -143,56 +133,45 @@ public class PayMentServiceImpl implements PayMentService {
 	    				errordata = TextUtils.setErrorMessage(rownum+i+1, 2, objects[1].toString()+",该合同编号不存在！");
 	    				return errordata;
 	    			}        		
-	        		
     			
-		    		
 	    			//检测到账日期
 	    			errordata  = TextUtils.checkDateString(rownum+i+1, 9, objects[8],false);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			} 	
 	    			//检测截止日期
 	    			errordata  = TextUtils.checkDateString(rownum+i+1, 10, objects[9],false);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			} 		    			
 	    			
 	    			//检查投资额 
 	    			errordata  = TextUtils.checkNumber(rownum+i+1, 8, objects[7],false);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			} 	
 	    			
 	    			//检查投期限 
 	    			errordata  = TextUtils.checkNumber(rownum+i+1, 11, objects[10],false);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			} 		    			
 
 	    			//检查分配收益 
 	    			errordata  = TextUtils.checkNumber(rownum+i+1, 13, objects[12],false);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			} 
 	    			
-
 	    			//检查开户银行不能为空
 	    			errordata  = TextUtils.checkEmptyString(rownum+i+1, 15, objects[14]);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			}
 	    			
-
 	    			//检查银行帐号不能为空
 	    			errordata  = TextUtils.checkEmptyString(rownum+i+1, 16, objects[15]);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			}
 	    			
@@ -242,20 +221,23 @@ public class PayMentServiceImpl implements PayMentService {
     //鑫丰母基金导入
     @Override
     public Map<String, Object> importExcelFileSpecial(MultipartFile multipartFile) throws Exception {
-    	
 		int sheetnum =0;
 		int rownum =2;
-		
 		List<Dictionary> pdics = dictionaryService.findDicByType("passport");
 		PageableResult<User> users = userService.findPageUsers(0,1000000);
-		
 		PageableResult<Product> prs = productService.findPageProducts(0, 10000);
-
-		
        Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
         @Override
         public String validation(Workbook xwb) {
-            return null;
+        	if(!TextUtils.validWorkbookTitle(xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString(), "鑫丰母") ){
+        		if(xwb.getSheetAt(sheetnum).getRow(0).getCell(0) != null){
+        			return "报表第" + String.valueOf(sheetnum+1) +"个sheet,表头为："+ xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString() +" 不是正确的报表！";
+        		}else{
+        			return "报表第" + String.valueOf(sheetnum+1) +"个sheet, 不是正确的报表！";
+        		}
+        	}else{
+        		return null;
+        	}
         }
 
         @Override 
@@ -268,18 +250,13 @@ public class PayMentServiceImpl implements PayMentService {
         	List<Object[]> spayMentList = new ArrayList<Object[]>();
         	if(data.get(0).length>0){
 	        	for (int i = 0, length = data.size(); i < length; i++) {
-	        		
 	    			Object[] objects = data.get(i);
-	    			
 	        		Object[] temData = new  Object[18];
-	        		
 	        		//错误检验处理
-	    			
 	    			//检测产品
 	    			List<Object[]> errordata  = TextUtils.checkEmptyString(rownum+i+1, 3, objects[2]);
 	    			boolean isExist = false;
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			}
 	    			
@@ -340,56 +317,45 @@ public class PayMentServiceImpl implements PayMentService {
 	    				errordata = TextUtils.setErrorMessage(rownum+i+1, 6, objects[5].toString()+ "，该客户证件号码不存在！");
 	    				return errordata;
 	    			}
-	        				    		
-
 		    		
 	    			//检测到账日期
 	    			errordata  = TextUtils.checkDateString(rownum+i+1, 1, objects[0],false);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			} 	
 	    			//检测截止日期
 	    			errordata  = TextUtils.checkDateString(rownum+i+1, 11, objects[10],false);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			} 		    			
 	    			
 	    			//检查投资额 
 	    			errordata  = TextUtils.checkNumber(rownum+i+1, 8, objects[7],false);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			} 	
 	    			
 	    			//检查投期限 
 	    			errordata  = TextUtils.checkNumber(rownum+i+1, 12, objects[11],false);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			} 		    			
 
 	    			//检查返款收益 
 	    			errordata  = TextUtils.checkNumber(rownum+i+1, 15, objects[14],false);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			} 
 	    			
-
 	    			//检查开户银行不能为空
 	    			errordata  = TextUtils.checkEmptyString(rownum+i+1, 17, objects[16]);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			}
-	    			
 
 	    			//检查银行帐号不能为空
 	    			errordata  = TextUtils.checkEmptyString(rownum+i+1, 18, objects[17]);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			}		    		
 	        		
