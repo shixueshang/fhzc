@@ -219,6 +219,7 @@
 
         var dispalyImg = $("#default_img");
         var imgUrl = "<%=basePath%>/${report.cover}";
+
         var defaultImg = "/static/image/no-image.png";
         if(imgUrl != defaultImg){
             dispalyImg.attr("src", imgUrl);
