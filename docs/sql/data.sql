@@ -133,6 +133,8 @@ INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,
 INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (70,'score_from_type','积分来源','活动','activity',0,0,0,NULL,NULL);
 INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (71,'score_from_type','积分来源','权益','rights',0,0,0,NULL,NULL);
 INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (72,'score_from_type','积分来源','其他','other',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (74,'risk_level','风险评级','成长型','4',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (75,'risk_level','风险评级','进取型','5',0,0,0,NULL,NULL);
 
 
 TRUNCATE TABLE `areas`;

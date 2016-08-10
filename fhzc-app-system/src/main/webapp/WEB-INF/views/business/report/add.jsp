@@ -5,6 +5,7 @@
 
 <%
     String contextPath = request.getContextPath();
+    String basePath  = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
 %>
 
 <jsp:include page="../../include/header.jsp"/>
@@ -189,7 +190,6 @@
 
         var reportType = '${report.cid}';
         var reportTypes = '${reportTypes}';
-        console.info(reportTypes);
         var pTypeJson= $.parseJSON(reportTypes);
         $.each(pTypeJson, function(i,val){
             $("#reportType").append("<option value='"+val.value+"'>"+val.key+"</option>");
@@ -218,7 +218,8 @@
         }
 
         var dispalyImg = $("#default_img");
-        var imgUrl = "<%=contextPath%>${report.cover}";
+        var imgUrl = "<%=basePath%>/${report.cover}";
+
         var defaultImg = "/static/image/no-image.png";
         if(imgUrl != defaultImg){
             dispalyImg.attr("src", imgUrl);
