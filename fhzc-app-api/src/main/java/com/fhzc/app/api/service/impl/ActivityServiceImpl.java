@@ -36,6 +36,7 @@ public class ActivityServiceImpl implements ActivityService {
     public List<Activity> getRecommendActivityList(){
         ActivityExample example = new ActivityExample();
         ActivityExample.Criteria criteria = example.createCriteria();
+        example.setOrderByClause("ctime desc");
         criteria.andIsDisplayEqualTo(Const.YES_OR_NO.YES);
         criteria.andIsRecommendEqualTo(Const.YES_OR_NO.YES);
         if (activityMapper.countByExample(example) > 0) {
