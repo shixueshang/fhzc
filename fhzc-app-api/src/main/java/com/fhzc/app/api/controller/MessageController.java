@@ -1,13 +1,11 @@
 package com.fhzc.app.api.controller;
 
-import com.fhzc.app.api.service.MessageService;
-import com.fhzc.app.api.service.UserService;
+import com.fhzc.app.api.service.*;
 import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
 import com.fhzc.app.api.tools.FileUtils;
 import com.fhzc.app.api.tools.TextUtils;
-import com.fhzc.app.dao.mybatis.model.ImMessage;
-import com.fhzc.app.dao.mybatis.model.User;
+import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.vdurmont.emoji.EmojiParser;
 import org.springframework.stereotype.Controller;
@@ -31,6 +29,18 @@ public class MessageController extends BaseController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private ProductService productService;
+
+    @Resource
+    private ActivityService activityService;
+
+    @Resource
+    private ReportService reportService;
+
+    @Resource
+    private RightsService rightsService;
 
     private static final String SHARE = "share_";
 
@@ -183,7 +193,26 @@ public class MessageController extends BaseController {
             ImMessage message = new ImMessage();
             message.setUserId(user.getUid());
             message.setToUserId(toUser);
-            String text = this.SHARE.concat(type).concat("_").concat(id.toString());
+            String title = "";
+            switch (type){
+                case Const.FOCUS_TYPE.PRODUCT:
+                    Product product = productService.getProduct(id);
+                    title = product.getName();
+                    break;
+                case Const.FOCUS_TYPE.ACTIVITY:
+                    Activity activity = activityService.getActivity(id);
+                    title = activity.getName();
+                    break;
+                case Const.FOCUS_TYPE.REPORT:
+                    Report report = reportService.getReport(id);
+                    title = report.getName();
+                    break;
+                case Const.FOCUS_TYPE.RIGHTS:
+                    Rights rights = rightsService.getRights(id);
+                    title = rights.getName();
+                    break;
+            }
+            String text = this.SHARE.concat(type).concat("_").concat(id.toString()).concat("_").concat(title);
             message.setContent(text);
             //查询对话历史,确定sessionId
             String sessionId = messageService.hasChatHistory(user.getUid(), toUser);
