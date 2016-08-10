@@ -27,3 +27,8 @@ ALTER TABLE `bank`.`dictionary`
 CHANGE COLUMN `id` `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ;
 ALTER TABLE `bank`.`customer`
 CHANGE COLUMN `risk` `risk` INT NULL DEFAULT 1 ;
+
+#2016-08-10
+ALTER TABLE `bank`.`activity`
+CHANGE COLUMN `sponsor` `sponsor` VARCHAR(500) NULL DEFAULT NULL COMMENT '活动主办方' ;
+

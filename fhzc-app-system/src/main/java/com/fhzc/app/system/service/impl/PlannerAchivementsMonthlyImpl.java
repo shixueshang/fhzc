@@ -246,7 +246,9 @@ public class PlannerAchivementsMonthlyImpl implements PlannerAchivementsMonthlyS
     @Override
     public List<PlannerAchivementsMonthly> findAchivementsMonthly(List<Integer> planners, String month) {
         Map<String, Object> param = new HashMap<String, Object>();
-        return null;
+        param.put("planners", planners);
+        param.put("month", month);
+        return plannerAchivementsMonthlyMapper.getAchivementsData(param);
     }
 
 

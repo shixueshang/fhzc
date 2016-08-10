@@ -281,6 +281,7 @@ public class ProductController extends BaseController {
     public ModelAndView reservationPub(@PathVariable(value = "pid") Integer pid){
         ModelAndView mav = new ModelAndView("business/product/addReservation");
         mav.addObject("product", productService.getProduct(pid));
+        mav.addObject("url", "business/product");
         return mav;
     }
 

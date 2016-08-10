@@ -79,6 +79,14 @@ public class DepartmentServiceImpl implements DepartmentService{
      */
     private List<Map<String, Object>> buildChildren(List<Department> list, Department parent){
         List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
+
+        if(parent.getParentDeptId() == null){
+            Map<String, Object> root = new ConcurrentHashMap<String, Object>();
+            root.put("id", parent.getDepartmentId());
+            root.put("name", parent.getTitle());
+            data.add(root);
+        }
+
         for(Department dept : list){
             Map<String, Object> resultMap = new ConcurrentHashMap<String, Object>();
             resultMap.put("id", dept.getDepartmentId());

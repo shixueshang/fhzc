@@ -211,3 +211,7 @@ INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf
 INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf`,`status`,`leader_uid`) VALUES (23,'杨辉直属团队',12,'2016-07-22 20:25:08',1,1,NULL);
 INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf`,`status`,`leader_uid`) VALUES (24,'高峰团队',12,'2016-07-22 20:25:08',1,1,NULL);
 INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf`,`status`,`leader_uid`) VALUES (26,'青岛团队ee',21,'2016-07-25 20:24:08',1,0,NULL);
+
+
+TRUNCATE TABLE `user`;
+INSERT INTO `bank`.`user` (`uid`, `login`, `password`, `realname`, `gender`, `avatar`) VALUES ('0', 'fhzs', '14adcfdae177218ed3b7f9806c85c1b4', '复华助手', 'male', '/opt/fhzc/api/image/default-head.jpg');

@@ -88,6 +88,16 @@
     `product_type`, `customer_uid`, `customer_name`, `customer_buy`, `annualised`, `product_cycle`, 
     `transfer_date`, `memo`, `ctime`, `area_id`
   </sql>
+
+    <select id="getAchivementsData" resultMap="BaseResultMap" parameterType="Map">
+        SELECT transfer_date,planner_uid, sum(annualised) as annualised FROM bank.planner_achivements_monthly where DATE_FORMAT(transfer_date,'%Y-%m') = #{month} and planner_uid in
+        <foreach item="item" index="index" collection="planners" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        group by planner_uid;
+
+    </select>
+
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.PlannerAchivementsMonthlyExample" >
     select
     <if test="distinct" >

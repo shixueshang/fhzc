@@ -258,6 +258,7 @@
     $(function(){
 
         var activityId =  '${activity.id}';
+
         if(activityId != null && activityId != ''){
             $('#activity_title').text('活动编辑');
         }
@@ -273,9 +274,11 @@
         });
 
         var dispalyImg = $("#default_img");
-        var imgUrl = "<%=basePath%>/${activity.cover}";
+        var imgUrl = "<%=basePath%>${activity.cover}";
         var defaultImg = "/static/image/no-image.png";
-        if(imgUrl != defaultImg){
+        if(activityId == ''){
+            dispalyImg.attr("src", defaultImg);
+        }else if(imgUrl != defaultImg){
             dispalyImg.attr("src", imgUrl);
         }
 

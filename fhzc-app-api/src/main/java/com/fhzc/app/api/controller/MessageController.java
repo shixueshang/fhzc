@@ -1,11 +1,13 @@
 package com.fhzc.app.api.controller;
 
+import com.fhzc.app.api.service.CustomerService;
 import com.fhzc.app.api.service.MessageService;
 import com.fhzc.app.api.service.UserService;
 import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
 import com.fhzc.app.api.tools.FileUtils;
 import com.fhzc.app.api.tools.TextUtils;
+import com.fhzc.app.dao.mybatis.model.Customer;
 import com.fhzc.app.dao.mybatis.model.ImMessage;
 import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.util.Const;
@@ -31,6 +33,9 @@ public class MessageController extends BaseController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private CustomerService customerService;
 
     private static final String SHARE = "share_";
 
@@ -130,6 +135,12 @@ public class MessageController extends BaseController {
                 Map<String, Object> userMap = new ConcurrentHashMap<String, Object>();
                 User user = userService.getUser(uid);
                 userMap.put("uid", uid);
+                userMap.put("gender", user.getGender());
+                userMap.put("role", user.getLoginRole());
+                if(user.getLoginRole() != null && user.getLoginRole().equals(APIConstants.USER_ROIE.CUSTOMER)){
+                    Customer customer = customerService.getCustomerByUid(user.getUid());
+                    userMap.put("level", user.getLevel() == null ? "" : getLevelName(customer.getLevelId()));
+                }
                 userMap.put("name", user.getRealname());
                 userMap.put("avatar", basePath + user.getAvatar());
                 groupInfo.add(userMap);
