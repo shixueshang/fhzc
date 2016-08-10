@@ -84,4 +84,11 @@ public interface PlannerService {
      * @return
      */
     List<Planner> findPlannerByDepartment(Integer departmentId);
+
+    /**
+     * 根据部门查询理财师
+     * @param depts
+     * @return
+     */
+    List<Integer> findPlannerByDepartment(List<Integer> depts);
 }

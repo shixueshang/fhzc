@@ -178,35 +178,59 @@ public class PlannerController extends BaseController {
         //判断是否为当前月份 如果是则从日表取数据，否则从月表取
         String nowMonth = DateUtil.formatDate(new Date(), "yyyy-MM");
         if(nowMonth.equals(startDate)){
-            //找到该团队下的所有理财师
-            if(team != 0){
-                List<Planner> planners = plannerService.findPlannerByDepartment(team);
-                List<Integer> plannerIds = new ArrayList<Integer>();
-                for(Planner planner : planners){
-                    plannerIds.add(planner.getId());
-                }
-                if(plannerIds.size() > 0){
-                    List<PlannerAchivementsDaily> achivementsDailies = plannerAchivementsDailyService.findAchivementsDaily(plannerIds);
-                    Integer totalAmount  = 0;
-                    for(PlannerAchivementsDaily achivementsDaily : achivementsDailies){
-                        Map<String, Object> map = new HashMap<String, Object>();
-                        totalAmount += achivementsDaily.getContractAmount();
-                        DecimalFormat format = new DecimalFormat("#0.00");
-                        String percent = format.format(achivementsDaily.getContractAmount().doubleValue() / totalAmount.doubleValue() * 100);
-                        map.put("value", achivementsDaily.getContractAmount() / 10000);
-                        map.put("percent", percent);
-                        map.put("date", achivementsDaily.getTransferDate());
-                        User user = userService.getUser(plannerService.getPlanner(achivementsDaily.getPlannerUid()).getUid());
-                        map.put("name", user.getRealname());
-                        result.add(map);
-                    }
-                }
-
-            }
-
+            result = this.findDailyAchivement(subCompany, team, result);
+        }else{
 
         }
         return new AjaxJson(true, result);
+    }
+
+    /**
+     * 理财师业绩日表数据,如果选择了团队则统计所有理财师数据，否则统计所有团队数据
+     * @param subCompany
+     * @param team
+     * @param result
+     * @return
+     */
+    private List<Map<String, Object>> findDailyAchivement(Integer subCompany, Integer team, List<Map<String, Object>> result){
+        //找到该团队下的所有理财师
+        if(team != 0){
+            List<Planner> planners = plannerService.findPlannerByDepartment(team);
+            List<Integer> plannerIds = new ArrayList<Integer>();
+            for(Planner planner : planners){
+                plannerIds.add(planner.getId());
+            }
+            if(plannerIds.size() > 0){
+                List<PlannerAchivementsDaily> achivementsDailies = plannerAchivementsDailyService.findAchivementsDaily(plannerIds);
+                Integer totalAmount  = 0;
+                for(PlannerAchivementsDaily achivementsDaily : achivementsDailies){
+                    Map<String, Object> map = new HashMap<String, Object>();
+                    totalAmount += achivementsDaily.getContractAmount();
+                    DecimalFormat format = new DecimalFormat("#0.00");
+                    String percent = format.format(achivementsDaily.getContractAmount().doubleValue() / totalAmount.doubleValue() * 100);
+                    map.put("value", achivementsDaily.getContractAmount() / 10000);
+                    map.put("percent", percent);
+                    map.put("date", achivementsDaily.getTransferDate());
+                    User user = userService.getUser(plannerService.getPlanner(achivementsDaily.getPlannerUid()).getUid());
+                    map.put("name", user.getRealname());
+                    result.add(map);
+                }
+            }
+        }else{
+            //找到该分公司下的所有理财师
+            List<Department> departments = departmentService.findChildren(subCompany);
+            List<Integer> deptIds = new ArrayList<Integer>();
+            for(Department department : departments){
+                deptIds.add(department.getDepartmentId());
+            }
+            if(deptIds.size() > 0){
+                List<Integer> planners = plannerService.findPlannerByDepartment(deptIds);
+
+            }
+
+        }
+
+        return result;
     }
 
 }

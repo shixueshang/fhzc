@@ -5,6 +5,7 @@
 
 <%
     String contextPath = request.getContextPath();
+    String basePath  = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
 %>
 
 <jsp:include page="../../include/header.jsp"/>
@@ -495,7 +496,7 @@ $(function(){
     });
 
     var dispalyImg = $("#default_img");
-    var imgUrl = "<%=contextPath%>${product.cover}";
+    var imgUrl = "<%=basePath%>/${product.cover}";
     var defaultImg = "/static/image/no-image.png";
     if(imgUrl != defaultImg){
         dispalyImg.attr("src", imgUrl);

@@ -7,6 +7,7 @@ import com.fhzc.app.dao.mybatis.model.PlannerAchivementsMonthly;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,5 +31,12 @@ public interface PlannerAchivementsMonthlyService {
      * @return
      */
     PageableResult<PlannerAchivementsMonthly> findPagePlannerAchivementsDaily(int page, int size);
+
+    /**
+     * @param planners
+     * @param month
+     * @return
+     */
+    List<PlannerAchivementsMonthly> findAchivementsMonthly(List<Integer> planners, String month);
 
 }

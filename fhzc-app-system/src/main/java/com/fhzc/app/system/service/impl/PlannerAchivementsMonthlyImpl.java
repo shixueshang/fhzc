@@ -1,5 +1,6 @@
 package com.fhzc.app.system.service.impl;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -241,6 +242,12 @@ public class PlannerAchivementsMonthlyImpl implements PlannerAchivementsMonthlyS
 		        List<PlannerAchivementsMonthly> list = plannerAchivementsMonthlyMapper.selectByExampleWithRowbounds(example, rowBounds);
 		        return new PageableResult<PlannerAchivementsMonthly>(page, size, list.size(), list);
 			}
+
+    @Override
+    public List<PlannerAchivementsMonthly> findAchivementsMonthly(List<Integer> planners, String month) {
+        Map<String, Object> param = new HashMap<String, Object>();
+        return null;
+    }
 
 
 }

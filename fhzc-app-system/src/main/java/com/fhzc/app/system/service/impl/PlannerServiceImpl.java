@@ -355,4 +355,17 @@ public class PlannerServiceImpl implements PlannerService {
         criteria.andDepartmentIdEqualTo(departmentId);
         return plannerMapper.selectByExample(example);
     }
+
+    @Override
+    public List<Integer> findPlannerByDepartment(List<Integer> depts) {
+        PlannerExample example = new PlannerExample();
+        PlannerExample.Criteria criteria = example.createCriteria();
+        criteria.andDepartmentIdIn(depts);
+        List<Planner> planners = plannerMapper.selectByExample(example);
+        List<Integer> plannerIds = new ArrayList<Integer>();
+        for(Planner planner : planners){
+            plannerIds.add(planner.getId());
+        }
+        return plannerIds;
+    }
 }
