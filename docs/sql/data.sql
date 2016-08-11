@@ -214,4 +214,4 @@ INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf
 
 
 TRUNCATE TABLE `user`;
-INSERT INTO `bank`.`user` (`uid`, `login`, `password`, `realname`, `gender`, `avatar`) VALUES ('0', 'fhzs', '14adcfdae177218ed3b7f9806c85c1b4', '复华助手', 'male', '/opt/fhzc/api/image/default-head.jpg');
+INSERT INTO `bank`.`user` (`uid`, `login`, `password`, `realname`, `gender`, `avatar`,login_role,ctime) VALUES ('0', 'fhzs', '14adcfdae177218ed3b7f9806c85c1b4', '复华助手', 'male', '/opt/fhzc/api/image/default-head.jpg','planner',NOW());
