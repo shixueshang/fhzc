@@ -64,4 +64,11 @@ public interface UserService {
      * @return
      */
     List<User> getUsersByName(String name);
+
+    /**
+     * 根据加密的证件号获取用户
+     * @param identity
+     * @return
+     */
+    User getUserByIdentity(String identity);
 }

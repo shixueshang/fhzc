@@ -32,3 +32,15 @@ CHANGE COLUMN `risk` `risk` INT NULL DEFAULT 1 ;
 ALTER TABLE `bank`.`activity`
 CHANGE COLUMN `sponsor` `sponsor` VARCHAR(500) NULL DEFAULT NULL COMMENT '活动主办方' ;
 
+#2016-08-11
+ALTER TABLE `bank`.`planner_achivements_daily`
+ADD COLUMN `company` INT(11) NULL COMMENT '理财师所属分公司' AFTER `ctime`,
+ADD COLUMN `team` INT(11) NULL COMMENT '理财师所属团队' AFTER `company`,
+ADD COLUMN `department_id` INT(11) NULL COMMENT '理财师所属部门' AFTER `team`;
+
+ALTER TABLE `bank`.`planner_achivements_monthly`
+ADD COLUMN `company` INT(11) NULL COMMENT '理财师所属分公司' AFTER `area_id`,
+ADD COLUMN `team` INT(11) NULL COMMENT '理财师所属团队' AFTER `company`,
+ADD COLUMN `department_id` INT(11) NULL COMMENT '理财师所属部门' AFTER `team`;
+
+

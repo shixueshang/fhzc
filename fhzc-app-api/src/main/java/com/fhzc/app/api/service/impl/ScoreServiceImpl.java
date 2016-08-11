@@ -29,7 +29,7 @@ public class ScoreServiceImpl implements ScoreService{
 
         criteria.andUidEqualTo(uid);
         criteria.andStatusEqualTo(type);
-        criteria.andIsVaildEqualTo(Const.Score.IS_VAILD);
+        criteria.andIsVaildEqualTo(Const.Data_Status.DATA_NORMAL);
         criteria.andIsApproveEqualTo(Const.Score.IS_APPROVE);
 
         return scoreHistoryMapper.selectByExample(example);
@@ -92,7 +92,7 @@ public class ScoreServiceImpl implements ScoreService{
 
         criteria.andUidEqualTo(uid);
         criteria.andStatusEqualTo(type);
-        criteria.andIsVaildEqualTo(Const.Score.IS_VAILD);
+        criteria.andIsVaildEqualTo(Const.Data_Status.DATA_NORMAL);
         criteria.andIsApproveEqualTo(Const.Score.IS_APPROVE);
         criteria.andCtimeBetween(start,end);
 
@@ -122,7 +122,7 @@ public class ScoreServiceImpl implements ScoreService{
         ScoreHistoryExample.Criteria criteria = example.createCriteria();
 
         criteria.andUidEqualTo(uid);
-        criteria.andIsVaildEqualTo(Const.Score.IS_VAILD);
+        criteria.andIsVaildEqualTo(Const.Data_Status.DATA_NORMAL);
         criteria.andIsApproveEqualTo(Const.Score.IS_APPROVE);
         criteria.andVaildTimeBetween(start,end);
 

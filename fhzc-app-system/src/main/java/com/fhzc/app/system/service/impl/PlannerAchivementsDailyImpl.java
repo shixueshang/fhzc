@@ -205,7 +205,7 @@ public class PlannerAchivementsDailyImpl implements PlannerAchivementsDailyServi
     public List<PlannerAchivementsDaily> findAchivementsDaily(List<Integer> planners) {
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("plannerIds", planners);
-        return plannerAchivementsDailyMapper.getAchivementsData(param);
+        return null; //plannerAchivementsDailyMapper.getAchivementsData(param);
     }
 
 }

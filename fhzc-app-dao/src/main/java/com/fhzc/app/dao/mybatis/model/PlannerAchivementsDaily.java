@@ -25,47 +25,13 @@ public class PlannerAchivementsDaily {
 
     private Date ctime;
 
+    private Integer company;
 
-    private String areaName;
-    private String productName;
-    private String plannerName;
-    private String workNum;
+    private Integer team;
 
+    private Integer departmentId;
 
-
-    public String getWorkNum() {
-		return workNum;
-	}
-
-	public void setWorkNum(String workNum) {
-		this.workNum = workNum;
-	}
-
-	public String getAreaName() {
-		return areaName;
-	}
-
-	public void setAreaName(String areaName) {
-		this.areaName = areaName;
-	}
-
-	public String getProductName() {
-		return productName;
-	}
-
-	public void setProductName(String productName) {
-		this.productName = productName;
-	}
-
-	public String getPlannerName() {
-		return plannerName;
-	}
-
-	public void setPlannerName(String plannerName) {
-		this.plannerName = plannerName;
-	}
-
-	public Integer getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -151,5 +117,29 @@ public class PlannerAchivementsDaily {
 
     public void setCtime(Date ctime) {
         this.ctime = ctime;
+    }
+
+    public Integer getCompany() {
+        return company;
+    }
+
+    public void setCompany(Integer company) {
+        this.company = company;
+    }
+
+    public Integer getTeam() {
+        return team;
+    }
+
+    public void setTeam(Integer team) {
+        this.team = team;
+    }
+
+    public Integer getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Integer departmentId) {
+        this.departmentId = departmentId;
     }
 }

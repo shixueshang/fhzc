@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
         criteria.andRealnameEqualTo(name);
 
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
-        List<User> list = userMapper.selectByExampleWithRowbounds(example, rowBounds);
+        List<User> list = decryptUser(userMapper.selectByExampleWithRowbounds(example, rowBounds));
 
         return new PageableResult<User>(page, size, userMapper.countByExample(example), decryptUser(list));
     }
@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAllUsers() {
     	UserExample example = new UserExample();
-        return userMapper.selectByExample(example);
+        return decryptUser(userMapper.selectByExample(example));
     }
 
     @Override
@@ -60,7 +60,18 @@ public class UserServiceImpl implements UserService {
         UserExample example = new UserExample();
         UserExample.Criteria criteria = example.createCriteria();
         criteria.andRealnameEqualTo(name);
-        return userMapper.selectByExample(example);
+        return decryptUser(userMapper.selectByExample(example));
+    }
+
+    @Override
+    public User getUserByIdentity(String identity) {
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        criteria.andPassportCodeEqualTo(identity);
+        if(userMapper.countByExample(example) > 0){
+            return decryptUser(userMapper.selectByExample(example).get(0));
+        }
+        return null;
     }
 
     @Override

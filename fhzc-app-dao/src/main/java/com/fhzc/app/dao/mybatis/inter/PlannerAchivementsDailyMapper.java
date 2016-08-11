@@ -3,8 +3,6 @@ package com.fhzc.app.dao.mybatis.inter;
 import com.fhzc.app.dao.mybatis.model.PlannerAchivementsDaily;
 import com.fhzc.app.dao.mybatis.model.PlannerAchivementsDailyExample;
 import java.util.List;
-import java.util.Map;
-
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
@@ -32,6 +30,4 @@ public interface PlannerAchivementsDailyMapper {
     int updateByPrimaryKeySelective(PlannerAchivementsDaily record);
 
     int updateByPrimaryKey(PlannerAchivementsDaily record);
-
-    List<PlannerAchivementsDaily> getAchivementsData(Map<String, Object> param);
 }
