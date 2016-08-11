@@ -9,6 +9,7 @@ import com.fhzc.app.dao.mybatis.model.ProductReservation;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -80,4 +81,10 @@ public interface ProductService {
      * @return
      */
     int addProductReservation(ProductReservation productReservation);
+
+    /**
+     * 获得所有产品
+     * @return
+     */
+    List<Product> findAllProduct();
 }

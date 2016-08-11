@@ -49,6 +49,20 @@
                 </div>
             </div>
 
+            <div class="row-fluid">
+                <form  class="form-inline" action="<%=contextPath%>/business/assets/find" method="GET">
+                    <div class="form-group">
+                        <label class="control-label" style="margin-left: 20px">产品名称</label>
+                        <input class="form-control" id="productName" placeholder="输入产品名称" name="productName" >
+
+                        <label class="control-label" style="margin-left: 20px">客户姓名</label>
+                        <input class="form-control" id="customerName" placeholder="输入客户姓名" name="customerName" >
+
+                        <button type="submit">查询</button>
+                    </div>
+                </form>
+            </div>
+
             <!--页面操作详细内容 开始-->
             <div class="row-fluid">
                 <div class="span12">

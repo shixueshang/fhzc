@@ -1,6 +1,7 @@
 package com.fhzc.app.system.controller.business;
 
 import com.fhzc.app.dao.mybatis.model.ScoreHistory;
+import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
@@ -8,6 +9,7 @@ import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.DictionaryService;
 import com.fhzc.app.system.service.ScoreHistoryService;
 import com.fhzc.app.system.service.ScoreService;
+import com.fhzc.app.system.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,6 +32,9 @@ public class ScoreHistoryController extends BaseController {
 
     @Resource
     private DictionaryService dictionaryService;
+
+    @Resource
+    private UserService userService;
 
     /**
      * 积分历史导入页面
@@ -97,16 +102,32 @@ public class ScoreHistoryController extends BaseController {
         return mav;
     }
 
+    @RequestMapping(value = "/list" ,method = RequestMethod.GET)
+    public ModelAndView list(){
+        ModelAndView mav = new ModelAndView("business/score/list");
+        mav.addObject("url", "business/score");
+        return mav;
+    }
+
     /**
      * 积分列表
+     * @param identity  身份证
+     * @param isApprove 审批状态
      * @return
      */
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ModelAndView listScore(){
+    @RequestMapping(value = "/find", method = RequestMethod.GET)
+    public ModelAndView findScore(String identity, Integer isApprove){
         ModelAndView mav = new ModelAndView("business/score/list");
-        PageableResult<ScoreHistory> pageableResult = scoreService.findPageScore(page, size);
+
+        User user = null;
+        if(identity != null){
+             user = userService.getUserByIdentity(identity);
+        }
+        PageableResult<ScoreHistory> pageableResult = scoreService.findPageScore(user == null ? null : user.getUid(), identity, isApprove, page, size);
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("scores", pageableResult.getItems());
+
+        mav.addObject("isApprove", isApprove);
         mav.addObject("scoreStatus", dictionaryService.findDicByType(Const.DIC_CAT.SCORE_STATUS));
         mav.addObject("fromTypes", dictionaryService.findDicByType(Const.DIC_CAT.SCORE_FROM_TYPE));
         mav.addObject("url", "business/score");

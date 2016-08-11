@@ -811,6 +811,186 @@ public class PlannerAchivementsDailyExample {
             addCriterion("`ctime` not between", value1, value2, "ctime");
             return (Criteria) this;
         }
+
+        public Criteria andCompanyIsNull() {
+            addCriterion("`company` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyIsNotNull() {
+            addCriterion("`company` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyEqualTo(Integer value) {
+            addCriterion("`company` =", value, "company");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyNotEqualTo(Integer value) {
+            addCriterion("`company` <>", value, "company");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyGreaterThan(Integer value) {
+            addCriterion("`company` >", value, "company");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyGreaterThanOrEqualTo(Integer value) {
+            addCriterion("`company` >=", value, "company");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyLessThan(Integer value) {
+            addCriterion("`company` <", value, "company");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyLessThanOrEqualTo(Integer value) {
+            addCriterion("`company` <=", value, "company");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyIn(List<Integer> values) {
+            addCriterion("`company` in", values, "company");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyNotIn(List<Integer> values) {
+            addCriterion("`company` not in", values, "company");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyBetween(Integer value1, Integer value2) {
+            addCriterion("`company` between", value1, value2, "company");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyNotBetween(Integer value1, Integer value2) {
+            addCriterion("`company` not between", value1, value2, "company");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIsNull() {
+            addCriterion("`team` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIsNotNull() {
+            addCriterion("`team` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamEqualTo(Integer value) {
+            addCriterion("`team` =", value, "team");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamNotEqualTo(Integer value) {
+            addCriterion("`team` <>", value, "team");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamGreaterThan(Integer value) {
+            addCriterion("`team` >", value, "team");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamGreaterThanOrEqualTo(Integer value) {
+            addCriterion("`team` >=", value, "team");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamLessThan(Integer value) {
+            addCriterion("`team` <", value, "team");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamLessThanOrEqualTo(Integer value) {
+            addCriterion("`team` <=", value, "team");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIn(List<Integer> values) {
+            addCriterion("`team` in", values, "team");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamNotIn(List<Integer> values) {
+            addCriterion("`team` not in", values, "team");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamBetween(Integer value1, Integer value2) {
+            addCriterion("`team` between", value1, value2, "team");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamNotBetween(Integer value1, Integer value2) {
+            addCriterion("`team` not between", value1, value2, "team");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentIdIsNull() {
+            addCriterion("`department_id` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentIdIsNotNull() {
+            addCriterion("`department_id` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentIdEqualTo(Integer value) {
+            addCriterion("`department_id` =", value, "departmentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentIdNotEqualTo(Integer value) {
+            addCriterion("`department_id` <>", value, "departmentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentIdGreaterThan(Integer value) {
+            addCriterion("`department_id` >", value, "departmentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("`department_id` >=", value, "departmentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentIdLessThan(Integer value) {
+            addCriterion("`department_id` <", value, "departmentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentIdLessThanOrEqualTo(Integer value) {
+            addCriterion("`department_id` <=", value, "departmentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentIdIn(List<Integer> values) {
+            addCriterion("`department_id` in", values, "departmentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentIdNotIn(List<Integer> values) {
+            addCriterion("`department_id` not in", values, "departmentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentIdBetween(Integer value1, Integer value2) {
+            addCriterion("`department_id` between", value1, value2, "departmentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("`department_id` not between", value1, value2, "departmentId");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

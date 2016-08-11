@@ -214,7 +214,7 @@ public class PlannerAchivementsMonthlyImpl implements PlannerAchivementsMonthlyS
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("planners", planners);
         param.put("month", month);
-        return plannerAchivementsMonthlyMapper.getAchivementsData(param);
+        return null; //plannerAchivementsMonthlyMapper.getAchivementsData(param);
     }
 
 

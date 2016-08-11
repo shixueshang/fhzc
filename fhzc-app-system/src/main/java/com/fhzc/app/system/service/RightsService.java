@@ -4,6 +4,8 @@ import com.fhzc.app.dao.mybatis.model.Rights;
 import com.fhzc.app.dao.mybatis.model.RightsReservation;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 
+import java.util.List;
+
 /**
  * Created by lihongde on 2016/7/19 19:50
  */
@@ -58,4 +60,10 @@ public interface RightsService {
      * @return
      */
     int updateReservation(RightsReservation reservation);
+
+    /**
+     * 获得所有权益
+     * @return
+     */
+    List<Rights> getAllRights();
 }

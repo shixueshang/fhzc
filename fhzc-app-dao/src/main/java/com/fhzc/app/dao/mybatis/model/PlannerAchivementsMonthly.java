@@ -35,65 +35,13 @@ public class PlannerAchivementsMonthly {
 
     private Integer areaId;
 
+    private Integer company;
 
-    private String areaName;
-    private String productName;
-    private String plannerName;
-    private String plannerWorkNum;
-    private String managerName;
-    private String managerWorkNum;
+    private Integer team;
 
+    private Integer departmentId;
 
-
-    public String getAreaName() {
-		return areaName;
-	}
-
-	public void setAreaName(String areaName) {
-		this.areaName = areaName;
-	}
-
-	public String getProductName() {
-		return productName;
-	}
-
-	public void setProductName(String productName) {
-		this.productName = productName;
-	}
-
-	public String getPlannerName() {
-		return plannerName;
-	}
-
-	public void setPlannerName(String plannerName) {
-		this.plannerName = plannerName;
-	}
-
-	public String getPlannerWorkNum() {
-		return plannerWorkNum;
-	}
-
-	public void setPlannerWorkNum(String plannerWorkNum) {
-		this.plannerWorkNum = plannerWorkNum;
-	}
-
-	public String getManagerName() {
-		return managerName;
-	}
-
-	public void setManagerName(String managerName) {
-		this.managerName = managerName;
-	}
-
-	public String getManagerWorkNum() {
-		return managerWorkNum;
-	}
-
-	public void setManagerWorkNum(String managerWorkNum) {
-		this.managerWorkNum = managerWorkNum;
-	}
-
-	public Integer getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -219,5 +167,29 @@ public class PlannerAchivementsMonthly {
 
     public void setAreaId(Integer areaId) {
         this.areaId = areaId;
+    }
+
+    public Integer getCompany() {
+        return company;
+    }
+
+    public void setCompany(Integer company) {
+        this.company = company;
+    }
+
+    public Integer getTeam() {
+        return team;
+    }
+
+    public void setTeam(Integer team) {
+        this.team = team;
+    }
+
+    public Integer getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Integer departmentId) {
+        this.departmentId = departmentId;
     }
 }

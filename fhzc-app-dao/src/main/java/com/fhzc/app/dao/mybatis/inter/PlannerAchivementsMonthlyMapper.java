@@ -3,8 +3,6 @@ package com.fhzc.app.dao.mybatis.inter;
 import com.fhzc.app.dao.mybatis.model.PlannerAchivementsMonthly;
 import com.fhzc.app.dao.mybatis.model.PlannerAchivementsMonthlyExample;
 import java.util.List;
-import java.util.Map;
-
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
@@ -32,6 +30,4 @@ public interface PlannerAchivementsMonthlyMapper {
     int updateByPrimaryKeySelective(PlannerAchivementsMonthly record);
 
     int updateByPrimaryKey(PlannerAchivementsMonthly record);
-
-    List<PlannerAchivementsMonthly> getAchivementsData(Map<String, Object> param);
 }

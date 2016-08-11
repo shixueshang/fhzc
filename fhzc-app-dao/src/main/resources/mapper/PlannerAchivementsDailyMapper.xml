@@ -13,10 +13,9 @@
     <result column="product_type" property="productType" jdbcType="VARCHAR" />
     <result column="memo" property="memo" jdbcType="VARCHAR" />
     <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
-    <result column="area_name" property="areaName" jdbcType="VARCHAR" />
-    <result column="product_name" property="productName" jdbcType="VARCHAR" />
-    <result column="planner_name" property="plannerName" jdbcType="VARCHAR" />
-    <result column="work_num" property="workNum" jdbcType="VARCHAR" />
+    <result column="company" property="company" jdbcType="INTEGER" />
+    <result column="team" property="team" jdbcType="INTEGER" />
+    <result column="department_id" property="departmentId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -78,18 +77,9 @@
   </sql>
   <sql id="Base_Column_List" >
     `id`, `transfer_date`, `area_id`, `planner_uid`, `product_id`, `annualised`, `contract_amount`, 
-    `period`, `product_type`, `memo`, `ctime`
+    `period`, `product_type`, `memo`, `ctime`, `company`, `team`, `department_id`
   </sql>
-
-    <select id="getAchivementsData" resultMap="BaseResultMap" parameterType="Map">
-        SELECT transfer_date,planner_uid, sum(contract_amount) as contract_amount FROM bank.planner_achivements_daily where planner_uid in
-        <foreach item="item" index="index" collection="plannerIds" open="(" separator="," close=")">
-            #{item}
-        </foreach>
-        group by planner_uid;
-    </select>
-
-    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.PlannerAchivementsDailyExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.PlannerAchivementsDailyExample" >
     select
     <if test="distinct" >
       distinct
@@ -126,11 +116,13 @@
     insert into `planner_achivements_daily` (`transfer_date`, `area_id`, `planner_uid`, 
       `product_id`, `annualised`, `contract_amount`, 
       `period`, `product_type`, `memo`, 
-      `ctime`)
+      `ctime`, `company`, `team`, 
+      `department_id`)
     values (#{transferDate,jdbcType=DATE}, #{areaId,jdbcType=INTEGER}, #{plannerUid,jdbcType=INTEGER}, 
       #{productId,jdbcType=INTEGER}, #{annualised,jdbcType=INTEGER}, #{contractAmount,jdbcType=INTEGER}, 
       #{period,jdbcType=INTEGER}, #{productType,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, 
-      #{ctime,jdbcType=TIMESTAMP})
+      #{ctime,jdbcType=TIMESTAMP}, #{company,jdbcType=INTEGER}, #{team,jdbcType=INTEGER}, 
+      #{departmentId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.PlannerAchivementsDaily" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
@@ -168,6 +160,15 @@
       <if test="ctime != null" >
         `ctime`,
       </if>
+      <if test="company != null" >
+        `company`,
+      </if>
+      <if test="team != null" >
+        `team`,
+      </if>
+      <if test="departmentId != null" >
+        `department_id`,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="transferDate != null" >
@@ -199,6 +200,15 @@
       </if>
       <if test="ctime != null" >
         #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="company != null" >
+        #{company,jdbcType=INTEGER},
+      </if>
+      <if test="team != null" >
+        #{team,jdbcType=INTEGER},
+      </if>
+      <if test="departmentId != null" >
+        #{departmentId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -244,6 +254,15 @@
       <if test="record.ctime != null" >
         `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.company != null" >
+        `company` = #{record.company,jdbcType=INTEGER},
+      </if>
+      <if test="record.team != null" >
+        `team` = #{record.team,jdbcType=INTEGER},
+      </if>
+      <if test="record.departmentId != null" >
+        `department_id` = #{record.departmentId,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -261,7 +280,10 @@
       `period` = #{record.period,jdbcType=INTEGER},
       `product_type` = #{record.productType,jdbcType=VARCHAR},
       `memo` = #{record.memo,jdbcType=VARCHAR},
-      `ctime` = #{record.ctime,jdbcType=TIMESTAMP}
+      `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
+      `company` = #{record.company,jdbcType=INTEGER},
+      `team` = #{record.team,jdbcType=INTEGER},
+      `department_id` = #{record.departmentId,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -299,6 +321,15 @@
       <if test="ctime != null" >
         `ctime` = #{ctime,jdbcType=TIMESTAMP},
       </if>
+      <if test="company != null" >
+        `company` = #{company,jdbcType=INTEGER},
+      </if>
+      <if test="team != null" >
+        `team` = #{team,jdbcType=INTEGER},
+      </if>
+      <if test="departmentId != null" >
+        `department_id` = #{departmentId,jdbcType=INTEGER},
+      </if>
     </set>
     where `id` = #{id,jdbcType=INTEGER}
   </update>
@@ -313,7 +344,10 @@
       `period` = #{period,jdbcType=INTEGER},
       `product_type` = #{productType,jdbcType=VARCHAR},
       `memo` = #{memo,jdbcType=VARCHAR},
-      `ctime` = #{ctime,jdbcType=TIMESTAMP}
+      `ctime` = #{ctime,jdbcType=TIMESTAMP},
+      `company` = #{company,jdbcType=INTEGER},
+      `team` = #{team,jdbcType=INTEGER},
+      `department_id` = #{departmentId,jdbcType=INTEGER}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
   <select resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.PlannerAchivementsDailyExample" id="selectByExampleWithRowbounds" >
@@ -321,13 +355,8 @@
     <if test="distinct" >
       distinct
     </if>
-    p.id, p.transfer_date, p.area_id, p.planner_uid, p.product_id, p.annualised, p.contract_amount, p.period, p.product_type, p.memo, p.ctime
-    ,areas.area_name, product.name product_name, user.realname planner_name, planner.work_num
-    from planner_achivements_daily p
-    left join areas on p.area_id=areas.area_id
-    left join product on p.product_id=product.pid
-    left join user on p.planner_uid = user.uid
-    left join planner on p.planner_uid = planner.uid
+    <include refid="Base_Column_List" />
+    from `planner_achivements_daily`
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>

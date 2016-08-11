@@ -29,7 +29,7 @@ public class ScoreServiceImpl implements ScoreService {
 
         criteria.andUidEqualTo(uid);
         criteria.andStatusEqualTo(type);
-        criteria.andIsVaildEqualTo(Const.Score.IS_VAILD);
+        criteria.andIsVaildEqualTo(Const.Data_Status.DATA_NORMAL);
         criteria.andIsApproveEqualTo(Const.Score.IS_APPROVE);
 
         return scoreHistoryMapper.selectByExample(example);
@@ -85,10 +85,16 @@ public class ScoreServiceImpl implements ScoreService {
     }
 
     @Override
-    public PageableResult<ScoreHistory> findPageScore(int page, int size) {
+    public PageableResult<ScoreHistory> findPageScore(Integer userId, String identity, Integer isApprove, int page, int size) {
         ScoreHistoryExample example = new ScoreHistoryExample();
         ScoreHistoryExample.Criteria criteria = example.createCriteria();
-        criteria.andIsApproveEqualTo(Const.APPROVE_STATUS.WATTING_APPROVE);
+        if(userId != null){
+            criteria.andUidEqualTo(userId);
+        }
+        if(identity != null && userId == null){
+            return new PageableResult<ScoreHistory>(page, size, 0, new ArrayList<ScoreHistory>());
+        }
+        criteria.andIsApproveEqualTo(isApprove);
         criteria.andIsVaildEqualTo(Const.Data_Status.DATA_NORMAL);
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<ScoreHistory> list = scoreHistoryMapper.selectByExampleWithRowbounds(example, rowBounds);

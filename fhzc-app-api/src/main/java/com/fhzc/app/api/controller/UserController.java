@@ -55,7 +55,7 @@ public class UserController extends BaseController {
 
             List<PlannerCustomer> plannerCustomers = plannerCustomerService.getCustomerPlannerList(user.getUid());
             if(plannerCustomers != null) {
-                List<Map> planners = new ArrayList<>();
+                List<Map<String, Object>> planners = new ArrayList<Map<String, Object>>();
                 for (PlannerCustomer pl : plannerCustomers) {
                     Map planner = new HashMap();
                     User plannerUser = userService.getUser(pl.getPlannerId());
@@ -79,22 +79,23 @@ public class UserController extends BaseController {
     @ResponseBody
     public ApiJsonResult getPlannerCustomers(){
         User user  = getCurrentUser();
-        List<PlannerCustomer> plannerCustomers = plannerCustomerService.getPlannerCustomerList(user.getUid());
+        Planner planner = plannerService.getPlannerByUid(user.getUid());
+        List<PlannerCustomer> plannerCustomers = plannerCustomerService.getPlannerCustomerList(planner.getId());
 
-        List<Map> result = new ArrayList<>();
+        List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
 
-        if(plannerCustomers != null) {
+        if(plannerCustomers.size() > 0) {
             for (PlannerCustomer pc : plannerCustomers) {
-                Map map = new HashMap();
-                User customer = userService.getUser(pc.getCustomerId());
+                Map<String, Object> map = new HashMap<String, Object>();
+                Customer customer = customerService.getCustomer(pc.getCustomerId());
+                User cUser = userService.getUser(customer.getUid());
                 Customer customerInfo = customerService.getCustomerByUid(pc.getCustomerId());
-                map.put("id", pc.getId());
                 map.put("uid", pc.getCustomerId());
-                map.put("avatar", customer.getAvatar());
-                map.put("realname", customer.getRealname());
-                map.put("mobile", customer.getMobile());
-                map.put("phone", customer.getPhone());
-                map.put("address", customer.getAddress());
+                map.put("avatar", cUser.getAvatar());
+                map.put("realname", cUser.getRealname());
+                map.put("mobile", cUser.getMobile());
+                map.put("phone", cUser.getPhone());
+                map.put("address", cUser.getAddress());
                 map.put("main", pc.getIsMain());
                 map.put("memo", pc.getMemo());
                 List<ScoreHistory> scoreHistoryList = scoreService.getAvailableList(pc.getCustomerId());
@@ -165,12 +166,12 @@ public class UserController extends BaseController {
      */
     @RequestMapping(value = "/api/customer/info", method = RequestMethod.GET)
     @ResponseBody
-    public ApiJsonResult getCustomerInfo(Integer customer_id) throws Exception {
+    public ApiJsonResult getCustomerInfo(Integer customerId) throws Exception {
         User user  = getCurrentUser();
         if(user.getLoginRole().equals(Const.USER_ROLE.PLANNER)) {
-            User customer = userService.getUser(customer_id);
-            Customer customerInfo = customerService.getCustomerByUid(customer_id);
-            Map result= new HashMap();
+            User customer = userService.getUser(customerId);
+            Customer customerInfo = customerService.getCustomerByUid(customerId);
+            Map<String, Object> result= new HashMap<String, Object>();
             result.put("name", customer.getRealname());
 
             if (customerInfo.getCustomerType() == Const.CUSTOMER_TYPE.ORGAN_CUSTOMER) {

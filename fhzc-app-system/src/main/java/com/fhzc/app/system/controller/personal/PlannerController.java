@@ -76,7 +76,7 @@ public class PlannerController extends BaseController {
         }
 
         mav.addObject("users", users);
-        mav.addObject("departments", departmentService.findDeptByParent(1));
+        mav.addObject("departments", departmentService.findDeptByParent(Const.ROOT_DEPT_ID));
         mav.addObject("areas", areasService.getAllAreas());
         mav.addObject("url", "personal/planner");
         return mav;
@@ -186,14 +186,13 @@ public class PlannerController extends BaseController {
     }
 
     /**
-     * 理财师业绩日表数据,如果选择了团队则统计所有理财师数据，否则统计所有团队数据
+     * 理财师业绩日表数据,如果只选择区总则按分公司统计，选择了分公司按团队统计，选择了团队按理财师统计
      * @param subCompany
      * @param team
      * @param result
      * @return
      */
     private List<Map<String, Object>> findDailyAchivement(Integer subCompany, Integer team, List<Map<String, Object>> result){
-        //找到该团队下的所有理财师
         Integer totalAmount = 0;
         if(team != 0){
             List<Planner> planners = plannerService.findPlannerByDepartment(team);

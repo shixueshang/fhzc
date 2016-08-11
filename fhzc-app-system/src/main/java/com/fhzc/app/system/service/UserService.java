@@ -6,6 +6,7 @@ import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -51,5 +52,23 @@ public interface UserService {
      */
     User getUserByMobile(String mobileNum);
 
-	PageableResult<User> findPageUsers(int page, int size);
+    /**
+     * 获得所有用户信息
+     * @return
+     */
+	List<User> findAllUsers();
+
+    /**
+     * 根据真实姓名获得用户
+     * @param name
+     * @return
+     */
+    List<User> getUsersByName(String name);
+
+    /**
+     * 根据加密的证件号获取用户
+     * @param identity
+     * @return
+     */
+    User getUserByIdentity(String identity);
 }

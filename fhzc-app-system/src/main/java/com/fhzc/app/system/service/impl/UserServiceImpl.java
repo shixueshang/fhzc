@@ -1,7 +1,5 @@
 package com.fhzc.app.system.service.impl;
 
-import com.fhzc.app.dao.mybatis.model.Planner;
-import com.fhzc.app.dao.mybatis.model.PlannerExample;
 import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.model.UserExample;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
@@ -46,17 +44,34 @@ public class UserServiceImpl implements UserService {
         criteria.andRealnameEqualTo(name);
 
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
-        List<User> list = userMapper.selectByExampleWithRowbounds(example, rowBounds);
+        List<User> list = decryptUser(userMapper.selectByExampleWithRowbounds(example, rowBounds));
 
         return new PageableResult<User>(page, size, userMapper.countByExample(example), decryptUser(list));
     }
     
     @Override
-    public PageableResult<User> findPageUsers(int page, int size) {
+    public List<User> findAllUsers() {
     	UserExample example = new UserExample();
-        RowBounds rowBounds = new RowBounds((page - 1) * size, size);
-        List<User> list = userMapper.selectByExampleWithRowbounds(example, rowBounds);
-        return new PageableResult<User>(page, size, userMapper.countByExample(example), list);
+        return decryptUser(userMapper.selectByExample(example));
+    }
+
+    @Override
+    public List<User> getUsersByName(String name) {
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        criteria.andRealnameEqualTo(name);
+        return decryptUser(userMapper.selectByExample(example));
+    }
+
+    @Override
+    public User getUserByIdentity(String identity) {
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        criteria.andPassportCodeEqualTo(identity);
+        if(userMapper.countByExample(example) > 0){
+            return decryptUser(userMapper.selectByExample(example).get(0));
+        }
+        return null;
     }
 
     @Override

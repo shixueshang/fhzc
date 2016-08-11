@@ -21,10 +21,23 @@ public class AssetsServiceImpl implements AssetsService {
     private AssetsHistoryMapper assetsHistoryMapper;
 
     @Override
-    public PageableResult<AssetsHistory> findPageAssets(int page, int size) {
+    public PageableResult<AssetsHistory> findPageAssets(Integer productId, List<Integer> customerIds, int page, int size) {
         AssetsHistoryExample example = new AssetsHistoryExample();
+        AssetsHistoryExample.Criteria criteria = example.createCriteria();
+        if(productId != null){
+            criteria.andProductIdEqualTo(productId);
+        }
+        if(customerIds.size() > 0){
+            criteria.andCustomerIdIn(customerIds);
+        }
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<AssetsHistory> list = assetsHistoryMapper.selectByExampleWithRowbounds(example, rowBounds);
         return new PageableResult<AssetsHistory>(page, size, assetsHistoryMapper.countByExample(example), list);
+    }
+
+    @Override
+    public List<AssetsHistory> findAllAssets() {
+        AssetsHistoryExample example = new AssetsHistoryExample();
+        return assetsHistoryMapper.selectByExample(example);
     }
 }
