@@ -163,7 +163,13 @@ public class TextUtils {
 	 * @return
 	 */
 	public static boolean valiDateTimeWithShortFormat(String timeStr) {
-		String format = "((19|20)[0-9]{2})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])";
+		String format ="";
+		if(timeStr.contains(":")){
+			format = "((19|20)[0-9]{2})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])(\\s+)(0\\d{1}|1\\d{1}|2[0-3]):([0-5]\\d{1}):([0-5]\\d{1})";
+		}else{
+			format = "((19|20)[0-9]{2})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])";
+		}		
+		
 		Pattern pattern = Pattern.compile(format);
 		Matcher matcher = pattern.matcher(timeStr);
 		if (matcher.matches()) {
@@ -256,7 +262,7 @@ public class TextUtils {
     	}
     	if(value != null && ! value.toString().trim().equals("")){
     		if(!valiDateTimeWithShortFormat(value.toString())){
-	    		String errorMessage = value + "不是合法的日期格式 年-月-日!";
+	    		String errorMessage = value + "不是合法的日期格式 !";
 	    		return setErrorMessage(rowNum,colNum,errorMessage);
     		}
  		
