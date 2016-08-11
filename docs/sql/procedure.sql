@@ -708,7 +708,7 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `sp_add_plannerachivementdaily`;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_add_plannerachivementdaily`(p_transfer_date varchar(45),p_area_name varchar(45),p_realname varchar(45),p_work_num varchar(45)
-, p_belong_manager varchar(45),p_product_name varchar(20),p_annualised int,p_contract_amount int, p_period int, p_product_type varchar(45), p_memo varchar(45)
+, p_belong_manager varchar(45),p_product_name varchar(45),p_annualised int,p_contract_amount int, p_period int, p_product_type varchar(45), p_memo varchar(45)
 )
 BEGIN
 	-- 理财师业绩日报
