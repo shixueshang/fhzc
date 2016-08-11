@@ -23,7 +23,6 @@ import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.commons.util.excel.ExcelImporter;
 import com.fhzc.app.system.commons.util.excel.ImportCallBack;
 import com.fhzc.app.system.commons.util.excel.ImportConfig;
-import com.fhzc.app.system.service.PlannerAchivementsDailyService;
 import com.fhzc.app.system.service.PlannerAchivementsMonthlyService;
 import com.fhzc.app.system.service.PlannerService;
 import com.fhzc.app.system.service.ProductService;
@@ -61,15 +60,10 @@ public class PlannerAchivementsMonthlyImpl implements PlannerAchivementsMonthlyS
 			 */
 			@Override
 			public Map<String, Object> importDailyExcelFile(MultipartFile multipartFile) throws Exception {
-				// TODO Auto-generated method stub
-				
 				int sheetnum =0;
 				int rownum =3;
-				
 				PageableResult<Product> prs = productService.findPageProducts(0, 10000);
 				PageableResult<Planner> planners =  plannerService.findPagePlanners(0, 10000);
-
-				
 				Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
 			        @Override
 			        public String validation(Workbook xwb) {
@@ -77,15 +71,13 @@ public class PlannerAchivementsMonthlyImpl implements PlannerAchivementsMonthlyS
 			        		if(xwb.getSheetAt(sheetnum).getRow(0).getCell(0) != null){
 			        			return "报表第" + String.valueOf(sheetnum+1) +"个sheet,表头为："+ xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString() +" 不是正确的报表！";
 			        		}
-			        		else
-			        		{
+			        		else{
 			        			return "报表第" + String.valueOf(sheetnum+1) +"个sheet, 不是正确的报表！";
 			        		}
 			        	}
 			        	else{
 			        		return null;
 			        	}
-			            
 			        }
 
 			        @Override
@@ -104,17 +96,13 @@ public class PlannerAchivementsMonthlyImpl implements PlannerAchivementsMonthlyS
 			    			if(tempData[2] != null && !tempData[2].toString().trim().equals("")){
 				    			Object[] newData = new Object[11];
 				    			//判断是否为空，如果为空则不处理
-				    			
 				    			//错误检验处理
-				    			
 				    			//检测产品
 				    			List<Object[]> errordata  = TextUtils.checkEmptyString(rownum+i+1, 13, tempData[12]);
 				    			boolean isExist = false;
-				    			if (errordata.size() >0)
-				    			{
+				    			if (errordata.size() >0){
 				    				return errordata;
 				    			}
-				    			
 				    			//检测是否存在
 				    			isExist = false;
 			    				for(Product product :prs.getItems()){
@@ -123,16 +111,13 @@ public class PlannerAchivementsMonthlyImpl implements PlannerAchivementsMonthlyS
 			    						break;
 			    					}
 			    				}
-			    				
 					    		if(!isExist){
 				    				errordata = TextUtils.setErrorMessage(rownum+i+1, 13, tempData[12].toString()+ "，该产品不存在！");
 				    				return errordata;
 				    			}
-
 				    			//检查理财师编号
 				    			errordata  = TextUtils.checkEmptyString(rownum+i+1, 3, tempData[2]);
-				    			if (errordata.size() >0)
-				    			{
+				    			if (errordata.size() >0){
 				    				return errordata;
 				    			}
 				    			//检测理财师编号是否存在
@@ -147,8 +132,6 @@ public class PlannerAchivementsMonthlyImpl implements PlannerAchivementsMonthlyS
 				    				errordata = TextUtils.setErrorMessage(rownum+i+1, 3, tempData[2].toString()+",该理财师编号不存在！");
 				    				return errordata;
 				    			}
-				    			
-			    			
 				    			//检测客户经理编号不为空的时候，是否存在
 					    		if(!tempData[6].toString().trim().equals("")){
 					    			isExist = false;
@@ -163,51 +146,35 @@ public class PlannerAchivementsMonthlyImpl implements PlannerAchivementsMonthlyS
 					    				return errordata;
 					    			}
 					    		}
-
-				    			
 				    			//检查认购金额
 				    			errordata  = TextUtils.checkNumber(rownum+i+1, 15, tempData[14],false);
-				    			if (errordata.size() >0)
-				    			{
+				    			if (errordata.size() >0){
 				    				return errordata;
 				    			} 	
-
-				    			
 				    			//检查期限
 				    			errordata  = TextUtils.checkNumber(rownum+i+1, 16, tempData[15],false);
-				    			if (errordata.size() >0)
-				    			{
+				    			if (errordata.size() >0){
 				    				return errordata;
 				    			} 
-				    			
 				    			//检测到账日期
 				    			errordata  = TextUtils.checkDateString(rownum+i+1, 17, tempData[16],false);
-				    			if (errordata.size() >0)
-				    			{
+				    			if (errordata.size() >0){
 				    				return errordata;
 				    			} 			
-				    			
-				    			
-				    			newData[0] = tempData[2].toString().trim();	//理财师工号
-				    			newData[1] = tempData[3];  //理财师分担比例
-				    			newData[2] = tempData[6].toString().trim();	//客户经理工号
-				    			newData[3] = tempData[7];  //客户经理分担比例1
-				    			newData[4] = tempData[12].toString().trim();	//产品名称
-				    			newData[5] = tempData[13].toString().trim();			// 购买人id
-				    			newData[6] = TextUtils.StringtoInteger(tempData[14].toString());	//购买金额
+				    			newData[0] = tempData[2].toString().trim();																				//理财师工号
+				    			newData[1] = tempData[3];  																								//理财师分担比例
+				    			newData[2] = tempData[6].toString().trim();																				//客户经理工号
+				    			newData[3] = tempData[7];  																								//客户经理分担比例1
+				    			newData[4] = tempData[12].toString().trim();																			//产品名称
+				    			newData[5] = tempData[13].toString().trim();																			// 购买人id
+				    			newData[6] = TextUtils.StringtoInteger(tempData[14].toString());														//购买金额
 				    			newData[7] = TextUtils.StringtoInteger(tempData[14].toString())* TextUtils.StringtoInteger(tempData[15].toString())/12;	//业绩
-				    			newData[8] = tempData[15];	//周期
-				    			newData[9] = tempData[16];	//到账日期
-				    			newData[10] = tempData[17].toString().trim();	//备注
-				    			
-				    			
-				    			
-
+				    			newData[8] = tempData[15];																								//周期
+				    			newData[9] = tempData[16];																								//到账日期
+				    			newData[10] = tempData[17].toString().trim();																			//备注
 				    			sqldata.add(newData);
 			    			}
-
 			        	}
-
 			            return sqldata;
 			        }
 
@@ -236,7 +203,6 @@ public class PlannerAchivementsMonthlyImpl implements PlannerAchivementsMonthlyS
 			 */
 			@Override
 			public PageableResult<PlannerAchivementsMonthly> findPagePlannerAchivementsDaily(int page, int size) {
-
 				PlannerAchivementsMonthlyExample example = new PlannerAchivementsMonthlyExample();
 		        RowBounds rowBounds = new RowBounds((page - 1) * size, size);
 		        List<PlannerAchivementsMonthly> list = plannerAchivementsMonthlyMapper.selectByExampleWithRowbounds(example, rowBounds);
@@ -246,7 +212,9 @@ public class PlannerAchivementsMonthlyImpl implements PlannerAchivementsMonthlyS
     @Override
     public List<PlannerAchivementsMonthly> findAchivementsMonthly(List<Integer> planners, String month) {
         Map<String, Object> param = new HashMap<String, Object>();
-        return null;
+        param.put("planners", planners);
+        param.put("month", month);
+        return null; //plannerAchivementsMonthlyMapper.getAchivementsData(param);
     }
 
 

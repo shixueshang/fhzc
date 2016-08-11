@@ -1,9 +1,7 @@
 package com.fhzc.app.system.controller.personal;
 
 import com.alibaba.fastjson.JSON;
-import com.fhzc.app.dao.mybatis.model.Department;
-import com.fhzc.app.dao.mybatis.model.PlannerAchivementsDaily;
-import com.fhzc.app.dao.mybatis.model.User;
+import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 
@@ -13,7 +11,6 @@ import com.fhzc.app.dao.mybatis.util.EncryptUtils;
 import com.fhzc.app.system.commons.util.DateUtil;
 import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
-import com.fhzc.app.dao.mybatis.model.Planner;
 import com.fhzc.app.system.service.*;
 
 import org.springframework.stereotype.Controller;
@@ -49,6 +46,9 @@ public class PlannerController extends BaseController {
     @Resource
     private PlannerAchivementsDailyService plannerAchivementsDailyService;
 
+    @Resource
+    private PlannerAchivementsMonthlyService plannerAchivementsMonthlyService;
+
     /**
      * 理财师列表
      * @return
@@ -76,7 +76,7 @@ public class PlannerController extends BaseController {
         }
 
         mav.addObject("users", users);
-        mav.addObject("departments", departmentService.findDeptByParent(1));
+        mav.addObject("departments", departmentService.findDeptByParent(Const.ROOT_DEPT_ID));
         mav.addObject("areas", areasService.getAllAreas());
         mav.addObject("url", "personal/planner");
         return mav;
@@ -180,20 +180,20 @@ public class PlannerController extends BaseController {
         if(nowMonth.equals(startDate)){
             result = this.findDailyAchivement(subCompany, team, result);
         }else{
-
+            result = this.findMonthlyAchivement(subCompany, team, startDate, result);
         }
         return new AjaxJson(true, result);
     }
 
     /**
-     * 理财师业绩日表数据,如果选择了团队则统计所有理财师数据，否则统计所有团队数据
+     * 理财师业绩日表数据,如果只选择区总则按分公司统计，选择了分公司按团队统计，选择了团队按理财师统计
      * @param subCompany
      * @param team
      * @param result
      * @return
      */
     private List<Map<String, Object>> findDailyAchivement(Integer subCompany, Integer team, List<Map<String, Object>> result){
-        //找到该团队下的所有理财师
+        Integer totalAmount = 0;
         if(team != 0){
             List<Planner> planners = plannerService.findPlannerByDepartment(team);
             List<Integer> plannerIds = new ArrayList<Integer>();
@@ -201,36 +201,98 @@ public class PlannerController extends BaseController {
                 plannerIds.add(planner.getId());
             }
             if(plannerIds.size() > 0){
-                List<PlannerAchivementsDaily> achivementsDailies = plannerAchivementsDailyService.findAchivementsDaily(plannerIds);
-                Integer totalAmount  = 0;
-                for(PlannerAchivementsDaily achivementsDaily : achivementsDailies){
-                    Map<String, Object> map = new HashMap<String, Object>();
-                    totalAmount += achivementsDaily.getContractAmount();
-                    DecimalFormat format = new DecimalFormat("#0.00");
-                    String percent = format.format(achivementsDaily.getContractAmount().doubleValue() / totalAmount.doubleValue() * 100);
-                    map.put("value", achivementsDaily.getContractAmount() / 10000);
-                    map.put("percent", percent);
-                    map.put("date", achivementsDaily.getTransferDate());
-                    User user = userService.getUser(plannerService.getPlanner(achivementsDaily.getPlannerUid()).getUid());
-                    map.put("name", user.getRealname());
-                    result.add(map);
-                }
+                result = this.buildDailyResult(totalAmount, plannerIds, result);
             }
         }else{
-            //找到该分公司下的所有理财师
             List<Department> departments = departmentService.findChildren(subCompany);
             List<Integer> deptIds = new ArrayList<Integer>();
             for(Department department : departments){
                 deptIds.add(department.getDepartmentId());
             }
-            if(deptIds.size() > 0){
-                List<Integer> planners = plannerService.findPlannerByDepartment(deptIds);
-
+            if(deptIds.size() > 0) {
+                List<Integer> plannerIds = plannerService.findPlannerByDepartment(deptIds);
+                result = this.buildDailyResult(totalAmount, plannerIds, result);
             }
-
         }
 
         return result;
     }
+
+    private List<Map<String, Object>> buildDailyResult(Integer totalAmount, List<Integer> plannerIds, List<Map<String, Object>> result){
+        List<PlannerAchivementsDaily> achivementsDailies = plannerAchivementsDailyService.findAchivementsDaily(plannerIds);
+
+        for(PlannerAchivementsDaily achivementsDaily : achivementsDailies){
+            totalAmount += achivementsDaily.getContractAmount();
+        }
+        for(PlannerAchivementsDaily achivementsDaily : achivementsDailies){
+            Map<String, Object> map = new HashMap<String, Object>();
+            DecimalFormat format = new DecimalFormat("#0.00");
+            String percent = format.format(achivementsDaily.getContractAmount().doubleValue() / totalAmount.doubleValue() * 100);
+            map.put("value", achivementsDaily.getContractAmount() / 10000);
+            map.put("percent", percent);
+            map.put("date", achivementsDaily.getTransferDate());
+            User user = userService.getUser(plannerService.getPlanner(achivementsDaily.getPlannerUid()).getUid());
+            map.put("name", user.getRealname());
+            result.add(map);
+        }
+
+        return result;
+    }
+
+    /**
+     * 理财师业绩月表
+     * @param subCompany
+     * @param team
+     * @param startDate
+     * @param result
+     * @return
+     */
+    private List<Map<String, Object>> findMonthlyAchivement(Integer subCompany, Integer team, String startDate, List<Map<String, Object>> result){
+        //找到该分公司下的所有理财师
+        Integer totalAmount = 0;
+        if(team != 0){
+            List<Planner> planners = plannerService.findPlannerByDepartment(team);
+            List<Integer> plannerIds = new ArrayList<Integer>();
+            for(Planner planner : planners){
+                plannerIds.add(planner.getId());
+            }
+            if(plannerIds.size() > 0){
+                result = this.buildMonthlyResult(totalAmount, plannerIds, startDate, result);
+            }
+        }else{
+            List<Department> departments = departmentService.findChildren(subCompany);
+            List<Integer> deptIds = new ArrayList<Integer>();
+            for(Department department : departments){
+                deptIds.add(department.getDepartmentId());
+            }
+            if(deptIds.size() > 0) {
+                List<Integer> plannerIds = plannerService.findPlannerByDepartment(deptIds);
+                result = this.buildMonthlyResult(totalAmount, plannerIds, startDate, result);
+            }
+        }
+
+        return result;
+    }
+
+    private List<Map<String, Object>> buildMonthlyResult(Integer totalAmount, List<Integer> plannerIds, String startDate, List<Map<String, Object>> result){
+        List<PlannerAchivementsMonthly> achivementsMonthlies = plannerAchivementsMonthlyService.findAchivementsMonthly(plannerIds, startDate);
+        for(PlannerAchivementsMonthly achivementsMonthly : achivementsMonthlies){
+            totalAmount += achivementsMonthly.getAnnualised();
+        }
+        for(PlannerAchivementsMonthly achivementsMonthly : achivementsMonthlies){
+            Map<String, Object> map = new HashMap<String, Object>();
+            DecimalFormat format = new DecimalFormat("#0.00");
+            String percent = format.format(achivementsMonthly.getAnnualised().doubleValue() / totalAmount.doubleValue() * 100);
+            map.put("value", achivementsMonthly.getAnnualised() / 10000);
+            map.put("percent", percent);
+            map.put("date", achivementsMonthly.getTransferDate());
+            User user = userService.getUser(plannerService.getPlanner(achivementsMonthly.getPlannerUid()).getUid());
+            map.put("name", user.getRealname());
+            result.add(map);
+        }
+
+        return result;
+    }
+
 
 }

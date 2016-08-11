@@ -67,13 +67,10 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
         	if(!TextUtils.validWorkbookTitle(xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString(), "个人") ){
         		if(xwb.getSheetAt(sheetnum).getRow(0).getCell(0) != null){
         			return "报表第" + String.valueOf(sheetnum+1) +"个sheet,表头为："+ xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString() +" 不是正确的报表！";
-        		}
-        		else
-        		{
+        		}else{
         			return "报表第" + String.valueOf(sheetnum+1) +"个sheet, 不是正确的报表！";
         		}
-        	}
-        	else{
+        	}else{
         		return null;
         	}
         }
@@ -134,14 +131,12 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
 	    			}
     				//校验手机号
 	        		errordata  = TextUtils.validPhoneNum(i+3, 12, phone,false);
-	        		if (errordata.size() >0)
-	    			{
+	        		if (errordata.size() >0){
 	    				return errordata;
 	    			}
 	        		//检验产品列不为空,且购买产品存在
 	        		errordata  = TextUtils.checkEmptyString(i+3, 20, objects[19]);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			}
 	    			isExist = false;
@@ -157,8 +152,7 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
 	    			}
 	        		//投资额、年化额
 		    		errordata  = TextUtils.checkNumber(i+3, 21, objects[20],false);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			}
 	    			errordata  = TextUtils.checkNumber(i+3, 22, objects[21],false);
@@ -168,8 +162,7 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
 	    			} 
 	        		//资金到账日/产品成立日/产品到期日
 	    			errordata  = TextUtils.checkDateString(i+3, 23, objects[22],false);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			} 
 	    			errordata  = TextUtils.checkDateString(i+3, 24, objects[23],false);
@@ -178,31 +171,26 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
 	    				return errordata;
 	    			} 
 	    			errordata  = TextUtils.checkDateString(i+3, 25, objects[24],false);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			} 
 	        		//银行、账号必填
 	    			errordata  = TextUtils.checkEmptyString(i+3, 26, objects[25]);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata; 
 	    			}
 	    			errordata  = TextUtils.checkEmptyString(i+3, 27, objects[26]);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata; 
 	    			}
 	        		//投资期限
 	    			errordata  = TextUtils.checkNumber(i+3, 29, objects[28],false);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata; 
 	    			}
 	        		//分支机构
 	    			errordata  = TextUtils.checkEmptyString(i+3, 31, objects[30]);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			}
 	    			isExist = false;
@@ -218,8 +206,7 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
 	    			}
 	        		//理财师工号
 		    		errordata  = TextUtils.checkEmptyString(i+3, 33, objects[32]);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			}
 	    			isExist = false;
@@ -235,8 +222,7 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
 	    			}
 	        		//合同编号
 		    		errordata  = TextUtils.checkEmptyString(i+3, 34, objects[33]);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			}
 	        		//会员级别
@@ -343,13 +329,10 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
 		        	if(!TextUtils.validWorkbookTitle(xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString(), "机构") ){
 		        		if(xwb.getSheetAt(sheetnum).getRow(0).getCell(0) != null){
 		        			return "报表第" + String.valueOf(sheetnum+1) +"个sheet,表头为："+ xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString() +" 不是正确的报表！";
-		        		}
-		        		else
-		        		{
+		        		}else{
 		        			return "报表第" + String.valueOf(sheetnum+1) +"个sheet, 不是正确的报表！";
 		        		}
-		        	}
-		        	else{
+		        	}else{
 		        		return null;
 		        	}
 		        }
@@ -397,14 +380,12 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
 			    			}
 			        		//手机号码
 			        		errordata  = TextUtils.validPhoneNum(i+3, 10, phone,false);
-			        		if (errordata.size() >0)
-			    			{
+			        		if (errordata.size() >0){
 			    				return errordata;
 			    			}
 			        		//产品
 			        		errordata  = TextUtils.checkEmptyString(i+3, 17, objects[16]);
-			    			if (errordata.size() >0)
-			    			{
+			    			if (errordata.size() >0){
 			    				return errordata;
 			    			}
 			    			isExist = false;
@@ -420,47 +401,39 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
 			    			}
 			        		//投资额
 				    		errordata  = TextUtils.checkNumber(i+3, 18, objects[17],false);
-			    			if (errordata.size() >0)
-			    			{
+			    			if (errordata.size() >0){
 			    				return errordata;
 			    			}
 			        		//资金到账日/产品成立日/产品到期日
 			    			errordata  = TextUtils.checkDateString(i+3, 29, objects[18],false);
-			    			if (errordata.size() >0)
-			    			{
+			    			if (errordata.size() >0){
 			    				return errordata;
 			    			} 
 			    			errordata  = TextUtils.checkDateString(i+3, 20, objects[19],false);
-			    			if (errordata.size() >0)
-			    			{
+			    			if (errordata.size() >0){
 			    				return errordata;
 			    			} 
 			    			errordata  = TextUtils.checkDateString(i+3, 21, objects[20],false);
-			    			if (errordata.size() >0)
-			    			{
+			    			if (errordata.size() >0){
 			    				return errordata;
 			    			} 
 			        		//银行、账号必填
 			    			errordata  = TextUtils.checkEmptyString(i+3, 22, objects[21]);
-			    			if (errordata.size() >0)
-			    			{
+			    			if (errordata.size() >0){
 			    				return errordata; 
 			    			}
 			    			errordata  = TextUtils.checkEmptyString(i+3, 23, objects[22]);
-			    			if (errordata.size() >0)
-			    			{
+			    			if (errordata.size() >0){
 			    				return errordata; 
 			    			}
 			        		//投资期限
 			    			errordata  = TextUtils.checkNumber(i+3, 25, objects[24],false);
-			    			if (errordata.size() >0)
-			    			{
+			    			if (errordata.size() >0){
 			    				return errordata; 
 			    			}
 			        		//分支机构
 			    			errordata  = TextUtils.checkEmptyString(i+3, 27, objects[26]);
-			    			if (errordata.size() >0)
-			    			{
+			    			if (errordata.size() >0){
 			    				return errordata;
 			    			}
 			    			isExist = false;
@@ -476,8 +449,7 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
 			    			}
 			        		//理财师工号
 				    		errordata  = TextUtils.checkEmptyString(i+3, 29, objects[28]);
-			    			if (errordata.size() >0)
-			    			{
+			    			if (errordata.size() >0){
 			    				return errordata;
 			    			}
 			    			isExist = false;
@@ -493,8 +465,7 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
 			    			}
 			        		//合同编号
 				    		errordata  = TextUtils.checkEmptyString(i+3, 30, objects[29]);
-			    			if (errordata.size() >0)
-			    			{
+			    			if (errordata.size() >0){
 			    				return errordata;
 			    			}
 			        		//会员级别

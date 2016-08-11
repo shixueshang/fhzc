@@ -19,10 +19,15 @@ public class PlannerServiceImpl implements PlannerService{
     PlannerMapper plannerMapper;
 
     @Override
-    public Planner getPlanner(Integer planner_id) {
+    public Planner getPlanner(Integer plannerId) {
+        return plannerMapper.selectByPrimaryKey(plannerId);
+    }
+
+    @Override
+    public Planner getPlannerByUid(Integer userId) {
         PlannerExample example = new PlannerExample();
         PlannerExample.Criteria criteria = example.createCriteria();
-        criteria.andUidEqualTo(planner_id);
+        criteria.andUidEqualTo(userId);
         if (plannerMapper.countByExample(example) > 0) {
             return plannerMapper.selectByExample(example).get(0);
         }

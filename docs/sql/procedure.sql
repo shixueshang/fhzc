@@ -437,7 +437,7 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `sp_insert_planner`;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_insert_planner`(p_login varchar(45), p_passwd varchar(45), p_work_num varchar(45), p_realname varchar(45)
-,p_passport_code varchar(45), p_mobile varchar(45), p_company varchar(45), p_area varchar(45), p_dept1_name varchar(45), p_dept1_leader varchar(45)
+,p_passport_code varchar(200), p_mobile varchar(200), p_company varchar(45), p_area varchar(45), p_dept1_name varchar(45), p_dept1_leader varchar(45)
 ,p_dept2_name varchar(45), p_dept2_leader varchar(45), p_dept3_name varchar(45), p_dept3_leader varchar(45)
 ,p_dept4_name varchar(45),p_dept4_leader varchar(45),p_job_title_cn varchar(45),p_position varchar(45)
 )
@@ -570,8 +570,16 @@ DROP PROCEDURE IF EXISTS `sp_removeoffer_planner`;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_removeoffer_planner`(p_work_num varchar(45))
 BEGIN
-
+	declare _planner_id int;
+	set _planner_id =-1;
+	
+	select id into _planner_id from planner where work_num = P_work_num;
+	
+	-- 更新理财师为离职状态
 	update planner set status='off' where work_num = P_work_num;
+	
+	-- 进行理财师对应客户缺位管理
+	update planner_customer set is_main=0 where planner_id=_planner_id;
 END
 ;;
 DELIMITER ;
@@ -582,7 +590,7 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `sp_update_department_leader`;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_update_department_leader`(p_login varchar(45), p_passwd varchar(45), p_work_num varchar(45), p_realname varchar(45)
-,p_passport_code varchar(45), p_mobile varchar(45), p_company varchar(45), p_area varchar(45), p_dept1_name varchar(45), p_dept1_leader varchar(45)
+,p_passport_code varchar(200), p_mobile varchar(200), p_company varchar(45), p_area varchar(45), p_dept1_name varchar(45), p_dept1_leader varchar(45)
 ,p_dept2_name varchar(45), p_dept2_leader varchar(45), p_dept3_name varchar(45), p_dept3_leader varchar(45)
 ,p_dept4_name varchar(45),p_dept4_leader varchar(45),p_job_title_cn varchar(45),p_position varchar(45)
 )
@@ -708,7 +716,7 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `sp_add_plannerachivementdaily`;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_add_plannerachivementdaily`(p_transfer_date varchar(45),p_area_name varchar(45),p_realname varchar(45),p_work_num varchar(45)
-, p_belong_manager varchar(45),p_product_name varchar(20),p_annualised int,p_contract_amount int, p_period int, p_product_type varchar(45), p_memo varchar(45)
+, p_belong_manager varchar(45),p_product_name varchar(45),p_annualised int,p_contract_amount int, p_period int, p_product_type varchar(45), p_memo varchar(45)
 )
 BEGIN
 	-- 理财师业绩日报

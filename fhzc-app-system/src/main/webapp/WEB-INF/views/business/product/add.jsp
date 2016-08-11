@@ -443,7 +443,6 @@ $(function(){
         }
     });
 
-
     var productStatusVal = '${product.status}';
     var productStatus = '${productStatus}';
     var statusJson= $.parseJSON(productStatus);
@@ -496,9 +495,11 @@ $(function(){
     });
 
     var dispalyImg = $("#default_img");
-    var imgUrl = "<%=basePath%>/${product.cover}";
+    var imgUrl = "<%=basePath%>${product.cover}";
     var defaultImg = "/static/image/no-image.png";
-    if(imgUrl != defaultImg){
+    if(productId == ''){
+        dispalyImg.attr("src", defaultImg);
+    }else if(imgUrl != defaultImg){
         dispalyImg.attr("src", imgUrl);
     }
 

@@ -230,7 +230,9 @@
         var dispalyImg = $("#default_img");
         var imgUrl = "<%=basePath%>/${right.cover}";
         var defaultImg = "/static/image/no-image.png";
-        if(imgUrl != defaultImg){
+        if(rightId == ''){
+            dispalyImg.attr("src", defaultImg);
+        }else if(imgUrl != defaultImg){
             dispalyImg.attr("src", imgUrl);
         }
 

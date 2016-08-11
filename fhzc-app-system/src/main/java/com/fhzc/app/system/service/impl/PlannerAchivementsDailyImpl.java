@@ -24,7 +24,6 @@ import com.fhzc.app.system.service.PlannerAchivementsDailyService;
 import com.fhzc.app.system.service.PlannerService;
 import com.fhzc.app.system.service.ProductService;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -58,10 +57,8 @@ public class PlannerAchivementsDailyImpl implements PlannerAchivementsDailyServi
 	 */
 	@Override
 	public Map<String, Object> importDailyExcelFile(MultipartFile multipartFile) throws Exception {
-		// TODO Auto-generated method stub
 		int sheetnum =1;
 		int rownum =2;
-		
 		PageableResult<Product> prs = productService.findPageProducts(0, 10000);
 		PageableResult<Planner> planners =  plannerService.findPagePlanners(0, 10000);
 		
@@ -90,27 +87,19 @@ public class PlannerAchivementsDailyImpl implements PlannerAchivementsDailyServi
 
 	        @Override
 	        public List<Object[]> getImportData(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data) {
-
 	        	List<Object[]> sqldata  = new LinkedList<Object[]>();
-	        	
-	
 	        	for (int i = 0, length = data.size(); i < length; i++) {
-	        		
 	    			Object[] tempData = data.get(i);
 	    			//判断是否为空，如果为空则不处理
 	    			if(tempData[0] != null && !tempData[0].toString().trim().equals("")){
 		    			Object[] newData = new Object[11];
-		    			
 		    			//错误检验处理
-		    			
 		    			//检测产品
 		    			List<Object[]> errordata  = TextUtils.checkEmptyString(rownum+i+1, 6, tempData[5]);
 		    			boolean isExist = false;
-		    			if (errordata.size() >0)
-		    			{
+		    			if (errordata.size() >0){
 		    				return errordata;
 		    			}
-		    			
 		    			//检测是否存在
 		    			isExist = false;
 	    				for(Product product :prs.getItems()){
@@ -119,16 +108,13 @@ public class PlannerAchivementsDailyImpl implements PlannerAchivementsDailyServi
 	    						break;
 	    					}
 	    				}
-	    				
 			    		if(!isExist){
 		    				errordata = TextUtils.setErrorMessage(rownum+i+1, 6, tempData[5].toString() +",该产品不存在！");
 		    				return errordata;
 		    			}
-
 		    			//检查理财师编号
 		    			errordata  = TextUtils.checkEmptyString(rownum+i+1, 4, tempData[3]);
-		    			if (errordata.size() >0)
-		    			{
+		    			if (errordata.size() >0){
 		    				return errordata;
 		    			}
 		    			//检测理财师编号是否存在
@@ -143,64 +129,45 @@ public class PlannerAchivementsDailyImpl implements PlannerAchivementsDailyServi
 		    				errordata = TextUtils.setErrorMessage(rownum+i+1, 4, tempData[3].toString()+ ", 该理财师编号不存在！");
 		    				return errordata;
 		    			}
-		    			
 		    			//检测日期
 		    			errordata  = TextUtils.checkDateString(rownum+i+1, 1, tempData[0],false);
-		    			if (errordata.size() >0)
-		    			{
+		    			if (errordata.size() >0){
 		    				return errordata;
 		    			} 			
-		    			
 		    			//检查年化业绩
 		    			errordata  = TextUtils.checkNumber(rownum+i+1, 7, tempData[6],false);
-		    			if (errordata.size() >0)
-		    			{
+		    			if (errordata.size() >0){
 		    				return errordata;
 		    			} 	
-		    			
 		    			//检查合同金额
 		    			errordata  = TextUtils.checkNumber(rownum+i+1, 8, tempData[7],true);
-		    			if (errordata.size() >0)
-		    			{
+		    			if (errordata.size() >0){
 		    				return errordata;
 		    			} 	
-
 		    			
 		    			//检查期限
 		    			errordata  = TextUtils.checkNumber(rownum+i+1, 9, tempData[8],true);
-		    			if (errordata.size() >0)
-		    			{
+		    			if (errordata.size() >0){
 		    				return errordata;
 		    			} 
-		    			
-		    			newData[0] = tempData[0];		//业绩日期
-		    			newData[1] = tempData[1].toString().trim();		//地区
-		    			newData[2] = tempData[2].toString().trim();		//理财师姓名
-		    			newData[3] = tempData[3].toString().trim();		//理财师工号
-		    			newData[4] = tempData[4].toString().trim();		//所属市场总监
-		    			newData[5] = tempData[5].toString().trim();		//产品名称
+		    			newData[0] = tempData[0];								//业绩日期
+		    			newData[1] = tempData[1].toString().trim();				//地区
+		    			newData[2] = tempData[2].toString().trim();				//理财师姓名
+		    			newData[3] = tempData[3].toString().trim();				//理财师工号
+		    			newData[4] = tempData[4].toString().trim();				//所属市场总监
+		    			newData[5] = tempData[5].toString().trim();				//产品名称
 		    			String strtmp = tempData[6].toString();
 		    			newData[6] = TextUtils.Stringto10kInteger(strtmp);		//年化业绩
-		    			
 		    			strtmp = tempData[7].toString();
 		    			newData[7] = TextUtils.Stringto10kInteger(strtmp);		//合同金额
-		    			
-		    			//期限
 		    			strtmp = tempData[8].toString();
-		    			newData[8] = TextUtils.StringtoInteger(strtmp);		//合同金额	
-
-		    			newData[9] = tempData[9].toString().trim();		//产品类型
-		    			newData[10] = tempData[10].toString().trim();		//备注
-		    			
-		    			
+		    			newData[8] = TextUtils.StringtoInteger(strtmp);			//合同金额	
+		    			newData[9] = tempData[9].toString().trim();				//产品类型
+		    			newData[10] = tempData[10].toString().trim();			//备注
 		    			sqldata.add(newData);
 	    			}
-
 	        	}
-	        	
 	       		return sqldata;
-
-	            
 	        }
 
 	        @Override
@@ -228,7 +195,6 @@ public class PlannerAchivementsDailyImpl implements PlannerAchivementsDailyServi
 	 */
 	@Override
 	public PageableResult<PlannerAchivementsDaily> findPagePlannerAchivementsDaily(int page, int size) {
-		// TODO Auto-generated method stub
 		PlannerAchivementsDailyExample example = new PlannerAchivementsDailyExample();
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<PlannerAchivementsDaily> list = plannerAchivementsDailyMapper.selectByExampleWithRowbounds(example, rowBounds);
@@ -239,7 +205,7 @@ public class PlannerAchivementsDailyImpl implements PlannerAchivementsDailyServi
     public List<PlannerAchivementsDaily> findAchivementsDaily(List<Integer> planners) {
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("plannerIds", planners);
-        return plannerAchivementsDailyMapper.getAchivementsData(param);
+        return null; //plannerAchivementsDailyMapper.getAchivementsData(param);
     }
 
 }

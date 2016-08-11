@@ -155,13 +155,10 @@ public class PlannerServiceImpl implements PlannerService {
         	if(!TextUtils.validWorkbookTitle(xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString(), "在职") ){
         		if(xwb.getSheetAt(sheetnum).getRow(0).getCell(0) != null){
         			return "报表第" + String.valueOf(sheetnum+1) +"个sheet,表头为："+ xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString() +" 不是正确的报表！";
-        		}
-        		else
-        		{
+        		}else{
         			return "报表第" + String.valueOf(sheetnum+1) +"个sheet, 不是正确的报表！";
         		}
-        	}
-        	else{
+        	}else{
         		return null;
         	}
         }
@@ -178,19 +175,18 @@ public class PlannerServiceImpl implements PlannerService {
         		int i = 0;
 	        	for (Object[] objects : data) {
 	        		Object[] temData = new  Object[18];
+	        		String phone = TextUtils.IntToDouble(objects[4].toString());
 	        		//校验工号不能为空
 	        		List<Object[]> errordata  = TextUtils.checkEmptyString(i+3, 2, objects[1]);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			}
 	        		//校验手机号
-	        		errordata  = TextUtils.validPhoneNum(i+3, 5, objects[4].toString(),false);
-	        		if (errordata.size() >0)
-	    			{
+	        		errordata  = TextUtils.validPhoneNum(i+3, 5, phone,false);
+	        		if (errordata.size() >0){
 	    				return errordata;
 	    			}
-	        		String phone = TextUtils.IntToDouble(objects[4].toString());
+	        		
 	        		temData[0] = objects[1];						//工号 work_num,作为初始登录名
 	        		temData[1] = DigestUtils.md5Hex(phone);			//手机号 mobile，作为初始密码	
 	        		temData[2] = objects[1];						//工号 work_num
@@ -251,13 +247,10 @@ public class PlannerServiceImpl implements PlannerService {
         	if(!TextUtils.validWorkbookTitle(xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString(), "离职") ){
         		if(xwb.getSheetAt(sheetnum).getRow(0).getCell(0) != null){
         			return "报表第" + String.valueOf(sheetnum+1) +"个sheet,表头为："+ xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString() +" 不是正确的报表！";
-        		}
-        		else
-        		{
+        		}else{
         			return "报表第" + String.valueOf(sheetnum+1) +"个sheet, 不是正确的报表！";
         		}
-        	}
-        	else{
+        	}else{
         		return null;
         	}
         }

@@ -137,7 +137,9 @@ public class CustomerServiceImpl implements CustomerService {
         CustomerExample example = new CustomerExample();
         CustomerExample.Criteria criteria = example.createCriteria();
         criteria.andUidEqualTo(uId);
-        criteria.andCustomerTypeEqualTo(customerType);
+        if(customerType != null){
+            criteria.andCustomerTypeEqualTo(customerType);
+        }
         if(customerMapper.countByExample(example) > 0){
             return customerMapper.selectByExample(example).get(0);
         }

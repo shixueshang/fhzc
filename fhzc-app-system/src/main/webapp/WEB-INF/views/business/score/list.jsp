@@ -94,6 +94,23 @@
                 </div>
             </div>
 
+            <div class="row-fluid">
+                <form  class="form-inline" action="<%=contextPath%>/business/score/find" method="GET">
+                    <div class="form-group">
+                        <label class="control-label" style="margin-left: 20px">身份证</label>
+                        <input class="form-control" name="identity" placeholder="输入身份证"  >
+
+                        <label class="control-label" style="margin-left: 20px">审批状态</label>
+                        <select class="form-control" name="isApprove" id="isApprove">
+                            <option value="0">待审批</option>
+                            <option value="1">已审批</option>
+                        </select>
+
+                        <button type="submit">查询</button>
+                    </div>
+                </form>
+            </div>
+
 
             <!--页面操作详细内容 开始-->
             <div class="row-fluid">
@@ -103,7 +120,7 @@
                         <div class="portlet-title">
                             <h4><i class="icon-reorder">
                             </i></h4>
-                            <button type="button" class="btn blue" onclick="batchApprove('<%=contextPath%>/business/score/batchApprove')" data-toggle="modal" data-target="#confirm-approve">批量审批</button>
+                            <button type="button" id="batchApprove" class="btn blue" onclick="batchApprove('<%=contextPath%>/business/score/batchApprove')" data-toggle="modal" data-target="#confirm-approve">批量审批</button>
                         </div>
                         <div class="portlet-body" style="height: 630px; overflow: scroll">
                             <table class="table table-striped table-bordered table-hover" id="score_table">
@@ -145,12 +162,12 @@
                                                 <c:when test="${score.isApprove == 0}">
                                                     <span class="label label-warning">待审批</span>
                                                 </c:when>
-                                                <c:when test="${score.isApprove == 0}">
+                                                <c:when test="${score.isApprove == 1}">
                                                     <span class="label label-warning">已审批</span>
                                                 </c:when>
                                             </c:choose>
                                         </td>
-                                        <td><a href="javascript:void(0)" onclick="approveById('<%=contextPath%>/business/score/approve/${score.id}')" class="btn mini purple" data-toggle="modal" data-target="#confirm-delete"><i class="icon-edit"></i>审批</a></td>
+                                        <td><a href="javascript:void(0)" onclick="approveById('<%=contextPath%>/business/score/approve/${score.id}')" class="btn mini purple button_approve" data-toggle="modal" data-target="#confirm-delete"><i class="icon-edit"></i>审批</a></td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>
@@ -168,6 +185,13 @@
 
 <script>
     $(function(){
+
+        var isApprove = '${isApprove}';
+        $('#isApprove').val(isApprove);
+        if(isApprove == 1){
+            $('#batchApprove').css("display", "none");
+            $('.button_approve').css("display", "none");
+        }
 
         $('#checkAll').click(function () {
             $('table tr input').prop('checked', $(this).is(":checked"));

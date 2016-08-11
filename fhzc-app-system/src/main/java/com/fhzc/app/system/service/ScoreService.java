@@ -54,7 +54,16 @@ public interface ScoreService {
      */
     Integer sumScore(List<ScoreHistory> scoreHistories);
 
-    PageableResult<ScoreHistory> findPageScore(int page, int size);
+    /**
+     * 查询积分列表
+     * @param userId
+     * @param identity  身份证
+     * @param isApprove 审批状态
+     * @param page
+     * @param size
+     * @return
+     */
+    PageableResult<ScoreHistory> findPageScore(Integer userId, String identity, Integer isApprove, int page, int size);
 
     void approve(Integer id);
 

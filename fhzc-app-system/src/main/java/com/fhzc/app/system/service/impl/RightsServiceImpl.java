@@ -71,4 +71,10 @@ public class RightsServiceImpl implements RightsService {
     public int updateReservation(RightsReservation reservation) {
         return rightsReservationMapper.updateByPrimaryKey(reservation);
     }
+
+    @Override
+    public List<Rights> getAllRights() {
+        RightsExample example = new RightsExample();
+        return rightsMapper.selectByExample(example);
+    }
 }

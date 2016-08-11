@@ -79,13 +79,13 @@
                    </div>
 
                     <div  class="span4" style="margin-top: 100px">
-                        <table class="table table-bordered table-hover " id="dd-table">
+                        <table class="table table-bordered table-hover " id="achive_table">
                             <thead>
                                 <tr>
-                                    <td>维度</td>
+                                    <td>理财师</td>
                                     <td>月份</td>
                                     <td>年化金额(万元)</td>
-                                    <td>占比</td>
+                                    <td>占比(%)</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -210,18 +210,14 @@ $(function(){
                 var mycharts = echarts.init(dom);
                 mycharts.setOption(option);
 
-
                 for(var i=0;i<result.data.length;i++){
                     var name = result.data[i].name;
                     var value = result.data[i].value;
                     var percent = result.data[i].percent;
                     var date = new Date(result.data[i].date);
                     var ddd = "<tr> <td>"+name+"</td> <td>"+getFormatDate(date)+"</td> <td>"+value+"</td> <td>"+percent+"</td></tr>";
-                    $("#dd-table tbody").append(ddd);
+                    $("#achive_table tbody").append(ddd);
                 }
-
-
-
             }
         })
     }

@@ -2,11 +2,9 @@ package com.fhzc.app.system.service.impl;
 
 import com.fhzc.app.dao.mybatis.inter.ScoreHistoryMapper;
 import com.fhzc.app.dao.mybatis.model.Dictionary;
-import com.fhzc.app.dao.mybatis.model.Product;
 import com.fhzc.app.dao.mybatis.model.Rights;
 import com.fhzc.app.dao.mybatis.model.ScoreHistory;
 import com.fhzc.app.dao.mybatis.model.User;
-import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.EncryptUtils;
 import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.commons.util.excel.ExcelImporter;
@@ -56,9 +54,9 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 	//消费积分导入
     @Override
     public Map<String, Object> importExcelFileConsume(MultipartFile multipartFile) throws Exception {
-       PageableResult<Rights> rs = rightsService.findPageRights(0,10000);
+       List<Rights> rs = rightsService.getAllRights();
        List<Dictionary> pdics = dictionaryService.findDicByType("passport");
-       PageableResult<User> users = userService.findPageUsers(0,1000000);
+       List<User> users = userService.findAllUsers();
        int sheetnum = 0;
        int rownum = 2;
     	Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
@@ -67,13 +65,10 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
         	if(!TextUtils.validWorkbookTitle(xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString(), "权益消费") ){
         		if(xwb.getSheetAt(sheetnum).getRow(0).getCell(0) != null){
         			return "报表第" + String.valueOf(sheetnum+1) +"个sheet,表头为："+ xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString() +" 不是正确的报表！";
-        		}
-        		else
-        		{
+        		}else{
         			return "报表第" + String.valueOf(sheetnum+1) +"个sheet, 不是正确的报表！";
         		}
-        	}
-        	else{
+        	}else{
         		return null;
         	}
         }
@@ -122,7 +117,7 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 	    				 pcode = objects[3].toString();
 		        		 key = pcode.substring(pcode.length()-8);
 	    			}
-    				for(User user :users.getItems()){
+    				for(User user : users){
     					if(user.getPassportCode().equals(EncryptUtils.encryptToDES(key, pcode)) && user.getPassportTypeId() == passport_type ){
     						isExist = true;
     						break;
@@ -136,12 +131,11 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 		    		
         			//权益名称
              		errordata  = TextUtils.checkEmptyString(i+3, 5, objects[4]);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			}
 	    			isExist = false;
-    				for(Rights rights :rs.getItems()){
+    				for(Rights rights : rs){
     					if(rights.getName().equals(objects[4].toString().trim())){
     						isExist = true;
     						break;
@@ -153,8 +147,7 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 	    			}
         			//时间
         			errordata  = TextUtils.checkDateString(i+3, 6, objects[5],false);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			} 
         			//消费积分、剩余积分必填且为数字
@@ -209,7 +202,7 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 		List<Dictionary> pdics = dictionaryService.findDicByType("passport");
 		List<Dictionary> sdics = dictionaryService.findDicByType("score_from_type");
 		List<Dictionary> ssdics = dictionaryService.findDicByType("score_status");
-		 PageableResult<User> users = userService.findPageUsers(0,1000000);
+		 List<User> users = userService.findAllUsers();
 		int sheetnum = 0;
 		int rownum = 2;
 		Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
@@ -218,13 +211,10 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 		        	if(!TextUtils.validWorkbookTitle(xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString(), "积分历史") ){
 		        		if(xwb.getSheetAt(sheetnum).getRow(0).getCell(0) != null){
 		        			return "报表第" + String.valueOf(sheetnum+1) +"个sheet,表头为："+ xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString() +" 不是正确的报表！";
-		        		}
-		        		else
-		        		{
+		        		}else{
 		        			return "报表第" + String.valueOf(sheetnum+1) +"个sheet, 不是正确的报表！";
 		        		}
-		        	}
-		        	else{
+		        	}else{
 		        		return null;
 		        	}
 		        }
@@ -273,7 +263,7 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 			    				 pcode = objects[3].toString();
 				        		 key = pcode.substring(pcode.length()-8);
 			    			}
-		    				for(User user :users.getItems()){
+		    				for(User user : users){
 		    					if(user.getPassportCode().equals(EncryptUtils.encryptToDES(key, pcode)) && user.getPassportTypeId() == passport_type ){
 		    						isExist = true;
 		    						break;
@@ -307,8 +297,7 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 			    			}
 		        			//时间
 		    				errordata  = TextUtils.checkDateString(i+3, 9, objects[8],false);
-			    			if (errordata.size() >0)
-			    			{
+			    			if (errordata.size() >0){
 			    				return errordata;
 			    			} 
 			    			//积分增减标识

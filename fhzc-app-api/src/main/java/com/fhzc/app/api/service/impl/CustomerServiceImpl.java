@@ -27,4 +27,9 @@ public class CustomerServiceImpl implements CustomerService {
         }
         return null;
     }
+
+    @Override
+    public Customer getCustomer(Integer customerId) {
+        return customerMapper.selectByPrimaryKey(customerId);
+    }
 }

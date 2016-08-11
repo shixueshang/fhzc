@@ -10,6 +10,9 @@ public class APIConstants {
 	
 	public static final String MESSAGE_NEED_LOGIN = "请先登录";
 
+    public static final String FH_ASSIST_SESSIONID = "e572abb3-1b95-4695-b10a-698b8688af9d";
+    public static final Integer FH_ASSIST_USERID = 0;
+
     /**
      * 服务器返回状态
      * @author lihongde

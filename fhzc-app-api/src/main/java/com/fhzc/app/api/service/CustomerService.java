@@ -13,4 +13,11 @@ public interface CustomerService {
      * @return
      */
     Customer getCustomerByUid(Integer uid);
+
+    /**
+     * 获得客户信息
+     * @param customerId
+     * @return
+     */
+    Customer getCustomer(Integer customerId);
 }

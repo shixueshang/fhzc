@@ -50,6 +50,10 @@ public class MessageServiceImpl implements MessageService {
             ImMessageExample.Criteria criteria1  = example.createCriteria();
             criteria1.andUserIdEqualTo(userId);
             example.or(criteria1);
+
+            ImMessageExample.Criteria criteria2  = example.createCriteria();
+            criteria2.andUserIdEqualTo(APIConstants.FH_ASSIST_USERID);
+            example.or(criteria2);
         }
         criteria.andToUserIdEqualTo(userId);
         Date lastSyncDate = new Date(version * 1000L);

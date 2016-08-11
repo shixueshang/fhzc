@@ -42,6 +42,7 @@ public class OrganizationController extends BaseController {
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("depts", pageableResult.getItems());
         mav.addObject("deptsForAdd", JSON.toJSON(pageableResult.getItems()));
+        mav.addObject("url", "organization/department");
         return mav;
     }
 
@@ -61,6 +62,7 @@ public class OrganizationController extends BaseController {
             parentDept.setLeaf(Const.YES_OR_NO.NO);
             departmentService.addOrUpdateDept(parentDept);
         }
+        departmentService.addOrUpdateDept(department);
 
         return "redirect:/organization/department/department";
     }
