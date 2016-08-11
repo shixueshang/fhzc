@@ -88,6 +88,12 @@ public class ProductApiController extends BaseController {
         if(focus != null){
             result.put("focusStatus",focus.getStatus());
         }
+
+        result.put("riskLevel", super.getLevelName(product.getRisk()));
+        result.put("customerLevel", super.getLevelName(product.getLevel()));
+        result.put("issueType", super.getProductIssueType(product.getIssueType()));
+        result.put("productStatus", super.getProductStatusName(Integer.valueOf(product.getStatus())));
+
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
     }
 

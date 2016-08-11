@@ -127,4 +127,36 @@ public class BaseController {
         }
         return "";
     }
+
+    /**
+     * 获得产品状态
+     * @param productStatus
+     * @return
+     */
+    public String getProductStatusName(Integer productStatus){
+        List<Dictionary> dicts = dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_STATUS);
+        for (Dictionary dict : dicts) {
+            if (dict.getValue().equals(productStatus.toString())) {
+                return dict.getKey();
+            }
+        }
+        return "";
+    }
+
+    /**
+     * 获得产品状态
+     * @param productIssueType
+     * @return
+     */
+    public String getProductIssueType(Integer productIssueType){
+        List<Dictionary> dicts = dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_ISSUE_TYPE);
+        for (Dictionary dict : dicts) {
+            if (dict.getValue().equals(productIssueType.toString())) {
+                return dict.getKey();
+            }
+        }
+        return "";
+    }
+
+
 }
