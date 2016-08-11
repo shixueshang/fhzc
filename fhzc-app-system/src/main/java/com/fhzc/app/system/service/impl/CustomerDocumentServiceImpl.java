@@ -1,15 +1,16 @@
 package com.fhzc.app.system.service.impl;
 
+import com.fhzc.app.dao.mybatis.model.AssetsHistory;
 import com.fhzc.app.dao.mybatis.model.Department;
 import com.fhzc.app.dao.mybatis.model.Dictionary;
 import com.fhzc.app.dao.mybatis.model.Planner;
 import com.fhzc.app.dao.mybatis.model.Product;
-import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.EncryptUtils;
 import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.commons.util.excel.ExcelImporter;
 import com.fhzc.app.system.commons.util.excel.ImportCallBack;
 import com.fhzc.app.system.commons.util.excel.ImportConfig;
+import com.fhzc.app.system.service.AssetsService;
 import com.fhzc.app.system.service.CustomerDocumentService;
 import com.fhzc.app.system.service.DepartmentService;
 import com.fhzc.app.system.service.DictionaryService;
@@ -50,15 +51,19 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
     
     @Resource
     private PlannerService plannerService;
+    
+    @Resource
+    private AssetsService assetsService;
 
     //个人客户导入
     @Override
     public Map<String, Object> importExcelFilePersonal(MultipartFile multipartFile) throws Exception {
        List<Dictionary> pdics = dictionaryService.findDicByType("passport");
-       PageableResult<Product> prs = productService.findPageProducts(0, 10000);
-       PageableResult<Department> deps = departmentService.findPageDepartments(0, 10000);
-       PageableResult<Planner> planners =  plannerService.findPagePlanners(0, 10000);
+       List<Product> prs = productService.findAllProduct();
+       List<Department> deps = departmentService.findAllDepartment();
+       List<Planner> planners =  plannerService.findAllPlanner();
        List<Dictionary> cdics = dictionaryService.findDicByType("customer_level");
+	   List<AssetsHistory> ahs =  assetsService.findAllAssets();
        int sheetnum = 0;
        int rownum = 2;
     	Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
@@ -95,6 +100,7 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
 	        		if (errordata.size() >0){
 	    				return errordata; 
 	    			}
+	        		
 	        		//判断证件类型的写法与数据库保持一致
 		    		errordata  = TextUtils.checkEmptyString(i+3, 4, objects[3]);
 	    			if (errordata.size() >0){
@@ -111,11 +117,13 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
 	    				errordata = TextUtils.setErrorMessage(i+3, 4, objects[3].toString()+ ", 该证件类型不存在！");
 	    				return errordata;
 	    			}
+		    		
 	        		//证件号必填
 		    		errordata  = TextUtils.checkEmptyString(i+3, 5, objects[4]);
 		    		if (errordata.size() >0){
 	    				return errordata;
 	    			}
+		    		
 	        		//年月日数字
 		    		errordata  = TextUtils.checkNumber(i+3, 6, objects[5], false);
 		    		if (errordata.size() >0){
@@ -129,18 +137,20 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
     				if (errordata.size() >0){
 	    				return errordata;
 	    			}
+    				
     				//校验手机号
 	        		errordata  = TextUtils.validPhoneNum(i+3, 12, phone,false);
 	        		if (errordata.size() >0){
 	    				return errordata;
 	    			}
+	        		
 	        		//检验产品列不为空,且购买产品存在
 	        		errordata  = TextUtils.checkEmptyString(i+3, 20, objects[19]);
 	    			if (errordata.size() >0){
 	    				return errordata;
 	    			}
 	    			isExist = false;
-    				for(Product product :prs.getItems()){
+    				for(Product product :prs){
     					if(product.getName().equals(objects[19].toString().trim())){
     						isExist = true;
     						break;
@@ -150,30 +160,31 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
 	    				errordata = TextUtils.setErrorMessage(i+3, 20, objects[19].toString() +",该产品不存在！");
 	    				return errordata;
 	    			}
+		    		
 	        		//投资额、年化额
 		    		errordata  = TextUtils.checkNumber(i+3, 21, objects[20],false);
 	    			if (errordata.size() >0){
 	    				return errordata;
 	    			}
 	    			errordata  = TextUtils.checkNumber(i+3, 22, objects[21],false);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			} 
+	    			
 	        		//资金到账日/产品成立日/产品到期日
 	    			errordata  = TextUtils.checkDateString(i+3, 23, objects[22],false);
 	    			if (errordata.size() >0){
 	    				return errordata;
 	    			} 
 	    			errordata  = TextUtils.checkDateString(i+3, 24, objects[23],false);
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			} 
 	    			errordata  = TextUtils.checkDateString(i+3, 25, objects[24],false);
 	    			if (errordata.size() >0){
 	    				return errordata;
 	    			} 
+	    			
 	        		//银行、账号必填
 	    			errordata  = TextUtils.checkEmptyString(i+3, 26, objects[25]);
 	    			if (errordata.size() >0){
@@ -183,18 +194,20 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
 	    			if (errordata.size() >0){
 	    				return errordata; 
 	    			}
+	    			
 	        		//投资期限
 	    			errordata  = TextUtils.checkNumber(i+3, 29, objects[28],false);
 	    			if (errordata.size() >0){
 	    				return errordata; 
 	    			}
+	    			
 	        		//分支机构
 	    			errordata  = TextUtils.checkEmptyString(i+3, 31, objects[30]);
 	    			if (errordata.size() >0){
 	    				return errordata;
 	    			}
 	    			isExist = false;
-    				for(Department department :deps.getItems()){
+    				for(Department department :deps){
     					if(department.getTitle().equals(objects[30].toString().trim())){
     						isExist = true;
     						break;
@@ -204,13 +217,14 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
 	    				errordata = TextUtils.setErrorMessage(i+3, 31, objects[30].toString()+ ", 该分公司不存在！");
 	    				return errordata;
 	    			}
+		    		
 	        		//理财师工号
 		    		errordata  = TextUtils.checkEmptyString(i+3, 33, objects[32]);
 	    			if (errordata.size() >0){
 	    				return errordata;
 	    			}
 	    			isExist = false;
-    				for(Planner planner :planners.getItems()){
+    				for(Planner planner :planners){
     					if(planner.getWorkNum().equals(objects[32].toString().trim())){
     						isExist = true;
     						break;
@@ -220,11 +234,22 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
 	    				errordata = TextUtils.setErrorMessage(i+3, 33, objects[32].toString()+ ", 该理财师编号不存在！");
 	    				return errordata;
 	    			}
+		    		
 	        		//合同编号
 		    		errordata  = TextUtils.checkEmptyString(i+3, 34, objects[33]);
 	    			if (errordata.size() >0){
 	    				return errordata;
 	    			}
+	    			
+	    			//检测合同编号是否存在
+    				for(AssetsHistory ah : ahs){
+    					if(ah.getSerial().equals(objects[33].toString().trim())){
+    						errordata = TextUtils.setErrorMessage(i+3, 34, objects[33].toString()+",该合同编号已存在！");
+    	    				return errordata;
+    					}
+    					break;
+    				}
+    				
 	        		//会员级别
 	    			errordata  = TextUtils.checkEmptyString(i+3, 37, objects[36]);
 	    			if (errordata.size() >0){
@@ -316,13 +341,14 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
     //机构客户导入
 	@Override
 	public Map<String, Object> importExcelFileAgent(MultipartFile multipartFile) throws Exception {
-		 List<Dictionary> pdics = dictionaryService.findDicByType("passport");
-	     PageableResult<Product> prs = productService.findPageProducts(0, 10000);
-	     PageableResult<Department> deps = departmentService.findPageDepartments(0, 10000);
-	     PageableResult<Planner> planners =  plannerService.findPagePlanners(0, 10000);
-	     List<Dictionary> cdics = dictionaryService.findDicByType("customer_level");
-		int sheetnum = 0;
-		int rownum = 2 ;
+	   List<Dictionary> pdics = dictionaryService.findDicByType("passport");
+       List<Product> prs = productService.findAllProduct();
+       List<Department> deps = departmentService.findAllDepartment();
+       List<Planner> planners =  plannerService.findAllPlanner();
+       List<Dictionary> cdics = dictionaryService.findDicByType("customer_level");
+       List<AssetsHistory> ahs =  assetsService.findAllAssets();
+	   int sheetnum = 0;
+	   int rownum = 2 ;
 		Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
 		        @Override
 		        public String validation(Workbook xwb) {
@@ -357,6 +383,7 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
 			        		if (errordata.size() >0){
 			    				return errordata; 
 			    			}
+			        		
 			        		//证件类型
 			        		errordata  = TextUtils.checkEmptyString(i+3, 3, objects[2]);
 			    			if (errordata.size() >0){
@@ -373,23 +400,26 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
 			    				errordata = TextUtils.setErrorMessage(i+3, 3, objects[2].toString()+ ", 该证件类型不存在！");
 			    				return errordata;
 			    			}
+				    		
 			        		//机构证件号必填
 				    		errordata  = TextUtils.checkEmptyString(i+3, 4, objects[3]);
 			    			if (errordata.size() >0){
 			    				return errordata;
 			    			}
+			    			
 			        		//手机号码
 			        		errordata  = TextUtils.validPhoneNum(i+3, 10, phone,false);
 			        		if (errordata.size() >0){
 			    				return errordata;
 			    			}
+			        		
 			        		//产品
 			        		errordata  = TextUtils.checkEmptyString(i+3, 17, objects[16]);
 			    			if (errordata.size() >0){
 			    				return errordata;
 			    			}
 			    			isExist = false;
-		    				for(Product product :prs.getItems()){
+		    				for(Product product :prs){
 		    					if(product.getName().equals(objects[16].toString().trim())){
 		    						isExist = true;
 		    						break;
@@ -399,11 +429,13 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
 			    				errordata = TextUtils.setErrorMessage(i+3, 17, objects[16].toString() +",该产品不存在！");
 			    				return errordata;
 			    			}
+				    		
 			        		//投资额
 				    		errordata  = TextUtils.checkNumber(i+3, 18, objects[17],false);
 			    			if (errordata.size() >0){
 			    				return errordata;
 			    			}
+			    			
 			        		//资金到账日/产品成立日/产品到期日
 			    			errordata  = TextUtils.checkDateString(i+3, 29, objects[18],false);
 			    			if (errordata.size() >0){
@@ -417,6 +449,7 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
 			    			if (errordata.size() >0){
 			    				return errordata;
 			    			} 
+			    			
 			        		//银行、账号必填
 			    			errordata  = TextUtils.checkEmptyString(i+3, 22, objects[21]);
 			    			if (errordata.size() >0){
@@ -426,18 +459,20 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
 			    			if (errordata.size() >0){
 			    				return errordata; 
 			    			}
+			    			
 			        		//投资期限
 			    			errordata  = TextUtils.checkNumber(i+3, 25, objects[24],false);
 			    			if (errordata.size() >0){
 			    				return errordata; 
 			    			}
+			    			
 			        		//分支机构
 			    			errordata  = TextUtils.checkEmptyString(i+3, 27, objects[26]);
 			    			if (errordata.size() >0){
 			    				return errordata;
 			    			}
 			    			isExist = false;
-		    				for(Department department :deps.getItems()){
+		    				for(Department department :deps){
 		    					if(department.getTitle().equals(objects[26].toString().trim())){
 		    						isExist = true;
 		    						break;
@@ -447,13 +482,14 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
 			    				errordata = TextUtils.setErrorMessage(i+3, 27, objects[26].toString()+ ", 该分公司不存在！");
 			    				return errordata;
 			    			}
+				    		
 			        		//理财师工号
 				    		errordata  = TextUtils.checkEmptyString(i+3, 29, objects[28]);
 			    			if (errordata.size() >0){
 			    				return errordata;
 			    			}
 			    			isExist = false;
-		    				for(Planner planner :planners.getItems()){
+		    				for(Planner planner :planners){
 		    					if(planner.getWorkNum().equals(objects[28].toString().trim())){
 		    						isExist = true;
 		    						break;
@@ -463,11 +499,22 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
 			    				errordata = TextUtils.setErrorMessage(i+3, 29, objects[28].toString()+ ", 该理财师编号不存在！");
 			    				return errordata;
 			    			}
+				    		
 			        		//合同编号
 				    		errordata  = TextUtils.checkEmptyString(i+3, 30, objects[29]);
 			    			if (errordata.size() >0){
 			    				return errordata;
 			    			}
+			    			
+			    			//检测合同编号是否存在
+		    				for(AssetsHistory ah : ahs){
+		    					if(ah.getSerial().equals(objects[29].toString().trim())){
+		    						errordata = TextUtils.setErrorMessage(i+3, 30, objects[29].toString()+",该合同编号已存在！");
+		    	    				return errordata;
+		    					}
+		    					break;
+		    				}
+		    				
 			        		//会员级别
 			    			errordata  = TextUtils.checkEmptyString(i+3, 33, objects[32]);
 			    			if (errordata.size() >0){

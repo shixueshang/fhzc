@@ -91,4 +91,10 @@ public interface PlannerService {
      * @return
      */
     List<Integer> findPlannerByDepartment(List<Integer> depts);
+    
+    /**
+     * 获得所有理财师
+     * @return
+     */
+    List<Planner> findAllPlanner();
 }

@@ -227,4 +227,13 @@ public class DepartmentServiceImpl implements DepartmentService{
         List<Department> list = departmentMapper.selectByExampleWithRowbounds(example, rowBounds);
         return new PageableResult<Department>(page, size, departmentMapper.countByExample(example), list);
     }
+    
+    /**
+     * 获取所有部门
+     */
+    @Override
+    public List<Department> findAllDepartment() {
+        DepartmentExample example = new DepartmentExample();
+        return departmentMapper.selectByExample(example);
+    }
 }

@@ -108,6 +108,7 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 	    				errordata = TextUtils.setErrorMessage(i+3, 3, objects[2].toString()+ ", 该证件类型不存在！");
 	    				return errordata;
 	    			}
+		    		
         			//证件类型+证件号码判断人存在
 	    			isExist = false;
 	    			errordata  = TextUtils.checkEmptyString(i+3, 4, objects[3]);
@@ -123,7 +124,6 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
     						break;
     					}
     				}
-    				
 		    		if(!isExist){
 	    				errordata = TextUtils.setErrorMessage(i+3, 4, objects[3].toString()+ "，该客户证件号码不存在！");
 	    				return errordata;
@@ -145,11 +145,13 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 	    				errordata = TextUtils.setErrorMessage(i+3, 5, objects[4].toString() +",该权益不存在！");
 	    				return errordata;
 	    			}
+		    		
         			//时间
         			errordata  = TextUtils.checkDateString(i+3, 6, objects[5],false);
 	    			if (errordata.size() >0){
 	    				return errordata;
 	    			} 
+	    			
         			//消费积分、剩余积分必填且为数字
         			errordata  = TextUtils.checkNumber(i+3, 8, objects[7], false);
     				if (errordata.size() >0){
@@ -159,6 +161,7 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
     				if (errordata.size() >0){
 	    				return errordata;
 	    			}
+    				
 	        		temData[0] = objects[0];										//姓名 
 	        		temData[1] = objects[1];										//性别 
 	        		temData[2] = objects[2];										//证件类型
@@ -202,7 +205,7 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 		List<Dictionary> pdics = dictionaryService.findDicByType("passport");
 		List<Dictionary> sdics = dictionaryService.findDicByType("score_from_type");
 		List<Dictionary> ssdics = dictionaryService.findDicByType("score_status");
-		 List<User> users = userService.findAllUsers();
+		List<User> users = userService.findAllUsers();
 		int sheetnum = 0;
 		int rownum = 2;
 		Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
@@ -254,6 +257,7 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 			    				errordata = TextUtils.setErrorMessage(i+3, 3, objects[2].toString()+ ", 该证件类型不存在！");
 			    				return errordata;
 			    			}
+				    		
 		        			//证件类型+证件号码判断人存在
 				    		isExist = false;
 			    			errordata  = TextUtils.checkEmptyString(i+3, 4, objects[3]);
@@ -269,16 +273,17 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 		    						break;
 		    					}
 		    				}
-		    				
 				    		if(!isExist){
 			    				errordata = TextUtils.setErrorMessage(i+3, 4, objects[3].toString()+ "，该客户证件号码不存在！");
 			    				return errordata;
 			    			}
+				    		
 				    		//积分数字
 				    		errordata  = TextUtils.checkNumber(i+3, 8, objects[7], false);
 		    				if (errordata.size() >0){
 			    				return errordata;
 			    			}
+		    				
 				    		//积分来源
 		    				errordata  = TextUtils.checkEmptyString(i+3, 6, objects[5]);
 		    				if (errordata.size() >0){
@@ -295,11 +300,13 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 			    				errordata = TextUtils.setErrorMessage(i+3, 6, objects[5].toString()+ ", 该积分来源不正确！");
 			    				return errordata;
 			    			}
+				    		
 		        			//时间
 		    				errordata  = TextUtils.checkDateString(i+3, 9, objects[8],false);
 			    			if (errordata.size() >0){
 			    				return errordata;
 			    			} 
+			    			
 			    			//积分增减标识
 			    			errordata  = TextUtils.checkEmptyString(i+3, 5, objects[4]);
 		    				if (errordata.size() >0){

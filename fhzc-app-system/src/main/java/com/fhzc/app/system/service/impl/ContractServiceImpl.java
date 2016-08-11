@@ -75,10 +75,10 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public Map<String, Object> importExcelFile(MultipartFile multipartFile) throws Exception {
-    	PageableResult<Product> prs = productService.findPageProducts(0, 10000);
-    	PageableResult<Planner> planners =  plannerService.findPagePlanners(0, 10000);
+    	List<Product> prs = productService.findAllProduct();
+    	List<Planner> planners =  plannerService.findAllPlanner();
     	List<Dictionary> dics = dictionaryService.findDicByType("passport");
-    	PageableResult<Department> deps = departmentService.findPageDepartments(0, 10000);
+    	List<Department> deps = departmentService.findAllDepartment();
     	int sheetnum = 0;
     	int rownum = 3;
     	Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
@@ -87,8 +87,7 @@ public class ContractServiceImpl implements ContractService {
         	if(!TextUtils.validWorkbookTitle(xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString(), "发行产品统计表") ){
         		if(xwb.getSheetAt(sheetnum).getRow(0).getCell(0) != null){
         			return "报表第" + String.valueOf(sheetnum+1) +"个sheet,表头为："+ xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString() +" 不是正确的报表！";
-        		}else
-        		{
+        		}else{
         			return "报表第" + String.valueOf(sheetnum+1) +"个sheet, 不是正确的报表！";
         		}
         	}else{
@@ -141,7 +140,7 @@ public class ContractServiceImpl implements ContractService {
 	    				return errordata;
 	    			}
 	    			isExist = false;
-    				for(Product product :prs.getItems()){
+    				for(Product product :prs){
     					if(product.getName().equals(objects[1].toString().trim())){
     						isExist = true;
     						break;
@@ -151,6 +150,7 @@ public class ContractServiceImpl implements ContractService {
 	    				errordata = TextUtils.setErrorMessage(i+4, 2, objects[1].toString() +",该产品不存在！");
 	    				return errordata;
 	    			}
+		    		
 	        		//判断证件类型的写法与数据库保持一致
 		    		errordata  = TextUtils.checkEmptyString(i+4, 4, objects[3]);
 	    			if (errordata.size() >0){
@@ -167,13 +167,14 @@ public class ContractServiceImpl implements ContractService {
 	    				errordata = TextUtils.setErrorMessage(i+4, 4, objects[3].toString()+ ", 该证件类型不存在！");
 	    				return errordata;
 	    			}
+		    		
 	        		//检验理财师是否存在
 	    			errordata  = TextUtils.checkEmptyString(i+4, 16, objects[15]);
 	    			if (errordata.size() >0){
 	    				return errordata;
 	    			}
 	    			isExist = false;
-    				for(Planner planner :planners.getItems()){
+    				for(Planner planner :planners){
     					if(planner.getWorkNum().equals(objects[15].toString().trim())){
     						isExist = true;
     						break;
@@ -183,11 +184,13 @@ public class ContractServiceImpl implements ContractService {
 	    				errordata = TextUtils.setErrorMessage(i+4, 16, objects[15].toString()+ ", 该理财师编号不存在！");
 	    				return errordata;
 	    			}
+		    		
 	        		//校验日期格式，到账日期不能为空
 		    		errordata  = TextUtils.checkDateString(i+4, 13, objects[12],false);
 	    			if (errordata.size() >0){
 	    				return errordata;
 	    			} 
+	    			
 	        		//校验金额格式，投资额,年化金额不能为空
 	    			errordata  = TextUtils.checkNumber(i+4, 9, objects[8],false);
 	    			if (errordata.size() >0){
@@ -197,18 +200,20 @@ public class ContractServiceImpl implements ContractService {
 	    			if (errordata.size() >0){
 	    				return errordata;
 	    			} 
+	    			
 	        		//投资期限必填
 	    			errordata  = TextUtils.checkNumber(i+4, 11, objects[10],false);
 	    			if (errordata.size() >0){
 	    				return errordata; 
 	    			}
+	    			
 	    			//校验分公司
 	    			errordata  = TextUtils.checkEmptyString(i+4, 14, objects[13]);
 	    			if (errordata.size() >0){
 	    				return errordata;
 	    			}
 	    			isExist = false;
-    				for(Department department :deps.getItems()){
+    				for(Department department :deps){
     					if(department.getTitle().equals(objects[13].toString().trim())){
     						isExist = true;
     						break;

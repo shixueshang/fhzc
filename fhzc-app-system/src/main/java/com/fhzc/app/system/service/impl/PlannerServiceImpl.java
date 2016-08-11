@@ -1,6 +1,7 @@
 package com.fhzc.app.system.service.impl;
 
 import com.fhzc.app.dao.mybatis.page.PageableResult;
+import com.fhzc.app.dao.mybatis.util.EncryptUtils;
 import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.commons.util.excel.ExcelImporter;
 import com.fhzc.app.system.commons.util.excel.ImportCallBack;
@@ -90,30 +91,32 @@ public class PlannerServiceImpl implements PlannerService {
         }
 
         @Override
-        public List<Object[]> getImportData(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data)  {
+        public List<Object[]> getImportData(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data) throws Exception  {
         	List<Object[]> plannerList = new ArrayList<Object[]>();
         	if(data.get(0).length>0){
 	        	for (Object[] objects : data) {
 	        		Object[] temData = new  Object[18];
 	        		String phone = TextUtils.IntToDouble(objects[4].toString());
-	        		temData[0] = objects[1];						//工号 work_num,作为初始登录名
-	        		temData[1] = DigestUtils.md5Hex(phone);			//手机号 mobile，作为初始密码	
-	        		temData[2] = objects[1];						//工号 work_num
-	        		temData[3] = objects[2];						//姓名 realname
-					temData[4] = objects[3];						//证件号
-					temData[5] = phone;								//手机号
-	        		temData[6] = objects[5];						//所属公司 company
-	        		temData[7] = objects[6];						//所属城市 area
-	        		temData[8] = objects[7];						//一级部门 dept1
-	        	    temData[9] = objects[8];						//负责人 dept1_leader	
-	        		temData[10] = objects[9];						//二级部门 dept2
-	        		temData[11] = objects[10];						//负责人 dept2_leader
-	        		temData[12] = objects[11];						//三级部门 dept3
-	        		temData[13] = objects[12];						//负责人 dept3_leader
-	        		temData[14] = objects[13];						//四级部门 dept14
-	        		temData[15] = objects[14];						//负责人 dept4_leader
-	        		temData[16] = objects[15];						//岗位名称 job_title_cn
-	        		temData[17] = objects[16];						//岗位序列 position
+	        		String pcode = objects[3].toString();
+	        		String key = pcode.substring(pcode.length()-8);
+	        		temData[0] = objects[1];								//工号 work_num,作为初始登录名
+	        		temData[1] = DigestUtils.md5Hex(phone);					//手机号 mobile，作为初始密码	
+	        		temData[2] = objects[1];								//工号 work_num
+	        		temData[3] = objects[2];								//姓名 realname
+					temData[4] = EncryptUtils.encryptToDES(key, pcode);		//证件号
+					temData[5] = EncryptUtils.encryptToDES(key, phone);;	//手机号
+	        		temData[6] = objects[5];								//所属公司 company
+	        		temData[7] = objects[6];								//所属城市 area
+	        		temData[8] = objects[7];								//一级部门 dept1
+	        	    temData[9] = objects[8];								//负责人 dept1_leader	
+	        		temData[10] = objects[9];								//二级部门 dept2
+	        		temData[11] = objects[10];								//负责人 dept2_leader
+	        		temData[12] = objects[11];								//三级部门 dept3
+	        		temData[13] = objects[12];								//负责人 dept3_leader
+	        		temData[14] = objects[13];								//四级部门 dept14
+	        		temData[15] = objects[14];								//负责人 dept4_leader
+	        		temData[16] = objects[15];								//岗位名称 job_title_cn
+	        		temData[17] = objects[16];								//岗位序列 position
 	        		plannerList.add(temData);
 				}
         	}
@@ -169,30 +172,48 @@ public class PlannerServiceImpl implements PlannerService {
         }
 
         @Override
-        public List<Object[]> getImportData(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data)  {
+        public List<Object[]> getImportData(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data) throws Exception  {
         	List<Object[]> plannerList = new ArrayList<Object[]>();
         	if(data.get(0).length>0){
         		int i = 0;
 	        	for (Object[] objects : data) {
 	        		Object[] temData = new  Object[18];
-	        		String phone = TextUtils.IntToDouble(objects[4].toString());
 	        		//校验工号不能为空
 	        		List<Object[]> errordata  = TextUtils.checkEmptyString(i+3, 2, objects[1]);
 	    			if (errordata.size() >0){
 	    				return errordata;
 	    			}
-	        		//校验手机号
-	        		errordata  = TextUtils.validPhoneNum(i+3, 5, phone,false);
-	        		if (errordata.size() >0){
-	    				return errordata;
-	    			}
+	    			String pcode = "";
+	        		String phone = "";
+	        		String key = "";
+	        		String enpcode = "";
+	        		String enphone = "";
+	        		if(objects[3]==null||objects[3].toString().trim().equals("")){
+	        			enpcode = "";
+	        			enphone = TextUtils.IntToDouble(objects[4].toString());
+		        		//校验手机号
+		        		errordata  = TextUtils.validPhoneNum(i+3, 5, enphone,false);
+		        		if (errordata.size() >0){
+		    				return errordata;
+		    			}
+	        		}else{
+	        			pcode = objects[3].toString();
+	        			key = pcode.substring(pcode.length()-8);
+	        			enpcode = EncryptUtils.encryptToDES(key, pcode);
+	        			phone = TextUtils.IntToDouble(objects[4].toString());
+	        			errordata  = TextUtils.validPhoneNum(i+3, 5, phone,false);
+		        		if (errordata.size() >0){
+		    				return errordata;
+		    			}
+		        		enphone = EncryptUtils.encryptToDES(key, phone);
+	        		}
 	        		
 	        		temData[0] = objects[1];						//工号 work_num,作为初始登录名
 	        		temData[1] = DigestUtils.md5Hex(phone);			//手机号 mobile，作为初始密码	
 	        		temData[2] = objects[1];						//工号 work_num
 	        		temData[3] = objects[2];						//姓名 realname
-					temData[4] = objects[3];						//证件号
-					temData[5] = phone;								//手机号
+					temData[4] = enpcode;							//证件号
+					temData[5] = enphone;							//手机号
 	        		temData[6] = objects[5];						//所属公司 company
 	        		temData[7] = objects[6];						//所属城市 area
 	        		temData[8] = objects[7];						//一级部门 dept1
@@ -263,7 +284,7 @@ public class PlannerServiceImpl implements PlannerService {
         @Override
         public List<Object[]> getImportData(SqlSessionTemplate sqlSessionTemplate, List<Object[]> data) {
         	List<Object[]> plannerList = new ArrayList<Object[]>();
-        	PageableResult<Planner> planners = findPagePlanners(0, 10000);
+        	List<Planner> planners = findAllPlanner();
         	if(data.get(0).length>0){
         		int i = 0;
 	        	for (Object[] objects : data) {
@@ -271,13 +292,12 @@ public class PlannerServiceImpl implements PlannerService {
 	        		//检查理财师编号
 	        		List<Object[]> errordata  = TextUtils.checkEmptyString(i+3, 2, objects[1]);
 	        		boolean isExist = false;
-	    			if (errordata.size() >0)
-	    			{
+	    			if (errordata.size() >0){
 	    				return errordata;
 	    			}
 	    			//检测理财师编号是否存在
 	    			isExist = false;
-    				for(Planner planner :planners.getItems()){
+    				for(Planner planner :planners){
     					if(planner.getWorkNum().equals(objects[1].toString())){
     						isExist = true;
     						break;
@@ -360,5 +380,14 @@ public class PlannerServiceImpl implements PlannerService {
             plannerIds.add(planner.getId());
         }
         return plannerIds;
+    }
+    
+    /**
+     * 获取所有理财师
+     */
+    @Override
+    public List<Planner> findAllPlanner() {
+        PlannerExample example = new PlannerExample();
+        return plannerMapper.selectByExample(example);
     }
 }

@@ -58,7 +58,6 @@ public interface DepartmentService {
      */
     List<Department> findChildren(Integer parentId);
 
-
     /**
      * 获得机构id
      * @param name
@@ -73,4 +72,10 @@ public interface DepartmentService {
      * @return
      */
     PageableResult<Department> findPageDepartments(int page, int size);
+    
+    /**
+     * 获得所有部门
+     * @return
+     */
+    List<Department> findAllDepartment();
 }

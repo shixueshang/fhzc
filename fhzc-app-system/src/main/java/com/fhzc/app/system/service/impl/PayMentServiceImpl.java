@@ -85,14 +85,19 @@ public class PayMentServiceImpl implements PayMentService {
 	        		
 	    			Object[] objects = data.get(i);
 	        		Object[] temData = new  Object[17];
+	        		
+	        		//证件号必填
+	        		List<Object[]> errordata  = TextUtils.checkEmptyString(rownum+i+1, 6, objects[5]);
+	    			boolean isExist = false;
+	    			if (errordata.size() >0){
+	    				return errordata;
+	    			}
 	        		String pcode = objects[5].toString();
 	        		String key = pcode.substring(pcode.length()-8);
 	        		
-	        		//错误检验处理
-	    			
 	    			//检测产品
-	    			List<Object[]> errordata  = TextUtils.checkEmptyString(rownum+i+1, 3, objects[2]);
-	    			boolean isExist = false;
+	    			errordata  = TextUtils.checkEmptyString(rownum+i+1, 3, objects[2]);
+	    			isExist = false;
 	    			if (errordata.size() >0){
 	    				return errordata;
 	    			}

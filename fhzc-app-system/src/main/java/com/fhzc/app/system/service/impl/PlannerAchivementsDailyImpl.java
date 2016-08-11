@@ -59,22 +59,18 @@ public class PlannerAchivementsDailyImpl implements PlannerAchivementsDailyServi
 	public Map<String, Object> importDailyExcelFile(MultipartFile multipartFile) throws Exception {
 		int sheetnum =1;
 		int rownum =2;
-		PageableResult<Product> prs = productService.findPageProducts(0, 10000);
-		PageableResult<Planner> planners =  plannerService.findPagePlanners(0, 10000);
-		
+		List<Product> prs = productService.findAllProduct();
+		List<Planner> planners =  plannerService.findAllPlanner();
 	    Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
 	        @Override
 	        public String validation(Workbook xwb) {
 	        	if(!TextUtils.validWorkbookTitle(xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString(), "业绩统计报表") ){
 	        		if(xwb.getSheetAt(sheetnum).getRow(0).getCell(0) != null){
 	        			return "报表第" + String.valueOf(sheetnum+1) +"个sheet,表头为："+ xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString() +" 不是正确的报表！";
-	        		}
-	        		else
-	        		{
+	        		}else{
 	        			return "报表第" + String.valueOf(sheetnum+1) +"个sheet, 不是正确的报表！";
 	        		}
-	        	}
-	        	else{
+	        	}else{
 	        		return null;
 	        	}
 	            
@@ -100,9 +96,10 @@ public class PlannerAchivementsDailyImpl implements PlannerAchivementsDailyServi
 		    			if (errordata.size() >0){
 		    				return errordata;
 		    			}
+		    			
 		    			//检测是否存在
 		    			isExist = false;
-	    				for(Product product :prs.getItems()){
+	    				for(Product product :prs){
 	    					if(product.getName().equals(tempData[5].toString().trim())){
 	    						isExist = true;
 	    						break;
@@ -112,14 +109,16 @@ public class PlannerAchivementsDailyImpl implements PlannerAchivementsDailyServi
 		    				errordata = TextUtils.setErrorMessage(rownum+i+1, 6, tempData[5].toString() +",该产品不存在！");
 		    				return errordata;
 		    			}
+			    		
 		    			//检查理财师编号
 		    			errordata  = TextUtils.checkEmptyString(rownum+i+1, 4, tempData[3]);
 		    			if (errordata.size() >0){
 		    				return errordata;
 		    			}
+		    			
 		    			//检测理财师编号是否存在
 		    			isExist = false;
-	    				for(Planner planner :planners.getItems()){
+	    				for(Planner planner :planners){
 	    					if(planner.getWorkNum().equals(tempData[3].toString().trim())){
 	    						isExist = true;
 	    						break;
@@ -129,16 +128,19 @@ public class PlannerAchivementsDailyImpl implements PlannerAchivementsDailyServi
 		    				errordata = TextUtils.setErrorMessage(rownum+i+1, 4, tempData[3].toString()+ ", 该理财师编号不存在！");
 		    				return errordata;
 		    			}
+			    		
 		    			//检测日期
 		    			errordata  = TextUtils.checkDateString(rownum+i+1, 1, tempData[0],false);
 		    			if (errordata.size() >0){
 		    				return errordata;
-		    			} 			
+		    			} 
+		    			
 		    			//检查年化业绩
 		    			errordata  = TextUtils.checkNumber(rownum+i+1, 7, tempData[6],false);
 		    			if (errordata.size() >0){
 		    				return errordata;
-		    			} 	
+		    			} 
+		    			
 		    			//检查合同金额
 		    			errordata  = TextUtils.checkNumber(rownum+i+1, 8, tempData[7],true);
 		    			if (errordata.size() >0){
@@ -150,6 +152,7 @@ public class PlannerAchivementsDailyImpl implements PlannerAchivementsDailyServi
 		    			if (errordata.size() >0){
 		    				return errordata;
 		    			} 
+		    			
 		    			newData[0] = tempData[0];								//业绩日期
 		    			newData[1] = tempData[1].toString().trim();				//地区
 		    			newData[2] = tempData[2].toString().trim();				//理财师姓名
