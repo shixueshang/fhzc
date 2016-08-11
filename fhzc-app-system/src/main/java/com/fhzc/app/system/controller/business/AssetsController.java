@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,14 +41,29 @@ public class AssetsController extends BaseController {
     private ProductService productService;
 
 
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public String listOrder(){
+        return "business/assets/list";
+    }
+
     /**
-     * 订单列表
+     * 按产品名称或客户姓名查询订单列表
+     * @param productName
+     * @param customerName
      * @return
      */
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ModelAndView listOrder(){
+    @RequestMapping(value = "/find", method = RequestMethod.GET)
+    public ModelAndView find(String productName, String customerName){
         ModelAndView mav = new ModelAndView("/business/assets/list");
-        PageableResult<AssetsHistory> pageableResult = assetsService.findPageAssets(page, size);
+
+        List<User> users = userService.getUsersByName(customerName);
+        List<Integer> customerIds = new ArrayList<Integer>();
+        for(User user : users){
+            customerIds.add(customerService.getCustomerByUid(user.getUid(), null).getCustomerId());
+        }
+        Product pro = productService.getProduct(productName);
+
+        PageableResult<AssetsHistory> pageableResult = assetsService.findPageAssets(pro== null ? null : pro.getPid(), customerIds, page, size);
 
         List<AssetsHistory> assets = pageableResult.getItems();
         for(AssetsHistory assetsHistory : assets){

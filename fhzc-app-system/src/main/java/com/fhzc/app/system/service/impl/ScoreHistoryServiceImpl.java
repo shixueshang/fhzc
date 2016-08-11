@@ -5,7 +5,6 @@ import com.fhzc.app.dao.mybatis.model.Dictionary;
 import com.fhzc.app.dao.mybatis.model.Rights;
 import com.fhzc.app.dao.mybatis.model.ScoreHistory;
 import com.fhzc.app.dao.mybatis.model.User;
-import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.EncryptUtils;
 import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.commons.util.excel.ExcelImporter;
@@ -55,9 +54,9 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 	//消费积分导入
     @Override
     public Map<String, Object> importExcelFileConsume(MultipartFile multipartFile) throws Exception {
-       PageableResult<Rights> rs = rightsService.findPageRights(0,10000);
+       List<Rights> rs = rightsService.getAllRights();
        List<Dictionary> pdics = dictionaryService.findDicByType("passport");
-       PageableResult<User> users = userService.findPageUsers(0,1000000);
+       List<User> users = userService.findAllUsers();
        int sheetnum = 0;
        int rownum = 2;
     	Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
@@ -118,7 +117,7 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 	    				 pcode = objects[3].toString();
 		        		 key = pcode.substring(pcode.length()-8);
 	    			}
-    				for(User user :users.getItems()){
+    				for(User user : users){
     					if(user.getPassportCode().equals(EncryptUtils.encryptToDES(key, pcode)) && user.getPassportTypeId() == passport_type ){
     						isExist = true;
     						break;
@@ -136,7 +135,7 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 	    				return errordata;
 	    			}
 	    			isExist = false;
-    				for(Rights rights :rs.getItems()){
+    				for(Rights rights : rs){
     					if(rights.getName().equals(objects[4].toString().trim())){
     						isExist = true;
     						break;
@@ -203,7 +202,7 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 		List<Dictionary> pdics = dictionaryService.findDicByType("passport");
 		List<Dictionary> sdics = dictionaryService.findDicByType("score_from_type");
 		List<Dictionary> ssdics = dictionaryService.findDicByType("score_status");
-		 PageableResult<User> users = userService.findPageUsers(0,1000000);
+		 List<User> users = userService.findAllUsers();
 		int sheetnum = 0;
 		int rownum = 2;
 		Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
@@ -264,7 +263,7 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 			    				 pcode = objects[3].toString();
 				        		 key = pcode.substring(pcode.length()-8);
 			    			}
-		    				for(User user :users.getItems()){
+		    				for(User user : users){
 		    					if(user.getPassportCode().equals(EncryptUtils.encryptToDES(key, pcode)) && user.getPassportTypeId() == passport_type ){
 		    						isExist = true;
 		    						break;

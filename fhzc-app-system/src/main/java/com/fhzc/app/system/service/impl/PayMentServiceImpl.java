@@ -4,7 +4,6 @@ import com.fhzc.app.dao.mybatis.model.AssetsHistory;
 import com.fhzc.app.dao.mybatis.model.Dictionary;
 import com.fhzc.app.dao.mybatis.model.Product;
 import com.fhzc.app.dao.mybatis.model.User;
-import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.EncryptUtils;
 import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.commons.util.excel.ExcelImporter;
@@ -13,7 +12,6 @@ import com.fhzc.app.system.commons.util.excel.ImportConfig;
 import com.fhzc.app.system.service.AssetsService;
 import com.fhzc.app.system.service.DictionaryService;
 import com.fhzc.app.system.service.PayMentService;
-import com.fhzc.app.system.service.PlannerService;
 import com.fhzc.app.system.service.ProductService;
 import com.fhzc.app.system.service.UserService;
 
@@ -44,9 +42,6 @@ public class PayMentServiceImpl implements PayMentService {
     private ProductService productService;
     
     @Resource
-    private PlannerService plannerService;
-    
-    @Resource
     private DictionaryService dictionaryService;
     
     @Resource
@@ -60,8 +55,8 @@ public class PayMentServiceImpl implements PayMentService {
     public Map<String, Object> importExcelFile(MultipartFile multipartFile) throws Exception {
 		int sheetnum =0;
 		int rownum =2;
-		PageableResult<Product> prs = productService.findPageProducts(0, 10000);
-		PageableResult<AssetsHistory> ahs =  assetsService.findPageAssets(0, 1000000);
+		List<Product> prs = productService.findAllProduct();
+		List<AssetsHistory> ahs =  assetsService.findAllAssets();
 		
        Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
         @Override
@@ -104,7 +99,7 @@ public class PayMentServiceImpl implements PayMentService {
 	    			
 	    			//检测是否存在
 	    			isExist = false;
-    				for(Product product :prs.getItems()){
+    				for(Product product : prs){
     					if(product.getName().equals(objects[2].toString().trim())){
     						isExist = true;
     						break;
@@ -123,7 +118,7 @@ public class PayMentServiceImpl implements PayMentService {
 	    			}
 	    			//检测合同编号是否存在
 	    			isExist = false;
-    				for(AssetsHistory ah :ahs.getItems()){
+    				for(AssetsHistory ah : ahs){
     					if(ah.getSerial().equals(objects[1].toString().trim())){
     						isExist = true;
     						break;
@@ -224,8 +219,8 @@ public class PayMentServiceImpl implements PayMentService {
 		int sheetnum =0;
 		int rownum =2;
 		List<Dictionary> pdics = dictionaryService.findDicByType("passport");
-		PageableResult<User> users = userService.findPageUsers(0,1000000);
-		PageableResult<Product> prs = productService.findPageProducts(0, 10000);
+		List<User> users = userService.findAllUsers();
+		List<Product> prs = productService.findAllProduct();
        Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
         @Override
         public String validation(Workbook xwb) {
@@ -262,7 +257,7 @@ public class PayMentServiceImpl implements PayMentService {
 	    			
 	    			//检测是否存在
 	    			isExist = false;
-    				for(Product product :prs.getItems()){
+    				for(Product product : prs){
     					if(product.getName().equals(objects[2].toString().trim())){
     						isExist = true;
     						break;
@@ -306,7 +301,7 @@ public class PayMentServiceImpl implements PayMentService {
 	    			
 	    			//检测是否存在
 	    			isExist = false;
-    				for(User user :users.getItems()){
+    				for(User user : users){
     					if(user.getPassportCode().equals(pcode_encry) && user.getPassportTypeId() == passport_type ){
     						isExist = true;
     						break;

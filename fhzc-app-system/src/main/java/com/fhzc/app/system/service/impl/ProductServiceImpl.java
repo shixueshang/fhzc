@@ -144,4 +144,10 @@ public class ProductServiceImpl implements ProductService {
     public int addProductReservation(ProductReservation productReservation) {
         return productReservationMapper.insert(productReservation);
     }
+
+    @Override
+    public List<Product> findAllProduct() {
+        ProductExample example = new ProductExample();
+        return productMapper.selectByExample(example);
+    }
 }

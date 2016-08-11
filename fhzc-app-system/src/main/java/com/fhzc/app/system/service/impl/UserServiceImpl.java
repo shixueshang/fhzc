@@ -1,7 +1,5 @@
 package com.fhzc.app.system.service.impl;
 
-import com.fhzc.app.dao.mybatis.model.Planner;
-import com.fhzc.app.dao.mybatis.model.PlannerExample;
 import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.model.UserExample;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
@@ -52,11 +50,17 @@ public class UserServiceImpl implements UserService {
     }
     
     @Override
-    public PageableResult<User> findPageUsers(int page, int size) {
+    public List<User> findAllUsers() {
     	UserExample example = new UserExample();
-        RowBounds rowBounds = new RowBounds((page - 1) * size, size);
-        List<User> list = userMapper.selectByExampleWithRowbounds(example, rowBounds);
-        return new PageableResult<User>(page, size, userMapper.countByExample(example), list);
+        return userMapper.selectByExample(example);
+    }
+
+    @Override
+    public List<User> getUsersByName(String name) {
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        criteria.andRealnameEqualTo(name);
+        return userMapper.selectByExample(example);
     }
 
     @Override
