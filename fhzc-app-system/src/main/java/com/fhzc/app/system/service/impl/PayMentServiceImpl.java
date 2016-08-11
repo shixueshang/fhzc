@@ -307,9 +307,11 @@ public class PayMentServiceImpl implements PayMentService {
 	    			//检测是否存在
 	    			isExist = false;
     				for(User user :users.getItems()){
-    					if(user.getPassportCode().equals(pcode_encry) && user.getPassportTypeId() == passport_type ){
-    						isExist = true;
-    						break;
+    					if(user.getLoginRole().trim().equals("customer")){
+	    					if(user.getPassportCode().equals(pcode_encry) && user.getPassportTypeId() == passport_type ){
+	    						isExist = true;
+	    						break;
+	    					}
     					}
     				}
     				
