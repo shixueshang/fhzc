@@ -179,7 +179,7 @@ BEGIN
 		select value  into _level_id from dictionary where cat='customer_level' and dictionary.key=p_member_level;
 		
 		insert into customer(uid,cb_id,level_id,risk,department_id,bank_info_id,customer_type) 
-			value(_userid, p_customerno, _level_id,'',_department_id,_bank_info_id,_customer_type);
+			value(_userid, p_customerno, _level_id,null,_department_id,_bank_info_id,_customer_type);
 		
 	else
 
@@ -321,7 +321,7 @@ BEGIN
 					set _userid = last_insert_id();
 					
 					insert into customer(uid,cb_id,level_id,risk,department_id,bank_info_id,customer_type) 
-					select _userid, -1, dictionary.value,'',-1,-1,_customer_type from dictionary where cat='customer_level' and dictionary.key='投资人';
+					select _userid, -1, dictionary.value,null,-1,-1,_customer_type from dictionary where cat='customer_level' and dictionary.key='投资人';
 
 					
 					select customer_id into _customer_Id from customer where uid =_userid;
@@ -335,9 +335,9 @@ BEGIN
 					select id into _assets_id from assets_history where product_id=_product_id and customer_id=_customer_Id and type='purchase';
 					if _assets_id =-1 then 
 						insert into assets_history(customer_id,product_id,type,amount,ctime,serial, customer_name,planner_id, buy_time, amount_usd, amount_rmb, annualised, period
-							, invaild, bank,bank_account,pub_agent, is_member, memo,bank,bank_account)
+							, invaild, bank,bank_account,pub_agent, is_member, memo)
 							values(_customer_Id,_product_id,'purchase',p_amount_rmb,now(),'', p_realname,_planner_id,p_buy_time,0, p_amount_rmb, p_annualised, p_period
-							, 1,'','', p_pub_agent, 0, p_memo,'','');
+							, 1,'','', p_pub_agent, 0, p_memo);
 					else
 						update assets_history set amount_rmb =amount_rmb + p_amount_rmb where id=_assets_id;
 						update assets_history set invaild =0 where id=_assets_id and amount_rmb=0;
@@ -366,9 +366,9 @@ BEGIN
 					select id into _assets_id from assets_history where product_id=_product_id and customer_id=_customer_Id and type='purchase';
 					if _assets_id =-1 then 
 						insert into assets_history(customer_id,product_id,type,amount,ctime,serial, customer_name,planner_id, buy_time, amount_usd, amount_rmb, annualised, period
-							, invaild, bank,bank_account,pub_agent, is_member, memo,bank,bank_account)
+							, invaild, bank,bank_account,pub_agent, is_member, memo)
 							values(_customer_Id,_product_id,'purchase',p_amount_rmb,now(),'', p_realname,_planner_id,p_buy_time,0, p_amount_rmb, p_annualised, p_period
-							, 1,'','', p_pub_agent, 0, p_memo,'','');
+							, 1,'','', p_pub_agent, 0, p_memo);
 					else
 						update assets_history set amount_rmb =amount_rmb + p_amount_rmb where id=_assets_id;
 						update assets_history set invaild =0 where id=_assets_id and amount_rmb=0;
@@ -517,7 +517,12 @@ BEGIN
 	end if;
 	
 
-END-- ----------------------------
+END
+;;
+DELIMITER ;
+
+
+-- ----------------------------
 -- Procedure structure for sp_insert_planner
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `sp_insert_planner`;
