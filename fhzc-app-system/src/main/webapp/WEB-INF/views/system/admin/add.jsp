@@ -173,7 +173,6 @@
     $(function(){
 
         var adminId =  '${adminUser.id}';
-        console.info(adminId)
         if(adminId != null && adminId != ''){
             $('#admin_title').text('编辑管理员');
             $('#adminId').val(adminId);

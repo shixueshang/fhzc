@@ -265,4 +265,23 @@ public class Const {
         public static final Integer ON= 1;
         public static final Integer OFF= 0;
     }
+
+    public static class FROM_TYPE{
+        /**
+         * 产品
+         */
+        public static final String PRODUCT= "product";
+        /**
+         * 活动
+         */
+        public static final String ACTIVITY= "activity";
+        /**
+         * 权益
+         */
+        public static final String RIGHTS= "rights";
+        /**
+         * 其他
+         */
+        public static final String OTHER= "other";
+    }
 }

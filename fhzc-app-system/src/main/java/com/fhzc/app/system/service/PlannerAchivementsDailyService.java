@@ -29,9 +29,24 @@ public interface PlannerAchivementsDailyService {
     PageableResult<PlannerAchivementsDaily> findPagePlannerAchivementsDaily(int page, int size);
 
     /**
+     * 根据分公司统计理财师业绩
+     * @param subCompanys
+     * @return
+     */
+    List<PlannerAchivementsDaily> findAchiveDailyBySub(List<Integer> subCompanys);
+
+    /**
+     * 根据团队统计理财师业绩
+     * @param team
+     * @return
+     */
+    List<PlannerAchivementsDaily> findAchiveDailyByTeam(List<Integer> team);
+
+    /**
+     * 根据理财师统计理财师业绩
      * @param planners
      * @return
      */
-    List<PlannerAchivementsDaily> findAchivementsDaily(List<Integer> planners);
+    List<PlannerAchivementsDaily> findAchiveDailyByPlanner(List<Integer> planners);
 
 }

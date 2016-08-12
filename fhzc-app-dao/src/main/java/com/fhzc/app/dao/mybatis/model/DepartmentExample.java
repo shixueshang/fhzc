@@ -474,6 +474,126 @@ public class DepartmentExample {
             addCriterion("`status` not between", value1, value2, "status");
             return (Criteria) this;
         }
+
+        public Criteria andLeaderUidIsNull() {
+            addCriterion("`leader_uid` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderUidIsNotNull() {
+            addCriterion("`leader_uid` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderUidEqualTo(Integer value) {
+            addCriterion("`leader_uid` =", value, "leaderUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderUidNotEqualTo(Integer value) {
+            addCriterion("`leader_uid` <>", value, "leaderUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderUidGreaterThan(Integer value) {
+            addCriterion("`leader_uid` >", value, "leaderUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderUidGreaterThanOrEqualTo(Integer value) {
+            addCriterion("`leader_uid` >=", value, "leaderUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderUidLessThan(Integer value) {
+            addCriterion("`leader_uid` <", value, "leaderUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderUidLessThanOrEqualTo(Integer value) {
+            addCriterion("`leader_uid` <=", value, "leaderUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderUidIn(List<Integer> values) {
+            addCriterion("`leader_uid` in", values, "leaderUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderUidNotIn(List<Integer> values) {
+            addCriterion("`leader_uid` not in", values, "leaderUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderUidBetween(Integer value1, Integer value2) {
+            addCriterion("`leader_uid` between", value1, value2, "leaderUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderUidNotBetween(Integer value1, Integer value2) {
+            addCriterion("`leader_uid` not between", value1, value2, "leaderUid");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelIsNull() {
+            addCriterion("`level` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelIsNotNull() {
+            addCriterion("`level` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelEqualTo(Integer value) {
+            addCriterion("`level` =", value, "level");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelNotEqualTo(Integer value) {
+            addCriterion("`level` <>", value, "level");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelGreaterThan(Integer value) {
+            addCriterion("`level` >", value, "level");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelGreaterThanOrEqualTo(Integer value) {
+            addCriterion("`level` >=", value, "level");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelLessThan(Integer value) {
+            addCriterion("`level` <", value, "level");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelLessThanOrEqualTo(Integer value) {
+            addCriterion("`level` <=", value, "level");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelIn(List<Integer> values) {
+            addCriterion("`level` in", values, "level");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelNotIn(List<Integer> values) {
+            addCriterion("`level` not in", values, "level");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelBetween(Integer value1, Integer value2) {
+            addCriterion("`level` between", value1, value2, "level");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelNotBetween(Integer value1, Integer value2) {
+            addCriterion("`level` not between", value1, value2, "level");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

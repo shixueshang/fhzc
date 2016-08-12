@@ -205,10 +205,24 @@ public class PlannerAchivementsDailyImpl implements PlannerAchivementsDailyServi
 	}
 
     @Override
-    public List<PlannerAchivementsDaily> findAchivementsDaily(List<Integer> planners) {
+    public List<PlannerAchivementsDaily> findAchiveDailyBySub(List<Integer> subCompanys) {
         Map<String, Object> param = new HashMap<String, Object>();
-        param.put("plannerIds", planners);
-        return null; //plannerAchivementsDailyMapper.getAchivementsData(param);
+        param.put("company", subCompanys);
+        return plannerAchivementsDailyMapper.findAchiveDailyBySub(param);
+    }
+
+    @Override
+    public List<PlannerAchivementsDaily> findAchiveDailyByTeam(List<Integer> team) {
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("team", team);
+        return plannerAchivementsDailyMapper.findAchiveDailyByTeam(param);
+    }
+
+    @Override
+    public List<PlannerAchivementsDaily> findAchiveDailyByPlanner(List<Integer> planners) {
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("planners", planners);
+        return plannerAchivementsDailyMapper.findAchiveDailyByPlanner(param);
     }
 
 }

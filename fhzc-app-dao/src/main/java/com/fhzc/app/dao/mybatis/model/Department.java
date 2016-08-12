@@ -15,6 +15,10 @@ public class Department {
 
     private Integer status;
 
+    private Integer leaderUid;
+
+    private Integer level;
+
     public Integer getDepartmentId() {
         return departmentId;
     }
@@ -61,5 +65,21 @@ public class Department {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getLeaderUid() {
+        return leaderUid;
+    }
+
+    public void setLeaderUid(Integer leaderUid) {
+        this.leaderUid = leaderUid;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
     }
 }

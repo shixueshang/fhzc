@@ -214,12 +214,30 @@ public class PlannerAchivementsMonthlyImpl implements PlannerAchivementsMonthlyS
 		        return new PageableResult<PlannerAchivementsMonthly>(page, size, list.size(), list);
 			}
 
+
     @Override
-    public List<PlannerAchivementsMonthly> findAchivementsMonthly(List<Integer> planners, String month) {
+    public List<PlannerAchivementsMonthly> findAchiveMonthlyByCompany(List<Integer> subCompanys, String month) {
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("company", subCompanys);
+        param.put("month", month);
+        return plannerAchivementsMonthlyMapper.findAchiveMonthlyBySub(param);
+    }
+
+    @Override
+    public List<PlannerAchivementsMonthly> findAchiveMonthlyByTeam(List<Integer> team, String month) {
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("team", team);
+        param.put("month", month);
+        return plannerAchivementsMonthlyMapper.findAchiveMonthlyByTeam(param);
+    }
+
+
+    @Override
+    public List<PlannerAchivementsMonthly> findAchiveMonthlyByPlanner(List<Integer> planners, String month) {
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("planners", planners);
         param.put("month", month);
-        return null; //plannerAchivementsMonthlyMapper.getAchivementsData(param);
+        return plannerAchivementsMonthlyMapper.findAchiveMonthlyByPlanner(param);
     }
 
 
