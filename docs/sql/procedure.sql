@@ -681,7 +681,7 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_update_department_leader`(p_login varchar(45), p_passwd varchar(45), p_work_num varchar(45), p_realname varchar(45)
 ,p_passport_code varchar(200), p_mobile varchar(200), p_company varchar(45), p_area varchar(45), p_dept1_name varchar(45), p_dept1_leader varchar(45)
 ,p_dept2_name varchar(45), p_dept2_leader varchar(45), p_dept3_name varchar(45), p_dept3_leader varchar(45)
-,p_dept4_name varchar(45),p_dept4_leader varchar(45),p_job_title_cn varchar(45),p_position varchar(45)
+,p_dept4_name varchar(45),p_dept4_leader varchar(45),p_job_title_cn varchar(45),p_position varchar(45),p_salt varchar(45)
 )
 BEGIN
 	-- 理财师花名册，只负责更新部门负责人
@@ -788,7 +788,7 @@ BEGIN
 	-- 四级部门负责人找 对应的三，四部门的人
 	if p_dept4_leader <> '' and p_dept4_leader <> '-' then 
 	   set _planner_id = -1;
-	   select id into _planner_id from user,planner where user.uid =planner.uid and, user.realname=p_dept4_leader and user.login_role='planner' and department_id in(_dept3_id,_dept4_id);
+	   select id into _planner_id from user,planner where user.uid =planner.uid and user.realname=p_dept4_leader and user.login_role='planner' and department_id in(_dept3_id,_dept4_id);
 	   if _planner_id > 0 then 
 			update department set leader_uid = _planner_id where department_id=_dept4_id;
 	   end if;
