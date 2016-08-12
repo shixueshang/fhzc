@@ -179,7 +179,7 @@ BEGIN
 		select value  into _level_id from dictionary where cat='customer_level' and dictionary.key=p_member_level;
 		
 		insert into customer(uid,cb_id,level_id,risk,department_id,bank_info_id,customer_type) 
-			value(_userid, p_customerno, _level_id,'',_department_id,_bank_info_id,_customer_type);
+			value(_userid, p_customerno, _level_id,null,_department_id,_bank_info_id,_customer_type);
 		
 	else
 
@@ -321,7 +321,7 @@ BEGIN
 					set _userid = last_insert_id();
 					
 					insert into customer(uid,cb_id,level_id,risk,department_id,bank_info_id,customer_type) 
-					select _userid, -1, dictionary.value,'',-1,-1,_customer_type from dictionary where cat='customer_level' and dictionary.key='投资人';
+					select _userid, -1, dictionary.value,null,-1,-1,_customer_type from dictionary where cat='customer_level' and dictionary.key='投资人';
 
 					
 					select customer_id into _customer_Id from customer where uid =_userid;
@@ -335,9 +335,9 @@ BEGIN
 					select id into _assets_id from assets_history where product_id=_product_id and customer_id=_customer_Id and type='purchase';
 					if _assets_id =-1 then 
 						insert into assets_history(customer_id,product_id,type,amount,ctime,serial, customer_name,planner_id, buy_time, amount_usd, amount_rmb, annualised, period
-							, invaild, bank,bank_account,pub_agent, is_member, memo,bank,bank_account)
+							, invaild, bank,bank_account,pub_agent, is_member, memo)
 							values(_customer_Id,_product_id,'purchase',p_amount_rmb,now(),'', p_realname,_planner_id,p_buy_time,0, p_amount_rmb, p_annualised, p_period
-							, 1,'','', p_pub_agent, 0, p_memo,'','');
+							, 1,'','', p_pub_agent, 0, p_memo);
 					else
 						update assets_history set amount_rmb =amount_rmb + p_amount_rmb where id=_assets_id;
 						update assets_history set invaild =0 where id=_assets_id and amount_rmb=0;
@@ -366,9 +366,9 @@ BEGIN
 					select id into _assets_id from assets_history where product_id=_product_id and customer_id=_customer_Id and type='purchase';
 					if _assets_id =-1 then 
 						insert into assets_history(customer_id,product_id,type,amount,ctime,serial, customer_name,planner_id, buy_time, amount_usd, amount_rmb, annualised, period
-							, invaild, bank,bank_account,pub_agent, is_member, memo,bank,bank_account)
+							, invaild, bank,bank_account,pub_agent, is_member, memo)
 							values(_customer_Id,_product_id,'purchase',p_amount_rmb,now(),'', p_realname,_planner_id,p_buy_time,0, p_amount_rmb, p_annualised, p_period
-							, 1,'','', p_pub_agent, 0, p_memo,'','');
+							, 1,'','', p_pub_agent, 0, p_memo);
 					else
 						update assets_history set amount_rmb =amount_rmb + p_amount_rmb where id=_assets_id;
 						update assets_history set invaild =0 where id=_assets_id and amount_rmb=0;
@@ -517,7 +517,12 @@ BEGIN
 	end if;
 	
 
-END-- ----------------------------
+END
+;;
+DELIMITER ;
+
+
+-- ----------------------------
 -- Procedure structure for sp_insert_planner
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `sp_insert_planner`;
@@ -681,7 +686,7 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_update_department_leader`(p_login varchar(45), p_passwd varchar(45), p_work_num varchar(45), p_realname varchar(45)
 ,p_passport_code varchar(200), p_mobile varchar(200), p_company varchar(45), p_area varchar(45), p_dept1_name varchar(45), p_dept1_leader varchar(45)
 ,p_dept2_name varchar(45), p_dept2_leader varchar(45), p_dept3_name varchar(45), p_dept3_leader varchar(45)
-,p_dept4_name varchar(45),p_dept4_leader varchar(45),p_job_title_cn varchar(45),p_position varchar(45)
+,p_dept4_name varchar(45),p_dept4_leader varchar(45),p_job_title_cn varchar(45),p_position varchar(45),p_salt varchar(45)
 )
 BEGIN
 	-- 理财师花名册，只负责更新部门负责人
@@ -788,7 +793,7 @@ BEGIN
 	-- 四级部门负责人找 对应的三，四部门的人
 	if p_dept4_leader <> '' and p_dept4_leader <> '-' then 
 	   set _planner_id = -1;
-	   select id into _planner_id from user,planner where user.uid =planner.uid and, user.realname=p_dept4_leader and user.login_role='planner' and department_id in(_dept3_id,_dept4_id);
+	   select id into _planner_id from user,planner where user.uid =planner.uid and user.realname=p_dept4_leader and user.login_role='planner' and department_id in(_dept3_id,_dept4_id);
 	   if _planner_id > 0 then 
 			update department set leader_uid = _planner_id where department_id=_dept4_id;
 	   end if;

@@ -309,7 +309,7 @@ public class PayMentServiceImpl implements PayMentService {
 
     				for(User user : users){
     					if(user.getLoginRole().trim().equals("customer")){
-	    					if(user.getPassportCode().equals(pcode_encry) && user.getPassportTypeId() == passport_type ){
+	    					if(user.getPassportCode().equals(objects[5].toString()) && user.getPassportTypeId() == passport_type ){
 	    						isExist = true;
 	    						break;
 	    					}

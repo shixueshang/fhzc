@@ -119,7 +119,7 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 		        		 key = pcode.substring(pcode.length()-8);
 	    			}
     				for(User user : users){
-    					if(user.getPassportCode().equals(EncryptUtils.encryptToDES(key, pcode)) && user.getPassportTypeId() == passport_type ){
+    					if(user.getPassportCode().equals(pcode) && user.getPassportTypeId() == passport_type ){
     						isExist = true;
     						break;
     					}
@@ -268,7 +268,7 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 				        		 key = pcode.substring(pcode.length()-8);
 			    			}
 		    				for(User user : users){
-		    					if(user.getPassportCode().equals(EncryptUtils.encryptToDES(key, pcode)) && user.getPassportTypeId() == passport_type ){
+		    					if(user.getPassportCode().equals(pcode) && user.getPassportTypeId() == passport_type ){
 		    						isExist = true;
 		    						break;
 		    					}
