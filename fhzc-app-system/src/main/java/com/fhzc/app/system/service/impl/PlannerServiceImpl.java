@@ -7,8 +7,10 @@ import com.fhzc.app.system.commons.util.excel.ExcelImporter;
 import com.fhzc.app.system.commons.util.excel.ImportCallBack;
 import com.fhzc.app.system.commons.util.excel.ImportConfig;
 import com.fhzc.app.dao.mybatis.inter.PlannerMapper;
+import com.fhzc.app.dao.mybatis.model.Areas;
 import com.fhzc.app.dao.mybatis.model.Planner;
 import com.fhzc.app.dao.mybatis.model.PlannerExample;
+import com.fhzc.app.system.service.AreasService;
 import com.fhzc.app.system.service.PlannerService;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -42,6 +44,9 @@ public class PlannerServiceImpl implements PlannerService {
 	 
 	@Resource
     PlannerMapper plannerMapper;
+	
+	@Resource
+    AreasService areasService;
 
     /**
      * 获得理财师信息
@@ -153,6 +158,7 @@ public class PlannerServiceImpl implements PlannerService {
     public Map<String, Object> importExcelFile(MultipartFile multipartFile) throws Exception {
     	int sheetnum =0;
 		int rownum =2;
+		List<Areas> as = areasService.getAllAreas();
     	Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
         @Override
         public String validation(Workbook xwb) {
@@ -209,6 +215,19 @@ public class PlannerServiceImpl implements PlannerService {
 		        		enphone = EncryptUtils.encryptToDES(key, phone);
 	        		}
 	        		
+	        		//判断所属城市是否存在
+	    			boolean isExist = false;
+	    			for(Areas areas : as){
+    					if(areas.getAreaName().equals(objects[6].toString().trim())){
+    						isExist = true;
+    						break;
+    					}
+    				}
+    				
+		    		if(!isExist){
+	    				errordata = TextUtils.setErrorMessage(i+3, 7, objects[6].toString()+ "，该城市区域尚未建立公司！");
+	    				return errordata;
+	    			}
 	        		temData[0] = objects[1];						//工号 work_num,作为初始登录名
 	        		temData[1] = DigestUtils.md5Hex(phone);			//手机号 mobile，作为初始密码	
 	        		temData[2] = objects[1];						//工号 work_num
