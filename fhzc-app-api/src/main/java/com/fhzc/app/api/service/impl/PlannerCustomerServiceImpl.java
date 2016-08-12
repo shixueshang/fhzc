@@ -27,6 +27,7 @@ public class PlannerCustomerServiceImpl implements PlannerCustomerService {
         PlannerCustomerExample example = new PlannerCustomerExample();
         PlannerCustomerExample.Criteria criteria = example.createCriteria();
         criteria.andPlannerIdEqualTo(planner_id);
+        example.setOrderByClause("id desc");
 
         if(plannerCustomerMapper.countByExample(example) > 0){
             return plannerCustomerMapper.selectByExampleWithBLOBs(example);

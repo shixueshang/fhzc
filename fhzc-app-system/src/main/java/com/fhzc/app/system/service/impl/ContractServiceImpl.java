@@ -84,8 +84,8 @@ public class ContractServiceImpl implements ContractService {
     	Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
         @Override
         public String validation(Workbook xwb) {
-        	if(!TextUtils.validWorkbookTitle(xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString(), "发行产品统计表") ){
-        		if(xwb.getSheetAt(sheetnum).getRow(0).getCell(0) != null){
+        	if(xwb.getSheetAt(sheetnum).getRow(0) == null || !TextUtils.validWorkbookTitle(xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString(), "发行产品统计表") ){
+        		if(xwb.getSheetAt(sheetnum).getRow(0) != null && xwb.getSheetAt(sheetnum).getRow(0).getCell(0) != null){
         			return "报表第" + String.valueOf(sheetnum+1) +"个sheet,表头为："+ xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString() +" 不是正确的报表！";
         		}else{
         			return "报表第" + String.valueOf(sheetnum+1) +"个sheet, 不是正确的报表！";

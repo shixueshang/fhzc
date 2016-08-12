@@ -40,10 +40,6 @@ public class PlannerAchivementsDailyController  extends BaseController  {
     @RequestMapping(value = "/importor", method = RequestMethod.GET)
     public ModelAndView importorProduct(){
         ModelAndView mav = new ModelAndView("business/plannerachivementsdaily/importor");
-        PageableResult<PlannerAchivementsDaily> pageableResult = plannerAchivementsDailyService.findPagePlannerAchivementsDaily(page, size);
-        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
-        mav.addObject("plannerAchivementsDailys", pageableResult.getItems());
-
         return mav;
 
     }
@@ -62,13 +58,7 @@ public class PlannerAchivementsDailyController  extends BaseController  {
         try {
             result = plannerAchivementsDailyService.importDailyExcelFile(multiFile);
             result.put("success", true);
-            	
-            PageableResult<PlannerAchivementsDaily> pageableResult = plannerAchivementsDailyService.findPagePlannerAchivementsDaily(page, size);
-            mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
-            mav.addObject("plannerAchivementsDailys", pageableResult.getItems());
-            
-           mav.addAllObjects(result);
-
+            mav.addAllObjects(result);
             return mav;
 
         } catch (Exception e) {

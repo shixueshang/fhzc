@@ -179,7 +179,7 @@ BEGIN
 		select value  into _level_id from dictionary where cat='customer_level' and dictionary.key=p_member_level;
 		
 		insert into customer(uid,cb_id,level_id,risk,department_id,bank_info_id,customer_type) 
-			value(_userid, p_customerno, _level_id,'',_department_id,_bank_info_id,_customer_type);
+			value(_userid, p_customerno, _level_id,null,_department_id,_bank_info_id,_customer_type);
 		
 	else
 
@@ -321,7 +321,7 @@ BEGIN
 					set _userid = last_insert_id();
 					
 					insert into customer(uid,cb_id,level_id,risk,department_id,bank_info_id,customer_type) 
-					select _userid, -1, dictionary.value,'',-1,-1,_customer_type from dictionary where cat='customer_level' and dictionary.key='投资人';
+					select _userid, -1, dictionary.value,null,-1,-1,_customer_type from dictionary where cat='customer_level' and dictionary.key='投资人';
 
 					
 					select customer_id into _customer_Id from customer where uid =_userid;
@@ -335,9 +335,9 @@ BEGIN
 					select id into _assets_id from assets_history where product_id=_product_id and customer_id=_customer_Id and type='purchase';
 					if _assets_id =-1 then 
 						insert into assets_history(customer_id,product_id,type,amount,ctime,serial, customer_name,planner_id, buy_time, amount_usd, amount_rmb, annualised, period
-							, invaild, bank,bank_account,pub_agent, is_member, memo,bank,bank_account)
+							, invaild, bank,bank_account,pub_agent, is_member, memo)
 							values(_customer_Id,_product_id,'purchase',p_amount_rmb,now(),'', p_realname,_planner_id,p_buy_time,0, p_amount_rmb, p_annualised, p_period
-							, 1,'','', p_pub_agent, 0, p_memo,'','');
+							, 1,'','', p_pub_agent, 0, p_memo);
 					else
 						update assets_history set amount_rmb =amount_rmb + p_amount_rmb where id=_assets_id;
 						update assets_history set invaild =0 where id=_assets_id and amount_rmb=0;
@@ -366,9 +366,9 @@ BEGIN
 					select id into _assets_id from assets_history where product_id=_product_id and customer_id=_customer_Id and type='purchase';
 					if _assets_id =-1 then 
 						insert into assets_history(customer_id,product_id,type,amount,ctime,serial, customer_name,planner_id, buy_time, amount_usd, amount_rmb, annualised, period
-							, invaild, bank,bank_account,pub_agent, is_member, memo,bank,bank_account)
+							, invaild, bank,bank_account,pub_agent, is_member, memo)
 							values(_customer_Id,_product_id,'purchase',p_amount_rmb,now(),'', p_realname,_planner_id,p_buy_time,0, p_amount_rmb, p_annualised, p_period
-							, 1,'','', p_pub_agent, 0, p_memo,'','');
+							, 1,'','', p_pub_agent, 0, p_memo);
 					else
 						update assets_history set amount_rmb =amount_rmb + p_amount_rmb where id=_assets_id;
 						update assets_history set invaild =0 where id=_assets_id and amount_rmb=0;
@@ -464,7 +464,7 @@ BEGIN
 	if p_dept1_name <> '' and p_dept1_name <> '-'  then 
 		select department_id into _dept1_id from department where title=p_dept1_name;
 		if _dept1_id = -1 then 
-			insert into department(title,parent_dept_id,ctime,leaf,status,leader_uid) values(p_dept1_name,0,now(),0,0,-1);
+			insert into department(title,parent_dept_id,ctime,leaf,status,leader_uid,level) values(p_dept1_name,null,now(),0,0,-1,1);
 			set _dept1_id = last_insert_id();
 		End if;
 		set _dept_id = _dept1_id;
@@ -473,7 +473,7 @@ BEGIN
 	if p_dept2_name <> '' and p_dept2_name <> '-'  then 
 		select department_id into _dept2_id from department where title=p_dept2_name;
 		if _dept2_id = -1 then 
-			insert into department(title,parent_dept_id,ctime,leaf,status,leader_uid) values(p_dept2_name,_dept1_id,now(),0,0,-1);
+			insert into department(title,parent_dept_id,ctime,leaf,status,leader_uid,level) values(p_dept2_name,_dept1_id,now(),0,0,-1,2);
 			set _dept2_id = last_insert_id();
 		End if;
 		set _dept_id = _dept2_id;
@@ -482,7 +482,7 @@ BEGIN
 	if p_dept3_name <> '' and p_dept3_name <> '-'  then 
 		select department_id into _dept3_id from department where title=p_dept3_name;
 		if _dept3_id = -1 then 
-			insert into department(title,parent_dept_id,ctime,leaf,status,leader_uid) values(p_dept3_name,_dept2_id,now(),1,0,-1);
+			insert into department(title,parent_dept_id,ctime,leaf,status,leader_uid,level) values(p_dept3_name,_dept2_id,now(),1,0,-1,3);
 			set _dept3_id = last_insert_id();
 		End if;
 		set _dept_id = _dept3_id;
@@ -491,7 +491,7 @@ BEGIN
 	if p_dept4_name <> '' and p_dept4_name <> '-'  then 
 		select department_id into _dept4_id from department where title=p_dept4_name and department.parent_dept_id in(select department_id from department where title=p_dept3_name);
 		if _dept4_id = -1 then 
-			insert into department(title,parent_dept_id,ctime,leaf,status,leader_uid) values(p_dept4_name,_dept3_id,now(),1,0,-1);
+			insert into department(title,parent_dept_id,ctime,leaf,status,leader_uid,level) values(p_dept4_name,_dept3_id,now(),1,0,-1,4);
 			set _dept4_id = last_insert_id();
 		End if;
 		set _dept_id = _dept4_id;
@@ -513,6 +513,100 @@ BEGIN
 		update user,areas set passport_code =p_passport_code, mobile=p_mobile, user.area_id=areas.area_id   where user.uid=_user_id and area_name=p_area;
 		update planner set planner.department_id=_dept_id, job_title_cn = p_job_title_cn, position = p_position  
 				where uid =_planner_id ;
+	
+	end if;
+	
+
+END
+;;
+DELIMITER ;
+
+
+-- ----------------------------
+-- Procedure structure for sp_insert_planner
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `sp_insert_planner`;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_insert_planner`(p_login varchar(45), p_passwd varchar(45), p_work_num varchar(45), p_realname varchar(45)
+,p_passport_code varchar(200), p_mobile varchar(200), p_company varchar(45), p_area varchar(45), p_dept1_name varchar(45), p_dept1_leader varchar(45)
+,p_dept2_name varchar(45), p_dept2_leader varchar(45), p_dept3_name varchar(45), p_dept3_leader varchar(45)
+,p_dept4_name varchar(45),p_dept4_leader varchar(45),p_job_title_cn varchar(45),p_position varchar(45),p_salt varchar(45)
+)
+BEGIN
+	-- 理财师花名册 ，只负责导入department 和 planner
+	Declare _user_id int;  -- user id
+	DECLARE _planner_id int;	-- 理财师ID
+	Declare _dept1_id int;		-- 部门1 ID
+	Declare _dept2_id int;		-- 部门2 ID
+	Declare _dept3_id int;		-- 部门3 ID
+	Declare _dept4_id int;		-- 部门4 ID
+	Declare _dept_id int; 		-- 理财师所在部门 ID
+	
+	set _planner_id = -1;
+	set _user_id =-1;
+	set _dept1_id = -1;
+	set _dept2_id = -1;
+	set _dept3_id = -1;
+	set _dept4_id = -1;
+	set _dept_id = -1;
+	-- 先判断部门是否存在，不存在就新增
+	-- 再判断理财师是否存在，不存在，就新增，如存在，就更新改理财师的信息。如果改理财师是部门负责人，则更新对应的部门负责人。
+	
+	if p_dept1_name <> '' and p_dept1_name <> '-'  then 
+		select department_id into _dept1_id from department where title=p_dept1_name;
+		if _dept1_id = -1 then 
+			insert into department(title,parent_dept_id,ctime,leaf,status,leader_uid,level) values(p_dept1_name,null,now(),0,0,-1,1);
+			set _dept1_id = last_insert_id();
+		End if;
+		set _dept_id = _dept1_id;
+	end if; 
+	
+	if p_dept2_name <> '' and p_dept2_name <> '-'  then 
+		select department_id into _dept2_id from department where title=p_dept2_name;
+		if _dept2_id = -1 then 
+			insert into department(title,parent_dept_id,ctime,leaf,status,leader_uid,level) values(p_dept2_name,_dept1_id,now(),0,0,-1,2);
+			set _dept2_id = last_insert_id();
+			update department set leaf=0 where department_id = _dept1_id;
+		End if;
+		set _dept_id = _dept2_id;
+	end if; 
+	
+	if p_dept3_name <> '' and p_dept3_name <> '-'  then 
+		select department_id into _dept3_id from department where title=p_dept3_name;
+		if _dept3_id = -1 then 
+			insert into department(title,parent_dept_id,ctime,leaf,status,leader_uid,level) values(p_dept3_name,_dept2_id,now(),1,0,-1,3);
+			set _dept3_id = last_insert_id();
+			update department set leaf=0 where department_id = _dept2_id;
+		End if;
+		set _dept_id = _dept3_id;
+	end if; 
+	
+	if p_dept4_name <> '' and p_dept4_name <> '-'  then 
+		select department_id into _dept4_id from department where title=p_dept4_name and department.parent_dept_id in(select department_id from department where title=p_dept3_name);
+		if _dept4_id = -1 then 
+			insert into department(title,parent_dept_id,ctime,leaf,status,leader_uid,level) values(p_dept4_name,_dept3_id,now(),1,0,-1,4);
+			set _dept4_id = last_insert_id();
+			update department set leaf=0 where department_id = _dept3_id;
+		End if;
+		set _dept_id = _dept4_id;
+	end if; 
+	
+	select id,uid into _planner_id,_user_id from planner where work_num = P_work_num;
+	if _planner_id =-1 then
+	-- insert 
+		insert into user (login, password, realname, passport_code, mobile, login_role, area_id, ctime,salt) 
+		 select p_login,p_passwd,p_realname,p_passport_code,p_mobile,'planner',areas.area_id,now(),p_salt from areas where area_name=p_area;
+		
+		set _user_id = last_insert_id();
+		insert into planner(uid, work_num, department_id, job_title_cn, position) 
+			values(_user_id,p_work_num,_dept_id, p_job_title_cn, p_position);
+		
+		set _planner_id = last_insert_id();
+	else
+	-- update 
+		update user,areas set passport_code =p_passport_code, mobile=p_mobile,salt =p_salt, user.area_id=areas.area_id   where user.uid=_user_id and area_name=p_area;
+		update planner set planner.department_id=_dept_id, job_title_cn = p_job_title_cn, position = p_position  
+				where id =_planner_id ;
 	
 	end if;
 	
@@ -585,14 +679,14 @@ END
 DELIMITER ;
 
 -- ----------------------------
--- Procedure structure for sp_update_department_leader
+-- Procedure structure for sp_insert_planner
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `sp_update_department_leader`;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_update_department_leader`(p_login varchar(45), p_passwd varchar(45), p_work_num varchar(45), p_realname varchar(45)
 ,p_passport_code varchar(200), p_mobile varchar(200), p_company varchar(45), p_area varchar(45), p_dept1_name varchar(45), p_dept1_leader varchar(45)
 ,p_dept2_name varchar(45), p_dept2_leader varchar(45), p_dept3_name varchar(45), p_dept3_leader varchar(45)
-,p_dept4_name varchar(45),p_dept4_leader varchar(45),p_job_title_cn varchar(45),p_position varchar(45)
+,p_dept4_name varchar(45),p_dept4_leader varchar(45),p_job_title_cn varchar(45),p_position varchar(45),p_salt varchar(45)
 )
 BEGIN
 	-- 理财师花名册，只负责更新部门负责人
@@ -617,7 +711,7 @@ BEGIN
 	if p_dept1_name <> '' and p_dept1_name <> '-'  then 
 		select department_id into _dept1_id from department where title=p_dept1_name;
 		if _dept1_id = -1 then 
-			insert into department(title,parent_dept_id,ctime,leaf,status,leader_uid) values(p_dept1_name,0,now(),0,0,-1);
+			insert into department(title,parent_dept_id,ctime,leaf,status,leader_uid,level) values(p_dept1_name,null,now(),0,0,-1,1);
 			set _dept1_id = last_insert_id();
 		End if;
 		set _dept_id = _dept1_id;
@@ -626,7 +720,7 @@ BEGIN
 	if p_dept2_name <> '' and p_dept2_name <> '-'  then 
 		select department_id into _dept2_id from department where title=p_dept2_name;
 		if _dept2_id = -1 then 
-			insert into department(title,parent_dept_id,ctime,leaf,status,leader_uid) values(p_dept2_name,_dept1_id,now(),0,0,-1);
+			insert into department(title,parent_dept_id,ctime,leaf,status,leader_uid,level) values(p_dept2_name,_dept1_id,now(),0,0,-1,2);
 			set _dept2_id = last_insert_id();
 		End if;
 		set _dept_id = _dept2_id;
@@ -635,7 +729,7 @@ BEGIN
 	if p_dept3_name <> '' and p_dept3_name <> '-'  then 
 		select department_id into _dept3_id from department where title=p_dept3_name;
 		if _dept3_id = -1 then 
-			insert into department(title,parent_dept_id,ctime,leaf,status,leader_uid) values(p_dept3_name,_dept2_id,now(),1,0,-1);
+			insert into department(title,parent_dept_id,ctime,leaf,status,leader_uid,level) values(p_dept3_name,_dept2_id,now(),1,0,-1,3);
 			set _dept3_id = last_insert_id();
 		End if;
 		set _dept_id = _dept3_id;
@@ -644,7 +738,7 @@ BEGIN
 	if p_dept4_name <> '' and p_dept4_name <> '-'  then 
 		select department_id into _dept4_id from department where title=p_dept4_name and department.parent_dept_id in(select department_id from department where title=p_dept3_name);
 		if _dept4_id = -1 then 
-			insert into department(title,parent_dept_id,ctime,leaf,status,leader_uid) values(p_dept4_name,_dept3_id,now(),1,0,-1);
+			insert into department(title,parent_dept_id,ctime,leaf,status,leader_uid,level) values(p_dept4_name,_dept3_id,now(),1,0,-1,4);
 			set _dept4_id = last_insert_id();
 		End if;
 		set _dept_id = _dept4_id;
@@ -720,11 +814,34 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_add_plannerachivementdaily`(p_tr
 )
 BEGIN
 	-- 理财师业绩日报
+	Declare _subcompany_id int; -- 分公司ID
+	Declare _department_id int;	-- 所属部门ID
+	Declare _team_id int; 	-- 所属团队ID
+	Declare _planner_id int;  -- 理财师ID
+	Declare _level int; 	-- 部门级别
 	
+	
+	select department_id,id into _department_id,_planner_id from planner where work_num =p_work_num;
+	select department_id,parent_dept_id,`level` into _team_id,_subcompany_id,_level from department where department_id=_department_id;
+	-- 本身属于分公司
+	if _level =3 THEN
+			set _team_id = -1;
+			set _subcompany_id = _department_id;
+			
+	End if;
+
+	-- 本身属于大区或者总公司
+	if _level <=2 THEN
+			set _team_id = -1;
+			set _subcompany_id = -1;
+			
+	End if;
+
+
 	insert into `planner_achivements_daily` (`transfer_date`, `area_id`, `planner_uid`, 
-       `product_id`, `annualised`, `contract_amount`,`period`, `product_type`, `memo`, `ctime`) 
-        select p_transfer_date,area_id,uid,pid,p_annualised,p_contract_amount,p_period,p_product_type,p_memo,NOW() 
-	   from planner left join areas on area_name=p_area_name left join product on product.name=p_product_name where work_num=p_work_num;
+       `product_id`, `annualised`, `contract_amount`,`period`, `product_type`, `memo`, `ctime`, `company`, `team`, `department_id`) 
+        select p_transfer_date,area_id,_planner_id,pid,p_annualised,p_contract_amount,p_period,p_product_type,p_memo,NOW(), _subcompany_id,_team_id,_department_id
+	   from product left join areas on area_name=p_area_name where product.name=p_product_name;
 END
 ;;
 DELIMITER ;
@@ -740,12 +857,37 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_add_plannerachivementmonthly`(p_
 )
 BEGIN
 	-- 理财师业绩月报
+	-- 理财师业绩日报
+	Declare _subcompany_id int; -- 分公司ID
+	Declare _department_id int;	-- 所属部门ID
+	Declare _team_id int; 	-- 所属团队ID
+	Declare _planner_id int;  -- 理财师ID
+	Declare _mannager_id int;  -- 客户经理ID
+	Declare _level int; 	-- 部门级别
+	
+	
+	select department_id,id into _department_id,_planner_id from planner where work_num =p_planner_wornum;
+  select id into _mannager_id from planner where work_num =p_mannager_wornum;
+	select department_id,parent_dept_id,`level` into _team_id,_subcompany_id,_level from department where department_id=_department_id;
+	-- 本身属于分公司
+	if _level =3 THEN
+			set _team_id = -1;
+			set _subcompany_id = _department_id;
+			
+	End if;
+
+	-- 本身属于大区或者总公司
+	if _level <=2 THEN
+			set _team_id = -1;
+			set _subcompany_id = -1;
+			
+	End if;
+
 	insert into `planner_achivements_monthly` (`planner_uid`, `planner_percent`, `manager_uid`,`mannager_percent`, 
-	   `product_id`, `product_type`,`customer_uid`, `customer_name`,`customer_buy`, `annualised`, `product_cycle`, `transfer_date`, `memo`, `ctime`, `area_id`) 
-		select planner1.uid,p_planner_percent,planner2.uid,p_mannager_percent,p.pid,p.product_type,-1,p_realname,p_customer_buy,p_annualised,p_product_cycle,p_transfer_date,p_memo,NOW(),null from planner planner1
-		left join planner planner2 on planner2.work_num=p_mannager_wornum 
-		left join product p on p.name=p_product_name
-		where  planner1.work_num=p_planner_wornum;
+	   `product_id`, `product_type`,`customer_uid`, `customer_name`,`customer_buy`, `annualised`, `product_cycle`, `transfer_date`, `memo`, `ctime`, `area_id`, `company`, `team`, `department_id`) 
+		select _planner_id,p_planner_percent,_mannager_id,p_mannager_percent,p.pid,p.product_type,-1,p_realname,p_customer_buy,p_annualised,p_product_cycle,p_transfer_date,p_memo,NOW(),null
+		, _subcompany_id,_team_id,_department_id from product p
+		where  p.name=p_product_name;
 END
 ;;
 DELIMITER ;

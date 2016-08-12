@@ -4,6 +4,7 @@ import com.fhzc.app.api.service.ProductReservationService;
 import com.fhzc.app.api.service.ProductService;
 import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
+import com.fhzc.app.api.tools.ObjUtils;
 import com.fhzc.app.dao.mybatis.model.Product;
 import com.fhzc.app.dao.mybatis.model.ProductReservation;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
@@ -65,12 +66,16 @@ public class ProductOrderApiController extends BaseController{
      */
     @RequestMapping(value = "/api/personal/product/order",method = RequestMethod.GET)
     @ResponseBody
-    public ApiJsonResult personalProductOrder(Integer customer_id){
+    public ApiJsonResult personalProductOrder(Integer customer_id) throws Exception {
         List<ProductReservation> reservationList = productReservationService.getUserProductList(customer_id);
-        List<Product> result = new ArrayList<Product>();
+        List<Map> result = new ArrayList<Map>();
         for(ProductReservation reserv : reservationList) {
             Product product = productService.getProduct(reserv.getProductId());
-            result.add(product);
+            if(product != null){
+                Map map = ObjUtils.objectToMap(product);
+                map.put("investAmount",reserv.getAmount());
+                result.add(map);
+            }
         }
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
     }
