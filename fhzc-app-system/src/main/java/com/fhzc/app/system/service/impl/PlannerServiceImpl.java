@@ -29,10 +29,10 @@ import java.util.*;
 public class PlannerServiceImpl implements PlannerService {
 	
 	//导入在职时先生成department
-	private static final String IMPORT_DEPART_SQL = "call sp_update_department_leader(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	private static final String IMPORT_DEPART_SQL = "call sp_update_department_leader(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	
 	//在职理财师
-	private static final String IMPORT_SQL = "call sp_insert_planner(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	private static final String IMPORT_SQL = "call sp_insert_planner(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	
 	//离职理财师
 	private static final String IMPORT_OFF_SQL = "call sp_removeoffer_planner(?)";
@@ -95,7 +95,7 @@ public class PlannerServiceImpl implements PlannerService {
         	List<Object[]> plannerList = new ArrayList<Object[]>();
         	if(data.get(0).length>0){
 	        	for (Object[] objects : data) {
-	        		Object[] temData = new  Object[18];
+	        		Object[] temData = new  Object[19];
 	        		String phone = TextUtils.IntToDouble(objects[4].toString());
 	        		String pcode = objects[3].toString();
 	        		String key = pcode.substring(pcode.length()-8);
@@ -117,6 +117,7 @@ public class PlannerServiceImpl implements PlannerService {
 	        		temData[15] = objects[14];								//负责人 dept4_leader
 	        		temData[16] = objects[15];								//岗位名称 job_title_cn
 	        		temData[17] = objects[16];								//岗位序列 position
+	        		temData[18] = key;
 	        		plannerList.add(temData);
 				}
         	}
@@ -155,8 +156,8 @@ public class PlannerServiceImpl implements PlannerService {
     	Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
         @Override
         public String validation(Workbook xwb) {
-        	if(!TextUtils.validWorkbookTitle(xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString(), "在职") ){
-        		if(xwb.getSheetAt(sheetnum).getRow(0).getCell(0) != null){
+        	if(xwb.getSheetAt(sheetnum).getRow(0) == null || !TextUtils.validWorkbookTitle(xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString(), "在职") ){
+        		if(xwb.getSheetAt(sheetnum).getRow(0) != null && xwb.getSheetAt(sheetnum).getRow(0).getCell(0) != null){
         			return "报表第" + String.valueOf(sheetnum+1) +"个sheet,表头为："+ xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString() +" 不是正确的报表！";
         		}else{
         			return "报表第" + String.valueOf(sheetnum+1) +"个sheet, 不是正确的报表！";
@@ -177,7 +178,7 @@ public class PlannerServiceImpl implements PlannerService {
         	if(data.get(0).length>0){
         		int i = 0;
 	        	for (Object[] objects : data) {
-	        		Object[] temData = new  Object[18];
+	        		Object[] temData = new  Object[19];
 	        		//校验工号不能为空
 	        		List<Object[]> errordata  = TextUtils.checkEmptyString(i+3, 2, objects[1]);
 	    			if (errordata.size() >0){
@@ -226,6 +227,7 @@ public class PlannerServiceImpl implements PlannerService {
 	        		temData[15] = objects[14];						//负责人 dept4_leader
 	        		temData[16] = objects[15];						//岗位名称 job_title_cn
 	        		temData[17] = objects[16];						//岗位序列 position
+	        		temData[18] = key;	
 	        		plannerList.add(temData);
 	        		i++;
 				}
@@ -265,8 +267,8 @@ public class PlannerServiceImpl implements PlannerService {
     	Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
         @Override
         public String validation(Workbook xwb) {
-        	if(!TextUtils.validWorkbookTitle(xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString(), "离职") ){
-        		if(xwb.getSheetAt(sheetnum).getRow(0).getCell(0) != null){
+        	if(xwb.getSheetAt(sheetnum).getRow(0) == null || !TextUtils.validWorkbookTitle(xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString(), "离职") ){
+        		if(xwb.getSheetAt(sheetnum).getRow(0) != null && xwb.getSheetAt(sheetnum).getRow(0).getCell(0) != null){
         			return "报表第" + String.valueOf(sheetnum+1) +"个sheet,表头为："+ xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString() +" 不是正确的报表！";
         		}else{
         			return "报表第" + String.valueOf(sheetnum+1) +"个sheet, 不是正确的报表！";
