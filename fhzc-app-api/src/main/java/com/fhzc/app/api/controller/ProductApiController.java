@@ -40,6 +40,9 @@ public class ProductApiController extends BaseController {
     @Resource
     private PlannerCustomerService plannerCustomerService;
 
+    @Resource
+    private DictionaryService dictionaryService;
+
     /**
      * 产品列表
      * @param userId
@@ -162,4 +165,26 @@ public class ProductApiController extends BaseController {
         }
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
     }
-}
+
+    /**
+     * 资产配置建议
+     * @return
+     */
+    @RequestMapping(value = "/api/suggest/assets", method = RequestMethod.GET)
+    @ResponseBody
+    public ApiJsonResult suggestAssets() {
+        List<Dictionary> dictionaryList = dictionaryService.findDicByType(Const.DIC_CAT.ASSET_CONFIG);
+        Map map = new HashMap();
+        List<Map> result = new ArrayList<>();
+        if (dictionaryList != null) {
+            for (Dictionary dictionary : dictionaryList) {
+                map.put("key", dictionary.getKey());
+                map.put("value", dictionary.getValue());
+                result.add(map);
+            }
+        }
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
+    }
+
+
+    }

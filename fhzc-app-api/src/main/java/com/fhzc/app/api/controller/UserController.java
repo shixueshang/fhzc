@@ -39,6 +39,9 @@ public class UserController extends BaseController {
     @Resource
     private ScoreService scoreService;
 
+    @Resource
+    private DepartmentService departmentService;
+
     /**
      * 获取登录用户信息
      * @return
@@ -80,11 +83,17 @@ public class UserController extends BaseController {
     public ApiJsonResult getPlannerCustomers(){
         User user  = getCurrentUser();
         Planner planner = plannerService.getPlannerByUid(user.getUid());
-        List<PlannerCustomer> plannerCustomers = plannerCustomerService.getPlannerCustomerList(planner.getId());
+        if (! user.getLoginRole().equals(Const.USER_ROLE.PLANNER)) {
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST, "查询的用户不是理财师");
+        }
+        if(planner == null){
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST, "查询的用户没有理财师数据");
+        }
+        List<PlannerCustomer> plannerCustomers = plannerCustomerService.getPlannerCustomerList(planner.getUid());
 
         List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
 
-        if(plannerCustomers.size() > 0) {
+        if(plannerCustomers !=null ) {
             for (PlannerCustomer pc : plannerCustomers) {
                 Map<String, Object> map = new HashMap<String, Object>();
                 Customer customer = customerService.getCustomer(pc.getCustomerId());
@@ -104,8 +113,10 @@ public class UserController extends BaseController {
 
                 result.add(map);
             }
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
+        }else{
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST, "查询的理财师没有客户");
         }
-        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
     }
 
     /**
@@ -218,20 +229,21 @@ public class UserController extends BaseController {
     public ApiJsonResult getPlannerInfo(Integer planner_id) throws Exception {
         User user = userService.getUser(planner_id);
         if(user == null){
-            return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST);
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"没有这个用户");
         }
-        Planner planner = plannerService.getPlanner(planner_id);
+        Planner planner = plannerService.getPlannerByUid(planner_id);
         Map result = new HashMap();
         if(planner != null) {
             result.put("name", user.getRealname());
             result.put("avatar", user.getAvatar());
             result.put("workNum", planner.getWorkNum());
-            result.put("departmentId", planner.getDepartmentId());
+            result.put("departmentId", departmentService.getDeparent(planner.getDepartmentId()).getTitle());
             result.put("status", planner.getStatus());
             result.put("roleId", planner.getRoleId());
             result.put("entryTime", planner.getEntryTime());
             result.put("jobTitleCn", planner.getJobTitleCn());
             result.put("position", planner.getPosition());
+            result.put("mobile", user.getMobile());
             return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
         }
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);

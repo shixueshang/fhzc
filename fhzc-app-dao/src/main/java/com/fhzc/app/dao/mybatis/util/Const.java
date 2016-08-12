@@ -119,6 +119,11 @@ public class Const {
          * 积分来源类型
          */
         public static final String SCORE_FROM_TYPE = "score_from_type";
+
+        /**
+         * 客户资产推荐配置
+         */
+        public static final String ASSET_CONFIG = "asset_config";
     }
 
     /**
