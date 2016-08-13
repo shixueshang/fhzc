@@ -413,16 +413,18 @@ BEGIN
 	Declare _serial varchar(45); -- 合同号
 	Declare _customer_Id int ; -- 客户id
 	Declare _period int;  -- 期限
+	Declare _customer_name varchar(45); -- 客户姓名
+	
 	set _contract_id = -1;
-	select id , customer_id, product_id,serial,period,is_member into _contract_id, _customer_Id,_product_id,_serial,_period,_is_member from assets_history where serial =p_serial and type='purchase';
+	select id , customer_id, product_id,serial,period,is_member,planner_id,customer_name into _contract_id, _customer_Id,_product_id,_serial,_period,_is_member,_planner_id,_customer_name from assets_history where serial =p_serial and type='purchase';
 	if _contract_id >0 then 
 		if p_total_rate >0 then 
-			insert into assets_history(serial,customer_id,product_id,type,amount,amount_rmb,amount_usd,ctime,buy_time,period,dead_date,payment_date,duration_day,bank,bank_account,earning_rate,distribute_earning,payment,invaild,is_member) 
-				values(_serial,_customer_Id,_product_id,'redemption',p_amount_rmb,p_amount_rmb,0,now(),p_payment_date,_period,p_end_date,p_payment_date,p_duration_day,p_bank,p_bank_account,p_earning_rate,p_distribute_earning,p_total_rate,1,_is_member);
+			insert into assets_history(serial,customer_id,product_id,type,amount,amount_rmb,amount_usd,ctime,buy_time,period,dead_date,payment_date,duration_day,bank,bank_account,earning_rate,distribute_earning,payment,invaild,is_member,planner_id,customer_name) 
+				values(_serial,_customer_Id,_product_id,'redemption',p_amount_rmb,p_amount_rmb,0,now(),p_payment_date,_period,p_end_date,p_payment_date,p_duration_day,p_bank,p_bank_account,p_earning_rate,p_distribute_earning,p_total_rate,1,_is_member,_planner_id,p_realname );
 		
 		else
-			insert into assets_history(serial,customer_id,product_id,type,amount,amount_rmb,amount_usd,ctime,buy_time,period,dead_date,payment_date,duration_day,bank,bank_account,earning_rate,distribute_earning,invaild,is_member) 
-				values(_serial,_customer_Id,_product_id,'dividend',p_amount_rmb,p_amount_rmb,0,now(),p_payment_date,_period,p_end_date,p_payment_date,p_duration_day,p_bank,p_bank_account,p_earning_rate,p_distribute_earning,1,_is_member);
+			insert into assets_history(serial,customer_id,product_id,type,amount,amount_rmb,amount_usd,ctime,buy_time,period,dead_date,payment_date,duration_day,bank,bank_account,earning_rate,distribute_earning,invaild,is_member,planner_id,customer_name) 
+				values(_serial,_customer_Id,_product_id,'dividend',p_amount_rmb,p_amount_rmb,0,now(),p_payment_date,_period,p_end_date,p_payment_date,p_duration_day,p_bank,p_bank_account,p_earning_rate,p_distribute_earning,1,_is_member,_planner_id,p_realname );
 		end if;		
 	end if;
 
@@ -640,17 +642,17 @@ BEGIN
 	Declare _serial varchar(45); -- 合同号
 	Declare _customer_Id int ; -- 客户id
 	Declare _period int;  -- 期限
-
+	Declare _customer_name varchar(45); -- 客户姓名
 	set _contract_id = -1;
 	
 	select dictionary.value into _passport_type_id from dictionary where cat='passport' and dictionary.key=p_passport_type;
 	select customer_Id into _customer_Id from customer,user where customer.uid =user.uid and user.passport_type_id=_passport_type_id and passport_code = p_passport_code;
-	select id , customer_id, product_id,serial,period,is_member into _contract_id, _customer_Id,_product_id,_serial,_period,_is_member  from assets_history, product
+	select id , customer_id, product_id,serial,period,is_member,planner_id,customer_name  into _contract_id, _customer_Id,_product_id,_serial,_period,_is_member,_planner_id,_customer_name  from assets_history, product
 		where assets_history.customer_id =_customer_Id and assets_history.product_id= product.pid and product.name=p_product and assets_history.type='purchase';
 	if _contract_id >0 then 
 
-		insert into assets_history(serial,customer_id,product_id,type,amount,amount_rmb,amount_usd,ctime,buy_time,period,lot,value_date,dead_date,payment_date,duration_day,bank,bank_account,earning_rate,distribute_earning,payment,invaild,is_member) 
-			values(_serial,_customer_Id,_product_id,'redemption',p_amount_rmb,p_amount_rmb,0,now(),p_payment_date,_period,p_lot,p_value_date,p_end_date,p_payment_date,p_duration_day,p_bank,p_bank_account,p_earning_rate,p_distribute_earning,p_total_rate,1,_is_member);
+		insert into assets_history(serial,customer_id,product_id,type,amount,amount_rmb,amount_usd,ctime,buy_time,period,lot,value_date,dead_date,payment_date,duration_day,bank,bank_account,earning_rate,distribute_earning,payment,invaild,is_member,planner_id,customer_name) 
+			values(_serial,_customer_Id,_product_id,'redemption',p_amount_rmb,p_amount_rmb,0,now(),p_payment_date,_period,p_lot,p_value_date,p_end_date,p_payment_date,p_duration_day,p_bank,p_bank_account,p_earning_rate,p_distribute_earning,p_total_rate,1,_is_member,_planner_id,p_realname);
 
 	end if;
 END
