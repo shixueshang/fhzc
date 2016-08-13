@@ -4,6 +4,7 @@ import com.fhzc.app.api.service.ActivityApplyService;
 import com.fhzc.app.dao.mybatis.inter.ActivityApplyMapper;
 import com.fhzc.app.dao.mybatis.model.ActivityApply;
 import com.fhzc.app.dao.mybatis.model.ActivityApplyExample;
+import com.fhzc.app.dao.mybatis.util.Const;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -36,6 +37,7 @@ public class ActivityApplyServiceImpl implements ActivityApplyService {
         ActivityApplyExample example = new ActivityApplyExample();
         ActivityApplyExample.Criteria criteria = example.createCriteria();
         criteria.andCustomerIdEqualTo(customer_id);
+        criteria.andResultEqualTo(Const.ACTIVITY_APPLY_STATUS.JOIN);
         if(activityApplyMapper.countByExample(example) > 0){
             return activityApplyMapper.selectByExample(example);
         }else{

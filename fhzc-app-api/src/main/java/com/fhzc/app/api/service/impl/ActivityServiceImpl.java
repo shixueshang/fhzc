@@ -41,7 +41,13 @@ public class ActivityServiceImpl implements ActivityService {
         criteria.andIsRecommendEqualTo(Const.YES_OR_NO.YES);
         if (activityMapper.countByExample(example) > 0) {
             List<Activity> activityList= activityMapper.selectByExample(example);
-            return this.setActivityListStatus(activityList);
+            List<Activity> result = new ArrayList<>();
+            for (Activity activity : activityList) {
+                if (getActivityStatus(activity).equals(Const.ACTIVITY_STATUS.GOING)) {
+                    result.add(activity);
+                }
+            }
+            return this.setActivityListStatus(result);
         }
         return null;
     }
@@ -77,10 +83,10 @@ public class ActivityServiceImpl implements ActivityService {
             return Const.ACTIVITY_STATUS.WILL;
         }else if(System.currentTimeMillis() > activity.getApplyBeginTime().getTime() && System.currentTimeMillis() < activity.getApplyEndTime().getTime() ){
             return Const.ACTIVITY_STATUS.GOING;
-        }else if(System.currentTimeMillis() > activity.getApplyEndTime().getTime()){
-            return Const.ACTIVITY_STATUS.APP_OVER;
         }else if(System.currentTimeMillis() > activity.getEndTime().getTime()){
             return Const.ACTIVITY_STATUS.ACT_OVER;
+        }else if(System.currentTimeMillis() > activity.getApplyEndTime().getTime()){
+            return Const.ACTIVITY_STATUS.APP_OVER;
         }else{
             return Const.ACTIVITY_STATUS.WILL;
         }

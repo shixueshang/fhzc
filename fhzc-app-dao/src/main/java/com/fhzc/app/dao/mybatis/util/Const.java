@@ -258,6 +258,16 @@ public class Const {
 
     }
 
+    /**
+     * 活动报名状态
+     */
+    public static class ACTIVITY_APPLY_STATUS{
+
+        public static final Integer JOIN= 1;
+        public static final Integer NOT_JOIN= 0;
+
+    }
+
     public static class FOCUS_TYPE{
         public static final String PRODUCT= "product";
         public static final String ACTIVITY= "activity";
