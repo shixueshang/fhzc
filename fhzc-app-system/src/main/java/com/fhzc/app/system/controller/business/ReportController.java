@@ -55,10 +55,15 @@ public class ReportController extends BaseController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addOrUpdateReport(Report report, MultipartFile coverFile){
-        String coverName = FileUtil.generatePictureName(coverFile);
-        String coverPath = TextUtils.getConfig(Const.CONFIG_KEY_SYSTEM_IMAGE_SAVE_PATH, this);
-        FileUtil.transferFile(coverPath, coverName, coverFile);
-        report.setCover(coverPath + coverName);
+
+        if(!coverFile.isEmpty()){
+            String coverName = FileUtil.generatePictureName(coverFile);
+            String coverPath = TextUtils.getConfig(Const.CONFIG_KEY_SYSTEM_IMAGE_SAVE_PATH, this);
+            FileUtil.transferFile(coverPath, coverName, coverFile);
+            report.setCover(coverPath + coverName);
+        }
+
+
         report.setCtime(new Date());
         report.setIsDel(Const.YES_OR_NO.NO);
         reportService.addOrUpdateReport(report);

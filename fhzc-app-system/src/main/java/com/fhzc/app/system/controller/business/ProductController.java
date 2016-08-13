@@ -268,6 +268,14 @@ public class ProductController extends BaseController {
     @RequestMapping(value = "/type/delete/{id}", method = RequestMethod.GET)
     @ResponseBody
     public AjaxJson delete(@PathVariable(value = "id") Integer id){
+
+        //判断该分类是否被使用
+        Dictionary dictionary = dictionaryService.getDictionary(id);
+        List<Product> products = productService.getProductByType(dictionary.getValue());
+        if(products.size() > 0){
+            return new AjaxJson(false, "已被产品使用，不能删除");
+        }
+
         dictionaryService.delete(id);
         return new AjaxJson(true);
     }

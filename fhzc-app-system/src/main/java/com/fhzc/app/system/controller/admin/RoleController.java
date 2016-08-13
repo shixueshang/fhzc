@@ -63,6 +63,14 @@ public class RoleController extends BaseController {
         return mav;
     }
 
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public AjaxJson delete(@PathVariable(value = "id") Integer id){
+        adminRoleService.delete(id);
+        return new AjaxJson(true);
+
+    }
+
 
     /**
      * 给角色分配权限

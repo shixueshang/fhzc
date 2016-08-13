@@ -72,7 +72,9 @@ public class RightsController extends BaseController{
     @RequestMapping(value = "/pub")
     public ModelAndView preAdd(){
         ModelAndView mav = new ModelAndView("business/rights/add");
-        mav.addObject("customerLevel", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL)));
+        List<Dictionary> list = dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL);
+        Collections.reverse(list);
+        mav.addObject("customerLevel", JSON.toJSON(list));
         mav.addObject("rightsCategory", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.RIGHTS_CATEGORY)));
         mav.addObject("departments", JSON.toJSON(departmentService.findDeptByParent(Const.ROOT_DEPT_ID)));
         mav.addObject("url", "business/rights");

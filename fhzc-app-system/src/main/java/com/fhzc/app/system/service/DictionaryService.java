@@ -30,4 +30,6 @@ public interface DictionaryService {
      * @return
      */
     Dictionary findCustomerLevel(String levelValue);
+
+    Dictionary getDictionary(Integer id);
 }

@@ -150,4 +150,12 @@ public class ProductServiceImpl implements ProductService {
         ProductExample example = new ProductExample();
         return productMapper.selectByExample(example);
     }
+
+    @Override
+    public List<Product> getProductByType(String typeId) {
+        ProductExample example = new ProductExample();
+        ProductExample.Criteria criteria = example.createCriteria();
+        criteria.andProductTypeEqualTo(typeId);
+        return productMapper.selectByExample(example);
+    }
 }

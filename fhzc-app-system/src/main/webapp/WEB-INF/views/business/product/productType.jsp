@@ -183,7 +183,18 @@
         });
 
         $("#do_del_productType").click(function () {
-            $.get("<%=contextPath%>/business/product/type/delete/" + $("#ptype_del_id").val(),function (data) {window.location.reload();})
+            $.get("<%=contextPath%>/business/product/type/delete/" + $("#ptype_del_id").val(),function (data) {
+                if(!data.success){
+                    BootstrapDialog.alert({
+                        title: '提示',
+                        message: data.message
+                    });
+
+                    return false;
+                }
+
+                window.location.reload();
+            })
         });
     });
 

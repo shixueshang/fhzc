@@ -29,6 +29,9 @@
     <!-- BEGIN PAGE -->
     <div class="page-content">
 
+        <div class="alert alert-success" id="delete_success" role="alert" style="display: none">成功</div>
+        <div class="alert alert-warning" id="delete_fail" role="alert" style="display: none">失败</div>
+
         <!-- BEGIN PAGE CONTAINER 主体内容 -->
         <div class="container-fluid">
             <!-- BEGIN PAGE HEADER 面包屑导航 -->
@@ -46,6 +49,25 @@
                         <li class="active"><a href="javascript:void(0);">管理员列表</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
+                </div>
+            </div>
+
+            <div class="modal fade" id="deleteModel">
+                <div class="modal-dialog">
+                    <div class="modal-content message_align">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">提示信息</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>您确认要删除吗？</p>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="hidden" id="url"/>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <a  onclick="urlDelete()" class="btn btn-success" data-dismiss="modal">确定</a>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -114,7 +136,7 @@
                                         <td>${admin.mobile}</td>
                                         <td>
                                             <a href="<%=contextPath%>/system/admin/detail/${admin.id}" class="btn mini purple"><i class="icon-edit"></i> 编辑</a>
-                                            <a href="<%=contextPath%>/system/admin/delete/${admin.id}" class="btn mini purple"><i class="icon-trash"></i> 删除</a>
+                                            <a href="javascript:void(0)" onclick="deleteById('<%=contextPath%>/system/admin/delete/${admin.id}')" class="btn mini purple"><i class="icon-trash"></i> 删除</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -132,3 +154,29 @@
 </div>
 
 <jsp:include page="../../include/footer.jsp"/>
+
+<script>
+
+    function deleteById(url){
+        $('#url').val(url);
+        $('#deleteModel').modal();
+    }
+
+    function urlDelete(){
+        var url = $.trim($("#url").val());//获取会话中的隐藏属性URL
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function(result) {
+                if(result){
+                    $("#delete_success").css("display", "block").hide(3000);
+                    window.location.reload();
+                }
+            },
+            error: function(xhr, textStatus, errorThrown){
+                $("#delete_fail").css("display", "block").hide(3000);
+            }
+        });
+    }
+
+</script>
