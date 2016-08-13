@@ -43,4 +43,10 @@ ADD COLUMN `company` INT(11) NULL COMMENT '理财师所属分公司' AFTER `area
 ADD COLUMN `team` INT(11) NULL COMMENT '理财师所属团队' AFTER `company`,
 ADD COLUMN `department_id` INT(11) NULL COMMENT '理财师所属部门' AFTER `team`;
 
+#2016-08-12
+ALTER TABLE `bank`.`department`
+ADD COLUMN `level` INT(1) NULL COMMENT '部门层级' AFTER `leader_uid`;
+
+ALTER TABLE `bank`.`banner`
+ADD COLUMN `status` INT(1) NULL COMMENT 'banner状态(0上线1已下线)' AFTER `from_type`;
 

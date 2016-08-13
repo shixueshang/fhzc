@@ -55,4 +55,10 @@ public class ActivityServiceImpl implements ActivityService {
         List<ActivityApplyBo> list = activityApplyMapper.listActivityApplies(query, rowBounds);
         return new PageableResult<ActivityApplyBo>(page, size, activityApplyMapper.countActivityApplies(query), list);
     }
+
+    @Override
+    public List<Activity> getAllActivities() {
+        ActivityExample example = new ActivityExample();
+        return activityMapper.selectByExampleWithBLOBs(example);
+    }
 }

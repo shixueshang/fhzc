@@ -78,15 +78,10 @@
                         <div id="contanis" style="height: 600px"></div>
                    </div>
 
-                    <div  class="span4" style="margin-top: 100px">
-                        <table class="table table-bordered table-hover " id="achive_table">
+                    <div  class="span6" style="margin-top: 100px">
+                        <table class="table table-hover " id="achive_table">
                             <thead>
-                                <tr>
-                                    <td>理财师</td>
-                                    <td>月份</td>
-                                    <td>年化金额(万元)</td>
-                                    <td>占比(%)</td>
-                                </tr>
+
                             </thead>
                             <tbody>
 
@@ -115,6 +110,11 @@ $(function(){
         $.each(json, function(i,val){
             $("#area").append("<option value='"+val.departmentId+"'>"+val.title+"</option>");
         });
+
+        var company = $('#subCompany').val();
+        if(company == null || company == ''){
+            $("#subCompany").prepend("<option value='0'>全部</option>");
+        }
 
 
         $('#area').change(function(){
@@ -174,6 +174,13 @@ $(function(){
 
 
     function formSubmit(){
+
+        var date = $('#startDate').val();
+        if(date == null || date == ''){
+            alert('请选择月份');
+            return false;
+        }
+
         $.ajax({
             type: "GET",
             url: "<%=contextPath%>/personal/planner/achivement/find",
@@ -210,14 +217,27 @@ $(function(){
                 var mycharts = echarts.init(dom);
                 mycharts.setOption(option);
 
+                var company = $('#subCompany').val();
+                var team = $('#team').val();
+                var tHead;
+                if(company == 0){
+                    tHead = "<tr> <td>分公司</td> <td>月份</td> <td>年化金额(万元)</td> <td>占比(%)</td></tr>";
+                }else if(team == 0){
+                    tHead = "<tr> <td>团队</td> <td>月份</td> <td>年化金额(万元)</td> <td>占比(%)</td></tr>";
+                }else{
+                    tHead = "<tr> <td>理财师</td> <td>月份</td> <td>年化金额(万元)</td> <td>占比(%)</td></tr>";
+                }
+                $("#achive_table thead").replaceWith(tHead);
+
+                var tBody = '';
                 for(var i=0;i<result.data.length;i++){
                     var name = result.data[i].name;
                     var value = result.data[i].value;
                     var percent = result.data[i].percent;
                     var date = new Date(result.data[i].date);
-                    var ddd = "<tr> <td>"+name+"</td> <td>"+getFormatDate(date)+"</td> <td>"+value+"</td> <td>"+percent+"</td></tr>";
-                    $("#achive_table tbody").append(ddd);
+                    tBody += "<tr> <td>"+name+"</td> <td>"+getFormatDate(date)+"</td> <td>"+value+"</td> <td>"+percent+"</td></tr>";
                 }
+                $("#achive_table tbody").html(tBody);
             }
         })
     }

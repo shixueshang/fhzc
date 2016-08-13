@@ -364,4 +364,28 @@
       order by ${orderByClause}
     </if>
   </select>
+
+    <select id="findAchiveDailyBySub" resultMap="BaseResultMap" parameterType="Map">
+        SELECT transfer_date,company, sum(contract_amount) as contract_amount FROM bank.planner_achivements_daily where company in
+        <foreach item="item" index="index" collection="company" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        group by company;
+    </select>
+
+    <select id="findAchiveDailyByTeam" resultMap="BaseResultMap" parameterType="Map">
+        SELECT transfer_date,team, sum(contract_amount) as contract_amount FROM bank.planner_achivements_daily where team in
+        <foreach item="item" index="index" collection="team" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        group by team;
+    </select>
+
+    <select id="findAchiveDailyByPlanner" resultMap="BaseResultMap" parameterType="Map">
+        SELECT transfer_date,planner_uid, sum(contract_amount) as contract_amount FROM bank.planner_achivements_daily where planner_uid in
+        <foreach item="item" index="index" collection="planners" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        group by planner_uid;
+    </select>
 </mapper>

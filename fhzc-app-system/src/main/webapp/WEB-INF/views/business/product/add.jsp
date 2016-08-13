@@ -141,7 +141,7 @@
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">存续期限</label>
+                                                <label class="control-label">存续期限(月)</label>
                                                 <div class="controls">
                                                     <input type="text" name="renewDeadline" value="${product.renewDeadline}" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
@@ -196,14 +196,14 @@
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">基金管理费<span class="required">*</span></label>
+                                                <label class="control-label">基金管理费(%)<span class="required">*</span></label>
                                                 <div class="controls">
                                                     <input type="text" name="fundManagementFee" value="${product.fundManagementFee}" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
                                             <div class="control-group">
-                                                <label class="control-label">基金认购费<span class="required">*</span></label>
+                                                <label class="control-label">基金认购费(%)<span class="required">*</span></label>
                                                 <div class="controls">
                                                     <input type="text" name="fundSubscriptionFee" value="${product.fundSubscriptionFee}"  data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
@@ -284,7 +284,7 @@
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">积分系数</label>
+                                                <label class="control-label">积分系数(%)</label>
                                                 <div class="controls">
                                                     <input type="text" name="scoreFactor" value="${product.scoreFactor}" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>

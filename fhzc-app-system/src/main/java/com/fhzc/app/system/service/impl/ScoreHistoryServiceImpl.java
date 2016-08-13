@@ -62,8 +62,8 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
     	Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
         @Override
         public String validation(Workbook xwb) {
-        	if(!TextUtils.validWorkbookTitle(xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString(), "权益消费") ){
-        		if(xwb.getSheetAt(sheetnum).getRow(0).getCell(0) != null){
+        	if(xwb.getSheetAt(sheetnum).getRow(0) == null || !TextUtils.validWorkbookTitle(xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString(), "权益消费") ){
+        		if(xwb.getSheetAt(sheetnum).getRow(0) != null && xwb.getSheetAt(sheetnum).getRow(0).getCell(0) != null){
         			return "报表第" + String.valueOf(sheetnum+1) +"个sheet,表头为："+ xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString() +" 不是正确的报表！";
         		}else{
         			return "报表第" + String.valueOf(sheetnum+1) +"个sheet, 不是正确的报表！";
@@ -119,9 +119,11 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 		        		 key = pcode.substring(pcode.length()-8);
 	    			}
     				for(User user : users){
-    					if(user.getPassportCode().equals(EncryptUtils.encryptToDES(key, pcode)) && user.getPassportTypeId() == passport_type ){
-    						isExist = true;
-    						break;
+    					if(user.getLoginRole().trim().equals("customer")){
+	    					if(user.getPassportCode().equals(pcode) && user.getPassportTypeId() == passport_type ){
+	    						isExist = true;
+	    						break;
+	    					}
     					}
     				}
 		    		if(!isExist){
@@ -211,8 +213,8 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 		Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
 		        @Override
 		        public String validation(Workbook xwb) {
-		        	if(!TextUtils.validWorkbookTitle(xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString(), "积分历史") ){
-		        		if(xwb.getSheetAt(sheetnum).getRow(0).getCell(0) != null){
+		        	if(xwb.getSheetAt(sheetnum).getRow(0) == null || !TextUtils.validWorkbookTitle(xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString(), "积分历史") ){
+		        		if(xwb.getSheetAt(sheetnum).getRow(0) != null && xwb.getSheetAt(sheetnum).getRow(0).getCell(0) != null){
 		        			return "报表第" + String.valueOf(sheetnum+1) +"个sheet,表头为："+ xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString() +" 不是正确的报表！";
 		        		}else{
 		        			return "报表第" + String.valueOf(sheetnum+1) +"个sheet, 不是正确的报表！";
@@ -268,9 +270,11 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 				        		 key = pcode.substring(pcode.length()-8);
 			    			}
 		    				for(User user : users){
-		    					if(user.getPassportCode().equals(EncryptUtils.encryptToDES(key, pcode)) && user.getPassportTypeId() == passport_type ){
-		    						isExist = true;
-		    						break;
+		    					if(user.getLoginRole().trim().equals("customer")){
+			    					if(user.getPassportCode().equals(pcode) && user.getPassportTypeId() == passport_type ){
+			    						isExist = true;
+			    						break;
+			    					}
 		    					}
 		    				}
 				    		if(!isExist){

@@ -212,6 +212,12 @@
                         <shiro:hasPermission name="/system/role/pub"><li>
                                 <a href="<%=contextPath%>/system/role/pub">角色新增</a>
                             </li></shiro:hasPermission>
+                        <shiro:hasPermission name="/system/banner/list"><li>
+                                <a href="<%=contextPath%>/system/banner/list">banner列表</a>
+                            </li></shiro:hasPermission>
+                        <shiro:hasPermission name="/system/banner/pub"><li>
+                                <a href="<%=contextPath%>/system/banner/pub">banner新增</a>
+                            </li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>
 

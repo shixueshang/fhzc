@@ -5,6 +5,8 @@ import com.fhzc.app.dao.mybatis.model.Activity;
 import com.fhzc.app.dao.mybatis.model.ActivityApplyQuery;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 
+import java.util.List;
+
 /**
  * Created by lihongde on 2016/7/19 14:30
  */
@@ -39,4 +41,6 @@ public interface ActivityService {
      * @return
      */
     PageableResult<ActivityApplyBo> findPageActivityApplies(ActivityApplyQuery query, int page, int size);
+
+    List<Activity> getAllActivities();
 }

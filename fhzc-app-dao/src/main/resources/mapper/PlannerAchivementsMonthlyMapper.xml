@@ -444,4 +444,28 @@
       order by ${orderByClause}
     </if>
   </select>
+
+    <select id="findAchiveMonthlyBySub" resultMap="BaseResultMap" parameterType="Map">
+        SELECT transfer_date,company, sum(annualised) as annualised FROM bank.planner_achivements_monthly where DATE_FORMAT(transfer_date,'%Y-%m') = #{month} and company in
+        <foreach item="item" index="index" collection="company" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        group by company;
+    </select>
+
+    <select id="findAchiveMonthlyByTeam" resultMap="BaseResultMap" parameterType="Map">
+        SELECT transfer_date,team, sum(annualised) as annualised FROM bank.planner_achivements_monthly where DATE_FORMAT(transfer_date,'%Y-%m') = #{month} and team in
+        <foreach item="item" index="index" collection="planners" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        group by team;
+    </select>
+
+    <select id="findAchiveMonthlyByPlanner" resultMap="BaseResultMap" parameterType="Map">
+        SELECT transfer_date,planner_uid, sum(annualised) as annualised FROM bank.planner_achivements_monthly where DATE_FORMAT(transfer_date,'%Y-%m') = #{month} and planner_uid in
+        <foreach item="item" index="index" collection="planners" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        group by planner_uid;
+    </select>
 </mapper>

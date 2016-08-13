@@ -64,8 +64,8 @@ public class PlannerAchivementsDailyImpl implements PlannerAchivementsDailyServi
 	    Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
 	        @Override
 	        public String validation(Workbook xwb) {
-	        	if(!TextUtils.validWorkbookTitle(xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString(), "业绩统计报表") ){
-	        		if(xwb.getSheetAt(sheetnum).getRow(0).getCell(0) != null){
+	        	if(xwb.getSheetAt(sheetnum).getRow(0) == null || !TextUtils.validWorkbookTitle(xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString(), "业绩统计报表") ){
+	        		if(xwb.getSheetAt(sheetnum).getRow(0) != null && xwb.getSheetAt(sheetnum).getRow(0).getCell(0) != null){
 	        			return "报表第" + String.valueOf(sheetnum+1) +"个sheet,表头为："+ xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString() +" 不是正确的报表！";
 	        		}else{
 	        			return "报表第" + String.valueOf(sheetnum+1) +"个sheet, 不是正确的报表！";
@@ -205,10 +205,24 @@ public class PlannerAchivementsDailyImpl implements PlannerAchivementsDailyServi
 	}
 
     @Override
-    public List<PlannerAchivementsDaily> findAchivementsDaily(List<Integer> planners) {
+    public List<PlannerAchivementsDaily> findAchiveDailyBySub(List<Integer> subCompanys) {
         Map<String, Object> param = new HashMap<String, Object>();
-        param.put("plannerIds", planners);
-        return null; //plannerAchivementsDailyMapper.getAchivementsData(param);
+        param.put("company", subCompanys);
+        return plannerAchivementsDailyMapper.findAchiveDailyBySub(param);
+    }
+
+    @Override
+    public List<PlannerAchivementsDaily> findAchiveDailyByTeam(List<Integer> team) {
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("team", team);
+        return plannerAchivementsDailyMapper.findAchiveDailyByTeam(param);
+    }
+
+    @Override
+    public List<PlannerAchivementsDaily> findAchiveDailyByPlanner(List<Integer> planners) {
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("planners", planners);
+        return plannerAchivementsDailyMapper.findAchiveDailyByPlanner(param);
     }
 
 }

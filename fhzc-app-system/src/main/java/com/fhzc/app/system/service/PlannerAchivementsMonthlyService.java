@@ -33,10 +33,27 @@ public interface PlannerAchivementsMonthlyService {
     PageableResult<PlannerAchivementsMonthly> findPagePlannerAchivementsDaily(int page, int size);
 
     /**
+     * 根据分公司统计理财师业绩
+     * @param subCompanys
+     * @param month
+     * @return
+     */
+    List<PlannerAchivementsMonthly> findAchiveMonthlyByCompany(List<Integer> subCompanys, String month);
+
+    /**
+     * 根据团队统计理财师业绩
+     * @param team
+     * @param month
+     * @return
+     */
+    List<PlannerAchivementsMonthly> findAchiveMonthlyByTeam(List<Integer> team, String month);
+
+    /**
+     * 根据理财师统计理财师业绩
      * @param planners
      * @param month
      * @return
      */
-    List<PlannerAchivementsMonthly> findAchivementsMonthly(List<Integer> planners, String month);
+    List<PlannerAchivementsMonthly> findAchiveMonthlyByPlanner(List<Integer> planners, String month);
 
 }

@@ -58,4 +58,10 @@ public class DictionaryServiceImpl implements DictionaryService {
 
         return null;
     }
+
+    @Override
+    public Dictionary getDictionary(Integer id) {
+
+        return dictionaryMapper.selectByPrimaryKey(id);
+    }
 }

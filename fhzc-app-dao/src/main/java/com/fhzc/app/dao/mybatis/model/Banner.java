@@ -13,6 +13,8 @@ public class Banner {
 
     private String fromType;
 
+    private Integer status;
+
     public Integer getId() {
         return id;
     }
@@ -59,5 +61,13 @@ public class Banner {
 
     public void setFromType(String fromType) {
         this.fromType = fromType == null ? null : fromType.trim();
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

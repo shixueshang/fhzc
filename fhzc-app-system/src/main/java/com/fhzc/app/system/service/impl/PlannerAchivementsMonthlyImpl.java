@@ -67,8 +67,8 @@ public class PlannerAchivementsMonthlyImpl implements PlannerAchivementsMonthlyS
 				Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
 			        @Override
 			        public String validation(Workbook xwb) {
-			        	if(!TextUtils.validWorkbookTitle(xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString(), "业绩统计汇总表") ){
-			        		if(xwb.getSheetAt(sheetnum).getRow(0).getCell(0) != null){
+			        	if(xwb.getSheetAt(sheetnum).getRow(0) == null || !TextUtils.validWorkbookTitle(xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString(), "业绩统计汇总表") ){
+			        		if(xwb.getSheetAt(sheetnum).getRow(0) != null && xwb.getSheetAt(sheetnum).getRow(0).getCell(0) != null){
 			        			return "报表第" + String.valueOf(sheetnum+1) +"个sheet,表头为："+ xwb.getSheetAt(sheetnum).getRow(0).getCell(0).toString() +" 不是正确的报表！";
 			        		}else{
 			        			return "报表第" + String.valueOf(sheetnum+1) +"个sheet, 不是正确的报表！";
@@ -214,12 +214,30 @@ public class PlannerAchivementsMonthlyImpl implements PlannerAchivementsMonthlyS
 		        return new PageableResult<PlannerAchivementsMonthly>(page, size, list.size(), list);
 			}
 
+
     @Override
-    public List<PlannerAchivementsMonthly> findAchivementsMonthly(List<Integer> planners, String month) {
+    public List<PlannerAchivementsMonthly> findAchiveMonthlyByCompany(List<Integer> subCompanys, String month) {
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("company", subCompanys);
+        param.put("month", month);
+        return plannerAchivementsMonthlyMapper.findAchiveMonthlyBySub(param);
+    }
+
+    @Override
+    public List<PlannerAchivementsMonthly> findAchiveMonthlyByTeam(List<Integer> team, String month) {
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("team", team);
+        param.put("month", month);
+        return plannerAchivementsMonthlyMapper.findAchiveMonthlyByTeam(param);
+    }
+
+
+    @Override
+    public List<PlannerAchivementsMonthly> findAchiveMonthlyByPlanner(List<Integer> planners, String month) {
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("planners", planners);
         param.put("month", month);
-        return null; //plannerAchivementsMonthlyMapper.getAchivementsData(param);
+        return plannerAchivementsMonthlyMapper.findAchiveMonthlyByPlanner(param);
     }
 
 

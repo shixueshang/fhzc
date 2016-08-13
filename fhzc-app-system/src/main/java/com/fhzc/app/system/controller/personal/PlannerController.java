@@ -178,9 +178,9 @@ public class PlannerController extends BaseController {
         //判断是否为当前月份 如果是则从日表取数据，否则从月表取
         String nowMonth = DateUtil.formatDate(new Date(), "yyyy-MM");
         if(nowMonth.equals(startDate)){
-            result = this.findDailyAchivement(subCompany, team, result);
+            result = this.findDailyAchivement(area, subCompany, team, result);
         }else{
-            result = this.findMonthlyAchivement(subCompany, team, startDate, result);
+            result = this.findMonthlyAchivement(area, subCompany, team, startDate, result);
         }
         return new AjaxJson(true, result);
     }
@@ -192,35 +192,47 @@ public class PlannerController extends BaseController {
      * @param result
      * @return
      */
-    private List<Map<String, Object>> findDailyAchivement(Integer subCompany, Integer team, List<Map<String, Object>> result){
+    private List<Map<String, Object>> findDailyAchivement(Integer area, Integer subCompany, Integer team, List<Map<String, Object>> result){
         Integer totalAmount = 0;
-        if(team != 0){
+
+        if(subCompany == 0){  //只选择区总，按照分公司统计
+            //获得区总下的分公司
+            List<Department> departments = departmentService.findChildren(area);
+            List<Integer> companys = new ArrayList<Integer>();
+            for(Department department : departments){
+                companys.add(department.getDepartmentId());
+            }
+            if(companys.size() > 0){
+                List<PlannerAchivementsDaily> achivementsDailies = plannerAchivementsDailyService.findAchiveDailyBySub(companys);
+                result = this.buildDailyResult(totalAmount, achivementsDailies, result, "company");
+            }
+        }
+        if(team == 0){  //选择了分公司，按团队统计
+            List<Department> departments = departmentService.findChildren(subCompany);
+            List<Integer> teams = new ArrayList<Integer>();
+            for(Department department : departments){
+                teams.add(department.getDepartmentId());
+            }
+            if(teams.size() > 0) {
+                List<PlannerAchivementsDaily> achivementsDailies = plannerAchivementsDailyService.findAchiveDailyByTeam(teams);
+                result = this.buildDailyResult(totalAmount, achivementsDailies, result, "team");
+            }
+        }else{ //选择了团队，按理财师统计
             List<Planner> planners = plannerService.findPlannerByDepartment(team);
             List<Integer> plannerIds = new ArrayList<Integer>();
             for(Planner planner : planners){
                 plannerIds.add(planner.getId());
             }
             if(plannerIds.size() > 0){
-                result = this.buildDailyResult(totalAmount, plannerIds, result);
-            }
-        }else{
-            List<Department> departments = departmentService.findChildren(subCompany);
-            List<Integer> deptIds = new ArrayList<Integer>();
-            for(Department department : departments){
-                deptIds.add(department.getDepartmentId());
-            }
-            if(deptIds.size() > 0) {
-                List<Integer> plannerIds = plannerService.findPlannerByDepartment(deptIds);
-                result = this.buildDailyResult(totalAmount, plannerIds, result);
+                List<PlannerAchivementsDaily> achivementsDailies = plannerAchivementsDailyService.findAchiveDailyByPlanner(plannerIds);
+                result = this.buildDailyResult(totalAmount, achivementsDailies, result, "planner");
             }
         }
 
         return result;
     }
 
-    private List<Map<String, Object>> buildDailyResult(Integer totalAmount, List<Integer> plannerIds, List<Map<String, Object>> result){
-        List<PlannerAchivementsDaily> achivementsDailies = plannerAchivementsDailyService.findAchivementsDaily(plannerIds);
-
+    private List<Map<String, Object>> buildDailyResult(Integer totalAmount, List<PlannerAchivementsDaily> achivementsDailies, List<Map<String, Object>> result, String type){
         for(PlannerAchivementsDaily achivementsDaily : achivementsDailies){
             totalAmount += achivementsDaily.getContractAmount();
         }
@@ -231,8 +243,19 @@ public class PlannerController extends BaseController {
             map.put("value", achivementsDaily.getContractAmount() / 10000);
             map.put("percent", percent);
             map.put("date", achivementsDaily.getTransferDate());
-            User user = userService.getUser(plannerService.getPlanner(achivementsDaily.getPlannerUid()).getUid());
-            map.put("name", user.getRealname());
+            if(type.equals("company")){
+                Department department = departmentService.getDeparent(achivementsDaily.getCompany());
+                map.put("name", department.getTitle());
+            }
+            if(type.equals("team")){
+                Department department = departmentService.getDeparent(achivementsDaily.getTeam());
+                map.put("name", department.getTitle());
+            }
+            if(type.equals("planner")){
+                User user = userService.getUser(plannerService.getPlanner(achivementsDaily.getPlannerUid()).getUid());
+                map.put("name", user.getRealname());
+            }
+
             result.add(map);
         }
 
@@ -247,35 +270,45 @@ public class PlannerController extends BaseController {
      * @param result
      * @return
      */
-    private List<Map<String, Object>> findMonthlyAchivement(Integer subCompany, Integer team, String startDate, List<Map<String, Object>> result){
-        //找到该分公司下的所有理财师
+    private List<Map<String, Object>> findMonthlyAchivement(Integer area, Integer subCompany, Integer team, String startDate, List<Map<String, Object>> result){
         Integer totalAmount = 0;
-        if(team != 0){
-            List<Planner> planners = plannerService.findPlannerByDepartment(team);
-            List<Integer> plannerIds = new ArrayList<Integer>();
-            for(Planner planner : planners){
-                plannerIds.add(planner.getId());
+        if(subCompany == 0){
+            List<Department> departments = departmentService.findChildren(area);
+            List<Integer> companys = new ArrayList<Integer>();
+            for(Department department : departments){
+                companys.add(department.getDepartmentId());
             }
-            if(plannerIds.size() > 0){
-                result = this.buildMonthlyResult(totalAmount, plannerIds, startDate, result);
+            if(companys.size() > 0){
+                List<PlannerAchivementsMonthly> achivementsMonthly = plannerAchivementsMonthlyService.findAchiveMonthlyByCompany(companys, startDate);
+                result = this.buildMonthlyResult(totalAmount, achivementsMonthly, startDate, result, "company");
+            }
+        }
+        if(team == 0){
+            List<Planner> planners = plannerService.findPlannerByDepartment(team);
+            List<Integer> teams = new ArrayList<Integer>();
+            for(Planner planner : planners){
+                teams.add(planner.getId());
+            }
+            if(teams.size() > 0){
+                List<PlannerAchivementsMonthly> achivementsMonthly = plannerAchivementsMonthlyService.findAchiveMonthlyByTeam(teams, startDate);
+                result = this.buildMonthlyResult(totalAmount, achivementsMonthly, startDate, result, "team");
             }
         }else{
             List<Department> departments = departmentService.findChildren(subCompany);
-            List<Integer> deptIds = new ArrayList<Integer>();
+            List<Integer> planners = new ArrayList<Integer>();
             for(Department department : departments){
-                deptIds.add(department.getDepartmentId());
+                planners.add(department.getDepartmentId());
             }
-            if(deptIds.size() > 0) {
-                List<Integer> plannerIds = plannerService.findPlannerByDepartment(deptIds);
-                result = this.buildMonthlyResult(totalAmount, plannerIds, startDate, result);
+            if(planners.size() > 0) {
+                List<PlannerAchivementsMonthly> achivementsMonthly = plannerAchivementsMonthlyService.findAchiveMonthlyByPlanner(planners, startDate);
+                result = this.buildMonthlyResult(totalAmount, achivementsMonthly, startDate, result, "planner");
             }
         }
 
         return result;
     }
 
-    private List<Map<String, Object>> buildMonthlyResult(Integer totalAmount, List<Integer> plannerIds, String startDate, List<Map<String, Object>> result){
-        List<PlannerAchivementsMonthly> achivementsMonthlies = plannerAchivementsMonthlyService.findAchivementsMonthly(plannerIds, startDate);
+    private List<Map<String, Object>> buildMonthlyResult(Integer totalAmount, List<PlannerAchivementsMonthly> achivementsMonthlies, String startDate, List<Map<String, Object>> result, String type){
         for(PlannerAchivementsMonthly achivementsMonthly : achivementsMonthlies){
             totalAmount += achivementsMonthly.getAnnualised();
         }
@@ -286,8 +319,18 @@ public class PlannerController extends BaseController {
             map.put("value", achivementsMonthly.getAnnualised() / 10000);
             map.put("percent", percent);
             map.put("date", achivementsMonthly.getTransferDate());
-            User user = userService.getUser(plannerService.getPlanner(achivementsMonthly.getPlannerUid()).getUid());
-            map.put("name", user.getRealname());
+            if(type.equals("company")){
+                Department department = departmentService.getDeparent(achivementsMonthly.getCompany());
+                map.put("name", department.getTitle());
+            }
+            if(type.equals("team")){
+                Department department = departmentService.getDeparent(achivementsMonthly.getTeam());
+                map.put("name", department.getTitle());
+            }
+            if(type.equals("planner")){
+                User user = userService.getUser(plannerService.getPlanner(achivementsMonthly.getPlannerUid()).getUid());
+                map.put("name", user.getRealname());
+            }
             result.add(map);
         }
 

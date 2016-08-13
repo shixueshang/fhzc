@@ -87,4 +87,11 @@ public interface ProductService {
      * @return
      */
     List<Product> findAllProduct();
+
+    /**
+     * 根据产品类型获得产品
+     * @param typeId
+     * @return
+     */
+    List<Product> getProductByType(String typeId);
 }

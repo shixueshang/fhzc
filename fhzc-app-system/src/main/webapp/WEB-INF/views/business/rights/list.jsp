@@ -5,6 +5,7 @@
 
 <%
     String contextPath = request.getContextPath();
+    String basePath  = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
 %>
 
 <jsp:include page="../../include/header.jsp"/>
@@ -61,9 +62,10 @@
                             <table class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <td>权益id</td>
                                     <td>权益名</td>
                                     <td>权益类型</td>
+                                    <td>权益图片</td>
+                                    <td>权益供应商</td>
                                     <td>客户等级要求</td>
                                     <td>兑换积分</td>
                                     <td>关注人数</td>
@@ -74,7 +76,6 @@
                                 <tbody>
                                 <c:forEach items="${rights}" var="right">
                                     <tr>
-                                        <td>${right.id}</td>
                                         <td>${right.name}</td>
                                         <td>
                                             <c:forEach items="${rightsCategory}" var="category">
@@ -83,6 +84,10 @@
                                                 </c:if>
                                             </c:forEach>
                                         </td>
+                                        <td>
+                                            <img width="120px" src="<%=contextPath%>${right.cover}" />
+                                        </td>
+                                        <td>${right.supply}</td>
                                         <td>
                                             <c:forEach items="${customerLevel}" var="level">
                                                 <c:if test="${right.level == level.value}">

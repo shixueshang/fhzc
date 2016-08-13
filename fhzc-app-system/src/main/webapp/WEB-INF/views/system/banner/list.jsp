@@ -5,6 +5,7 @@
 
 <%
     String contextPath = request.getContextPath();
+    String basePath  = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
 %>
 
 <jsp:include page="../../include/header.jsp"/>
@@ -46,7 +47,7 @@
                             <a href="javascript:void(0);">系统管理</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li class="active"><a href="javascript:void(0);">管理员列表</a></li>
+                        <li class="active"><a href="javascript:void(0);">banner列表</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
@@ -83,60 +84,56 @@
                             <table class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <td>用户名</td>
-                                    <td>用户真实姓名</td>
-                                    <td>所属角色</td>
-                                    <td>状态</td>
-                                    <td>所属公司</td>
-                                    <td>所属地区</td>
-                                    <td>电话</td>
+                                    <td>banner类型</td>
+                                    <td>banner图片</td>
+                                    <td>banner文字</td>
+                                    <td>跳转页面类型</td>
+                                    <td>banner状态</td>
                                     <td>操作</td>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach items="${admins}" var="admin">
+                                <c:forEach items="${banners}" var="banner">
                                     <tr>
-                                        <td>${admin.login}</td>
-                                        <td>${admin.realname}</td>
-                                        <td>
-                                            <c:forEach items="${roles}" var="role" >
-                                                <c:if test="${admin.role == role.roleId}" >
-                                                    ${role.roleName}
-                                                </c:if>
-                                                
-                                            </c:forEach>
-                                        </td>
                                         <td>
                                             <c:choose>
-                                                <c:when test="${admin.status == '1'}" >
-                                                    正常
+                                                <c:when test="${banner.type == 'index_text'}">
+                                                    文字
                                                 </c:when>
-                                                <c:when test="${admin.status == '0'}" >
-                                                    禁用
+                                                <c:when test="${banner.type == 'index_pic'}">
+                                                    图片
+                                                </c:when>
+                                            </c:choose>
+                                        </td>
+                                        <td><script>
+                                                var cover = '${banner.cover}';
+                                                if(cover == null || cover == ''){
+                                                    $('#cover').css("display" , "none")
+                                                }
+                                            </script>
+                                            <img id="cover" width="120px" src="<%=basePath%>${banner.cover}"></td>
+                                        <td>${banner.text}</td>
+                                        <td>
+                                            <c:forEach items="${fromTypes}" var="fromType">
+                                                <c:if test="${banner.fromType == fromType.value}">
+                                                    ${fromType.key}
+                                                </c:if>
+                                            </c:forEach>
+                                        </td>
+
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${banner.status == 0}">
+                                                    展示中
+                                                </c:when>
+                                                <c:when test="${banner.status == 1}">
+                                                    已下线
                                                 </c:when>
                                             </c:choose>
                                         </td>
                                         <td>
-                                            <c:forEach items="${departments}" var="department">
-                                                <c:if test="${admin.organ == department['id']}">
-                                                    ${department['name']}
-                                                </c:if>
-                                            </c:forEach>
-
-                                        </td>
-                                        <td>
-                                            <c:forEach items="${areas}" var="area" >
-                                                <c:if test="${admin.area == area.areaId}" >
-                                                    ${area.areaName}
-                                                </c:if>
-
-                                            </c:forEach>
-
-                                        </td>
-                                        <td>${admin.mobile}</td>
-                                        <td>
-                                            <a href="<%=contextPath%>/system/admin/detail/${admin.id}" class="btn mini purple"><i class="icon-edit"></i> 编辑</a>
-                                            <a href="javascript:void(0)" onclick="deleteById('<%=contextPath%>/system/admin/delete/${admin.id}')" class="btn mini purple"><i class="icon-trash"></i> 删除</a>
+                                            <a href="<%=contextPath%>/system/banner/detail/${banner.id}" class="btn mini purple"><i class="icon-edit"></i> 编辑</a>
+                                            <a href="javascript:void(0)" onclick="deleteById('<%=contextPath%>/system/banner/delete/${banner.id}')" class="btn mini purple button_delete"><i class="icon-trash"></i> 删除</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -157,26 +154,26 @@
 
 <script>
 
-    function deleteById(url){
-        $('#url').val(url);
-        $('#deleteModel').modal();
-    }
+        function deleteById(url){
+            $('#url').val(url);
+            $('#deleteModel').modal();
+        }
 
-    function urlDelete(){
-        var url = $.trim($("#url").val());//获取会话中的隐藏属性URL
-        $.ajax({
-            url: url,
-            type: 'GET',
-            success: function(result) {
-                if(result){
-                    $("#delete_success").css("display", "block").hide(3000);
-                    window.location.reload();
+        function urlDelete(){
+            var url = $.trim($("#url").val());//获取会话中的隐藏属性URL
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function(result) {
+                    if(result){
+                        $("#delete_success").css("display", "block").hide(3000);
+                        window.location.reload();
+                    }
+                },
+                error: function(xhr, textStatus, errorThrown){
+                    $("#delete_fail").css("display", "block").hide(3000);
                 }
-            },
-            error: function(xhr, textStatus, errorThrown){
-                $("#delete_fail").css("display", "block").hide(3000);
-            }
-        });
-    }
+            });
+        }
 
 </script>

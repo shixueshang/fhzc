@@ -25,6 +25,8 @@ public class AdminRoleServiceImpl implements AdminRoleService {
     @Override
     public PageableResult<AdminRole> findPageRole(int page, int size) {
         AdminRoleExample example = new AdminRoleExample();
+        AdminRoleExample.Criteria criteria = example.createCriteria();
+        criteria.andStatusEqualTo(Const.Data_Status.DATA_NORMAL);
         RowBounds rowBounds = new RowBounds((page - 1 ) * size, size);
         List<AdminRole> list = adminRoleMapper.selectByExample(example);
         return new PageableResult<AdminRole>(page, size, adminRoleMapper.countByExample(example), list);
