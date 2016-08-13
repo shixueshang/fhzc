@@ -119,9 +119,11 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 		        		 key = pcode.substring(pcode.length()-8);
 	    			}
     				for(User user : users){
-    					if(user.getPassportCode().equals(pcode) && user.getPassportTypeId() == passport_type ){
-    						isExist = true;
-    						break;
+    					if(user.getLoginRole().trim().equals("customer")){
+	    					if(user.getPassportCode().equals(pcode) && user.getPassportTypeId() == passport_type ){
+	    						isExist = true;
+	    						break;
+	    					}
     					}
     				}
 		    		if(!isExist){
@@ -268,9 +270,11 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 				        		 key = pcode.substring(pcode.length()-8);
 			    			}
 		    				for(User user : users){
-		    					if(user.getPassportCode().equals(pcode) && user.getPassportTypeId() == passport_type ){
-		    						isExist = true;
-		    						break;
+		    					if(user.getLoginRole().trim().equals("customer")){
+			    					if(user.getPassportCode().equals(pcode) && user.getPassportTypeId() == passport_type ){
+			    						isExist = true;
+			    						break;
+			    					}
 		    					}
 		    				}
 				    		if(!isExist){
