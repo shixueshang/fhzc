@@ -109,8 +109,9 @@ public class UserController extends BaseController {
                 map.put("address", customerUser.getAddress());
                 map.put("main", pc.getIsMain());
                 map.put("memo", pc.getMemo());
-                List<ScoreHistory> scoreHistoryList = scoreService.getAvailableList(pc.getCustomerId());
-                map.put("score", scoreService.sumScore(scoreHistoryList));
+                List<ScoreHistory> availableList= scoreService.getAvailableList(pc.getCustomerId());
+                List<ScoreHistory> consumeList = scoreService.getConsume(pc.getCustomerId());
+                map.put("score", scoreService.sumScore(availableList) + scoreService.sumScore(consumeList));
                 map.put("level", super.getLevelName(customer.getLevelId()));
 
                 result.add(map);

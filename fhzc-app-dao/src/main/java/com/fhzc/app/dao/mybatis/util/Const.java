@@ -299,4 +299,12 @@ public class Const {
          */
         public static final String OTHER= "other";
     }
+
+    public static class SCORE_VAILD{
+
+        public static final Integer IS_VAILD = 1;
+
+        public static final Integer NOT_VAILD = 0;
+
+    }
 }

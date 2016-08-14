@@ -25,4 +25,5 @@ public interface ScoreService {
     List<ScoreHistory> getWillExpired(Integer customerId, Date start, Date end);
     List<ScoreHistory> getAllList(Integer customerId, Date start, Date end);
 
+    List<ScoreHistory> getConsume(Integer cutomerId);
 }
