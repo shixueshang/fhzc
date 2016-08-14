@@ -1,9 +1,11 @@
 package com.fhzc.app.api.controller;
 
 import com.fhzc.app.api.controller.BaseController;
+import com.fhzc.app.api.service.CustomerService;
 import com.fhzc.app.api.service.ScoreService;
 import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
+import com.fhzc.app.dao.mybatis.model.Customer;
 import com.fhzc.app.dao.mybatis.model.ScoreHistory;
 import com.fhzc.app.dao.mybatis.model.User;
 import org.springframework.stereotype.Controller;
@@ -28,6 +30,9 @@ public class ScoreApiController extends BaseController {
     @Resource
     private ScoreService scoreService;
 
+    @Resource
+    private CustomerService customerService;
+
     /**
      * 积分记录
      * @return
@@ -36,12 +41,12 @@ public class ScoreApiController extends BaseController {
     @ResponseBody
     public ApiJsonResult personalScore(){
         User user = super.getCurrentUser();
-        Integer uid = user.getUid();
-        Integer available = scoreService.sumScore(scoreService.getAvailableList(uid));
+        Customer customer = customerService.getCustomerByUid(user.getUid());
+        Integer customerId = customer.getCustomerId();
 
-        Integer frozen= scoreService.sumScore(scoreService.getFrozen(uid));
-
-        Integer expired = scoreService.sumScore(scoreService.getWillExpired(uid));
+        Integer available = scoreService.sumScore(scoreService.getAvailableList(customerId));
+        Integer frozen= scoreService.sumScore(scoreService.getFrozen(customerId));
+        Integer expired = scoreService.sumScore(scoreService.getWillExpired(customerId));
 
         Map<String, Object> map = new HashMap<String,Object>();
         map.put("yours",available + frozen);
@@ -63,7 +68,8 @@ public class ScoreApiController extends BaseController {
     @ResponseBody
     public ApiJsonResult personalScoreDetail(String type, String start, String end){
         User user = super.getCurrentUser();
-        Integer uid = user.getUid();
+        Customer customer = customerService.getCustomerByUid(user.getUid());
+        Integer customerId = customer.getCustomerId();
         List<ScoreHistory>  scoreHistory = null;
 
         SimpleDateFormat sbf=new SimpleDateFormat("yyyy-MM-dd");
@@ -80,16 +86,16 @@ public class ScoreApiController extends BaseController {
         }else {
             switch (type){
                 case "all":
-                    scoreHistory = scoreService.getAllList(uid,scoreStart,scoreEnd);
+                    scoreHistory = scoreService.getAllList(customerId,scoreStart,scoreEnd);
                     break;
                 case "available":
-                    scoreHistory = scoreService.getAvailableList(uid,scoreStart,scoreEnd);
+                    scoreHistory = scoreService.getAvailableList(customerId,scoreStart,scoreEnd);
                     break;
                 case "frozen":
-                    scoreHistory = scoreService.getFrozen(uid,scoreStart,scoreEnd);
+                    scoreHistory = scoreService.getFrozen(customerId,scoreStart,scoreEnd);
                     break;
                 case "will":
-                    scoreHistory = scoreService.getWillExpired(uid,scoreStart,scoreEnd);
+                    scoreHistory = scoreService.getWillExpired(customerId,scoreStart,scoreEnd);
                     break;
                 default:
                     break;
