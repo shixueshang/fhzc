@@ -12,6 +12,7 @@ public class RightReservationVo {
     private int score;
     private String phoneNum;
     private Integer id;
+    private String reservationStatus;
 
     public Integer getId() {
         return id;
@@ -59,5 +60,13 @@ public class RightReservationVo {
 
     public void setPhoneNum(String phoneNum) {
         this.phoneNum = phoneNum;
+    }
+
+    public String getReservationStatus() {
+        return reservationStatus;
+    }
+
+    public void setReservationStatus(String reservationStatus) {
+        this.reservationStatus = reservationStatus;
     }
 }

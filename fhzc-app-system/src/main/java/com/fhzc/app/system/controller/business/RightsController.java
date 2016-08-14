@@ -191,24 +191,7 @@ public class RightsController extends BaseController{
         ModelAndView mav = new ModelAndView("business/rights/reservationList");
         PageableResult<RightsReservation> pageableResult = rightsService.listRightReservations(page, size);
         List<RightsReservation> reservations = pageableResult.getItems();
-        List<RightReservationVo> vos = new LinkedList<RightReservationVo>();
-        if (!CollectionUtils.isEmpty(reservations)){
-            for (RightsReservation reser : reservations){
-                RightReservationVo vo = new RightReservationVo();
-                vo.setId(reser.getId());
-                Rights r = rightsService.getRights(reser.getRightsId());
-                vo.setRightName(r.getName());
-
-                Customer c = customerService.getCustomer(reser.getCustomerId());
-                User u = userService.getUser(c.getUid());
-                vo.setCustomerName(u.getRealname());
-                vo.setPhoneNum(u.getMobile());
-
-                vo.setScore(reser.getScoreCost());
-                vo.setReservationTime(reser.getMarkDate());
-                vos.add(vo);
-            }
-        }
+        List<RightReservationVo> vos = convertReserVo(reservations);
 
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("reservations", vos);
@@ -291,6 +274,14 @@ public class RightsController extends BaseController{
         ModelAndView mav = new ModelAndView("business/rights/reservationList");
         PageableResult<RightsReservation> pageableResult = rightsService.listRightReservations(page, size);
         List<RightsReservation> reservations = pageableResult.getItems();
+        List<RightReservationVo> vos = convertReserVo(reservations);
+
+        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
+        mav.addObject("reservations", vos);
+        return mav;
+    }
+
+    List<RightReservationVo> convertReserVo(List<RightsReservation> reservations){
         List<RightReservationVo> vos = new LinkedList<RightReservationVo>();
         if (!CollectionUtils.isEmpty(reservations)){
             for (RightsReservation reser : reservations){
@@ -306,12 +297,42 @@ public class RightsController extends BaseController{
 
                 vo.setScore(reser.getScoreCost());
                 vo.setReservationTime(reser.getMarkDate());
+                switch (reser.getStatus()){
+                    case 0:{
+                        vo.setReservationStatus("预约中");
+                        break;
+                    }
+
+                    case 1:{
+                        vo.setReservationStatus("预约成功");
+                        break;
+                    }
+
+                    case 2:{
+                        vo.setReservationStatus("预约失败");
+                        break;
+                    }
+
+                    case 3:{
+                        vo.setReservationStatus("预约取消");
+                        break;
+                    }
+
+                    case 4:{
+                        vo.setReservationStatus("客户消费");
+                        break;
+                    }
+
+                    case 5:{
+                        vo.setReservationStatus("客户缺席");
+                        break;
+                    }
+                }
+
                 vos.add(vo);
             }
         }
 
-        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
-        mav.addObject("reservations", vos);
-        return mav;
+        return vos;
     }
 }
