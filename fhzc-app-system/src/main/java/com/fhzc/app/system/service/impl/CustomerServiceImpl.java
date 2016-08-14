@@ -37,7 +37,7 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerMapper customerMapper;
 
     @Resource
-    private UserMapper userMapper;
+    private UserService userService;
 
     @Resource
     private DictionaryMapper dictionaryMapper;
@@ -165,12 +165,14 @@ public class CustomerServiceImpl implements CustomerService {
      */
     @Override
     public CustomerVo getCustomerInfoByMobile(String mobileNum) {
-        List<User> users = userMapper.selectUserByMobile(mobileNum);
-        if (users != null && users.size() > 0){
+        //List<User> users = userMapper.selectUserByMobile(mobileNum);
+        User user = userService.getUserByMobile(mobileNum);
+
+        if (user != null){
             CustomerVo vo = new CustomerVo();
-            vo.setName(users.get(0).getRealname());
+            vo.setName(user.getRealname());
             // TODO 需要根据手机号判断是个人客户还是机构客户
-            Customer customer = this.getCustomerByUid(users.get(0).getUid(), Const.CUSTOMER_TYPE.SINGLE_CUSTOMER);
+            Customer customer = this.getCustomerByUid(user.getUid(), Const.CUSTOMER_TYPE.SINGLE_CUSTOMER);
             vo.setCustomerId(customer.getCustomerId());
             if (customer != null){
                 DictionaryExample example = new DictionaryExample();
@@ -186,7 +188,7 @@ public class CustomerServiceImpl implements CustomerService {
                 }
             }
 
-            Integer score = scoreHistoryMapper.getScoreByUid(users.get(0).getUid());
+            Integer score = scoreHistoryMapper.getScoreByUid(user.getUid());
             if (score == null){
                 vo.setAvailableScore(0+"");
             } else {

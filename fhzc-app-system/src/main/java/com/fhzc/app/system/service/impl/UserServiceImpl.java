@@ -195,9 +195,46 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByMobile(String mobileNum) {
-        List<User> users = userMapper.selectUserByMobile(mobileNum);
+        /*List<User> users = userMapper.selectUserByMobile(mobileNum);
         if (users != null && users.size() > 0){
             return users.get(0);
+        }*/
+        if (StringUtils.isBlank(mobileNum)){
+            return null;
+        } else {
+            mobileNum = mobileNum.trim();
+        }
+
+        UserExample example = new UserExample();
+        int size = 30;
+        int pageNum = 1;
+        RowBounds rowBounds = new RowBounds((pageNum - 1) * size, size);
+        while (true){
+            List<User> users = userMapper.selectByExampleWithRowbounds(example, rowBounds);
+            if (users == null || users.size() == 0){
+                break;
+            } else {
+                for (User user : users){
+                    String key = user.getSalt();
+                    String mobile = null;
+                    if(key == null){
+                        mobile = user.getMobile();
+                    } else {
+                        try {
+                            mobile = EncryptUtils.decryptByDES(key, user.getMobile());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    if (mobileNum.equalsIgnoreCase(mobile)){
+                        return user;
+                    }
+                }
+            }
+
+            pageNum++;
+            rowBounds = new RowBounds((pageNum - 1) * size, size);
         }
 
         return null;
