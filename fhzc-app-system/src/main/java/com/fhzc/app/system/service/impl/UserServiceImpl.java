@@ -1,5 +1,8 @@
 package com.fhzc.app.system.service.impl;
 
+import com.fhzc.app.dao.mybatis.inter.FocusMapper;
+import com.fhzc.app.dao.mybatis.model.Focus;
+import com.fhzc.app.dao.mybatis.model.FocusExample;
 import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.model.UserExample;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
@@ -9,6 +12,7 @@ import com.fhzc.app.system.commons.util.excel.ImportCallBack;
 import com.fhzc.app.system.commons.util.excel.ImportConfig;
 import com.fhzc.app.dao.mybatis.inter.UserMapper;
 import com.fhzc.app.system.service.UserService;
+import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -36,6 +40,9 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private UserMapper userMapper;
+
+    @Resource
+    private FocusMapper focusMapper;
     
     @Override
     public PageableResult<User> findPageUsers(String name, int page, int size) {
@@ -193,11 +200,61 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByMobile(String mobileNum) {
-        List<User> users = userMapper.selectUserByMobile(mobileNum);
+        /*List<User> users = userMapper.selectUserByMobile(mobileNum);
         if (users != null && users.size() > 0){
             return users.get(0);
+        }*/
+        if (StringUtils.isBlank(mobileNum)){
+            return null;
+        } else {
+            mobileNum = mobileNum.trim();
+        }
+
+        UserExample example = new UserExample();
+        int size = 30;
+        int pageNum = 1;
+        RowBounds rowBounds = new RowBounds((pageNum - 1) * size, size);
+        while (true){
+            List<User> users = userMapper.selectByExampleWithRowbounds(example, rowBounds);
+            if (users == null || users.size() == 0){
+                break;
+            } else {
+                for (User user : users){
+                    String key = user.getSalt();
+                    String mobile = null;
+                    if(key == null){
+                        mobile = user.getMobile();
+                    } else {
+                        try {
+                            mobile = EncryptUtils.decryptByDES(key, user.getMobile());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    if (mobileNum.equalsIgnoreCase(mobile)){
+                        return user;
+                    }
+                }
+            }
+
+            pageNum++;
+            rowBounds = new RowBounds((pageNum - 1) * size, size);
         }
 
         return null;
+    }
+
+    @Override
+    public PageableResult<Focus> getFocusByType(String ftype, int page, int size) {
+        FocusExample example = new FocusExample();
+        FocusExample.Criteria criteria = example.createCriteria();
+        if (StringUtils.isNotBlank(ftype)){
+            criteria.andFtypeEqualTo(ftype);
+        }
+
+        RowBounds rowBounds = new RowBounds((page - 1) * size, size);
+        List<Focus> focuses = focusMapper.selectByExampleWithRowbounds(example, rowBounds);
+        return new PageableResult<Focus>(page, size, focusMapper.countByExample(example), focuses);
     }
 }

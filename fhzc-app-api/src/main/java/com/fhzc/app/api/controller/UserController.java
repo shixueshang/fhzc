@@ -12,10 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -42,6 +39,9 @@ public class UserController extends BaseController {
     @Resource
     private DepartmentService departmentService;
 
+    @Resource
+    private AchievementService achievementService;
+
     /**
      * 获取登录用户信息
      * @return
@@ -64,6 +64,7 @@ public class UserController extends BaseController {
                     Planner planner = plannerService.getPlanner(pl.getPlannerId());
                     User plannerUser = userService.getUser(planner.getUid());
                     map.put("plannerId", pl.getPlannerId());
+                    map.put("uid", planner.getUid());
                     map.put("plannerName", plannerUser.getRealname());
                     map.put("isMain", pl.getIsMain());
                     planners.add(map);
@@ -243,6 +244,30 @@ public class UserController extends BaseController {
         result.put("position", planner.getPosition());
         result.put("mobile", user.getMobile());
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
+    }
+
+    /**
+     * 我的工作
+     * @return
+     */
+    @RequestMapping(value = "/api/achievement", method = RequestMethod.GET)
+    @ResponseBody
+    public ApiJsonResult achievement(){
+        User user = super.getCurrentUser();
+        if (!user.getLoginRole().equals(Const.USER_ROLE.PLANNER)) {
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"非理财师用户");
+        }
+        Planner planner = plannerService.getPlannerByUid(user.getUid());
+        Map map = new HashMap();
+
+        Calendar cal = Calendar.getInstance();
+        Integer currentYear = cal.get(Calendar.YEAR);
+        Integer currentMonth = cal.get(Calendar.MONTH)+1;
+
+        map.put("monthSale", achievementService.getMonthSale(planner.getId(),currentYear,currentMonth));
+        map.put("yearSale", achievementService.getYearSale(planner.getId(),currentYear));
+
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, map);
     }
 }
 

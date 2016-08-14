@@ -41,27 +41,26 @@
                     <ul class="breadcrumb">
                         <li>
                             <i class="icon-home"></i>
-                            <a href="javascript:void(0);">权益管理</a>
+                            <a href="javascript:void(0);">客户管理</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li class="active"><a href="javascript:void(0);">预约列表</a></li>
+                        <li class="active"><a href="javascript:void(0);">关注列表</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
             </div>
 
-            <div class="row-fluid" style="display: none">
-                <form name="searchForm" class="form-inline" action="/business/activity/registers">
+            <div class="row-fluid">
+                <form name="searchForm" class="form-inline" action="/personal/user/focus/list">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">活动名称:</label>
-                        <input class="form-control" id="activityName" name="activityName" value="${param.activityName}">
-
-                        <label class="col-sm-2 control-label">身份证号:</label>
-                        <input class="form-control" id="identityId" name="identityId" value="${param.identityId}">
-                        <label class="col-sm-2 control-label">预约时间:</label>
-                        <input class="form-control" id="startTime" name="startTime" style="width: 180px" value="${param.startTime}">
-                        ~
-                        <input class="form-control" id="endTime" name="endTime" style="width: 180px" value="${param.endTime}">
+                        <label class="col-sm-2 control-label">关注类型:</label>
+                        <select id="ftype" name="ftype">
+                            <option value=""></option>
+                            <option value="product" <c:if test="${param.ftype eq 'product'}"> selected</c:if>>产品</option>
+                            <option value="report" <c:if test="${param.ftype eq 'report'}"> selected</c:if>>报告</option>
+                            <option value="rights" <c:if test="${param.ftype eq 'rights'}"> selected</c:if>>权益</option>
+                            <option value="activity" <c:if test="${param.ftype eq 'activity'}"> selected</c:if>>活动</option>
+                        </select>
                         <button type="submit">查找</button>
                     </div>
                 </form>
@@ -79,25 +78,25 @@
                             <table class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <td>预约时间</td>
-                                    <td>权利名称</td>
-                                    <td>客户姓名</td>
-                                    <td>客户电话</td>
-                                    <td>消耗积分</td>
-                                    <td>预约状态</td>
-                                    <td></td>
+                                    <td>关注id</td>
+                                    <td>关注内容</td>
+                                    <td>关注类型</td>
+                                    <td>关注时间</td>
+                                    <td>关注用户名</td>
+                                    <td>关注用户类型</td>
+                                    <td>状态</td>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach items="${reservations}" var="reservation">
+                                <c:forEach items="${focuses}" var="focus">
                                     <tr>
-                                        <td><fmt:formatDate value="${reservation.reservationTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-                                        <td>${reservation.rightName}</td>
-                                        <td>${reservation.customerName}</td>
-                                        <td>${reservation.phoneNum}</td>
-                                        <td>${reservation.score}</td>
-                                        <td>${reservation.reservationStatus}</td>
-                                        <td><button class="Deal_Reser" data-id="${reservation.id}">处理预约</button></td>
+                                        <td>${focus.id}</td>
+                                        <td>${focus.contentName}</td>
+                                        <td>${focus.contentType}</td>
+                                        <td><fmt:formatDate value="${focus.focusTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+                                        <td>${focus.userName}</td>
+                                        <td>${focus.userType}</td>
+                                        <td>${focus.status}</td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>
@@ -118,12 +117,6 @@
 
 <script type="text/javascript">
 $(document).ready(function () {
-    $(".Deal_Reser").click(function () {
-        var id = $(this).data("id");
-        var url = '<%=contextPath%>/business/rights/reservation/deal?id='+id;
-        window.location.href = url;
-    });
-
     $('#startTime').datetimepicker({
         timeFormat: 'HH:mm:ss',
         dateFormat: "yy-mm-dd"
