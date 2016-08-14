@@ -51,10 +51,16 @@
             </div>
 
             <div class="row-fluid">
-                <form name="searchForm" class="form-inline" action="/business/activity/registers">
+                <form name="searchForm" class="form-inline" action="/personal/user/focus/list">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">关注类型:</label>
-                        <input class="form-control" id="activityName" name="activityName" value="${param.activityName}">
+                        <select id="ftype" name="ftype">
+                            <option value=""></option>
+                            <option value="product" <c:if test="${param.ftype eq 'product'}"> selected</c:if>>产品</option>
+                            <option value="report" <c:if test="${param.ftype eq 'report'}"> selected</c:if>>报告</option>
+                            <option value="rights" <c:if test="${param.ftype eq 'rights'}"> selected</c:if>>权益</option>
+                            <option value="activity" <c:if test="${param.ftype eq 'activity'}"> selected</c:if>>活动</option>
+                        </select>
                         <button type="submit">查找</button>
                     </div>
                 </form>

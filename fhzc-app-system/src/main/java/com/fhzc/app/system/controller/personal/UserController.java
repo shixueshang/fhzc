@@ -74,37 +74,72 @@ public class UserController extends BaseController {
                     vo.setStatus("关注");
                 }
 
-                User user = userService.getUser(focus.getUid());
+                User user = null;
+                try{
+                    user = userService.getUser(focus.getUid());
+                } catch (Exception ex){
+                    continue;
+                }
+
                 vo.setUserName(user.getRealname());
 
                 switch (focus.getFtype()){
                     case "product": {
                         vo.setContentType("产品");
                         Product p = productService.getProduct(focus.getFid());
+                        if (p == null){
+                            logger.error("Could not find product with id {}", focus.getFid());
+                            continue;
+                        }
+
                         vo.setContentName(p.getName());
+                        break;
                     }
 
                     case "report":{
                         vo.setContentType("报告");
                         Report r = reportService.getReport(focus.getFid());
+                        if (r == null){
+                            logger.error("Could not find report with id {}", focus.getFid());
+                            continue;
+                        }
+
                         vo.setContentName(r.getName());
+                        break;
                     }
 
                     case "rights":{
                         vo.setContentType("权益");
                         Rights ri = rightsService.getRights(focus.getFid());
+                        if (ri == null){
+                            logger.error("Could not find rights with id {}", focus.getFid());
+                            continue;
+                        }
+
                         vo.setContentName(ri.getName());
+                        break;
                     }
 
                     case "activity":{
                         vo.setContentType("活动");
                         Activity a = activityService.getActivity(focus.getFid());
+                        if (a == null){
+                            logger.error("Could not find activity with id {}", focus.getFid());
+                            continue;
+                        }
+
                         vo.setContentName(a.getName());
+                        break;
                     }
                 }
 
                 if ("customer".equalsIgnoreCase(user.getLoginRole().trim().toLowerCase())){
                     Customer customer = customerService.getCustomerByUid(user.getUid(), null);
+                    if (customer == null){
+                        logger.error("Could not find customer with id {}", user.getUid());
+                        continue;
+                    }
+
                     Dictionary customerLevel = dictionaryService.findCustomerLevel(customer.getLevelId().toString());
                     vo.setUserType(customerLevel.getKey());
                 } else {
