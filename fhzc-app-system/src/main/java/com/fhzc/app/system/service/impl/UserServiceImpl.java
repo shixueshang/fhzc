@@ -67,6 +67,11 @@ public class UserServiceImpl implements UserService {
     public User getUserByIdentity(String identity) {
         UserExample example = new UserExample();
         UserExample.Criteria criteria = example.createCriteria();
+        try {
+            identity = EncryptUtils.encryptToDES(identity.substring(identity.length() - 8), identity);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         criteria.andPassportCodeEqualTo(identity);
         if(userMapper.countByExample(example) > 0){
             return decryptUser(userMapper.selectByExample(example).get(0));

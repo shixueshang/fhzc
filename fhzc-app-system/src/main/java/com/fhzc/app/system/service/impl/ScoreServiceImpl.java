@@ -91,7 +91,7 @@ public class ScoreServiceImpl implements ScoreService {
         if(userId != null){
             criteria.andUidEqualTo(userId);
         }
-        if(identity != null && userId == null){
+        if(!"".equals(identity)  && userId == null){
             return new PageableResult<ScoreHistory>(page, size, 0, new ArrayList<ScoreHistory>());
         }
         criteria.andIsApproveEqualTo(isApprove);
