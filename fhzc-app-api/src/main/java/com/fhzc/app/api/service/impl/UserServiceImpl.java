@@ -78,6 +78,9 @@ public class UserServiceImpl implements UserService {
      */
     private User decryptUser(User user){
         String key = user.getSalt();
+        if(key == null){
+            return user;
+        }
         try {
             user.setPassportCode(EncryptUtils.decryptByDES(key, user.getPassportCode()));
             if(user.getMobile() != null){
