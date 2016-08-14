@@ -64,6 +64,7 @@ public class UserController extends BaseController {
                     Planner planner = plannerService.getPlanner(pl.getPlannerId());
                     User plannerUser = userService.getUser(planner.getUid());
                     map.put("plannerId", pl.getPlannerId());
+                    map.put("uid", planner.getUid());
                     map.put("plannerName", plannerUser.getRealname());
                     map.put("isMain", pl.getIsMain());
                     planners.add(map);

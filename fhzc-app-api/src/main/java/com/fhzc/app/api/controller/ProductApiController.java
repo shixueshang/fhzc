@@ -124,16 +124,21 @@ public class ProductApiController extends BaseController {
             }
             boolean isCustomer = false;
             for (PlannerCustomer pl: plannerCustomers){
-                if(pl.getCustomerId() == customer_id){
+                if(pl.getCustomerId().equals(customer_id)){
                     isCustomer = true;
                     break;
                 }
             }
             if(!isCustomer){
-                return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"非客户发起的查看资产请求");
+                return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"您不是此客户的理财师");
             }
-        }else{
-            return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"非理财师不得查看客户资料");
+        }
+
+        if(user.getLoginRole().equals(Const.USER_ROLE.CUSTOMER)) {
+            Customer customer = customerService.getCustomerByUid(user.getUid());
+            if(!customer.getCustomerId().equals(customer_id)){
+                return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"不得其他查看客户资料");
+            }
         }
 
         List<AssetsHistory> assetsHistoryList = assetsService.getHistory(customer_id);
