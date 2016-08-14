@@ -123,6 +123,9 @@
                         <shiro:hasPermission name="/personal/customer/organ/list"><li>
                                 <a href="/personal/customer/organ/list">机构客户列表</a>
                             </li></shiro:hasPermission>
+                        <shiro:hasPermission name="/personal/user/focus/list"><li>
+                                <a href="/personal/user/focus/list">关注列表</a>
+                            </li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>
 

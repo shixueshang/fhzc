@@ -2,6 +2,7 @@ package com.fhzc.app.system.service;
 
 
 
+import com.fhzc.app.dao.mybatis.model.Focus;
 import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import org.springframework.web.multipart.MultipartFile;
@@ -71,4 +72,14 @@ public interface UserService {
      * @return
      */
     User getUserByIdentity(String identity);
+
+    /**
+     * 根据关注类型查询关注列表
+     *
+     * @param ftype
+     * @param page
+     * @param size
+     * @return
+     */
+    PageableResult<Focus> getFocusByType(String ftype, int page, int size);
 }

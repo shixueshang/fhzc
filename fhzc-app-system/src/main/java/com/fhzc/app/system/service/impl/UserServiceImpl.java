@@ -1,5 +1,8 @@
 package com.fhzc.app.system.service.impl;
 
+import com.fhzc.app.dao.mybatis.inter.FocusMapper;
+import com.fhzc.app.dao.mybatis.model.Focus;
+import com.fhzc.app.dao.mybatis.model.FocusExample;
 import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.model.UserExample;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
@@ -9,6 +12,7 @@ import com.fhzc.app.system.commons.util.excel.ImportCallBack;
 import com.fhzc.app.system.commons.util.excel.ImportConfig;
 import com.fhzc.app.dao.mybatis.inter.UserMapper;
 import com.fhzc.app.system.service.UserService;
+import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -36,6 +40,9 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private UserMapper userMapper;
+
+    @Resource
+    private FocusMapper focusMapper;
     
     @Override
     public PageableResult<User> findPageUsers(String name, int page, int size) {
@@ -194,5 +201,18 @@ public class UserServiceImpl implements UserService {
         }
 
         return null;
+    }
+
+    @Override
+    public PageableResult<Focus> getFocusByType(String ftype, int page, int size) {
+        FocusExample example = new FocusExample();
+        FocusExample.Criteria criteria = example.createCriteria();
+        if (StringUtils.isNotBlank(ftype)){
+            criteria.andFtypeEqualTo(ftype);
+        }
+
+        RowBounds rowBounds = new RowBounds((page - 1) * size, size);
+        List<Focus> focuses = focusMapper.selectByExampleWithRowbounds(example, rowBounds);
+        return new PageableResult<Focus>(page, size, focusMapper.countByExample(example), focuses);
     }
 }
