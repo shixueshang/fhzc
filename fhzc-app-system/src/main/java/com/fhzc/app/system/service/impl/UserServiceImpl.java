@@ -1,5 +1,8 @@
 package com.fhzc.app.system.service.impl;
 
+import com.fhzc.app.dao.mybatis.inter.FocusMapper;
+import com.fhzc.app.dao.mybatis.model.Focus;
+import com.fhzc.app.dao.mybatis.model.FocusExample;
 import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.model.UserExample;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
@@ -36,6 +39,9 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private UserMapper userMapper;
+
+    @Resource
+    private FocusMapper focusMapper;
     
     @Override
     public PageableResult<User> findPageUsers(String name, int page, int size) {
@@ -191,5 +197,15 @@ public class UserServiceImpl implements UserService {
         }
 
         return null;
+    }
+
+    @Override
+    public PageableResult<Focus> getFocusByType(String ftype, int page, int size) {
+        FocusExample example = new FocusExample();
+        FocusExample.Criteria criteria = example.createCriteria();
+        criteria.andFtypeEqualTo(ftype);
+        RowBounds rowBounds = new RowBounds((page - 1) * size, size);
+        List<Focus> focuses = focusMapper.selectByExampleWithRowbounds(example, rowBounds);
+        return new PageableResult<Focus>(page, size, focusMapper.countByExample(example), focuses);
     }
 }
