@@ -176,6 +176,7 @@ public class FocusApiController extends BaseController {
             Integer fid = focus.getFid();
             Map map = new HashMap();
             map.put("id",fid);
+            map.put("ctime",focus.getCtime());
             switch (ftype){
                 case "product":
                     Product product = productService.getProduct(fid);
