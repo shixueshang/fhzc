@@ -33,10 +33,10 @@ public class ActivityApplyServiceImpl implements ActivityApplyService {
     }
 
     @Override
-    public List<ActivityApply> getActivityApplyList(Integer customer_id) {
+    public List<ActivityApply> getActivityApplyList(Integer customerId) {
         ActivityApplyExample example = new ActivityApplyExample();
         ActivityApplyExample.Criteria criteria = example.createCriteria();
-        criteria.andCustomerIdEqualTo(customer_id);
+        criteria.andCustomerIdEqualTo(customerId);
         criteria.andResultEqualTo(Const.ACTIVITY_APPLY_STATUS.JOIN);
         if(activityApplyMapper.countByExample(example) > 0){
             return activityApplyMapper.selectByExample(example);
@@ -46,11 +46,11 @@ public class ActivityApplyServiceImpl implements ActivityApplyService {
     }
 
     @Override
-    public ActivityApply getByUidActivityId(Integer uid, Integer activityId) {
+    public ActivityApply getActivityIdByCustomerId(Integer customerId, Integer activityId) {
         ActivityApplyExample example = new ActivityApplyExample();
         ActivityApplyExample.Criteria criteria = example.createCriteria();
         example.setOrderByClause("id desc");
-        criteria.andCustomerIdEqualTo(uid);
+        criteria.andCustomerIdEqualTo(customerId);
         criteria.andActivityIdEqualTo(activityId);
         if(activityApplyMapper.countByExample(example) > 0){
             return activityApplyMapper.selectByExample(example).get(0);

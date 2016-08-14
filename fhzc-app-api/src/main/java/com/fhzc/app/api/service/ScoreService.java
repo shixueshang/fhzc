@@ -11,18 +11,18 @@ import java.util.List;
  */
 public interface ScoreService {
 
-    List<ScoreHistory> getList(Integer uid, String type);
-    List<ScoreHistory> getAvailableList(Integer uid);
-    List<ScoreHistory> getFrozen(Integer uid);
-    List<ScoreHistory> getWillExpired(Integer uid);
-    List<ScoreHistory> getExpiredList(Integer uid);
+    List<ScoreHistory> getList(Integer customerId, String type);
+    List<ScoreHistory> getAvailableList(Integer customerId);
+    List<ScoreHistory> getFrozen(Integer customerId);
+    List<ScoreHistory> getWillExpired(Integer customerId);
+    List<ScoreHistory> getExpiredList(Integer customerId);
     List<ScoreHistory> calcWillExpired(List<ScoreHistory> scoreHistories);
     Integer sumScore(List<ScoreHistory> scoreHistories);
 
-    List<ScoreHistory> getList(Integer uid, String type, Date start, Date end);
-    List<ScoreHistory> getAvailableList(Integer uid, Date start, Date end);
-    List<ScoreHistory> getFrozen(Integer uid, Date start, Date end);
-    List<ScoreHistory> getWillExpired(Integer uid, Date start, Date end);
-    List<ScoreHistory> getAllList(Integer uid, Date start, Date end);
+    List<ScoreHistory> getList(Integer customerId, String type, Date start, Date end);
+    List<ScoreHistory> getAvailableList(Integer customerId, Date start, Date end);
+    List<ScoreHistory> getFrozen(Integer customerId, Date start, Date end);
+    List<ScoreHistory> getWillExpired(Integer customerId, Date start, Date end);
+    List<ScoreHistory> getAllList(Integer customerId, Date start, Date end);
 
 }

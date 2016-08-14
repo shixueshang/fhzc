@@ -2,15 +2,13 @@ package com.fhzc.app.api.controller;
 
 import com.fhzc.app.api.service.ActivityApplyService;
 import com.fhzc.app.api.service.ActivityService;
+import com.fhzc.app.api.service.CustomerService;
 import com.fhzc.app.api.service.FocusService;
 import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
 import com.fhzc.app.api.tools.ObjUtils;
-import com.fhzc.app.dao.mybatis.model.ActivityApply;
-import com.fhzc.app.dao.mybatis.model.Focus;
-import com.fhzc.app.dao.mybatis.model.User;
+import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
-import com.fhzc.app.dao.mybatis.model.Activity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,6 +31,9 @@ public class ActivityApiController extends BaseController{
 
     @Resource
     private FocusService focusService;
+
+    @Resource
+    private CustomerService customerService;
 
     /**
      * 活动列表
@@ -57,8 +58,9 @@ public class ActivityApiController extends BaseController{
         Activity activity = activityService.getActivity(activityId);
         Map result = ObjUtils.objectToMap(activity);
         User user = super.getCurrentUser();
+        Customer customer = customerService.getCustomerByUid(user.getUid());
 
-        ActivityApply activityApply = activityApplyService.getByUidActivityId(user.getUid(),activityId);
+        ActivityApply activityApply = activityApplyService.getActivityIdByCustomerId(customer.getCustomerId(),activityId);
         if(activityApply != null) {
             result.put("activityResult", activityApply.getResult());
             result.put("activityIsContact", activityApply.getIsContact());
@@ -75,7 +77,7 @@ public class ActivityApiController extends BaseController{
         }else{
             result.put("focusStatus","");
         }
-        ActivityApply apply= activityApplyService.getByUidActivityId(user.getUid(),activityId);
+        ActivityApply apply= activityApplyService.getActivityIdByCustomerId(customer.getCustomerId(),activityId);
         if(apply!= null) {
             result.put("applyId", apply.getId());
         }else{

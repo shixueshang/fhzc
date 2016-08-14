@@ -9,11 +9,11 @@ import java.util.List;
  */
 public interface ProductReservationService {
 
-    public void addOrUpdateProductReservation(ProductReservation productReservation);
+    void addOrUpdateProductReservation(ProductReservation productReservation);
 
-    public ProductReservation getProductReservation(Integer id) ;
+    ProductReservation getProductReservation(Integer id) ;
 
-    public List<ProductReservation> getUserProductList(Integer customer_id);
+    List<ProductReservation> getUserProductList(Integer customer_id);
 
-    public ProductReservation getUserProductReservation(Integer uid, Integer productId);
+    ProductReservation getUserProductReservation(Integer customerId, Integer productId);
 }

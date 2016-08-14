@@ -15,5 +15,5 @@ public interface ActivityApplyService {
 
     List<ActivityApply> getActivityApplyList(Integer customer_id);
 
-    ActivityApply getByUidActivityId(Integer uid, Integer activityId);
+    ActivityApply getActivityIdByCustomerId(Integer customerId, Integer activityId);
 }

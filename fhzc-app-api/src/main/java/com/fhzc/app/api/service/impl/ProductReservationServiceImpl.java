@@ -42,11 +42,11 @@ public class ProductReservationServiceImpl implements ProductReservationService 
     }
 
     @Override
-    public ProductReservation getUserProductReservation(Integer uid, Integer productId){
+    public ProductReservation getUserProductReservation(Integer customerId, Integer productId){
         ProductReservationExample example = new ProductReservationExample();
         ProductReservationExample.Criteria criteria = example.createCriteria();
         example.setOrderByClause("id desc");
-        criteria.andCustomerIdEqualTo(uid);
+        criteria.andCustomerIdEqualTo(customerId);
         criteria.andProductIdEqualTo(productId);
         if(productReservationMapper.countByExample(example) > 0) {
             return productReservationMapper.selectByExample(example).get(0);

@@ -2,10 +2,15 @@ package com.fhzc.app.api.controller;
 
 import com.fhzc.app.api.exception.BadRequestException;
 import com.fhzc.app.api.exception.NeedLoginRequestException;
+import com.fhzc.app.api.service.CustomerService;
+import com.fhzc.app.api.service.PlannerService;
 import com.fhzc.app.api.service.UserService;
 import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
+import com.fhzc.app.dao.mybatis.model.Customer;
+import com.fhzc.app.dao.mybatis.model.Planner;
 import com.fhzc.app.dao.mybatis.model.User;
+import com.fhzc.app.dao.mybatis.util.Const;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -31,6 +36,12 @@ public class LoginController extends BaseController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private PlannerService plannerService;
+
+    @Resource
+    private CustomerService customerService;
 
     /**
      * 未验证身份用户登录
@@ -81,8 +92,19 @@ public class LoginController extends BaseController {
             map.put("realname",user.getRealname());
             map.put("role",user.getLoginRole());
 
-            return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, map);
-        } catch (UnknownAccountException e) {
+            if (user.getLoginRole().equals(Const.USER_ROLE.PLANNER)) {
+                Planner planner = plannerService.getPlannerByUid(user.getUid());
+                map.put("plannerId", planner.getId());
+            }
+
+            if (user.getLoginRole().equals(Const.USER_ROLE.CUSTOMER)) {
+                Customer customer= customerService.getCustomerByUid(user.getUid());
+                map.put("customerId", customer.getCustomerId());
+            }
+
+
+                return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, map);
+            } catch (UnknownAccountException e) {
             return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST, "账号不存在");
         } catch (IncorrectCredentialsException e) {
             return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST, "密码错误");

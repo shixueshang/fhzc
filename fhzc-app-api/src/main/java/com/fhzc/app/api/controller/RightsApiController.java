@@ -1,9 +1,6 @@
 package com.fhzc.app.api.controller;
 
-import com.fhzc.app.api.service.DictionaryService;
-import com.fhzc.app.api.service.FocusService;
-import com.fhzc.app.api.service.RightsReservationService;
-import com.fhzc.app.api.service.RightsService;
+import com.fhzc.app.api.service.*;
 import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
 
@@ -37,7 +34,7 @@ public class RightsApiController extends BaseController{
     private RightsReservationService rightsReservationService;
 
     @Resource
-    private DictionaryService dictionaryService;
+    private CustomerService customerService;
 
     /**
      * 权益列表
@@ -47,7 +44,7 @@ public class RightsApiController extends BaseController{
     @RequestMapping(value = "/api/rights",method = RequestMethod.GET)
     @ResponseBody
     public ApiJsonResult rightsList(Integer cid) throws Exception {
-        List<Rights> rightsList =  rightsService.getListByCid(cid);
+        List<Rights> rightsList = rightsService.getListByCid(cid);
         List<Object> result = new ArrayList<>();
         if(rightsList != null){
             for (Rights rights:rightsList){
@@ -68,7 +65,6 @@ public class RightsApiController extends BaseController{
     @ResponseBody
     public ApiJsonResult rightsSelectList(){
         PageableResult<Rights> rightsList =  rightsService.findPageRights(0,100);
-
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,rightsList);
     }
 
@@ -85,7 +81,6 @@ public class RightsApiController extends BaseController{
         Map result = ObjUtils.objectToMap(rights);
         User user = super.getCurrentUser();
         Focus focus = focusService.getFocusByCond(user.getUid(),rightsId,APIConstants.FocusType.Rights);
-        List<Dictionary> dictionaryList = dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL);
         result.put("levelNeed",super.getLevelName(rights.getLevel()));
 
         if(focus != null){
@@ -93,13 +88,17 @@ public class RightsApiController extends BaseController{
         }else{
             result.put("focusStatus","");
         }
-        RightsReservation reservation = rightsReservationService.getUserRightsReservation(user.getUid(),rightsId);
-        if(reservation != null) {
-            result.put("reservationStatus", reservation.getStatus());
-            result.put("reservationId", reservation.getId());
-        }else{
-            result.put("reservationStatus", "");
-            result.put("reservationId", "");
+
+        Customer customer = customerService.getCustomerByUid(user.getUid());
+        if(customer != null) {
+            RightsReservation reservation = rightsReservationService.getUserRightsReservation(customer.getCustomerId(), rightsId);
+            if (reservation != null) {
+                result.put("reservationStatus", reservation.getStatus());
+                result.put("reservationId", reservation.getId());
+            } else {
+                result.put("reservationStatus", "");
+                result.put("reservationId", "");
+            }
         }
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
     }
