@@ -84,6 +84,7 @@
                                     <td>客户姓名</td>
                                     <td>客户电话</td>
                                     <td>消耗积分</td>
+                                    <td>预约状态</td>
                                     <td></td>
                                 </tr>
                                 </thead>
@@ -95,6 +96,7 @@
                                         <td>${reservation.customerName}</td>
                                         <td>${reservation.phoneNum}</td>
                                         <td>${reservation.score}</td>
+                                        <td>${reservation.reservationStatus}</td>
                                         <td><button class="Deal_Reser" data-id="${reservation.id}">处理预约</button></td>
                                     </tr>
                                 </c:forEach>
