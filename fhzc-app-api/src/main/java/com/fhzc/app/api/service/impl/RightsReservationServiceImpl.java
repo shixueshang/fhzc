@@ -33,20 +33,20 @@ public class RightsReservationServiceImpl implements RightsReservationService{
     }
 
     @Override
-    public List<RightsReservation> getUserRightsList(Integer customer_id) {
+    public List<RightsReservation> getUserRightsList(Integer customerId) {
         RightsReservationExample example = new  RightsReservationExample();
         RightsReservationExample.Criteria criteria = example.createCriteria();
         example.setOrderByClause("ctime desc");
-        criteria.andCustomerIdEqualTo(customer_id);
+        criteria.andCustomerIdEqualTo(customerId);
         return rightsReservationMapper.selectByExample(example);
     }
 
     @Override
-    public RightsReservation getUserRightsReservation(Integer uid, Integer rightsId){
+    public RightsReservation getUserRightsReservation(Integer customerId, Integer rightsId){
         RightsReservationExample example = new RightsReservationExample();
         RightsReservationExample.Criteria criteria = example.createCriteria();
         example.setOrderByClause("id desc");
-        criteria.andCustomerIdEqualTo(uid);
+        criteria.andCustomerIdEqualTo(customerId);
         criteria.andRightsIdEqualTo(rightsId);
         if(rightsReservationMapper.countByExample(example) > 0) {
             return rightsReservationMapper.selectByExample(example).get(0);

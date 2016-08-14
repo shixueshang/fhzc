@@ -43,14 +43,19 @@ public class ProductApiController extends BaseController {
     @Resource
     private DictionaryService dictionaryService;
 
+    @Resource
+    private CustomerService customerService;
+
+    @Resource
+    private PlannerService plannerService;
+
     /**
      * 产品列表
-     * @param userId
      * @return
      */
     @RequestMapping(value = "/api/product",method = RequestMethod.GET)
     @ResponseBody
-    public ApiJsonResult productList(Integer userId){
+    public ApiJsonResult productList(){
         PageableResult<Product> productList =  productService.getProductList(0,0, false);
 
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,productList);
@@ -58,12 +63,11 @@ public class ProductApiController extends BaseController {
 
     /**
      * 精选基金列表
-     * @param userId
      * @return
      */
     @RequestMapping(value = "/api/product/select",method = RequestMethod.GET)
     @ResponseBody
-    public ApiJsonResult productListSelect(Integer userId){
+    public ApiJsonResult productListSelect(){
         PageableResult<Product> productList =  productService.getProductList(0,0,true);
 
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,productList);
@@ -81,7 +85,8 @@ public class ProductApiController extends BaseController {
         Product product = productService.getProduct(productId);
         Map result = ObjUtils.objectToMap(product);
         User user = super.getCurrentUser();
-        ProductReservation reservation = productReservationService.getUserProductReservation(user.getUid(),productId);
+        Customer customer = customerService.getCustomerByUid(user.getUid());
+        ProductReservation reservation = productReservationService.getUserProductReservation(customer.getCustomerId(),productId);
         if(reservation != null) {
             result.put("reservationId", reservation.getId());
             result.put("reservationResult", reservation.getResult());
@@ -111,10 +116,11 @@ public class ProductApiController extends BaseController {
         User user = getCurrentUser();
 
         //校验是否是登陆理财师的客户请求
-        if(user.getLoginRole() == Const.USER_ROLE.PLANNER) {
-            List<PlannerCustomer> plannerCustomers= plannerCustomerService.getPlannerCustomerList(user.getUid());
+        if(user.getLoginRole().equals(Const.USER_ROLE.PLANNER)) {
+            Planner planner = plannerService.getPlannerByUid(user.getUid());
+            List<PlannerCustomer> plannerCustomers= plannerCustomerService.getPlannerCustomerList(planner.getId());
             if(plannerCustomers == null){
-                return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST);
+                return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"登陆理财师与请求客户无对应关系");
             }
             boolean isCustomer = false;
             for (PlannerCustomer pl: plannerCustomers){
@@ -124,14 +130,16 @@ public class ProductApiController extends BaseController {
                 }
             }
             if(!isCustomer){
-                return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST);
+                return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"非客户发起的查看资产请求");
             }
+        }else{
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"非理财师不得查看客户资料");
         }
 
         List<AssetsHistory> assetsHistoryList = assetsService.getHistory(customer_id);
         List<Map> result = new ArrayList<>();
         if(assetsHistoryList == null){
-            return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"无资产数据信息");
         }
         for (AssetsHistory asset:assetsHistoryList){
             Map map = new HashMap();
