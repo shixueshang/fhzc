@@ -908,9 +908,9 @@ CREATE TABLE IF NOT EXISTS `bank`.`user_role` (
 
 DROP TABLE IF EXISTS `bank`.`push_token` ;
 CREATE TABLE `bank`.`push_token` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
-  `device_type` INT(1) NULL COMMENT '设备类型',
+  `device_type` VARCHAR(10) NULL COMMENT '设备类型',
   `device_token` VARCHAR(100) NULL COMMENT '设备编号',
   `allow_push` INT(1) NULL COMMENT '是否允许推送',
   `allow_sound` INT(1) NULL COMMENT '是否开启声音',

@@ -26,4 +26,12 @@ public interface PushTokenService {
      * @param pushToken
      */
     void bindToken(PushToken pushToken);
+
+    /**
+     * 向用户推送消息
+     * @param toUserId
+     * @param content
+     * @throws Exception
+     */
+    public void pushMessageToUser(Integer toUserId, String content) throws Exception;
 }

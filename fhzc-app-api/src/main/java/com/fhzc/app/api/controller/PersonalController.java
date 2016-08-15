@@ -5,6 +5,7 @@ import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
 import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.util.Const;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,6 +16,7 @@ import java.util.*;
 /**
  * Created by lihongde on 2016/8/15 16:05
  */
+@Controller
 public class PersonalController extends BaseController {
 
     @Resource

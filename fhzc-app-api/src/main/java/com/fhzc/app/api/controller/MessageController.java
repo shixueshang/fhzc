@@ -51,6 +51,9 @@ public class MessageController extends BaseController {
     @Resource
     private CustomerService customerService;
 
+    @Resource
+    private PushTokenService pushTokenService;
+
     private static final String SHARE = "share_";
 
     /**
@@ -63,7 +66,7 @@ public class MessageController extends BaseController {
      */
     @RequestMapping(value = "/api/message/publish", method = RequestMethod.POST)
     @ResponseBody
-    public ApiJsonResult publishMessage(Integer toUserId, @RequestParam(required = false) String text, String type, @RequestParam(required = false) String duration){
+    public ApiJsonResult publishMessage(Integer toUserId, @RequestParam(required = false) String text, String type, @RequestParam(required = false) String duration) throws Exception {
 
             User user  = getCurrentUser();
             ImMessage message = new ImMessage();
@@ -84,12 +87,15 @@ public class MessageController extends BaseController {
             String sessionId = messageService.hasChatHistory(user.getUid(), toUserId);
             if(sessionId == null){
                     sessionId = UUID.randomUUID().toString();
-                }
+            }
             message.setSessionId(sessionId);
             message.setMessageType(type);
             message.setSendTime(new Date());
 
             ImMessage result = messageService.sendMessgeToSession(message);
+
+            pushTokenService.pushMessageToUser(toUserId, text);
+
             if(type.equals(APIConstants.Message_Type.Audio)){
                 result.setContent("");
             }else{
