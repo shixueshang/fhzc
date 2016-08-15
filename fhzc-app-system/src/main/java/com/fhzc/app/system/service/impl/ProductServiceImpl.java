@@ -3,12 +3,14 @@ package com.fhzc.app.system.service.impl;
 import com.fhzc.app.dao.mybatis.bo.ProductReservationBo;
 import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
+import com.fhzc.app.dao.mybatis.util.EncryptUtils;
 import com.fhzc.app.system.commons.util.excel.ExcelImporter;
 import com.fhzc.app.system.commons.util.excel.ImportCallBack;
 import com.fhzc.app.system.commons.util.excel.ImportConfig;
 import com.fhzc.app.dao.mybatis.inter.ProductMapper;
 import com.fhzc.app.dao.mybatis.inter.ProductReservationMapper;
 import com.fhzc.app.system.service.ProductService;
+import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -137,6 +139,19 @@ public class ProductServiceImpl implements ProductService {
     public PageableResult<ProductReservationBo> findPageProductReservations(ProductReserQuery query, int page, int size) {
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<ProductReservationBo> list = productReservationMapper.selectReservations(query, rowBounds);
+        if (list != null && list.size() > 0){
+            for (int i = 0; i < list.size(); i++){
+                String key = list.get(i).getSalt();
+                if (StringUtils.isNotBlank(key)){
+                    try {
+                        list.get(i).setPlanerPhone(EncryptUtils.decryptByDES(key, list.get(i).getPlanerPhone()));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
         return new PageableResult<ProductReservationBo>(page, size, productReservationMapper.countReservations(query), list);
     }
 
