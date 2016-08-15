@@ -45,12 +45,13 @@ public class ScoreApiController extends BaseController {
         Integer customerId = customer.getCustomerId();
 
         Integer available = scoreService.sumScore(scoreService.getAvailableList(customerId));
+        Integer consume = scoreService.sumScore(scoreService.getConsume(customerId));
         Integer frozen= scoreService.sumScore(scoreService.getFrozen(customerId));
         Integer expired = scoreService.sumScore(scoreService.getWillExpired(customerId));
 
         Map<String, Object> map = new HashMap<String,Object>();
-        map.put("yours",available + frozen);
-        map.put("available",available);
+        map.put("yours",available + frozen + consume);
+        map.put("available",available + consume);
         map.put("frozen",frozen);
         map.put("expired",expired);
 

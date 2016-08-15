@@ -29,7 +29,7 @@ public class ScoreServiceImpl implements ScoreService{
 
         criteria.andUidEqualTo(customerId);
         criteria.andStatusEqualTo(type);
-        criteria.andIsVaildEqualTo(Const.Data_Status.DATA_NORMAL);
+        criteria.andIsVaildEqualTo(Const.SCORE_VAILD.IS_VAILD);
         criteria.andIsApproveEqualTo(Const.Score.IS_APPROVE);
 
         return scoreHistoryMapper.selectByExample(example);
@@ -49,6 +49,11 @@ public class ScoreServiceImpl implements ScoreService{
         return scoreHistories;
     }
 
+    @Override
+    public List<ScoreHistory> getConsume(Integer customerId) {
+        List<ScoreHistory> scoreHistories = this.getList(customerId, Const.Score.CONSUME);
+        return scoreHistories;
+    }
 
     @Override
     public List<ScoreHistory> calcWillExpired(List<ScoreHistory> scoreHistories){
@@ -92,7 +97,7 @@ public class ScoreServiceImpl implements ScoreService{
 
         criteria.andUidEqualTo(customerId);
         criteria.andStatusEqualTo(type);
-        criteria.andIsVaildEqualTo(Const.Data_Status.DATA_NORMAL);
+        criteria.andIsVaildEqualTo(Const.SCORE_VAILD.IS_VAILD);
         criteria.andIsApproveEqualTo(Const.Score.IS_APPROVE);
         criteria.andCtimeBetween(start,end);
 
@@ -122,7 +127,7 @@ public class ScoreServiceImpl implements ScoreService{
         ScoreHistoryExample.Criteria criteria = example.createCriteria();
 
         criteria.andUidEqualTo(customerId);
-        criteria.andIsVaildEqualTo(Const.Data_Status.DATA_NORMAL);
+        criteria.andIsVaildEqualTo(Const.SCORE_VAILD.IS_VAILD);
         criteria.andIsApproveEqualTo(Const.Score.IS_APPROVE);
         criteria.andVaildTimeBetween(start,end);
 

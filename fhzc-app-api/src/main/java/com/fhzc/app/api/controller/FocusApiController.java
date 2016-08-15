@@ -196,7 +196,6 @@ public class FocusApiController extends BaseController {
                     map.put("name",report.getName());
                     map.put("cover",report.getCover());
                     map.put("summary",report.getSummary());
-                    map.put("ctime",report.getCtime());
                     reportList.add(map);
                     break;
                 case "activity":
