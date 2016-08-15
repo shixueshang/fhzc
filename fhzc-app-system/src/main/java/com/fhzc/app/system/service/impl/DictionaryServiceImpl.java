@@ -58,6 +58,19 @@ public class DictionaryServiceImpl implements DictionaryService {
 
         return null;
     }
+    
+    @Override
+    public Dictionary findRiskLevel(String levelValue) {
+        List<Dictionary> dicts = findDicByType(Const.DIC_CAT.RISK_LEVEL);
+
+        for(com.fhzc.app.dao.mybatis.model.Dictionary dict : dicts){
+            if(dict.getValue().equals(levelValue)){
+                return dict;
+            }
+        }
+
+        return null;
+    }
 
     @Override
     public Dictionary getDictionary(Integer id) {

@@ -30,6 +30,13 @@ public interface DictionaryService {
      * @return
      */
     Dictionary findCustomerLevel(String levelValue);
+    
+    /**
+     * 获取客户的风险等级
+     * @param levelValue
+     * @return
+     */
+    Dictionary findRiskLevel(String levelValue);
 
     Dictionary getDictionary(Integer id);
 }
