@@ -43,7 +43,7 @@
                             <a href="javascript:void(0);">客户管理</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li class="active"><a href="javascript:void(0);">机构客户列表</a></li>
+                        <li class="active"><a href="javascript:void(0);">个人客户列表</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>

@@ -65,6 +65,9 @@ INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (50,'理财师业绩','/personal/planner/achivement',NULL,25,3,1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (51,'banner列表','/system/banner/list',NULL,16,3,1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (52,'banner新增','/system/banner/pub',NULL,16,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (53, '关注列表', '/personal/user/focus/list',NULL, 27, 3, 1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (54, '关于App', '/system/about/pub',NULL,16, 3, 1);
+
 
 
 /*

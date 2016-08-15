@@ -235,52 +235,62 @@ public class PushTokenExample {
             return (Criteria) this;
         }
 
-        public Criteria andDeviceTypeEqualTo(Integer value) {
+        public Criteria andDeviceTypeEqualTo(String value) {
             addCriterion("`device_type` =", value, "deviceType");
             return (Criteria) this;
         }
 
-        public Criteria andDeviceTypeNotEqualTo(Integer value) {
+        public Criteria andDeviceTypeNotEqualTo(String value) {
             addCriterion("`device_type` <>", value, "deviceType");
             return (Criteria) this;
         }
 
-        public Criteria andDeviceTypeGreaterThan(Integer value) {
+        public Criteria andDeviceTypeGreaterThan(String value) {
             addCriterion("`device_type` >", value, "deviceType");
             return (Criteria) this;
         }
 
-        public Criteria andDeviceTypeGreaterThanOrEqualTo(Integer value) {
+        public Criteria andDeviceTypeGreaterThanOrEqualTo(String value) {
             addCriterion("`device_type` >=", value, "deviceType");
             return (Criteria) this;
         }
 
-        public Criteria andDeviceTypeLessThan(Integer value) {
+        public Criteria andDeviceTypeLessThan(String value) {
             addCriterion("`device_type` <", value, "deviceType");
             return (Criteria) this;
         }
 
-        public Criteria andDeviceTypeLessThanOrEqualTo(Integer value) {
+        public Criteria andDeviceTypeLessThanOrEqualTo(String value) {
             addCriterion("`device_type` <=", value, "deviceType");
             return (Criteria) this;
         }
 
-        public Criteria andDeviceTypeIn(List<Integer> values) {
+        public Criteria andDeviceTypeLike(String value) {
+            addCriterion("`device_type` like", value, "deviceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeviceTypeNotLike(String value) {
+            addCriterion("`device_type` not like", value, "deviceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeviceTypeIn(List<String> values) {
             addCriterion("`device_type` in", values, "deviceType");
             return (Criteria) this;
         }
 
-        public Criteria andDeviceTypeNotIn(List<Integer> values) {
+        public Criteria andDeviceTypeNotIn(List<String> values) {
             addCriterion("`device_type` not in", values, "deviceType");
             return (Criteria) this;
         }
 
-        public Criteria andDeviceTypeBetween(Integer value1, Integer value2) {
+        public Criteria andDeviceTypeBetween(String value1, String value2) {
             addCriterion("`device_type` between", value1, value2, "deviceType");
             return (Criteria) this;
         }
 
-        public Criteria andDeviceTypeNotBetween(Integer value1, Integer value2) {
+        public Criteria andDeviceTypeNotBetween(String value1, String value2) {
             addCriterion("`device_type` not between", value1, value2, "deviceType");
             return (Criteria) this;
         }

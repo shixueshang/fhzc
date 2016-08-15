@@ -34,4 +34,11 @@ public interface UserService {
      * @param user
      */
     void updateUser(User user);
+
+    /**
+     * 查询手机号是否存在
+     * @param mobile
+     * @return
+     */
+    public boolean checkMobileExists(String mobile);
 }

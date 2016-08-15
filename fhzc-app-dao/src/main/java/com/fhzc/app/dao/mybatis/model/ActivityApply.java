@@ -27,6 +27,16 @@ public class ActivityApply {
 
     private String personName;
 
+    private String verifyCode;
+
+    public String getVerifyCode() {
+        return verifyCode;
+    }
+
+    public void setVerifyCode(String verifyCode) {
+        this.verifyCode = verifyCode;
+    }
+
     public Integer getId() {
         return id;
     }

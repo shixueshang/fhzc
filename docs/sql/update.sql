@@ -50,3 +50,13 @@ ADD COLUMN `level` INT(1) NULL COMMENT '部门层级' AFTER `leader_uid`;
 ALTER TABLE `bank`.`banner`
 ADD COLUMN `status` INT(1) NULL COMMENT 'banner状态(0上线1已下线)' AFTER `from_type`;
 
+#2016-08-15
+DROP TABLE IF EXISTS `bank`.`about_app` ;
+CREATE TABLE `bank`.`about_app` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `version` VARCHAR(45) NULL COMMENT '版本',
+  `introduction` TEXT NULL COMMENT '简介',
+  `is_using` INT(1) NULL COMMENT '是否正在使用',
+  PRIMARY KEY (`id`))
+  COMMENT = '关于app';
+

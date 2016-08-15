@@ -1,13 +1,13 @@
 package com.fhzc.app.api.controller;
 
+import  com.fhzc.app.api.exception.BadRequestException;
 import com.fhzc.app.api.service.ActivityApplyService;
 import com.fhzc.app.api.service.ActivityService;
+import com.fhzc.app.api.service.VerifyCodeService;
 import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
 import com.fhzc.app.dao.mybatis.model.Activity;
 import com.fhzc.app.dao.mybatis.model.ActivityApply;
-import com.fhzc.app.dao.mybatis.util.Const;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,8 +28,11 @@ public class ActivityApplyApiController extends BaseController {
     @Resource
     private ActivityService activityService;
 
+    @Resource
+    private VerifyCodeService verifyCodeService;
+
     /**
-     * 报名活动
+     * 报名活动  为他人报名的理财师id为0
      * @param activityApply
      * @return
      */
@@ -37,14 +40,19 @@ public class ActivityApplyApiController extends BaseController {
     @ResponseBody
     public ApiJsonResult activityApplyJoin(ActivityApply activityApply){
 
-        //如果理财师id为0则活动为自己申请
         Integer plannerId = activityApply.getPlannerId();
         if(plannerId == 0){
-            activityApply.setPlannerId(0);
-            activityApply.setType(APIConstants.ActivityApply.TYPE_SELF);
-        }else{
-            //todo 有理财师则说明活动 为其他人申请的 需要有手机验证码
+
+            if(activityApply.getPhone() == null || activityApply.getPhone().length() == 0){
+                throw new BadRequestException("手机号不能为空");
+            }
+
+            if(!verifyCodeService.checkVerifyCode(activityApply.getPhone(), activityApply.getVerifyCode())){
+                throw new BadRequestException("验证码输入错误");
+            }
         }
+        activityApply.setPlannerId(plannerId);
+        activityApply.setType(APIConstants.ActivityApply.TYPE_SELF);
         activityApply.setCtime(new Date());
         activityApply.setResult(APIConstants.ActivityApply.RESULT_YES);
         activityApplyService.addOrUpdateActivityApply(activityApply);
@@ -77,12 +85,11 @@ public class ActivityApplyApiController extends BaseController {
     @ResponseBody
     public ApiJsonResult personalActivityApply(Integer customer_id){
         List<ActivityApply> activityApplyList = activityApplyService.getActivityApplyList(customer_id);
-        List<Map> result = new ArrayList<>();
+        List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
         if(activityApplyList != null){
             for(ActivityApply apply : activityApplyList) {
                 Activity activity = activityService.getActivity(apply.getActivityId());
-                Map map = new HashMap();
-
+                Map<String, Object> map = new HashMap<String, Object>();
                 if(activity != null) {
                     map.put("activityApplyId", apply.getId());
                     map.put("activityId", apply.getActivityId());

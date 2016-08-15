@@ -931,6 +931,17 @@ CREATE TABLE IF NOT EXISTS `verify_code` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8
   COMMENT='短信验证码';
 
+DROP TABLE IF EXISTS `bank`.`about_app` ;
+CREATE TABLE `bank`.`about_app` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `version` VARCHAR(45) NULL COMMENT '版本',
+  `introduction` TEXT NULL COMMENT '简介',
+  `is_using` INT(1) NULL COMMENT '是否正在使用',
+  PRIMARY KEY (`id`))
+  ENGINE=InnoDB  DEFAULT CHARSET=utf8
+  COMMENT = '关于app';
+
+
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

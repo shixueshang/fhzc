@@ -30,6 +30,11 @@ public class UserServiceImpl implements UserService {
         UserExample example = new UserExample();
         UserExample.Criteria criteria = example.createCriteria();
         criteria.andPassportTypeIdEqualTo(identity);
+        try {
+            identityNum = EncryptUtils.encryptToDES(identityNum.substring(identityNum.length() - 8), identityNum);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         criteria.andPassportCodeEqualTo(identityNum);
         if(userMapper.countByExample(example) > 0){
             return userMapper.selectByExample(example).get(0);
@@ -56,6 +61,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUser(User user) {
         userMapper.updateByPrimaryKey(user);
+    }
+
+    @Override
+    public boolean checkMobileExists(String mobile) {
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        criteria.andMobileEqualTo(mobile);
+        return userMapper.countByExample(example) > 0;
     }
 
     /**

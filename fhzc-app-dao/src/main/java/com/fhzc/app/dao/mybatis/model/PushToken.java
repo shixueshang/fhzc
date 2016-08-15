@@ -7,7 +7,7 @@ public class PushToken {
 
     private Integer userId;
 
-    private Integer deviceType;
+    private String deviceType;
 
     private String deviceToken;
 
@@ -35,12 +35,12 @@ public class PushToken {
         this.userId = userId;
     }
 
-    public Integer getDeviceType() {
+    public String getDeviceType() {
         return deviceType;
     }
 
-    public void setDeviceType(Integer deviceType) {
-        this.deviceType = deviceType;
+    public void setDeviceType(String deviceType) {
+        this.deviceType = deviceType == null ? null : deviceType.trim();
     }
 
     public String getDeviceToken() {

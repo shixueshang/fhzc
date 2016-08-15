@@ -118,13 +118,13 @@
 
                         <ul class="sub">
                         <shiro:hasPermission name="/personal/customer/single/list"><li>
-                                <a href="/personal/customer/single/list">个人客户列表</a>
+                                <a href="<%=contextPath%>/personal/customer/single/list">个人客户列表</a>
                             </li></shiro:hasPermission>
                         <shiro:hasPermission name="/personal/customer/organ/list"><li>
-                                <a href="/personal/customer/organ/list">机构客户列表</a>
+                                <a href="<%=contextPath%>/personal/customer/organ/list">机构客户列表</a>
                             </li></shiro:hasPermission>
                         <shiro:hasPermission name="/personal/user/focus/list"><li>
-                                <a href="/personal/user/focus/list">关注列表</a>
+                                <a href="<%=contextPath%>/personal/user/focus/list">关注列表</a>
                             </li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>
@@ -139,10 +139,10 @@
 
                         <ul class="sub">
                         <shiro:hasPermission name="/personal/planner/list"><li>
-                                <a href="/personal/planner/list">理财师列表</a>
+                                <a href="<%=contextPath%>/personal/planner/list">理财师列表</a>
                             </li></shiro:hasPermission>
                         <shiro:hasPermission name="/personal/planner/achivement"><li>
-                                <a href="/personal/planner/achivement">理财师业绩</a>
+                                <a href="<%=contextPath%>/personal/planner/achivement">理财师业绩</a>
                             </li></shiro:hasPermission>
 
                         </ul>
@@ -221,6 +221,9 @@
                         <shiro:hasPermission name="/system/banner/pub"><li>
                                 <a href="<%=contextPath%>/system/banner/pub">banner新增</a>
                             </li></shiro:hasPermission>
+                        <shiro:hasPermission name="/system/about/pub"><li>
+                                <a href="<%=contextPath%>/system/about/pub">关于App</a>
+                            </li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>
 
@@ -238,16 +241,16 @@
                                     <a href="<%=contextPath%>/business/product/importor">产品导入</a>
                                 </li></shiro:hasPermission>
                             <shiro:hasPermission name="/personal/planner/importor"><li>
-                                <a href="/personal/planner/importor">在职理财师导入</a>
+                                <a href="<%=contextPath%>/personal/planner/importor">在职理财师导入</a>
                             </li></shiro:hasPermission>
                             <shiro:hasPermission name="/personal/planner/importoroff"><li>
-                                <a href="/personal/planner/importoroff">离职理财师导入</a>
+                                <a href="<%=contextPath%>/personal/planner/importoroff">离职理财师导入</a>
                             </li></shiro:hasPermission>
                             <shiro:hasPermission name="/business/plannerachivementsdaily/importor"><li>
-                                <a href="/business/plannerachivementsdaily/importor">理财师日业绩导入</a>
+                                <a href="<%=contextPath%>/business/plannerachivementsdaily/importor">理财师日业绩导入</a>
                             </li></shiro:hasPermission>
                             <shiro:hasPermission name="/business/plannerachivementsmonthly/importor"><li>
-                                <a href="/business/plannerachivementsmonthly/importor">理财师月业绩导入</a>
+                                <a href="<%=contextPath%>/business/plannerachivementsmonthly/importor">理财师月业绩导入</a>
                             </li></shiro:hasPermission>
                             <shiro:hasPermission name="/business/contract/importor"><li>
                                 <a href="<%=contextPath%>/business/contract/importor">财务日表导入</a>
