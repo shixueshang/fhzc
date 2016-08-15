@@ -90,7 +90,7 @@
                                                 <label class="control-label">产品代码</label>
                                                 <div class="controls">
                                                     <input type="text" name="code" value="${product.code}" placeholder="" class="m-wrap large">
-                                                    <span class="help-inline"></span>
+                                                    <span class="help-inline hide">该代码已存在,请换一个代码</span>
                                                 </div>
                                             </div>
                                             <div class="control-group">
@@ -531,7 +531,8 @@ $(function(){
         focusInvalid: false, // do not focus the last invalid input
         ignore: "",
         messages: {
-            name:{required:"产品名不能为空！",remote:jQuery.format("产品名已经存在")}
+            name:{required:"产品名不能为空！",remote:jQuery.format("产品名已经存在")},
+            code:{required:"",remote:jQuery.format("产品代码已经存在")}
         },
         rules: {
             name: {
@@ -547,6 +548,24 @@ $(function(){
                                 return old_name + 'no check';
                             }else {
                                 return new_name;
+                            }
+                        }
+                    }
+                }
+            },
+            code: {
+                required: false,
+                remote: {
+                    url: "/business/product/isCodeExists",
+                    type: "get",
+                    data: {
+                        code: function() {
+                            var old_code = '${product.code}';
+                            var new_code = $("input[name='code']").val();
+                            if(old_code == new_code){
+                                return old_code + 'no check';
+                            }else {
+                                return new_code;
                             }
                         }
                     }

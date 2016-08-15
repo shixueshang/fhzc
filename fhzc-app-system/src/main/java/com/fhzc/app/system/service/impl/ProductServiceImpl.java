@@ -110,6 +110,18 @@ public class ProductServiceImpl implements ProductService {
         }
         return false;
     }
+    
+    @Override
+    public boolean isCodeExists(String code) {
+        ProductExample example = new ProductExample();
+        ProductExample.Criteria criteria = example.createCriteria();
+        criteria.andCodeEqualTo(code);
+        if(productMapper.countByExample(example) > 0){
+            return true;
+        }
+        return false;
+    }
+    
     @Override
     public int checkProductExists(String name) {
         ProductExample example = new ProductExample();
