@@ -22,6 +22,7 @@
     <result property="planerId" column="work_num" jdbcType="VARCHAR" />
     <result property="planerName" column="pname" jdbcType="VARCHAR" />
     <result property="planerPhone" column="phone" jdbcType="VARCHAR" />
+    <result property="salt" column="salt" jdbcType="VARCHAR" />
     <result property="reservationStatus" column="result" jdbcType="VARCHAR" />
   </resultMap>
 
@@ -270,9 +271,9 @@
     </if>
   </select>
   <select id="selectReservations" parameterType="com.fhzc.app.dao.mybatis.model.ProductReserQuery" resultMap="ViewResultMap">
-  select p.id, p.product_id, p.apply_time, p.result, p.amount, pu.work_num, pu.realname pname, pu.phone, cu.customer_id, cu.passport_code, cu.realname cname from product_reservation p,
-    (select pl.id, pl.work_num, u.realname, u.phone, u.passport_code from planner pl, user u where pl.uid = u.uid)pu,
-    (select c.customer_id, u.realname, u.phone, u.passport_code from customer c, user u where c.uid = u.uid) cu
+  select p.id, p.product_id, p.apply_time, p.result, p.amount, pu.work_num, pu.realname pname, pu.mobile phone, pu.salt, cu.customer_id, cu.passport_code, cu.realname cname from product_reservation p,
+    (select pl.id, pl.work_num, u.realname, u.mobile, u.passport_code, u.salt from planner pl, user u where pl.uid = u.uid)pu,
+    (select c.customer_id, u.realname, u.mobile, u.passport_code, u.salt from customer c, user u where c.uid = u.uid) cu
     where p.customer_id = cu.customer_id and p.planner_id = pu.id
       <if test="productName != null">
         AND p.product_id = #{productId}

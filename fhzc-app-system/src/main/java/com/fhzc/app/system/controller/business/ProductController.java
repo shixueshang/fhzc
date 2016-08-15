@@ -146,6 +146,13 @@ public class ProductController extends BaseController {
         boolean flag = productService.isNameExists(name);
         return !flag;
     }
+    
+    @RequestMapping(value = "/isCodeExists", method = RequestMethod.GET)
+    @ResponseBody
+    public Object isCodeExists(String code){
+        boolean flag = productService.isCodeExists(code);
+        return !flag;
+    }
 
     @RequestMapping(value = "/importor")
     public String importorProduct(){

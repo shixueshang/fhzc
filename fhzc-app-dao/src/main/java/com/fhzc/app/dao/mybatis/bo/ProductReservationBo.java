@@ -15,6 +15,7 @@ public class ProductReservationBo {
     String planerName;
     String planerPhone;
     String reservationStatus;
+    String salt;
 
     public long getId() {
         return id;
@@ -104,4 +105,11 @@ public class ProductReservationBo {
         this.reservationStatus = reservationStatus;
     }
 
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
 }

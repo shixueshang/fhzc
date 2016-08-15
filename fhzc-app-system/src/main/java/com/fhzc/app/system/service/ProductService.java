@@ -54,6 +54,13 @@ public interface ProductService {
     boolean isNameExists(String name);
     
     /**
+     * 查询产品代码是否存在
+     * @param name
+     * @return
+     */
+    boolean isCodeExists(String code);
+    
+    /**
      * 查询产品名称是否存在
      * @param name
      * @return
