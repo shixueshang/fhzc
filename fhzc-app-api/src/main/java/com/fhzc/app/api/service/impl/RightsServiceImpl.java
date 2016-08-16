@@ -38,7 +38,7 @@ public class RightsServiceImpl implements RightsService {
         RightsExample.Criteria criteria = example.createCriteria();
         criteria.andCidEqualTo(cid);
         if(rightsMapper.countByExample(example) > 0) {
-            return rightsMapper.selectByExample(example);
+            return rightsMapper.selectByExampleWithBLOBs(example);
         }else {
             return null;
         }
@@ -63,7 +63,7 @@ public class RightsServiceImpl implements RightsService {
         criteria.andIsRecommendEqualTo(1);
         example.setOrderByClause("ctime desc");
         if (rightsMapper.countByExample(example) > 0) {
-            return rightsMapper.selectByExample(example);
+            return rightsMapper.selectByExampleWithBLOBs(example);
         } else {
             return null;
         }
