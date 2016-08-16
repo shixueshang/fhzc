@@ -160,11 +160,15 @@ public class Const {
         public static final long LONGDAY = 30;
 
         public static final String ADD = "add";
+
         public static final String CONSUME = "consume";
+
         public static final String FROZEN = "frozen";
+
         public static final String EXPIRE = "expire";
 
         public static final int IS_APPROVE = 1;
+
         public static final int NOT_APPROVE = 0;
 
     }
@@ -174,12 +178,14 @@ public class Const {
          * 单人客户
          */
         public static final String SINGLE_CUSTOMER = "single";
+
         public static final String SINGLE_CUSTOMER_ZH = "个人";
 
         /**
          * 机构客户
          */
         public static final String ORGAN_CUSTOMER = "organ";
+
         public static final String ORGAN_CUSTOMER_ZH = "机构";
     }
 
@@ -207,11 +213,13 @@ public class Const {
 
     public static class USER_ROLE{
         public static final String PLANNER = "planner";
+
         public static final String CUSTOMER= "customer";
     }
 
     public static class BANNER_TYPE{
         public static final String TEXT= "index_text";
+
         public static final String PIC= "index_pic";
     }
 
@@ -239,9 +247,11 @@ public class Const {
      public static class GENDER{
 
         public static final String MALE= "male";
+
         public static final String MALE_ZH= "男";
 
          public static final String FEMALE= "female";
+
          public static final String FEMALE_ZH= "女";
 
     }
@@ -252,8 +262,11 @@ public class Const {
     public static class ACTIVITY_STATUS{
 
         public static final Integer WILL= 0;    //待开始
+
         public static final Integer GOING= 1;   //报名中
+
         public static final Integer APP_OVER= 2;//报名结束
+
         public static final Integer ACT_OVER= 3;//活动结束
 
     }
@@ -264,14 +277,18 @@ public class Const {
     public static class ACTIVITY_APPLY_STATUS{
 
         public static final Integer JOIN= 1;
+
         public static final Integer NOT_JOIN= 0;
 
     }
 
     public static class FOCUS_TYPE{
         public static final String PRODUCT= "product";
+
         public static final String ACTIVITY= "activity";
+
         public static final String REPORT= "report";
+
         public static final String RIGHTS= "rights";
 
     }
@@ -307,4 +324,11 @@ public class Const {
         public static final Integer NOT_VAILD = 0;
 
     }
+
+    public static class About_App{
+        public static final String ABOUT_APP = "about_app";
+
+        public static final String CONTACT_US = "contact_us";
+    }
 }
+

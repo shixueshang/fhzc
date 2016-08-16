@@ -221,8 +221,11 @@
                         <shiro:hasPermission name="/system/banner/pub"><li>
                                 <a href="<%=contextPath%>/system/banner/pub">banner新增</a>
                             </li></shiro:hasPermission>
-                        <shiro:hasPermission name="/system/about/pub"><li>
-                                <a href="<%=contextPath%>/system/about/pub">关于App</a>
+                        <shiro:hasPermission name="/system/about/app/pub"><li>
+                                <a href="<%=contextPath%>/system/about/app/pub">关于App</a>
+                            </li></shiro:hasPermission>
+                        <shiro:hasPermission name="/system/about/contact/pub"><li>
+                                <a href="<%=contextPath%>/system/about/contact/pub">联系我们</a>
                             </li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>

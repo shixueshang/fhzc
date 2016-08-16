@@ -6,6 +6,7 @@ import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
 import com.fhzc.app.dao.mybatis.model.Rights;
 import com.fhzc.app.dao.mybatis.model.RightsReservation;
+import com.fhzc.app.dao.mybatis.util.Const;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -103,7 +104,7 @@ public class RightsReservationApiController extends BaseController {
             map.put("cover",rights.getCover());
             map.put("spendScore",rights.getSpendScore());
             map.put("level",rights.getLevel());
-            map.put("levelName",super.getLevelName(rights.getLevel()));
+            map.put("levelName",super.getDicName(rights.getLevel(), Const.DIC_CAT.CUSTOMER_LEVEL));
             map.put("markDate",reserv.getMarkDate());
             map.put("status",reserv.getStatus());
             result.add(map);

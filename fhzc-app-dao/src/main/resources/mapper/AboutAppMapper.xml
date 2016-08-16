@@ -5,6 +5,7 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="version" property="version" jdbcType="VARCHAR" />
     <result column="is_using" property="isUsing" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.fhzc.app.dao.mybatis.model.AboutApp" extends="BaseResultMap" >
     <result column="introduction" property="introduction" jdbcType="LONGVARCHAR" />
@@ -68,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    `id`, `version`, `is_using`
+    `id`, `version`, `is_using`, `type`
   </sql>
   <sql id="Blob_Column_List" >
     `introduction`
@@ -125,10 +126,10 @@
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into `about_app` (`version`, `is_using`, `introduction`
-      )
-    values (#{version,jdbcType=VARCHAR}, #{isUsing,jdbcType=INTEGER}, #{introduction,jdbcType=LONGVARCHAR}
-      )
+    insert into `about_app` (`version`, `is_using`, `type`, 
+      `introduction`)
+    values (#{version,jdbcType=VARCHAR}, #{isUsing,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, 
+      #{introduction,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.AboutApp" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
@@ -142,6 +143,9 @@
       <if test="isUsing != null" >
         `is_using`,
       </if>
+      <if test="type != null" >
+        `type`,
+      </if>
       <if test="introduction != null" >
         `introduction`,
       </if>
@@ -152,6 +156,9 @@
       </if>
       <if test="isUsing != null" >
         #{isUsing,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
       </if>
       <if test="introduction != null" >
         #{introduction,jdbcType=LONGVARCHAR},
@@ -176,6 +183,9 @@
       <if test="record.isUsing != null" >
         `is_using` = #{record.isUsing,jdbcType=INTEGER},
       </if>
+      <if test="record.type != null" >
+        `type` = #{record.type,jdbcType=VARCHAR},
+      </if>
       <if test="record.introduction != null" >
         `introduction` = #{record.introduction,jdbcType=LONGVARCHAR},
       </if>
@@ -189,6 +199,7 @@
     set `id` = #{record.id,jdbcType=INTEGER},
       `version` = #{record.version,jdbcType=VARCHAR},
       `is_using` = #{record.isUsing,jdbcType=INTEGER},
+      `type` = #{record.type,jdbcType=VARCHAR},
       `introduction` = #{record.introduction,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -198,7 +209,8 @@
     update `about_app`
     set `id` = #{record.id,jdbcType=INTEGER},
       `version` = #{record.version,jdbcType=VARCHAR},
-      `is_using` = #{record.isUsing,jdbcType=INTEGER}
+      `is_using` = #{record.isUsing,jdbcType=INTEGER},
+      `type` = #{record.type,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -212,6 +224,9 @@
       <if test="isUsing != null" >
         `is_using` = #{isUsing,jdbcType=INTEGER},
       </if>
+      <if test="type != null" >
+        `type` = #{type,jdbcType=VARCHAR},
+      </if>
       <if test="introduction != null" >
         `introduction` = #{introduction,jdbcType=LONGVARCHAR},
       </if>
@@ -222,13 +237,15 @@
     update `about_app`
     set `version` = #{version,jdbcType=VARCHAR},
       `is_using` = #{isUsing,jdbcType=INTEGER},
+      `type` = #{type,jdbcType=VARCHAR},
       `introduction` = #{introduction,jdbcType=LONGVARCHAR}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.fhzc.app.dao.mybatis.model.AboutApp" >
     update `about_app`
     set `version` = #{version,jdbcType=VARCHAR},
-      `is_using` = #{isUsing,jdbcType=INTEGER}
+      `is_using` = #{isUsing,jdbcType=INTEGER},
+      `type` = #{type,jdbcType=VARCHAR}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
   <select resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.AboutAppExample" id="selectByExampleWithBLOBsWithRowbounds" >
