@@ -12,9 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
-@ContextConfiguration(locations = {"classpath:spring-mvc.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml","classpath:spring-mvc.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
-@Rollback(false)
+@Rollback
 
 @Transactional(transactionManager = "transactionManager")
 public class Base extends Assert{
