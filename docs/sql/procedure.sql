@@ -220,7 +220,7 @@ BEGIN
 	if _assets_id = -1 then
 		insert into assets_history(customer_id,product_id,type,amount,ctime
 			,serial, customer_name,planner_id, buy_time, amount_usd, amount_rmb, annualised, period
-			, invaild, product_found_day,  product_expire_day, bank, bank_account, lot, duration_month, duration_day
+			, invaild, product_found_day,  expire_day, bank, bank_account, lot, duration_month, duration_day
 			, pub_agent, branch_agent, is_member, memo) 
 			values(_customer_Id,_product_id,'purchase',p_amount_rmb,now()
 			, p_serial, p_realname,_planner_id,p_buy_time,0, p_amount_rmb, p_annualised, p_period
@@ -230,7 +230,7 @@ BEGIN
 	else
 		update assets_history 
 		set serial=p_serial,buy_time=p_buy_time,amount_rmb=p_amount_rmb,annualised=p_annualised,period=p_period
-			,invaild=1,product_found_day=p_product_found_day,product_expire_day=p_product_expire_day,bank=p_bank,bank_account=p_bank_account
+			,invaild=1,product_found_day=p_product_found_day,expire_day=p_product_expire_day,bank=p_bank,bank_account=p_bank_account
 			,lot=p_lot,pub_agent=pub_agent,branch_agent=p_branch_agent,is_member=_is_member,memo=p_memo
 		where id = _assets_id;
 	end if;

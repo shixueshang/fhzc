@@ -123,6 +123,7 @@ public class PersonalController extends BaseController {
             map.put("annualYield",product.getAnnualYield());//年化收益率
             map.put("buyDay",product.getBuyDay());//开放申购日
             map.put("deadDate",asset.getDeadDate());//截止日期
+            map.put("expireDay",asset.getExpireDay());//合同到期日期
             map.put("paymentDate",asset.getPaymentDate());//预期到账时间
             map.put("buyTime",asset.getBuyTime());//开放认购时间
 
