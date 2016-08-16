@@ -816,33 +816,65 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_add_plannerachivementdaily`(p_tr
 )
 BEGIN
 	-- 理财师业绩日报
+	Declare _root_dept_id int;  -- 一级部门ID
+	Declare _area int ;  -- 所属大区ID
 	Declare _subcompany_id int; -- 分公司ID
 	Declare _department_id int;	-- 所属部门ID
+	Declare _parent_department_id int;	-- 所属上级部门ID
 	Declare _team_id int; 	-- 所属团队ID
 	Declare _planner_id int;  -- 理财师ID
 	Declare _level int; 	-- 部门级别
 	
 	
 	select department_id,id into _department_id,_planner_id from planner where work_num =p_work_num;
-	select department_id,parent_dept_id,`level` into _team_id,_subcompany_id,_level from department where department_id=_department_id;
-	-- 本身属于分公司
-	if _level =3 THEN
-			set _team_id = -1;
-			set _subcompany_id = _department_id;
-			
+	select parent_dept_id,`level` into _parent_department_id,_level from department where department_id=_department_id;
+
+	-- 本身属于一级部门
+	if _level =1 THEN
+		set _root_dept_id = _department_id;
+		set _area = -1;
+		set _team_id = -1;
+		set _subcompany_id = -1;
 	End if;
 
-	-- 本身属于大区或者总公司
-	if _level <=2 THEN
-			set _team_id = -1;
-			set _subcompany_id = -1;
-			
+	-- 本身属于大区
+	if _level =2 THEN
+		set _root_dept_id = _parent_department_id;
+		set _area = _department_id;
+		set _team_id = -1;
+		set _subcompany_id = -1;
+	End if;
+	
+	-- 本身属于分公司
+	if _level =3 THEN
+		set _root_dept_id = -1 ;
+		set _area = _parent_department_id;
+		set _subcompany_id = _department_id;
+		set _team_id = -1;
+		
+		select parent_dept_id,`level` into _parent_department_id,_level from department where department_id=_area;
+		set _root_dept_id = _parent_department_id ;
+
+	End if;
+
+	-- 本身属于团队
+	if _level =4 THEN
+		set _root_dept_id = -1 ;
+		set _area = -1;
+		set _subcompany_id = _parent_department_id;
+		set _team_id = _department_id;
+		
+		select parent_dept_id,`level` into _parent_department_id,_level from department where department_id=_subcompany_id;
+		set _area = _parent_department_id ;
+
+		select parent_dept_id,`level` into _parent_department_id,_level from department where department_id=_area;
+		set _root_dept_id = _parent_department_id;
 	End if;
 
 
 	insert into `planner_achivements_daily` (`transfer_date`, `area_id`, `planner_uid`, 
-       `product_id`, `annualised`, `contract_amount`,`period`, `product_type`, `memo`, `ctime`, `company`, `team`, `department_id`) 
-        select p_transfer_date,area_id,_planner_id,pid,p_annualised,p_contract_amount,p_period,p_product_type,p_memo,NOW(), _subcompany_id,_team_id,_department_id
+       `product_id`, `annualised`, `contract_amount`,`period`, `product_type`, `memo`, `ctime`, `root_dept`, `area`,`company`, `team`, `department_id`) 
+        select p_transfer_date,area_id,_planner_id,pid,p_annualised,p_contract_amount,p_period,p_product_type,p_memo,NOW(),_root_dept_id,_area, _subcompany_id,_team_id,_department_id
 	   from product left join areas on area_name=p_area_name where product.name=p_product_name;
 END
 ;;
@@ -860,8 +892,11 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_add_plannerachivementmonthly`(p_
 BEGIN
 	-- 理财师业绩月报
 	-- 理财师业绩日报
+	Declare _root_dept_id int;  -- 一级部门ID
+	Declare _area int ;  -- 所属大区ID
 	Declare _subcompany_id int; -- 分公司ID
 	Declare _department_id int;	-- 所属部门ID
+	Declare _parent_department_id int;	-- 所属上级部门ID
 	Declare _team_id int; 	-- 所属团队ID
 	Declare _planner_id int;  -- 理财师ID
 	Declare _mannager_id int;  -- 客户经理ID
@@ -869,25 +904,54 @@ BEGIN
 	
 	
 	select department_id,id into _department_id,_planner_id from planner where work_num =p_planner_wornum;
-  select id into _mannager_id from planner where work_num =p_mannager_wornum;
-	select department_id,parent_dept_id,`level` into _team_id,_subcompany_id,_level from department where department_id=_department_id;
-	-- 本身属于分公司
-	if _level =3 THEN
-			set _team_id = -1;
-			set _subcompany_id = _department_id;
-			
+	select id into _mannager_id from planner where work_num =p_mannager_wornum;
+	select parent_dept_id,`level` into _parent_department_id,_level from department where department_id=_department_id;
+
+	-- 本身属于一级部门
+	if _level =1 THEN
+		set _root_dept_id = _department_id;
+		set _area = -1;
+		set _team_id = -1;
+		set _subcompany_id = -1;
 	End if;
 
-	-- 本身属于大区或者总公司
-	if _level <=2 THEN
-			set _team_id = -1;
-			set _subcompany_id = -1;
-			
+	-- 本身属于大区
+	if _level =2 THEN
+		set _root_dept_id = _parent_department_id;
+		set _area = _department_id;
+		set _team_id = -1;
+		set _subcompany_id = -1;
+	End if;
+	
+	-- 本身属于分公司
+	if _level =3 THEN
+		set _root_dept_id = -1 ;
+		set _area = _parent_department_id;
+		set _subcompany_id = _department_id;
+		set _team_id = -1;
+		
+		select parent_dept_id,`level` into _parent_department_id,_level from department where department_id=_area;
+		set _root_dept_id = _parent_department_id ;
+
+	End if;
+
+	-- 本身属于团队
+	if _level =4 THEN
+		set _root_dept_id = -1 ;
+		set _area = -1;
+		set _subcompany_id = _parent_department_id;
+		set _team_id = _department_id;
+		
+		select parent_dept_id,`level` into _parent_department_id,_level from department where department_id=_subcompany_id;
+		set _area = _parent_department_id ;
+
+		select parent_dept_id,`level` into _parent_department_id,_level from department where department_id=_area;
+		set _root_dept_id = _parent_department_id;
 	End if;
 
 	insert into `planner_achivements_monthly` (`planner_uid`, `planner_percent`, `manager_uid`,`mannager_percent`, 
-	   `product_id`, `product_type`,`customer_uid`, `customer_name`,`customer_buy`, `annualised`, `product_cycle`, `transfer_date`, `memo`, `ctime`, `area_id`, `company`, `team`, `department_id`) 
-		select _planner_id,p_planner_percent,_mannager_id,p_mannager_percent,p.pid,p.product_type,-1,p_realname,p_customer_buy,p_annualised,p_product_cycle,p_transfer_date,p_memo,NOW(),null
+	   `product_id`, `product_type`,`customer_uid`, `customer_name`,`customer_buy`, `annualised`, `product_cycle`, `transfer_date`, `memo`, `ctime`, `area_id`, `root_dept`, `area`, `company`, `team`, `department_id`) 
+		select _planner_id,p_planner_percent,_mannager_id,p_mannager_percent,p.pid,p.product_type,-1,p_realname,p_customer_buy,p_annualised,p_product_cycle,p_transfer_date,p_memo,NOW(),null,_root_dept_id,_area
 		, _subcompany_id,_team_id,_department_id from product p
 		where  p.name=p_product_name;
 END
