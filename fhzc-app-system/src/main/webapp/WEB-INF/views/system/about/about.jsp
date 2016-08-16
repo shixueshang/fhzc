@@ -66,7 +66,7 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="portlet_tab1">
                                         <!-- BEGIN FORM-->
-                                        <form action="<%=contextPath%>/system/about/add" method="POST" class="form-horizontal">
+                                        <form action="<%=contextPath%>/system/about/app/add" method="POST" class="form-horizontal">
                                             <div class="control-group">
                                             </div>
                                             <div class="control-group">
@@ -79,7 +79,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">简介</label>
                                                 <div class="controls">
-                                                    <textarea name="introduction" class="span6 m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;">${about.introduction}</textarea>
+                                                    <textarea name="introduction" class="span12 ckeditor m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;">${about.introduction}</textarea>
                                                 </div>
                                             </div>
                                             <div class="form-actions">
@@ -106,7 +106,7 @@
 </div>
 
 <jsp:include page="../../include/footer.jsp"/>
-
+<script type="text/javascript" src="<%=contextPath%>/assets/ckeditor/ckeditor.js"></script>
 <script>
 
     var aboutId = '${about.id}';

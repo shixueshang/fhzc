@@ -53,7 +53,9 @@
                 <form  class="form-inline" id="achive_form">
                     <div class="form-group">
                         <label class="control-label" style="margin-left: 20px">区总</label>
-                        <select class="form-control"  id="area"  name="area" style="width:180px;"></select>
+                        <select class="form-control"  id="area"  name="area" style="width:180px;">
+                            <option value="0">全部</option>
+                        </select>
 
                         <label class="control-label" style="margin-left: 20px">分公司</label>
                         <select class="form-control"  id="subCompany"  name="subCompany" style="width:180px;"></select>
@@ -117,7 +119,7 @@ $(function(){
         }
 
 
-        $('#area').change(function(){
+        $("#area").change(function(){
             var area = $('#area').val();
             $.ajax({
                 type: "GET",
@@ -177,7 +179,10 @@ $(function(){
 
         var date = $('#startDate').val();
         if(date == null || date == ''){
-            alert('请选择月份');
+            BootstrapDialog.alert({
+                title: '提示',
+                message: '请选择月份'
+            });
             return false;
         }
 

@@ -33,6 +33,8 @@ public interface PlannerAchivementsDailyMapper {
 
     int updateByPrimaryKey(PlannerAchivementsDaily record);
 
+    List<PlannerAchivementsDaily> findAchiveDailyByArea(Map<String, Object> param);
+
     List<PlannerAchivementsDaily> findAchiveDailyBySub(Map<String, Object> param);
 
     List<PlannerAchivementsDaily> findAchiveDailyByTeam(Map<String, Object> param);

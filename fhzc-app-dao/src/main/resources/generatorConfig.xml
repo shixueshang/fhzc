@@ -46,10 +46,17 @@
 
         <!--生成对应表及类名 -->
 
-        <table tableName="about_app"
+        <table tableName="planner_achivements_daily"
                delimitAllColumns="true"
                delimitIdentifiers="true"
-               domainObjectName="AboutApp">
+               domainObjectName="PlannerAchivementsDaily">
+            <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
+        </table>
+
+        <table tableName="planner_achivements_monthly"
+               delimitAllColumns="true"
+               delimitIdentifiers="true"
+               domainObjectName="PlannerAchivementsMonthly">
             <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
         </table>
 
