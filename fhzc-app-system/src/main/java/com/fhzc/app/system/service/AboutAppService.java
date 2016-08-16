@@ -14,4 +14,6 @@ public interface AboutAppService {
     AboutApp getAboutApp();
 
     void addOrUpdate(AboutApp aboutApp);
+
+    AboutApp getContactUs();
 }

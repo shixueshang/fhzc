@@ -159,7 +159,7 @@ public class MessageController extends BaseController {
                 userMap.put("role", user.getLoginRole());
                 if(user.getLoginRole() != null && user.getLoginRole().equals(APIConstants.USER_ROIE.CUSTOMER)){
                     Customer customer = customerService.getCustomerByUid(user.getUid());
-                    userMap.put("level", user.getLevel() == null ? "" : getLevelName(customer.getLevelId()));
+                    userMap.put("level", user.getLevel() == null ? "" : getDicName(customer.getLevelId(), Const.DIC_CAT.CUSTOMER_LEVEL));
                 }
                 userMap.put("name", user.getRealname());
                 userMap.put("avatar", basePath + user.getAvatar());

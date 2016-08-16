@@ -50,7 +50,7 @@ public class UserController extends BaseController {
         Map result = ObjUtils.objectToMap(user);
         if(user.getLoginRole().equals(Const.USER_ROLE.CUSTOMER)) {
             Customer customer = customerService.getCustomerByUid(user.getUid());
-            user.setLevel(super.getLevelName(customer.getLevelId()));
+            user.setLevel(super.getDicName(customer.getLevelId(), Const.DIC_CAT.CUSTOMER_LEVEL));
             result.put("cb_id", customer.getCbId());
 
             List<PlannerCustomer> plannerCustomers = plannerCustomerService.getCustomerPlannerList(customer.getCustomerId());
@@ -109,7 +109,7 @@ public class UserController extends BaseController {
                 List<ScoreHistory> availableList= scoreService.getAvailableList(pc.getCustomerId());
                 List<ScoreHistory> consumeList = scoreService.getConsume(pc.getCustomerId());
                 map.put("score", scoreService.sumScore(availableList) + scoreService.sumScore(consumeList));
-                map.put("level", super.getLevelName(customer.getLevelId()));
+                map.put("level", super.getDicName(customer.getLevelId(), Const.DIC_CAT.CUSTOMER_LEVEL));
 
                 result.add(map);
             }
@@ -183,27 +183,27 @@ public class UserController extends BaseController {
             Map<String, Object> result = new HashMap<String, Object>();
             result.put("name", customerUser.getRealname());
 
-            if (customer.getCustomerType() == Const.CUSTOMER_TYPE.ORGAN_CUSTOMER) {
+            if (customer.getCustomerType().equals(Const.CUSTOMER_TYPE.ORGAN_CUSTOMER)) {
                 result.put("type", Const.CUSTOMER_TYPE.ORGAN_CUSTOMER_ZH);
             }
-            if (customer.getCustomerType() == Const.CUSTOMER_TYPE.SINGLE_CUSTOMER) {
+            if (customer.getCustomerType().equals(Const.CUSTOMER_TYPE.SINGLE_CUSTOMER)) {
                 result.put("type", Const.CUSTOMER_TYPE.SINGLE_CUSTOMER_ZH);
             }
 
-            result.put("level", super.getLevelName(customer.getLevelId()));
-            result.put("risk", super.getRiskName(customer.getRisk()));
-            result.put("passportType", this.getPassportTypeName(customerUser.getPassportTypeId()));
+            result.put("level", super.getDicName(customer.getLevelId(), Const.DIC_CAT.CUSTOMER_LEVEL));
+            result.put("risk", super.getDicName(customer.getRisk(), Const.DIC_CAT.RISK_LEVEL));
+            result.put("passportType", super.getDicName(customerUser.getPassportTypeId(), Const.DIC_CAT.PASSPORT));
             result.put("passportTypeId", customerUser.getPassportTypeId());
 
             StringBuilder sb1 = new StringBuilder(customerUser.getPassportCode());
             result.put("passportCode", sb1.replace(3, 7, "****"));
             result.put("passportAddress", customerUser.getPassportAddress());
             result.put("birthday", customerUser.getBirthday());
-            if (customerUser.getGender() == Const.GENDER.MALE) {
+            if (customerUser.getGender().equals(Const.GENDER.MALE)) {
                 result.put("gender", Const.GENDER.MALE_ZH);
             }
 
-            if (customerUser.getGender() == Const.GENDER.FEMALE) {
+            if (customerUser.getGender().equals(Const.GENDER.FEMALE)) {
                 result.put("gender", Const.GENDER.FEMALE_ZH);
             }
             StringBuilder sb2 = new StringBuilder(customerUser.getMobile());

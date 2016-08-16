@@ -21,19 +21,45 @@ public class AboutAppController extends BaseController {
     @Resource
     private AboutAppService aboutAppService;
 
-    @RequestMapping(value = "/pub", method = RequestMethod.GET)
-    public ModelAndView pub(){
+    /**
+     * 关于App
+     * @return
+     */
+    @RequestMapping(value = "/app/pub", method = RequestMethod.GET)
+    public ModelAndView about(){
         ModelAndView mav = new ModelAndView("system/about/about");
         mav.addObject("about", aboutAppService.getAboutApp());
         mav.addObject("url", "system/about");
         return mav;
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    /**
+     * 新增
+     * @param aboutApp
+     * @return
+     */
+    @RequestMapping(value = "/app/add", method = RequestMethod.POST)
     public String addOrUpdate(AboutApp aboutApp){
 
-        aboutApp.setIsUsing(Const.Data_Status.DATA_NORMAL);
+        aboutApp.setIsUsing(Const.YES_OR_NO.YES);
         aboutAppService.addOrUpdate(aboutApp);
-        return "redirect:/system/about/pub";
+        if(Const.About_App.ABOUT_APP.equals(aboutApp.getType())){
+            return "redirect:/system/about/app/pub";
+        }
+        return "redirect:/system/about/contact/pub";
     }
+
+    /**
+     * 联系我们
+     * @return
+     */
+    @RequestMapping(value = "/contact/pub", method = RequestMethod.GET)
+    public ModelAndView contact(){
+        ModelAndView mav = new ModelAndView("system/about/contact");
+        mav.addObject("contact", aboutAppService.getContactUs());
+        mav.addObject("url", "system/about");
+        return mav;
+    }
+
+
 }

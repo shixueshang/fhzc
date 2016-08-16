@@ -7,6 +7,8 @@ public class AboutApp {
 
     private Integer isUsing;
 
+    private String type;
+
     private String introduction;
 
     public Integer getId() {
@@ -31,6 +33,14 @@ public class AboutApp {
 
     public void setIsUsing(Integer isUsing) {
         this.isUsing = isUsing;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type == null ? null : type.trim();
     }
 
     public String getIntroduction() {

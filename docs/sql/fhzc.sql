@@ -937,9 +937,10 @@ CREATE TABLE `bank`.`about_app` (
   `version` VARCHAR(45) NULL COMMENT '版本',
   `introduction` TEXT NULL COMMENT '简介',
   `is_using` INT(1) NULL COMMENT '是否正在使用',
-  PRIMARY KEY (`id`))
+  `type` VARCHAR(10) NULL COMMENT '类型1、关于App2、联系我们',
+  PRIMARY KEY (`id`) )
   ENGINE=InnoDB  DEFAULT CHARSET=utf8
-  COMMENT = '关于app';
+  COMMENT = '关于App';
 
 
 

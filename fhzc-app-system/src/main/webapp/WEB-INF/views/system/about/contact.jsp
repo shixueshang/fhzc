@@ -21,8 +21,6 @@
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/jquery-tags-input/jquery.tagsinput.css" />
 <link rel="stylesheet" href="<%=contextPath%>/assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" />
 
-<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/bootstrap-datepicker/css/datepicker.css">
-
 <!-- BEGIN CONTAINER -->
 <div class="page-container row-fluid">
     <jsp:include page="../../include/left.jsp"/>
@@ -43,7 +41,7 @@
                             <a href="javascript:void(0);">系统管理</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li class="active"><a href="javascript:void(0);">关于App</a></li>
+                        <li class="active"><a href="javascript:void(0);">联系我们</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
@@ -57,7 +55,7 @@
                         <div class="portlet-title">
                             <h4>
                                 <i class="icon-plus"></i>
-                                <span class="hidden-480">关于App</span>
+                                <span class="hidden-480">联系我们</span>
                                 &nbsp;
                             </h4>
                         </div>
@@ -66,25 +64,19 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="portlet_tab1">
                                         <!-- BEGIN FORM-->
-                                        <form action="<%=contextPath%>/system/about/add" method="POST" class="form-horizontal">
+                                        <form action="<%=contextPath%>/system/about/app/add" method="POST" class="form-horizontal">
                                             <div class="control-group">
                                             </div>
+
                                             <div class="control-group">
-                                                <label class="control-label">版本号</label>
+                                                <label class="control-label">联系我们</label>
                                                 <div class="controls">
-                                                    <input type="text" name="version" value="${about.version}" placeholder="请输入版本号" class="m-wrap large">
-                                                    <span class="help-inline"></span>
-                                                </div>
-                                            </div>
-                                            <div class="control-group">
-                                                <label class="control-label">简介</label>
-                                                <div class="controls">
-                                                    <textarea name="introduction" class="span6 m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;">${about.introduction}</textarea>
+                                                    <textarea name="introduction" class="span12 ckeditor m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;">${contact.introduction}</textarea>
                                                 </div>
                                             </div>
                                             <div class="form-actions">
-                                                <input type="hidden" name="id" id="aboutId"/>
-                                                <input type="hidden" name="type" value="about_app"/>
+                                                <input type="hidden" name="id" id="contactId"/>
+                                                <input type="hidden" name="type" value="contact_us"/>
                                                 <button type="submit" class="btn blue"><i class="icon-ok"></i> 保存</button>
                                             </div>
                                         </form>
@@ -106,9 +98,9 @@
 </div>
 
 <jsp:include page="../../include/footer.jsp"/>
-
+<script type="text/javascript" src="<%=contextPath%>/assets/ckeditor/ckeditor.js"></script>
 <script>
 
-    var aboutId = '${about.id}';
-    $('#aboutId').val(aboutId);
+    var contactId = '${contact.id}';
+    $('#contactId').val(contactId);
 </script>
