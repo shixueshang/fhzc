@@ -71,7 +71,7 @@
             <div class="row-fluid">
                 <div class="span12">
 
-                    <div class="portlet box yellow">
+                    <div class="portlet box blue">
                         <div class="portlet-title">
                             <h4><i class="icon-reorder"></i></h4>
                         </div>
@@ -85,7 +85,7 @@
                                     <td>客户电话</td>
                                     <td>消耗积分</td>
                                     <td>预约状态</td>
-                                    <td></td>
+                                    <td>操作</td>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -97,7 +97,7 @@
                                         <td>${reservation.phoneNum}</td>
                                         <td>${reservation.score}</td>
                                         <td>${reservation.reservationStatus}</td>
-                                        <td><button class="Deal_Reser" data-id="${reservation.id}">处理预约</button></td>
+                                        <td><a class="btn mini purple Deal_Reser" data-id="${reservation.id}">处理预约</a></td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>

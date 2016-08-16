@@ -195,6 +195,7 @@ public class RightsController extends BaseController{
 
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("reservations", vos);
+        mav.addObject("url", "business/rights");
         return mav;
     }
 
@@ -215,12 +216,12 @@ public class RightsController extends BaseController{
         vo.setAvailableScore(score+"");
 
         RightVo rvo = new RightVo();
-        Rights rights = rightsService.getRights((int)reservation.getRightsId());
+        Rights rights = rightsService.getRights(reservation.getRightsId());
         rvo.setScore(rights.getSpendScore());
         rvo.setProviderName(rights.getSupply());
         rvo.setRightId(reservation.getRightsId());
 
-        PageableResult<Rights> pageableResult = rightsService.findPageRights(1, 500);
+        PageableResult<Rights> pageableResult = rightsService.findPageRights(page, size);
         mav.addObject("reservation", reservation);
         mav.addObject("rights", pageableResult.getItems());
 

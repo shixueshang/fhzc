@@ -105,13 +105,16 @@
                                                 </c:when>
                                             </c:choose>
                                         </td>
-                                        <td><script>
-                                                var cover = '${banner.cover}';
-                                                if(cover == null || cover == ''){
-                                                    $('#cover').css("display" , "none")
-                                                }
-                                            </script>
-                                            <img id="cover" width="120px" src="<%=basePath%>${banner.cover}"></td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${banner.cover == null || banner.cover == ''}">
+
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <img id="cover" width="120px" src="<%=basePath%>${banner.cover}">
+                                                </c:otherwise>
+                                            </c:choose>
+                                            </td>
                                         <td>${banner.text}</td>
                                         <td>
                                             <c:forEach items="${fromTypes}" var="fromType">

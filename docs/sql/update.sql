@@ -68,3 +68,10 @@ ALTER TABLE `bank`.`planner_achivements_monthly`
 ADD COLUMN `area` INT(11) NULL COMMENT '区总' AFTER `department_id`;
 
 
+ALTER TABLE `bank`.`planner_achivements_daily`
+ADD COLUMN `root_dept` INT(11) NULL COMMENT '顶级机构' AFTER `area`;
+
+ALTER TABLE `bank`.`planner_achivements_monthly`
+ADD COLUMN `root_dept` INT(11) NULL COMMENT '顶级机构' AFTER `area`;
+
+

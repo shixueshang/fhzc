@@ -40,6 +40,9 @@ public class UserController extends BaseController {
     @Resource
     private DepartmentService departmentService;
 
+    @Resource
+    private AssetsService assetsService;
+
     /**
      * 获取登录用户信息
      * @return
@@ -98,6 +101,35 @@ public class UserController extends BaseController {
                 Map<String, Object> map = new HashMap<String, Object>();
                 Customer customer = customerService.getCustomer(pc.getCustomerId());
                 User customerUser= userService.getUser(customer.getUid());
+                Integer assetsSum = 0;
+
+                /* 计算客户资产 */
+                List<AssetsHistory> assetsHistoryList = assetsService.getHistory(pc.getCustomerId());
+                if (assetsHistoryList == null) {
+                    assetsSum = 0;
+                } else {
+                    for (AssetsHistory asset:assetsHistoryList){
+
+                        if(asset.getType().equals(Const.ASSET_TYPE.PURCHASE)){
+                            assetsSum = assetsSum + asset.getAmount();
+                        }
+
+                        if(asset.getType().equals(Const.ASSET_TYPE.RENEW)){
+                            assetsSum = assetsSum + asset.getAmount();
+                        }
+
+                        if(asset.getType().equals(Const.ASSET_TYPE.DIVIDEND)){
+                            assetsSum = assetsSum + asset.getAmount();
+                        }
+
+                        if(asset.getType().equals(Const.ASSET_TYPE.REDEMPTION)){
+                            assetsSum = assetsSum  - asset.getAmount();
+                        }
+
+                    }
+                }
+
+                map.put("assetsSum", assetsSum);
                 map.put("uid", customerUser.getUid());
                 map.put("customerId", pc.getCustomerId());
                 map.put("avatar", customerUser.getAvatar());
