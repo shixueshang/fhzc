@@ -41,6 +41,8 @@ public class PlannerAchivementsMonthly {
 
     private Integer departmentId;
 
+    private Integer area;
+
     public Integer getId() {
         return id;
     }
@@ -191,5 +193,13 @@ public class PlannerAchivementsMonthly {
 
     public void setDepartmentId(Integer departmentId) {
         this.departmentId = departmentId;
+    }
+
+    public Integer getArea() {
+        return area;
+    }
+
+    public void setArea(Integer area) {
+        this.area = area;
     }
 }

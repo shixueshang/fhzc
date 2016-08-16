@@ -21,6 +21,7 @@
     <result column="company" property="company" jdbcType="INTEGER" />
     <result column="team" property="team" jdbcType="INTEGER" />
     <result column="department_id" property="departmentId" jdbcType="INTEGER" />
+    <result column="area" property="area" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -83,7 +84,8 @@
   <sql id="Base_Column_List" >
     `id`, `planner_uid`, `planner_percent`, `manager_uid`, `mannager_percent`, `product_id`, 
     `product_type`, `customer_uid`, `customer_name`, `customer_buy`, `annualised`, `product_cycle`, 
-    `transfer_date`, `memo`, `ctime`, `area_id`, `company`, `team`, `department_id`
+    `transfer_date`, `memo`, `ctime`, `area_id`, `company`, `team`, `department_id`, 
+    `area`
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.PlannerAchivementsMonthlyExample" >
     select
@@ -124,15 +126,15 @@
       `customer_uid`, `customer_name`, `customer_buy`, 
       `annualised`, `product_cycle`, `transfer_date`, 
       `memo`, `ctime`, `area_id`, 
-      `company`, `team`, `department_id`
-      )
+      `company`, `team`, `department_id`, 
+      `area`)
     values (#{plannerUid,jdbcType=INTEGER}, #{plannerPercent,jdbcType=VARCHAR}, #{managerUid,jdbcType=INTEGER}, 
       #{mannagerPercent,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER}, #{productType,jdbcType=VARCHAR}, 
       #{customerUid,jdbcType=INTEGER}, #{customerName,jdbcType=VARCHAR}, #{customerBuy,jdbcType=INTEGER}, 
       #{annualised,jdbcType=INTEGER}, #{productCycle,jdbcType=INTEGER}, #{transferDate,jdbcType=DATE}, 
       #{memo,jdbcType=VARCHAR}, #{ctime,jdbcType=TIMESTAMP}, #{areaId,jdbcType=INTEGER}, 
-      #{company,jdbcType=INTEGER}, #{team,jdbcType=INTEGER}, #{departmentId,jdbcType=INTEGER}
-      )
+      #{company,jdbcType=INTEGER}, #{team,jdbcType=INTEGER}, #{departmentId,jdbcType=INTEGER}, 
+      #{area,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.PlannerAchivementsMonthly" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
@@ -194,6 +196,9 @@
       <if test="departmentId != null" >
         `department_id`,
       </if>
+      <if test="area != null" >
+        `area`,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="plannerUid != null" >
@@ -249,6 +254,9 @@
       </if>
       <if test="departmentId != null" >
         #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -318,6 +326,9 @@
       <if test="record.departmentId != null" >
         `department_id` = #{record.departmentId,jdbcType=INTEGER},
       </if>
+      <if test="record.area != null" >
+        `area` = #{record.area,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -343,7 +354,8 @@
       `area_id` = #{record.areaId,jdbcType=INTEGER},
       `company` = #{record.company,jdbcType=INTEGER},
       `team` = #{record.team,jdbcType=INTEGER},
-      `department_id` = #{record.departmentId,jdbcType=INTEGER}
+      `department_id` = #{record.departmentId,jdbcType=INTEGER},
+      `area` = #{record.area,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -405,6 +417,9 @@
       <if test="departmentId != null" >
         `department_id` = #{departmentId,jdbcType=INTEGER},
       </if>
+      <if test="area != null" >
+        `area` = #{area,jdbcType=INTEGER},
+      </if>
     </set>
     where `id` = #{id,jdbcType=INTEGER}
   </update>
@@ -427,7 +442,8 @@
       `area_id` = #{areaId,jdbcType=INTEGER},
       `company` = #{company,jdbcType=INTEGER},
       `team` = #{team,jdbcType=INTEGER},
-      `department_id` = #{departmentId,jdbcType=INTEGER}
+      `department_id` = #{departmentId,jdbcType=INTEGER},
+      `area` = #{area,jdbcType=INTEGER}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
   <select resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.PlannerAchivementsMonthlyExample" id="selectByExampleWithRowbounds" >
@@ -444,6 +460,14 @@
       order by ${orderByClause}
     </if>
   </select>
+
+    <select id="findAchiveMonthlyByArea" resultMap="BaseResultMap" parameterType="Map">
+        SELECT transfer_date,area, sum(annualised) as annualised FROM bank.planner_achivements_monthly where DATE_FORMAT(transfer_date,'%Y-%m') = #{month} and area in
+        <foreach item="item" index="index" collection="area" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        group by area;
+    </select>
 
     <select id="findAchiveMonthlyBySub" resultMap="BaseResultMap" parameterType="Map">
         SELECT transfer_date,company, sum(annualised) as annualised FROM bank.planner_achivements_monthly where DATE_FORMAT(transfer_date,'%Y-%m') = #{month} and company in

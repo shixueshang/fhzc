@@ -9,6 +9,7 @@ import com.fhzc.app.dao.mybatis.util.Const;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -208,7 +209,7 @@ public class UserController extends BaseController {
      */
     @RequestMapping(value = "/api/customer/info", method = RequestMethod.GET)
     @ResponseBody
-    public ApiJsonResult getCustomerInfo(Integer customerId) throws Exception {
+    public ApiJsonResult getCustomerInfo(@RequestParam(value = "customer_id") Integer customerId) throws Exception {
         Customer customer = customerService.getCustomer(customerId);
         if(customer != null) {
             User customerUser = userService.getUser(customer.getUid());

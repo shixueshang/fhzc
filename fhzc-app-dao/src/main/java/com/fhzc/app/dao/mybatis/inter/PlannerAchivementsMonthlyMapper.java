@@ -33,6 +33,8 @@ public interface PlannerAchivementsMonthlyMapper {
 
     int updateByPrimaryKey(PlannerAchivementsMonthly record);
 
+    List<PlannerAchivementsMonthly> findAchiveMonthlyByArea(Map<String, Object> param);
+
     List<PlannerAchivementsMonthly> findAchiveMonthlyBySub(Map<String, Object> param);
 
     List<PlannerAchivementsMonthly> findAchiveMonthlyByTeam(Map<String, Object> param);

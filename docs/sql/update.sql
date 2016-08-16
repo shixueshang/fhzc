@@ -61,3 +61,10 @@ CREATE TABLE `bank`.`about_app` (
   PRIMARY KEY (`id`))
   COMMENT = '关于App';
 
+ALTER TABLE `bank`.`planner_achivements_daily`
+ADD COLUMN `area` INT(11) NULL COMMENT '区总' AFTER `department_id`;
+
+ALTER TABLE `bank`.`planner_achivements_monthly`
+ADD COLUMN `area` INT(11) NULL COMMENT '区总' AFTER `department_id`;
+
+
