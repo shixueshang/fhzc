@@ -70,7 +70,7 @@ public class IndexApiController extends BaseController {
 
         Map<String, Object> map = new HashMap<String,Object>();
         map.put("product", productService.getNewProductList());
-        map.put("rights", rightsService.getRecommend());
+        map.put("rights", rightsService.getLatestRights());
         map.put("activity", activityService.getRecommendActivityList());
         map.put("report", reportService.getRecommendReportList());
         map.put("banner_pic",bannerService.get(Const.BANNER_TYPE.PIC));//私行提示下面的第一张图

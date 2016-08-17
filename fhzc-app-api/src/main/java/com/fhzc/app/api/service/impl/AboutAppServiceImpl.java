@@ -18,6 +18,7 @@ public class AboutAppServiceImpl implements AboutAppService{
     @Resource
     AboutAppMapper aboutAppMapper;
 
+    @Override
     public AboutApp getLatestApp() {
         AboutAppExample example = new AboutAppExample();
         AboutAppExample.Criteria criteria = example.createCriteria();
@@ -30,6 +31,7 @@ public class AboutAppServiceImpl implements AboutAppService{
         }
     }
 
+    @Override
     public AboutApp getAppByVersion(String version) {
         AboutAppExample example = new AboutAppExample();
         AboutAppExample.Criteria criteria = example.createCriteria();

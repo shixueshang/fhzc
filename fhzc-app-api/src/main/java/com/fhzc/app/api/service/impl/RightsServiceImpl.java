@@ -33,13 +33,13 @@ public class RightsServiceImpl implements RightsService {
     }
 
     @Override
-    public List<Rights> getListByCid(Integer cid){
+    public List<Rights> getListByCid(Integer cid) {
         RightsExample example = new RightsExample();
         RightsExample.Criteria criteria = example.createCriteria();
         criteria.andCidEqualTo(cid);
-        if(rightsMapper.countByExample(example) > 0) {
+        if (rightsMapper.countByExample(example) > 0) {
             return rightsMapper.selectByExampleWithBLOBs(example);
-        }else {
+        } else {
             return null;
         }
     }
@@ -49,21 +49,34 @@ public class RightsServiceImpl implements RightsService {
         RightsExample example = new RightsExample();
         RightsExample.Criteria criteria = example.createCriteria();
         criteria.andIdEqualTo(id);
-        if(rightsMapper.countByExample(example) > 0) {
+        if (rightsMapper.countByExample(example) > 0) {
             return rightsMapper.selectByPrimaryKey(id);
-        }else{
+        } else {
             return null;
         }
     }
 
     @Override
-    public List<Rights> getRecommend(){
+    public List<Rights> getRecommend() {
         RightsExample example = new RightsExample();
         RightsExample.Criteria criteria = example.createCriteria();
         criteria.andIsRecommendEqualTo(1);
         example.setOrderByClause("ctime desc");
         if (rightsMapper.countByExample(example) > 0) {
             return rightsMapper.selectByExampleWithBLOBs(example);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public List<Rights> getLatestRights() {
+        RightsExample example = new RightsExample();
+        RightsExample.Criteria criteria = example.createCriteria();
+        example.setOrderByClause("ctime desc");
+        RowBounds rowBounds = new RowBounds(0, 10);
+        if (rightsMapper.countByExample(example) > 0) {
+            return rightsMapper.selectByExampleWithBLOBsWithRowbounds(example, rowBounds);
         } else {
             return null;
         }
