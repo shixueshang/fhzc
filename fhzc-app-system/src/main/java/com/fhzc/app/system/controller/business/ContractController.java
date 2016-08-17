@@ -1,7 +1,23 @@
 package com.fhzc.app.system.controller.business;
 
+import com.alibaba.fastjson.JSON;
+import com.fhzc.app.dao.mybatis.model.Activity;
+import com.fhzc.app.dao.mybatis.model.AssetsHistory;
+import com.fhzc.app.dao.mybatis.model.Contract;
+import com.fhzc.app.dao.mybatis.model.Customer;
+import com.fhzc.app.dao.mybatis.model.Planner;
+import com.fhzc.app.dao.mybatis.model.Product;
+import com.fhzc.app.dao.mybatis.model.User;
+import com.fhzc.app.dao.mybatis.page.PageHelper;
+import com.fhzc.app.dao.mybatis.page.PageableResult;
+import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.ContractService;
+import com.fhzc.app.system.service.CustomerService;
+import com.fhzc.app.system.service.PlannerService;
+import com.fhzc.app.system.service.ProductService;
+import com.fhzc.app.system.service.UserService;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +38,18 @@ public class ContractController extends BaseController {
     @Resource(name="contractService")
     private ContractService contractService;
 
+    @Resource
+    private UserService userService;
+    
+    @Resource
+    private PlannerService plannerService;
+    
+    @Resource
+    private ProductService productService;
+    
+    @Resource
+    private CustomerService customerService;
+    
     /**
      * 日表导入页面
      * @return
@@ -53,6 +81,71 @@ public class ContractController extends BaseController {
             mav.addAllObjects(result);
             e.printStackTrace();
         }
+        return mav;
+    }
+    
+    
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public ModelAndView listActivities(){
+        ModelAndView mav = new ModelAndView("business/contract/list");
+        PageableResult<Contract> pageableResult = contractService.findPageContracts(null,new ArrayList<Integer>(),page, size);
+        List<Customer> customers = customerService.findAllCustomer();
+        List<Product> products = productService.findAllProduct();
+        List<Planner> planners = plannerService.findAllPlanner();
+        for (Contract contract : pageableResult.getItems()) {
+        	for (Customer customer : customers) {
+				if(customer.getCustomerId() == contract.getCustomerId()){
+					contract.setCustomerName(userService.getUser(customer.getUid()).getRealname());
+				}
+			}
+        	for(Product product : products){
+  				if(product.getPid() == contract.getProductId()){
+  					contract.setProductName(product.getName());
+  				}
+  			} 
+        	for (Planner planner : planners) {
+      			if(planner.getId() == contract.getPlannerId()){
+      				contract.setPlannerName(userService.getUser(planner.getUid()).getRealname());
+      			}
+        	 }
+		}
+        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
+        mav.addObject("contracts", pageableResult.getItems());
+        mav.addObject("url", "business/contract");
+        return mav;
+    }
+
+    /**
+     * 按产品名称或理财师姓名查询订单列表
+     * @param productName
+     * @param customerName
+     * @return
+     */
+    @RequestMapping(value = "/find", method = RequestMethod.GET)
+    public ModelAndView find(String productName, String plannerName){
+        ModelAndView mav = new ModelAndView("/business/contract/list");
+        List<User> users = userService.getUsersByName(plannerName);
+        List<Integer> plannerIds = new ArrayList<Integer>();
+        for(User user : users){
+        	plannerIds.add(plannerService.getPlannerByUid(user.getUid()).getId());
+        }
+        Product pro = productService.getProduct(productName);
+        PageableResult<Contract> pageableResult = contractService.findPageContracts(pro== null ? null : pro.getPid(), plannerIds, page, size);
+        List<Contract> contracts = pageableResult.getItems();
+        for(Contract contract : contracts){
+            Planner planner = plannerService.getPlanner(contract.getPlannerId());
+            if(planner != null){
+            	contract.setPlannerName(userService.getUser(planner.getUid()).getRealname());
+            }
+            Product product = productService.getProduct(contract.getProductId());
+            contract.setProductName(product.getName());
+            Customer customer = customerService.getCustomer(contract.getCustomerId());
+            contract.setCustomerName(userService.getUser(customer.getUid()).getRealname());
+        }
+
+        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
+        mav.addObject("contracts", contracts);
+        mav.addObject("url", "/business/contract");
         return mav;
     }
 }
