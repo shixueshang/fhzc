@@ -227,6 +227,12 @@
                         <shiro:hasPermission name="/system/about/contact/pub"><li>
                                 <a href="<%=contextPath%>/system/about/contact/pub">联系我们</a>
                             </li></shiro:hasPermission>
+                        <shiro:hasPermission name="/system/notice/pub"><li>
+                                <a href="<%=contextPath%>/system/notice/pub">消息新增</a>
+                            </li></shiro:hasPermission>
+                        <shiro:hasPermission name="/system/notice/list"><li>
+                                <a href="<%=contextPath%>/system/notice/list">消息列表</a>
+                            </li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>
 

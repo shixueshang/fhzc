@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fhzc.app.dao.mybatis.inter.SystemNoticeMapper" >
+  <resultMap id="BaseResultMap" type="com.fhzc.app.dao.mybatis.model.SystemNotice" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="has_pushed" property="hasPushed" jdbcType="INTEGER" />
+    <result column="push_channel" property="pushChannel" jdbcType="VARCHAR" />
+    <result column="publish_time" property="publishTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.fhzc.app.dao.mybatis.model.SystemNotice" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    `id`, `title`, `has_pushed`, `push_channel`, `publish_time`
+  </sql>
+  <sql id="Blob_Column_List" >
+    `content`
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.SystemNoticeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from `system_notice`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.SystemNoticeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from `system_notice`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from `system_notice`
+    where `id` = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from `system_notice`
+    where `id` = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fhzc.app.dao.mybatis.model.SystemNoticeExample" >
+    delete from `system_notice`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fhzc.app.dao.mybatis.model.SystemNotice" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `system_notice` (`title`, `has_pushed`, `push_channel`, 
+      `publish_time`, `content`)
+    values (#{title,jdbcType=VARCHAR}, #{hasPushed,jdbcType=INTEGER}, #{pushChannel,jdbcType=VARCHAR}, 
+      #{publishTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.SystemNotice" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `system_notice`
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="title != null" >
+        `title`,
+      </if>
+      <if test="hasPushed != null" >
+        `has_pushed`,
+      </if>
+      <if test="pushChannel != null" >
+        `push_channel`,
+      </if>
+      <if test="publishTime != null" >
+        `publish_time`,
+      </if>
+      <if test="content != null" >
+        `content`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="hasPushed != null" >
+        #{hasPushed,jdbcType=INTEGER},
+      </if>
+      <if test="pushChannel != null" >
+        #{pushChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="publishTime != null" >
+        #{publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fhzc.app.dao.mybatis.model.SystemNoticeExample" resultType="java.lang.Integer" >
+    select count(*) from `system_notice`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update `system_notice`
+    <set >
+      <if test="record.id != null" >
+        `id` = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null" >
+        `title` = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hasPushed != null" >
+        `has_pushed` = #{record.hasPushed,jdbcType=INTEGER},
+      </if>
+      <if test="record.pushChannel != null" >
+        `push_channel` = #{record.pushChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.publishTime != null" >
+        `publish_time` = #{record.publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.content != null" >
+        `content` = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update `system_notice`
+    set `id` = #{record.id,jdbcType=INTEGER},
+      `title` = #{record.title,jdbcType=VARCHAR},
+      `has_pushed` = #{record.hasPushed,jdbcType=INTEGER},
+      `push_channel` = #{record.pushChannel,jdbcType=VARCHAR},
+      `publish_time` = #{record.publishTime,jdbcType=TIMESTAMP},
+      `content` = #{record.content,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update `system_notice`
+    set `id` = #{record.id,jdbcType=INTEGER},
+      `title` = #{record.title,jdbcType=VARCHAR},
+      `has_pushed` = #{record.hasPushed,jdbcType=INTEGER},
+      `push_channel` = #{record.pushChannel,jdbcType=VARCHAR},
+      `publish_time` = #{record.publishTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fhzc.app.dao.mybatis.model.SystemNotice" >
+    update `system_notice`
+    <set >
+      <if test="title != null" >
+        `title` = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="hasPushed != null" >
+        `has_pushed` = #{hasPushed,jdbcType=INTEGER},
+      </if>
+      <if test="pushChannel != null" >
+        `push_channel` = #{pushChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="publishTime != null" >
+        `publish_time` = #{publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        `content` = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where `id` = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.SystemNotice" >
+    update `system_notice`
+    set `title` = #{title,jdbcType=VARCHAR},
+      `has_pushed` = #{hasPushed,jdbcType=INTEGER},
+      `push_channel` = #{pushChannel,jdbcType=VARCHAR},
+      `publish_time` = #{publishTime,jdbcType=TIMESTAMP},
+      `content` = #{content,jdbcType=LONGVARCHAR}
+    where `id` = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fhzc.app.dao.mybatis.model.SystemNotice" >
+    update `system_notice`
+    set `title` = #{title,jdbcType=VARCHAR},
+      `has_pushed` = #{hasPushed,jdbcType=INTEGER},
+      `push_channel` = #{pushChannel,jdbcType=VARCHAR},
+      `publish_time` = #{publishTime,jdbcType=TIMESTAMP}
+    where `id` = #{id,jdbcType=INTEGER}
+  </update>
+  <select resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.SystemNoticeExample" id="selectByExampleWithBLOBsWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from `system_notice`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.SystemNoticeExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from `system_notice`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

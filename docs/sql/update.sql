@@ -74,4 +74,16 @@ ADD COLUMN `root_dept` INT(11) NULL COMMENT '顶级机构' AFTER `area`;
 ALTER TABLE `bank`.`planner_achivements_monthly`
 ADD COLUMN `root_dept` INT(11) NULL COMMENT '顶级机构' AFTER `area`;
 
-
+#2016-08-17
+DROP TABLE IF EXISTS `bank`.`system_notice` ;
+CREATE TABLE `bank`.`system_notice` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(200) NULL COMMENT '标题',
+  `content` TEXT NULL COMMENT '内容',
+  `has_pushed` INT(1) NULL COMMENT '是否已经推送1、已推送0、未推送',
+  `push_channel` VARCHAR(45) NULL COMMENT '推送途径',
+  `publish_time` DATETIME NULL COMMENT '发布时间',
+  PRIMARY KEY (`id`))
+  ENGINE = InnoDB
+  DEFAULT CHARACTER SET = utf8
+  COMMENT = '消息推送维护表';
