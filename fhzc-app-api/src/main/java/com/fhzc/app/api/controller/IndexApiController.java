@@ -99,12 +99,24 @@ public class IndexApiController extends BaseController {
         AboutApp currentAboutApp = aboutAppService.getAppByVersion(version);
         AboutApp latestAboutApp = aboutAppService.getLatestApp();
         if(currentAboutApp == null){
-            return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,currentAboutApp);
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,latestAboutApp);
         }
         if(currentAboutApp.getId() < latestAboutApp.getId()){
             return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,latestAboutApp);
         }else{
             return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,false);
         }
+    }
+
+    /**
+     * 联系我们
+     *
+     * @return
+     */
+    @RequestMapping(value = "/api/aboutUs", method = RequestMethod.GET)
+    @ResponseBody
+    public ApiJsonResult aboutUs() {
+        AboutApp aboutApp = aboutAppService.getContactUs();
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,aboutApp);
     }
 }

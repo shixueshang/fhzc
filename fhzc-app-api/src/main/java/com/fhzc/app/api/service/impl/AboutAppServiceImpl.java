@@ -43,4 +43,17 @@ public class AboutAppServiceImpl implements AboutAppService{
             return null;
         }
     }
+
+    @Override
+    public AboutApp getContactUs() {
+        AboutAppExample example = new AboutAppExample();
+        AboutAppExample.Criteria criteria = example.createCriteria();
+        criteria.andTypeEqualTo(Const.About_App.CONTACT_US);
+        example.setOrderByClause("id desc");
+        if (aboutAppMapper.countByExample(example) > 0) {
+            return aboutAppMapper.selectByExampleWithBLOBs(example).get(0);
+        } else {
+            return null;
+        }
+    }
 }

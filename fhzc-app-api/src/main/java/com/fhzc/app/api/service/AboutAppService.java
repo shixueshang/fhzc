@@ -8,4 +8,5 @@ import com.fhzc.app.dao.mybatis.model.AboutApp;
 public interface AboutAppService {
     AboutApp getLatestApp();
     AboutApp getAppByVersion(String version);
+    AboutApp getContactUs();
 }
