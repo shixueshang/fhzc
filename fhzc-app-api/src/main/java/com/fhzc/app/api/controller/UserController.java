@@ -267,7 +267,9 @@ public class UserController extends BaseController {
         result.put("name", user.getRealname());
         result.put("avatar", user.getAvatar());
         result.put("workNum", planner.getWorkNum());
-        result.put("departmentId", departmentService.getDeparent(planner.getDepartmentId()).getTitle());
+        //获得3级部门信息
+        Department department = departmentService.getDeparent(planner.getDepartmentId());
+        result.put("departmentId", departmentService.getDeparent(department.getParentDeptId()).getTitle());
         result.put("status", planner.getStatus());
         result.put("roleId", planner.getRoleId());
         result.put("entryTime", planner.getEntryTime());

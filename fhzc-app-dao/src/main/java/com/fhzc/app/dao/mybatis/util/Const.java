@@ -52,6 +52,11 @@ public class Const {
     }
 
     /**
+     * 分隔符
+     */
+    public static final String SEPRATOR = "$_$";
+
+    /**
      * 字典类型
      */
     public static class DIC_CAT{
