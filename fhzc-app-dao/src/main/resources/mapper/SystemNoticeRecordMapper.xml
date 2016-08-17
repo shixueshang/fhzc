@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fhzc.app.dao.mybatis.inter.SystemNoticeMapper" >
-  <resultMap id="BaseResultMap" type="com.fhzc.app.dao.mybatis.model.SystemNotice" >
+<mapper namespace="com.fhzc.app.dao.mybatis.inter.SystemNoticeRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.fhzc.app.dao.mybatis.model.SystemNoticeRecord" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="notice_id" property="noticeId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="push_status" property="pushStatus" jdbcType="INTEGER" />
-    <result column="push_channel" property="pushChannel" jdbcType="VARCHAR" />
-    <result column="publish_time" property="publishTime" jdbcType="TIMESTAMP" />
+    <result column="push_channel" property="pushChannel" jdbcType="INTEGER" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.fhzc.app.dao.mybatis.model.SystemNotice" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.fhzc.app.dao.mybatis.model.SystemNoticeRecord" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -70,12 +70,12 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    `id`, `title`, `push_status`, `push_channel`, `publish_time`
+    `id`, `notice_id`, `user_id`, `push_status`, `push_channel`
   </sql>
   <sql id="Blob_Column_List" >
     `content`
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.SystemNoticeExample" >
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.SystemNoticeRecordExample" >
     select
     <if test="distinct" >
       distinct
@@ -83,7 +83,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from `system_notice`
+    from `system_notice_record`
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -91,13 +91,13 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.SystemNoticeExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.SystemNoticeRecordExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from `system_notice`
+    from `system_notice_record`
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -110,36 +110,39 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from `system_notice`
+    from `system_notice_record`
     where `id` = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from `system_notice`
+    delete from `system_notice_record`
     where `id` = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.fhzc.app.dao.mybatis.model.SystemNoticeExample" >
-    delete from `system_notice`
+  <delete id="deleteByExample" parameterType="com.fhzc.app.dao.mybatis.model.SystemNoticeRecordExample" >
+    delete from `system_notice_record`
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.fhzc.app.dao.mybatis.model.SystemNotice" >
+  <insert id="insert" parameterType="com.fhzc.app.dao.mybatis.model.SystemNoticeRecord" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into `system_notice` (`title`, `push_status`, `push_channel`, 
-      `publish_time`, `content`)
-    values (#{title,jdbcType=VARCHAR}, #{pushStatus,jdbcType=INTEGER}, #{pushChannel,jdbcType=VARCHAR}, 
-      #{publishTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
+    insert into `system_notice_record` (`notice_id`, `user_id`, `push_status`, 
+      `push_channel`, `content`)
+    values (#{noticeId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{pushStatus,jdbcType=INTEGER}, 
+      #{pushChannel,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.SystemNotice" >
+  <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.SystemNoticeRecord" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into `system_notice`
+    insert into `system_notice_record`
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="title != null" >
-        `title`,
+      <if test="noticeId != null" >
+        `notice_id`,
+      </if>
+      <if test="userId != null" >
+        `user_id`,
       </if>
       <if test="pushStatus != null" >
         `push_status`,
@@ -147,54 +150,51 @@
       <if test="pushChannel != null" >
         `push_channel`,
       </if>
-      <if test="publishTime != null" >
-        `publish_time`,
-      </if>
       <if test="content != null" >
         `content`,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="title != null" >
-        #{title,jdbcType=VARCHAR},
+      <if test="noticeId != null" >
+        #{noticeId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
       </if>
       <if test="pushStatus != null" >
         #{pushStatus,jdbcType=INTEGER},
       </if>
       <if test="pushChannel != null" >
-        #{pushChannel,jdbcType=VARCHAR},
-      </if>
-      <if test="publishTime != null" >
-        #{publishTime,jdbcType=TIMESTAMP},
+        #{pushChannel,jdbcType=INTEGER},
       </if>
       <if test="content != null" >
         #{content,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.fhzc.app.dao.mybatis.model.SystemNoticeExample" resultType="java.lang.Integer" >
-    select count(*) from `system_notice`
+  <select id="countByExample" parameterType="com.fhzc.app.dao.mybatis.model.SystemNoticeRecordExample" resultType="java.lang.Integer" >
+    select count(*) from `system_notice_record`
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update `system_notice`
+    update `system_notice_record`
     <set >
       <if test="record.id != null" >
         `id` = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.title != null" >
-        `title` = #{record.title,jdbcType=VARCHAR},
+      <if test="record.noticeId != null" >
+        `notice_id` = #{record.noticeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        `user_id` = #{record.userId,jdbcType=INTEGER},
       </if>
       <if test="record.pushStatus != null" >
         `push_status` = #{record.pushStatus,jdbcType=INTEGER},
       </if>
       <if test="record.pushChannel != null" >
-        `push_channel` = #{record.pushChannel,jdbcType=VARCHAR},
-      </if>
-      <if test="record.publishTime != null" >
-        `publish_time` = #{record.publishTime,jdbcType=TIMESTAMP},
+        `push_channel` = #{record.pushChannel,jdbcType=INTEGER},
       </if>
       <if test="record.content != null" >
         `content` = #{record.content,jdbcType=LONGVARCHAR},
@@ -205,42 +205,42 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update `system_notice`
+    update `system_notice_record`
     set `id` = #{record.id,jdbcType=INTEGER},
-      `title` = #{record.title,jdbcType=VARCHAR},
+      `notice_id` = #{record.noticeId,jdbcType=INTEGER},
+      `user_id` = #{record.userId,jdbcType=INTEGER},
       `push_status` = #{record.pushStatus,jdbcType=INTEGER},
-      `push_channel` = #{record.pushChannel,jdbcType=VARCHAR},
-      `publish_time` = #{record.publishTime,jdbcType=TIMESTAMP},
+      `push_channel` = #{record.pushChannel,jdbcType=INTEGER},
       `content` = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update `system_notice`
+    update `system_notice_record`
     set `id` = #{record.id,jdbcType=INTEGER},
-      `title` = #{record.title,jdbcType=VARCHAR},
+      `notice_id` = #{record.noticeId,jdbcType=INTEGER},
+      `user_id` = #{record.userId,jdbcType=INTEGER},
       `push_status` = #{record.pushStatus,jdbcType=INTEGER},
-      `push_channel` = #{record.pushChannel,jdbcType=VARCHAR},
-      `publish_time` = #{record.publishTime,jdbcType=TIMESTAMP}
+      `push_channel` = #{record.pushChannel,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.fhzc.app.dao.mybatis.model.SystemNotice" >
-    update `system_notice`
+  <update id="updateByPrimaryKeySelective" parameterType="com.fhzc.app.dao.mybatis.model.SystemNoticeRecord" >
+    update `system_notice_record`
     <set >
-      <if test="title != null" >
-        `title` = #{title,jdbcType=VARCHAR},
+      <if test="noticeId != null" >
+        `notice_id` = #{noticeId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        `user_id` = #{userId,jdbcType=INTEGER},
       </if>
       <if test="pushStatus != null" >
         `push_status` = #{pushStatus,jdbcType=INTEGER},
       </if>
       <if test="pushChannel != null" >
-        `push_channel` = #{pushChannel,jdbcType=VARCHAR},
-      </if>
-      <if test="publishTime != null" >
-        `publish_time` = #{publishTime,jdbcType=TIMESTAMP},
+        `push_channel` = #{pushChannel,jdbcType=INTEGER},
       </if>
       <if test="content != null" >
         `content` = #{content,jdbcType=LONGVARCHAR},
@@ -248,24 +248,24 @@
     </set>
     where `id` = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.SystemNotice" >
-    update `system_notice`
-    set `title` = #{title,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.SystemNoticeRecord" >
+    update `system_notice_record`
+    set `notice_id` = #{noticeId,jdbcType=INTEGER},
+      `user_id` = #{userId,jdbcType=INTEGER},
       `push_status` = #{pushStatus,jdbcType=INTEGER},
-      `push_channel` = #{pushChannel,jdbcType=VARCHAR},
-      `publish_time` = #{publishTime,jdbcType=TIMESTAMP},
+      `push_channel` = #{pushChannel,jdbcType=INTEGER},
       `content` = #{content,jdbcType=LONGVARCHAR}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.fhzc.app.dao.mybatis.model.SystemNotice" >
-    update `system_notice`
-    set `title` = #{title,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="com.fhzc.app.dao.mybatis.model.SystemNoticeRecord" >
+    update `system_notice_record`
+    set `notice_id` = #{noticeId,jdbcType=INTEGER},
+      `user_id` = #{userId,jdbcType=INTEGER},
       `push_status` = #{pushStatus,jdbcType=INTEGER},
-      `push_channel` = #{pushChannel,jdbcType=VARCHAR},
-      `publish_time` = #{publishTime,jdbcType=TIMESTAMP}
+      `push_channel` = #{pushChannel,jdbcType=INTEGER}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
-  <select resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.SystemNoticeExample" id="selectByExampleWithBLOBsWithRowbounds" >
+  <select resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.SystemNoticeRecordExample" id="selectByExampleWithBLOBsWithRowbounds" >
     select
     <if test="distinct" >
       distinct
@@ -273,7 +273,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from `system_notice`
+    from `system_notice_record`
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -281,13 +281,13 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.SystemNoticeExample" id="selectByExampleWithRowbounds" >
+  <select resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.SystemNoticeRecordExample" id="selectByExampleWithRowbounds" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from `system_notice`
+    from `system_notice_record`
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>

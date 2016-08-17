@@ -96,16 +96,19 @@
                                         <td>${notice.contet}</td>
                                         <td>
                                             <c:choose>
-                                                <c:when test="${notice.hasPushed == '1'}">
-                                                    已推送
+                                                <c:when test="${notice.pushStatus == '0'}">
+                                                    未推送
+                                                </c:when>
+                                                <c:when test="${notice.pushStatus == '1'}">
+                                                    待推送
                                                 </c:when>
                                                 <c:otherwise>
-                                                    未推送
+                                                    已推送
                                                 </c:otherwise>
                                             </c:choose>
                                         </td>
 
-                                        <td>
+                                        <td><fmt:formatDate value="${notice.publishTime}" pattern="yyyy-MM-dd"/></td>
 
                                         <td>
                                             <a href="<%=contextPath%>/system/notice/detail/${notice.id}" class="btn mini purple"><i class="icon-edit"></i> 编辑</a>

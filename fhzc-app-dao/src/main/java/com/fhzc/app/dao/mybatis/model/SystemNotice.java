@@ -7,7 +7,7 @@ public class SystemNotice {
 
     private String title;
 
-    private Integer hasPushed;
+    private Integer pushStatus;
 
     private String pushChannel;
 
@@ -31,12 +31,12 @@ public class SystemNotice {
         this.title = title == null ? null : title.trim();
     }
 
-    public Integer getHasPushed() {
-        return hasPushed;
+    public Integer getPushStatus() {
+        return pushStatus;
     }
 
-    public void setHasPushed(Integer hasPushed) {
-        this.hasPushed = hasPushed;
+    public void setPushStatus(Integer pushStatus) {
+        this.pushStatus = pushStatus;
     }
 
     public String getPushChannel() {

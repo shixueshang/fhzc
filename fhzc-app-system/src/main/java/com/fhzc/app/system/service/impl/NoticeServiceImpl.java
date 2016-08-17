@@ -1,8 +1,10 @@
 package com.fhzc.app.system.service.impl;
 
 import com.fhzc.app.dao.mybatis.inter.SystemNoticeMapper;
+import com.fhzc.app.dao.mybatis.inter.SystemNoticeRecordMapper;
 import com.fhzc.app.dao.mybatis.model.SystemNotice;
 import com.fhzc.app.dao.mybatis.model.SystemNoticeExample;
+import com.fhzc.app.dao.mybatis.model.SystemNoticeRecordExample;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.system.service.NoticeService;
 import org.apache.ibatis.session.RowBounds;
@@ -19,6 +21,9 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Resource
     private SystemNoticeMapper systemNoticeMapper;
+
+    @Resource
+    private SystemNoticeRecordMapper systemNoticeRecordMapper;
 
     @Override
     public PageableResult<SystemNotice> findPageNotices(int page, int size) {
@@ -41,5 +46,13 @@ public class NoticeServiceImpl implements NoticeService {
     @Override
     public void delete(Integer id) {
         systemNoticeMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public void deleteByNoticeId(Integer noticeId) {
+        SystemNoticeRecordExample example = new SystemNoticeRecordExample();
+        SystemNoticeRecordExample.Criteria criteria = example.createCriteria();
+        criteria.andNoticeIdEqualTo(noticeId);
+        systemNoticeRecordMapper.deleteByExample(example);
     }
 }

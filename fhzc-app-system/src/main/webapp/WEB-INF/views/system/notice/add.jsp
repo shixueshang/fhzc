@@ -93,11 +93,12 @@
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">是否已推送</label>
+                                                <label class="control-label">推送状态</label>
                                                 <div class="controls">
-                                                    <select name="hasPushed"  class="m-wrap large" >
-                                                        <option value="0">否</option>
-                                                        <option value="1">是</option>
+                                                    <select name="pushStatus" disabled="disabled"  class="m-wrap large" >
+                                                        <option value="0">未推送</option>
+                                                        <option value="1">待推送</option>
+                                                        <option value="2">已推送</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -107,7 +108,7 @@
                                                 <div class="controls" style="margin-top:8px;">
                                                     <input type="checkbox" id="channel_system" value="1"/>系统&nbsp;&nbsp;&nbsp;&nbsp;
                                                     <input type="checkbox" id="channel_sms" value="2"/>短信&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <input type="checkbox" id="channel_push" value="3"/>消息&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <input type="checkbox" id="channel_push" value="3"/>推送&nbsp;&nbsp;&nbsp;&nbsp;
                                                     <input type="checkbox" id="channel_email" value="4"/>邮件&nbsp;&nbsp;&nbsp;&nbsp;
                                                 </div>
                                             </div>
@@ -162,13 +163,11 @@
 
         $('#pushChannel').val(channels);
 
-        var form = $('#notice_form').serialize()
         $.ajax({
             url:"<%=contextPath%>/system/notice/add",
             type:"POST",
-            data:JSON.stringify(form),
+            data:$('#notice_form').serialize(),
             dataType:"json",
-            contentType:"application/json",
             success:function(data){
                 window.location.href = "<%=contextPath%>/system/notice/list";
             },error:function(data){

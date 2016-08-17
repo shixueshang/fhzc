@@ -27,4 +27,10 @@ public interface NoticeService {
      * @param id
      */
     void delete(Integer id);
+
+    /**
+     * 根据noticeId删除record表中的记录
+     * @param noticeId
+     */
+    void deleteByNoticeId(Integer noticeId);
 }

@@ -80,13 +80,27 @@ CREATE TABLE `bank`.`system_notice` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(200) NULL COMMENT '标题',
   `content` TEXT NULL COMMENT '内容',
-  `has_pushed` INT(1) NULL COMMENT '是否已经推送1、已推送0、未推送',
-  `push_channel` VARCHAR(45) NULL COMMENT '推送途径',
+  `push_status` INT(1) NULL COMMENT '推送状态0未推送1、待推送2、已推送',
+  `push_channel` VARCHAR(45) NULL COMMENT '推送途径1、系统2、短信3、推送4、邮件',
   `publish_time` DATETIME NULL COMMENT '发布时间',
   PRIMARY KEY (`id`))
   ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8
   COMMENT = '消息推送维护表';
+
+DROP TABLE IF EXISTS `bank`.`system_notice_record` ;
+CREATE TABLE `bank`.`system_notice_record` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `notice_id` INT(11) NULL COMMENT '消息id',
+  `user_id` INT(11) NULL COMMENT '推送用户',
+  `content` TEXT NULL COMMENT '内容',
+  `push_status` INT(1) NULL COMMENT '推送状态0未推送1、待推送2、已推送',
+  `push_channel` INT(1) NULL COMMENT '推送途径1、系统2、短信3、推送4、邮件',
+  PRIMARY KEY (`id`))
+  ENGINE = InnoDB
+  DEFAULT CHARACTER SET = utf8
+  COMMENT = '推送记录表';
+
 ALTER TABLE `bank`.`about_app`
 ADD COLUMN `android_url` VARCHAR(255) NULL COMMENT '安装包下载地址' AFTER `type`,
 ADD COLUMN `ios_url` VARCHAR(255) NULL AFTER `android_url`;

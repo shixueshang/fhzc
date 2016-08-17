@@ -124,6 +124,11 @@ public class Const {
          * 客户资产推荐配置
          */
         public static final String ASSET_CONFIG = "asset_config";
+
+        /**
+         * 推送渠道
+         */
+        public static final String PUSH_CHANNEL = "push_channel";
     }
 
     /**
@@ -369,6 +374,32 @@ public class Const {
          * 赎回
          */
         public static final String REDEMPTION = "redemption";
+    }
+
+    /**
+     * 推送渠道
+     */
+    public static class PUSH_CHANNEL{
+
+        /**
+         * 系统
+         */
+        public static final Integer SYSTEM = 1;
+
+        /**
+         * 短信
+         */
+        public static final Integer SMS = 2;
+
+        /**
+         * 消息
+         */
+        public static final Integer MESSAGE = 3;
+
+        /**
+         * 邮件
+         */
+        public static final Integer EMAIL = 4;
     }
 }
 
