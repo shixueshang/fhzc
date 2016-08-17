@@ -282,7 +282,11 @@ public class Const {
 
     }
 
+    /**
+     * 关注类型
+     */
     public static class FOCUS_TYPE{
+
         public static final String PRODUCT= "product";
 
         public static final String ACTIVITY= "activity";
@@ -293,8 +297,18 @@ public class Const {
 
     }
 
+    /**
+     * 关注状态
+     */
     public static class FOCUS_STATUS{
+        /**
+         * 已关注
+         */
         public static final Integer ON= 1;
+
+        /**
+         * 不关注
+         */
         public static final Integer OFF= 0;
     }
 
@@ -318,17 +332,43 @@ public class Const {
     }
 
     public static class SCORE_VAILD{
-
+        /**
+         * 有效
+         */
         public static final Integer IS_VAILD = 1;
 
+        /**
+         * 无效
+         */
         public static final Integer NOT_VAILD = 0;
 
     }
 
     public static class About_App{
+
         public static final String ABOUT_APP = "about_app";
 
         public static final String CONTACT_US = "contact_us";
+    }
+
+    public static class ASSET_TYPE {
+
+        /**
+         * 派息
+         */
+        public static final String DIVIDEND = "dividend";
+        /**
+         * 购买
+         */
+        public static final String PURCHASE = "purchase";
+        /**
+         * 存续
+         */
+        public static final String RENEW = "renew";
+        /**
+         * 赎回
+         */
+        public static final String REDEMPTION = "redemption";
     }
 }
 

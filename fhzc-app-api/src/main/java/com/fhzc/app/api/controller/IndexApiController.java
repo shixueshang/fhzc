@@ -6,10 +6,12 @@ import com.fhzc.app.api.tools.ApiJsonResult;
 
 
 import com.fhzc.app.api.tools.ObjUtils;
+import com.fhzc.app.dao.mybatis.model.AboutApp;
 import com.fhzc.app.dao.mybatis.util.Const;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -37,6 +39,8 @@ public class IndexApiController extends BaseController {
     @Resource
     private BannerService bannerService;
 
+    @Resource
+    private AboutAppService aboutAppService;
     /**
      * 首页-精选
      * @return
@@ -73,4 +77,34 @@ public class IndexApiController extends BaseController {
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,map);
     }
 
+    /**
+     * 关于App
+     * @return
+     */
+    @RequestMapping(value = "/api/aboutApp",method = RequestMethod.GET)
+    @ResponseBody
+    public ApiJsonResult aboutApp(@RequestParam(value = "version") String version){
+        AboutApp aboutApp = aboutAppService.getAppByVersion(version);
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,aboutApp);
+    }
+
+
+    /**
+     * 取得最新版本app信息
+     * @return
+     */
+    @RequestMapping(value = "/api/latestApp",method = RequestMethod.GET)
+    @ResponseBody
+    public ApiJsonResult latestApp(@RequestParam(value = "version") String version){
+        AboutApp currentAboutApp = aboutAppService.getAppByVersion(version);
+        AboutApp latestAboutApp = aboutAppService.getLatestApp();
+        if(currentAboutApp == null){
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,currentAboutApp);
+        }
+        if(currentAboutApp.getId() < latestAboutApp.getId()){
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,latestAboutApp);
+        }else{
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,false);
+        }
+    }
 }

@@ -363,6 +363,146 @@ public class AboutAppExample {
             addCriterion("`type` not between", value1, value2, "type");
             return (Criteria) this;
         }
+
+        public Criteria andAndroidUrlIsNull() {
+            addCriterion("`android_url` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidUrlIsNotNull() {
+            addCriterion("`android_url` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidUrlEqualTo(String value) {
+            addCriterion("`android_url` =", value, "androidUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidUrlNotEqualTo(String value) {
+            addCriterion("`android_url` <>", value, "androidUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidUrlGreaterThan(String value) {
+            addCriterion("`android_url` >", value, "androidUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidUrlGreaterThanOrEqualTo(String value) {
+            addCriterion("`android_url` >=", value, "androidUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidUrlLessThan(String value) {
+            addCriterion("`android_url` <", value, "androidUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidUrlLessThanOrEqualTo(String value) {
+            addCriterion("`android_url` <=", value, "androidUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidUrlLike(String value) {
+            addCriterion("`android_url` like", value, "androidUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidUrlNotLike(String value) {
+            addCriterion("`android_url` not like", value, "androidUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidUrlIn(List<String> values) {
+            addCriterion("`android_url` in", values, "androidUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidUrlNotIn(List<String> values) {
+            addCriterion("`android_url` not in", values, "androidUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidUrlBetween(String value1, String value2) {
+            addCriterion("`android_url` between", value1, value2, "androidUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidUrlNotBetween(String value1, String value2) {
+            addCriterion("`android_url` not between", value1, value2, "androidUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andIosUrlIsNull() {
+            addCriterion("`ios_url` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIosUrlIsNotNull() {
+            addCriterion("`ios_url` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIosUrlEqualTo(String value) {
+            addCriterion("`ios_url` =", value, "iosUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andIosUrlNotEqualTo(String value) {
+            addCriterion("`ios_url` <>", value, "iosUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andIosUrlGreaterThan(String value) {
+            addCriterion("`ios_url` >", value, "iosUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andIosUrlGreaterThanOrEqualTo(String value) {
+            addCriterion("`ios_url` >=", value, "iosUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andIosUrlLessThan(String value) {
+            addCriterion("`ios_url` <", value, "iosUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andIosUrlLessThanOrEqualTo(String value) {
+            addCriterion("`ios_url` <=", value, "iosUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andIosUrlLike(String value) {
+            addCriterion("`ios_url` like", value, "iosUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andIosUrlNotLike(String value) {
+            addCriterion("`ios_url` not like", value, "iosUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andIosUrlIn(List<String> values) {
+            addCriterion("`ios_url` in", values, "iosUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andIosUrlNotIn(List<String> values) {
+            addCriterion("`ios_url` not in", values, "iosUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andIosUrlBetween(String value1, String value2) {
+            addCriterion("`ios_url` between", value1, value2, "iosUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andIosUrlNotBetween(String value1, String value2) {
+            addCriterion("`ios_url` not between", value1, value2, "iosUrl");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
