@@ -279,5 +279,28 @@ public class UserController extends BaseController {
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
     }
 
+    /**
+     * 设置客户风险等级
+     * @param customerId
+     * @param risk
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/api/set/risk", method = RequestMethod.POST)
+    @ResponseBody
+    public ApiJsonResult setRisk(@RequestParam(value = "customer_id") Integer customerId,
+                                 @RequestParam(value = "risk") Integer risk) throws Exception {
+        Customer customer = customerService.getCustomer(customerId);
+        if(customer == null){
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.NOT_FOUND, "没有这个客户");
+        }
+        customer.setRisk(risk);
+        int result = customerService.setCustomer(customer);
+        if (result > 0) {
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, "修改成功");
+        }
+
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.FAILED, "修改失败");
+    }
 }
 
