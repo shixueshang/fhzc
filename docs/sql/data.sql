@@ -68,7 +68,7 @@ INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (53, '关注列表', '/personal/user/focus/list',NULL, 27, 3, 1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (54, '关于App', '/system/about/app/pub',NULL,16, 3, 1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (55, '联系我们', '/system/about/contact/pub',NULL, 16, 3, 1);
-
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (56, '财务日报列表', '/business/contract/list', NULL, 45, 3, 1);
 
 
 /*
