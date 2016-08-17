@@ -51,6 +51,9 @@ public class MessageController extends BaseController {
     @Resource
     private PushTokenService pushTokenService;
 
+    @Resource
+    private SystemNoticeRecordService systemNoticeRecordService;
+
     private static final String SHARE = "share";
 
     /**
@@ -257,4 +260,16 @@ public class MessageController extends BaseController {
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
     }
 
+    /**
+     * 公告通知
+     * @return
+     */
+    @RequestMapping(value = "/api/notice", method = RequestMethod.GET)
+    @ResponseBody
+    public ApiJsonResult notice(){
+        User user = getCurrentUser();
+        List<SystemNoticeRecord> list = systemNoticeRecordService.getByUserId(user.getUid());
+
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,list);
+    }
 }
