@@ -441,97 +441,6 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_insert_planner`(p_login varchar(45), p_passwd varchar(45), p_work_num varchar(45), p_realname varchar(45)
 ,p_passport_code varchar(200), p_mobile varchar(200), p_company varchar(45), p_area varchar(45), p_dept1_name varchar(45), p_dept1_leader varchar(45)
 ,p_dept2_name varchar(45), p_dept2_leader varchar(45), p_dept3_name varchar(45), p_dept3_leader varchar(45)
-,p_dept4_name varchar(45),p_dept4_leader varchar(45),p_job_title_cn varchar(45),p_position varchar(45)
-)
-BEGIN
-	-- 理财师花名册 ，只负责导入department 和 planner
-	Declare _user_id int;  -- user id
-	DECLARE _planner_id int;	-- 理财师ID
-	Declare _dept1_id int;		-- 部门1 ID
-	Declare _dept2_id int;		-- 部门2 ID
-	Declare _dept3_id int;		-- 部门3 ID
-	Declare _dept4_id int;		-- 部门4 ID
-	Declare _dept_id int; 		-- 理财师所在部门 ID
-	
-	set _planner_id = -1;
-	set _user_id =-1;
-	set _dept1_id = -1;
-	set _dept2_id = -1;
-	set _dept3_id = -1;
-	set _dept4_id = -1;
-	set _dept_id = -1;
-	-- 先判断部门是否存在，不存在就新增
-	-- 再判断理财师是否存在，不存在，就新增，如存在，就更新改理财师的信息。如果改理财师是部门负责人，则更新对应的部门负责人。
-	
-	if p_dept1_name <> '' and p_dept1_name <> '-'  then 
-		select department_id into _dept1_id from department where title=p_dept1_name;
-		if _dept1_id = -1 then 
-			insert into department(title,parent_dept_id,ctime,leaf,status,leader_uid,level) values(p_dept1_name,null,now(),0,0,-1,1);
-			set _dept1_id = last_insert_id();
-		End if;
-		set _dept_id = _dept1_id;
-	end if; 
-	
-	if p_dept2_name <> '' and p_dept2_name <> '-'  then 
-		select department_id into _dept2_id from department where title=p_dept2_name;
-		if _dept2_id = -1 then 
-			insert into department(title,parent_dept_id,ctime,leaf,status,leader_uid,level) values(p_dept2_name,_dept1_id,now(),0,0,-1,2);
-			set _dept2_id = last_insert_id();
-		End if;
-		set _dept_id = _dept2_id;
-	end if; 
-	
-	if p_dept3_name <> '' and p_dept3_name <> '-'  then 
-		select department_id into _dept3_id from department where title=p_dept3_name;
-		if _dept3_id = -1 then 
-			insert into department(title,parent_dept_id,ctime,leaf,status,leader_uid,level) values(p_dept3_name,_dept2_id,now(),1,0,-1,3);
-			set _dept3_id = last_insert_id();
-		End if;
-		set _dept_id = _dept3_id;
-	end if; 
-	
-	if p_dept4_name <> '' and p_dept4_name <> '-'  then 
-		select department_id into _dept4_id from department where title=p_dept4_name and department.parent_dept_id in(select department_id from department where title=p_dept3_name);
-		if _dept4_id = -1 then 
-			insert into department(title,parent_dept_id,ctime,leaf,status,leader_uid,level) values(p_dept4_name,_dept3_id,now(),1,0,-1,4);
-			set _dept4_id = last_insert_id();
-		End if;
-		set _dept_id = _dept4_id;
-	end if; 
-	
-	select id,uid into _planner_id,_user_id from planner where work_num = P_work_num;
-	if _planner_id =-1 then
-	-- insert 
-		insert into user (login, password, realname, passport_code, mobile, login_role, area_id, ctime) 
-		 select p_login,p_passwd,p_realname,p_passport_code,p_mobile,'planner',areas.area_id,now() from areas where area_name=p_area;
-		
-		set _user_id = last_insert_id();
-		insert into planner(uid, work_num, department_id, job_title_cn, position) 
-			values(_user_id,p_work_num,_dept_id, p_job_title_cn, p_position);
-		
-		set _planner_id = last_insert_id();
-	else
-	-- update 
-		update user,areas set passport_code =p_passport_code, mobile=p_mobile, user.area_id=areas.area_id   where user.uid=_user_id and area_name=p_area;
-		update planner set planner.department_id=_dept_id, job_title_cn = p_job_title_cn, position = p_position  
-				where uid =_planner_id ;
-	
-	end if;
-	
-
-END
-;;
-DELIMITER ;
-
-
--- ----------------------------
--- Procedure structure for sp_insert_planner
--- ----------------------------
-DROP PROCEDURE IF EXISTS `sp_insert_planner`;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_insert_planner`(p_login varchar(45), p_passwd varchar(45), p_work_num varchar(45), p_realname varchar(45)
-,p_passport_code varchar(200), p_mobile varchar(200), p_company varchar(45), p_area varchar(45), p_dept1_name varchar(45), p_dept1_leader varchar(45)
-,p_dept2_name varchar(45), p_dept2_leader varchar(45), p_dept3_name varchar(45), p_dept3_leader varchar(45)
 ,p_dept4_name varchar(45),p_dept4_leader varchar(45),p_job_title_cn varchar(45),p_position varchar(45),p_salt varchar(45)
 )
 BEGIN
@@ -553,6 +462,9 @@ BEGIN
 	set _dept_id = -1;
 	-- 先判断部门是否存在，不存在就新增
 	-- 再判断理财师是否存在，不存在，就新增，如存在，就更新改理财师的信息。如果改理财师是部门负责人，则更新对应的部门负责人。
+	if p_dept1_name = '' or p_dept1_name = '-'  then 
+		set p_dept1_name ='复华资产';
+	End if ;
 	
 	if p_dept1_name <> '' and p_dept1_name <> '-'  then 
 		select department_id into _dept1_id from department where title=p_dept1_name;
@@ -709,6 +621,11 @@ BEGIN
 	set _dept_id = -1;
 	-- 先判断部门是否存在，不存在就新增
 	-- 再判断理财师是否存在，不存在，就新增，如存在，就更新改理财师的信息。如果改理财师是部门负责人，则更新对应的部门负责人。
+
+	if p_dept1_name = '' or p_dept1_name = '-'  then 
+		set p_dept1_name ='复华资产';
+	End if ;
+
 	
 	if p_dept1_name <> '' and p_dept1_name <> '-'  then 
 		select department_id into _dept1_id from department where title=p_dept1_name;
