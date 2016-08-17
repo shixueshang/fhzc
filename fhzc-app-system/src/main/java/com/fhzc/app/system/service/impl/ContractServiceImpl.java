@@ -1,10 +1,13 @@
 package com.fhzc.app.system.service.impl;
 
+import com.fhzc.app.dao.mybatis.model.AssetsHistory;
+import com.fhzc.app.dao.mybatis.model.AssetsHistoryExample;
 import com.fhzc.app.dao.mybatis.model.Contract;
 import com.fhzc.app.dao.mybatis.model.ContractExample;
 import com.fhzc.app.dao.mybatis.model.Department;
 import com.fhzc.app.dao.mybatis.model.Dictionary;
 import com.fhzc.app.dao.mybatis.model.Planner;
+import com.fhzc.app.dao.mybatis.model.PlannerExample;
 import com.fhzc.app.dao.mybatis.model.Product;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.EncryptUtils;
@@ -56,11 +59,18 @@ public class ContractServiceImpl implements ContractService {
     private DepartmentService departmentService;
     
     @Override
-    public PageableResult<Contract> findPageContracts(int page, int size) {
-        ContractExample example = new ContractExample();
+    public PageableResult<Contract> findPageContracts(Integer productId, List<Integer> plannerIds, int page, int size) {
+    	ContractExample example = new ContractExample();
+    	ContractExample.Criteria criteria = example.createCriteria();
+        if(productId != null){
+            criteria.andProductIdEqualTo(productId);
+        }
+        if(plannerIds.size() > 0){
+            criteria.andPlannerIdIn(plannerIds);
+        }
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<Contract> list = contractMapper.selectByExampleWithRowbounds(example, rowBounds);
-        return new PageableResult<Contract>(page, size, list.size(), list);
+        return new PageableResult<Contract>(page, size, contractMapper.countByExample(example), list);
     }
 
     @Override
@@ -279,5 +289,11 @@ public class ContractServiceImpl implements ContractService {
     public boolean isNameExists(String name) {
         return false;
     }
+
+	@Override
+	public List<Contract> findAllContract() {
+		ContractExample example = new ContractExample();
+	    return contractMapper.selectByExample(example);
+	}
 
 }

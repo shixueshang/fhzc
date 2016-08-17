@@ -228,4 +228,10 @@ public class CustomerServiceImpl implements CustomerService {
     public void delete(Integer id) {
         customerOrganMapper.deleteByPrimaryKey(id);
     }
+    
+	@Override
+	public List<Customer> findAllCustomer() {
+		CustomerExample example = new CustomerExample();
+	    return customerMapper.selectByExample(example);
+	}
 }

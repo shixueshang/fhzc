@@ -87,3 +87,8 @@ CREATE TABLE `bank`.`system_notice` (
   ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8
   COMMENT = '消息推送维护表';
+ALTER TABLE `bank`.`about_app`
+ADD COLUMN `android_url` VARCHAR(255) NULL COMMENT '安装包下载地址' AFTER `type`,
+ADD COLUMN `ios_url` VARCHAR(255) NULL AFTER `android_url`;
+
+

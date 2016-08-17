@@ -71,6 +71,7 @@ INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (56, '消息新增', '/system/notice/pub',NULL, 16, 3, 1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (57, '消息列表', '/system/notice/list',NULL, 16, 3, 1);
 
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (56, '财务日报列表', '/business/contract/list', NULL, 45, 3, 1);
 
 
 /*

@@ -6,6 +6,8 @@
     <result column="version" property="version" jdbcType="VARCHAR" />
     <result column="is_using" property="isUsing" jdbcType="INTEGER" />
     <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="android_url" property="androidUrl" jdbcType="VARCHAR" />
+    <result column="ios_url" property="iosUrl" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.fhzc.app.dao.mybatis.model.AboutApp" extends="BaseResultMap" >
     <result column="introduction" property="introduction" jdbcType="LONGVARCHAR" />
@@ -69,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    `id`, `version`, `is_using`, `type`
+    `id`, `version`, `is_using`, `type`, `android_url`, `ios_url`
   </sql>
   <sql id="Blob_Column_List" >
     `introduction`
@@ -127,9 +129,11 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into `about_app` (`version`, `is_using`, `type`, 
-      `introduction`)
+      `android_url`, `ios_url`, `introduction`
+      )
     values (#{version,jdbcType=VARCHAR}, #{isUsing,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, 
-      #{introduction,jdbcType=LONGVARCHAR})
+      #{androidUrl,jdbcType=VARCHAR}, #{iosUrl,jdbcType=VARCHAR}, #{introduction,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.AboutApp" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
@@ -146,6 +150,12 @@
       <if test="type != null" >
         `type`,
       </if>
+      <if test="androidUrl != null" >
+        `android_url`,
+      </if>
+      <if test="iosUrl != null" >
+        `ios_url`,
+      </if>
       <if test="introduction != null" >
         `introduction`,
       </if>
@@ -159,6 +169,12 @@
       </if>
       <if test="type != null" >
         #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="androidUrl != null" >
+        #{androidUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="iosUrl != null" >
+        #{iosUrl,jdbcType=VARCHAR},
       </if>
       <if test="introduction != null" >
         #{introduction,jdbcType=LONGVARCHAR},
@@ -186,6 +202,12 @@
       <if test="record.type != null" >
         `type` = #{record.type,jdbcType=VARCHAR},
       </if>
+      <if test="record.androidUrl != null" >
+        `android_url` = #{record.androidUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iosUrl != null" >
+        `ios_url` = #{record.iosUrl,jdbcType=VARCHAR},
+      </if>
       <if test="record.introduction != null" >
         `introduction` = #{record.introduction,jdbcType=LONGVARCHAR},
       </if>
@@ -200,6 +222,8 @@
       `version` = #{record.version,jdbcType=VARCHAR},
       `is_using` = #{record.isUsing,jdbcType=INTEGER},
       `type` = #{record.type,jdbcType=VARCHAR},
+      `android_url` = #{record.androidUrl,jdbcType=VARCHAR},
+      `ios_url` = #{record.iosUrl,jdbcType=VARCHAR},
       `introduction` = #{record.introduction,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -210,7 +234,9 @@
     set `id` = #{record.id,jdbcType=INTEGER},
       `version` = #{record.version,jdbcType=VARCHAR},
       `is_using` = #{record.isUsing,jdbcType=INTEGER},
-      `type` = #{record.type,jdbcType=VARCHAR}
+      `type` = #{record.type,jdbcType=VARCHAR},
+      `android_url` = #{record.androidUrl,jdbcType=VARCHAR},
+      `ios_url` = #{record.iosUrl,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -227,6 +253,12 @@
       <if test="type != null" >
         `type` = #{type,jdbcType=VARCHAR},
       </if>
+      <if test="androidUrl != null" >
+        `android_url` = #{androidUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="iosUrl != null" >
+        `ios_url` = #{iosUrl,jdbcType=VARCHAR},
+      </if>
       <if test="introduction != null" >
         `introduction` = #{introduction,jdbcType=LONGVARCHAR},
       </if>
@@ -238,6 +270,8 @@
     set `version` = #{version,jdbcType=VARCHAR},
       `is_using` = #{isUsing,jdbcType=INTEGER},
       `type` = #{type,jdbcType=VARCHAR},
+      `android_url` = #{androidUrl,jdbcType=VARCHAR},
+      `ios_url` = #{iosUrl,jdbcType=VARCHAR},
       `introduction` = #{introduction,jdbcType=LONGVARCHAR}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
@@ -245,7 +279,9 @@
     update `about_app`
     set `version` = #{version,jdbcType=VARCHAR},
       `is_using` = #{isUsing,jdbcType=INTEGER},
-      `type` = #{type,jdbcType=VARCHAR}
+      `type` = #{type,jdbcType=VARCHAR},
+      `android_url` = #{androidUrl,jdbcType=VARCHAR},
+      `ios_url` = #{iosUrl,jdbcType=VARCHAR}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
   <select resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.AboutAppExample" id="selectByExampleWithBLOBsWithRowbounds" >

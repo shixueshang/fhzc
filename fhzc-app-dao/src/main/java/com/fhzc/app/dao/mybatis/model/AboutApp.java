@@ -9,6 +9,10 @@ public class AboutApp {
 
     private String type;
 
+    private String androidUrl;
+
+    private String iosUrl;
+
     private String introduction;
 
     public Integer getId() {
@@ -41,6 +45,22 @@ public class AboutApp {
 
     public void setType(String type) {
         this.type = type == null ? null : type.trim();
+    }
+
+    public String getAndroidUrl() {
+        return androidUrl;
+    }
+
+    public void setAndroidUrl(String androidUrl) {
+        this.androidUrl = androidUrl == null ? null : androidUrl.trim();
+    }
+
+    public String getIosUrl() {
+        return iosUrl;
+    }
+
+    public void setIosUrl(String iosUrl) {
+        this.iosUrl = iosUrl == null ? null : iosUrl.trim();
     }
 
     public String getIntroduction() {

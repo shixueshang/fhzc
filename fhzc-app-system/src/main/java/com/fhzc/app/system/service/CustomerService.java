@@ -97,4 +97,10 @@ public interface CustomerService {
      * @param id
      */
     void delete(Integer id);
+    
+    /**
+     * 获取所有用户
+     * @param id
+     */
+	List<Customer> findAllCustomer();
 }
