@@ -1,7 +1,9 @@
 package com.fhzc.app.api.service;
 
 import com.fhzc.app.dao.mybatis.model.Planner;
+import com.fhzc.app.dao.mybatis.model.PlannerAchivementsMonthly;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,4 +20,6 @@ public interface AchievementService {
     Map<String,String>  getYearRankList(Integer year, Integer department_id);
 
     Integer userRankInList(Map<String, String> map, Integer plannerId);
+
+    List<PlannerAchivementsMonthly> getPlanners();
 }

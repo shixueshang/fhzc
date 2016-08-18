@@ -133,7 +133,7 @@ public class AchievementServiceImpl implements AchievementService{
 
     @Override
     public Map<String, String> getYearRankList(Integer year, Integer department_id) {
-         List<PlannerAchivementsMonthly> plannerAchivementsMonthlyList= plannerAchivementsMonthlyMapper.selectDistinctPlannerUidByDeptId(department_id);
+        List<PlannerAchivementsMonthly> plannerAchivementsMonthlyList= plannerAchivementsMonthlyMapper.selectDistinctPlannerUidByDeptId(department_id);
         Map plannerSell = new HashMap();
         if(plannerAchivementsMonthlyList == null){
             return plannerSell;
@@ -162,4 +162,15 @@ public class AchievementServiceImpl implements AchievementService{
         }
         return 0;//0代表无排名
     }
+
+    @Override
+    public List<PlannerAchivementsMonthly> getPlanners() {
+        List<PlannerAchivementsMonthly> plannersIdList = plannerAchivementsMonthlyMapper.selectDistinctPlannerUid();
+        if(plannersIdList.size() > 0){
+            return plannersIdList;
+        }else{
+            return null;
+        }
+    }
+
 }
