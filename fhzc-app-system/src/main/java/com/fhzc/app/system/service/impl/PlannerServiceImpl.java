@@ -101,27 +101,27 @@ public class PlannerServiceImpl implements PlannerService {
         	if(data.get(0).length>0){
 	        	for (Object[] objects : data) {
 	        		Object[] temData = new  Object[19];
-	        		String phone = TextUtils.IntToDouble(objects[4].toString());
-	        		String pcode = objects[3].toString();
+	        		String phone = TextUtils.IntToDouble(objects[15].toString());
+	        		String pcode = objects[16].toString();
 	        		String key = pcode.substring(pcode.length()-8);
 	        		temData[0] = objects[1];								//工号 work_num,作为初始登录名
 	        		temData[1] = DigestUtils.md5Hex(phone);					//手机号 mobile，作为初始密码	
 	        		temData[2] = objects[1];								//工号 work_num
 	        		temData[3] = objects[2];								//姓名 realname
-					temData[4] = EncryptUtils.encryptToDES(key, pcode);		//证件号
-					temData[5] = EncryptUtils.encryptToDES(key, phone);;	//手机号
-	        		temData[6] = objects[5];								//所属公司 company
-	        		temData[7] = objects[6];								//所属城市 area
-	        		temData[8] = objects[7];								//一级部门 dept1
-	        	    temData[9] = objects[8];								//负责人 dept1_leader	
-	        		temData[10] = objects[9];								//二级部门 dept2
-	        		temData[11] = objects[10];								//负责人 dept2_leader
-	        		temData[12] = objects[11];								//三级部门 dept3
-	        		temData[13] = objects[12];								//负责人 dept3_leader
-	        		temData[14] = objects[13];								//四级部门 dept14
-	        		temData[15] = objects[14];								//负责人 dept4_leader
-	        		temData[16] = objects[15];								//岗位名称 job_title_cn
-	        		temData[17] = objects[16];								//岗位序列 position
+	        		temData[4] = EncryptUtils.encryptToDES(key, pcode);		//证件号
+    				temData[5] = EncryptUtils.encryptToDES(key, phone);		//手机号
+	        		temData[6] = objects[3];								//所属公司 company
+	        		temData[7] = objects[4];								//所属城市 area
+	        		temData[8] = objects[5];								//一级部门 dept1
+	        	    temData[9] = objects[6];								//负责人 dept1_leader	
+	        		temData[10] = objects[7];								//二级部门 dept2
+	        		temData[11] = objects[8];								//负责人 dept2_leader
+	        		temData[12] = objects[9];								//三级部门 dept3
+	        		temData[13] = objects[10];								//负责人 dept3_leader
+	        		temData[14] = objects[11];								//四级部门 dept14
+	        		temData[15] = objects[12];								//负责人 dept4_leader
+	        		temData[16] = objects[13];								//岗位名称 job_title_cn
+	        		temData[17] = objects[14];								//岗位序列 position
 	        		temData[18] = key;
 	        		plannerList.add(temData);
 				}
@@ -195,20 +195,20 @@ public class PlannerServiceImpl implements PlannerService {
 	        		String key = "";
 	        		String enpcode = "";
 	        		String enphone = "";
-	        		if(objects[3]==null||objects[3].toString().trim().equals("")){
+	        		if(objects[16]==null||objects[16].toString().trim().equals("")){
 	        			enpcode = "";
-	        			enphone = TextUtils.IntToDouble(objects[4].toString());
+	        			enphone = TextUtils.IntToDouble(objects[15].toString());
 		        		//校验手机号
-		        		errordata  = TextUtils.validPhoneNum(i+3, 5, enphone,false);
+		        		errordata  = TextUtils.validPhoneNum(i+3, 16, enphone,false);
 		        		if (errordata.size() >0){
 		    				return errordata;
 		    			}
 	        		}else{
-	        			pcode = objects[3].toString();
+	        			pcode = objects[16].toString();
 	        			key = pcode.substring(pcode.length()-8);
 	        			enpcode = EncryptUtils.encryptToDES(key, pcode);
-	        			phone = TextUtils.IntToDouble(objects[4].toString());
-	        			errordata  = TextUtils.validPhoneNum(i+3, 5, phone,false);
+	        			phone = TextUtils.IntToDouble(objects[15].toString());
+	        			errordata  = TextUtils.validPhoneNum(i+3, 16, phone,false);
 		        		if (errordata.size() >0){
 		    				return errordata;
 		    			}
@@ -218,34 +218,34 @@ public class PlannerServiceImpl implements PlannerService {
 	        		//判断所属城市是否存在
 	    			boolean isExist = false;
 	    			for(Areas areas : as){
-    					if(areas.getAreaName().equals(objects[6].toString().trim())){
+    					if(areas.getAreaName().equals(objects[4].toString().trim())){
     						isExist = true;
     						break;
     					}
     				}
     				
 		    		if(!isExist){
-	    				errordata = TextUtils.setErrorMessage(i+3, 7, objects[6].toString()+ "，该城市区域尚未建立公司！");
+	    				errordata = TextUtils.setErrorMessage(i+3, 5, objects[4].toString()+ "，该城市区域尚未建立公司！");
 	    				return errordata;
 	    			}
 	        		temData[0] = objects[1];						//工号 work_num,作为初始登录名
 	        		temData[1] = DigestUtils.md5Hex(phone);			//手机号 mobile，作为初始密码	
 	        		temData[2] = objects[1];						//工号 work_num
 	        		temData[3] = objects[2];						//姓名 realname
-					temData[4] = enpcode;							//证件号
-					temData[5] = enphone;							//手机号
-	        		temData[6] = objects[5];						//所属公司 company
-	        		temData[7] = objects[6];						//所属城市 area
-	        		temData[8] = objects[7];						//一级部门 dept1
-	        	    temData[9] = objects[8];						//负责人 dept1_leader	
-	        		temData[10] = objects[9];						//二级部门 dept2
-	        		temData[11] = objects[10];						//负责人 dept2_leader
-	        		temData[12] = objects[11];						//三级部门 dept3
-	        		temData[13] = objects[12];						//负责人 dept3_leader
-	        		temData[14] = objects[13];						//四级部门 dept14
-	        		temData[15] = objects[14];						//负责人 dept4_leader
-	        		temData[16] = objects[15];						//岗位名称 job_title_cn
-	        		temData[17] = objects[16];						//岗位序列 position
+	        		temData[4] = enphone;							//手机号
+	        		temData[5] = enpcode;							//证件号
+	        		temData[6] = objects[3];						//所属公司 company
+	        		temData[7] = objects[4];						//所属城市 area
+	        		temData[8] = objects[5];						//一级部门 dept1
+	        	    temData[9] = objects[6];						//负责人 dept1_leader	
+	        		temData[10] = objects[7];						//二级部门 dept2
+	        		temData[11] = objects[8];						//负责人 dept2_leader
+	        		temData[12] = objects[9];						//三级部门 dept3
+	        		temData[13] = objects[10];						//负责人 dept3_leader
+	        		temData[14] = objects[11];						//四级部门 dept14
+	        		temData[15] = objects[12];						//负责人 dept4_leader
+	        		temData[16] = objects[13];						//岗位名称 job_title_cn
+	        		temData[17] = objects[14];						//岗位序列 position
 	        		temData[18] = key;	
 	        		plannerList.add(temData);
 	        		i++;
@@ -361,7 +361,12 @@ public class PlannerServiceImpl implements PlannerService {
         PlannerExample example = new PlannerExample();
         PlannerExample.Criteria criteria = example.createCriteria();
         criteria.andUidEqualTo(uid);
-		return plannerMapper.selectByExample(example).get(0);
+        try {
+        	return plannerMapper.selectByExample(example).get(0);
+		} catch (Exception e) {
+			return null;
+		}
+		
 	}
 	
 	//在职离职理财师一起导入--未使用
