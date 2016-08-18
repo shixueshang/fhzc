@@ -220,7 +220,6 @@ public class MessageController extends BaseController {
             shareEle.add(this.SHARE);
             shareEle.add(type);
             shareEle.add(id.toString());
-            shareEle.add(type);
             switch (type){
                 case Const.FOCUS_TYPE.PRODUCT:
                     Product product = productService.getProduct(id);
