@@ -1,7 +1,6 @@
 package com.fhzc.app.api.service.impl;
 
 import com.fhzc.app.api.service.PushTokenService;
-import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.dao.mybatis.inter.PushTokenMapper;
 import com.fhzc.app.dao.mybatis.model.PushToken;
 import com.fhzc.app.dao.mybatis.model.PushTokenExample;
@@ -56,8 +55,8 @@ public class PushTokenServiceImpl implements PushTokenService {
 
         List<PushToken> list = pushTokenMapper.selectByExample(pushTokenExample);
         for (PushToken pushToken : list) {
-            if(APIConstants.DEVICE_TYPE.IOS.equals(pushToken.getDeviceType())){
-                IOSUnicast unicast = new IOSUnicast(APIConstants.UMENG_PUSH_APPKEY,APIConstants.UMENG_PUSH_APP_MASTER_SECRET);
+            if(Const.DEVICE_TYPE.IOS.equals(pushToken.getDeviceType())){
+                IOSUnicast unicast = new IOSUnicast(Const.UMENG_PUSH_APPKEY,Const.UMENG_PUSH_APP_MASTER_SECRET);
                 unicast.setDeviceToken(pushToken.getDeviceToken());
                 unicast.setAlert(content);
                 unicast.setBadge(1);
@@ -67,12 +66,12 @@ public class PushTokenServiceImpl implements PushTokenService {
                 unicast.setProductionMode();
                 client.send(unicast);
 
-            }else if(APIConstants.DEVICE_TYPE.ANDROID.equals(pushToken.getDeviceType())){
-                AndroidUnicast unicast = new AndroidUnicast(APIConstants.UMENG_PUSH_APPKEY_ANDROID,APIConstants.UMENG_PUSH_APP_MASTER_SECRET_ANDROID);
+            }else if(Const.DEVICE_TYPE.ANDROID.equals(pushToken.getDeviceType())){
+                AndroidUnicast unicast = new AndroidUnicast(Const.UMENG_PUSH_APPKEY_ANDROID,Const.UMENG_PUSH_APP_MASTER_SECRET_ANDROID);
                 unicast.setDeviceToken(pushToken.getDeviceToken());
-                unicast.setTitle(APIConstants.SYSTEM_NAME);
+                unicast.setTitle(Const.SYSTEM_NAME);
                 unicast.setText(content);
-                unicast.setTicker(APIConstants.SYSTEM_NAME);
+                unicast.setTicker(Const.SYSTEM_NAME);
                 unicast.goAppAfterOpen();
                 unicast.setDisplayType(AndroidNotification.DisplayType.NOTIFICATION);
                 unicast.setProductionMode();

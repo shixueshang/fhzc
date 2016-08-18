@@ -1,11 +1,19 @@
 package com.fhzc.app.system.controller.admin;
 
+import com.alibaba.fastjson.JSON;
+import com.fhzc.app.dao.mybatis.model.PushToken;
 import com.fhzc.app.dao.mybatis.model.SystemNotice;
+import com.fhzc.app.dao.mybatis.model.SystemNoticeRecord;
+import com.fhzc.app.dao.mybatis.model.User;
+import com.fhzc.app.dao.mybatis.page.PageHelper;
+import com.fhzc.app.dao.mybatis.page.PageableResult;
+import com.fhzc.app.dao.mybatis.thirdparty.sms.SMSTemplate;
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.NoticeService;
 import com.fhzc.app.system.service.PushTokenService;
+import com.fhzc.app.system.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +22,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by lihongde on 2016/8/17 14:35
@@ -29,6 +39,9 @@ public class NoticeController extends BaseController {
     @Resource
     private PushTokenService pushTokenService;
 
+    @Resource
+    private UserService userService;
+
     @RequestMapping(value = "/pub", method = RequestMethod.GET)
     public ModelAndView pub(){
         ModelAndView mav = new ModelAndView("system/notice/add");
@@ -39,7 +52,22 @@ public class NoticeController extends BaseController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView list(){
         ModelAndView mav = new ModelAndView("system/notice/list");
-
+        PageableResult<SystemNotice> pageableResult = noticeService.findPageNotices(page, size);
+        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
+        List<SystemNotice> list = new ArrayList<SystemNotice>();
+        for(SystemNotice  systemNotice : pageableResult.getItems()){
+            String channel = systemNotice.getPushChannel();
+            String[] channels = channel.split(",");
+            StringBuilder sb = new StringBuilder();
+            for(String ch : channels){
+                String chName = super.getDicName(Integer.parseInt(ch), Const.DIC_CAT.PUSH_CHANNEL);
+                sb.append(chName).append(",");
+            }
+            systemNotice.setPushChannel(sb.substring(0, sb.length() - 1));
+            list.add(systemNotice);
+        }
+        mav.addObject("notices", list);
+        mav.addObject("url", "system/notice");
         return mav;
     }
 
@@ -51,38 +79,46 @@ public class NoticeController extends BaseController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
     public AjaxJson addOrUpdate(SystemNotice systemNotice){
-
+        systemNotice.setPublishTime(new Date());
+        noticeService.addOrUpdate(systemNotice);
         if(systemNotice.getId() == null){
             preHandle(systemNotice);
         }else{
             //删除原来system_notice_record表的记录
-            noticeService.deleteByNoticeId(systemNotice.getId());
+            noticeService.deleteRecordByNoticeId(systemNotice.getId());
             preHandle(systemNotice);
         }
-        systemNotice.setPublishTime(new Date());
-        noticeService.addOrUpdate(systemNotice);
-
         return new AjaxJson(true);
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    @ResponseBody
     public AjaxJson delete(@PathVariable(value = "id") Integer id){
+        noticeService.deleteRecordByNoticeId(id);
+        noticeService.delete(id);
         return new AjaxJson(true);
     }
 
+    @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
+    public ModelAndView edit(@PathVariable(value = "id") Integer id){
+        ModelAndView mav = new ModelAndView("system/notice/add");
+        mav.addObject("notice", JSON.toJSON(noticeService.getSystemNotice(id)));
+        mav.addObject("url", "system/notice");
+        return mav;
+    }
 
     private void preHandle(SystemNotice systemNotice){
         String channel = systemNotice.getPushChannel();
         String[] channelArr = channel.split(",");
         for(String cha : channelArr){
             if(cha.equals(Const.PUSH_CHANNEL.SYSTEM.toString())){
-                doHandleSystemNotice(systemNotice);
+                this.doHandleSystemNotice(systemNotice, Const.PUSH_CHANNEL.SYSTEM);
             }
             if(cha.equals(Const.PUSH_CHANNEL.SMS.toString())){
-                doHandleSystemSMS(systemNotice);
+                this.doHandleSystemSMS(systemNotice, Const.PUSH_CHANNEL.SMS);
             }
             if(cha.equals(Const.PUSH_CHANNEL.MESSAGE.toString())){
-                doHandleSystemMessage(systemNotice);
+                this.doHandleSystemMessage(systemNotice, Const.PUSH_CHANNEL.MESSAGE);
             }
         }
     }
@@ -90,25 +126,89 @@ public class NoticeController extends BaseController {
     /**
      * 处理系统通知
      * @param systemNotice
+     * @param channel
      */
-    private void doHandleSystemNotice(SystemNotice systemNotice){
-
+    private void doHandleSystemNotice(SystemNotice systemNotice, Integer channel){
+        List<PushToken> list = pushTokenService.getAllTokens();
+        for(PushToken pushToken : list){
+            this.addNoticeRecord(systemNotice, channel, pushToken.getUserId());
+        }
     }
 
     /**
      * 处理发送短信
      * @param systemNotice
+     * @param channel
      */
-    private void doHandleSystemSMS(SystemNotice systemNotice){
-
+    private void doHandleSystemSMS(SystemNotice systemNotice, Integer channel){
+        List<User> list = userService.findAllUsers();
+        for(User user : list){
+            this.addNoticeRecord(systemNotice, channel, user.getUid());
+        }
     }
 
     /**
      * 处理消息推送
      * @param systemNotice
+     * @param channel
      */
-    private void doHandleSystemMessage(SystemNotice systemNotice){
+    private void doHandleSystemMessage(SystemNotice systemNotice, Integer channel){
+        List<PushToken> list = pushTokenService.getAllTokens();
+        for(PushToken pushToken : list){
+            this.addNoticeRecord(systemNotice, channel, pushToken.getUserId());
+        }
+    }
 
+    private void addNoticeRecord(SystemNotice systemNotice, Integer channel, Integer userId){
+        SystemNoticeRecord record = new SystemNoticeRecord();
+        record.setNoticeId(systemNotice.getId());
+        record.setUserId(userId);
+        record.setContent(systemNotice.getContent());
+        record.setPushChannel(channel);
+        record.setPushStatus(systemNotice.getPushStatus());
+        noticeService.addOrUpdateNoticeRecord(record);
+    }
+
+
+    /**
+     * 手动推送
+     * @return
+     */
+    @RequestMapping(value = "/push/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxJson push(@PathVariable(value = "id") Integer noticeId) {
+        List<SystemNoticeRecord> list = noticeService.findRecordByNoticeId(noticeId);
+        try{
+            for(SystemNoticeRecord record : list){
+                if(record.getPushChannel() == Const.PUSH_CHANNEL.SYSTEM){
+                    continue;
+                }
+                if(record.getPushChannel() == Const.PUSH_CHANNEL.MESSAGE){
+                    pushTokenService.pushMessageToUser(record.getUserId(), record.getContent());
+                }
+                if(record.getPushChannel() == Const.PUSH_CHANNEL.SMS){
+                    User user = userService.getUser(record.getUserId());
+                    SMSTemplate smsTemplate = new SMSTemplate(Const.SMS_PARAM.SMS_USERNAME, Const.SMS_PARAM.SMS_PASSWORD, Const.SMS_PARAM.SMS_APPIKEY, record.getContent());
+                    smsTemplate.sendTemplateSMS(user.getMobile());
+                }
+                if(record.getPushChannel() == Const.PUSH_CHANNEL.EMAIL){
+                    continue;
+                }
+
+                //更新状态为已推送
+                record.setPushStatus(Const.PUSH_STATUS.PUSHED);
+                noticeService.addOrUpdateNoticeRecord(record);
+                SystemNotice notice = noticeService.getSystemNotice(noticeId);
+                notice.setPushStatus(Const.PUSH_STATUS.PUSHED);
+                noticeService.addOrUpdate(notice);
+
+            }
+        }catch (Exception e){
+            logger.error("推送失败!");
+            e.printStackTrace();
+        }
+
+        return new AjaxJson(true);
     }
 
 }
