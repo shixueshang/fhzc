@@ -165,6 +165,19 @@
                                                 </div>
                                             </div>
 
+                                            <div class="control-group">
+                                                <label class="control-label">是否精选</label>
+                                                <div class="controls">
+                                                    <label class="radio">
+                                                        <input type="radio" name="isRecommend" value="1" />
+                                                        是
+                                                    </label>
+                                                    <label class="radio">
+                                                        <input type="radio" name="isRecommend" value="0" checked />
+                                                        否
+                                                    </label>
+                                                </div>
+                                            </div>
                                             <div class="form-actions">
                                                 <input name="id" type="hidden" value="${right.id}" />
                                                 <button type="submit" class="btn blue"><i class="icon-ok"></i> 保存</button>
