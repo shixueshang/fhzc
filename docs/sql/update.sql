@@ -114,3 +114,27 @@ CREATE TABLE `bank`.`suggest` (
   `mobile` VARCHAR(45) NULL COMMENT '电话号码',
   PRIMARY KEY (`id`))
 COMMENT = '用户反馈';
+
+CREATE TABLE `rank_month` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `planner_id` int(11) DEFAULT NULL COMMENT '理财师id',
+  `year_month` date NOT NULL COMMENT '年月',
+  `annualised` int(11) DEFAULT NULL COMMENT '年化业绩',
+  `department_id` int(11) DEFAULT NULL COMMENT '部门id',
+  `rank` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `pl_rank_uniq` (`planner_id`,`year_month`,`department_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8 COMMENT='月业绩排名';
+
+CREATE TABLE `rank_year` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `planner_id` int(11) DEFAULT NULL COMMENT '理财师id',
+  `year` int(11) NOT NULL COMMENT '年',
+  `annualised` int(11) DEFAULT NULL COMMENT '年化业绩',
+  `department_id` int(11) DEFAULT NULL COMMENT '部门id',
+  `rank` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `pl_uniq` (`planner_id`,`year`,`department_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='年度业绩排名';
+
+

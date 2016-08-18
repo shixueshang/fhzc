@@ -1,8 +1,5 @@
 package com.fhzc.app.system.controller.business;
 
-import com.alibaba.fastjson.JSON;
-import com.fhzc.app.dao.mybatis.model.Activity;
-import com.fhzc.app.dao.mybatis.model.AssetsHistory;
 import com.fhzc.app.dao.mybatis.model.Contract;
 import com.fhzc.app.dao.mybatis.model.Customer;
 import com.fhzc.app.dao.mybatis.model.Planner;
@@ -10,7 +7,6 @@ import com.fhzc.app.dao.mybatis.model.Product;
 import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
-import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.ContractService;
 import com.fhzc.app.system.service.CustomerService;
@@ -18,6 +14,7 @@ import com.fhzc.app.system.service.PlannerService;
 import com.fhzc.app.system.service.ProductService;
 import com.fhzc.app.system.service.UserService;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -86,7 +83,7 @@ public class ContractController extends BaseController {
     
     
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ModelAndView listActivities(){
+    public ModelAndView listContracts(){
         ModelAndView mav = new ModelAndView("business/contract/list");
         PageableResult<Contract> pageableResult = contractService.findPageContracts(null,new ArrayList<Integer>(),page, size);
         List<Customer> customers = customerService.findAllCustomer();
@@ -116,7 +113,7 @@ public class ContractController extends BaseController {
     }
 
     /**
-     * 按产品名称或理财师姓名查询订单列表
+     * 按产品名称或理财师姓名查询合同列表
      * @param productName
      * @param customerName
      * @return
@@ -124,13 +121,29 @@ public class ContractController extends BaseController {
     @RequestMapping(value = "/find", method = RequestMethod.GET)
     public ModelAndView find(String productName, String plannerName){
         ModelAndView mav = new ModelAndView("/business/contract/list");
-        List<User> users = userService.getUsersByName(plannerName);
+        List<User> users = new ArrayList<User>();
         List<Integer> plannerIds = new ArrayList<Integer>();
-        for(User user : users){
-        	plannerIds.add(plannerService.getPlannerByUid(user.getUid()).getId());
+        Product pro = new Product();
+        if(StringUtils.isNotBlank(plannerName)){
+          users = userService.getUsersByName(plannerName);
+    	  if(users.isEmpty()){
+          	return mav;
+          }else{
+    	     for(User user : users){
+	        	if(plannerService.getPlannerByUid(user.getUid()) == null){
+	        		return mav;
+	        	} 
+	        plannerIds.add(plannerService.getPlannerByUid(user.getUid()).getId());
+    	     }
+          }
         }
-        Product pro = productService.getProduct(productName);
-        PageableResult<Contract> pageableResult = contractService.findPageContracts(pro== null ? null : pro.getPid(), plannerIds, page, size);
+        if(StringUtils.isNotBlank(productName)){
+        	 pro = productService.getProduct(productName);
+             if(pro == null){
+             	return mav;
+             }
+        }
+        PageableResult<Contract> pageableResult = contractService.findPageContracts(pro.getPid(), plannerIds, page, size);
         List<Contract> contracts = pageableResult.getItems();
         for(Contract contract : contracts){
             Planner planner = plannerService.getPlanner(contract.getPlannerId());
@@ -138,11 +151,15 @@ public class ContractController extends BaseController {
             	contract.setPlannerName(userService.getUser(planner.getUid()).getRealname());
             }
             Product product = productService.getProduct(contract.getProductId());
-            contract.setProductName(product.getName());
+            if(product != null){
+            	contract.setProductName(product.getName());
+            }
             Customer customer = customerService.getCustomer(contract.getCustomerId());
-            contract.setCustomerName(userService.getUser(customer.getUid()).getRealname());
+            if(customer != null){
+            	contract.setCustomerName(userService.getUser(customer.getUid()).getRealname());
+            }
+            
         }
-
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("contracts", contracts);
         mav.addObject("url", "/business/contract");

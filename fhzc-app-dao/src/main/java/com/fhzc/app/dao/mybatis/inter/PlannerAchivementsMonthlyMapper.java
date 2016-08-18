@@ -25,6 +25,10 @@ public interface PlannerAchivementsMonthlyMapper {
 
     PlannerAchivementsMonthly selectByPrimaryKey(Integer id);
 
+    List<PlannerAchivementsMonthly> selectDistinctPlannerUid();
+
+    List<PlannerAchivementsMonthly> selectDistinctPlannerUidByDeptId(Integer departmentId);
+
     int updateByExampleSelective(@Param("record") PlannerAchivementsMonthly record, @Param("example") PlannerAchivementsMonthlyExample example);
 
     int updateByExample(@Param("record") PlannerAchivementsMonthly record, @Param("example") PlannerAchivementsMonthlyExample example);

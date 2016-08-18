@@ -8,6 +8,7 @@ import com.fhzc.app.dao.mybatis.util.Const;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -37,6 +38,15 @@ public class PersonalController extends BaseController {
     @Resource
     private ProductService productService;
 
+    @Resource
+    private DepartmentService departmentService;
+
+    @Resource
+    private RankMonthService rankMonthService;
+
+    @Resource
+    private RankYearService rankYearService;
+
     /**
      * 我的工作
      * @return
@@ -55,8 +65,41 @@ public class PersonalController extends BaseController {
         Integer currentYear = cal.get(Calendar.YEAR);
         Integer currentMonth = cal.get(Calendar.MONTH)+1;
 
+        //月销售额
         map.put("monthSale", achievementService.getMonthSale(planner.getId(),currentYear,currentMonth));
+        //年销售额
         map.put("yearSale", achievementService.getYearSale(planner.getId(),currentYear));
+
+        //月度总排名
+        Map<String,String> monthRankList = achievementService.getMonthRankList(currentYear, currentMonth);
+        map.put("monthRank", monthRankList);
+        map.put("monthMyRank", achievementService.userRankInList(monthRankList,planner.getId()));
+
+        //年度总排名
+        Map<String,String> yearRankList = achievementService.getYearRankList(currentYear);
+        map.put("yearRank", yearRankList);
+        map.put("yearMyRank", achievementService.userRankInList(yearRankList,planner.getId()));
+
+
+        //取用户的第三级部门
+        Department department = departmentService.getDeparent(planner.getDepartmentId());
+        Integer deparment_id = department.getParentDeptId();
+
+        if(deparment_id > 0) {
+            //月度部门排名
+            planner.getDepartmentId();
+            Map<String, String> monthDeptRankList = achievementService.getMonthRankList(currentYear, currentMonth, deparment_id);
+            map.put("monthDeptRank", monthDeptRankList);
+            map.put("monthDeptMyRank", achievementService.userRankInList(monthDeptRankList, planner.getId()));
+
+            //年度部门排名
+            Map<String, String> yearDeptRankList = achievementService.getYearRankList(currentYear, deparment_id);
+            map.put("yearDeptRank", yearDeptRankList);
+            map.put("yearDeptMyRank", achievementService.userRankInList(yearDeptRankList, planner.getId()));
+        }else{
+            map.put("monthDeptMyRank", 0);
+            map.put("yearDeptMyRank", 0);
+        }
 
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, map);
     }
@@ -136,4 +179,127 @@ public class PersonalController extends BaseController {
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
     }
 
+
+    @RequestMapping(value = "/api/init/rank/month", method = RequestMethod.GET)
+    @ResponseBody
+    public ApiJsonResult initRank(@RequestParam(value = "year") Integer year) {
+        Integer result = 0;
+        for(int month=1;month<=12;month++) {
+            List<PlannerAchivementsMonthly> plannerAchivementsMonthlyList = achievementService.getPlanners();
+            for (PlannerAchivementsMonthly plannerAchivementsMonthly : plannerAchivementsMonthlyList) {
+                Integer plannerId = plannerAchivementsMonthly.getPlannerUid();
+                Integer departmentId = plannerAchivementsMonthly.getDepartmentId();
+                Integer sale = achievementService.getMonthSale(plannerId, year, month);
+                if(sale > 0) {
+                    RankMonth rank = new RankMonth();
+                    rank.setAnnualised(sale);
+                    rank.setDepartmentId(departmentId);
+                    rank.setPlannerId(plannerId);
+
+                    Calendar cal = Calendar.getInstance();
+                    cal.set(Calendar.YEAR, year);
+                    cal.set(Calendar.MONTH, month - 1);
+                    cal.set(Calendar.DAY_OF_MONTH, 1);
+                    Date date = cal.getTime();
+
+                    rank.setYearMonth(date);
+                    rankMonthService.addOrUpdate(rank);
+                }
+            }
+        }
+
+        List<Date> dateList = rankMonthService.getExistYearMonth();
+        for (Date date : dateList) {
+            List<RankMonth> rankList = rankMonthService.getYearMonthRankList(date);
+
+            for (RankMonth rank1:rankList) {
+                Integer plannerId = rank1.getPlannerId();
+                Integer i = 0;
+
+                for (RankMonth rank : rankList) {
+                    if (rank.getAnnualised().equals(0)) {
+                        continue;
+                    }
+                    if (rank.getPlannerId().equals(plannerId)) {
+                        RankMonth rankMonth = new RankMonth();
+                        rankMonth.setId(rank.getId());
+                        rankMonth.setPlannerId(plannerId);
+                        rankMonth.setRank(i+1);
+                        rankMonth.setYearMonth(date);
+                        rankMonth.setAnnualised(rank.getAnnualised());
+                        rankMonth.setDepartmentId(rank.getDepartmentId());
+                        rankMonthService.addOrUpdate(rankMonth);
+                    }
+                    i++;
+                }
+            }
+        }
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
+    }
+
+
+    @RequestMapping(value = "/api/init/rank/year", method = RequestMethod.GET)
+    @ResponseBody
+    public ApiJsonResult initRankYear() {
+        Integer result = 0;
+        for (Integer year = 2016; year < 2067; year++) {
+            List<PlannerAchivementsMonthly> plannerAchivementsMonthlyList = achievementService.getPlanners();
+            for (PlannerAchivementsMonthly plannerAchivementsMonthly : plannerAchivementsMonthlyList) {
+                Integer plannerId = plannerAchivementsMonthly.getPlannerUid();
+                Integer departmentId = plannerAchivementsMonthly.getDepartmentId();
+                Integer sale = achievementService.getYearSale(plannerId, year);
+                if(sale > 0) {
+                    RankYear rank = new RankYear();
+                    rank.setAnnualised(sale);
+                    rank.setDepartmentId(departmentId);
+                    rank.setPlannerId(plannerId);
+                    rank.setYear(year);
+                    rankYearService.addOrUpdate(rank);
+                }
+            }
+        }
+
+        List<Integer> yearList = rankYearService.getExistYear();
+        for (Integer year : yearList) {
+            List<RankYear> rankList = rankYearService.getYearRankList(year);
+
+            for (RankYear rank1:rankList) {
+                Integer plannerId = rank1.getPlannerId();
+                Integer i = 0;
+
+                for (RankYear rank : rankList) {
+                    if (rank.getAnnualised().equals(0)) {
+                        continue;
+                    }
+                    if (rank.getPlannerId().equals(plannerId)) {
+                        RankYear rankYear= new RankYear();
+                        rankYear.setId(rank.getId());
+                        rankYear.setPlannerId(plannerId);
+                        rankYear.setRank(i+1);
+                        rankYear.setYear(year);
+                        rankYear.setAnnualised(rank.getAnnualised());
+                        rankYear.setDepartmentId(rank.getDepartmentId());
+                        rankYearService.addOrUpdate(rankYear);
+                    }
+                    i++;
+                }
+            }
+        }
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
+    }
+
+    @RequestMapping(value = "/api/rank/year", method = RequestMethod.GET)
+    @ResponseBody
+    public ApiJsonResult rankYear() {
+         User user = super.getCurrentUser();
+         if (!user.getLoginRole().equals(Const.USER_ROLE.PLANNER)) {
+             return new ApiJsonResult(APIConstants.API_JSON_RESULT.NOT_FOUND, "非理财师用户");
+         }
+         Planner planner = plannerService.getPlannerByUid(user.getUid());
+         List<Map> result = new ArrayList<>();
+         Map map = new HashMap();
+
+
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
+     }
 }

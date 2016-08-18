@@ -1,13 +1,10 @@
 package com.fhzc.app.system.service.impl;
 
-import com.fhzc.app.dao.mybatis.model.AssetsHistory;
-import com.fhzc.app.dao.mybatis.model.AssetsHistoryExample;
 import com.fhzc.app.dao.mybatis.model.Contract;
 import com.fhzc.app.dao.mybatis.model.ContractExample;
 import com.fhzc.app.dao.mybatis.model.Department;
 import com.fhzc.app.dao.mybatis.model.Dictionary;
 import com.fhzc.app.dao.mybatis.model.Planner;
-import com.fhzc.app.dao.mybatis.model.PlannerExample;
 import com.fhzc.app.dao.mybatis.model.Product;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.EncryptUtils;

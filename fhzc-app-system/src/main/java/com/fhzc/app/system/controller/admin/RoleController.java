@@ -10,7 +10,6 @@ import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.AdminRoleService;
 import com.fhzc.app.system.service.ResourceService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -49,7 +48,13 @@ public class RoleController extends BaseController {
         mav.addObject("url", "system/role");
        return mav;
     }
-
+    
+    @RequestMapping(value = "/isRoleNameExists", method = RequestMethod.GET)
+    @ResponseBody
+    public Object isRoleNameExists(String roleName){
+        boolean flag = adminRoleService.isRoleNameExists(roleName);
+        return !flag;
+    }
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String add(AdminRole role){
         adminRoleService.addOrUpdateRole(role);

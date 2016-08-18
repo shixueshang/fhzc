@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fhzc.app.dao.mybatis.inter.RankYearMapper" >
+  <resultMap id="BaseResultMap" type="com.fhzc.app.dao.mybatis.model.RankYear" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="planner_id" property="plannerId" jdbcType="INTEGER" />
+    <result column="year" property="year" jdbcType="INTEGER" />
+    <result column="annualised" property="annualised" jdbcType="INTEGER" />
+    <result column="department_id" property="departmentId" jdbcType="INTEGER" />
+    <result column="rank" property="rank" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    `id`, `planner_id`, `year`, `annualised`, `department_id`, `rank`
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.RankYearExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from `rank_year`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from `rank_year`
+    where `id` = #{id,jdbcType=INTEGER}
+  </select>
+   <select id="selectDistinctYear" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    SELECT
+    DISTINCT `year`
+    from `rank_year`
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from `rank_year`
+    where `id` = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fhzc.app.dao.mybatis.model.RankYearExample" >
+    delete from `rank_year`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fhzc.app.dao.mybatis.model.RankYear" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `rank_year` (`planner_id`, `year`, `annualised`, 
+      `department_id`, `rank`)
+    values (#{plannerId,jdbcType=INTEGER}, #{year,jdbcType=INTEGER}, #{annualised,jdbcType=INTEGER}, 
+      #{departmentId,jdbcType=INTEGER}, #{rank,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.RankYear" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `rank_year`
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="plannerId != null" >
+        `planner_id`,
+      </if>
+      <if test="year != null" >
+        `year`,
+      </if>
+      <if test="annualised != null" >
+        `annualised`,
+      </if>
+      <if test="departmentId != null" >
+        `department_id`,
+      </if>
+      <if test="rank != null" >
+        `rank`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="plannerId != null" >
+        #{plannerId,jdbcType=INTEGER},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="annualised != null" >
+        #{annualised,jdbcType=INTEGER},
+      </if>
+      <if test="departmentId != null" >
+        #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="rank != null" >
+        #{rank,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fhzc.app.dao.mybatis.model.RankYearExample" resultType="java.lang.Integer" >
+    select count(*) from `rank_year`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update `rank_year`
+    <set >
+      <if test="record.id != null" >
+        `id` = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.plannerId != null" >
+        `planner_id` = #{record.plannerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.year != null" >
+        `year` = #{record.year,jdbcType=INTEGER},
+      </if>
+      <if test="record.annualised != null" >
+        `annualised` = #{record.annualised,jdbcType=INTEGER},
+      </if>
+      <if test="record.departmentId != null" >
+        `department_id` = #{record.departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.rank != null" >
+        `rank` = #{record.rank,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update `rank_year`
+    set `id` = #{record.id,jdbcType=INTEGER},
+      `planner_id` = #{record.plannerId,jdbcType=INTEGER},
+      `year` = #{record.year,jdbcType=INTEGER},
+      `annualised` = #{record.annualised,jdbcType=INTEGER},
+      `department_id` = #{record.departmentId,jdbcType=INTEGER},
+      `rank` = #{record.rank,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fhzc.app.dao.mybatis.model.RankYear" >
+    update `rank_year`
+    <set >
+      <if test="plannerId != null" >
+        `planner_id` = #{plannerId,jdbcType=INTEGER},
+      </if>
+      <if test="year != null" >
+        `year` = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="annualised != null" >
+        `annualised` = #{annualised,jdbcType=INTEGER},
+      </if>
+      <if test="departmentId != null" >
+        `department_id` = #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="rank != null" >
+        `rank` = #{rank,jdbcType=INTEGER},
+      </if>
+    </set>
+    where `id` = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fhzc.app.dao.mybatis.model.RankYear" >
+    update `rank_year`
+    set `planner_id` = #{plannerId,jdbcType=INTEGER},
+      `year` = #{year,jdbcType=INTEGER},
+      `annualised` = #{annualised,jdbcType=INTEGER},
+      `department_id` = #{departmentId,jdbcType=INTEGER},
+      `rank` = #{rank,jdbcType=INTEGER}
+    where `id` = #{id,jdbcType=INTEGER}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.RankYearExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from `rank_year`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

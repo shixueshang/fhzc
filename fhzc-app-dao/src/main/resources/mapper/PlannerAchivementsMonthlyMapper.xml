@@ -107,6 +107,17 @@
     from `planner_achivements_monthly`
     where `id` = #{id,jdbcType=INTEGER}
   </select>
+   <select id="selectDistinctPlannerUid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    DISTINCT `planner_uid`,department_id
+    from `planner_achivements_monthly`
+  </select>
+  <select id="selectDistinctPlannerUidByDeptId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    DISTINCT `planner_uid`
+    from `planner_achivements_monthly`
+    where `department_id` = #{departmentId,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from `planner_achivements_monthly`
     where `id` = #{id,jdbcType=INTEGER}
