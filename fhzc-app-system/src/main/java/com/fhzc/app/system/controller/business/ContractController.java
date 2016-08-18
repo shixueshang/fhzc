@@ -1,8 +1,5 @@
 package com.fhzc.app.system.controller.business;
 
-import com.alibaba.fastjson.JSON;
-import com.fhzc.app.dao.mybatis.model.Activity;
-import com.fhzc.app.dao.mybatis.model.AssetsHistory;
 import com.fhzc.app.dao.mybatis.model.Contract;
 import com.fhzc.app.dao.mybatis.model.Customer;
 import com.fhzc.app.dao.mybatis.model.Planner;
@@ -10,7 +7,6 @@ import com.fhzc.app.dao.mybatis.model.Product;
 import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
-import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.ContractService;
 import com.fhzc.app.system.service.CustomerService;
@@ -87,7 +83,7 @@ public class ContractController extends BaseController {
     
     
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ModelAndView listActivities(){
+    public ModelAndView listContracts(){
         ModelAndView mav = new ModelAndView("business/contract/list");
         PageableResult<Contract> pageableResult = contractService.findPageContracts(null,new ArrayList<Integer>(),page, size);
         List<Customer> customers = customerService.findAllCustomer();
