@@ -114,3 +114,12 @@ CREATE TABLE `bank`.`suggest` (
   `mobile` VARCHAR(45) NULL COMMENT '电话号码',
   PRIMARY KEY (`id`))
 COMMENT = '用户反馈';
+
+CREATE TABLE `bank`.`rank` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `planner_id` INT NULL COMMENT '理财师id',
+  `year_month` DATE NOT NULL COMMENT '年月',
+  `annualised` INT NULL COMMENT '年化业绩',
+  `department_id` INT NULL COMMENT '部门id',
+  PRIMARY KEY (`id`))
+COMMENT = '理财师月业绩汇总表';

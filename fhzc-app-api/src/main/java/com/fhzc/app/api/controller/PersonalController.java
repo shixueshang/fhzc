@@ -37,6 +37,9 @@ public class PersonalController extends BaseController {
     @Resource
     private ProductService productService;
 
+    @Resource
+    private DepartmentService departmentService;
+
     /**
      * 我的工作
      * @return
@@ -55,8 +58,41 @@ public class PersonalController extends BaseController {
         Integer currentYear = cal.get(Calendar.YEAR);
         Integer currentMonth = cal.get(Calendar.MONTH)+1;
 
+        //月销售额
         map.put("monthSale", achievementService.getMonthSale(planner.getId(),currentYear,currentMonth));
+        //年销售额
         map.put("yearSale", achievementService.getYearSale(planner.getId(),currentYear));
+
+        //月度总排名
+        Map<String,String> monthRankList = achievementService.getMonthRankList(currentYear, currentMonth);
+        map.put("monthRank", monthRankList);
+        map.put("monthMyRank", achievementService.userRankInList(monthRankList,planner.getId()));
+
+        //年度总排名
+        Map<String,String> yearRankList = achievementService.getYearRankList(currentYear);
+        map.put("yearRank", yearRankList);
+        map.put("yearMyRank", achievementService.userRankInList(yearRankList,planner.getId()));
+
+
+        //取用户的第三级部门
+        Department department = departmentService.getDeparent(planner.getDepartmentId());
+        Integer deparment_id = department.getParentDeptId();
+
+        if(deparment_id > 0) {
+            //月度部门排名
+            planner.getDepartmentId();
+            Map<String, String> monthDeptRankList = achievementService.getMonthRankList(currentYear, currentMonth, deparment_id);
+            map.put("monthDeptRank", monthDeptRankList);
+            map.put("monthDeptMyRank", achievementService.userRankInList(monthDeptRankList, planner.getId()));
+
+            //年度部门排名
+            Map<String, String> yearDeptRankList = achievementService.getYearRankList(currentYear, deparment_id);
+            map.put("yearDeptRank", yearDeptRankList);
+            map.put("yearDeptMyRank", achievementService.userRankInList(yearDeptRankList, planner.getId()));
+        }else{
+            map.put("monthDeptMyRank", 0);
+            map.put("yearDeptMyRank", 0);
+        }
 
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, map);
     }
