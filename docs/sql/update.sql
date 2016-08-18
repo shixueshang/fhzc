@@ -106,3 +106,11 @@ ADD COLUMN `android_url` VARCHAR(255) NULL COMMENT '安装包下载地址' AFTER
 ADD COLUMN `ios_url` VARCHAR(255) NULL AFTER `android_url`;
 
 
+CREATE TABLE `bank`.`suggest` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `type` VARCHAR(45) NULL COMMENT '问题类型',
+  `content` TEXT NULL COMMENT '问题内容',
+  `imgs` TEXT NULL COMMENT '问题图片',
+  `mobile` VARCHAR(45) NULL COMMENT '电话号码',
+  PRIMARY KEY (`id`))
+COMMENT = '用户反馈';
