@@ -66,7 +66,16 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="portlet_tab1">
                                         <!-- BEGIN FORM-->
-                                        <form action="<%=contextPath%>/business/product/type/add" method="POST" class="form-horizontal">
+                                        <form action="<%=contextPath%>/business/product/type/add" id="form_sample_1" method="POST" class="form-horizontal">
+                                            <div class="alert alert-error hide">
+                                                <button class="close" data-dismiss="alert"></button>
+                                                	您的表单验证失败,请检查.
+                                            </div>
+                                            <div class="alert alert-success hide">
+                                                <button class="close" data-dismiss="alert"></button>
+                                               		 表单内容验证成功!
+                                            </div>
+                                           
                                             <div class="control-group">
                                             </div>
                                             <div class="control-group">
@@ -196,6 +205,140 @@
                 window.location.reload();
             })
         });
+        
+        var form1 = $('#form_sample_1');
+        var error1 = $('.alert-error', form1);
+        var success1 = $('.alert-success', form1);
+
+        form1.validate({
+            errorElement: 'span', //default input error message container
+            errorClass: 'help-inline', // default input error message class
+            focusInvalid: false, // do not focus the last invalid input
+            ignore: "",
+            messages: {
+                value:{required:"产品类型值不能为空！",remote:jQuery.format("产品类型值已经存在")},
+                key:{required:"产品类型不能为空",remote:jQuery.format("产品类型已经存在")}
+            },
+            rules: {
+                value: {
+                    required: true,
+                    remote: {
+                        url: "/business/product/isValueExists",
+                        type: "get",
+                        data: {
+                            value: function() {
+                                var old_value = '${productType.value}';
+                                var new_value = $("input[name='value']").val();
+                                if(old_value == new_value){
+                                    return old_value + 'no check';
+                                }else {
+                                    return new_value;
+                                }
+                            }
+                        }
+                    }
+                },
+                key: {
+                    required: true,
+                    remote: {
+                        url: "/business/product/isKeyExists",
+                        type: "get",
+                        data: {
+                            key: function() {
+                                var old_key = '${productType.key}';
+                                var new_key = $("input[name='key']").val();
+                                if(old_key == new_key){
+                                    return old_key + 'no check';
+                                }else {
+                                    return new_key;
+                                }
+                            }
+                        }
+                    }
+                },
+                expectedMin: {
+                    number: true,
+                    min:0
+                },
+                expectedMax: {
+                    number: true,
+                    min:0
+                },
+                investTermMin: {
+                    required: true,
+                    number: true,
+                    min:0
+                },
+                investTermMax: {
+                    required: true,
+                    number: true,
+                    min:1
+                },
+                investThreshold: {
+                    required: true,
+                    number: true,
+                    min:0
+                },
+                renewDeadline: {
+                    number: true,
+                    min:0
+                },
+                scoreFactor: {
+                    number: true,
+                    min:0
+                },
+                detailUrl: {
+                    url: true
+                },
+                fundManagementFee: {
+                    required: true,
+                    number: true,
+                    min:0
+                },
+                fundSubscriptionFee: {
+                    required: true,
+                    number: true,
+                    min:0
+                },
+                fundManager: {
+                    required: true
+                },
+                custodian: {
+                    required: true
+                }
+            },
+
+            invalidHandler: function (event, validator) { //display error alert on form submit
+                success1.hide();
+                error1.show();
+                App.scrollTo(error1, -200);
+            },
+
+            highlight: function (element) { // hightlight error inputs
+                $(element)
+                        .closest('.help-inline').removeClass('ok'); // display OK icon
+                $(element)
+                        .closest('.control-group').removeClass('success').addClass('error'); // set error class to the control group
+            },
+
+            unhighlight: function (element) { // revert the change dony by hightlight
+                $(element)
+                        .closest('.control-group').removeClass('error'); // set error class to the control group
+            },
+
+            success: function (label) {
+                label
+                        .addClass('valid').addClass('help-inline ok') // mark the current input as valid and display OK icon
+                        .closest('.control-group').removeClass('error').addClass('success'); // set success class to the control group
+            },
+
+            submitHandler: function (form) {
+                success1.show();
+                error1.hide();
+                form.submit();
+            }
+        });
+        
     });
 
 

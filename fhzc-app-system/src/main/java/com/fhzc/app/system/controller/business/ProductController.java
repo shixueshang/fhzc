@@ -259,7 +259,21 @@ public class ProductController extends BaseController {
         mav.addObject("url", "business/product");
         return mav;
     }
-
+    
+    @RequestMapping(value = "/isKeyExists", method = RequestMethod.GET)
+    @ResponseBody
+    public Object isKeyExists(String key){
+        boolean flag = dictionaryService.isKeyExists("product_type",key);
+        return !flag;
+    }
+    
+    @RequestMapping(value = "/isValueExists", method = RequestMethod.GET)
+    @ResponseBody
+    public Object isValueExists(String value){
+        boolean flag = dictionaryService.isValueExists("product_type",value);
+        return !flag;
+    }
+    
     @RequestMapping(value = "/type/add", method = RequestMethod.POST)
     public String add(Dictionary dictionary){
 
