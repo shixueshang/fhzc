@@ -1,7 +1,6 @@
 package com.fhzc.app.system.service.impl;
 
 import com.fhzc.app.dao.mybatis.inter.AdminRoleMapper;
-import com.fhzc.app.dao.mybatis.model.Admin;
 import com.fhzc.app.dao.mybatis.model.AdminRole;
 import com.fhzc.app.dao.mybatis.model.AdminRoleExample;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
@@ -61,4 +60,15 @@ public class AdminRoleServiceImpl implements AdminRoleService {
         role.setStatus(Const.Data_Status.DATA_DELETE);
         adminRoleMapper.updateByPrimaryKey(role);
     }
+
+	@Override
+	public boolean isRoleNameExists(String roleName) {
+	     AdminRoleExample example = new AdminRoleExample();
+	     AdminRoleExample.Criteria criteria = example.createCriteria();
+	        criteria.andRoleNameEqualTo(roleName);
+	        if(adminRoleMapper.countByExample(example) > 0){
+	            return true;
+	        }
+	        return false;
+	}
 }

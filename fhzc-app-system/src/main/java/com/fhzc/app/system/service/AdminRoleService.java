@@ -38,4 +38,11 @@ public interface AdminRoleService {
      * @param id
      */
     void delete(Integer id);
+    
+    /**
+     * 查询角色名称是否存在
+     * @param name
+     * @return
+     */
+    boolean isRoleNameExists(String roleName);
 }
