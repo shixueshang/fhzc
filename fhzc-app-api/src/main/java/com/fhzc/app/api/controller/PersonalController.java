@@ -186,6 +186,9 @@ public class PersonalController extends BaseController {
         Integer result = 0;
         for(int month=1;month<=12;month++) {
             List<PlannerAchivementsMonthly> plannerAchivementsMonthlyList = achievementService.getPlanners();
+            if (plannerAchivementsMonthlyList == null) {
+                continue;
+            }
             for (PlannerAchivementsMonthly plannerAchivementsMonthly : plannerAchivementsMonthlyList) {
                 Integer plannerId = plannerAchivementsMonthly.getPlannerUid();
                 Integer departmentId = plannerAchivementsMonthly.getDepartmentId();
@@ -210,6 +213,7 @@ public class PersonalController extends BaseController {
 
         List<Date> dateList = rankMonthService.getExistYearMonth();
         for (Date date : dateList) {
+            //全公司排名计算
             List<RankMonth> rankList = rankMonthService.getYearMonthRankList(date);
 
             for (RankMonth rank1:rankList) {
@@ -233,6 +237,29 @@ public class PersonalController extends BaseController {
                     i++;
                 }
             }
+
+            //部门排名计算
+            List<Integer> departmentList = rankMonthService.getExistDepartment();
+            for (Integer department : departmentList) {
+                List<RankMonth> rankList1 = rankMonthService.getYearMonthRankList(date,department);
+
+                for (RankMonth rank1:rankList1) {
+                    Integer plannerId = rank1.getPlannerId();
+                    Integer i = 0;
+
+                    for (RankMonth rank : rankList1) {
+                        if (rank.getAnnualised().equals(0)) {
+                            continue;
+                        }
+                        if (rank.getPlannerId().equals(plannerId)) {
+                            RankMonth rankMonth = rankMonthService.getByPlannerIdYearMonth(plannerId, date);
+                            rankMonth.setDepartmentRank(i+1);
+                            rankMonthService.addOrUpdate(rankMonth);
+                        }
+                        i++;
+                    }
+                }
+            }
         }
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
     }
@@ -244,6 +271,9 @@ public class PersonalController extends BaseController {
         Integer result = 0;
         for (Integer year = 2016; year < 2067; year++) {
             List<PlannerAchivementsMonthly> plannerAchivementsMonthlyList = achievementService.getPlanners();
+            if(plannerAchivementsMonthlyList == null){
+                continue;
+            }
             for (PlannerAchivementsMonthly plannerAchivementsMonthly : plannerAchivementsMonthlyList) {
                 Integer plannerId = plannerAchivementsMonthly.getPlannerUid();
                 Integer departmentId = plannerAchivementsMonthly.getDepartmentId();
@@ -261,9 +291,10 @@ public class PersonalController extends BaseController {
 
         List<Integer> yearList = rankYearService.getExistYear();
         for (Integer year : yearList) {
+            //全公司排名计算
             List<RankYear> rankList = rankYearService.getYearRankList(year);
 
-            for (RankYear rank1:rankList) {
+            for (RankYear rank1 : rankList) {
                 Integer plannerId = rank1.getPlannerId();
                 Integer i = 0;
 
@@ -272,10 +303,10 @@ public class PersonalController extends BaseController {
                         continue;
                     }
                     if (rank.getPlannerId().equals(plannerId)) {
-                        RankYear rankYear= new RankYear();
+                        RankYear rankYear = new RankYear();
                         rankYear.setId(rank.getId());
                         rankYear.setPlannerId(plannerId);
-                        rankYear.setRank(i+1);
+                        rankYear.setRank(i + 1);
                         rankYear.setYear(year);
                         rankYear.setAnnualised(rank.getAnnualised());
                         rankYear.setDepartmentId(rank.getDepartmentId());
@@ -284,22 +315,63 @@ public class PersonalController extends BaseController {
                     i++;
                 }
             }
+
+            //部门排名计算
+            List<Integer> departmentList = rankMonthService.getExistDepartment();
+            for (Integer department : departmentList) {
+                List<RankYear> rankList1 = rankYearService.getYearRankList(year, department);
+
+                for (RankYear rank1 : rankList1) {
+                    Integer plannerId = rank1.getPlannerId();
+                    Integer i = 0;
+
+                    for (RankYear rank : rankList1) {
+                        if (rank.getAnnualised().equals(0)) {
+                            continue;
+                        }
+                        if (rank.getPlannerId().equals(plannerId)) {
+                            RankYear rankYear = rankYearService.getByPlannerIdYear(plannerId, year);
+                            rankYear.setDepartmentRank(i + 1);
+                            rankYearService.addOrUpdate(rankYear);
+                        }
+                        i++;
+                    }
+                }
+            }
         }
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
     }
 
+    /**
+     * 理财师历年排名(全公司、部门)
+     * @return
+     */
     @RequestMapping(value = "/api/rank/year", method = RequestMethod.GET)
     @ResponseBody
     public ApiJsonResult rankYear() {
-         User user = super.getCurrentUser();
-         if (!user.getLoginRole().equals(Const.USER_ROLE.PLANNER)) {
-             return new ApiJsonResult(APIConstants.API_JSON_RESULT.NOT_FOUND, "非理财师用户");
-         }
-         Planner planner = plannerService.getPlannerByUid(user.getUid());
-         List<Map> result = new ArrayList<>();
-         Map map = new HashMap();
-
-
+        User user = super.getCurrentUser();
+        if (!user.getLoginRole().equals(Const.USER_ROLE.PLANNER)) {
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.NOT_FOUND, "非理财师用户");
+        }
+        Planner planner = plannerService.getPlannerByUid(user.getUid());
+        List<RankYear> result = rankYearService.getPlannerRankList(planner.getId());
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
-     }
+    }
+
+
+    /**
+     * 理财师历月排名(全公司、部门)
+     * @return
+     */
+    @RequestMapping(value = "/api/rank/month", method = RequestMethod.GET)
+    @ResponseBody
+    public ApiJsonResult rankMonth() {
+        User user = super.getCurrentUser();
+        if (!user.getLoginRole().equals(Const.USER_ROLE.PLANNER)) {
+           return new ApiJsonResult(APIConstants.API_JSON_RESULT.NOT_FOUND, "非理财师用户");
+        }
+        Planner planner = plannerService.getPlannerByUid(user.getUid());
+        List<RankMonth> result = rankMonthService.getPlannerRankList(planner.getId());
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
+    }
 }

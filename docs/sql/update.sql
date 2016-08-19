@@ -137,4 +137,10 @@ CREATE TABLE `rank_year` (
   UNIQUE KEY `pl_uniq` (`planner_id`,`year`,`department_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='年度业绩排名';
 
+ALTER TABLE `bank`.`rank_month`
+CHANGE COLUMN `rank` `rank` INT(11) NULL DEFAULT NULL COMMENT '全公司排名' ,
+ADD COLUMN `department_rank` INT NULL COMMENT '部门排名' AFTER `rank`;
 
+ALTER TABLE `bank`.`rank_year`
+CHANGE COLUMN `rank` `rank` INT(11) NULL DEFAULT NULL COMMENT '全公司排名' ,
+ADD COLUMN `department_rank` INT(11) NULL DEFAULT NULL COMMENT '部门排名' AFTER `rank`;

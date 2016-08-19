@@ -23,6 +23,8 @@ public interface RankMonthMapper {
 
     List<RankMonth> selectDistinctYearMonth();
 
+    List<RankMonth> selectDistinctDepartmentId();
+
     RankMonth selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") RankMonth record, @Param("example") RankMonthExample example);

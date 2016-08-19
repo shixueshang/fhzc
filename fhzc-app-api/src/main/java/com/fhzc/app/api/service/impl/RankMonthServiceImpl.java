@@ -36,6 +36,19 @@ public class RankMonthServiceImpl implements RankMonthService {
         }
     }
 
+    @Override
+    public RankMonth getByPlannerIdYearMonth(Integer plannerId, Date yearMonth){
+        RankMonthExample example = new RankMonthExample();
+        RankMonthExample.Criteria criteria = example.createCriteria();
+        criteria.andPlannerIdEqualTo(plannerId);
+        criteria.andYearMonthEqualTo(yearMonth);
+        if (rankMonthMapper.countByExample(example) > 0) {
+            return rankMonthMapper.selectByExample(example).get(0);
+        }else{
+            return null;
+        }
+    }
+
     @Deprecated
     private Date getMaxDate(){
         RankMonthExample example = new RankMonthExample();
@@ -71,11 +84,58 @@ public class RankMonthServiceImpl implements RankMonthService {
     }
 
     @Override
+    public List<Integer> getExistDepartment(){
+        List<RankMonth> rankList = rankMonthMapper.selectDistinctDepartmentId();
+        List<Integer> result = new ArrayList<>();
+        for (RankMonth rank : rankList) {
+            result.add(rank.getDepartmentId());
+        }
+        return result;
+    }
+
+    @Override
     public List<RankMonth> getYearMonthRankList(Date yearMonth){
         RankMonthExample example = new RankMonthExample();
         RankMonthExample.Criteria criteria = example.createCriteria();
         example.setOrderByClause("annualised desc");
         criteria.andYearMonthEqualTo(yearMonth);
         return rankMonthMapper.selectByExample(example);
+    }
+
+    @Override
+    public List<RankMonth> getYearMonthRankList(Date yearMonth,Integer departmentId){
+        RankMonthExample example = new RankMonthExample();
+        RankMonthExample.Criteria criteria = example.createCriteria();
+        example.setOrderByClause("annualised desc");
+        criteria.andYearMonthEqualTo(yearMonth);
+        criteria.andDepartmentIdEqualTo(departmentId);
+        return rankMonthMapper.selectByExample(example);
+    }
+
+    @Override
+    public List<RankMonth> getPlannerRankList(Integer plannerId) {
+        RankMonthExample example = new RankMonthExample();
+        RankMonthExample.Criteria criteria = example.createCriteria();
+        criteria.andPlannerIdEqualTo(plannerId);
+        example.setOrderByClause("`year_month` desc");
+        if (rankMonthMapper.countByExample(example) > 0) {
+            return rankMonthMapper.selectByExample(example);
+        }else{
+            return null;
+        }
+    }
+
+    @Override
+    public List<RankMonth> getPlannerRankList(Integer plannerId, Integer departmentId) {
+        RankMonthExample example = new RankMonthExample();
+        RankMonthExample.Criteria criteria = example.createCriteria();
+        criteria.andPlannerIdEqualTo(plannerId);
+        criteria.andPlannerIdEqualTo(departmentId);
+        example.setOrderByClause("year_month desc");
+        if (rankMonthMapper.countByExample(example) > 0) {
+            return rankMonthMapper.selectByExample(example);
+        }else{
+            return null;
+        }
     }
 }

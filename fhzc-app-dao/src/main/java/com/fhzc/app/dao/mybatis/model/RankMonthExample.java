@@ -491,6 +491,66 @@ public class RankMonthExample {
             addCriterion("`rank` not between", value1, value2, "rank");
             return (Criteria) this;
         }
+
+        public Criteria andDepartmentRankIsNull() {
+            addCriterion("`department_rank` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentRankIsNotNull() {
+            addCriterion("`department_rank` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentRankEqualTo(Integer value) {
+            addCriterion("`department_rank` =", value, "departmentRank");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentRankNotEqualTo(Integer value) {
+            addCriterion("`department_rank` <>", value, "departmentRank");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentRankGreaterThan(Integer value) {
+            addCriterion("`department_rank` >", value, "departmentRank");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentRankGreaterThanOrEqualTo(Integer value) {
+            addCriterion("`department_rank` >=", value, "departmentRank");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentRankLessThan(Integer value) {
+            addCriterion("`department_rank` <", value, "departmentRank");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentRankLessThanOrEqualTo(Integer value) {
+            addCriterion("`department_rank` <=", value, "departmentRank");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentRankIn(List<Integer> values) {
+            addCriterion("`department_rank` in", values, "departmentRank");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentRankNotIn(List<Integer> values) {
+            addCriterion("`department_rank` not in", values, "departmentRank");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentRankBetween(Integer value1, Integer value2) {
+            addCriterion("`department_rank` between", value1, value2, "departmentRank");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentRankNotBetween(Integer value1, Integer value2) {
+            addCriterion("`department_rank` not between", value1, value2, "departmentRank");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

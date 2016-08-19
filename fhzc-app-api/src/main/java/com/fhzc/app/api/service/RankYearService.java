@@ -9,7 +9,12 @@ import java.util.List;
  */
 public interface RankYearService {
     int addOrUpdate(RankYear rankYear);
+    RankYear getByPlannerIdYear(Integer plannerId, Integer year);
     List<Integer> getExistYear();
+    List<Integer> getExistDepartment();
     List<RankYear> getYearRankList(Integer year);
+    List<RankYear> getYearRankList(Integer year,Integer departmentId);
+    List<RankYear> getPlannerRankList(Integer plannerId);
+    List<RankYear> getPlannerRankList(Integer plannerId,Integer departmentId);
 }
 
