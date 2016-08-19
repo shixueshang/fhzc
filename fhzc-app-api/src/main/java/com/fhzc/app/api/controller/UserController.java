@@ -1,9 +1,7 @@
 package com.fhzc.app.api.controller;
 
 import com.fhzc.app.api.service.*;
-import com.fhzc.app.api.tools.APIConstants;
-import com.fhzc.app.api.tools.ApiJsonResult;
-import com.fhzc.app.api.tools.ObjUtils;
+import com.fhzc.app.api.tools.*;
 import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.util.Const;
 import org.springframework.stereotype.Controller;
@@ -51,11 +49,13 @@ public class UserController extends BaseController {
     @ResponseBody
     public ApiJsonResult getUserInfo() throws Exception {
         User user  = getCurrentUser();
+        user = super.setUserAvatarPath(user);
         Map result = ObjUtils.objectToMap(user);
         if(user.getLoginRole().equals(Const.USER_ROLE.CUSTOMER)) {
             Customer customer = customerService.getCustomerByUid(user.getUid());
             user.setLevel(super.getDicName(customer.getLevelId(), Const.DIC_CAT.CUSTOMER_LEVEL));
             result.put("cb_id", customer.getCbId());
+
 
             List<PlannerCustomer> plannerCustomers = plannerCustomerService.getCustomerPlannerList(customer.getCustomerId());
             if(plannerCustomers != null) {
@@ -132,6 +132,7 @@ public class UserController extends BaseController {
                 map.put("assetsSum", assetsSum);
                 map.put("uid", customerUser.getUid());
                 map.put("customerId", pc.getCustomerId());
+                customerUser = super.setUserAvatarPath(customerUser);
                 map.put("avatar", customerUser.getAvatar());
                 map.put("realname", customerUser.getRealname());
                 map.put("mobile", customerUser.getMobile());
@@ -278,6 +279,7 @@ public class UserController extends BaseController {
             return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"没有这个理财师");
         }
         User user = userService.getUser(planner.getUid());
+        user = super.setUserAvatarPath(user);
         Map result = new HashMap();
         result.put("name", user.getRealname());
         result.put("avatar", user.getAvatar());
@@ -317,5 +319,27 @@ public class UserController extends BaseController {
 
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.FAILED, "修改失败");
     }
+
+    /**
+     * 设置头像
+     * @return
+     */
+    @RequestMapping(value = "/api/set/avatar", method = RequestMethod.POST)
+    @ResponseBody
+    public ApiJsonResult setAvatar() {
+        String savePath = TextUtils.getConfig(Const.CONFIG_KEY_IMAGE_SAVE_PATH, this);
+        List<String> imageList = FileUtils.saveFilesToDisk(request, savePath);
+        String imageFile = null;
+        if (imageList.size() > 0) {
+            User user  = userService.getUser(getCurrentUser().getUid());
+            imageFile = savePath +  imageList.get(0);
+            user.setAvatar(imageFile);
+            userService.updateUser(user);
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, imageFile);
+        }
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.FAILED, "上传失败");
+    }
+
+
 }
 
