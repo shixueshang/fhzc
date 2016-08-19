@@ -11,6 +11,7 @@ import com.fhzc.app.dao.mybatis.model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -67,7 +68,9 @@ public class ScoreApiController extends BaseController {
      */
     @RequestMapping(value = "/api/personal/score/detail",method = RequestMethod.GET)
     @ResponseBody
-    public ApiJsonResult personalScoreDetail(String type, String start, String end){
+    public ApiJsonResult personalScoreDetail(@RequestParam String type,
+                                             @RequestParam String start,
+                                             @RequestParam String end){
         User user = super.getCurrentUser();
         Customer customer = customerService.getCustomerByUid(user.getUid());
         Integer customerId = customer.getCustomerId();
@@ -82,25 +85,21 @@ public class ScoreApiController extends BaseController {
         } catch (ParseException e) {
 
         }
-        if(scoreStart==null || scoreEnd==null){
-            return new ApiJsonResult(APIConstants.API_JSON_RESULT.FAILED,"date formart is error");
-        }else {
-            switch (type){
-                case "all":
-                    scoreHistory = scoreService.getAllList(customerId,scoreStart,scoreEnd);
-                    break;
-                case "available":
-                    scoreHistory = scoreService.getAvailableList(customerId,scoreStart,scoreEnd);
-                    break;
-                case "frozen":
-                    scoreHistory = scoreService.getFrozen(customerId,scoreStart,scoreEnd);
-                    break;
-                case "will":
-                    scoreHistory = scoreService.getWillExpired(customerId,scoreStart,scoreEnd);
-                    break;
-                default:
-                    break;
-            }
+        switch (type){
+            case "all":
+                scoreHistory = scoreService.getAllList(customerId,scoreStart,scoreEnd);
+                break;
+            case "available":
+                scoreHistory = scoreService.getAvailableList(customerId,scoreStart,scoreEnd);
+                break;
+            case "frozen":
+                scoreHistory = scoreService.getFrozen(customerId,scoreStart,scoreEnd);
+                break;
+            case "will":
+                scoreHistory = scoreService.getWillExpired(customerId,scoreStart,scoreEnd);
+                break;
+            default:
+                break;
         }
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, scoreHistory);
     }

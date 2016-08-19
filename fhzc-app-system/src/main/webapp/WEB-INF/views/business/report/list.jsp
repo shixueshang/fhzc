@@ -90,20 +90,20 @@
                                         </td>
                                         <td>
                                             <c:choose>
-                                                <c:when test="${right.isDisplay == '0'}">
+                                                <c:when test="${report.isDisplay == '0'}">
                                                     	否
                                                 </c:when>
-                                                <c:when test="${right.isDisplay == '1'}">
+                                                <c:when test="${report.isDisplay == '1'}">
                                                    		 是
                                                 </c:when>
                                             </c:choose>
                                         </td>
                                         <td>
                                             <c:choose>
-                                                <c:when test="${right.isRecommend == '0'}">
+                                                <c:when test="${report.isRecommend == '0'}">
                                                     	否
                                                 </c:when>
-                                                <c:when test="${right.isRecommend == '1'}">
+                                                <c:when test="${report.isRecommend == '1'}">
                                                    		 是
                                                 </c:when>
                                             </c:choose>
