@@ -23,6 +23,8 @@ import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 
+import static org.apache.shiro.web.filter.mgt.DefaultFilter.user;
+
 
 public class BaseController {
 
@@ -105,4 +107,15 @@ public class BaseController {
         return "";
     }
 
+    /**
+     * 设置用户头像路径
+     * @param user
+     * @return
+     */
+	public User setUserAvatarPath(User user){
+        if(user.getAvatar() != null && !user.getAvatar().contains("http")) {
+            user.setAvatar(basePath + user.getAvatar());
+        }
+		return user;
+	}
 }
