@@ -4,8 +4,10 @@ import com.fhzc.app.dao.mybatis.inter.SystemNoticeMapper;
 import com.fhzc.app.dao.mybatis.inter.SystemNoticeRecordMapper;
 import com.fhzc.app.dao.mybatis.model.SystemNotice;
 import com.fhzc.app.dao.mybatis.model.SystemNoticeExample;
+import com.fhzc.app.dao.mybatis.model.SystemNoticeRecord;
 import com.fhzc.app.dao.mybatis.model.SystemNoticeRecordExample;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
+import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.service.NoticeService;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
@@ -37,7 +39,7 @@ public class NoticeServiceImpl implements NoticeService {
     public void addOrUpdate(SystemNotice systemNotice) {
         Integer id = systemNotice.getId();
         if(id == null){
-            systemNoticeMapper.insert(systemNotice);
+            systemNoticeMapper.insertSelective(systemNotice);
         }else{
             systemNoticeMapper.updateByPrimaryKeyWithBLOBs(systemNotice);
         }
@@ -48,11 +50,35 @@ public class NoticeServiceImpl implements NoticeService {
         systemNoticeMapper.deleteByPrimaryKey(id);
     }
 
+
     @Override
-    public void deleteByNoticeId(Integer noticeId) {
+    public SystemNotice getSystemNotice(Integer noticeId) {
+        return systemNoticeMapper.selectByPrimaryKey(noticeId);
+    }
+
+    @Override
+    public void deleteRecordByNoticeId(Integer noticeId) {
         SystemNoticeRecordExample example = new SystemNoticeRecordExample();
         SystemNoticeRecordExample.Criteria criteria = example.createCriteria();
         criteria.andNoticeIdEqualTo(noticeId);
         systemNoticeRecordMapper.deleteByExample(example);
+    }
+
+    @Override
+    public void addOrUpdateNoticeRecord(SystemNoticeRecord record) {
+        Integer id = record.getId();
+        if(id == null){
+            systemNoticeRecordMapper.insert(record);
+        }else{
+            systemNoticeRecordMapper.updateByPrimaryKeyWithBLOBs(record);
+        }
+    }
+
+    @Override
+    public List<SystemNoticeRecord> findRecordByNoticeId(Integer noticeId) {
+        SystemNoticeRecordExample example = new SystemNoticeRecordExample();
+        SystemNoticeRecordExample.Criteria criteria = example.createCriteria();
+        criteria.andPushStatusEqualTo(Const.PUSH_STATUS.WAITTING_PUSH);
+        return systemNoticeRecordMapper.selectByExampleWithBLOBs(example);
     }
 }

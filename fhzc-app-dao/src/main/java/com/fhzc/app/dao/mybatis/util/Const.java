@@ -2,12 +2,30 @@ package com.fhzc.app.dao.mybatis.util;
 
 public class Const {
 
+    public static final String UMENG_PUSH_APPKEY = "57a0140a67e58e982a0020b4";
+    public static final String UMENG_PUSH_APP_MASTER_SECRET = "jqyndid67kfluu56oan1y71dg2qldb63";
+
+    public static final String UMENG_PUSH_APPKEY_ANDROID = "57b16f9467e58eb94900180b";
+    public static final String UMENG_PUSH_APP_MASTER_SECRET_ANDROID = "ap7lwshihbysiuidlovhxwumauxakxzq";
+
+    public static final String SYSTEM_NAME = "复华资产";
+
     /**
      * 聊天图片存放地址
      */
     public static final String CONFIG_KEY_IMAGE_SAVE_PATH =  "chat_image_save_path";
 
     public static final String CONFIG_KEY_SYSTEM_IMAGE_SAVE_PATH =  "system_image_save_path";
+
+    /**
+     * 设备类型
+     */
+    public static class DEVICE_TYPE{
+
+        public static final String ANDROID = "android";
+
+        public static final String IOS = "ios";
+    }
 
     /**
      * 发短信的参数
@@ -405,6 +423,17 @@ public class Const {
          * 邮件
          */
         public static final Integer EMAIL = 4;
+    }
+
+    /**
+     * 推送状态
+     */
+    public static class PUSH_STATUS{
+        public static final Integer NOT_PUSH = 0;
+
+        public static final Integer WAITTING_PUSH = 1;
+
+        public static final Integer PUSHED = 2;
     }
 }
 

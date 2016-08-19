@@ -2,18 +2,11 @@ package com.fhzc.app.api.tools;
 
 public class APIConstants {
 
-	public static final String UMENG_PUSH_APPKEY = "568e2fd0e0f55af072000aa6";
-	public static final String UMENG_PUSH_APP_MASTER_SECRET = "kqtyxz5j9mvxvr0tbcjae15epaci8xp4";
-	
-	public static final String UMENG_PUSH_APPKEY_ANDROID = "57b16f9467e58eb94900180b";
-	public static final String UMENG_PUSH_APP_MASTER_SECRET_ANDROID = "ap7lwshihbysiuidlovhxwumauxakxzq";
-	
+
 	public static final String MESSAGE_NEED_LOGIN = "请先登录";
 
     public static final String FH_ASSIST_SESSIONID = "e572abb3-1b95-4695-b10a-698b8688af9d";
-    public static final Integer FH_ASSIST_USERID = 0;
-
-    public static final String SYSTEM_NAME = "复华资产";
+    public static final Integer FH_ASSIST_USERID = 1;
 
     /**
      * 服务器返回状态
@@ -143,16 +136,6 @@ public class APIConstants {
         public static final String Rights = "rights";
 
         public static final String Report = "report";
-    }
-
-    /**
-     * 设备类型
-     */
-    public static class DEVICE_TYPE{
-
-        public static final String ANDROID = "android";
-
-        public static final String IOS = "ios";
     }
 
 }

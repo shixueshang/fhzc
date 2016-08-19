@@ -70,6 +70,25 @@
                 </div>
             </div>
 
+            <div class="modal fade" id="pushModel">
+                <div class="modal-dialog">
+                    <div class="modal-content message_align">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">提示信息</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>您确认要手动推送吗？</p>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="hidden" id="pushUrl"/>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <a  onclick="urlPush()" class="btn btn-success" data-dismiss="modal">确定</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!--页面操作详细内容 开始-->
             <div class="row-fluid">
                 <div class="span12">
@@ -84,7 +103,8 @@
                                 <tr>
                                     <td>消息标题</td>
                                     <td>消息内容</td>
-                                    <td>是否已推送</td>
+                                    <td>发布时间</td>
+                                    <td>推送状态</td>
                                     <td>推送渠道</td>
                                     <td>操作</td>
                                 </tr>
@@ -93,27 +113,31 @@
                                 <c:forEach items="${notices}" var="notice">
                                     <tr>
                                         <td>${notice.title}</td>
-                                        <td>${notice.contet}</td>
+                                        <td>${notice.content}</td>
+                                        <td><fmt:formatDate value="${notice.publishTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                                         <td>
                                             <c:choose>
                                                 <c:when test="${notice.pushStatus == '0'}">
-                                                    未推送
+                                                    <span class="label">未推送</span>
                                                 </c:when>
                                                 <c:when test="${notice.pushStatus == '1'}">
-                                                    待推送
+                                                    <span class="label label-warning">待推送</span>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    已推送
+                                                    <span class="label label-success">已推送</span>
                                                 </c:otherwise>
                                             </c:choose>
                                         </td>
-
-                                        <td><fmt:formatDate value="${notice.publishTime}" pattern="yyyy-MM-dd"/></td>
+                                        <td>${notice.pushChannel}</td>
 
                                         <td>
                                             <a href="<%=contextPath%>/system/notice/detail/${notice.id}" class="btn mini purple"><i class="icon-edit"></i> 编辑</a>
-                                            <a href="javascript:void(0)" onclick="deleteById('<%=contextPath%>/system/banner/delete/${notice.id}')" class="btn mini purple button_delete"><i class="icon-trash"></i> 删除</a>
-                                            <a href="<%=contextPath%>/system/notice/push/${notice.id}" class="btn mini purple"><i class="icon-edit"></i> 推送</a>
+                                            <a href="javascript:void(0)" onclick="deleteById('<%=contextPath%>/system/notice/delete/${notice.id}')" class="btn mini purple"><i class="icon-trash"></i> 删除</a>
+                                            <c:choose>
+                                                <c:when test="${notice.pushStatus == '1'}">
+                                                <a href="javascript:void(0)" onclick="push('<%=contextPath%>/system/notice/push/${notice.id}')" class="btn mini purple"><i class="icon-check"></i> 推送</a>
+                                                </c:when>
+                                            </c:choose>
                                     </td>
                                     </tr>
                                 </c:forEach>
@@ -144,6 +168,28 @@
         $.ajax({
             url: url,
             type: 'GET',
+            success: function(result) {
+                if(result){
+                    $("#delete_success").css("display", "block").hide(3000);
+                    window.location.reload();
+                }
+            },
+            error: function(xhr, textStatus, errorThrown){
+                $("#delete_fail").css("display", "block").hide(3000);
+            }
+        });
+    }
+
+    function push(url){
+        $('#pushUrl').val(url);
+        $('#pushModel').modal();
+    }
+
+    function urlPush(){
+        var url = $.trim($("#pushUrl").val());//获取会话中的隐藏属性URL
+        $.ajax({
+            url: url,
+            type: 'POST',
             success: function(result) {
                 if(result){
                     $("#delete_success").css("display", "block").hide(3000);

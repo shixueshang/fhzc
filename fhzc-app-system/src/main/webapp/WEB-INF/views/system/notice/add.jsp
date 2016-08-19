@@ -94,18 +94,19 @@
 
                                             <div class="control-group">
                                                 <label class="control-label">推送状态</label>
-                                                <div class="controls">
-                                                    <select name="pushStatus" disabled="disabled"  class="m-wrap large" >
-                                                        <option value="0">未推送</option>
-                                                        <option value="1">待推送</option>
-                                                        <option value="2">已推送</option>
-                                                    </select>
+                                                <div class="controls" >
+                                                    <label class="radio">
+                                                    <input type="radio" name="pushStatus" value="0"/>未推送
+                                                    </label>
+                                                    <label class="radio">
+                                                    <input type="radio" name="pushStatus" value="1"/>待推送
+                                                    </label>
                                                 </div>
                                             </div>
 
                                             <div class="control-group">
                                                 <label class="control-label">推送渠道</label>
-                                                <div class="controls" style="margin-top:8px;">
+                                                <div class="controls" >
                                                     <input type="checkbox" id="channel_system" value="1"/>系统&nbsp;&nbsp;&nbsp;&nbsp;
                                                     <input type="checkbox" id="channel_sms" value="2"/>短信&nbsp;&nbsp;&nbsp;&nbsp;
                                                     <input type="checkbox" id="channel_push" value="3"/>推送&nbsp;&nbsp;&nbsp;&nbsp;
@@ -116,7 +117,7 @@
                                             <div class="form-actions">
                                                 <input name="id" type="hidden" value="${notice.id}" id="noticeId"/>
                                                 <input name="pushChannel" type="hidden"  id="pushChannel"/>
-                                                <button type="button" onclick="submitForm()" class="btn blue"><i class="icon-ok"></i> 保存</button>
+                                                <button type="button" onclick="submitForm()" id="sub_button" class="btn blue"><i class="icon-ok"></i> 保存</button>
                                             </div>
                                         </form>
                                         <!-- END FORM-->
@@ -137,15 +138,55 @@
 <jsp:include page="../../include/footer.jsp"/>
 
 <script>
+
     $(function(){
 
         var noticeId =  '${notice.id}';
         if(noticeId != null && noticeId != ''){
             $('#notice_title').text('编辑消息');
+
+            var pushChannels = '${notice.pushChannel}';
+            var arr = pushChannels.split(",");
+            for(var i=0; i<arr.length; i++){
+                var system = $('#channel_system');
+                if(arr[i] == system.val()){
+                    system.parent().addClass('checked');
+                    system.prop("checked", "checked");
+                }
+                var sms = $('#channel_sms');
+                if(arr[i] == sms.val()){
+                    sms.parent().addClass('checked');
+                    sms.prop("checked", "checked");
+                }
+                var push = $('#channel_push');
+                if(arr[i] == push.val()){
+                    push.parent().addClass('checked');
+                    push.prop("checked", "checked");
+                }
+                var email = $('#channel_email');
+                if(arr[i] == email.val()){
+                    email.parent().addClass('checked');
+                    email.prop("checked", "checked");
+                }
+            }
         }
 
+        var pushStatus = '${notice.pushStatus}';
+        if(pushStatus == 0 || pushStatus == null || pushStatus == ''){
+            $.uniform.update($("input[name='pushStatus'][value='0']").attr("checked", true));
+            $.uniform.update($("input[name='pushStatus'][value='1']").attr("checked", false));
+            $.uniform.update($("input[name='pushStatus'][value='2']").attr("checked", false));
+        }else if(pushStatus == 1){
+            $.uniform.update($("input[name='pushStatus'][value='0']").attr("checked", false));
+            $.uniform.update($("input[name='pushStatus'][value='1']").attr("checked", true));
+            $.uniform.update($("input[name='pushStatus'][value='2']").attr("checked", false));
+        }else{
+            $.uniform.update($("input[name='pushStatus'][value='0']").attr("checked", false));
+            $.uniform.update($("input[name='pushStatus'][value='1']").attr("checked", false));
+            $.uniform.update($("input[name='pushStatus'][value='2']").attr("checked", true));
+        }
 
-    })
+    });
 
     function submitForm(){
         if($('input[type="checkbox"]:checked').length == 0){
@@ -153,6 +194,12 @@
                 title: '提示',
                 message: '请至少选择一个推送渠道!'
             });
+        }
+
+        var flag = true;
+        if(flag){
+            $('#sub_button').attr('disabled', 'disabled');
+            $('#sub_button').removeClass('blue');
         }
 
         var channels = new Array();
