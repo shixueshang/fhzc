@@ -16,5 +16,6 @@ public interface RankYearService {
     List<RankYear> getYearRankList(Integer year,Integer departmentId);
     List<RankYear> getPlannerRankList(Integer plannerId);
     List<RankYear> getPlannerRankList(Integer plannerId,Integer departmentId);
+    List<RankYear> getFirstTenByYear(Integer year);
 }
 

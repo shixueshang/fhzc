@@ -4,6 +4,7 @@ import com.fhzc.app.api.service.RankYearService;
 import com.fhzc.app.dao.mybatis.inter.RankYearMapper;
 import com.fhzc.app.dao.mybatis.model.RankYear;
 import com.fhzc.app.dao.mybatis.model.RankYearExample;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -110,6 +111,21 @@ public class RankYearServiceImpl implements RankYearService{
         example.setOrderByClause("year_month desc");
         if (rankYearMapper.countByExample(example) > 0) {
             return rankYearMapper.selectByExample(example);
+        }else{
+            return null;
+        }
+    }
+
+    @Override
+    public List<RankYear> getFirstTenByYear(Integer year) {
+        RankYearExample example = new RankYearExample();
+        RankYearExample.Criteria criteria = example.createCriteria();
+        criteria.andYearEqualTo(year);
+        example.setOrderByClause("annualised desc");
+        RowBounds rowBounds = new RowBounds(0, 10);
+
+        if (rankYearMapper.countByExample(example) > 0) {
+            return rankYearMapper.selectByExampleWithRowbounds(example, rowBounds);
         }else{
             return null;
         }

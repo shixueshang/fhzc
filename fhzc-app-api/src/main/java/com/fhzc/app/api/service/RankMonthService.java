@@ -17,4 +17,5 @@ public interface RankMonthService {
     List<RankMonth> getYearMonthRankList(Date yearMonth, Integer departmentId);
     List<RankMonth> getPlannerRankList(Integer plannerId);
     List<RankMonth> getPlannerRankList(Integer plannerId,Integer departmentId);
+    List<RankMonth> getPlannerRankListByYear(Integer plannerId, Date start, Date end);
 }

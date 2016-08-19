@@ -131,7 +131,21 @@ public class RankMonthServiceImpl implements RankMonthService {
         RankMonthExample.Criteria criteria = example.createCriteria();
         criteria.andPlannerIdEqualTo(plannerId);
         criteria.andPlannerIdEqualTo(departmentId);
-        example.setOrderByClause("year_month desc");
+        example.setOrderByClause("`year_month` desc");
+        if (rankMonthMapper.countByExample(example) > 0) {
+            return rankMonthMapper.selectByExample(example);
+        }else{
+            return null;
+        }
+    }
+
+    @Override
+    public List<RankMonth> getPlannerRankListByYear(Integer plannerId, Date start, Date end) {
+        RankMonthExample example = new RankMonthExample();
+        RankMonthExample.Criteria criteria = example.createCriteria();
+        example.setOrderByClause("`year_month` desc");
+        criteria.andPlannerIdEqualTo(plannerId);
+        criteria.andYearMonthBetween(start, end);
         if (rankMonthMapper.countByExample(example) > 0) {
             return rankMonthMapper.selectByExample(example);
         }else{
