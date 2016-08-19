@@ -210,7 +210,12 @@ public class RankApiController extends BaseController {
         }
         Planner planner = plannerService.getPlannerByUid(user.getUid());
         List<RankYear> result = rankYearService.getPlannerRankList(planner.getId());
-        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
+
+        if (result == null) {
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.NOT_FOUND);
+        } else {
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
+        }
     }
 
 
@@ -227,7 +232,11 @@ public class RankApiController extends BaseController {
         }
         Planner planner = plannerService.getPlannerByUid(user.getUid());
         List<RankMonth> result = rankMonthService.getPlannerRankList(planner.getId());
-        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
+        if (result == null) {
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.NOT_FOUND);
+        } else {
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
+        }
     }
 
     /**
@@ -240,6 +249,9 @@ public class RankApiController extends BaseController {
     public ApiJsonResult rankTen(@RequestParam (value = "year") Integer year) {
         List<RankYear> yearList = rankYearService.getFirstTenByYear(year);
         List<Map> result = new ArrayList<>();
+        if(yearList == null){
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.NOT_FOUND,"rank_year表无数据,请先初始化数据!");
+        }
         for (RankYear record : yearList) {
             Map map = new HashMap();
             Planner planner = plannerService.getPlanner(record.getPlannerId());
@@ -273,6 +285,10 @@ public class RankApiController extends BaseController {
 
         List<RankMonth> result = rankMonthService.getPlannerRankListByYear(planner.getId(),start,end);
 
-        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
+        if (result == null) {
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.NOT_FOUND);
+        } else {
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
+        }
     }
 }
