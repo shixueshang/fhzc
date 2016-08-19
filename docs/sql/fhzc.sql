@@ -392,22 +392,6 @@ CREATE TABLE IF NOT EXISTS `bank`.`im_message` (
   COMMENT = '消息表';
 
 
--- -----------------------------------------------------
--- Table `bank`.`log`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `bank`.`log` ;
-
-CREATE TABLE IF NOT EXISTS `bank`.`log` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  `desc` VARCHAR(45) NULL DEFAULT NULL,
-  `ctime` DATETIME NOT NULL,
-  `admin_id` INT(11) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`))
-  ENGINE = InnoDB
-  DEFAULT CHARACTER SET = utf8
-  COMMENT = '后台系统变更日志';
-
 
 -- -----------------------------------------------------
 -- Table `bank`.`planner`
@@ -875,21 +859,25 @@ CREATE TABLE IF NOT EXISTS `bank`.`user` (
 
 
 -- -----------------------------------------------------
--- Table `bank`.`user_log`
+-- Table `bank`.`system_log`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `bank`.`user_log` ;
-
-CREATE TABLE IF NOT EXISTS `bank`.`user_log` (
+DROP TABLE IF EXISTS `bank`.`system_log`;
+CREATE TABLE IF NOT EXISTS `bank`.`system_log` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `uid` INT(11) NULL DEFAULT NULL COMMENT '用户id',
-  `login_role` ENUM('customer', 'planner') NULL DEFAULT 'customer' COMMENT '登陆用户类型',
-  `action` VARCHAR(45) NULL DEFAULT NULL,
-  `ctime` DATETIME NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `uid_index` (`uid` ASC))
+  `user_id` INT(11) NULL  COMMENT '操作人',
+  `description` VARCHAR(200) NULL COMMENT '描述',
+  `method` VARCHAR(200) NULL  COMMENT '方法',
+  `type` VARCHAR(10) NULL COMMENT '操作类型',
+  `level` VARCHAR(10) NULL COMMENT '日志级别',
+  `request_ip` VARCHAR(45) NULL COMMENT '请求ip',
+  `exception_code` VARCHAR(45) NULL COMMENT '异常代码',
+  `exception_detail` VARCHAR(200) COMMENT '异常描述',
+  `params` VARCHAR(45) COMMENT '参数',
+  `create_time` DATETIME NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`))
   ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8
-  COMMENT = '手机登陆用户操作存档';
+  COMMENT = '系统操作日志';
 
 
 -- -----------------------------------------------------

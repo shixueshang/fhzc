@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
     private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private static final String IMPORT_SQL = "";
-	
+
     @Resource
     private ExcelImporter importer;
 
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private FocusMapper focusMapper;
-    
+
     @Override
     public PageableResult<User> findPageUsers(String name, int page, int size) {
         UserExample example = new UserExample();
@@ -55,10 +55,10 @@ public class UserServiceImpl implements UserService {
 
         return new PageableResult<User>(page, size, userMapper.countByExample(example), decryptUser(list));
     }
-    
+
     @Override
     public List<User> findAllUsers() {
-    	UserExample example = new UserExample();
+        UserExample example = new UserExample();
         return decryptUser(userMapper.selectByExample(example));
     }
 
@@ -72,45 +72,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByIdentity(String identity) {
-    	if (StringUtils.isBlank(identity)){
-            return null;
-        } else {
-        	identity = identity.trim();
-        }
+
 
         UserExample example = new UserExample();
-        int size = 30;
-        int pageNum = 1;
-        RowBounds rowBounds = new RowBounds((pageNum - 1) * size, size);
-        while (true){
-            List<User> users = userMapper.selectByExampleWithRowbounds(example, rowBounds);
-            if (users == null || users.size() == 0){
-                break;
-            } else {
-                for (User user : users){
-                    String key = user.getSalt();
-                    String idcard = null;
-                    if(key == null){
-                        idcard = user.getPassportCode();
-                    } else {
-                        try {
-                        	idcard = EncryptUtils.decryptByDES(key, user.getPassportCode());
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    if (identity.equalsIgnoreCase(idcard)){
-                        return user;
-                    }
-                }
-            }
-
-            pageNum++;
-            rowBounds = new RowBounds((pageNum - 1) * size, size);
+        UserExample.Criteria criteria = example.createCriteria();
+        try {
+            identity = EncryptUtils.encryptToDES(identity.substring(identity.length() - 8), identity);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
+        criteria.andPassportCodeEqualTo(identity);
+        if (userMapper.countByExample(example) > 0) {
+            return userMapper.selectByExample(example).get(0);
+        }
         return null;
+
     }
 
     @Override

@@ -6,8 +6,6 @@ import com.fhzc.app.dao.mybatis.model.ScoreHistoryExample;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.service.ScoreService;
-
-import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
@@ -93,7 +91,8 @@ public class ScoreServiceImpl implements ScoreService {
         if(userId != null){
             criteria.andUidEqualTo(userId);
         }
-        if(StringUtils.isNotBlank(identity) && userId == null){
+
+        if(!"".equals(identity)  && userId == null){
             return new PageableResult<ScoreHistory>(page, size, 0, new ArrayList<ScoreHistory>());
         }
         if(isApprove !=null ){

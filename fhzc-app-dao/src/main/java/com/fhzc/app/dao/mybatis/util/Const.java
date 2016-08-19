@@ -435,5 +435,47 @@ public class Const {
 
         public static final Integer PUSHED = 2;
     }
+
+    /**
+     * 记录日志类型
+     */
+    public static class LOG_TYPE{
+
+        /**
+         * controller层
+         */
+        public static final String CONTROLLER = "controller";
+
+        /**
+         * service层
+         */
+        public static final String SERVICE = "service";
+    }
+
+    /**
+     * 日志级别
+     */
+    public static class LOG_LEVEL{
+
+        /**
+         * 正常信息
+         */
+        public static final String NORMAL = "normal";
+
+        /**
+         * 警告
+         */
+        public static final String WARNING = "warning";
+
+        /**
+         * 错误
+         */
+        public static final String ERROR = "error";
+
+        /**
+         * 严重错误
+         */
+        public static final String SERIOUS_ERROR = "serious_error";
+    }
 }
 

@@ -6,6 +6,7 @@ import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
+import com.fhzc.app.system.aop.SystemControllerLog;
 import com.fhzc.app.system.commons.util.FileUtil;
 import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.controller.AjaxJson;
@@ -55,6 +56,7 @@ public class ProductController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @SystemControllerLog(description = "产品查询")
     public ModelAndView listProduct(){
         ModelAndView mav = new ModelAndView("business/product/list");
         PageableResult<Product> pageableResult = productService.findPageProducts(page, size);
@@ -95,6 +97,7 @@ public class ProductController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @SystemControllerLog(description = "产品新增或修改")
     public String addOrUpdateProduct(Product product, MultipartFile coverFile, MultipartFile proveFile, MultipartFile noticeFile){
 
         if(!coverFile.isEmpty()){
