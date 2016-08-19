@@ -8,6 +8,7 @@ import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
 import com.fhzc.app.dao.mybatis.model.Activity;
 import com.fhzc.app.dao.mybatis.model.ActivityApply;
+import com.fhzc.app.dao.mybatis.util.Const;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -51,13 +52,29 @@ public class ActivityApplyApiController extends BaseController {
                 throw new BadRequestException("验证码输入错误");
             }
         }
-        activityApply.setPlannerId(plannerId);
-        activityApply.setType(APIConstants.ActivityApply.TYPE_SELF);
-        activityApply.setCtime(new Date());
-        activityApply.setResult(APIConstants.ActivityApply.RESULT_YES);
-        activityApplyService.addOrUpdateActivityApply(activityApply);
+        Activity activity = activityService.getActivity(activityApply.getActivityId());
+        Integer status = activityService.getActivityStatus(activity);
+        if (status.equals(Const.ACTIVITY_STATUS.GOING)) {
+            activityApply.setPlannerId(plannerId);
+            activityApply.setType(APIConstants.ActivityApply.TYPE_SELF);
+            activityApply.setCtime(new Date());
+            activityApply.setResult(APIConstants.ActivityApply.RESULT_YES);
+            activityApplyService.addOrUpdateActivityApply(activityApply);
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
+        }
+        if (status.equals(Const.ACTIVITY_STATUS.WILL)) {
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"未到活动报名时间,敬请期待");
+        }
 
-        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
+        if (status.equals(Const.ACTIVITY_STATUS.ACT_OVER)) {
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"活动已结束");
+        }
+
+        if (status.equals(Const.ACTIVITY_STATUS.APP_OVER)) {
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"活动报名已经结束,不能报名");
+        }
+
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"发生未知错误");
     }
 
     /**

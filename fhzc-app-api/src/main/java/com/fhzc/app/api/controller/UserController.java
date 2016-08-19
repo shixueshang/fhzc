@@ -137,8 +137,23 @@ public class UserController extends BaseController {
                 map.put("mobile", customerUser.getMobile());
                 map.put("phone", customerUser.getPhone());
                 map.put("address", customerUser.getAddress());
+                map.put("risk", super.getDicName(customer.getRisk(), Const.DIC_CAT.RISK_LEVEL));
                 map.put("main", pc.getIsMain());
                 map.put("memo", pc.getMemo());
+                map.put("passportType", super.getDicName(customerUser.getPassportTypeId(), Const.DIC_CAT.PASSPORT));
+                map.put("passportTypeId", customerUser.getPassportTypeId());
+
+                StringBuilder sb1 = new StringBuilder(customerUser.getPassportCode());
+                map.put("passportCode", sb1.replace(3, 7, "****"));
+                map.put("passportAddress", customerUser.getPassportAddress());
+                map.put("birthday", customerUser.getBirthday());
+                if (customerUser.getGender().equals(Const.GENDER.MALE)) {
+                    map.put("gender", Const.GENDER.MALE_ZH);
+                }
+
+                if (customerUser.getGender().equals(Const.GENDER.FEMALE)) {
+                    map.put("gender", Const.GENDER.FEMALE_ZH);
+                }
                 List<ScoreHistory> availableList= scoreService.getAvailableList(pc.getCustomerId());
                 List<ScoreHistory> consumeList = scoreService.getConsume(pc.getCustomerId());
                 map.put("score", scoreService.sumScore(availableList) + scoreService.sumScore(consumeList));
