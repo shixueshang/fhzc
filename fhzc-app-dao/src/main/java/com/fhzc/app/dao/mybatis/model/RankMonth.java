@@ -15,6 +15,8 @@ public class RankMonth {
 
     private Integer rank;
 
+    private Integer departmentRank;
+
     public Integer getId() {
         return id;
     }
@@ -61,5 +63,13 @@ public class RankMonth {
 
     public void setRank(Integer rank) {
         this.rank = rank;
+    }
+
+    public Integer getDepartmentRank() {
+        return departmentRank;
+    }
+
+    public void setDepartmentRank(Integer departmentRank) {
+        this.departmentRank = departmentRank;
     }
 }

@@ -25,6 +25,8 @@ public interface RankYearMapper {
 
     List<RankYear> selectDistinctYear();
 
+    List<RankYear> selectDistinctDepartmentId();
+
     int updateByExampleSelective(@Param("record") RankYear record, @Param("example") RankYearExample example);
 
     int updateByExample(@Param("record") RankYear record, @Param("example") RankYearExample example);

@@ -101,7 +101,8 @@
                         <input class="form-control" name="identity" placeholder="输入身份证"  >
 
                         <label class="control-label" style="margin-left: 20px">审批状态</label>
-                        <select class="form-control" name="isApprove" id="isApprove">
+                        <select class="form-control" name="isApprove" id="isApprove" >
+                        	<option value="">全部</option>
                             <option value="0">待审批</option>
                             <option value="1">已审批</option>
                         </select>
@@ -123,10 +124,11 @@
                             <button type="button" id="batchApprove" class="btn blue" onclick="batchApprove('<%=contextPath%>/business/score/batchApprove')" data-toggle="modal" data-target="#confirm-approve">批量审批</button>
                         </div>
                         <div class="portlet-body" style="height: 630px; overflow: scroll">
-                            <table class="table table-striped table-bordered table-hover" id="score_table">
+                            <table class="table table-striped table-bordered table-hover" id="score_table" >
                                 <thead>
                                 <tr>
                                     <td><input type="checkbox" id="checkAll" name="checkAll" />全选</td>
+                                    <td>客户姓名</td>
                                     <td>积分</td>
                                     <td>积分状态</td>
                                     <td>描述</td>
@@ -140,6 +142,7 @@
                                 <c:forEach items="${scores}" var="score">
                                     <tr>
                                         <td><input type="checkbox" name="subBox" value="${score.id}"/></td>
+                                        <td>${score.customerName}</td>
                                         <td>${score.score}</td>
                                         <td>
                                             <c:forEach items="${scoreStatus}" var="scoreStat">

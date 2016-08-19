@@ -13,6 +13,8 @@ public class RankYear {
 
     private Integer rank;
 
+    private Integer departmentRank;
+
     public Integer getId() {
         return id;
     }
@@ -59,5 +61,13 @@ public class RankYear {
 
     public void setRank(Integer rank) {
         this.rank = rank;
+    }
+
+    public Integer getDepartmentRank() {
+        return departmentRank;
+    }
+
+    public void setDepartmentRank(Integer departmentRank) {
+        this.departmentRank = departmentRank;
     }
 }

@@ -125,7 +125,7 @@ public class ContractController extends BaseController {
         List<Integer> plannerIds = new ArrayList<Integer>();
         Product pro = new Product();
         if(StringUtils.isNotBlank(plannerName)){
-          users = userService.getUsersByName(plannerName);
+          users = userService.getUsersByName(plannerName.trim());
     	  if(users.isEmpty()){
           	return mav;
           }else{
@@ -138,7 +138,7 @@ public class ContractController extends BaseController {
           }
         }
         if(StringUtils.isNotBlank(productName)){
-        	 pro = productService.getProduct(productName);
+        	 pro = productService.getProduct(productName.trim());
              if(pro == null){
              	return mav;
              }
