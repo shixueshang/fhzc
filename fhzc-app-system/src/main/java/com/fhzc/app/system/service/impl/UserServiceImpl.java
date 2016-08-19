@@ -72,12 +72,44 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByIdentity(String identity) {
-        UserExample example = new UserExample();
-        UserExample.Criteria criteria = example.createCriteria();
-        criteria.andPassportCodeEqualTo(identity);
-        if(userMapper.countByExample(example) > 0){
-            return decryptUser(userMapper.selectByExample(example).get(0));
+    	if (StringUtils.isBlank(identity)){
+            return null;
+        } else {
+        	identity = identity.trim();
         }
+
+        UserExample example = new UserExample();
+        int size = 30;
+        int pageNum = 1;
+        RowBounds rowBounds = new RowBounds((pageNum - 1) * size, size);
+        while (true){
+            List<User> users = userMapper.selectByExampleWithRowbounds(example, rowBounds);
+            if (users == null || users.size() == 0){
+                break;
+            } else {
+                for (User user : users){
+                    String key = user.getSalt();
+                    String idcard = null;
+                    if(key == null){
+                        idcard = user.getPassportCode();
+                    } else {
+                        try {
+                        	idcard = EncryptUtils.decryptByDES(key, user.getPassportCode());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    if (identity.equalsIgnoreCase(idcard)){
+                        return user;
+                    }
+                }
+            }
+
+            pageNum++;
+            rowBounds = new RowBounds((pageNum - 1) * size, size);
+        }
+
         return null;
     }
 

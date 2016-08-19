@@ -206,7 +206,7 @@
 
         var rightId =  '${right.id}';
         if(rightId != null && rightId != ''){
-            $('#right_title').text('编辑权益');
+            $('#rights_title').text('编辑权益');
         }
 
         var rightType = '${right.cid}';

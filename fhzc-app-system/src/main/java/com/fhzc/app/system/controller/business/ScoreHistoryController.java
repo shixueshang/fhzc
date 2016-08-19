@@ -1,15 +1,19 @@
 package com.fhzc.app.system.controller.business;
 
+import com.fhzc.app.dao.mybatis.model.Customer;
 import com.fhzc.app.dao.mybatis.model.ScoreHistory;
 import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.controller.BaseController;
+import com.fhzc.app.system.service.CustomerService;
 import com.fhzc.app.system.service.DictionaryService;
 import com.fhzc.app.system.service.ScoreHistoryService;
 import com.fhzc.app.system.service.ScoreService;
 import com.fhzc.app.system.service.UserService;
+
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,6 +39,9 @@ public class ScoreHistoryController extends BaseController {
 
     @Resource
     private UserService userService;
+    
+    @Resource
+    private CustomerService customerService;
 
     /**
      * 积分历史导入页面
@@ -118,15 +125,34 @@ public class ScoreHistoryController extends BaseController {
     @RequestMapping(value = "/find", method = RequestMethod.GET)
     public ModelAndView findScore(String identity, Integer isApprove){
         ModelAndView mav = new ModelAndView("business/score/list");
-
-        User user = null;
-        if(identity != null){
+        User user = new User();
+        List<Customer> customers = new ArrayList<Customer>();
+        String customerName = "";
+        if(StringUtils.isNotBlank(identity)){
              user = userService.getUserByIdentity(identity);
+        }
+        if(user == null){
+        	return mav;
         }
         PageableResult<ScoreHistory> pageableResult = scoreService.findPageScore(user == null ? null : user.getUid(), identity, isApprove, page, size);
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("scores", pageableResult.getItems());
-
+        if(StringUtils.isBlank(identity)){
+        	customers = customerService.findAllCustomer();
+        	for(ScoreHistory score : pageableResult.getItems()){
+        		for (Customer customer : customers) {
+					if(customer.getUid() == score.getUid()){
+						customerName = userService.getUser(score.getUid()).getRealname();
+						score.setCustomerName(customerName);
+					}
+				}
+        		
+        	}
+        }else{
+        	for(ScoreHistory score : pageableResult.getItems()){
+        		score.setCustomerName(user.getRealname());
+        	}
+        }
         mav.addObject("isApprove", isApprove);
         mav.addObject("scoreStatus", dictionaryService.findDicByType(Const.DIC_CAT.SCORE_STATUS));
         mav.addObject("fromTypes", dictionaryService.findDicByType(Const.DIC_CAT.SCORE_FROM_TYPE));

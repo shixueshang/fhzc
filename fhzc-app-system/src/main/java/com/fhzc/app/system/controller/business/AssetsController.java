@@ -61,7 +61,7 @@ public class AssetsController extends BaseController {
         List<Integer> customerIds = new ArrayList<Integer>();
         Product pro = new Product();
         if(StringUtils.isNotBlank(customerName)){
-        	users = userService.getUsersByName(customerName);
+        	users = userService.getUsersByName(customerName.trim());
 	        if(users.isEmpty()){
 	         	return mav;
 	         }else{
@@ -74,7 +74,7 @@ public class AssetsController extends BaseController {
 	         }
         }
         if(StringUtils.isNotBlank(productName)){
-        	pro = productService.getProduct(productName);
+        	pro = productService.getProduct(productName.trim());
         	if(pro == null){
         		return mav;
         	}
