@@ -129,7 +129,7 @@ public class ScoreServiceImpl implements ScoreService{
         criteria.andUidEqualTo(customerId);
         criteria.andIsVaildEqualTo(Const.SCORE_VAILD.IS_VAILD);
         criteria.andIsApproveEqualTo(Const.Score.IS_APPROVE);
-        criteria.andVaildTimeBetween(start,end);
+        criteria.andCtimeBetween(start,end);
 
         return scoreHistoryMapper.selectByExample(example);
     }
