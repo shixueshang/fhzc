@@ -3,7 +3,6 @@
 TRUNCATE TABLE `admin`;
 TRUNCATE TABLE `admin_role`;
 TRUNCATE TABLE `system_module`;
-TRUNCATE TABLE `system_admin_module`;
 
 /*
 -- Query: SELECT * FROM bank.admin
@@ -65,6 +64,13 @@ INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (50,'理财师业绩','/personal/planner/achivement',NULL,25,3,1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (51,'banner列表','/system/banner/list',NULL,16,3,1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (52,'banner新增','/system/banner/pub',NULL,16,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (53, '关注列表', '/personal/user/focus/list',NULL, 27, 3, 1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (54, '关于App', '/system/about/app/pub',NULL,16, 3, 1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (55, '联系我们', '/system/about/contact/pub',NULL, 16, 3, 1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (56, '消息新增', '/system/notice/pub',NULL, 16, 3, 1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (57, '消息列表', '/system/notice/list',NULL, 16, 3, 1);
+
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (58, '财务日报列表', '/business/contract/list', NULL, 45, 3, 1);
 
 
 /*
@@ -137,6 +143,10 @@ INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,
 INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (72,'score_from_type','积分来源','其他','other',0,0,0,NULL,NULL);
 INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (74,'risk_level','风险评级','成长型','4',0,0,0,NULL,NULL);
 INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (75,'risk_level','风险评级','进取型','5',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (76,'push_channel','推送渠道','系统','1',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (77,'push_channel','推送渠道','短信','2',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (78,'push_channel','推送渠道','推送','3',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (79,'push_channel','推送渠道','邮件','4',0,0,0,NULL,NULL);
 
 
 TRUNCATE TABLE `areas`;
@@ -217,5 +227,5 @@ INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf
 
 TRUNCATE TABLE `user`;
 
-INSERT INTO `bank`.`user` (`uid`, `login`, `password`, `realname`, `gender`, `avatar`, `login_role`,  `ctime`) VALUES ('0', 'fhzs', '14adcfdae177218ed3b7f9806c85c1b4', '复华助手', 'male', '/opt/fhzc/api/image/default-head.jpg', 'planner', now());
+INSERT INTO `bank`.`user` (`uid`, `login`, `password`, `realname`, `gender`, `avatar`, `login_role`,  `ctime`) VALUES ('1', 'fhzs', '14adcfdae177218ed3b7f9806c85c1b4', '复华助手', 'male', '/opt/fhzc/api/image/default-head.jpg', 'planner', now());
 

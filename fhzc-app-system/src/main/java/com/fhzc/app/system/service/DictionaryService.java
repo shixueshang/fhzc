@@ -30,6 +30,29 @@ public interface DictionaryService {
      * @return
      */
     Dictionary findCustomerLevel(String levelValue);
+    
+    /**
+     * 获取客户的风险等级
+     * @param levelValue
+     * @return
+     */
+    Dictionary findRiskLevel(String levelValue);
 
     Dictionary getDictionary(Integer id);
+    
+    /**
+     * 判断数据字典的key是否存在
+     * @param cat
+     * @param key
+     * @return
+     */
+    boolean isKeyExists(String cat, String key);
+    
+    /**
+     * 判断数据字典的value是否存在
+     * @param cat
+     * @param value
+     * @return
+     */
+    boolean isValueExists(String cat, String value);
 }

@@ -29,4 +29,6 @@ public interface RightsService {
     List<Rights> getListByCid(Integer cid);
 
     List<Rights> getRecommend();
+
+    List<Rights> getLatestRights();
 }

@@ -19,6 +19,8 @@
         </property>
     </bean>
 
+    <aop:aspectj-autoproxy/>
+
     <!-- 自动开启“注解实现Bean依赖注入”支持。 -->
     <context:component-scan base-package="com.fhzc.app.dao.*"/>
     <context:component-scan base-package="com.fhzc.app.api.*"/>

@@ -50,3 +50,97 @@ ADD COLUMN `level` INT(1) NULL COMMENT '部门层级' AFTER `leader_uid`;
 ALTER TABLE `bank`.`banner`
 ADD COLUMN `status` INT(1) NULL COMMENT 'banner状态(0上线1已下线)' AFTER `from_type`;
 
+#2016-08-16
+DROP TABLE IF EXISTS `bank`.`about_app` ;
+CREATE TABLE `bank`.`about_app` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `version` VARCHAR(45) NULL COMMENT '版本',
+  `introduction` TEXT NULL COMMENT '简介',
+  `is_using` INT(1) NULL COMMENT '是否正在使用',
+  `type` VARCHAR(10) NULL COMMENT '类型1、关于App2、联系我们',
+  PRIMARY KEY (`id`))
+  COMMENT = '关于App';
+
+ALTER TABLE `bank`.`planner_achivements_daily`
+ADD COLUMN `area` INT(11) NULL COMMENT '区总' AFTER `department_id`;
+
+ALTER TABLE `bank`.`planner_achivements_monthly`
+ADD COLUMN `area` INT(11) NULL COMMENT '区总' AFTER `department_id`;
+
+
+ALTER TABLE `bank`.`planner_achivements_daily`
+ADD COLUMN `root_dept` INT(11) NULL COMMENT '顶级机构' AFTER `area`;
+
+ALTER TABLE `bank`.`planner_achivements_monthly`
+ADD COLUMN `root_dept` INT(11) NULL COMMENT '顶级机构' AFTER `area`;
+
+#2016-08-17
+DROP TABLE IF EXISTS `bank`.`system_notice` ;
+CREATE TABLE `bank`.`system_notice` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(200) NULL COMMENT '标题',
+  `content` TEXT NULL COMMENT '内容',
+  `push_status` INT(1) NULL COMMENT '推送状态0未推送1、待推送2、已推送',
+  `push_channel` VARCHAR(45) NULL COMMENT '推送途径1、系统2、短信3、推送4、邮件',
+  `publish_time` DATETIME NULL COMMENT '发布时间',
+  PRIMARY KEY (`id`))
+  ENGINE = InnoDB
+  DEFAULT CHARACTER SET = utf8
+  COMMENT = '消息推送维护表';
+
+DROP TABLE IF EXISTS `bank`.`system_notice_record` ;
+CREATE TABLE `bank`.`system_notice_record` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `notice_id` INT(11) NULL COMMENT '消息id',
+  `user_id` INT(11) NULL COMMENT '推送用户',
+  `content` TEXT NULL COMMENT '内容',
+  `push_status` INT(1) NULL COMMENT '推送状态0未推送1、待推送2、已推送',
+  `push_channel` INT(1) NULL COMMENT '推送途径1、系统2、短信3、推送4、邮件',
+  PRIMARY KEY (`id`))
+  ENGINE = InnoDB
+  DEFAULT CHARACTER SET = utf8
+  COMMENT = '推送记录表';
+
+ALTER TABLE `bank`.`about_app`
+ADD COLUMN `android_url` VARCHAR(255) NULL COMMENT '安装包下载地址' AFTER `type`,
+ADD COLUMN `ios_url` VARCHAR(255) NULL AFTER `android_url`;
+
+
+CREATE TABLE `bank`.`suggest` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `type` VARCHAR(45) NULL COMMENT '问题类型',
+  `content` TEXT NULL COMMENT '问题内容',
+  `imgs` TEXT NULL COMMENT '问题图片',
+  `mobile` VARCHAR(45) NULL COMMENT '电话号码',
+  PRIMARY KEY (`id`))
+COMMENT = '用户反馈';
+
+CREATE TABLE `rank_month` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `planner_id` int(11) DEFAULT NULL COMMENT '理财师id',
+  `year_month` date NOT NULL COMMENT '年月',
+  `annualised` int(11) DEFAULT NULL COMMENT '年化业绩',
+  `department_id` int(11) DEFAULT NULL COMMENT '部门id',
+  `rank` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `pl_rank_uniq` (`planner_id`,`year_month`,`department_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8 COMMENT='月业绩排名';
+
+CREATE TABLE `rank_year` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `planner_id` int(11) DEFAULT NULL COMMENT '理财师id',
+  `year` int(11) NOT NULL COMMENT '年',
+  `annualised` int(11) DEFAULT NULL COMMENT '年化业绩',
+  `department_id` int(11) DEFAULT NULL COMMENT '部门id',
+  `rank` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `pl_uniq` (`planner_id`,`year`,`department_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='年度业绩排名';
+
+ALTER TABLE `bank`.`rank_month`
+CHANGE COLUMN `rank` `rank` INT(11) NULL DEFAULT NULL COMMENT '全公司排名' ,
+ADD COLUMN `department_rank` INT NULL COMMENT '部门排名' AFTER `rank`;
+
+ALTER TABLE `bank`.`rank_year`
+CHANGE COLUMN `rank` `rank` INT(11) NULL DEFAULT NULL COMMENT '全公司排名' ,
+ADD COLUMN `department_rank` INT(11) NULL DEFAULT NULL COMMENT '部门排名' AFTER `rank`;

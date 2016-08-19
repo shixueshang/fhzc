@@ -69,7 +69,7 @@ public class UserController extends BaseController {
                 vo.setId(focus.getId());
                 vo.setFocusTime(focus.getCtime());
                 if (focus.getStatus() == 0){
-                    vo.setStatus("未关注");
+                    vo.setStatus("取消关注");
                 } else if (focus.getStatus() == 1) {
                     vo.setStatus("关注");
                 }

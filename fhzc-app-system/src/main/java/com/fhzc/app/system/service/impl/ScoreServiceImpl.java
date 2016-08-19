@@ -29,7 +29,7 @@ public class ScoreServiceImpl implements ScoreService {
 
         criteria.andUidEqualTo(uid);
         criteria.andStatusEqualTo(type);
-        criteria.andIsVaildEqualTo(Const.Data_Status.DATA_NORMAL);
+        criteria.andIsVaildEqualTo(Const.SCORE_VAILD.IS_VAILD);
         criteria.andIsApproveEqualTo(Const.Score.IS_APPROVE);
 
         return scoreHistoryMapper.selectByExample(example);
@@ -91,11 +91,14 @@ public class ScoreServiceImpl implements ScoreService {
         if(userId != null){
             criteria.andUidEqualTo(userId);
         }
+
         if(!"".equals(identity)  && userId == null){
             return new PageableResult<ScoreHistory>(page, size, 0, new ArrayList<ScoreHistory>());
         }
-        criteria.andIsApproveEqualTo(isApprove);
-        criteria.andIsVaildEqualTo(Const.Data_Status.DATA_NORMAL);
+        if(isApprove !=null ){
+        	criteria.andIsApproveEqualTo(isApprove);
+        }
+        criteria.andIsVaildEqualTo(Const.SCORE_VAILD.IS_VAILD);
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<ScoreHistory> list = scoreHistoryMapper.selectByExampleWithRowbounds(example, rowBounds);
         return new PageableResult<ScoreHistory>(page, size, scoreHistoryMapper.countByExample(example), list);

@@ -41,7 +41,7 @@
                             </li></shiro:hasPermission>
                             <shiro:hasPermission name="/business/product/type">
                                 <li>
-                                    <a href="<%=contextPath%>/business/product/type">产品类型维护</a>
+                                    <a href="<%=contextPath%>/business/product/type">产品分类维护</a>
                                 </li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>
@@ -59,10 +59,10 @@
                                 <a href="<%=contextPath%>/business/activity/list">活动列表</a>
                             </li></shiro:hasPermission>
                         <shiro:hasPermission name="/business/activity/pub">   <li>
-                                <a href="<%=contextPath%>/business/activity/pub">新增活动</a>
+                                <a href="<%=contextPath%>/business/activity/pub">活动新增</a>
                             </li></shiro:hasPermission>
                             <shiro:hasPermission name="/business/activity/registers">   <li>
-                                <a href="<%=contextPath%>/business/activity/registers">报名管理</a>
+                                <a href="<%=contextPath%>/business/activity/registers">活动报名</a>
                             </li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>
@@ -97,10 +97,10 @@
                                 <a href="<%=contextPath%>/business/rights/list">权益列表</a>
                             </li></shiro:hasPermission>
                         <shiro:hasPermission name="/business/rights/pub"><li>
-                                <a href="<%=contextPath%>/business/rights/pub">新增权益</a>
+                                <a href="<%=contextPath%>/business/rights/pub">权益新增</a>
                             </li></shiro:hasPermission>
                         <shiro:hasPermission name="/business/rights/reservation/pub"><li>
-                            <a href="<%=contextPath%>/business/rights/reservation/pub">新增预约</a>
+                            <a href="<%=contextPath%>/business/rights/reservation/pub">添加权益预约</a>
                         </li></shiro:hasPermission>
                         <shiro:hasPermission name="/business/rights/reservations"><li>
                             <a href="<%=contextPath%>/business/rights/reservations">权益预约列表</a>
@@ -118,13 +118,13 @@
 
                         <ul class="sub">
                         <shiro:hasPermission name="/personal/customer/single/list"><li>
-                                <a href="/personal/customer/single/list">个人客户列表</a>
+                                <a href="<%=contextPath%>/personal/customer/single/list">个人客户列表</a>
                             </li></shiro:hasPermission>
                         <shiro:hasPermission name="/personal/customer/organ/list"><li>
-                                <a href="/personal/customer/organ/list">机构客户列表</a>
+                                <a href="<%=contextPath%>/personal/customer/organ/list">机构客户列表</a>
                             </li></shiro:hasPermission>
                         <shiro:hasPermission name="/personal/user/focus/list"><li>
-                                <a href="/personal/user/focus/list">关注列表</a>
+                                <a href="<%=contextPath%>/personal/user/focus/list">关注列表</a>
                             </li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>
@@ -139,10 +139,10 @@
 
                         <ul class="sub">
                         <shiro:hasPermission name="/personal/planner/list"><li>
-                                <a href="/personal/planner/list">理财师列表</a>
+                                <a href="<%=contextPath%>/personal/planner/list">理财师列表</a>
                             </li></shiro:hasPermission>
                         <shiro:hasPermission name="/personal/planner/achivement"><li>
-                                <a href="/personal/planner/achivement">理财师业绩</a>
+                                <a href="<%=contextPath%>/personal/planner/achivement">理财师业绩</a>
                             </li></shiro:hasPermission>
 
                         </ul>
@@ -174,6 +174,9 @@
                         <ul class="sub">
                             <shiro:hasPermission name="/business/assets/list"><li>
                                 <a href="<%=contextPath%>/business/assets/list">订单列表</a>
+                            </li></shiro:hasPermission>
+                            <shiro:hasPermission name="/business/contract/list"><li>
+                                <a href="<%=contextPath%>/business/contract/list">财务日报列表</a>
                             </li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>
@@ -221,6 +224,18 @@
                         <shiro:hasPermission name="/system/banner/pub"><li>
                                 <a href="<%=contextPath%>/system/banner/pub">banner新增</a>
                             </li></shiro:hasPermission>
+                        <shiro:hasPermission name="/system/about/app/pub"><li>
+                                <a href="<%=contextPath%>/system/about/app/pub">关于App</a>
+                            </li></shiro:hasPermission>
+                        <shiro:hasPermission name="/system/about/contact/pub"><li>
+                                <a href="<%=contextPath%>/system/about/contact/pub">联系我们</a>
+                            </li></shiro:hasPermission>
+                        <shiro:hasPermission name="/system/notice/pub"><li>
+                                <a href="<%=contextPath%>/system/notice/pub">消息新增</a>
+                            </li></shiro:hasPermission>
+                        <shiro:hasPermission name="/system/notice/list"><li>
+                                <a href="<%=contextPath%>/system/notice/list">消息列表</a>
+                            </li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>
 
@@ -238,16 +253,16 @@
                                     <a href="<%=contextPath%>/business/product/importor">产品导入</a>
                                 </li></shiro:hasPermission>
                             <shiro:hasPermission name="/personal/planner/importor"><li>
-                                <a href="/personal/planner/importor">在职理财师导入</a>
+                                <a href="<%=contextPath%>/personal/planner/importor">在职理财师导入</a>
                             </li></shiro:hasPermission>
                             <shiro:hasPermission name="/personal/planner/importoroff"><li>
-                                <a href="/personal/planner/importoroff">离职理财师导入</a>
+                                <a href="<%=contextPath%>/personal/planner/importoroff">离职理财师导入</a>
                             </li></shiro:hasPermission>
                             <shiro:hasPermission name="/business/plannerachivementsdaily/importor"><li>
-                                <a href="/business/plannerachivementsdaily/importor">理财师日业绩导入</a>
+                                <a href="<%=contextPath%>/business/plannerachivementsdaily/importor">理财师日业绩导入</a>
                             </li></shiro:hasPermission>
                             <shiro:hasPermission name="/business/plannerachivementsmonthly/importor"><li>
-                                <a href="/business/plannerachivementsmonthly/importor">理财师月业绩导入</a>
+                                <a href="<%=contextPath%>/business/plannerachivementsmonthly/importor">理财师月业绩导入</a>
                             </li></shiro:hasPermission>
                             <shiro:hasPermission name="/business/contract/importor"><li>
                                 <a href="<%=contextPath%>/business/contract/importor">财务日表导入</a>

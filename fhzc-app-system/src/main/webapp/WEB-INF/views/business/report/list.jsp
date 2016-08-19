@@ -66,7 +66,9 @@
                                     <td>报告名</td>
                                     <td>封面图</td>
                                     <td>报告类型</td>
-                                    <td>生效状态</td>
+                                   <!--   <td>生效状态</td>-->
+                                    <td>是否显示</td>
+                                    <td>是否推荐</td>
                                     <td>关注人数</td>
                                     <td>操作</td>
                                 </tr>
@@ -86,7 +88,26 @@
                                                 </c:if>
                                             </c:forEach>
                                         </td>
-                                        <td></td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${report.isDisplay == '0'}">
+                                                    	否
+                                                </c:when>
+                                                <c:when test="${report.isDisplay == '1'}">
+                                                   		 是
+                                                </c:when>
+                                            </c:choose>
+                                        </td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${report.isRecommend == '0'}">
+                                                    	否
+                                                </c:when>
+                                                <c:when test="${report.isRecommend == '1'}">
+                                                   		 是
+                                                </c:when>
+                                            </c:choose>
+                                        </td>
                                         <td></td>
                                         <td><a href="<%=contextPath%>/business/report/detail/${report.id}" class="btn mini purple"><i class="icon-edit"></i>编辑</a>
                                         </td>

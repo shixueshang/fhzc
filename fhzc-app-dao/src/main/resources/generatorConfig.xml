@@ -46,15 +46,12 @@
 
         <!--生成对应表及类名 -->
 
-        <table tableName="banner"
+        <table tableName="system_log"
                delimitAllColumns="true"
                delimitIdentifiers="true"
-               domainObjectName="Banner">
+               domainObjectName="SystemLog">
             <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
         </table>
-
-
-
 
     </context>
 </generatorConfiguration>

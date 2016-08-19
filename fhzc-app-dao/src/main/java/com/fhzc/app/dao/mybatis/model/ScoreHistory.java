@@ -28,7 +28,17 @@ public class ScoreHistory {
     private Integer isVaild;
 
     private Integer isApprove;
+    
+    private String customerName;
+    
+    public String getCustomerName() {
+        return customerName;
+    }
 
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+    
     public Integer getId() {
         return id;
     }

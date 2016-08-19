@@ -1321,6 +1321,66 @@ public class PlannerAchivementsMonthlyExample {
             addCriterion("`department_id` not between", value1, value2, "departmentId");
             return (Criteria) this;
         }
+
+        public Criteria andAreaIsNull() {
+            addCriterion("`area` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAreaIsNotNull() {
+            addCriterion("`area` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAreaEqualTo(Integer value) {
+            addCriterion("`area` =", value, "area");
+            return (Criteria) this;
+        }
+
+        public Criteria andAreaNotEqualTo(Integer value) {
+            addCriterion("`area` <>", value, "area");
+            return (Criteria) this;
+        }
+
+        public Criteria andAreaGreaterThan(Integer value) {
+            addCriterion("`area` >", value, "area");
+            return (Criteria) this;
+        }
+
+        public Criteria andAreaGreaterThanOrEqualTo(Integer value) {
+            addCriterion("`area` >=", value, "area");
+            return (Criteria) this;
+        }
+
+        public Criteria andAreaLessThan(Integer value) {
+            addCriterion("`area` <", value, "area");
+            return (Criteria) this;
+        }
+
+        public Criteria andAreaLessThanOrEqualTo(Integer value) {
+            addCriterion("`area` <=", value, "area");
+            return (Criteria) this;
+        }
+
+        public Criteria andAreaIn(List<Integer> values) {
+            addCriterion("`area` in", values, "area");
+            return (Criteria) this;
+        }
+
+        public Criteria andAreaNotIn(List<Integer> values) {
+            addCriterion("`area` not in", values, "area");
+            return (Criteria) this;
+        }
+
+        public Criteria andAreaBetween(Integer value1, Integer value2) {
+            addCriterion("`area` between", value1, value2, "area");
+            return (Criteria) this;
+        }
+
+        public Criteria andAreaNotBetween(Integer value1, Integer value2) {
+            addCriterion("`area` not between", value1, value2, "area");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

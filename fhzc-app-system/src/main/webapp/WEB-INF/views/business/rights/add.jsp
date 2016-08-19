@@ -165,6 +165,19 @@
                                                 </div>
                                             </div>
 
+                                            <div class="control-group">
+                                                <label class="control-label">是否精选</label>
+                                                <div class="controls">
+                                                    <label class="radio">
+                                                        <input type="radio" name="isRecommend" value="1" />
+                                                        是
+                                                    </label>
+                                                    <label class="radio">
+                                                        <input type="radio" name="isRecommend" value="0" checked />
+                                                        否
+                                                    </label>
+                                                </div>
+                                            </div>
                                             <div class="form-actions">
                                                 <input name="id" type="hidden" value="${right.id}" />
                                                 <button type="submit" class="btn blue"><i class="icon-ok"></i> 保存</button>
@@ -193,7 +206,7 @@
 
         var rightId =  '${right.id}';
         if(rightId != null && rightId != ''){
-            $('#right_title').text('编辑权益');
+            $('#rights_title').text('编辑权益');
         }
 
         var rightType = '${right.cid}';
@@ -227,6 +240,15 @@
             }
         });
 
+        var isRecommend = '${right.isRecommend}';
+        if(isRecommend == 1 || isRecommend == '' || isRecommend == null){
+            $.uniform.update($("input[name='isRecommend'][value='1']").attr("checked", true));
+            $.uniform.update($("input[name='isRecommend'][value='0']").attr("checked", false));
+        }else{
+            $.uniform.update($("input[name='isRecommend'][value='1']").attr("checked", false));
+            $.uniform.update($("input[name='isRecommend'][value='0']").attr("checked", true));
+        }
+        
         var dispalyImg = $("#default_img");
         var imgUrl = "<%=basePath%>/${right.cover}";
         var defaultImg = "/static/image/no-image.png";

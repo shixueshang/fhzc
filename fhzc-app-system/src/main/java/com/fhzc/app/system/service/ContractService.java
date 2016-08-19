@@ -6,6 +6,7 @@ import com.fhzc.app.dao.mybatis.model.Contract;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,7 +20,7 @@ public interface ContractService {
      * @param size
      * @return
      */
-    PageableResult<Contract> findPageContracts(int page, int size);
+    PageableResult<Contract> findPageContracts(Integer productId, List<Integer> plannerIds, int page, int size);
 
     /**
      * 添加
@@ -48,4 +49,10 @@ public interface ContractService {
      * @return
      */
     boolean isNameExists(String name);
+    
+    /**
+     * 获得所有合同日报
+     * @return
+     */
+    List<Contract> findAllContract();
 }

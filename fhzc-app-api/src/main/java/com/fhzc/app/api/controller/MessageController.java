@@ -4,10 +4,7 @@ import com.fhzc.app.api.service.CustomerService;
 import com.fhzc.app.api.service.MessageService;
 import com.fhzc.app.api.service.UserService;
 import com.fhzc.app.api.service.*;
-import com.fhzc.app.api.tools.APIConstants;
-import com.fhzc.app.api.tools.ApiJsonResult;
-import com.fhzc.app.api.tools.FileUtils;
-import com.fhzc.app.api.tools.TextUtils;
+import com.fhzc.app.api.tools.*;
 import com.fhzc.app.dao.mybatis.model.Customer;
 import com.fhzc.app.dao.mybatis.model.ImMessage;
 import com.fhzc.app.dao.mybatis.model.User;
@@ -51,7 +48,13 @@ public class MessageController extends BaseController {
     @Resource
     private CustomerService customerService;
 
-    private static final String SHARE = "share_";
+    @Resource
+    private PushTokenService pushTokenService;
+
+    @Resource
+    private SystemNoticeRecordService systemNoticeRecordService;
+
+    private static final String SHARE = "share";
 
     /**
      * 发送消息
@@ -63,7 +66,7 @@ public class MessageController extends BaseController {
      */
     @RequestMapping(value = "/api/message/publish", method = RequestMethod.POST)
     @ResponseBody
-    public ApiJsonResult publishMessage(Integer toUserId, @RequestParam(required = false) String text, String type, @RequestParam(required = false) String duration){
+    public ApiJsonResult publishMessage(Integer toUserId, @RequestParam(required = false) String text, String type, @RequestParam(required = false) String duration) throws Exception {
 
             User user  = getCurrentUser();
             ImMessage message = new ImMessage();
@@ -84,12 +87,15 @@ public class MessageController extends BaseController {
             String sessionId = messageService.hasChatHistory(user.getUid(), toUserId);
             if(sessionId == null){
                     sessionId = UUID.randomUUID().toString();
-                }
+            }
             message.setSessionId(sessionId);
             message.setMessageType(type);
             message.setSendTime(new Date());
 
             ImMessage result = messageService.sendMessgeToSession(message);
+
+            pushTokenService.pushMessageToUser(toUserId, text);
+
             if(type.equals(APIConstants.Message_Type.Audio)){
                 result.setContent("");
             }else{
@@ -153,7 +159,7 @@ public class MessageController extends BaseController {
                 userMap.put("role", user.getLoginRole());
                 if(user.getLoginRole() != null && user.getLoginRole().equals(APIConstants.USER_ROIE.CUSTOMER)){
                     Customer customer = customerService.getCustomerByUid(user.getUid());
-                    userMap.put("level", user.getLevel() == null ? "" : getLevelName(customer.getLevelId()));
+                    userMap.put("level", user.getLevel() == null ? "" : getDicName(customer.getLevelId(), Const.DIC_CAT.CUSTOMER_LEVEL));
                 }
                 userMap.put("name", user.getRealname());
                 userMap.put("avatar", basePath + user.getAvatar());
@@ -202,32 +208,42 @@ public class MessageController extends BaseController {
      */
     @RequestMapping(value = "/api/share", method = RequestMethod.POST)
     @ResponseBody
-    public ApiJsonResult share(@RequestParam(value="toUserId[]") Integer[] toUserId, Integer id, String type){
+    public ApiJsonResult share(@RequestParam(value="toUserId[]") Integer[] toUserId,
+                               @RequestParam(value="id") Integer id,
+                               @RequestParam(value="type") String type){
         for (Integer toUser : toUserId) {
             User user = getCurrentUser();
             ImMessage message = new ImMessage();
             message.setUserId(user.getUid());
             message.setToUserId(toUser);
-            String title = "";
+            List<String> shareEle = new ArrayList<>();
+            shareEle.add(this.SHARE);
+            shareEle.add(type);
+            shareEle.add(id.toString());
             switch (type){
                 case Const.FOCUS_TYPE.PRODUCT:
                     Product product = productService.getProduct(id);
-                    title = product.getName();
+                    shareEle.add(product.getName());
+                    shareEle.add(product.getDesc());
                     break;
                 case Const.FOCUS_TYPE.ACTIVITY:
                     Activity activity = activityService.getActivity(id);
-                    title = activity.getName();
+                    shareEle.add(activity.getName());
+                    shareEle.add(activity.getApplyEndTime().toString());
+                    shareEle.add(activity.getAddress());
                     break;
                 case Const.FOCUS_TYPE.REPORT:
                     Report report = reportService.getReport(id);
-                    title = report.getName();
+                    shareEle.add(report.getName());
+                    shareEle.add(report.getSummary());
                     break;
                 case Const.FOCUS_TYPE.RIGHTS:
                     Rights rights = rightsService.getRights(id);
-                    title = rights.getName();
+                    shareEle.add(rights.getName());
+                    shareEle.add(rights.getSpendScore().toString());
                     break;
             }
-            String text = this.SHARE.concat(type).concat("_").concat(id.toString()).concat("_").concat(title);
+            String text = ListUtil.listToString(shareEle, Const.SEPRATOR);
             message.setContent(text);
             //查询对话历史,确定sessionId
             String sessionId = messageService.hasChatHistory(user.getUid(), toUser);
@@ -243,4 +259,16 @@ public class MessageController extends BaseController {
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
     }
 
+    /**
+     * 公告通知
+     * @return
+     */
+    @RequestMapping(value = "/api/notice", method = RequestMethod.GET)
+    @ResponseBody
+    public ApiJsonResult notice(){
+        User user = getCurrentUser();
+        List<SystemNoticeRecord> list = systemNoticeRecordService.getByUserId(user.getUid());
+
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,list);
+    }
 }

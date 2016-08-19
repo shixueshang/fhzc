@@ -22,14 +22,6 @@
                     <!-- BEGIN TOP NAVIGATION MENU -->
                     <ul class="nav pull-right">
 
-                        <!--未读消息-->
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="icon-envelope-alt"></i>
-                                <span class="badge">5</span>
-                            </a>
-                        </li>
-
                         <li class="dropdown user">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img alt="" width="29" height="29" src="<%=contextPath%>/assets/images/avatar.png" />

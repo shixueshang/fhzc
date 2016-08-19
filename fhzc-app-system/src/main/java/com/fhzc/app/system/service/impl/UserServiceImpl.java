@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
     private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private static final String IMPORT_SQL = "";
-	
+
     @Resource
     private ExcelImporter importer;
 
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private FocusMapper focusMapper;
-    
+
     @Override
     public PageableResult<User> findPageUsers(String name, int page, int size) {
         UserExample example = new UserExample();
@@ -55,10 +55,10 @@ public class UserServiceImpl implements UserService {
 
         return new PageableResult<User>(page, size, userMapper.countByExample(example), decryptUser(list));
     }
-    
+
     @Override
     public List<User> findAllUsers() {
-    	UserExample example = new UserExample();
+        UserExample example = new UserExample();
         return decryptUser(userMapper.selectByExample(example));
     }
 
@@ -72,6 +72,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByIdentity(String identity) {
+
+
         UserExample example = new UserExample();
         UserExample.Criteria criteria = example.createCriteria();
         try {
@@ -80,10 +82,11 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
         }
         criteria.andPassportCodeEqualTo(identity);
-        if(userMapper.countByExample(example) > 0){
-            return decryptUser(userMapper.selectByExample(example).get(0));
+        if (userMapper.countByExample(example) > 0) {
+            return userMapper.selectByExample(example).get(0);
         }
         return null;
+
     }
 
     @Override

@@ -67,7 +67,7 @@
                                         <form action="<%=contextPath%>/system/role/add" id="form_sample_1" method="POST" class="form-horizontal">
                                             <div class="alert alert-error hide">
                                                 <button class="close" data-dismiss="alert"></button>
-                                                您的表单有未完成的必填项,请检查.
+                                                您的表单校验失败,请检查.
                                             </div>
                                             <div class="alert alert-success hide">
                                                 <button class="close" data-dismiss="alert"></button>
@@ -149,13 +149,27 @@
             errorClass: 'help-inline', // default input error message class
             focusInvalid: false, // do not focus the last invalid input
             ignore: "",
+            messages: {
+                roleName:{required:"角色名称不能为空！",remote:jQuery.format("该角色名称已经存在")},
+            },
             rules: {
-                name: {
-                    required: true
-                },
-                url: {
-                    required: true,
-                    url: true
+            	roleName: {
+                	 required: true,
+                     remote: {
+                         url: "/system/role/isRoleNameExists",
+                         type: "get",
+                         data: {
+                        	 roleName: function() {
+	                                 var old_name = '${role.roleName}';
+	                                 var new_name = $("input[name='roleName']").val();
+	                                 if(old_name == new_name){
+	                                     return old_name + 'no check';
+	                                 }else {
+	                                     return new_name;
+	                                 }
+                             	}
+                         	}
+                     }
                 }
             },
 

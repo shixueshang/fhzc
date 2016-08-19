@@ -20,4 +20,11 @@ public interface CustomerService {
      * @return
      */
     Customer getCustomer(Integer customerId);
+
+    /**
+     * 修改客户信息
+     * @param customer
+     * @return
+     */
+    int setCustomer(Customer customer);
 }

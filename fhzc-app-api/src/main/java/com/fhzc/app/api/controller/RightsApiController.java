@@ -48,7 +48,7 @@ public class RightsApiController extends BaseController{
         List<Object> result = new ArrayList<>();
         if(rightsList != null){
             for (Rights rights:rightsList){
-                String levelName = super.getLevelName(rights.getLevel());
+                String levelName = super.getDicName(rights.getLevel(), Const.DIC_CAT.CUSTOMER_LEVEL);
                 Map map = ObjUtils.objectToMap(rights);
                 map.put("levelName", levelName);
                 result.add(map);
@@ -81,7 +81,7 @@ public class RightsApiController extends BaseController{
         Map result = ObjUtils.objectToMap(rights);
         User user = super.getCurrentUser();
         Focus focus = focusService.getFocusByCond(user.getUid(),rightsId,APIConstants.FocusType.Rights);
-        result.put("levelNeed",super.getLevelName(rights.getLevel()));
+        result.put("levelNeed",super.getDicName(rights.getLevel(), Const.DIC_CAT.CUSTOMER_LEVEL));
 
         if(focus != null){
             result.put("focusStatus",focus.getStatus());

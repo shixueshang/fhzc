@@ -25,6 +25,10 @@ public interface PlannerAchivementsDailyMapper {
 
     PlannerAchivementsDaily selectByPrimaryKey(Integer id);
 
+    List<PlannerAchivementsDaily> selectDistinctPlannerUid();
+
+    List<PlannerAchivementsDaily> selectDistinctPlannerUidByDeptId(Integer departmentId);
+
     int updateByExampleSelective(@Param("record") PlannerAchivementsDaily record, @Param("example") PlannerAchivementsDailyExample example);
 
     int updateByExample(@Param("record") PlannerAchivementsDaily record, @Param("example") PlannerAchivementsDailyExample example);
@@ -32,6 +36,8 @@ public interface PlannerAchivementsDailyMapper {
     int updateByPrimaryKeySelective(PlannerAchivementsDaily record);
 
     int updateByPrimaryKey(PlannerAchivementsDaily record);
+
+    List<PlannerAchivementsDaily> findAchiveDailyByArea(Map<String, Object> param);
 
     List<PlannerAchivementsDaily> findAchiveDailyBySub(Map<String, Object> param);
 

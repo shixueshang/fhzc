@@ -59,30 +59,17 @@ public class ActivityApiController extends BaseController{
         Map result = ObjUtils.objectToMap(activity);
         User user = super.getCurrentUser();
         Customer customer = customerService.getCustomerByUid(user.getUid());
-
-        ActivityApply activityApply = activityApplyService.getActivityIdByCustomerId(customer.getCustomerId(),activityId);
-        if(activityApply != null) {
-            result.put("activityResult", activityApply.getResult());
-            result.put("activityIsContact", activityApply.getIsContact());
-            result.put("activityIsSure", activityApply.getIsSure());
-        }else{
-            result.put("activityResult", "");
-            result.put("activityIsContact", "");
-            result.put("activityIsSure", "");
+        if(customer != null){
+            ActivityApply apply = activityApplyService.getActivityIdByCustomerId(customer.getCustomerId(),activityId);
+            result.put("activityResult", apply == null ? "" : apply.getResult());
+            result.put("activityIsContact", apply == null ? "" : apply.getIsContact());
+            result.put("activityIsSure", apply == null ? "" : apply.getIsSure());
+            result.put("applyId", apply == null ? 0 : apply.getId());
         }
 
         Focus focus = focusService.getFocusByCond(user.getUid(),activityId,APIConstants.FocusType.Activity);
-        if(focus != null){
-            result.put("focusStatus",focus.getStatus());
-        }else{
-            result.put("focusStatus","");
-        }
-        ActivityApply apply= activityApplyService.getActivityIdByCustomerId(customer.getCustomerId(),activityId);
-        if(apply!= null) {
-            result.put("applyId", apply.getId());
-        }else{
-            result.put("applyId", 0);
-        }
+        result.put("focusStatus",focus == null ? "" :focus.getStatus());
+
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
     }
 }

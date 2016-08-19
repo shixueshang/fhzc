@@ -282,12 +282,12 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
 	        		temData[10] = objects[8];												//发证机关 user--passport_agent
 	        	    temData[11] = objects[9];												//证件有效期 user--passport_expire
 	        		temData[12] = objects[10];												//号码类型 user--mobile
-	        		temData[13] =  EncryptUtils.encryptToDES(key, phone);					//手机号码 user--mobile
+	        		temData[13] = EncryptUtils.encryptToDES(key, phone);					//手机号码 user--mobile
 	        		temData[14] = objects[12];												//号码类型 user--mobile
-	        		temData[15] =  EncryptUtils.encryptToDES(key, objects[13].toString());	//电话号码 user--mobile
+	        		temData[15] = EncryptUtils.encryptToDES(key, objects[13].toString());	//电话号码 user--mobile
 	        		temData[16] = objects[14];												//号码类型 user--phone
-	        		temData[17] =  EncryptUtils.encryptToDES(key, objects[15].toString());	//电话号码 user--mobile
-	        		temData[18] = objects[16];												//电子邮箱 user--email
+	        		temData[17] = EncryptUtils.encryptToDES(key, objects[15].toString());	//电话号码 user--mobile
+	        		temData[18] = EncryptUtils.encryptToDES(key, objects[16].toString());	//电子邮箱 user--email
 	        		temData[19] = objects[17];												//身份证地址 user--passport_address
 	        		temData[20] = objects[18];												//通讯地址 user--address
 	        		temData[21] = objects[19];												//购买产品名称 contract--product_id

@@ -6,6 +6,7 @@ import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
+import com.fhzc.app.system.aop.SystemControllerLog;
 import com.fhzc.app.system.commons.util.FileUtil;
 import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.controller.AjaxJson;
@@ -55,6 +56,7 @@ public class ProductController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @SystemControllerLog(description = "产品查询")
     public ModelAndView listProduct(){
         ModelAndView mav = new ModelAndView("business/product/list");
         PageableResult<Product> pageableResult = productService.findPageProducts(page, size);
@@ -95,6 +97,7 @@ public class ProductController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @SystemControllerLog(description = "产品新增或修改")
     public String addOrUpdateProduct(Product product, MultipartFile coverFile, MultipartFile proveFile, MultipartFile noticeFile){
 
         if(!coverFile.isEmpty()){
@@ -144,6 +147,13 @@ public class ProductController extends BaseController {
     @ResponseBody
     public Object isNameExists(String name){
         boolean flag = productService.isNameExists(name);
+        return !flag;
+    }
+    
+    @RequestMapping(value = "/isCodeExists", method = RequestMethod.GET)
+    @ResponseBody
+    public Object isCodeExists(String code){
+        boolean flag = productService.isCodeExists(code);
         return !flag;
     }
 
@@ -252,7 +262,21 @@ public class ProductController extends BaseController {
         mav.addObject("url", "business/product");
         return mav;
     }
-
+    
+    @RequestMapping(value = "/isKeyExists", method = RequestMethod.GET)
+    @ResponseBody
+    public Object isKeyExists(String key){
+        boolean flag = dictionaryService.isKeyExists("product_type",key);
+        return !flag;
+    }
+    
+    @RequestMapping(value = "/isValueExists", method = RequestMethod.GET)
+    @ResponseBody
+    public Object isValueExists(String value){
+        boolean flag = dictionaryService.isValueExists("product_type",value);
+        return !flag;
+    }
+    
     @RequestMapping(value = "/type/add", method = RequestMethod.POST)
     public String add(Dictionary dictionary){
 
@@ -289,6 +313,8 @@ public class ProductController extends BaseController {
     public ModelAndView reservationPub(@PathVariable(value = "pid") Integer pid){
         ModelAndView mav = new ModelAndView("business/product/addReservation");
         mav.addObject("product", productService.getProduct(pid));
+        mav.addObject("customer_level", dictionaryService.findCustomerLevel(productService.getProduct(pid).getLevel()+""));
+        mav.addObject("risk_level", dictionaryService.findRiskLevel(productService.getProduct(pid).getRisk()+""));
         mav.addObject("url", "business/product");
         return mav;
     }

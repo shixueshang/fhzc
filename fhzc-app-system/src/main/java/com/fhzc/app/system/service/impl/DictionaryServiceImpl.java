@@ -58,10 +58,47 @@ public class DictionaryServiceImpl implements DictionaryService {
 
         return null;
     }
+    
+    @Override
+    public Dictionary findRiskLevel(String levelValue) {
+        List<Dictionary> dicts = findDicByType(Const.DIC_CAT.RISK_LEVEL);
+
+        for(com.fhzc.app.dao.mybatis.model.Dictionary dict : dicts){
+            if(dict.getValue().equals(levelValue)){
+                return dict;
+            }
+        }
+
+        return null;
+    }
 
     @Override
     public Dictionary getDictionary(Integer id) {
 
         return dictionaryMapper.selectByPrimaryKey(id);
+    }
+    
+    @Override
+    public boolean isKeyExists(String cat, String key) {
+        DictionaryExample example = new DictionaryExample();
+        DictionaryExample.Criteria criteria = example.createCriteria();
+        criteria.andCatEqualTo(cat);
+        criteria.andKeyEqualTo(key);
+        if(dictionaryMapper.countByExample(example) > 0){
+            return true;
+        }
+        return false;
+    }
+    
+    @Override
+    public boolean isValueExists(String cat, String value) {
+        DictionaryExample example = new DictionaryExample();
+        DictionaryExample.Criteria criteria = example.createCriteria();
+        criteria.andCatEqualTo(cat);
+        criteria.andValueEqualTo(value);
+        if(dictionaryMapper.countByExample(example) > 0){
+            return true;
+        }
+        return false;
     }
 }

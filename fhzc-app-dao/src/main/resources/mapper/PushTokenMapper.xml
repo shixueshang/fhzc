@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.fhzc.app.dao.mybatis.model.PushToken" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
-    <result column="device_type" property="deviceType" jdbcType="INTEGER" />
+    <result column="device_type" property="deviceType" jdbcType="VARCHAR" />
     <result column="device_token" property="deviceToken" jdbcType="VARCHAR" />
     <result column="allow_push" property="allowPush" jdbcType="INTEGER" />
     <result column="allow_sound" property="allowSound" jdbcType="INTEGER" />
@@ -110,7 +110,7 @@
     insert into `push_token` (`user_id`, `device_type`, `device_token`, 
       `allow_push`, `allow_sound`, `bind_date`, 
       `is_delete`)
-    values (#{userId,jdbcType=INTEGER}, #{deviceType,jdbcType=INTEGER}, #{deviceToken,jdbcType=VARCHAR}, 
+    values (#{userId,jdbcType=INTEGER}, #{deviceType,jdbcType=VARCHAR}, #{deviceToken,jdbcType=VARCHAR}, 
       #{allowPush,jdbcType=INTEGER}, #{allowSound,jdbcType=INTEGER}, #{bindDate,jdbcType=TIMESTAMP}, 
       #{isDelete,jdbcType=INTEGER})
   </insert>
@@ -147,7 +147,7 @@
         #{userId,jdbcType=INTEGER},
       </if>
       <if test="deviceType != null" >
-        #{deviceType,jdbcType=INTEGER},
+        #{deviceType,jdbcType=VARCHAR},
       </if>
       <if test="deviceToken != null" >
         #{deviceToken,jdbcType=VARCHAR},
@@ -182,7 +182,7 @@
         `user_id` = #{record.userId,jdbcType=INTEGER},
       </if>
       <if test="record.deviceType != null" >
-        `device_type` = #{record.deviceType,jdbcType=INTEGER},
+        `device_type` = #{record.deviceType,jdbcType=VARCHAR},
       </if>
       <if test="record.deviceToken != null" >
         `device_token` = #{record.deviceToken,jdbcType=VARCHAR},
@@ -208,7 +208,7 @@
     update `push_token`
     set `id` = #{record.id,jdbcType=INTEGER},
       `user_id` = #{record.userId,jdbcType=INTEGER},
-      `device_type` = #{record.deviceType,jdbcType=INTEGER},
+      `device_type` = #{record.deviceType,jdbcType=VARCHAR},
       `device_token` = #{record.deviceToken,jdbcType=VARCHAR},
       `allow_push` = #{record.allowPush,jdbcType=INTEGER},
       `allow_sound` = #{record.allowSound,jdbcType=INTEGER},
@@ -225,7 +225,7 @@
         `user_id` = #{userId,jdbcType=INTEGER},
       </if>
       <if test="deviceType != null" >
-        `device_type` = #{deviceType,jdbcType=INTEGER},
+        `device_type` = #{deviceType,jdbcType=VARCHAR},
       </if>
       <if test="deviceToken != null" >
         `device_token` = #{deviceToken,jdbcType=VARCHAR},
@@ -248,7 +248,7 @@
   <update id="updateByPrimaryKey" parameterType="com.fhzc.app.dao.mybatis.model.PushToken" >
     update `push_token`
     set `user_id` = #{userId,jdbcType=INTEGER},
-      `device_type` = #{deviceType,jdbcType=INTEGER},
+      `device_type` = #{deviceType,jdbcType=VARCHAR},
       `device_token` = #{deviceToken,jdbcType=VARCHAR},
       `allow_push` = #{allowPush,jdbcType=INTEGER},
       `allow_sound` = #{allowSound,jdbcType=INTEGER},

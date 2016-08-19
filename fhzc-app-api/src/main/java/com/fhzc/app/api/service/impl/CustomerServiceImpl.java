@@ -32,4 +32,9 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer getCustomer(Integer customerId) {
         return customerMapper.selectByPrimaryKey(customerId);
     }
+
+    @Override
+    public int setCustomer(Customer customer) {
+        return customerMapper.updateByPrimaryKey(customer);
+    }
 }

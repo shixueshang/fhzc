@@ -1,14 +1,18 @@
 package com.fhzc.app.system.controller;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.fhzc.app.dao.mybatis.model.Admin;
+import com.fhzc.app.dao.mybatis.model.Dictionary;
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.dao.mybatis.util.DateEditor;
+import com.fhzc.app.system.service.DictionaryService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -29,6 +33,9 @@ public class BaseController {
 	protected String basePath;
 	protected Integer page;
 	protected Integer size;
+
+    @Resource
+    private DictionaryService dictionaryService;
 
 	public BaseController() {
 		super();
@@ -70,10 +77,32 @@ public class BaseController {
         }
 	}
 
+    /**
+     * 获得当前用户
+     * @return
+     */
     public Admin getCurrentUser(){
         Subject subject = SecurityUtils.getSubject();
         Admin admin  = (Admin)subject.getSession().getAttribute("admin");
         return admin;
+    }
+
+    /**
+     * 根据字典值和类型获得显示值
+     * @param value 字典值
+     * @param cat 类型
+     * @return
+     */
+    public String getDicName(Integer value, String cat){
+        if(value != null){
+            List<Dictionary> dicts = dictionaryService.findDicByType(cat);
+            for (Dictionary dict : dicts) {
+                if (dict.getValue().equals(value.toString())) {
+                    return dict.getKey();
+                }
+            }
+        }
+        return "";
     }
 
 }

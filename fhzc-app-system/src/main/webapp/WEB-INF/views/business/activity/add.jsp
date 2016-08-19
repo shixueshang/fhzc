@@ -185,7 +185,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">活动主办方</label>
                                                 <div class="controls">
-                                                    <textarea name="sponsor" class="span6 m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;"></textarea>
+                                                    <textarea name="sponsor" class="span6 m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;">${activity.sponsor}</textarea>
                                                 </div>
                                             </div>
                                             <div class="control-group">
@@ -198,7 +198,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">详情链接</label>
                                                 <div class="controls">
-                                                    <input type="text" name="url" data-required="1" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="url" data-required="1" placeholder="" class="m-wrap large" value="${activity.url}">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>

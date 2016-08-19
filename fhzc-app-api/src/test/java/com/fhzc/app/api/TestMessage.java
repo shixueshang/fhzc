@@ -3,6 +3,7 @@ package com.fhzc.app.api;
 import com.alibaba.fastjson.JSON;
 import com.fhzc.app.api.context.Base;
 import com.fhzc.app.api.service.MessageService;
+import com.fhzc.app.api.service.PushTokenService;
 import com.fhzc.app.api.service.UserService;
 import com.fhzc.app.dao.mybatis.model.ImMessage;
 import com.fhzc.app.dao.mybatis.model.User;
@@ -23,10 +24,13 @@ public class TestMessage extends Base {
     @Resource
     private UserService userService;
 
+    @Resource
+    private PushTokenService pushTokenService;
+
     @Test
-    public void sendText(){
+    public void sendText() throws Exception {
         ImMessage message = new ImMessage();
-        message.setUserId(1);
+        message.setUserId(16);
         message.setToUserId(2);
 
 
@@ -42,6 +46,7 @@ public class TestMessage extends Base {
 
         ImMessage result = messageService.sendMessgeToSession(message);
 
+        pushTokenService.pushMessageToUser(2, "我是张三");
     }
 
     @Test

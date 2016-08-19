@@ -2,12 +2,30 @@ package com.fhzc.app.dao.mybatis.util;
 
 public class Const {
 
+    public static final String UMENG_PUSH_APPKEY = "57a0140a67e58e982a0020b4";
+    public static final String UMENG_PUSH_APP_MASTER_SECRET = "jqyndid67kfluu56oan1y71dg2qldb63";
+
+    public static final String UMENG_PUSH_APPKEY_ANDROID = "57b16f9467e58eb94900180b";
+    public static final String UMENG_PUSH_APP_MASTER_SECRET_ANDROID = "ap7lwshihbysiuidlovhxwumauxakxzq";
+
+    public static final String SYSTEM_NAME = "复华资产";
+
     /**
      * 聊天图片存放地址
      */
     public static final String CONFIG_KEY_IMAGE_SAVE_PATH =  "chat_image_save_path";
 
     public static final String CONFIG_KEY_SYSTEM_IMAGE_SAVE_PATH =  "system_image_save_path";
+
+    /**
+     * 设备类型
+     */
+    public static class DEVICE_TYPE{
+
+        public static final String ANDROID = "android";
+
+        public static final String IOS = "ios";
+    }
 
     /**
      * 发短信的参数
@@ -50,6 +68,11 @@ public class Const {
         public static final Integer NO = 0;
 
     }
+
+    /**
+     * 分隔符
+     */
+    public static final String SEPRATOR = "$_$";
 
     /**
      * 字典类型
@@ -124,6 +147,11 @@ public class Const {
          * 客户资产推荐配置
          */
         public static final String ASSET_CONFIG = "asset_config";
+
+        /**
+         * 推送渠道
+         */
+        public static final String PUSH_CHANNEL = "push_channel";
     }
 
     /**
@@ -160,11 +188,15 @@ public class Const {
         public static final long LONGDAY = 30;
 
         public static final String ADD = "add";
+
         public static final String CONSUME = "consume";
+
         public static final String FROZEN = "frozen";
+
         public static final String EXPIRE = "expire";
 
         public static final int IS_APPROVE = 1;
+
         public static final int NOT_APPROVE = 0;
 
     }
@@ -174,12 +206,14 @@ public class Const {
          * 单人客户
          */
         public static final String SINGLE_CUSTOMER = "single";
+
         public static final String SINGLE_CUSTOMER_ZH = "个人";
 
         /**
          * 机构客户
          */
         public static final String ORGAN_CUSTOMER = "organ";
+
         public static final String ORGAN_CUSTOMER_ZH = "机构";
     }
 
@@ -207,11 +241,13 @@ public class Const {
 
     public static class USER_ROLE{
         public static final String PLANNER = "planner";
+
         public static final String CUSTOMER= "customer";
     }
 
     public static class BANNER_TYPE{
         public static final String TEXT= "index_text";
+
         public static final String PIC= "index_pic";
     }
 
@@ -239,9 +275,11 @@ public class Const {
      public static class GENDER{
 
         public static final String MALE= "male";
+
         public static final String MALE_ZH= "男";
 
          public static final String FEMALE= "female";
+
          public static final String FEMALE_ZH= "女";
 
     }
@@ -252,8 +290,11 @@ public class Const {
     public static class ACTIVITY_STATUS{
 
         public static final Integer WILL= 0;    //待开始
+
         public static final Integer GOING= 1;   //报名中
+
         public static final Integer APP_OVER= 2;//报名结束
+
         public static final Integer ACT_OVER= 3;//活动结束
 
     }
@@ -264,20 +305,38 @@ public class Const {
     public static class ACTIVITY_APPLY_STATUS{
 
         public static final Integer JOIN= 1;
+
         public static final Integer NOT_JOIN= 0;
 
     }
 
+    /**
+     * 关注类型
+     */
     public static class FOCUS_TYPE{
+
         public static final String PRODUCT= "product";
+
         public static final String ACTIVITY= "activity";
+
         public static final String REPORT= "report";
+
         public static final String RIGHTS= "rights";
 
     }
 
+    /**
+     * 关注状态
+     */
     public static class FOCUS_STATUS{
+        /**
+         * 已关注
+         */
         public static final Integer ON= 1;
+
+        /**
+         * 不关注
+         */
         public static final Integer OFF= 0;
     }
 
@@ -299,4 +358,124 @@ public class Const {
          */
         public static final String OTHER= "other";
     }
+
+    public static class SCORE_VAILD{
+        /**
+         * 有效
+         */
+        public static final Integer IS_VAILD = 1;
+
+        /**
+         * 无效
+         */
+        public static final Integer NOT_VAILD = 0;
+
+    }
+
+    public static class About_App{
+
+        public static final String ABOUT_APP = "about_app";
+
+        public static final String CONTACT_US = "contact_us";
+    }
+
+    public static class ASSET_TYPE {
+
+        /**
+         * 派息
+         */
+        public static final String DIVIDEND = "dividend";
+        /**
+         * 购买
+         */
+        public static final String PURCHASE = "purchase";
+        /**
+         * 存续
+         */
+        public static final String RENEW = "renew";
+        /**
+         * 赎回
+         */
+        public static final String REDEMPTION = "redemption";
+    }
+
+    /**
+     * 推送渠道
+     */
+    public static class PUSH_CHANNEL{
+
+        /**
+         * 系统
+         */
+        public static final Integer SYSTEM = 1;
+
+        /**
+         * 短信
+         */
+        public static final Integer SMS = 2;
+
+        /**
+         * 消息
+         */
+        public static final Integer MESSAGE = 3;
+
+        /**
+         * 邮件
+         */
+        public static final Integer EMAIL = 4;
+    }
+
+    /**
+     * 推送状态
+     */
+    public static class PUSH_STATUS{
+        public static final Integer NOT_PUSH = 0;
+
+        public static final Integer WAITTING_PUSH = 1;
+
+        public static final Integer PUSHED = 2;
+    }
+
+    /**
+     * 记录日志类型
+     */
+    public static class LOG_TYPE{
+
+        /**
+         * controller层
+         */
+        public static final String CONTROLLER = "controller";
+
+        /**
+         * service层
+         */
+        public static final String SERVICE = "service";
+    }
+
+    /**
+     * 日志级别
+     */
+    public static class LOG_LEVEL{
+
+        /**
+         * 正常信息
+         */
+        public static final String NORMAL = "normal";
+
+        /**
+         * 警告
+         */
+        public static final String WARNING = "warning";
+
+        /**
+         * 错误
+         */
+        public static final String ERROR = "error";
+
+        /**
+         * 严重错误
+         */
+        public static final String SERIOUS_ERROR = "serious_error";
+    }
 }
+

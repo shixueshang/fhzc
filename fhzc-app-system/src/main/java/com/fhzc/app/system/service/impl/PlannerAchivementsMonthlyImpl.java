@@ -214,6 +214,13 @@ public class PlannerAchivementsMonthlyImpl implements PlannerAchivementsMonthlyS
 		        return new PageableResult<PlannerAchivementsMonthly>(page, size, list.size(), list);
 			}
 
+    @Override
+    public List<PlannerAchivementsMonthly> findAchiveMonthlyByArea(List<Integer> areas, String month) {
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("area", areas);
+        param.put("month", month);
+        return plannerAchivementsMonthlyMapper.findAchiveMonthlyByArea(param);
+    }
 
     @Override
     public List<PlannerAchivementsMonthly> findAchiveMonthlyByCompany(List<Integer> subCompanys, String month) {

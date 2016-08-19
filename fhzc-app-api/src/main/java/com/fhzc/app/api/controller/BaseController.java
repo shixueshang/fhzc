@@ -23,6 +23,8 @@ import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 
+import static org.apache.shiro.web.filter.mgt.DefaultFilter.user;
+
 
 public class BaseController {
 
@@ -77,6 +79,10 @@ public class BaseController {
         }
 	}
 
+    /**
+     * 获得当前用户信息
+     * @return
+     */
     public User getCurrentUser(){
         Subject subject = SecurityUtils.getSubject();
         User user  = (User)subject.getSession().getAttribute("user");
@@ -84,79 +90,32 @@ public class BaseController {
     }
 
 	/**
-	 * 获得用户等级信息明文
-	 * @param level
+	 * 根据字典值和类型获得显示值
+	 * @param value 字典值
+     * @param cat 类型
 	 * @return
      */
-    public String getLevelName(Integer level){
-        List<Dictionary> dicts = dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL);
-        for (Dictionary dict : dicts) {
-            if (dict.getValue().equals(level.toString())) {
-                return dict.getKey();
-            }
-        }
-        return "";
-    }
-
-	/**
-	 * 获得风险等级汉字
-	 * @param risk
-	 * @return
-     */
-    public String getRiskName(Integer risk){
-        List<Dictionary> dicts = dictionaryService.findDicByType(Const.DIC_CAT.RISK_LEVEL);
-        for (Dictionary dict : dicts) {
-            if (dict.getValue().equals(risk.toString())) {
-                return dict.getKey();
+    public String getDicName(Integer value, String cat){
+        if(value != null){
+            List<Dictionary> dicts = dictionaryService.findDicByType(cat);
+            for (Dictionary dict : dicts) {
+                if (dict.getValue().equals(value.toString())) {
+                    return dict.getKey();
+                }
             }
         }
         return "";
     }
 
     /**
-     * 获得用户证件类型明文
-     * @param passport_type_id
+     * 设置用户头像路径
+     * @param user
      * @return
      */
-    public String getPassportTypeName(Integer passport_type_id){
-        List<Dictionary> dicts = dictionaryService.findDicByType(Const.DIC_CAT.PASSPORT);
-        for (Dictionary dict : dicts) {
-            if (dict.getValue().equals(passport_type_id.toString())) {
-                return dict.getKey();
-            }
+	public User setUserAvatarPath(User user){
+        if(user.getAvatar() != null && !user.getAvatar().contains("http")) {
+            user.setAvatar(basePath + user.getAvatar());
         }
-        return "";
-    }
-
-    /**
-     * 获得产品状态
-     * @param productStatus
-     * @return
-     */
-    public String getProductStatusName(Integer productStatus){
-        List<Dictionary> dicts = dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_STATUS);
-        for (Dictionary dict : dicts) {
-            if (dict.getValue().equals(productStatus.toString())) {
-                return dict.getKey();
-            }
-        }
-        return "";
-    }
-
-    /**
-     * 获得产品状态
-     * @param productIssueType
-     * @return
-     */
-    public String getProductIssueType(Integer productIssueType){
-        List<Dictionary> dicts = dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_ISSUE_TYPE);
-        for (Dictionary dict : dicts) {
-            if (dict.getValue().equals(productIssueType.toString())) {
-                return dict.getKey();
-            }
-        }
-        return "";
-    }
-
-
+		return user;
+	}
 }

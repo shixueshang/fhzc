@@ -1,14 +1,13 @@
 package com.fhzc.app.api.controller;
 
 import com.fhzc.app.api.service.*;
-import com.fhzc.app.api.tools.APIConstants;
-import com.fhzc.app.api.tools.ApiJsonResult;
-import com.fhzc.app.api.tools.ObjUtils;
+import com.fhzc.app.api.tools.*;
 import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.util.Const;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -40,7 +39,7 @@ public class UserController extends BaseController {
     private DepartmentService departmentService;
 
     @Resource
-    private AchievementService achievementService;
+    private AssetsService assetsService;
 
     /**
      * 获取登录用户信息
@@ -50,11 +49,13 @@ public class UserController extends BaseController {
     @ResponseBody
     public ApiJsonResult getUserInfo() throws Exception {
         User user  = getCurrentUser();
+        user = super.setUserAvatarPath(user);
         Map result = ObjUtils.objectToMap(user);
         if(user.getLoginRole().equals(Const.USER_ROLE.CUSTOMER)) {
             Customer customer = customerService.getCustomerByUid(user.getUid());
-            user.setLevel(super.getLevelName(customer.getLevelId()));
+            user.setLevel(super.getDicName(customer.getLevelId(), Const.DIC_CAT.CUSTOMER_LEVEL));
             result.put("cb_id", customer.getCbId());
+
 
             List<PlannerCustomer> plannerCustomers = plannerCustomerService.getCustomerPlannerList(customer.getCustomerId());
             if(plannerCustomers != null) {
@@ -100,18 +101,64 @@ public class UserController extends BaseController {
                 Map<String, Object> map = new HashMap<String, Object>();
                 Customer customer = customerService.getCustomer(pc.getCustomerId());
                 User customerUser= userService.getUser(customer.getUid());
+                Integer assetsSum = 0;
+
+                /* 计算客户资产 */
+                List<AssetsHistory> assetsHistoryList = assetsService.getHistory(pc.getCustomerId());
+                if (assetsHistoryList == null) {
+                    assetsSum = 0;
+                } else {
+                    for (AssetsHistory asset:assetsHistoryList){
+
+                        if(asset.getType().equals(Const.ASSET_TYPE.PURCHASE)){
+                            assetsSum = assetsSum + asset.getAmount();
+                        }
+
+                        if(asset.getType().equals(Const.ASSET_TYPE.RENEW)){
+                            assetsSum = assetsSum + asset.getAmount();
+                        }
+
+                        if(asset.getType().equals(Const.ASSET_TYPE.DIVIDEND)){
+                            assetsSum = assetsSum + asset.getAmount();
+                        }
+
+                        if(asset.getType().equals(Const.ASSET_TYPE.REDEMPTION)){
+                            assetsSum = assetsSum  - asset.getAmount();
+                        }
+
+                    }
+                }
+
+                map.put("assetsSum", assetsSum);
                 map.put("uid", customerUser.getUid());
                 map.put("customerId", pc.getCustomerId());
+                customerUser = super.setUserAvatarPath(customerUser);
                 map.put("avatar", customerUser.getAvatar());
                 map.put("realname", customerUser.getRealname());
                 map.put("mobile", customerUser.getMobile());
                 map.put("phone", customerUser.getPhone());
                 map.put("address", customerUser.getAddress());
+                map.put("risk", super.getDicName(customer.getRisk(), Const.DIC_CAT.RISK_LEVEL));
                 map.put("main", pc.getIsMain());
                 map.put("memo", pc.getMemo());
-                List<ScoreHistory> scoreHistoryList = scoreService.getAvailableList(pc.getCustomerId());
-                map.put("score", scoreService.sumScore(scoreHistoryList));
-                map.put("level", super.getLevelName(customer.getLevelId()));
+                map.put("passportType", super.getDicName(customerUser.getPassportTypeId(), Const.DIC_CAT.PASSPORT));
+                map.put("passportTypeId", customerUser.getPassportTypeId());
+
+                StringBuilder sb1 = new StringBuilder(customerUser.getPassportCode());
+                map.put("passportCode", sb1.replace(3, 7, "****"));
+                map.put("passportAddress", customerUser.getPassportAddress());
+                map.put("birthday", customerUser.getBirthday());
+                if (customerUser.getGender().equals(Const.GENDER.MALE)) {
+                    map.put("gender", Const.GENDER.MALE_ZH);
+                }
+
+                if (customerUser.getGender().equals(Const.GENDER.FEMALE)) {
+                    map.put("gender", Const.GENDER.FEMALE_ZH);
+                }
+                List<ScoreHistory> availableList= scoreService.getAvailableList(pc.getCustomerId());
+                List<ScoreHistory> consumeList = scoreService.getConsume(pc.getCustomerId());
+                map.put("score", scoreService.sumScore(availableList) + scoreService.sumScore(consumeList));
+                map.put("level", super.getDicName(customer.getLevelId(), Const.DIC_CAT.CUSTOMER_LEVEL));
 
                 result.add(map);
             }
@@ -178,34 +225,34 @@ public class UserController extends BaseController {
      */
     @RequestMapping(value = "/api/customer/info", method = RequestMethod.GET)
     @ResponseBody
-    public ApiJsonResult getCustomerInfo(Integer customerId) throws Exception {
+    public ApiJsonResult getCustomerInfo(@RequestParam(value = "customer_id") Integer customerId) throws Exception {
         Customer customer = customerService.getCustomer(customerId);
         if(customer != null) {
             User customerUser = userService.getUser(customer.getUid());
             Map<String, Object> result = new HashMap<String, Object>();
             result.put("name", customerUser.getRealname());
 
-            if (customer.getCustomerType() == Const.CUSTOMER_TYPE.ORGAN_CUSTOMER) {
+            if (customer.getCustomerType().equals(Const.CUSTOMER_TYPE.ORGAN_CUSTOMER)) {
                 result.put("type", Const.CUSTOMER_TYPE.ORGAN_CUSTOMER_ZH);
             }
-            if (customer.getCustomerType() == Const.CUSTOMER_TYPE.SINGLE_CUSTOMER) {
+            if (customer.getCustomerType().equals(Const.CUSTOMER_TYPE.SINGLE_CUSTOMER)) {
                 result.put("type", Const.CUSTOMER_TYPE.SINGLE_CUSTOMER_ZH);
             }
 
-            result.put("level", super.getLevelName(customer.getLevelId()));
-            result.put("risk", super.getRiskName(customer.getRisk()));
-            result.put("passportType", this.getPassportTypeName(customerUser.getPassportTypeId()));
+            result.put("level", super.getDicName(customer.getLevelId(), Const.DIC_CAT.CUSTOMER_LEVEL));
+            result.put("risk", super.getDicName(customer.getRisk(), Const.DIC_CAT.RISK_LEVEL));
+            result.put("passportType", super.getDicName(customerUser.getPassportTypeId(), Const.DIC_CAT.PASSPORT));
             result.put("passportTypeId", customerUser.getPassportTypeId());
 
             StringBuilder sb1 = new StringBuilder(customerUser.getPassportCode());
             result.put("passportCode", sb1.replace(3, 7, "****"));
             result.put("passportAddress", customerUser.getPassportAddress());
             result.put("birthday", customerUser.getBirthday());
-            if (customerUser.getGender() == Const.GENDER.MALE) {
+            if (customerUser.getGender().equals(Const.GENDER.MALE)) {
                 result.put("gender", Const.GENDER.MALE_ZH);
             }
 
-            if (customerUser.getGender() == Const.GENDER.FEMALE) {
+            if (customerUser.getGender().equals(Const.GENDER.FEMALE)) {
                 result.put("gender", Const.GENDER.FEMALE_ZH);
             }
             StringBuilder sb2 = new StringBuilder(customerUser.getMobile());
@@ -232,11 +279,14 @@ public class UserController extends BaseController {
             return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"没有这个理财师");
         }
         User user = userService.getUser(planner.getUid());
+        user = super.setUserAvatarPath(user);
         Map result = new HashMap();
         result.put("name", user.getRealname());
         result.put("avatar", user.getAvatar());
         result.put("workNum", planner.getWorkNum());
-        result.put("departmentId", departmentService.getDeparent(planner.getDepartmentId()).getTitle());
+        //获得3级部门信息
+        Department department = departmentService.getDeparent(planner.getDepartmentId());
+        result.put("departmentId", departmentService.getDeparent(department.getParentDeptId()).getTitle());
         result.put("status", planner.getStatus());
         result.put("roleId", planner.getRoleId());
         result.put("entryTime", planner.getEntryTime());
@@ -247,27 +297,49 @@ public class UserController extends BaseController {
     }
 
     /**
-     * 我的工作
+     * 设置客户风险等级
+     * @param customerId
+     * @param risk
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/api/set/risk", method = RequestMethod.POST)
+    @ResponseBody
+    public ApiJsonResult setRisk(@RequestParam(value = "customer_id") Integer customerId,
+                                 @RequestParam(value = "risk") Integer risk) throws Exception {
+        Customer customer = customerService.getCustomer(customerId);
+        if(customer == null){
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.NOT_FOUND, "没有这个客户");
+        }
+        customer.setRisk(risk);
+        int result = customerService.setCustomer(customer);
+        if (result > 0) {
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, "修改成功");
+        }
+
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.FAILED, "修改失败");
+    }
+
+    /**
+     * 设置头像
      * @return
      */
-    @RequestMapping(value = "/api/achievement", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/set/avatar", method = RequestMethod.POST)
     @ResponseBody
-    public ApiJsonResult achievement(){
-        User user = super.getCurrentUser();
-        if (!user.getLoginRole().equals(Const.USER_ROLE.PLANNER)) {
-            return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"非理财师用户");
+    public ApiJsonResult setAvatar() {
+        String savePath = TextUtils.getConfig(Const.CONFIG_KEY_IMAGE_SAVE_PATH, this);
+        List<String> imageList = FileUtils.saveFilesToDisk(request, savePath);
+        String imageFile = null;
+        if (imageList.size() > 0) {
+            User user  = userService.getUser(getCurrentUser().getUid());
+            imageFile = savePath +  imageList.get(0);
+            user.setAvatar(imageFile);
+            userService.updateUser(user);
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, imageFile);
         }
-        Planner planner = plannerService.getPlannerByUid(user.getUid());
-        Map map = new HashMap();
-
-        Calendar cal = Calendar.getInstance();
-        Integer currentYear = cal.get(Calendar.YEAR);
-        Integer currentMonth = cal.get(Calendar.MONTH)+1;
-
-        map.put("monthSale", achievementService.getMonthSale(planner.getId(),currentYear,currentMonth));
-        map.put("yearSale", achievementService.getYearSale(planner.getId(),currentYear));
-
-        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, map);
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.FAILED, "上传失败");
     }
+
+
 }
 

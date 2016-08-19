@@ -99,7 +99,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">接受的客户等级</label>
                                                 <div class="controls">
-                                                    <input type="text" name="allowedLevel" id="allowedLevel" value="${product.level}" disabled>
+                                                    <input type="text" name="allowedLevel" id="allowedLevel" value="${customer_level.key };${risk_level.key}" disabled>
                                                 </div>
                                             </div>
 

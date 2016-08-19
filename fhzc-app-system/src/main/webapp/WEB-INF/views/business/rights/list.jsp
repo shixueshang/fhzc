@@ -68,6 +68,7 @@
                                     <td>权益供应商</td>
                                     <td>客户等级要求</td>
                                     <td>兑换积分</td>
+                                    <td>是否精选</td>
                                     <td>关注人数</td>
                                     <td>预约人数</td>
                                     <td>操作</td>
@@ -96,6 +97,16 @@
                                             </c:forEach>
                                         </td>
                                         <td>${right.spendScore}</td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${right.isRecommend == '0'}">
+                                                    	否
+                                                </c:when>
+                                                <c:when test="${right.isRecommend == '1'}">
+                                                   		 是
+                                                </c:when>
+                                            </c:choose>
+                                        </td>
                                         <td></td>
                                         <td></td>
                                         <td><a href="<%=contextPath%>/business/rights/detail/${right.id}" class="btn mini purple"><i class="icon-edit"></i> 编辑</a>

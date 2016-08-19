@@ -2,15 +2,12 @@ package com.fhzc.app.api.controller;
 
 import com.fhzc.app.api.exception.BadRequestException;
 import com.fhzc.app.api.exception.NeedLoginRequestException;
-import com.fhzc.app.api.service.CustomerService;
-import com.fhzc.app.api.service.PlannerService;
-import com.fhzc.app.api.service.UserService;
+import com.fhzc.app.api.service.*;
 import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
-import com.fhzc.app.dao.mybatis.model.Customer;
-import com.fhzc.app.dao.mybatis.model.Planner;
-import com.fhzc.app.dao.mybatis.model.User;
+import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.util.Const;
+import com.fhzc.app.dao.mybatis.util.EncryptUtils;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -25,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -43,6 +42,13 @@ public class LoginController extends BaseController {
     @Resource
     private CustomerService customerService;
 
+    @Resource
+    private PushTokenService pushTokenService;
+
+    @Resource
+    private VerifyCodeService verifyCodeService;
+
+
     /**
      * 未验证身份用户登录
      * @param identity  证件类型
@@ -54,11 +60,16 @@ public class LoginController extends BaseController {
     @RequestMapping(value = "/api/auth/login/newuser", method = RequestMethod.GET)
     @ResponseBody
     public ApiJsonResult loginWithoutPwd(Integer identity, String identityNum, String phoneNum, String verifyCode){
-        User user = userService.checkUserExists(identity, identityNum);
-        if(user != null){
-            return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, identityNum);
+
+        if(!verifyCodeService.checkVerifyCode(phoneNum, verifyCode)){
+            throw new BadRequestException("验证码输入错误");
         }
-        return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST, "没有找到用户信息");
+
+        User user = userService.checkUserExists(identity, identityNum);
+        if(user == null){
+            throw new BadRequestException("没有找到用户信息");
+        }
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, identityNum);
     }
 
     /**
@@ -87,7 +98,7 @@ public class LoginController extends BaseController {
             User user = userService.getUserByLogin(username);
             Session session = subject.getSession(true);
             session.setAttribute("user", user);
-            Map map = new HashMap<>();
+            Map<String, Object> map = new HashMap<String, Object>();
             map.put("uid",user.getUid());
             map.put("realname",user.getRealname());
             map.put("role",user.getLoginRole());
@@ -165,6 +176,69 @@ public class LoginController extends BaseController {
         }
         user.setPassword(DigestUtils.md5Hex(newPwd));
         userService.updateUser(user);
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
+    }
+
+    /**
+     * 登陆后绑定设备
+     * @param token 设备唯一标识
+     * @param allowPush 是否允许推送消息 1允许 0不允许
+     * @param deviceType 设备类型
+     * @return
+     */
+    @RequestMapping(value = "/api/user/binding", method =  RequestMethod.POST)
+    @ResponseBody
+    public ApiJsonResult bindToken(String token, Integer allowPush, String deviceType){
+
+        User user = getCurrentUser();
+        //判断是否绑定了其他设备，如果是则解绑
+        List<PushToken> list = pushTokenService.getPushToken(user.getUid());
+        for(PushToken pushToken : list){
+            pushTokenService.deleteByUserId(pushToken.getUserId());
+        }
+
+        PushToken record = new PushToken();
+        record.setUserId(user.getUid());
+        record.setDeviceType(deviceType);
+        record.setDeviceToken(token);
+        record.setAllowPush(allowPush);
+        record.setAllowSound(Const.YES_OR_NO.YES);
+        record.setBindDate(new Date());
+        record.setIsDelete(Const.Data_Status.DATA_NORMAL);
+        pushTokenService.bindToken(record);
+
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
+    }
+
+    /**
+     * 发送短信验证码
+     * @param mobile
+     * @return
+     */
+    @RequestMapping(value="/api/auth/sms",method =  RequestMethod.POST )
+    @ResponseBody ApiJsonResult getSmsCode(String mobile)  {
+
+        User user = getCurrentUser();
+        if(mobile == null || mobile.length() == 0){
+            throw new BadRequestException("手机号不能为空");
+        }
+
+        if(user != null){
+            try {
+                mobile = EncryptUtils.encryptToDES(user.getSalt(), mobile);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            if(!userService.checkMobileExists(mobile)){
+                return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"该手机号未注册");
+            }
+        }
+
+        VerifyCode verifyCode = verifyCodeService.sendNewVerifyCode(mobile);
+
+        logger.debug("mobile=" + mobile + " verifyCode=" + verifyCode.getCodeValue());
+
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
     }
 }

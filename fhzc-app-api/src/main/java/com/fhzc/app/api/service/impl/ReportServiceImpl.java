@@ -38,7 +38,7 @@ public class ReportServiceImpl implements ReportService {
         criteria.andIsRecommendEqualTo(Const.YES_OR_NO.YES);
         RowBounds rowBounds = new RowBounds(0, 3);
 
-        return reportMapper.selectByExampleWithRowbounds(example,rowBounds);
+        return reportMapper.selectByExampleWithBLOBsWithRowbounds(example,rowBounds);
     }
 
     @Override
