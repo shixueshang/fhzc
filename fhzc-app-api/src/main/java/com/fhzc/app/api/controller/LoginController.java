@@ -223,14 +223,16 @@ public class LoginController extends BaseController {
             throw new BadRequestException("手机号不能为空");
         }
 
-        try {
-            mobile = EncryptUtils.encryptToDES(user.getSalt(), mobile);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        if(user != null){
+            try {
+                mobile = EncryptUtils.encryptToDES(user.getSalt(), mobile);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-        if(!userService.checkMobileExists(mobile)){
-            return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"该手机号未注册");
+            if(!userService.checkMobileExists(mobile)){
+                return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"该手机号未注册");
+            }
         }
 
         VerifyCode verifyCode = verifyCodeService.sendNewVerifyCode(mobile);

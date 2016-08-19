@@ -131,7 +131,11 @@
                                         <td>${notice.pushChannel}</td>
 
                                         <td>
+                                            <c:choose>
+                                            <c:when test="${notice.pushStatus != '2'}">
                                             <a href="<%=contextPath%>/system/notice/detail/${notice.id}" class="btn mini purple"><i class="icon-edit"></i> 编辑</a>
+                                            </c:when>
+                                            </c:choose>
                                             <a href="javascript:void(0)" onclick="deleteById('<%=contextPath%>/system/notice/delete/${notice.id}')" class="btn mini purple"><i class="icon-trash"></i> 删除</a>
                                             <c:choose>
                                                 <c:when test="${notice.pushStatus == '1'}">
