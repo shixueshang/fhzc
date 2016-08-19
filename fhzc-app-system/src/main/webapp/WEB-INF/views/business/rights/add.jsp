@@ -240,6 +240,15 @@
             }
         });
 
+        var isRecommend = '${right.isRecommend}';
+        if(isRecommend == 1 || isRecommend == '' || isRecommend == null){
+            $.uniform.update($("input[name='isRecommend'][value='1']").attr("checked", true));
+            $.uniform.update($("input[name='isRecommend'][value='0']").attr("checked", false));
+        }else{
+            $.uniform.update($("input[name='isRecommend'][value='1']").attr("checked", false));
+            $.uniform.update($("input[name='isRecommend'][value='0']").attr("checked", true));
+        }
+        
         var dispalyImg = $("#default_img");
         var imgUrl = "<%=basePath%>/${right.cover}";
         var defaultImg = "/static/image/no-image.png";
