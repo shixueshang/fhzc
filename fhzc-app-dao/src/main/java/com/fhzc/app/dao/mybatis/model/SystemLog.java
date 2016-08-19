@@ -11,11 +11,13 @@ public class SystemLog {
 
     private String method;
 
-    private Integer type;
+    private String type;
 
-    private String requestId;
+    private String level;
 
-    private Integer exceptionCode;
+    private String requestIp;
+
+    private String exceptionCode;
 
     private String exceptionDetail;
 
@@ -55,28 +57,36 @@ public class SystemLog {
         this.method = method == null ? null : method.trim();
     }
 
-    public Integer getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setType(String type) {
+        this.type = type == null ? null : type.trim();
     }
 
-    public String getRequestId() {
-        return requestId;
+    public String getLevel() {
+        return level;
     }
 
-    public void setRequestId(String requestId) {
-        this.requestId = requestId == null ? null : requestId.trim();
+    public void setLevel(String level) {
+        this.level = level == null ? null : level.trim();
     }
 
-    public Integer getExceptionCode() {
+    public String getRequestIp() {
+        return requestIp;
+    }
+
+    public void setRequestIp(String requestIp) {
+        this.requestIp = requestIp == null ? null : requestIp.trim();
+    }
+
+    public String getExceptionCode() {
         return exceptionCode;
     }
 
-    public void setExceptionCode(Integer exceptionCode) {
-        this.exceptionCode = exceptionCode;
+    public void setExceptionCode(String exceptionCode) {
+        this.exceptionCode = exceptionCode == null ? null : exceptionCode.trim();
     }
 
     public String getExceptionDetail() {

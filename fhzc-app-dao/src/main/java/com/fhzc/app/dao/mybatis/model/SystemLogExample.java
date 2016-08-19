@@ -375,123 +375,203 @@ public class SystemLogExample {
             return (Criteria) this;
         }
 
-        public Criteria andTypeEqualTo(Integer value) {
+        public Criteria andTypeEqualTo(String value) {
             addCriterion("`type` =", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeNotEqualTo(Integer value) {
+        public Criteria andTypeNotEqualTo(String value) {
             addCriterion("`type` <>", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeGreaterThan(Integer value) {
+        public Criteria andTypeGreaterThan(String value) {
             addCriterion("`type` >", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeGreaterThanOrEqualTo(Integer value) {
+        public Criteria andTypeGreaterThanOrEqualTo(String value) {
             addCriterion("`type` >=", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeLessThan(Integer value) {
+        public Criteria andTypeLessThan(String value) {
             addCriterion("`type` <", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeLessThanOrEqualTo(Integer value) {
+        public Criteria andTypeLessThanOrEqualTo(String value) {
             addCriterion("`type` <=", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeIn(List<Integer> values) {
+        public Criteria andTypeLike(String value) {
+            addCriterion("`type` like", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotLike(String value) {
+            addCriterion("`type` not like", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIn(List<String> values) {
             addCriterion("`type` in", values, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeNotIn(List<Integer> values) {
+        public Criteria andTypeNotIn(List<String> values) {
             addCriterion("`type` not in", values, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeBetween(Integer value1, Integer value2) {
+        public Criteria andTypeBetween(String value1, String value2) {
             addCriterion("`type` between", value1, value2, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeNotBetween(Integer value1, Integer value2) {
+        public Criteria andTypeNotBetween(String value1, String value2) {
             addCriterion("`type` not between", value1, value2, "type");
             return (Criteria) this;
         }
 
-        public Criteria andRequestIdIsNull() {
-            addCriterion("`request_id` is null");
+        public Criteria andLevelIsNull() {
+            addCriterion("`level` is null");
             return (Criteria) this;
         }
 
-        public Criteria andRequestIdIsNotNull() {
-            addCriterion("`request_id` is not null");
+        public Criteria andLevelIsNotNull() {
+            addCriterion("`level` is not null");
             return (Criteria) this;
         }
 
-        public Criteria andRequestIdEqualTo(String value) {
-            addCriterion("`request_id` =", value, "requestId");
+        public Criteria andLevelEqualTo(String value) {
+            addCriterion("`level` =", value, "level");
             return (Criteria) this;
         }
 
-        public Criteria andRequestIdNotEqualTo(String value) {
-            addCriterion("`request_id` <>", value, "requestId");
+        public Criteria andLevelNotEqualTo(String value) {
+            addCriterion("`level` <>", value, "level");
             return (Criteria) this;
         }
 
-        public Criteria andRequestIdGreaterThan(String value) {
-            addCriterion("`request_id` >", value, "requestId");
+        public Criteria andLevelGreaterThan(String value) {
+            addCriterion("`level` >", value, "level");
             return (Criteria) this;
         }
 
-        public Criteria andRequestIdGreaterThanOrEqualTo(String value) {
-            addCriterion("`request_id` >=", value, "requestId");
+        public Criteria andLevelGreaterThanOrEqualTo(String value) {
+            addCriterion("`level` >=", value, "level");
             return (Criteria) this;
         }
 
-        public Criteria andRequestIdLessThan(String value) {
-            addCriterion("`request_id` <", value, "requestId");
+        public Criteria andLevelLessThan(String value) {
+            addCriterion("`level` <", value, "level");
             return (Criteria) this;
         }
 
-        public Criteria andRequestIdLessThanOrEqualTo(String value) {
-            addCriterion("`request_id` <=", value, "requestId");
+        public Criteria andLevelLessThanOrEqualTo(String value) {
+            addCriterion("`level` <=", value, "level");
             return (Criteria) this;
         }
 
-        public Criteria andRequestIdLike(String value) {
-            addCriterion("`request_id` like", value, "requestId");
+        public Criteria andLevelLike(String value) {
+            addCriterion("`level` like", value, "level");
             return (Criteria) this;
         }
 
-        public Criteria andRequestIdNotLike(String value) {
-            addCriterion("`request_id` not like", value, "requestId");
+        public Criteria andLevelNotLike(String value) {
+            addCriterion("`level` not like", value, "level");
             return (Criteria) this;
         }
 
-        public Criteria andRequestIdIn(List<String> values) {
-            addCriterion("`request_id` in", values, "requestId");
+        public Criteria andLevelIn(List<String> values) {
+            addCriterion("`level` in", values, "level");
             return (Criteria) this;
         }
 
-        public Criteria andRequestIdNotIn(List<String> values) {
-            addCriterion("`request_id` not in", values, "requestId");
+        public Criteria andLevelNotIn(List<String> values) {
+            addCriterion("`level` not in", values, "level");
             return (Criteria) this;
         }
 
-        public Criteria andRequestIdBetween(String value1, String value2) {
-            addCriterion("`request_id` between", value1, value2, "requestId");
+        public Criteria andLevelBetween(String value1, String value2) {
+            addCriterion("`level` between", value1, value2, "level");
             return (Criteria) this;
         }
 
-        public Criteria andRequestIdNotBetween(String value1, String value2) {
-            addCriterion("`request_id` not between", value1, value2, "requestId");
+        public Criteria andLevelNotBetween(String value1, String value2) {
+            addCriterion("`level` not between", value1, value2, "level");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestIpIsNull() {
+            addCriterion("`request_ip` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestIpIsNotNull() {
+            addCriterion("`request_ip` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestIpEqualTo(String value) {
+            addCriterion("`request_ip` =", value, "requestIp");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestIpNotEqualTo(String value) {
+            addCriterion("`request_ip` <>", value, "requestIp");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestIpGreaterThan(String value) {
+            addCriterion("`request_ip` >", value, "requestIp");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestIpGreaterThanOrEqualTo(String value) {
+            addCriterion("`request_ip` >=", value, "requestIp");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestIpLessThan(String value) {
+            addCriterion("`request_ip` <", value, "requestIp");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestIpLessThanOrEqualTo(String value) {
+            addCriterion("`request_ip` <=", value, "requestIp");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestIpLike(String value) {
+            addCriterion("`request_ip` like", value, "requestIp");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestIpNotLike(String value) {
+            addCriterion("`request_ip` not like", value, "requestIp");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestIpIn(List<String> values) {
+            addCriterion("`request_ip` in", values, "requestIp");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestIpNotIn(List<String> values) {
+            addCriterion("`request_ip` not in", values, "requestIp");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestIpBetween(String value1, String value2) {
+            addCriterion("`request_ip` between", value1, value2, "requestIp");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestIpNotBetween(String value1, String value2) {
+            addCriterion("`request_ip` not between", value1, value2, "requestIp");
             return (Criteria) this;
         }
 
@@ -505,52 +585,62 @@ public class SystemLogExample {
             return (Criteria) this;
         }
 
-        public Criteria andExceptionCodeEqualTo(Integer value) {
+        public Criteria andExceptionCodeEqualTo(String value) {
             addCriterion("`exception_code` =", value, "exceptionCode");
             return (Criteria) this;
         }
 
-        public Criteria andExceptionCodeNotEqualTo(Integer value) {
+        public Criteria andExceptionCodeNotEqualTo(String value) {
             addCriterion("`exception_code` <>", value, "exceptionCode");
             return (Criteria) this;
         }
 
-        public Criteria andExceptionCodeGreaterThan(Integer value) {
+        public Criteria andExceptionCodeGreaterThan(String value) {
             addCriterion("`exception_code` >", value, "exceptionCode");
             return (Criteria) this;
         }
 
-        public Criteria andExceptionCodeGreaterThanOrEqualTo(Integer value) {
+        public Criteria andExceptionCodeGreaterThanOrEqualTo(String value) {
             addCriterion("`exception_code` >=", value, "exceptionCode");
             return (Criteria) this;
         }
 
-        public Criteria andExceptionCodeLessThan(Integer value) {
+        public Criteria andExceptionCodeLessThan(String value) {
             addCriterion("`exception_code` <", value, "exceptionCode");
             return (Criteria) this;
         }
 
-        public Criteria andExceptionCodeLessThanOrEqualTo(Integer value) {
+        public Criteria andExceptionCodeLessThanOrEqualTo(String value) {
             addCriterion("`exception_code` <=", value, "exceptionCode");
             return (Criteria) this;
         }
 
-        public Criteria andExceptionCodeIn(List<Integer> values) {
+        public Criteria andExceptionCodeLike(String value) {
+            addCriterion("`exception_code` like", value, "exceptionCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andExceptionCodeNotLike(String value) {
+            addCriterion("`exception_code` not like", value, "exceptionCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andExceptionCodeIn(List<String> values) {
             addCriterion("`exception_code` in", values, "exceptionCode");
             return (Criteria) this;
         }
 
-        public Criteria andExceptionCodeNotIn(List<Integer> values) {
+        public Criteria andExceptionCodeNotIn(List<String> values) {
             addCriterion("`exception_code` not in", values, "exceptionCode");
             return (Criteria) this;
         }
 
-        public Criteria andExceptionCodeBetween(Integer value1, Integer value2) {
+        public Criteria andExceptionCodeBetween(String value1, String value2) {
             addCriterion("`exception_code` between", value1, value2, "exceptionCode");
             return (Criteria) this;
         }
 
-        public Criteria andExceptionCodeNotBetween(Integer value1, Integer value2) {
+        public Criteria andExceptionCodeNotBetween(String value1, String value2) {
             addCriterion("`exception_code` not between", value1, value2, "exceptionCode");
             return (Criteria) this;
         }
