@@ -141,8 +141,8 @@ public class ScoreHistoryController extends BaseController {
         	customers = customerService.findAllCustomer();
         	for(ScoreHistory score : pageableResult.getItems()){
         		for (Customer customer : customers) {
-					if(customer.getUid() == score.getUid()){
-						customerName = userService.getUser(score.getUid()).getRealname();
+					if(customer.getCustomerId() == score.getUid()){
+						customerName = userService.getUser(customer.getUid()).getRealname();
 						score.setCustomerName(customerName);
 					}
 				}
