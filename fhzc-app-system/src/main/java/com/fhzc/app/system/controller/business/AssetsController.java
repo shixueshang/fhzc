@@ -80,6 +80,7 @@ public class AssetsController extends BaseController {
         	}
         }
         PageableResult<AssetsHistory> pageableResult = assetsService.findPageAssets(pro== null ? null : pro.getPid(), customerIds, page, size);
+        List<AssetsHistory> assetsHistories = new ArrayList<AssetsHistory>();
         List<AssetsHistory> assets = pageableResult.getItems();
         for(AssetsHistory assetsHistory : assets){
             Customer customer = customerService.getCustomer(assetsHistory.getCustomerId());
@@ -91,9 +92,10 @@ public class AssetsController extends BaseController {
             Product product = productService.getProduct(assetsHistory.getProductId());
             assetsHistory.setProductName(product.getName());
             assetsHistory.setProductCode(product.getCode());
+            assetsHistories.add(assetsHistory);
         }
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
-        mav.addObject("assets", assets);
+        mav.addObject("assets", assetsHistories);
         mav.addObject("assetsStatus", dictionaryService.findDicByType(Const.DIC_CAT.ASSETS_STATUS));
         mav.addObject("url", "/business/assets");
         return mav;

@@ -151,13 +151,21 @@
                                                 <div class="controls">
                                                     <div class="fileupload fileupload-new" data-provides="fileupload">
                                                         <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
-                                                            <img src="/static/image/no-image.png" alt="" id="default_img" />
+                                                            <c:choose>
+                                                                <c:when test="${activity.cover == null}" >
+                                                                    <img src="/static/image/no-image.png" alt="" id="default_img" />
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <img src="<%=basePath%>${activity.cover}" alt="" id="default_img" />
+                                                                </c:otherwise>
+                                                            </c:choose>
                                                         </div>
                                                         <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
                                                         <div>
                                                        <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
                                                        <span class="fileupload-exists">更换</span>
                                                        <input type="file" name="coverFile" class="default" /></span>
+                                                            <input type="hidden" name="cover" value="${activity.cover}" class="default" />
                                                             <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
                                                         </div>
                                                     </div>
@@ -185,13 +193,13 @@
                                             <div class="control-group">
                                                 <label class="control-label">活动主办方</label>
                                                 <div class="controls">
-                                                    <textarea name="sponsor" class="span6 m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;">${activity.sponsor}</textarea>
+                                                    <textarea name="sponsor" class="span6 m-wrap" maxlength="250" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;">${activity.sponsor}</textarea>
                                                 </div>
                                             </div>
                                             <div class="control-group">
                                                 <label class="control-label">活动摘要</label>
                                                 <div class="controls">
-                                                    <textarea name="summary" class="span6 m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;">${activity.summary}</textarea>
+                                                    <textarea name="summary" class="span6 m-wrap" maxlength="250" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;">${activity.summary}</textarea>
                                                 </div>
                                             </div>
 
@@ -272,16 +280,6 @@
                 $("#activityType").val(activityTypesVal);
             }
         });
-
-        var dispalyImg = $("#default_img");
-        var imgUrl = "<%=basePath%>${activity.cover}";
-        var defaultImg = "/static/image/no-image.png";
-        if(activityId == ''){
-            dispalyImg.attr("src", defaultImg);
-        }else if(imgUrl != defaultImg){
-            dispalyImg.attr("src", imgUrl);
-        }
-
 
         var status = '${activity.status}';
         if(status == 1 || status == null || status == ""){

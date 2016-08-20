@@ -24,7 +24,7 @@ public class ReportServiceImpl implements ReportService {
     public PageableResult<Report> findPageReports(int page, int size) {
         ReportExample example = new ReportExample();
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
-        List<Report> list = reportMapper.selectByExampleWithRowbounds(example, rowBounds);
+        List<Report> list = reportMapper.selectByExampleWithBLOBsWithRowbounds(example, rowBounds);
         return new PageableResult<Report>(page, size, reportMapper.countByExample(example), list);
     }
 
@@ -34,7 +34,7 @@ public class ReportServiceImpl implements ReportService {
         if(id == null){
             reportMapper.insert(report);
         }else{
-            reportMapper.updateByPrimaryKey(report);
+            reportMapper.updateByPrimaryKeyWithBLOBs(report);
         }
     }
 
