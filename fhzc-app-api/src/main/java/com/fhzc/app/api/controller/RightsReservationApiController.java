@@ -2,10 +2,12 @@ package com.fhzc.app.api.controller;
 
 import com.fhzc.app.api.service.RightsReservationService;
 import com.fhzc.app.api.service.RightsService;
+import com.fhzc.app.api.service.ScoreService;
 import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
 import com.fhzc.app.dao.mybatis.model.Rights;
 import com.fhzc.app.dao.mybatis.model.RightsReservation;
+import com.fhzc.app.dao.mybatis.model.ScoreHistory;
 import com.fhzc.app.dao.mybatis.util.Const;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +31,9 @@ public class RightsReservationApiController extends BaseController {
     @Resource
     private RightsService rightsService;
 
+    @Resource
+    private ScoreService scoreService;
+
     public static long LONGHOUR = 24;
 
     public static String LESS_THEN_LONGHOUR_MESSAGE = "未超过24小时不能取消";
@@ -43,6 +48,12 @@ public class RightsReservationApiController extends BaseController {
     @RequestMapping(value = "/api/rights/exchange",method = RequestMethod.POST)
     @ResponseBody
     public ApiJsonResult rightsReservation(RightsReservation rightsReservation){
+
+        List<ScoreHistory> availableList = scoreService.getAvailableList(rightsReservation.getCustomerId());
+        Integer userScore = scoreService.sumScore(availableList);
+        if (userScore < rightsReservation.getScoreCost()) {
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.FAILED,"积分可用余额不足");
+        }
         Rights rights = rightsService.getRights(rightsReservation.getRightsId());
         rightsReservation.setCtime(new Date());
         rightsReservation.setScoreCost(rights.getSpendScore());
