@@ -53,7 +53,7 @@
             <div class="row-fluid">
                 <div class="span12">
 
-                    <div class="portlet box yellow">
+                    <div class="portlet box blue">
                         <div class="portlet-title">
                             <h4><i class="icon-reorder"></i></h4>
                         </div>
@@ -71,7 +71,7 @@
                                     <td>是否展示</td>
                                     <td>关注人数</td>
                                     <td>预约人数</td>
-                                    <td>预约金额</td>
+                                    <td>预约金额(万元)</td>
                                     <td>操作</td>
                                 </tr>
                                 </thead>
@@ -117,10 +117,9 @@
                                                 </c:if>
                                             </c:forEach>
                                         </td>
-                                        <td>
-                                        </td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>${product.focusNum}</td>
+                                        <td>${product.orderNum}</td>
+                                        <td>${product.orderAmount}</td>
                                         <td>
                                             <a href="<%=contextPath%>/business/product/detail/${product.pid}" class="btn mini purple"><i class="icon-edit"></i> 编辑</a>
                                             <a href="<%=contextPath%>/business/product/order/${product.pid}" class="btn mini blue"><i class="icon-share"></i> 预约</a>

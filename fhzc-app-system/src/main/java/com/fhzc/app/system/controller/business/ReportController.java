@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
+import com.fhzc.app.system.aop.SystemControllerLog;
 import com.fhzc.app.system.commons.util.FileUtil;
 import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.controller.BaseController;
@@ -35,6 +36,7 @@ public class ReportController extends BaseController {
     private DictionaryService dictionaryService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @SystemControllerLog(description = "查看投研报告列表")
     public ModelAndView listReport(){
         ModelAndView mav = new ModelAndView("business/report/list");
         PageableResult<Report> pageableResult =  reportService.findPageReports(page, size);
@@ -54,6 +56,7 @@ public class ReportController extends BaseController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @SystemControllerLog(description = "新增或修改报告")
     public String addOrUpdateReport(Report report, MultipartFile coverFile){
 
         if(!coverFile.isEmpty()){

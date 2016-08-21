@@ -73,4 +73,34 @@ public class DateUtil {
 		return date;
 	}
 
+    /**
+     * 获得指定日期的起始时间
+     * @param date
+     * @return
+     */
+    public static Date getStartTimeOfDate(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTime();
+    }
+
+    /**
+     * 获得滴定日期的结束日期
+     * @param date
+     * @return
+     */
+    public static Date getEndTimeOfDate(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        calendar.set(Calendar.MILLISECOND, 999);
+        return calendar.getTime();
+    }
+
 }

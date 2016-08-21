@@ -6,6 +6,7 @@ import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
+import com.fhzc.app.system.aop.SystemControllerLog;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.CustomerService;
 import com.fhzc.app.system.service.DictionaryService;
@@ -60,6 +61,7 @@ public class ScoreHistoryController extends BaseController {
      */
     @RequestMapping(value = "/importadd", method = RequestMethod.POST)
     @ResponseBody
+    @SystemControllerLog(description = "积分历史导入")
     public ModelAndView importExcelAdd(MultipartFile multiFile){
     	Map<String, Object> result = new HashMap<String, Object>();
         ModelAndView mav = new ModelAndView("business/addscorehistory/importor");
@@ -93,6 +95,7 @@ public class ScoreHistoryController extends BaseController {
      */
     @RequestMapping(value = "/importconsume", method = RequestMethod.POST)
     @ResponseBody
+    @SystemControllerLog(description = "权益消费导入")
     public ModelAndView importExcelConsume(MultipartFile multiFile){
     	Map<String, Object> result = new HashMap<String, Object>();
         ModelAndView mav = new ModelAndView("business/consumescorehistory/importor");
@@ -123,6 +126,7 @@ public class ScoreHistoryController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/find", method = RequestMethod.GET)
+    @SystemControllerLog(description = "查看积分列表")
     public ModelAndView findScore(String identity, Integer isApprove){
         ModelAndView mav = new ModelAndView("business/score/list");
         User user = new User();
@@ -166,6 +170,7 @@ public class ScoreHistoryController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/approve/{id}", method = RequestMethod.GET)
+    @SystemControllerLog(description = "积分审批")
     public String approve(@PathVariable(value = "id") Integer scoreId){
         scoreService.approve(scoreId);
         return "redirect:/business/score/list";
@@ -178,6 +183,7 @@ public class ScoreHistoryController extends BaseController {
      */
     @RequestMapping(value = "/batchApprove", method = RequestMethod.GET)
     @ResponseBody
+    @SystemControllerLog(description = "积分批量审批")
     public Object batchApprove(@RequestParam(value = "ids[]") Integer[] ids){
         for(Integer id : ids){
             scoreService.approve(id);

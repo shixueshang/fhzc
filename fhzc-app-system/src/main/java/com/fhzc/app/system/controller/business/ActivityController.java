@@ -8,6 +8,7 @@ import com.fhzc.app.dao.mybatis.model.Dictionary;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
+import com.fhzc.app.system.aop.SystemControllerLog;
 import com.fhzc.app.system.commons.util.FileUtil;
 import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.controller.BaseController;
@@ -42,6 +43,7 @@ public class ActivityController extends BaseController {
     private DictionaryService dictionaryService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @SystemControllerLog(description = "查询活动列表")
     public ModelAndView listActivities(){
         ModelAndView mav = new ModelAndView("business/activity/list");
         PageableResult<Activity> pageableResult = activityService.findPageActivies(page, size);
@@ -61,6 +63,7 @@ public class ActivityController extends BaseController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @SystemControllerLog(description = "新增或修改活动")
     public String addActivity(Activity activity, MultipartFile coverFile){
 
         if(!coverFile.isEmpty()){

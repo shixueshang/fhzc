@@ -3,6 +3,7 @@ package com.fhzc.app.system.controller.admin;
 import com.fhzc.app.dao.mybatis.model.Admin;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.AdminService;
+import com.fhzc.app.system.service.SystemLogService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -27,6 +28,9 @@ public class LoginController extends BaseController {
 
     @Resource
     private AdminService adminService;
+
+    @Resource
+    private SystemLogService systemLogService;
 
     /**
      * @return
@@ -53,6 +57,7 @@ public class LoginController extends BaseController {
             Session session = subject.getSession(true);
             session.setAttribute("admin", admin);
             mav.setViewName("system/home");
+            systemLogService.addByDescription("登陆", admin);
             return mav;
         } catch (UnknownAccountException e) {
             mav.setViewName("index");
@@ -73,6 +78,7 @@ public class LoginController extends BaseController {
     public String logout() {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
+        systemLogService.addByDescription("退出登陆", super.getCurrentUser());
         return "index";
     }
 }

@@ -6,26 +6,11 @@
     <result column="product_id" property="productId" jdbcType="INTEGER" />
     <result column="customer_id" property="customerId" jdbcType="INTEGER" />
     <result column="planner_id" property="plannerId" jdbcType="INTEGER" />
+    <result column="apply_time" property="applyTime" jdbcType="TIMESTAMP" />
     <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
     <result column="result" property="result" jdbcType="CHAR" />
     <result column="amount" property="amount" jdbcType="INTEGER" />
-    <result column="apply_time" property="applyTime" jdbcType="TIMESTAMP" />
   </resultMap>
-
-  <resultMap id="ViewResultMap" type="com.fhzc.app.dao.mybatis.bo.ProductReservationBo" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result property="reservationTime" column="apply_time" jdbcType="TIMESTAMP" />
-    <result property="productId" column="product_id" jdbcType="INTEGER" />
-    <result property="reservationAmount" column="amount" jdbcType="INTEGER" />
-    <result property="clientId" column="customer_id" jdbcType="INTEGER" />
-    <result property="clientName" column="cname" jdbcType="VARCHAR" />
-    <result property="planerId" column="work_num" jdbcType="VARCHAR" />
-    <result property="planerName" column="pname" jdbcType="VARCHAR" />
-    <result property="planerPhone" column="phone" jdbcType="VARCHAR" />
-    <result property="salt" column="salt" jdbcType="VARCHAR" />
-    <result property="reservationStatus" column="result" jdbcType="VARCHAR" />
-  </resultMap>
-
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -85,7 +70,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    `id`, `product_id`, `customer_id`, `planner_id`, `ctime`, `result`, `amount`
+    `id`, `product_id`, `customer_id`, `planner_id`, `apply_time`, `ctime`, `result`, 
+    `amount`
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.ProductReservationExample" >
     select
@@ -122,11 +108,11 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into `product_reservation` (`product_id`, `customer_id`, `planner_id`, 
-      `ctime`, `result`, `amount`
-      )
+      `apply_time`, `ctime`, `result`, 
+      `amount`)
     values (#{productId,jdbcType=INTEGER}, #{customerId,jdbcType=INTEGER}, #{plannerId,jdbcType=INTEGER}, 
-      #{ctime,jdbcType=TIMESTAMP}, #{result,jdbcType=CHAR}, #{amount,jdbcType=INTEGER}
-      )
+      #{applyTime,jdbcType=TIMESTAMP}, #{ctime,jdbcType=TIMESTAMP}, #{result,jdbcType=CHAR}, 
+      #{amount,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.ProductReservation" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
@@ -142,6 +128,9 @@
       </if>
       <if test="plannerId != null" >
         `planner_id`,
+      </if>
+      <if test="applyTime != null" >
+        `apply_time`,
       </if>
       <if test="ctime != null" >
         `ctime`,
@@ -162,6 +151,9 @@
       </if>
       <if test="plannerId != null" >
         #{plannerId,jdbcType=INTEGER},
+      </if>
+      <if test="applyTime != null" >
+        #{applyTime,jdbcType=TIMESTAMP},
       </if>
       <if test="ctime != null" >
         #{ctime,jdbcType=TIMESTAMP},
@@ -195,6 +187,9 @@
       <if test="record.plannerId != null" >
         `planner_id` = #{record.plannerId,jdbcType=INTEGER},
       </if>
+      <if test="record.applyTime != null" >
+        `apply_time` = #{record.applyTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.ctime != null" >
         `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
       </if>
@@ -215,6 +210,7 @@
       `product_id` = #{record.productId,jdbcType=INTEGER},
       `customer_id` = #{record.customerId,jdbcType=INTEGER},
       `planner_id` = #{record.plannerId,jdbcType=INTEGER},
+      `apply_time` = #{record.applyTime,jdbcType=TIMESTAMP},
       `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
       `result` = #{record.result,jdbcType=CHAR},
       `amount` = #{record.amount,jdbcType=INTEGER}
@@ -234,6 +230,9 @@
       <if test="plannerId != null" >
         `planner_id` = #{plannerId,jdbcType=INTEGER},
       </if>
+      <if test="applyTime != null" >
+        `apply_time` = #{applyTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="ctime != null" >
         `ctime` = #{ctime,jdbcType=TIMESTAMP},
       </if>
@@ -251,6 +250,7 @@
     set `product_id` = #{productId,jdbcType=INTEGER},
       `customer_id` = #{customerId,jdbcType=INTEGER},
       `planner_id` = #{plannerId,jdbcType=INTEGER},
+      `apply_time` = #{applyTime,jdbcType=TIMESTAMP},
       `ctime` = #{ctime,jdbcType=TIMESTAMP},
       `result` = #{result,jdbcType=CHAR},
       `amount` = #{amount,jdbcType=INTEGER}
@@ -270,42 +270,4 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectReservations" parameterType="com.fhzc.app.dao.mybatis.model.ProductReserQuery" resultMap="ViewResultMap">
-  select p.id, p.product_id, p.apply_time, p.result, p.amount, pu.work_num, pu.realname pname, pu.mobile phone, pu.salt, cu.customer_id, cu.passport_code, cu.realname cname from product_reservation p,
-    (select pl.id, pl.work_num, u.realname, u.mobile, u.passport_code, u.salt from planner pl, user u where pl.uid = u.uid)pu,
-    (select c.customer_id, u.realname, u.mobile, u.passport_code, u.salt from customer c, user u where c.uid = u.uid) cu
-    where p.customer_id = cu.customer_id and p.planner_id = pu.id
-      <if test="productName != null">
-        AND p.product_id = #{productId}
-      </if>
-      <if test="customerIdCardNum != null">
-        AND cu.passport_code = #{customerIdCardNum}
-      </if>
-      <if test="startDate != null">
-        AND p.apply_time &gt;= #{startDate}
-      </if>
-      <if test="endDate != null">
-        AND p.apply_time &lt;= #{endDate}
-      </if>
-  </select>
-
-  <select id="countReservations" parameterType="com.fhzc.app.dao.mybatis.model.ProductReserQuery" resultType="java.lang.Integer">
-    select count(*) from product_reservation p,
-    (select pl.id, pl.work_num, u.realname, u.phone, u.passport_code from planner pl, user u where pl.uid = u.uid)pu,
-    (select c.customer_id, u.realname, u.phone, u.passport_code from customer c, user u where c.uid = u.uid) cu
-    where p.customer_id = cu.customer_id and p.planner_id = pu.id
-    <if test="productName != null">
-      AND p.product_id = #{productId}
-    </if>
-    <if test="customerIdCardNum != null">
-      AND cu.passport_code = #{customerIdCardNum}
-    </if>
-    <if test="startDate != null">
-      AND p.apply_time &gt;= #{startDate}
-    </if>
-    <if test="endDate != null">
-      AND p.apply_time &lt;= #{endDate}
-    </if>
-  </select>
-  
 </mapper>

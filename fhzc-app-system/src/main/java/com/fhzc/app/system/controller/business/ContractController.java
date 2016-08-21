@@ -7,6 +7,7 @@ import com.fhzc.app.dao.mybatis.model.Product;
 import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
+import com.fhzc.app.system.aop.SystemControllerLog;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.ContractService;
 import com.fhzc.app.system.service.CustomerService;
@@ -64,6 +65,7 @@ public class ContractController extends BaseController {
      */
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     @ResponseBody
+    @SystemControllerLog(description = "导入日表")
     public ModelAndView importExcel(MultipartFile multiFile){
     	Map<String, Object> result = new HashMap<String, Object>();
         ModelAndView mav = new ModelAndView("business/contract/importor");
@@ -115,10 +117,11 @@ public class ContractController extends BaseController {
     /**
      * 按产品名称或理财师姓名查询合同列表
      * @param productName
-     * @param customerName
+     * @param plannerName
      * @return
      */
     @RequestMapping(value = "/find", method = RequestMethod.GET)
+    @SystemControllerLog(description = "查询合同列表")
     public ModelAndView find(String productName, String plannerName){
         ModelAndView mav = new ModelAndView("/business/contract/list");
         List<User> users = new ArrayList<User>();

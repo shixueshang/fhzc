@@ -5,6 +5,7 @@ import com.fhzc.app.dao.mybatis.model.Department;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
+import com.fhzc.app.system.aop.SystemControllerLog;
 import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.DepartmentService;
@@ -36,6 +37,7 @@ public class OrganizationController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/department", method = RequestMethod.GET)
+    @SystemControllerLog(description = "查看机构列表")
     public ModelAndView listResources(){
         ModelAndView mav = new ModelAndView("organization/department/department");
         PageableResult<Map<String, Object>> pageableResult =  departmentService.findPageDepts(page, size);
@@ -51,6 +53,7 @@ public class OrganizationController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @SystemControllerLog(description = "新增或修改机构")
     public String addOrUpdateDept(Department department){
         department.setCtime(new Date());
         department.setStatus(Const.Data_Status.DATA_NORMAL);

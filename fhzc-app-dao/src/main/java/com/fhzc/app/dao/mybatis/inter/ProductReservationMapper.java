@@ -1,7 +1,5 @@
 package com.fhzc.app.dao.mybatis.inter;
 
-import com.fhzc.app.dao.mybatis.bo.ProductReservationBo;
-import com.fhzc.app.dao.mybatis.model.ProductReserQuery;
 import com.fhzc.app.dao.mybatis.model.ProductReservation;
 import com.fhzc.app.dao.mybatis.model.ProductReservationExample;
 import java.util.List;
@@ -32,8 +30,4 @@ public interface ProductReservationMapper {
     int updateByPrimaryKeySelective(ProductReservation record);
 
     int updateByPrimaryKey(ProductReservation record);
-
-    List<ProductReservationBo> selectReservations(ProductReserQuery query, RowBounds rowBounds);
-
-    int countReservations(ProductReserQuery query);
 }

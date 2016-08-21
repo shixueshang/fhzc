@@ -102,6 +102,36 @@ public class Product {
 
     private String detailContent;
 
+    private Integer focusNum;
+
+    private Integer orderNum;
+
+    private BigDecimal orderAmount;
+
+    public Integer getFocusNum() {
+        return focusNum;
+    }
+
+    public void setFocusNum(Integer focusNum) {
+        this.focusNum = focusNum;
+    }
+
+    public Integer getOrderNum() {
+        return orderNum;
+    }
+
+    public void setOrderNum(Integer orderNum) {
+        this.orderNum = orderNum;
+    }
+
+    public BigDecimal getOrderAmount() {
+        return orderAmount;
+    }
+
+    public void setOrderAmount(BigDecimal orderAmount) {
+        this.orderAmount = orderAmount;
+    }
+
     public Integer getPid() {
         return pid;
     }

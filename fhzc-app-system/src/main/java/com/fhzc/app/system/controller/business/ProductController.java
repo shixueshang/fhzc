@@ -1,8 +1,8 @@
 package com.fhzc.app.system.controller.business;
 
 import com.alibaba.fastjson.JSON;
-import com.fhzc.app.dao.mybatis.bo.ProductReservationBo;
 import com.fhzc.app.dao.mybatis.model.*;
+import com.fhzc.app.dao.mybatis.model.Dictionary;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
@@ -11,13 +11,9 @@ import com.fhzc.app.system.commons.util.FileUtil;
 import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
-import com.fhzc.app.system.service.DepartmentService;
-import com.fhzc.app.system.service.DictionaryService;
-import com.fhzc.app.system.service.PlannerService;
-import com.fhzc.app.system.service.ProductService;
+import com.fhzc.app.system.service.*;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,10 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by lihongde on 2016/7/7 15:22
@@ -51,17 +44,44 @@ public class ProductController extends BaseController {
     @Resource
     private PlannerService plannerService;
 
+    @Resource
+    private CustomerService customerService;
+
+    @Resource
+    private UserService userService;
+
+    @Resource
+    private FocusService focusService;
+
     /**
      * 产品列表
      * @return
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @SystemControllerLog(description = "产品查询")
+    @SystemControllerLog(description = "查询产品列表")
     public ModelAndView listProduct(){
         ModelAndView mav = new ModelAndView("business/product/list");
         PageableResult<Product> pageableResult = productService.findPageProducts(page, size);
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
-        mav.addObject("products", pageableResult.getItems());
+        List<Product> products = new ArrayList<Product>();
+        for(Product product : pageableResult.getItems()){
+            //获得产品关注人数
+            List<Focus> focuses = focusService.findFocusByType(Const.FOCUS_TYPE.PRODUCT, product.getPid());
+            product.setFocusNum(focuses.size() > 0 ? focuses.size() : 0);
+
+            //获得预约人数
+            List<ProductReservation> orders = productService.findOrdersByPid(product.getPid());
+            product.setOrderNum(orders.size() > 0 ? orders.size() : 0);
+            BigDecimal orderAmount = new BigDecimal(0.00);
+            for(ProductReservation order : orders){
+                orderAmount = orderAmount.add(new BigDecimal(order.getAmount() / 10000));
+            }
+            product.setOrderAmount(orderAmount);
+            products.add(product);
+        }
+
+
+        mav.addObject("products", products);
         mav.addObject("productTypes", dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_TYPE));
         mav.addObject("productStatus", dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_STATUS));
         mav.addObject("departments", departmentService.findDeptByParent(Const.ROOT_DEPT_ID));
@@ -97,7 +117,7 @@ public class ProductController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    @SystemControllerLog(description = "产品新增或修改")
+    @SystemControllerLog(description = "新增或修改产品")
     public String addOrUpdateProduct(Product product, MultipartFile coverFile, MultipartFile proveFile, MultipartFile noticeFile){
 
         if(!coverFile.isEmpty()){
@@ -170,6 +190,7 @@ public class ProductController extends BaseController {
      */
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     @ResponseBody
+    @SystemControllerLog(description = "导入产品")
     public Map<String, Object> importExcel(MultipartFile multiFile){
         Map<String, Object> result = new HashMap<String, Object>();
         try {
@@ -188,15 +209,9 @@ public class ProductController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/order/list", method = RequestMethod.GET)
+    @SystemControllerLog(description = "查看产品预约列表")
     public ModelAndView listProductOrdered(){
         ModelAndView mav = new ModelAndView("business/product/reservationList");
-        ProductReserQuery query = new ProductReserQuery();
-        PageableResult<ProductReservationBo> pageableResult = productService.findPageProductReservations(query, page, size);
-        List<ProductReservationBo> items = pageableResult.getItems();
-        filledProductName(items);
-
-        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
-        mav.addObject("reservations", pageableResult.getItems());
         mav.addObject("url", "business/product");
         return mav;
     }
@@ -210,16 +225,12 @@ public class ProductController extends BaseController {
         ModelAndView mav = new ModelAndView("business/product/reservationList");
         ProductReserQuery query = new ProductReserQuery();
         if (StringUtils.isNotBlank(productName)){
+            query.setProductName(productName);
             Product product = productService.getProduct(productName.trim());
             if (product != null){
                 query.setProductName(product.getName());
                 query.setProductId(product.getPid());
             }
-            //query.setProductName(productName);
-        }
-
-        if (StringUtils.isNotBlank(identityId)){
-            query.setCustomerIdCardNum(identityId);
         }
 
         if (startTime != null){
@@ -230,25 +241,27 @@ public class ProductController extends BaseController {
             query.setEndDate(endTime);
         }
 
-        PageableResult<ProductReservationBo> pageableResult = productService.findPageProductReservations(query, page, size);
-        List<ProductReservationBo> items = pageableResult.getItems();
-        filledProductName(items);
+        PageableResult<ProductReservation> pageableResult = productService.findPageProductReservations(query, page, size);
+        List<ProductReservation> result = new ArrayList<ProductReservation>();
+        for(ProductReservation productReservation : pageableResult.getItems()){
+            productReservation.setProductName(productService.getProduct(productReservation.getProductId()).getName());
+            Customer customer = customerService.getCustomer(productReservation.getCustomerId());
+            User customUser = userService.getUser(customer.getUid());
+            productReservation.setCustomerNum(customer.getCbId());
+            productReservation.setCustomerName(customUser.getRealname());
+
+            Planner planner = plannerService.getPlanner(productReservation.getPlannerId());
+            User plannerUser = userService.getUser(planner.getUid());
+            productReservation.setPlannerNum(planner.getWorkNum());
+            productReservation.setPlannerMobile(plannerUser.getMobile());
+            productReservation.setPlannerName(plannerUser.getRealname());
+            result.add(productReservation);
+        }
 
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
-        mav.addObject("reservations", pageableResult.getItems());
+        mav.addObject("reservations", result);
 
         return mav;
-    }
-
-    private void filledProductName(List<ProductReservationBo> items){
-        if (!CollectionUtils.isEmpty(items)){
-            for (ProductReservationBo item : items){
-                Product product = productService.getProduct((int)item.getProductId());
-                if (product != null){
-                    item.setProductName(product.getName());
-                }
-            }
-        }
     }
 
     /**
@@ -266,14 +279,14 @@ public class ProductController extends BaseController {
     @RequestMapping(value = "/isKeyExists", method = RequestMethod.GET)
     @ResponseBody
     public Object isKeyExists(String key){
-        boolean flag = dictionaryService.isKeyExists("product_type",key);
+        boolean flag = dictionaryService.isKeyOrValueExists(Const.DIC_CAT.PRODUCT_TYPE, "key", key);
         return !flag;
     }
     
     @RequestMapping(value = "/isValueExists", method = RequestMethod.GET)
     @ResponseBody
     public Object isValueExists(String value){
-        boolean flag = dictionaryService.isValueExists("product_type",value);
+        boolean flag = dictionaryService.isKeyOrValueExists(Const.DIC_CAT.PRODUCT_TYPE, "value", value);
         return !flag;
     }
     
