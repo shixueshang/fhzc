@@ -232,8 +232,8 @@ public class PlannerServiceImpl implements PlannerService {
 	        		temData[1] = DigestUtils.md5Hex(phone);			//手机号 mobile，作为初始密码	
 	        		temData[2] = objects[1];						//工号 work_num
 	        		temData[3] = objects[2];						//姓名 realname
-	        		temData[4] = enphone;							//手机号
-	        		temData[5] = enpcode;							//证件号
+	        		temData[4] = enpcode;							//证件号
+	        		temData[5] = enphone;							//手机号
 	        		temData[6] = objects[3];						//所属公司 company
 	        		temData[7] = objects[4];						//所属城市 area
 	        		temData[8] = objects[5];						//一级部门 dept1
