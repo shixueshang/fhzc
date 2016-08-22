@@ -51,10 +51,10 @@ public class RightsReservationApiController extends BaseController {
 
         List<ScoreHistory> availableList = scoreService.getAvailableList(rightsReservation.getCustomerId());
         Integer userScore = scoreService.sumScore(availableList);
-        if (userScore < rightsReservation.getScoreCost()) {
+        Rights rights = rightsService.getRights(rightsReservation.getRightsId());
+        if (userScore < rights.getSpendScore()) {
             return new ApiJsonResult(APIConstants.API_JSON_RESULT.FAILED,"积分可用余额不足");
         }
-        Rights rights = rightsService.getRights(rightsReservation.getRightsId());
         rightsReservation.setCtime(new Date());
         rightsReservation.setScoreCost(rights.getSpendScore());
         rightsReservation.setStatus(APIConstants.RightsOrderStatus.ORDER_ING);
