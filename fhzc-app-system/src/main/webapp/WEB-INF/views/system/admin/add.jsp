@@ -21,6 +21,9 @@
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/jquery-tags-input/jquery.tagsinput.css" />
 <link rel="stylesheet" href="<%=contextPath%>/assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" />
 
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/static/zTree/css/zTreeStyle.css">
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/static/zTree/css/demo.css">
+
 <!-- BEGIN CONTAINER -->
 <div class="page-container row-fluid">
     <jsp:include page="../../include/left.jsp"/>
@@ -110,8 +113,8 @@
                                             <div class="control-group">
                                                 <label class="control-label">所属机构</label>
                                                 <div class="controls">
-                                                    <select name="organ" id="belongOrgan" class="large m-wrap"  tabindex="1">
-                                                    </select>
+                                                    <input type="text" id="department" onclick="showTreeData(); return false;" class="large m-wrap"/>
+                                                    <input type="hidden" name="organ" id="department_value" />
                                                 </div>
                                             </div>
 
@@ -158,6 +161,9 @@
                         </div>
                     </div>
                     <!-- END SAMPLE FORM PORTLET-->
+                    <div id="treeContent" class="treeContent" style="display:none; position: absolute;">
+                        <ul id="treeDemo" class="ztree" style="margin-top:0;"></ul>
+                    </div>
                 </div>
             </div>
             <!--页面操作详细内容 开始-->
@@ -169,6 +175,8 @@
 <jsp:include page="../../include/footer.jsp"/>
 <script type="text/javascript" src="<%=contextPath%>/assets/jquery-validation/dist/jquery.validate.min.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/static/zTree/js/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/static/zTree/js/tree.js"></script>
 <script>
     $(function(){
 
@@ -203,14 +211,10 @@
         });
 
         var organVal = '${adminUser.organ}';
-        var departments = '${departments}';
-        var deptsJson= $.parseJSON(departments);
-        $.each(deptsJson, function(i,val){
-            $("#belongOrgan").append("<option value='"+val.id+"'>"+val.name+"</option>");
-            if(organVal == val.id){
-                $("#belongOrgan").val(organVal);
-            }
-        });
+        var treeNodes = '${departments}';
+        treeNodes = $.parseJSON(treeNodes);
+        setOrganValue(organVal, treeNodes);
+        $.fn.zTree.init($("#treeDemo"), setting, treeNodes);
 
         var status = '${adminUser.status}';
         if(status == 1 || status == null || status == ""){

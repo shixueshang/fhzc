@@ -165,7 +165,7 @@
                                                        <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
                                                        <span class="fileupload-exists">更换</span>
                                                        <input type="file" name="coverFile" class="default" /></span>
-                                                            <input type="hidden" name="cover" value="${activity.cover}" class="default" />
+                                                       <input type="hidden" name="cover" value="${activity.cover}" />
                                                             <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
                                                         </div>
                                                     </div>

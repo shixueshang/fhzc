@@ -1,6 +1,8 @@
 package com.fhzc.app.system;
 
+import com.fhzc.app.dao.mybatis.model.Department;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
+import com.fhzc.app.system.commons.util.Tree;
 import com.fhzc.app.system.context.Base;
 import com.fhzc.app.system.service.DepartmentService;
 import org.junit.*;
@@ -19,19 +21,19 @@ public class DepartmentTest extends Base {
 
     @org.junit.Test
     public void list(){
-       PageableResult<Map<String, Object>> pageDepts = departmentService.findPageDepts(0, 20);
+       PageableResult<Department> pageDepts = departmentService.findPageDepartments(0, 20);
 
-        for(Map<String, Object> map : pageDepts.getItems()){
-            logger.info(map.get("id") + " : " + map.get("name"));
+        for(Department department : pageDepts.getItems()){
+            logger.info(department.getDepartmentId() + " : " + department.getTitle());
         }
     }
 
     @org.junit.Test
     public void getChildren(){
-       List<Map<String, Object>> list =  departmentService.findDeptByParent(1);
+       List<Tree> list =  departmentService.findDeptByParent(1);
 
-        for(Map<String, Object> map : list){
-            logger.info(map.get("id") + " : " + map.get("name"));
+        for(Tree tree : list){
+            logger.info(tree.getId() + " : " + tree.getName());
         }
     }
 }

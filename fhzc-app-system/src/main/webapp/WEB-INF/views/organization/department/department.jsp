@@ -21,7 +21,8 @@
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/jquery-tags-input/jquery.tagsinput.css" />
 <link rel="stylesheet" href="<%=contextPath%>/assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" />
 
-<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/bootstrap-datepicker/css/datepicker.css">
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/static/zTree/css/zTreeStyle.css">
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/static/zTree/css/demo.css">
 
 <!-- BEGIN CONTAINER -->
 <div class="page-container row-fluid">
@@ -79,8 +80,8 @@
                                             <div class="control-group">
                                                 <label class="control-label">上级部门</label>
                                                 <div class="controls">
-                                                    <select class="large m-wrap" name="parentDeptId" id="parent_dept" tabindex="1">
-                                                    </select>
+                                                    <input type="text" readonly id="department" onclick="showTreeData(); return false;" class="large m-wrap"/>
+                                                    <input type="hidden" name="parentDeptId" id="department_value" />
                                                 </div>
                                             </div>
                                             <div class="form-actions">
@@ -94,17 +95,21 @@
                         </div>
                     </div>
                     <!-- END SAMPLE FORM PORTLET-->
+                    <div id="treeContent" class="treeContent" style="display:none; position: absolute;">
+                        <ul id="treeDemo" class="ztree" style="margin-top:0;"></ul>
+                    </div>
 
-                    <div class="portlet box yellow">
+                    <div class="portlet box blue">
                         <div class="portlet-title">
                             <h4><i class="icon-reorder"></i></h4>
                         </div>
-                        <div class="portlet-body">
+                        <div class="portlet-body" style="height: 430px; overflow: scroll">
                             <table class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
                                     <th>部门id</th>
                                     <th>部门名称</th>
+                                    <th>父级部门</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
@@ -112,12 +117,12 @@
 
                                 <c:forEach items="${depts}" var="dept">
                                     <tr>
-                                        <td>${dept.get("id")}</td>
-                                        <td>${dept.get("name")}</td>
+                                        <td>${dept.departmentId}</td>
+                                        <td>${dept.title}</td>
+                                        <td>${dept.parentName}</td>
                                         <td>
-
-                                            <a href="#modal_edit" role="button" class="btn mini purple mod_dep" data-toggle="modal" data-id="${dept.get("id")}" data-title="${dept.get("title")}" data-pid="${dept.get("parentId")}"><i class="icon-edit"></i> 修改</a>
-                                            <a href="#modal_del" role="button" class="btn mini black del_dep" data-toggle="modal" data-id="${dept.get("id")}" ><i class="icon-trash"></i> 删除</a>
+                                            <a href="#modal_edit" role="button" class="btn mini purple mod_dep" data-toggle="modal" data-id="${dept.departmentId}" data-title="${dept.title}" data-pid="${dept.parentDeptId}"><i class="icon-edit"></i> 修改</a>
+                                            <a href="#modal_del" role="button" class="btn mini black del_dep" data-toggle="modal" data-id="${dept.departmentId}" ><i class="icon-trash"></i> 删除</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -125,8 +130,10 @@
                             </table>
                         </div>
                     </div>
+                    <jsp:include page="../../include/page.jsp"/>
                 </div>
             </div>
+
             <!--页面操作详细内容 开始-->
             <div id="modal_edit" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="my_modal_edit" aria-hidden="true">
                 <div class="modal-header">
@@ -159,18 +166,16 @@
             </div>
 
         </div>
-        <jsp:include page="../../include/page.jsp"/>
     </div>
 </div>
-
+<script type="text/javascript" src="<%=contextPath%>/static/zTree/js/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/static/zTree/js/tree.js"></script>
 <script>
 
     $(function(){
-        var depts = '${deptsForAdd}';
-        var json= $.parseJSON(depts);
-        $.each(json, function(i,val){
-            $("#parent_dept").append("<option value='"+val.id+"'>"+val.name+"</option>");
-        });
+        var treeNodes = '${deptsForAdd}';
+        treeNodes = $.parseJSON(treeNodes);
+        $.fn.zTree.init($("#treeDemo"), setting, treeNodes);
 
         $(".mod_dep").click(function(){
             $("#dep_mod_title").val($(this).data('title'));

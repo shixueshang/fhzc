@@ -6,14 +6,15 @@ import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.aop.SystemControllerLog;
-import com.fhzc.app.system.controller.AjaxJson;
+import com.fhzc.app.system.commons.util.FileUtil;
+import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -44,6 +45,9 @@ public class CustomerController extends BaseController {
 
     @Resource
     private PlannerService plannerService;
+
+    @Resource
+    private DepartmentService departmentService;
 
 
     /**
@@ -107,15 +111,16 @@ public class CustomerController extends BaseController {
         Planner planner = plannerService.getPlanner(plannerCustomer.getPlannerId());
         mav.addObject("planner", JSON.toJSON(planner));
         mav.addObject("plannerUser", JSON.toJSON(userService.getUser(planner.getUid())));
+        mav.addObject("url", "personal/customer");
         return mav;
     }
 
     @RequestMapping(value = "/single/update", method = RequestMethod.POST)
-    public ModelAndView update(Customer customer, User user){
+    public String update(Customer customer, User user){
         ModelAndView mav = new ModelAndView("personal/customer/singleCustomerList");
         customerService.addOrUpdateCustomer(customer);
         userService.addOrUpdateUser(user);
-        return mav;
+        return "redirect:/personal/customer/single/list";
     }
 
     /**
@@ -165,6 +170,33 @@ public class CustomerController extends BaseController {
         return mav;
     }
 
+    @RequestMapping(value = "/organ/update", method = RequestMethod.POST)
+    public String addOrUpdate(Customer customer, User user, MultipartFile businessLicenseFile, MultipartFile accountLicenseFile, MultipartFile entrustedLetterFile){
+        if(!businessLicenseFile.isEmpty()){
+            String fileName = FileUtil.generatePictureName(businessLicenseFile);
+            String path = TextUtils.getConfig(Const.CONFIG_KEY_SYSTEM_IMAGE_SAVE_PATH, this);
+            FileUtil.transferFile(path, fileName, businessLicenseFile);
+            customer.setBusinessLicense(path + fileName);
+        }
+        if(!accountLicenseFile.isEmpty()){
+            String fileName = FileUtil.generatePictureName(accountLicenseFile);
+            String path = TextUtils.getConfig(Const.CONFIG_KEY_SYSTEM_IMAGE_SAVE_PATH, this);
+            FileUtil.transferFile(path, fileName, accountLicenseFile);
+            customer.setAccountLicense(path + fileName);
+        }
+        if(!entrustedLetterFile.isEmpty()){
+            String fileName = FileUtil.generatePictureName(entrustedLetterFile);
+            String path = TextUtils.getConfig(Const.CONFIG_KEY_SYSTEM_IMAGE_SAVE_PATH, this);
+            FileUtil.transferFile(path, fileName, entrustedLetterFile);
+            customer.setEntrustedLetter(path + fileName);
+        }
+        Department department = departmentService.getDeparent(customer.getDepartmentId());
+        customer.setOrganName(department.getTitle());
+        customerService.addOrUpdateCustomer(customer);
+        userService.addOrUpdateUser(user);
+        return "redirect:/personal/customer/organ/list";
+    }
+
     @RequestMapping(value = "/organ/detail/{id}", method = RequestMethod.GET)
     public ModelAndView editOrganCustomer(@PathVariable(value = "id") Integer customerId){
         ModelAndView mav = new ModelAndView("personal/customer/organCustomerAdd");
@@ -175,7 +207,7 @@ public class CustomerController extends BaseController {
         mav.addObject("customerLevels", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL)));
         mav.addObject("availableScore", JSON.toJSON(scoreService.sumScore(scoreService.getAvailableList(customer.getUid()))));
         mav.addObject("frozenScore", JSON.toJSON(scoreService.sumScore(scoreService.getFrozen(customer.getUid()))));
-
+        mav.addObject("departments", JSON.toJSON(departmentService.getDepartmentTree()));
         PlannerCustomer plannerCustomer = customerService.getPlannerByCustomerId(customer.getCustomerId());
         if(plannerCustomer != null){
             Planner planner = plannerService.getPlanner(plannerCustomer.getPlannerId());

@@ -118,8 +118,8 @@
                                         </td>
                                         <td>
                                             <c:forEach items="${departments}" var="department">
-                                                <c:if test="${admin.organ == department['id']}">
-                                                    ${department['name']}
+                                                <c:if test="${admin.organ == department.id}">
+                                                    ${department.name}
                                                 </c:if>
                                             </c:forEach>
 

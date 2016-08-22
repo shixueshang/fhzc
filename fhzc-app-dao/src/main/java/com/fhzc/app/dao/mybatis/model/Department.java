@@ -19,6 +19,16 @@ public class Department {
 
     private Integer level;
 
+    private String parentName;
+
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
+    }
+
     public Integer getDepartmentId() {
         return departmentId;
     }

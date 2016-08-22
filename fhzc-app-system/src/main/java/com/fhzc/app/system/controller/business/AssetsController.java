@@ -99,7 +99,7 @@ public class AssetsController extends BaseController {
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("assets", assetsHistories);
         mav.addObject("assetsStatus", dictionaryService.findDicByType(Const.DIC_CAT.ASSETS_STATUS));
-        mav.addObject("url", "/business/assets");
+        mav.addObject("url", "business/assets");
         return mav;
     }
 }

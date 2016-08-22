@@ -2,9 +2,9 @@ package com.fhzc.app.system.service;
 
 import com.fhzc.app.dao.mybatis.model.Department;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
+import com.fhzc.app.system.commons.util.Tree;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by lihongde on 2016/7/21 13:07
@@ -17,7 +17,13 @@ public interface DepartmentService {
      * @param size
      * @return
      */
-    PageableResult<Map<String, Object>> findPageDepts(int page, int size);
+    PageableResult<Department> findPageDepartments(int page, int size);
+
+    /**
+     * 获得机构树
+     * @return
+     */
+    List<Tree> getDepartmentTree();
 
     /**
      * 添加或修改机构
@@ -43,7 +49,7 @@ public interface DepartmentService {
      * @param parentId
      * @return
      */
-    List<Map<String, Object>> findDeptByParent(Integer parentId);
+    List<Tree> findDeptByParent(Integer parentId);
 
     /**
      * 获得顶级机构
@@ -64,14 +70,6 @@ public interface DepartmentService {
      * @return
      */
     Department getDeparent(String name);
-    
-    /**
-     * 直接查询所有机构信息
-     * @param page
-     * @param size
-     * @return
-     */
-    PageableResult<Department> findPageDepartments(int page, int size);
     
     /**
      * 获得所有部门

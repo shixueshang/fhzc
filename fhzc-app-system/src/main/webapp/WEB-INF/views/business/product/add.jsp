@@ -24,6 +24,9 @@
 
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/bootstrap-datepicker/css/datepicker.css">
 
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/static/zTree/css/zTreeStyle.css">
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/static/zTree/css/demo.css">
+
 <!-- BEGIN CONTAINER -->
 <div class="page-container row-fluid">
     <jsp:include page="../../include/left.jsp"/>
@@ -108,9 +111,9 @@
                                                 </div>
                                             </div>
                                             <div class="control-group">
-                                                <label class="control-label">参考业绩标准(单位:%)</label>
+                                                <label class="control-label">参考业绩标准(%)</label>
                                                 <div class="controls">
-                                                    <input type="number" name="expectedMin" value="${product.expectedMin}" placeholder="" class="m-wrap small"> ~ <input type="number" name="expectedMax" value="${product.expectedMax}" placeholder="" class="m-wrap small">
+                                                    <input type="number" name="annualYield" value="${product.annualYield}" placeholder="" class="large m-wrap">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -261,8 +264,8 @@
                                             <div class="control-group">
                                                 <label class="control-label">投放分公司</label>
                                                 <div class="controls">
-                                                    <select name="throwDepartment" id="departments"  class="large m-wrap"  tabindex="1">
-                                                    </select>
+                                                    <input type="text" id="department" readonly onclick="showTreeData(); return false;" class="large m-wrap"/>
+                                                    <input type="hidden" name="throwDepartment" id="department_value" />
                                                 </div>
 
                                             </div>
@@ -304,13 +307,21 @@
                                                 <div class="controls">
                                                     <div class="fileupload fileupload-new" data-provides="fileupload">
                                                         <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
-                                                            <img src="/static/image/no-image.png" alt="" id="default_img"/>
+                                                            <c:choose>
+                                                                <c:when test="${product.cover == null}" >
+                                                                    <img src="/static/image/no-image.png" alt="" id="default_img" />
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <img src="<%=basePath%>${product.cover}" alt="" id="default_img" />
+                                                                </c:otherwise>
+                                                            </c:choose>
                                                         </div>
                                                         <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
                                                         <div>
                                                        <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
                                                        <span class="fileupload-exists">更换</span>
                                                        <input type="file" name="coverFile" id="cover_img" class="default" /></span>
+                                                       <input type="hidden" name="cover" value="${procuct.cover}" />
                                                             <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
                                                         </div>
                                                     </div>
@@ -415,6 +426,9 @@
                         </div>
                     </div>
                     <!-- END SAMPLE FORM PORTLET-->
+                    <div id="treeContent" class="treeContent" style="display:none; position: absolute;">
+                    <ul id="treeDemo" class="ztree" style="margin-top:0;"></ul>
+                    </div>
                 </div>
             </div>
             <!--页面操作详细内容 开始-->
@@ -425,6 +439,8 @@
 
 <jsp:include page="../../include/footer.jsp"/>
 <script type="text/javascript" src="<%=contextPath%>/assets/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/static/zTree/js/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/static/zTree/js/tree.js"></script>
 <script>
 $(function(){
 
@@ -455,14 +471,10 @@ $(function(){
 
 
     var throwDepartment = '${product.throwDepartment}';
-    var depts = '${departments}';
-    var deptsJson= $.parseJSON(depts);
-    $.each(deptsJson, function(i,val){
-        $("#departments").append("<option value='"+val.id+"'>"+val.name+"</option>");
-        if(throwDepartment == val.id){
-            $("#departments").val(throwDepartment);
-        }
-    });
+    var treeNodes = '${departments}';
+    treeNodes = $.parseJSON(treeNodes);
+    setOrganValue(throwDepartment, treeNodes);
+    $.fn.zTree.init($("#treeDemo"), setting, treeNodes);
 
     var issueTypeVal = '${product.issueType}';
     var issueType = '${productIssueType}';
@@ -493,15 +505,6 @@ $(function(){
             $("#riskLevel").val(risk);
         }
     });
-
-    var dispalyImg = $("#default_img");
-    var imgUrl = "<%=basePath%>${product.cover}";
-    var defaultImg = "/static/image/no-image.png";
-    if(productId == ''){
-        dispalyImg.attr("src", defaultImg);
-    }else if(imgUrl != defaultImg){
-        dispalyImg.attr("src", imgUrl);
-    }
 
     var isDisplay = '${product.isDisplay}';
     if(isDisplay == 1){

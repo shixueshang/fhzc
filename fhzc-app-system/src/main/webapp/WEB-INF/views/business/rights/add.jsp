@@ -94,15 +94,6 @@
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">投放分公司</label>
-                                                <div class="controls">
-                                                    <select name="departments" id="departments"  class="large m-wrap"  tabindex="1">
-                                                    </select>
-                                                </div>
-
-                                            </div>
-
-                                            <div class="control-group">
                                                 <label class="control-label">供应商</label>
                                                 <div class="controls">
                                                     <input type="text" name="supply" value="${right.supply}"  placeholder="" class="m-wrap large">
@@ -190,6 +181,9 @@
                         </div>
                     </div>
                     <!-- END SAMPLE FORM PORTLET-->
+                    <div id="treeContent" class="treeContent" style="display:none; position: absolute;">
+                        <ul id="treeDemo" class="ztree" style="margin-top:0;"></ul>
+                    </div>
                 </div>
             </div>
             <!--页面操作详细内容 开始-->
@@ -227,16 +221,6 @@
             $("#level").append("<option value='"+val.value+"'>"+val.key+"</option>");
             if(level == val.value){
                 $("#level").val(level);
-            }
-        });
-
-        var throwDepartment = '${product.throwDepartment}';
-        var depts = '${departments}';
-        var deptsJson= $.parseJSON(depts);
-        $.each(deptsJson, function(i,val){
-            $("#departments").append("<option value='"+val.id+"'>"+val.name+"</option>");
-            if(throwDepartment == val.id){
-                $("#departments").val(throwDepartment);
             }
         });
 
