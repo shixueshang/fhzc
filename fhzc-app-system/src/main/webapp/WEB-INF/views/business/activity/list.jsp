@@ -99,8 +99,8 @@
                                             </c:choose>
                                         </td>
                                         <td>${activity.address}</td>
-                                        <td><fmt:formatDate value="${activity.beginTime}" pattern="yyyy-MM-dd"/></td>
-                                        <td><fmt:formatDate value="${activity.endTime}" pattern="yyyy-MM-dd"/></td>
+                                        <td><fmt:formatDate value="${activity.beginTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+                                        <td><fmt:formatDate value="${activity.endTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
                                         <td>${activity.sponsor}</td>
                                         <td>
                                             <c:choose>
