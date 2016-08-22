@@ -76,9 +76,9 @@ public class LoginController extends BaseController {
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout() {
+        systemLogService.addByDescription("退出登陆", super.getCurrentUser());
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
-        systemLogService.addByDescription("退出登陆", super.getCurrentUser());
         return "index";
     }
 }

@@ -69,12 +69,11 @@
                                     <td>活动开始时间</td>
                                     <td>活动结束时间</td>
                                     <td style="width:18%">活动主办方</td>
-                                  <!--<td>投放分公司</td>-->
                                     <td>是否显示</td>
                                     <td>是否推荐</td>
                                     <td>关注人数</td>
                                     <td>预约人数</td>
-                                    <td>操作</td>
+                                    <td style="width: 80px;" >操作</td>
                                 </tr>
                                 </thead>
                                 <tbody>

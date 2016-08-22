@@ -36,6 +36,7 @@ public class ProductOrderApiController extends BaseController{
     @RequestMapping(value = "/api/product/order",method = RequestMethod.POST)
     @ResponseBody
     public ApiJsonResult productOrder(ProductReservation productReservation){
+        productReservation.setApplyTime(new Date());
         productReservation.setCtime(new Date());
         productReservation.setResult(APIConstants.OrderResult.Success);
         productReservationService.addOrUpdateProductReservation(productReservation);
