@@ -76,7 +76,7 @@
                                 <tr>
                                     <td>操作</td>
                                     <td>操作人</td>
-                                    <td>调用方法</td>
+                                    <td style="width:20%">调用方法</td>
                                     <td>操作类型</td>
                                     <td>日志级别</td>
                                     <td>请求地址</td>

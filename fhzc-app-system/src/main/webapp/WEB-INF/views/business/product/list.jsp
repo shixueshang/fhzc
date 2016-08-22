@@ -62,7 +62,7 @@
                                 <thead>
                                 <tr>
                                     <td>产品代码</td>
-                                    <td>产品名称</td>
+                                    <td style="width:18%">产品名称</td>
                                     <td>产品类型</td>
                                     <td>产品状态</td>
                                     <td>投放分公司</td>

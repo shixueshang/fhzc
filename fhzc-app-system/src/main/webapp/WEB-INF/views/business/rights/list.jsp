@@ -62,7 +62,7 @@
                             <table class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <td>权益名</td>
+                                    <td style="width:18%">权益名</td>
                                     <td>权益类型</td>
                                     <td>权益图片</td>
                                     <td>权益供应商</td>

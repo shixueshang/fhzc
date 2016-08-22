@@ -63,7 +63,7 @@
                                 <thead>
                                 <tr>
                                     <td>报告id</td>
-                                    <td>报告名</td>
+                                    <td style="width:18%">报告名</td>
                                     <td>封面图</td>
                                     <td>报告类型</td>
                                    <!--   <td>生效状态</td>-->
