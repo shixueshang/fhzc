@@ -58,10 +58,14 @@
                         </select>
 
                         <label class="control-label" style="margin-left: 20px">分公司</label>
-                        <select class="form-control"  id="subCompany"  name="subCompany" style="width:180px;"></select>
+                        <select class="form-control"  id="subCompany"  name="subCompany" style="width:180px;">
+                            <option value="0">全部</option>
+                        </select>
 
                         <label class="control-label" style="margin-left: 20px">团队</label>
-                        <select class="form-control" id="team"  name="team" style="width:180px;"></select>
+                        <select class="form-control" id="team"  name="team" style="width:180px;">
+                            <option value="0">全部</option>
+                        </select>
 
                         <label class="control-label" style="margin-left: 20px">月份</label>
                         <input type="text" class="form-control form_datetime"  data-date-format="yyyy-mm"  id="startDate"  name="startDate" style="width:180px;"/>
@@ -113,12 +117,6 @@ $(function(){
             $("#area").append("<option value='"+val.departmentId+"'>"+val.title+"</option>");
         });
 
-        var company = $('#subCompany').val();
-        if(company == null || company == ''){
-            $("#subCompany").prepend("<option value='0'>全部</option>");
-        }
-
-
         $("#area").change(function(){
             var area = $('#area').val();
             $.ajax({
@@ -128,6 +126,7 @@ $(function(){
                 data: { "departmentId": area },
                 success: function(req) {
                     $("#subCompany").empty();
+                    $("#subCompany").append("<option value='0'>全部</option>");
                     $.each(req.children, function(i,val){
                         $("#subCompany").append("<option value='"+val.departmentId+"'>"+val.title+"</option>");
                     });
@@ -152,25 +151,17 @@ $(function(){
                 data: { "departmentId": subCompany },
                 success: function(req) {
                     $("#team").empty();
+                    $("#team").append("<option value='0'>全部</option>");
                     $.each(req.children, function(i,val){
                         $("#team").append("<option value='"+val.departmentId+"'>"+val.title+"</option>");
                     });
 
-                    var team = $('#team').val();
-                    if(team == null || team == ''){
-                        $("#team").prepend("<option value='0'>全部</option>");
-                    }
                 },
                 error: function() {
 
                 }
             });
         });
-
-        var team = $('#team').val();
-        if(team == null || team == ''){
-            $("#team").prepend("<option value='0'>全部</option>");
-        }
 
     });
 
