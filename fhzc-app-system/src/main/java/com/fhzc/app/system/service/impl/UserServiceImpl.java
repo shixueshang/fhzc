@@ -43,7 +43,9 @@ public class UserServiceImpl implements UserService {
     public PageableResult<User> findPageUsers(String name, int page, int size) {
         UserExample example = new UserExample();
         UserExample.Criteria criteria = example.createCriteria();
-        criteria.andRealnameEqualTo(name);
+        if(!"".equals(name)){
+            criteria.andRealnameEqualTo(name);
+        }
 
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<User> list = decryptUser(userMapper.selectByExampleWithRowbounds(example, rowBounds));

@@ -20,8 +20,8 @@ import java.util.*;
  * Created by lihongde on 2016/7/30 14:00
  */
 @Controller
-@RequestMapping(value = "/personal/user")
-public class UserController extends BaseController {
+@RequestMapping(value = "/personal/focus")
+public class FocusController extends BaseController {
     @Resource
     private UserService userService;
 
@@ -50,7 +50,7 @@ public class UserController extends BaseController {
      * 用户关注列表页面
      * @return
      */
-    @RequestMapping(value = "/focus/list")
+    @RequestMapping(value = "/list")
     @SystemControllerLog(description = "查看用户关注列表")
     public ModelAndView listSingleCustomer(String ftype){
         ModelAndView mav = new ModelAndView("personal/user/focusList");
@@ -58,6 +58,7 @@ public class UserController extends BaseController {
 
         mav.addObject("page", PageHelper.getPageModel(request, presult));
         mav.addObject("focuses", getFocusVos(presult));
+        mav.addObject("url", "personal/focus");
         return mav;
     }
 

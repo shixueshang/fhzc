@@ -18,9 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by lihongde on 2016/7/8 19:57
@@ -40,10 +38,10 @@ public class OrganizationController extends BaseController {
     @SystemControllerLog(description = "查看机构列表")
     public ModelAndView listResources(){
         ModelAndView mav = new ModelAndView("organization/department/department");
-        PageableResult<Map<String, Object>> pageableResult =  departmentService.findPageDepts(page, size);
+        PageableResult<Department> pageableResult =  departmentService.findPageDepartments(page, size);
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("depts", pageableResult.getItems());
-        mav.addObject("deptsForAdd", JSON.toJSON(pageableResult.getItems()));
+        mav.addObject("deptsForAdd", JSON.toJSON(departmentService.getDepartmentTree()));
         mav.addObject("url", "organization/department");
         return mav;
     }
@@ -65,6 +63,11 @@ public class OrganizationController extends BaseController {
             parentDept.setLeaf(Const.YES_OR_NO.NO);
             departmentService.addOrUpdateDept(parentDept);
         }
+
+        //根据父级的level设置自己level
+        Department parent = departmentService.getDeparent(department.getParentDeptId());
+        department.setLevel(parent.getLevel() + 1);
+        department.setLeaf(Const.YES_OR_NO.YES);
         departmentService.addOrUpdateDept(department);
 
         return "redirect:/organization/department/department";

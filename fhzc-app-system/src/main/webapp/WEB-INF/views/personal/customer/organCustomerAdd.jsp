@@ -5,6 +5,7 @@
 
 <%
     String contextPath = request.getContextPath();
+    String basePath  = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
 %>
 
 <jsp:include page="../../include/header.jsp"/>
@@ -22,6 +23,8 @@
 <link rel="stylesheet" href="<%=contextPath%>/assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" />
 
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/bootstrap-datepicker/css/datepicker.css">
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/static/zTree/css/zTreeStyle.css">
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/static/zTree/css/demo.css">
 
 <!-- BEGIN CONTAINER -->
 <div class="page-container row-fluid">
@@ -66,7 +69,7 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="portlet_tab1">
                                         <!-- BEGIN FORM-->
-                                        <form action="<%=contextPath%>/personal/customer/organ/update" id="form_sample_1"  method="POST" class="form-horizontal">
+                                        <form action="<%=contextPath%>/personal/customer/organ/update" id="form_sample_1" enctype="multipart/form-data"  method="POST" class="form-horizontal">
                                             <div class="alert alert-error hide">
                                                 <button class="close" data-dismiss="alert"></button>
                                                 您的表单有未完成的必填项,请检查.
@@ -85,10 +88,10 @@
                                                 </div>
                                             </div>
                                             <div class="control-group">
-                                                <label class="control-label">机构全称</label>
+                                                <label class="control-label">所属机构</label>
                                                 <div class="controls">
-                                                    <input type="text" name="realname" value="${customer.organName}" data-required="1" placeholder="" class="m-wrap large">
-                                                    <span class="help-inline"></span>
+                                                    <input type="text" id="department" readonly onclick="showTreeData(); return false;" class="large m-wrap"/>
+                                                    <input type="hidden" name="departmentId" id="department_value" />
                                                 </div>
                                             </div>
 
@@ -97,13 +100,21 @@
                                                 <div class="controls">
                                                     <div class="fileupload fileupload-new" data-provides="fileupload">
                                                         <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
-                                                            <img src="/static/image/no-image.png" alt="" id="default_img"/>
+                                                            <c:choose>
+                                                                <c:when test="${customer.businessLicense == null}" >
+                                                                    <img src="/static/image/no-image.png" alt="" id="default_img" />
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <img src="<%=basePath%>${customer.businessLicense}" alt="" id="default_img" />
+                                                                </c:otherwise>
+                                                            </c:choose>
                                                         </div>
                                                         <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
                                                         <div>
                                                        <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
                                                        <span class="fileupload-exists">更换</span>
-                                                       <input type="file" name="businessLicense" id="businessLicense" class="default" /></span>
+                                                       <input type="file" name="businessLicenseFile" id="businessLicense" class="default" /></span>
+                                                       <input type="hidden" name="businessLicense" value="${customer.businessLicense}" />
                                                             <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
                                                         </div>
                                                     </div>
@@ -120,13 +131,21 @@
                                                 <div class="controls">
                                                     <div class="fileupload fileupload-new" data-provides="fileupload">
                                                         <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
-                                                            <img src="/static/image/no-image.png" alt="" />
+                                                            <c:choose>
+                                                                <c:when test="${customer.accountLicense == null}" >
+                                                                    <img src="/static/image/no-image.png" alt="" id="default_img" />
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <img src="<%=basePath%>${customer.accountLicense}" alt="" id="default_img" />
+                                                                </c:otherwise>
+                                                            </c:choose>
                                                         </div>
                                                         <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
                                                         <div>
                                                        <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
                                                        <span class="fileupload-exists">更换</span>
-                                                       <input type="file" name="accountLicense" id="accountLicense" class="default" /></span>
+                                                       <input type="file" name="accountLicenseFile" id="accountLicenseFile" class="default" /></span>
+                                                       <input type="hidden" name="accountLicense" value="${customer.accountLicense}" />
                                                             <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
                                                         </div>
                                                     </div>
@@ -262,13 +281,21 @@
                                                 <div class="controls">
                                                     <div class="fileupload fileupload-new" data-provides="fileupload">
                                                         <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
-                                                            <img src="/static/image/no-image.png" alt="" />
+                                                            <c:choose>
+                                                                <c:when test="${customer.entrustedLetter == null}" >
+                                                                    <img src="/static/image/no-image.png" alt="" id="default_img" />
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <img src="<%=basePath%>${customer.entrustedLetter}" alt="" id="default_img" />
+                                                                </c:otherwise>
+                                                            </c:choose>
                                                         </div>
                                                         <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
                                                         <div>
                                                        <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
                                                        <span class="fileupload-exists">更换</span>
-                                                       <input type="file" name="entrustedLetter" id="entrustedLetter" class="default" /></span>
+                                                       <input type="file" name="entrustedLetterFile" id="entrustedLetter" class="default" /></span>
+                                                       <input type="hidden" name="entrustedLetter" value="${customer.entrustedLetter}" />
                                                             <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
                                                         </div>
                                                     </div>
@@ -293,6 +320,9 @@
                         </div>
                     </div>
                     <!-- END SAMPLE FORM PORTLET-->
+                    <div id="treeContent" class="treeContent" style="display:none; position: absolute;">
+                        <ul id="treeDemo" class="ztree" style="margin-top:0;"></ul>
+                    </div>
                 </div>
             </div>
             <!--页面操作详细内容 开始-->
@@ -303,7 +333,8 @@
 
 <jsp:include page="../../include/footer.jsp"/>
 <script type="text/javascript" src="<%=contextPath%>/assets/jquery-validation/dist/jquery.validate.min.js"></script>
-
+<script type="text/javascript" src="<%=contextPath%>/static/zTree/js/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/static/zTree/js/tree.js"></script>
 <script>
     $(function(){
 
@@ -327,6 +358,11 @@
             }
         });
 
+        var department = '${customer.departmentId}';
+        var treeNodes = '${departments}';
+        treeNodes = $.parseJSON(treeNodes);
+        setOrganValue(department, treeNodes);
+        $.fn.zTree.init($("#treeDemo"), setting, treeNodes);
 
         var gender = '${user.gender}';
         if(gender == 'male' || gender == '' || gender == null){
@@ -335,13 +371,6 @@
         }else{
             $.uniform.update($("input[name='gender'][value='male']").attr("checked", false));
             $.uniform.update($("input[name='gender'][value='female']").attr("checked", true));
-        }
-
-
-        var dispalyImg = $("#default_img");
-        var imgUrl = "<%=contextPath%>/${report.cover}";
-        if(imgUrl != ""){
-            dispalyImg.attr("src", imgUrl);
         }
 
         var form1 = $('#form_sample_1');
