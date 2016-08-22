@@ -8,8 +8,10 @@ import com.fhzc.app.system.aop.SystemControllerLog;
 import com.fhzc.app.system.commons.util.FileUtil;
 import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.controller.BaseController;
+import com.fhzc.app.dao.mybatis.model.Focus;
 import com.fhzc.app.dao.mybatis.model.Report;
 import com.fhzc.app.system.service.DictionaryService;
+import com.fhzc.app.system.service.FocusService;
 import com.fhzc.app.system.service.ReportService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 投研报告
@@ -34,12 +37,19 @@ public class ReportController extends BaseController {
 
     @Resource
     private DictionaryService dictionaryService;
+    
+    @Resource
+    private FocusService focusService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @SystemControllerLog(description = "查看投研报告列表")
     public ModelAndView listReport(){
         ModelAndView mav = new ModelAndView("business/report/list");
         PageableResult<Report> pageableResult =  reportService.findPageReports(page, size);
+        for (Report report : pageableResult.getItems()) {
+        	List<Focus> focuses = focusService.findFocusByType(Const.FOCUS_TYPE.REPORT, report.getId(),1);
+        	report.setFocusNum(focuses.size() > 0 ? focuses.size() : 0);
+		}
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("reports", pageableResult.getItems());
         mav.addObject("reportTypes", dictionaryService.findDicByType(Const.DIC_CAT.REPORT_CATEGORY));

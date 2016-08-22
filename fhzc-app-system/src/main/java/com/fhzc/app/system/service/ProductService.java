@@ -107,4 +107,11 @@ public interface ProductService {
      * @return
      */
     List<ProductReservation> findOrdersByPid(Integer pId);
+    
+    /**
+     * 根据产品id获得产品预约成功的产品
+     * @param pId
+     * @return
+     */
+    List<ProductReservation> findSuccessOrdersByPid(Integer pId,String result);
 }

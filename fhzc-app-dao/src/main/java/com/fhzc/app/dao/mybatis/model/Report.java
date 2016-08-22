@@ -22,6 +22,16 @@ public class Report {
     private Integer isRecommend;
 
     private String summary;
+    
+    private Integer focusNum;
+    
+    public Integer getFocusNum() {
+        return focusNum;
+    }
+
+    public void setFocusNum(Integer focusNum) {
+        this.focusNum = focusNum;
+    }
 
     public Integer getId() {
         return id;

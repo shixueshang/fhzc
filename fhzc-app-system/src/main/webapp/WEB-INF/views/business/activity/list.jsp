@@ -123,8 +123,8 @@
                                                 </c:when>
                                             </c:choose>
                                         </td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>${activity.focusNum}</td>
+                                        <td>${activity.orderNum}</td>
                                         
                                         <td>
                                             <a href="<%=contextPath%>/business/activity/detail/${activity.id}" class="btn mini purple"><i class="icon-edit"></i> 编辑</a>

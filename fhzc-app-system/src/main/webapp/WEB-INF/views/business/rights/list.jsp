@@ -107,8 +107,8 @@
                                                 </c:when>
                                             </c:choose>
                                         </td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>${right.focusNum}</td>
+                                        <td>${right.orderNum}</td>
                                         <td><a href="<%=contextPath%>/business/rights/detail/${right.id}" class="btn mini purple"><i class="icon-edit"></i> 编辑</a>
                                         </td>
                                     </tr>

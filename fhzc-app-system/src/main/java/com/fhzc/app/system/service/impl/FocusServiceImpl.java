@@ -35,11 +35,12 @@ public class FocusServiceImpl implements FocusService{
     }
 
     @Override
-    public List<Focus> findFocusByType(String type, Integer typeId) {
+    public List<Focus> findFocusByType(String type, Integer typeId, Integer status) {
         FocusExample example = new FocusExample();
         FocusExample.Criteria criteria = example.createCriteria();
         criteria.andFtypeEqualTo(type);
         criteria.andFidEqualTo(typeId);
+        criteria.andStatusEqualTo(status);
         return focusMapper.selectByExample(example);
     }
 }

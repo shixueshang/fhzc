@@ -2,6 +2,7 @@ package com.fhzc.app.system.service;
 
 import com.fhzc.app.dao.mybatis.bo.ActivityApplyBo;
 import com.fhzc.app.dao.mybatis.model.Activity;
+import com.fhzc.app.dao.mybatis.model.ActivityApply;
 import com.fhzc.app.dao.mybatis.model.ActivityApplyQuery;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 
@@ -43,4 +44,13 @@ public interface ActivityService {
     PageableResult<ActivityApplyBo> findPageActivityApplies(ActivityApplyQuery query, int page, int size);
 
     List<Activity> getAllActivities();
+    
+    /**
+     * 根据活动id获得预约成功的活动
+     * @param pId
+     * @param result
+     * @return
+     */
+    List<ActivityApply>findSuccessOrdersById(Integer id, Integer result);
+    
 }

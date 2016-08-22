@@ -52,6 +52,9 @@ public class RightsController extends BaseController{
 
     @Resource
     private ScoreHistoryService scoreHistoryService;
+    
+    @Resource
+    private FocusService focusService;
 
     /**
      * 权益列表
@@ -62,6 +65,12 @@ public class RightsController extends BaseController{
     public ModelAndView listRights(){
         ModelAndView mav = new ModelAndView("business/rights/list");
         PageableResult<Rights> pageableResult = rightsService.findPageRights(page, size);
+        for(Rights rights : pageableResult.getItems() ){
+        	List<Focus> focuses = focusService.findFocusByType(Const.FOCUS_TYPE.RIGHTS, rights.getId(),1);
+        	rights.setFocusNum(focuses.size() > 0 ? focuses.size() : 0);
+        	List<RightsReservation> orders= rightsService.findSuccessOrdersById(rights.getId(), 1);
+        	rights.setOrderNum(orders.size() > 0 ? orders.size() : 0);
+        }
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("rights", pageableResult.getItems());
         mav.addObject("customerLevel", dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL));
