@@ -56,8 +56,6 @@
                         <label class="col-sm-2 control-label">产品名称:</label>
                         <input class="form-control" id="productName" name="productName" value="${param.productName}">
 
-                        <label class="col-sm-2 control-label">身份证号:</label>
-                        <input class="form-control" id="identityId" name="identityId" value="${param.identityId}">
                         <label class="col-sm-2 control-label">预约时间:</label>
                         <input class="form-control" id="startTime" name="startTime" style="width: 180px" value="${param.startTime}">
                         ~
@@ -71,7 +69,7 @@
             <div class="row-fluid">
                 <div class="span12">
 
-                    <div class="portlet box yellow">
+                    <div class="portlet box blue">
                         <div class="portlet-title">
                             <h4><i class="icon-reorder"></i></h4>
                         </div>
@@ -93,15 +91,15 @@
                                 <tbody>
                                 <c:forEach items="${reservations}" var="reservation">
                                     <tr>
-                                        <td>${reservation.reservationTime}</td>
+                                        <td><fmt:formatDate value="${reservation.applyTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                                         <td>${reservation.productName}</td>
-                                        <td>${reservation.reservationAmount}</td>
-                                        <td>${reservation.clientId}</td>
-                                        <td>${reservation.clientName}</td>
-                                        <td>${reservation.planerId}</td>
-                                        <td>${reservation.planerName}</td>
-                                        <td>${reservation.planerPhone}</td>
-                                        <td>${reservation.reservationStatus}</td>
+                                        <td>${reservation.amount}</td>
+                                        <td>${reservation.customerNum}</td>
+                                        <td>${reservation.customerName}</td>
+                                        <td>${reservation.plannerNum}</td>
+                                        <td>${reservation.plannerName}</td>
+                                        <td>${reservation.plannerMobile}</td>
+                                        <td>${reservation.result}</td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>

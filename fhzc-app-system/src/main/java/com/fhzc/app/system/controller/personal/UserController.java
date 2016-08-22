@@ -1,21 +1,17 @@
 package com.fhzc.app.system.controller.personal;
 
-import com.alibaba.fastjson.JSON;
 import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.model.Dictionary;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
-import com.fhzc.app.dao.mybatis.util.Const;
+import com.fhzc.app.system.aop.SystemControllerLog;
 import com.fhzc.app.system.commons.vo.FocusVo;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -47,14 +43,18 @@ public class UserController extends BaseController {
     @Resource
     private DictionaryService dictionaryService;
 
+    @Resource
+    private FocusService focusService;
+
     /**
      * 用户关注列表页面
      * @return
      */
     @RequestMapping(value = "/focus/list")
+    @SystemControllerLog(description = "查看用户关注列表")
     public ModelAndView listSingleCustomer(String ftype){
         ModelAndView mav = new ModelAndView("personal/user/focusList");
-        PageableResult<Focus> presult = userService.getFocusByType(ftype, page, size);
+        PageableResult<Focus> presult = focusService.getFocusByType(ftype, page, size);
 
         mav.addObject("page", PageHelper.getPageModel(request, presult));
         mav.addObject("focuses", getFocusVos(presult));

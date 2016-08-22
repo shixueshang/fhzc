@@ -6,17 +6,17 @@ import java.util.Date;
  * Created by menghq on 2016/7/26.
  */
 public class ProductReserQuery {
-    private long productId;
+    private Integer productId;
     private String productName;
     private String customerIdCardNum;
     private Date startDate;
     private Date endDate;
 
-    public long getProductId() {
+    public Integer getProductId() {
         return productId;
     }
 
-    public void setProductId(long productId) {
+    public void setProductId(Integer productId) {
         this.productId = productId;
     }
 

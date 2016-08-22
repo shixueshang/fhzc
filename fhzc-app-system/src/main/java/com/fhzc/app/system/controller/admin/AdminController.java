@@ -5,6 +5,7 @@ import com.fhzc.app.dao.mybatis.model.Admin;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
+import com.fhzc.app.system.aop.SystemControllerLog;
 import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.AdminRoleService;
@@ -41,6 +42,7 @@ public class AdminController extends BaseController {
     private AreasService areasService;
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
+    @SystemControllerLog(description = "查询管理员")
     public ModelAndView listAdmin(){
         ModelAndView mav = new ModelAndView("system/admin/list");
         PageableResult<Admin> pageableResult = adminService.findPageAdmins(page, size);
@@ -64,8 +66,10 @@ public class AdminController extends BaseController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @SystemControllerLog(description = "新增或修改管理员")
     public String add(Admin admin){
         admin.setPassword(DigestUtils.md5Hex(admin.getPassword()));
+        admin.setLoginIp(request.getRemoteAddr());
         adminService.addOrUpdateAdmin(admin);
 
         return "redirect:/system/admin/list";
@@ -84,6 +88,7 @@ public class AdminController extends BaseController {
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     @ResponseBody
+    @SystemControllerLog(description = "删除管理员")
     public AjaxJson delete(@PathVariable(value = "id") Integer id){
         adminService.delete(id);
         return new AjaxJson(true);

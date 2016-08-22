@@ -46,10 +46,10 @@
 
         <!--生成对应表及类名 -->
 
-        <table tableName="system_log"
+        <table tableName="product_reservation"
                delimitAllColumns="true"
                delimitIdentifiers="true"
-               domainObjectName="SystemLog">
+               domainObjectName="ProductReservation">
             <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
         </table>
 

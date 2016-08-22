@@ -6,6 +6,7 @@ import com.fhzc.app.dao.mybatis.model.SystemRoleModule;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
+import com.fhzc.app.system.aop.SystemControllerLog;
 import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.AdminRoleService;
@@ -33,6 +34,7 @@ public class RoleController extends BaseController {
     private ResourceService resourceService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @SystemControllerLog(description = "查询角色列表")
     public ModelAndView listRole(){
         ModelAndView mav = new ModelAndView("system/role/list");
         PageableResult<AdminRole> pageableResult = adminRoleService.findPageRole(page, size);
@@ -56,6 +58,7 @@ public class RoleController extends BaseController {
         return !flag;
     }
     @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @SystemControllerLog(description = "添加或修改角色")
     public String add(AdminRole role){
         adminRoleService.addOrUpdateRole(role);
         return "redirect:/system/role/list";
@@ -70,6 +73,7 @@ public class RoleController extends BaseController {
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     @ResponseBody
+    @SystemControllerLog(description = "删除角色")
     public AjaxJson delete(@PathVariable(value = "id") Integer id){
         adminRoleService.delete(id);
         return new AjaxJson(true);
@@ -82,6 +86,7 @@ public class RoleController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/authorization/{id}", method = RequestMethod.GET)
+    @SystemControllerLog(description = "给角色分配权限")
     public ModelAndView authorization(@PathVariable(value = "id") Integer id){
         ModelAndView mav = new ModelAndView("system/role/authorization");
         List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();

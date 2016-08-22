@@ -79,26 +79,20 @@ public class DictionaryServiceImpl implements DictionaryService {
     }
     
     @Override
-    public boolean isKeyExists(String cat, String key) {
+    public boolean isKeyOrValueExists(String cat, String type, String kv) {
         DictionaryExample example = new DictionaryExample();
         DictionaryExample.Criteria criteria = example.createCriteria();
         criteria.andCatEqualTo(cat);
-        criteria.andKeyEqualTo(key);
+        if("key".equals(type)){
+            criteria.andKeyEqualTo(kv);
+        }
+        if("value".equals(type)){
+            criteria.andValueEqualTo(kv);
+        }
         if(dictionaryMapper.countByExample(example) > 0){
             return true;
         }
         return false;
     }
-    
-    @Override
-    public boolean isValueExists(String cat, String value) {
-        DictionaryExample example = new DictionaryExample();
-        DictionaryExample.Criteria criteria = example.createCriteria();
-        criteria.andCatEqualTo(cat);
-        criteria.andValueEqualTo(value);
-        if(dictionaryMapper.countByExample(example) > 0){
-            return true;
-        }
-        return false;
-    }
+
 }

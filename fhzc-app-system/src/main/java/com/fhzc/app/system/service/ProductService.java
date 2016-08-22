@@ -2,7 +2,6 @@ package com.fhzc.app.system.service;
 
 
 
-import com.fhzc.app.dao.mybatis.bo.ProductReservationBo;
 import com.fhzc.app.dao.mybatis.model.Product;
 import com.fhzc.app.dao.mybatis.model.ProductReserQuery;
 import com.fhzc.app.dao.mybatis.model.ProductReservation;
@@ -55,7 +54,7 @@ public interface ProductService {
     
     /**
      * 查询产品代码是否存在
-     * @param name
+     * @param code
      * @return
      */
     boolean isCodeExists(String code);
@@ -80,7 +79,7 @@ public interface ProductService {
      * @param size
      * @return
      */
-    PageableResult<ProductReservationBo> findPageProductReservations(ProductReserQuery query, int page, int size);
+    PageableResult<ProductReservation> findPageProductReservations(ProductReserQuery query, int page, int size);
 
     /**
      * 添加产品预约
@@ -101,4 +100,11 @@ public interface ProductService {
      * @return
      */
     List<Product> getProductByType(String typeId);
+
+    /**
+     * 根据产品id获得产品预约列表
+     * @param pId
+     * @return
+     */
+    List<ProductReservation> findOrdersByPid(Integer pId);
 }

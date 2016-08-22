@@ -9,6 +9,7 @@ import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.thirdparty.sms.SMSTemplate;
 import com.fhzc.app.dao.mybatis.util.Const;
+import com.fhzc.app.system.aop.SystemControllerLog;
 import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.NoticeService;
@@ -50,6 +51,7 @@ public class NoticeController extends BaseController {
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @SystemControllerLog(description = "查询消息列表")
     public ModelAndView list(){
         ModelAndView mav = new ModelAndView("system/notice/list");
         PageableResult<SystemNotice> pageableResult = noticeService.findPageNotices(page, size);
@@ -78,6 +80,7 @@ public class NoticeController extends BaseController {
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
+    @SystemControllerLog(description = "发布或编辑消息")
     public AjaxJson addOrUpdate(SystemNotice systemNotice){
         systemNotice.setPublishTime(new Date());
         noticeService.addOrUpdate(systemNotice);
@@ -93,6 +96,7 @@ public class NoticeController extends BaseController {
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     @ResponseBody
+    @SystemControllerLog(description = "删除消息")
     public AjaxJson delete(@PathVariable(value = "id") Integer id){
         noticeService.deleteRecordByNoticeId(id);
         noticeService.delete(id);
@@ -176,6 +180,7 @@ public class NoticeController extends BaseController {
      */
     @RequestMapping(value = "/push/{id}", method = RequestMethod.POST)
     @ResponseBody
+    @SystemControllerLog(description = "推送消息")
     public AjaxJson push(@PathVariable(value = "id") Integer noticeId) {
         List<SystemNoticeRecord> list = noticeService.findRecordByNoticeId(noticeId);
         try{

@@ -115,17 +115,7 @@ CREATE TABLE `bank`.`suggest` (
   PRIMARY KEY (`id`))
 COMMENT = '用户反馈';
 
-CREATE TABLE `rank_month` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `planner_id` int(11) DEFAULT NULL COMMENT '理财师id',
-  `year_month` date NOT NULL COMMENT '年月',
-  `annualised` int(11) DEFAULT NULL COMMENT '年化业绩',
-  `department_id` int(11) DEFAULT NULL COMMENT '部门id',
-  `rank` int(11) DEFAULT NULL COMMENT '全公司排名',
-  `department_rank` int(11) DEFAULT NULL COMMENT '部门排名',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `pl_rank_uniq` (`planner_id`,`year_month`,`department_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8 COMMENT='月业绩排名';
+DROP TABLE IF EXISTS `bank`.`rank_month` ;
 CREATE TABLE `rank_month` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `planner_id` int(11) DEFAULT NULL COMMENT '理财师id',
@@ -138,3 +128,15 @@ CREATE TABLE `rank_month` (
   UNIQUE KEY `pl_rank_uniq` (`planner_id`,`year_month`,`department_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8 COMMENT='月业绩排名';
 
+DROP TABLE IF EXISTS `bank`.`rank_year` ;
+CREATE TABLE `rank_year` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `planner_id` int(11) DEFAULT NULL COMMENT '理财师id',
+  `year` INT(11) NOT NULL COMMENT '年',
+  `annualised` int(11) DEFAULT NULL COMMENT '年化业绩',
+  `department_id` int(11) DEFAULT NULL COMMENT '部门id',
+  `rank` int(11) DEFAULT NULL COMMENT '全公司排名',
+  `department_rank` int(11) DEFAULT NULL COMMENT '部门排名',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `pl_rank_uniq` (`planner_id`,`year`,`department_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8 COMMENT='年业绩排名';

@@ -8,6 +8,7 @@ import com.fhzc.app.dao.mybatis.page.PageableResult;
 
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.dao.mybatis.util.EncryptUtils;
+import com.fhzc.app.system.aop.SystemControllerLog;
 import com.fhzc.app.system.commons.util.DateUtil;
 import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
@@ -54,6 +55,7 @@ public class PlannerController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @SystemControllerLog(description = "查看理财师列表")
     public ModelAndView listPlanners(){
         ModelAndView mav = new ModelAndView("personal/planner/list");
         PageableResult<Planner> pageableResult = plannerService.findPagePlanners(page, size);
@@ -99,6 +101,7 @@ public class PlannerController extends BaseController {
      */
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     @ResponseBody
+    @SystemControllerLog(description = "在职理财师导入")
     public ModelAndView importExcel(MultipartFile multiFile){
     	ModelAndView mav = new ModelAndView("personal/planner/importor");
     	Map<String,Object> result = new HashMap<String,Object>();
@@ -133,6 +136,7 @@ public class PlannerController extends BaseController {
      */
     @RequestMapping(value = "/importoff", method = RequestMethod.POST)
     @ResponseBody
+    @SystemControllerLog(description = "离职理财师导入")
     public ModelAndView importOffExcel(MultipartFile multiFile){
     	ModelAndView mav = new ModelAndView("personal/planner/importoroff");
     	Map<String,Object> result = new HashMap<String,Object>();
@@ -173,6 +177,7 @@ public class PlannerController extends BaseController {
      */
     @RequestMapping(value = "/achivement/find", method = RequestMethod.GET)
     @ResponseBody
+    @SystemControllerLog(description = "查看理财师业绩")
     public AjaxJson achivementData(Integer area, Integer subCompany, Integer team, String startDate){
         List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
         //判断是否为当前月份 如果是则从日表取数据，否则从月表取

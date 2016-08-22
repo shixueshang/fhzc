@@ -73,13 +73,4 @@ public interface UserService {
      */
     User getUserByIdentity(String identity);
 
-    /**
-     * 根据关注类型查询关注列表
-     *
-     * @param ftype
-     * @param page
-     * @param size
-     * @return
-     */
-    PageableResult<Focus> getFocusByType(String ftype, int page, int size);
 }

@@ -7,6 +7,7 @@ import com.fhzc.app.dao.mybatis.model.Dictionary;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
+import com.fhzc.app.system.aop.SystemControllerLog;
 import com.fhzc.app.system.commons.util.FileUtil;
 import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.commons.vo.CustomerVo;
@@ -57,6 +58,7 @@ public class RightsController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @SystemControllerLog(description = "查看权益列表")
     public ModelAndView listRights(){
         ModelAndView mav = new ModelAndView("business/rights/list");
         PageableResult<Rights> pageableResult = rightsService.findPageRights(page, size);
@@ -88,6 +90,7 @@ public class RightsController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @SystemControllerLog(description = "新增或修改权益")
     public String addRight(Rights rights, MultipartFile coverFile){
         if(!coverFile.isEmpty()){
             String coverName = FileUtil.generatePictureName(coverFile);
@@ -132,6 +135,7 @@ public class RightsController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/reservation/pub", method = RequestMethod.GET)
+    @SystemControllerLog(description = "创建权益预约")
     public ModelAndView preReservationAdd(){
         ModelAndView mav = new ModelAndView("business/rights/addRightReservation");
         PageableResult<Rights> pageableResult = rightsService.findPageRights(1, 500);

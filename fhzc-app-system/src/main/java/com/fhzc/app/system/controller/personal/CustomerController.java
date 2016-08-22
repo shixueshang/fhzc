@@ -5,6 +5,7 @@ import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
+import com.fhzc.app.system.aop.SystemControllerLog;
 import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.*;
@@ -62,6 +63,7 @@ public class CustomerController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/single/find", method = RequestMethod.GET)
+    @SystemControllerLog(description = "查看个人客户列表")
     public ModelAndView findSingleCustomers(String name){
         ModelAndView mav = new ModelAndView("personal/customer/singleCustomerList");
         PageableResult<User> pageableResult = userService.findPageUsers(name, page, size);
@@ -133,6 +135,7 @@ public class CustomerController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/organ/find", method = RequestMethod.GET)
+    @SystemControllerLog(description = "查看机构客户列表")
     public ModelAndView findOrganCustomers(String name){
         ModelAndView mav = new ModelAndView("personal/customer/organCustomerList");
         PageableResult<User> pageableResult = userService.findPageUsers(name, page, size);
@@ -188,6 +191,7 @@ public class CustomerController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/organ/enjoy/list/{id}", method = RequestMethod.GET)
+    @SystemControllerLog(description = "查看权益享用人")
     public ModelAndView listEnjoy(@PathVariable(value = "id") Integer customerId){
         ModelAndView mav = new ModelAndView("/personal/customer/rightsEnjoy");
         mav.addObject("customerId", customerId);
@@ -205,6 +209,7 @@ public class CustomerController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/organ/enjoy/add", method = RequestMethod.POST)
+    @SystemControllerLog(description = "新增或修改权益享用人")
     public String addOrUpdate(CustomerOrgan customerOrgan, RedirectAttributes attr){
         customerService.addOrUpdateOrganCustomer(customerOrgan);
         attr.addAttribute("id", customerOrgan.getCustomerId());
@@ -234,6 +239,7 @@ public class CustomerController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/organ/enjoy/delete/{id}", method = RequestMethod.GET)
+    @SystemControllerLog(description = "删除权益享用人")
     public String delete(@PathVariable(value = "id") Integer id, RedirectAttributes attr){
         CustomerOrgan customerOrgan = customerService.getRightsEnjoyPerson(id);
         customerService.delete(id);

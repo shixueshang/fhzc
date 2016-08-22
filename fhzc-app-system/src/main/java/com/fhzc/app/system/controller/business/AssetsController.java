@@ -4,6 +4,7 @@ import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
+import com.fhzc.app.system.aop.SystemControllerLog;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.*;
 
@@ -55,6 +56,7 @@ public class AssetsController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/find", method = RequestMethod.GET)
+    @SystemControllerLog(description = "查询订单列表")
     public ModelAndView find(String productName, String customerName){
         ModelAndView mav = new ModelAndView("/business/assets/list");
         List<User> users = new ArrayList<User>();
@@ -80,6 +82,7 @@ public class AssetsController extends BaseController {
         	}
         }
         PageableResult<AssetsHistory> pageableResult = assetsService.findPageAssets(pro== null ? null : pro.getPid(), customerIds, page, size);
+        List<AssetsHistory> assetsHistories = new ArrayList<AssetsHistory>();
         List<AssetsHistory> assets = pageableResult.getItems();
         for(AssetsHistory assetsHistory : assets){
             Customer customer = customerService.getCustomer(assetsHistory.getCustomerId());
@@ -91,9 +94,10 @@ public class AssetsController extends BaseController {
             Product product = productService.getProduct(assetsHistory.getProductId());
             assetsHistory.setProductName(product.getName());
             assetsHistory.setProductCode(product.getCode());
+            assetsHistories.add(assetsHistory);
         }
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
-        mav.addObject("assets", assets);
+        mav.addObject("assets", assetsHistories);
         mav.addObject("assetsStatus", dictionaryService.findDicByType(Const.DIC_CAT.ASSETS_STATUS));
         mav.addObject("url", "/business/assets");
         return mav;

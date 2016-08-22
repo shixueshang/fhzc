@@ -41,18 +41,12 @@ public interface DictionaryService {
     Dictionary getDictionary(Integer id);
     
     /**
-     * 判断数据字典的key是否存在
+     * 判断数据字典的key或value是否存在
      * @param cat
-     * @param key
+     * @param type
+     * @param kv
      * @return
      */
-    boolean isKeyExists(String cat, String key);
-    
-    /**
-     * 判断数据字典的value是否存在
-     * @param cat
-     * @param value
-     * @return
-     */
-    boolean isValueExists(String cat, String value);
+    boolean isKeyOrValueExists(String cat, String type, String kv);
+
 }

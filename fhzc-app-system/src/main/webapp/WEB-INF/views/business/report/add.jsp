@@ -105,13 +105,21 @@
                                               <div class="controls">
                                                  <div class="fileupload fileupload-new" data-provides="fileupload">
                                                     <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
-                                                       <img src="/static/image/no-image.png" alt="" id="default_img" />
+                                                        <c:choose>
+                                                            <c:when test="${report.cover == null}" >
+                                                                <img src="/static/image/no-image.png" alt="" id="default_img" />
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <img src="<%=basePath%>${report.cover}" alt="" id="default_img" />
+                                                            </c:otherwise>
+                                                        </c:choose>
                                                     </div>
                                                     <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
                                                     <div>
                                                        <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
                                                        <span class="fileupload-exists">更换</span>
                                                        <input type="file" name="coverFile" id="cover_img" class="default" /></span>
+                                                        <input type="hidden" name="cover" value="${report.cover}" class="default" />
                                                        <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
                                                     </div>
                                                  </div>
@@ -215,15 +223,6 @@
         }else{
             $.uniform.update($("input[name='isRecommend'][value='1']").attr("checked", false));
             $.uniform.update($("input[name='isRecommend'][value='0']").attr("checked", true));
-        }
-
-        var dispalyImg = $("#default_img");
-        var imgUrl = "<%=basePath%>${report.cover}";
-        var defaultImg = "/static/image/no-image.png";
-        if(reportId == ''){
-            dispalyImg.attr("src", defaultImg);
-        }else if(imgUrl != defaultImg){
-            dispalyImg.attr("src", imgUrl);
         }
 
         var form1 = $('#form_sample_1');

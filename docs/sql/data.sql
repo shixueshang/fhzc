@@ -69,8 +69,8 @@ INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (55, '联系我们', '/system/about/contact/pub',NULL, 16, 3, 1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (56, '消息新增', '/system/notice/pub',NULL, 16, 3, 1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (57, '消息列表', '/system/notice/list',NULL, 16, 3, 1);
-
-INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (58, '财务日报列表', '/business/contract/list', NULL, 45, 3, 1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (58, '财务日报列表','/business/contract/list', NULL, 45, 3, 1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (59, '操作日志','/system/log/list',NULL,16,3,1);
 
 
 /*
@@ -203,7 +203,8 @@ INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('青渝总经理');
 -- Date: 2016-08-05 14:30
 */
 TRUNCATE TABLE `department`;
-INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf`,`status`,`leader_uid`) VALUES (1,'复华资产',NULL,'2016-07-22 20:25:08',0,0,NULL);
+INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf`,`status`,`leader_uid`,`level`) VALUES (1,'复华资产',NULL,'2016-07-22 20:25:08',0,0,NULL,1);
+/*
 INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf`,`status`,`leader_uid`) VALUES (2,'华北区',1,'2016-07-22 20:25:08',0,0,NULL);
 INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf`,`status`,`leader_uid`) VALUES (3,'华南区',1,'2016-07-22 20:25:08',0,0,NULL);
 INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf`,`status`,`leader_uid`) VALUES (9,'西南区',1,'2016-07-22 20:25:08',0,0,NULL);
@@ -223,7 +224,7 @@ INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf
 INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf`,`status`,`leader_uid`) VALUES (23,'杨辉直属团队',12,'2016-07-22 20:25:08',1,1,NULL);
 INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf`,`status`,`leader_uid`) VALUES (24,'高峰团队',12,'2016-07-22 20:25:08',1,1,NULL);
 INSERT INTO `department` (`department_id`,`title`,`parent_dept_id`,`ctime`,`leaf`,`status`,`leader_uid`) VALUES (26,'青岛团队ee',21,'2016-07-25 20:24:08',1,0,NULL);
-
+*/
 
 TRUNCATE TABLE `user`;
 
