@@ -44,7 +44,27 @@ public class Activity {
     private String userReq;
 
     private String content;
+    
+    private Integer focusNum;
 
+    private Integer orderNum;
+
+    public Integer getFocusNum() {
+        return focusNum;
+    }
+
+    public void setFocusNum(Integer focusNum) {
+        this.focusNum = focusNum;
+    }
+
+    public Integer getOrderNum() {
+        return orderNum;
+    }
+
+    public void setOrderNum(Integer orderNum) {
+        this.orderNum = orderNum;
+    }
+    
     public Integer getId() {
         return id;
     }

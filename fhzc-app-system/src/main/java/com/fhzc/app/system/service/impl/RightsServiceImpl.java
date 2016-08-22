@@ -79,4 +79,13 @@ public class RightsServiceImpl implements RightsService {
         RightsExample example = new RightsExample();
         return rightsMapper.selectByExample(example);
     }
+
+	@Override
+	public List<RightsReservation> findSuccessOrdersById(Integer id, Integer status) {
+		RightsReservationExample example = new RightsReservationExample();
+		RightsReservationExample.Criteria criteria = example.createCriteria();
+	        criteria.andRightsIdEqualTo(id);
+	        criteria.andStatusEqualTo(status);
+	        return rightsReservationMapper.selectByExample(example);
+	}
 }

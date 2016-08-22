@@ -66,4 +66,12 @@ public interface RightsService {
      * @return
      */
     List<Rights> getAllRights();
+    
+    /**
+     * 根据权益id获得预约成功的权益
+     * @param id
+     * @param status
+     * @return
+     */
+    List<RightsReservation> findSuccessOrdersById(Integer id, Integer status);
 }

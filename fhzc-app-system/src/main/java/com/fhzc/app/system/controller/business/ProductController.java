@@ -66,11 +66,13 @@ public class ProductController extends BaseController {
         List<Product> products = new ArrayList<Product>();
         for(Product product : pageableResult.getItems()){
             //获得产品关注人数
-            List<Focus> focuses = focusService.findFocusByType(Const.FOCUS_TYPE.PRODUCT, product.getPid());
+//            List<Focus> focuses = focusService.findFocusByType(Const.FOCUS_TYPE.PRODUCT, product.getPid());
+        	List<Focus> focuses = focusService.findFocusByType(Const.FOCUS_TYPE.PRODUCT, product.getPid(),1);
             product.setFocusNum(focuses.size() > 0 ? focuses.size() : 0);
 
             //获得预约人数
-            List<ProductReservation> orders = productService.findOrdersByPid(product.getPid());
+//            List<ProductReservation> orders = productService.findOrdersByPid(product.getPid());
+            List<ProductReservation> orders = productService.findSuccessOrdersByPid(product.getPid(), "success");
             product.setOrderNum(orders.size() > 0 ? orders.size() : 0);
             BigDecimal orderAmount = new BigDecimal(0.00);
             for(ProductReservation order : orders){

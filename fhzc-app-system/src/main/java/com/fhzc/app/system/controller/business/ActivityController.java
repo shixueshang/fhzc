@@ -3,8 +3,10 @@ package com.fhzc.app.system.controller.business;
 import com.alibaba.fastjson.JSON;
 import com.fhzc.app.dao.mybatis.bo.ActivityApplyBo;
 import com.fhzc.app.dao.mybatis.model.Activity;
+import com.fhzc.app.dao.mybatis.model.ActivityApply;
 import com.fhzc.app.dao.mybatis.model.ActivityApplyQuery;
 import com.fhzc.app.dao.mybatis.model.Dictionary;
+import com.fhzc.app.dao.mybatis.model.Focus;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
@@ -14,6 +16,8 @@ import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.ActivityService;
 import com.fhzc.app.system.service.DictionaryService;
+import com.fhzc.app.system.service.FocusService;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
@@ -24,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -41,12 +46,27 @@ public class ActivityController extends BaseController {
 
     @Resource
     private DictionaryService dictionaryService;
+    
+    @Resource
+    private FocusService focusService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @SystemControllerLog(description = "查询活动列表")
     public ModelAndView listActivities(){
         ModelAndView mav = new ModelAndView("business/activity/list");
         PageableResult<Activity> pageableResult = activityService.findPageActivies(page, size);
+        for (Activity activity : pageableResult.getItems()) {
+        	List<Focus> focuses = focusService.findFocusByType(Const.FOCUS_TYPE.ACTIVITY, activity.getId(),1);
+        	activity.setFocusNum(focuses.size() > 0 ? focuses.size() : 0);
+        	List<ActivityApply> orders = activityService.findSuccessOrdersById(activity.getId(), 1);
+        	int personNum = 0;
+        	if(orders.size() > 0){
+            	for (ActivityApply activityApply : orders) {
+    				personNum = personNum+activityApply.getPersonNum();
+    			}
+        	}
+        	activity.setOrderNum(personNum > 0 ? personNum : 0);
+		}
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("activities", pageableResult.getItems());
         mav.addObject("activityTypes", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.ACTIVITY_CATEGORY)));

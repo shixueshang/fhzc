@@ -131,7 +131,7 @@
                                     <td>客户姓名</td>
                                     <td>积分</td>
                                     <td>积分状态</td>
-                                    <td>描述</td>
+                                    <td style="width:18%">描述</td>
                                     <td>积分变动来源</td>
                                     <td>有效时间</td>
                                     <td>审批状态</td>

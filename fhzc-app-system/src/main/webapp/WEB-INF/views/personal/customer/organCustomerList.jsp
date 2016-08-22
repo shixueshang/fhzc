@@ -72,7 +72,7 @@
                                 <thead>
                                 <tr>
                                     <td>客户编号</td>
-                                    <td>机构全称</td>
+                                    <td style="width:16%">机构全称</td>
                                     <td>会员等级</td>
                                     <td>当前可用积分</td>
                                     <td>冻结积分</td>

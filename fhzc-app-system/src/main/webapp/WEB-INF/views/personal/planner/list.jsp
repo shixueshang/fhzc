@@ -66,7 +66,7 @@
                                     <td>身份证号</td>
                                     <td>姓名</td>
                                     <td>手机号</td>
-                                    <td>所属公司</td>
+                                    <td style="width:16%">所属公司</td>
                                     <td>所属城市</td>
                                     <td>在职状态</td>
                                     <td>角色</td>

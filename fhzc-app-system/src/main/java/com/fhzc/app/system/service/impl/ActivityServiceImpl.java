@@ -4,8 +4,11 @@ import com.fhzc.app.dao.mybatis.bo.ActivityApplyBo;
 import com.fhzc.app.dao.mybatis.inter.ActivityApplyMapper;
 import com.fhzc.app.dao.mybatis.inter.ActivityMapper;
 import com.fhzc.app.dao.mybatis.model.Activity;
+import com.fhzc.app.dao.mybatis.model.ActivityApply;
+import com.fhzc.app.dao.mybatis.model.ActivityApplyExample;
 import com.fhzc.app.dao.mybatis.model.ActivityApplyQuery;
 import com.fhzc.app.dao.mybatis.model.ActivityExample;
+import com.fhzc.app.dao.mybatis.model.ProductReservationExample;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.system.service.ActivityService;
 import org.apache.ibatis.session.RowBounds;
@@ -61,4 +64,13 @@ public class ActivityServiceImpl implements ActivityService {
         ActivityExample example = new ActivityExample();
         return activityMapper.selectByExampleWithBLOBs(example);
     }
+
+	@Override
+	public List<ActivityApply> findSuccessOrdersById(Integer id, Integer result) {
+		ActivityApplyExample example = new ActivityApplyExample();
+		ActivityApplyExample.Criteria criteria = example.createCriteria();
+	        criteria.andActivityIdEqualTo(id);
+	        criteria.andResultEqualTo(result);
+	        return activityApplyMapper.selectByExample(example);
+	}
 }
