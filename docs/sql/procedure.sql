@@ -85,7 +85,7 @@ BEGIN
 	if _rights_id >0 then 
 
 		insert into score_history(uid,score,event_id,status,operator_type,operator_id,detail,from_type,ctime,is_vaild,is_approve)
-		  values(_customer_Id,-1*p_consume_score,_rights_id,'consume','admin',p_operator_id,CONCAT('积分减，类型：权益消费,名称：',p_rightsname),'rights',now(),1,1);
+		  values(_customer_Id,-1*p_consume_score,_rights_id,'consume','admin',p_operator_id,CONCAT('积分减，类型：权益消费,名称：',p_rightsname),'rights',p_consume_time,1,1);
 
 	end if;
 END
