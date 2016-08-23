@@ -169,6 +169,7 @@ public class PersonalController extends BaseController {
 
             map.put("collectStart",product.getCollectStart());
             map.put("collectEnd",product.getCollectEnd());
+            map.put("incomeDistributionType",product.getIncomeDistributionType());
 
 
             result.add(map);

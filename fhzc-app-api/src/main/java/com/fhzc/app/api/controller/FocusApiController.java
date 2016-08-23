@@ -187,6 +187,7 @@ public class FocusApiController extends BaseController {
                     map.put("collect_end",product.getCollectEnd());
                     map.put("cover",product.getCover());
                     map.put("status",product.getStatus());
+                    map.put("incomeDistributionType", product.getIncomeDistributionType());
                     productList.add(map);
                     break;
                 case "report":
