@@ -5,6 +5,8 @@ import com.fhzc.app.dao.mybatis.inter.UserMapper;
 import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.model.UserExample;
 import com.fhzc.app.dao.mybatis.util.EncryptUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -16,6 +18,8 @@ import java.util.List;
  */
 @Service
 public class UserServiceImpl implements UserService {
+
+    private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Resource
     private UserMapper userMapper;
@@ -37,7 +41,7 @@ public class UserServiceImpl implements UserService {
         }
         criteria.andPassportCodeEqualTo(identityNum);
         if(userMapper.countByExample(example) > 0){
-            return userMapper.selectByExample(example).get(0);
+            return decryptUser(userMapper.selectByExample(example).get(0));
         }
         return null;
     }
@@ -60,6 +64,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(User user) {
+        String passport = user.getPassportCode();
+        String key = passport.substring(passport.length() - 8);
+        user.setSalt(key);
+        try {
+            user.setPassportCode(EncryptUtils.encryptToDES(key, user.getPassportCode()));
+            if(user.getMobile() != null){
+                user.setMobile(EncryptUtils.encryptToDES(key, user.getMobile()));
+            }
+            if(user.getEmail() != null){
+                user.setEmail(EncryptUtils.encryptToDES(key, user.getEmail()));
+            }
+        } catch (Exception e) {
+            logger.error("加密失败");
+            e.printStackTrace();
+        }
         userMapper.updateByPrimaryKey(user);
     }
 

@@ -20,10 +20,8 @@
 
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/jquery-tags-input/jquery.tagsinput.css" />
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" />
-<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/jquery-ui/jquery-ui-1.10.1.custom.css">
-<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/custom_datepicker/jquery-ui-timepicker-addon.css">
-<script src="<%=contextPath%>/assets/jquery-ui/jquery-ui-1.10.1.custom.min.js"></script>
-<script src="<%=contextPath%>/assets/custom_datepicker/jquery-ui-timepicker-addon.js"></script>
+
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/bootstrap-datepicker/css/datepicker.css">
 <!-- BEGIN CONTAINER -->
 <div class="page-container row-fluid">
     <jsp:include page="../../include/left.jsp"/>
@@ -56,10 +54,10 @@
                         <label class="col-sm-2 control-label">活动名称:</label>
                         <input class="form-control" id="activityName" name="activityName" value="${param.activityName}">
 
-                        <label class="col-sm-2 control-label">预约时间:</label>
-                        <input class="form-control" id="startTime" name="startTime" style="width: 180px" value="${param.startTime}">
+                        <label class="col-sm-2 control-label">报名时间:</label>
+                        <input class="form-control date-picker" id="startTime" name="startTime" style="width: 180px" value="${param.startTime}">
                         ~
-                        <input class="form-control" id="endTime" name="endTime" style="width: 180px" value="${param.endTime}">
+                        <input class="form-control date-picker" id="endTime" name="endTime" style="width: 180px" value="${param.endTime}">
                         <button type="submit">查找</button>
                     </div>
                 </form>
@@ -81,17 +79,28 @@
                                     <td>活动名称</td>
                                     <td>客户姓名</td>
                                     <td>客户等级</td>
-                                    <td>手机号码</td>
+                                    <td>客户手机号码</td>
+                                    <td>是否参加</td>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <c:forEach items="${activityApplies}" var="activityApply">
                                     <tr>
-                                        <td>${activityApply.registerTime}</td>
+                                        <td><fmt:formatDate value="${activityApply.ctime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                                         <td>${activityApply.activityName}</td>
-                                        <td>${activityApply.clientName}</td>
-                                        <td>${activityApply.clientLevel}</td>
-                                        <td>${activityApply.clientPhone}</td>
+                                        <td>${activityApply.personName}</td>
+                                        <td>${activityApply.level}</td>
+                                        <td>${activityApply.mobile}</td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${activityApply.result == '1'}">
+                                                    <span class="label label-success">参加</span>
+                                                </c:when>
+                                                <c:when test="${activityApply.result == '0'}">
+                                                    <span class="label label-warning">不参加</span>
+                                                </c:when>
+                                            </c:choose>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>
@@ -109,19 +118,5 @@
     </div>
 
 </div>
-
-<script type="text/javascript">
-$(document).ready(function () {
-    $('#startTime').datetimepicker({
-        timeFormat: 'HH:mm:ss',
-        dateFormat: "yy-mm-dd"
-    });
-
-    $('#endTime').datetimepicker({
-        timeFormat: 'HH:mm:ss',
-        dateFormat: "yy-mm-dd"
-    });
-});
-</script>
 
 <jsp:include page="../../include/footer.jsp"/>

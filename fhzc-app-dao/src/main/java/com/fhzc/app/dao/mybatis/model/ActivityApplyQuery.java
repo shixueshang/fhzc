@@ -6,17 +6,20 @@ import java.util.Date;
  * Created by menghq on 2016/7/26.
  */
 public class ActivityApplyQuery {
-    private long activityId;
+
+    private Integer activityId;
+
     private String activityName;
-    private String customerIdCardNum;
+
     private Date startDate;
+
     private Date endDate;
 
-    public long getActivityId() {
+    public Integer getActivityId() {
         return activityId;
     }
 
-    public void setActivityId(long activityId) {
+    public void setActivityId(Integer activityId) {
         this.activityId = activityId;
     }
 
@@ -26,14 +29,6 @@ public class ActivityApplyQuery {
 
     public void setActivityName(String activityName) {
         this.activityName = activityName;
-    }
-
-    public String getCustomerIdCardNum() {
-        return customerIdCardNum;
-    }
-
-    public void setCustomerIdCardNum(String customerIdCardNum) {
-        this.customerIdCardNum = customerIdCardNum;
     }
 
     public Date getStartDate() {

@@ -1,6 +1,5 @@
 package com.fhzc.app.system.service.impl;
 
-import com.fhzc.app.dao.mybatis.inter.FocusMapper;
 import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.model.UserExample;
 import com.fhzc.app.dao.mybatis.page.PageableResult;

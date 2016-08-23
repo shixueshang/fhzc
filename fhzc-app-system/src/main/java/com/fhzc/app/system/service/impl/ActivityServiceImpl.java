@@ -1,6 +1,5 @@
 package com.fhzc.app.system.service.impl;
 
-import com.fhzc.app.dao.mybatis.bo.ActivityApplyBo;
 import com.fhzc.app.dao.mybatis.inter.ActivityApplyMapper;
 import com.fhzc.app.dao.mybatis.inter.ActivityMapper;
 import com.fhzc.app.dao.mybatis.model.Activity;
@@ -8,13 +7,14 @@ import com.fhzc.app.dao.mybatis.model.ActivityApply;
 import com.fhzc.app.dao.mybatis.model.ActivityApplyExample;
 import com.fhzc.app.dao.mybatis.model.ActivityApplyQuery;
 import com.fhzc.app.dao.mybatis.model.ActivityExample;
-import com.fhzc.app.dao.mybatis.model.ProductReservationExample;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
+import com.fhzc.app.system.commons.util.DateUtil;
 import com.fhzc.app.system.service.ActivityService;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,10 +53,21 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public PageableResult<ActivityApplyBo> findPageActivityApplies(ActivityApplyQuery query, int page, int size) {
+    public PageableResult<ActivityApply> findPageActivityApplies(ActivityApplyQuery query, int page, int size) {
+        ActivityApplyExample example = new ActivityApplyExample();
+        ActivityApplyExample.Criteria criteria = example.createCriteria();
+        if(query.getActivityName() != null && query.getActivityId() == null){
+            return new PageableResult<ActivityApply>(page, size, activityApplyMapper.countByExample(example), new ArrayList<ActivityApply>());
+        }
+        if(query.getActivityName() != null && query.getActivityId() != null){
+            criteria.andActivityIdEqualTo(query.getActivityId());
+        }
+        if(query.getStartDate() != null && query.getEndDate() != null){
+            criteria.andCtimeBetween(DateUtil.getStartTimeOfDate(query.getStartDate()), DateUtil.getEndTimeOfDate(query.getEndDate()));
+        }
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
-        List<ActivityApplyBo> list = activityApplyMapper.listActivityApplies(query, rowBounds);
-        return new PageableResult<ActivityApplyBo>(page, size, activityApplyMapper.countActivityApplies(query), list);
+        List<ActivityApply> list = activityApplyMapper.selectByExampleWithRowbounds(example, rowBounds);
+        return new PageableResult<ActivityApply>(page, size, activityApplyMapper.countByExample(example), list);
     }
 
     @Override
@@ -73,4 +84,15 @@ public class ActivityServiceImpl implements ActivityService {
 	        criteria.andResultEqualTo(result);
 	        return activityApplyMapper.selectByExample(example);
 	}
+
+    @Override
+    public Activity findActivityByName(String name) {
+        ActivityExample example = new ActivityExample();
+        ActivityExample.Criteria criteria = example.createCriteria();
+        criteria.andNameEqualTo(name);
+        if(activityMapper.countByExample(example) > 0){
+            return activityMapper.selectByExample(example).get(0);
+        }
+        return null;
+    }
 }

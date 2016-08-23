@@ -1,13 +1,12 @@
 package com.fhzc.app.api.controller;
 
 import  com.fhzc.app.api.exception.BadRequestException;
-import com.fhzc.app.api.service.ActivityApplyService;
-import com.fhzc.app.api.service.ActivityService;
-import com.fhzc.app.api.service.VerifyCodeService;
+import com.fhzc.app.api.service.*;
 import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
 import com.fhzc.app.dao.mybatis.model.Activity;
 import com.fhzc.app.dao.mybatis.model.ActivityApply;
+import com.fhzc.app.dao.mybatis.model.Customer;
 import com.fhzc.app.dao.mybatis.util.Const;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +31,12 @@ public class ActivityApplyApiController extends BaseController {
     @Resource
     private VerifyCodeService verifyCodeService;
 
+    @Resource
+    private UserService userService;
+
+    @Resource
+    private CustomerService customerService;
+
     /**
      * 报名活动  为他人报名的理财师id为0
      * @param activityApply
@@ -40,6 +45,12 @@ public class ActivityApplyApiController extends BaseController {
     @RequestMapping(value = "/api/activity/join",method = RequestMethod.POST)
     @ResponseBody
     public ApiJsonResult activityApplyJoin(ActivityApply activityApply){
+
+        //判断该客户是否已经报名
+        ActivityApply apply = activityApplyService.getActivityIdByCustomerId(activityApply.getCustomerId(), activityApply.getActivityId());
+        if(apply != null){
+            activityApply.setId(apply.getId());
+        }
 
         Integer plannerId = activityApply.getPlannerId();
         if(plannerId == 0){
@@ -58,6 +69,9 @@ public class ActivityApplyApiController extends BaseController {
             activityApply.setPlannerId(plannerId);
             activityApply.setType(APIConstants.ActivityApply.TYPE_SELF);
             activityApply.setCtime(new Date());
+            activityApply.setPersonNum(activityApply.getPersonNum());
+            Customer customer = customerService.getCustomer(activityApply.getCustomerId());
+            activityApply.setPersonName(userService.getUser(customer.getUid()).getRealname());
             activityApply.setResult(APIConstants.ActivityApply.RESULT_YES);
             activityApplyService.addOrUpdateActivityApply(activityApply);
             return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);

@@ -29,6 +29,7 @@
         <property name="filterChainDefinitions">
             <value>
                 /static/** = anon
+                /druid/** = anon
                 /assets/** = anon
                 /opt/** = anon
                 /login = anon
