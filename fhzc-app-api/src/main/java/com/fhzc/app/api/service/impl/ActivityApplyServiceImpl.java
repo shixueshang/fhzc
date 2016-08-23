@@ -37,6 +37,7 @@ public class ActivityApplyServiceImpl implements ActivityApplyService {
         ActivityApplyExample example = new ActivityApplyExample();
         ActivityApplyExample.Criteria criteria = example.createCriteria();
         criteria.andCustomerIdEqualTo(customerId);
+        example.setOrderByClause("ctime desc");
         criteria.andResultEqualTo(Const.ACTIVITY_APPLY_STATUS.JOIN);
         if(activityApplyMapper.countByExample(example) > 0){
             return activityApplyMapper.selectByExample(example);
