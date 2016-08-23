@@ -97,8 +97,8 @@
             <div class="row-fluid">
                 <form  class="form-inline" action="<%=contextPath%>/business/score/find" method="GET">
                     <div class="form-group">
-                        <label class="control-label" style="margin-left: 20px">身份证</label>
-                        <input class="form-control" name="identity" placeholder="输入身份证"  >
+                        <label class="control-label" style="margin-left: 20px">客户姓名</label>
+                        <input class="form-control" name="identity" placeholder="输入客户姓名"  >
 
                         <label class="control-label" style="margin-left: 20px">审批状态</label>
                         <select class="form-control" name="isApprove" id="isApprove" >
@@ -170,7 +170,11 @@
                                                 </c:when>
                                             </c:choose>
                                         </td>
-                                        <td><a href="javascript:void(0)" onclick="approveById('<%=contextPath%>/business/score/approve/${score.id}')" class="btn mini purple button_approve" data-toggle="modal" data-target="#confirm-delete"><i class="icon-edit"></i>审批</a></td>
+                                        <td>
+                                        <c:if test = "${score.isApprove == 0 }">
+                                        <a href="javascript:void(0)" onclick="approveById('<%=contextPath%>/business/score/approve/${score.id}')" class="btn mini purple button_approve" data-toggle="modal" data-target="#confirm-delete"><i class="icon-edit"></i>审批</a>
+                                       </c:if>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>

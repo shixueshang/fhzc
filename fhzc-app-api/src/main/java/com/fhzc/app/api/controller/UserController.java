@@ -298,16 +298,14 @@ public class UserController extends BaseController {
 
     /**
      * 设置客户风险等级
-     * @param customerId
      * @param risk
      * @return
      * @throws Exception
      */
     @RequestMapping(value = "/api/set/risk", method = RequestMethod.POST)
     @ResponseBody
-    public ApiJsonResult setRisk(@RequestParam(value = "customer_id") Integer customerId,
-                                 @RequestParam(value = "risk") Integer risk) throws Exception {
-        Customer customer = customerService.getCustomer(customerId);
+    public ApiJsonResult setRisk( @RequestParam(value = "risk") Integer risk) throws Exception {
+        Customer customer = customerService.getCustomerByUid(super.getCurrentUser().getUid());
         if(customer == null){
             return new ApiJsonResult(APIConstants.API_JSON_RESULT.NOT_FOUND, "没有这个客户");
         }
