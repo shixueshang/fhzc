@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>风险评测</title>
+    <meta name="wap-font-scale" content="no">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport">
+    <link rel="stylesheet" href="riskEvaluation.css"/>
+    <script src="js/jquery-1.11.3.min.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+</head>
+<body>
+<form action="">
+    <div class="question-box">
+        <p class="q-tit"><span>1</span>、您的年龄介于</p>
+        <div class="option-box">
+            <div class="option-item">
+                <input checked="checked" id="item1-a" class="item-check" type="radio" name="first" value="1"/>
+                <label for="item1-a" class="item-ans">18-30岁</label>
+            </div>
+            <div class="option-item">
+                <input id="item1-b" class="item-check" type="radio" name="first" value="2"/>
+                <label for="item1-b" class="item-ans">31-50岁</label>
+            </div>
+            <div class="option-item">
+                <input id="item1-c" class="item-check" type="radio" name="first" value="3"/>
+                <label for="item1-c" class="item-ans">51-65岁</label>
+            </div>
+            <div class="option-item">
+                <input id="item1-d" class="item-check" type="radio" name="first" value="4"/>
+                <label for="item1-d" class="item-ans">高于65岁</label>
+            </div>
+        </div>
+    </div>
+    <div class="question-box">
+        <p class="q-tit"><span>2</span>、您的学历</p>
+        <div class="option-box">
+            <div class="option-item">
+                <input checked="checked" id="item2-a" class="item-check" type="radio" name="second" value="1"/>
+                <label for="item2-a" class="item-ans">高中及以下</label>
+            </div>
+            <div class="option-item">
+                <input id="item2-b" class="item-check" type="radio" name="second" value="2"/>
+                <label for="item2-b" class="item-ans">中专或大专</label>
+            </div>
+            <div class="option-item">
+                <input id="item2-c" class="item-check" type="radio" name="second" value="3"/>
+                <label for="item2-c" class="item-ans">本科</label>
+            </div>
+            <div class="option-item">
+                <input id="item2-d" class="item-check" type="radio" name="second" value="4"/>
+                <label for="item2-d" class="item-ans">硕士及以上</label>
+            </div>
+        </div>
+    </div>
+    <div class="question-box">
+        <p class="q-tit"><span>3</span>、您的家庭可支配的年收入为（折合人民币）？</p>
+        <div class="option-box">
+            <div class="option-item">
+                <input checked="checked" id="item3-a" class="item-check" type="radio" name="third"  value="1"/>
+                <label for="item3-a" class="item-ans">50万元以下</label>
+            </div>
+            <div class="option-item">
+                <input id="item3-b" class="item-check" type="radio" name="third" value="2"/>
+                <label for="item3-b" class="item-ans">50-100万元</label>
+            </div>
+            <div class="option-item">
+                <input id="item3-c" class="item-check" type="radio" name="third" value="3"/>
+                <label for="item3-c" class="item-ans">100-500万元</label>
+            </div>
+            <div class="option-item">
+                <input id="item3-d" class="item-check" type="radio" name="third" value="4"/>
+                <label for="item3-d" class="item-ans">500-1000万元</label>
+            </div>
+            <div class="option-item">
+                <input id="item3-e" class="item-check" type="radio" name="third" value="5"/>
+                <label for="item3-e" class="item-ans">1000万元以上</label>
+            </div>
+        </div>
+    </div>
+    <div class="question-box">
+        <p class="q-tit"><span>4</span>、在您每年的家庭可支配收入中，可用于金融投资（储蓄存款除外）的比例为？</p>
+        <div class="option-box">
+            <div class="option-item">
+                <input checked="checked" id="item4-a" class="item-check" type="radio" name="forth" value="1"/>
+                <label for="item4-a" class="item-ans">小于10%</label>
+            </div>
+            <div class="option-item">
+                <input id="item4-b" class="item-check" type="radio" name="forth" value="2"/>
+                <label for="item4-b" class="item-ans">10%至25%</label>
+            </div>
+            <div class="option-item">
+                <input id="item4-c" class="item-check" type="radio" name="forth" value="3"/>
+                <label for="item4-c" class="item-ans">25%至50%</label>
+            </div>
+            <div class="option-item">
+                <input id="item4-d" class="item-check" type="radio" name="forth" value="4"/>
+                <label for="item4-d" class="item-ans">大于50%</label>
+            </div>
+        </div>
+    </div>
+    <button class="submit" type="button">确认提交</button>
+</form>
+<script>
+
+
+    var urls = {
+        isDebug: true,
+        url: '',
+        init: function(){
+            var isDebug = urls.getUrlParam('debug');
+            urls.isDebug = isDebug ? true : false;
+            urls.url = urls.isDebug ? urls.domain.loc : urls.domain.dev;
+        },
+        domain: {
+            dev: "http://dev-apptest.foriseassets.com:8080/api/set/risk",
+            loc: "http://localhost:7003/api/set/risk"
+        },
+        getUrlParam: function(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+            if (r != null) return unescape(r[2]); return null; //返回参数值
+        }
+    };
+    urls.init();
+
+
+    $(".item-check").click(function(){
+        $(this).parent().siblings().find(".item-check").attr("checked",false);
+        $(this).attr("checked","checked");
+    })
+
+    var customer_id = urls.getUrlParam('customer_id');
+    var risk = urls.getUrlParam('risk');
+
+    //本地调试
+    if(urls.isDebug){
+        var login = {
+            username: "18910645495",
+            password: "18910645495"
+        };
+
+        $.ajax({
+            type : 'POST',
+            url : "http://localhost:7003/api/auth/login",
+            data :login,
+            success : function(data){
+                console.log(data);
+            }
+        });
+    }
+
+
+
+    $(".submit").click(function(){
+        var input = $("input[checked=checked]");
+        var arr = [];
+        var number = input.map(function(index,elem){
+            return elem.value;
+        }).get();
+        arr.push(number);
+        console.log(arr);
+        $.ajax({
+            type : 'POST',
+            url : urls.url+"?customer_id="+customer_id+"&risk="+risk,
+            data :{"answer":arr},
+            success : function(data){
+                console.log(data);
+            }
+        })
+
+    })
+</script>
+</body>
+</html>

@@ -6,7 +6,7 @@ import java.util.Date;
 public class Product {
     private Integer pid;
 
-    private Byte status;
+    private Integer status;
 
     private String code;
 
@@ -30,7 +30,7 @@ public class Product {
 
     private String dividendDay;
 
-    private String annualYield;
+    private BigDecimal annualYield;
 
     private String incomeDistributionType;
 
@@ -70,13 +70,13 @@ public class Product {
 
     private String notice;
 
-    private Byte scoreFactor;
+    private BigDecimal scoreFactor;
 
-    private Byte isRecommend;
+    private Integer isRecommend;
 
-    private Byte isDisplay;
+    private Integer isDisplay;
 
-    private Byte isRenew;
+    private Integer isRenew;
 
     private Date ctime;
 
@@ -87,10 +87,6 @@ public class Product {
     private Integer investTermMax;
 
     private BigDecimal investThreshold;
-
-    private BigDecimal expectedMin;
-
-    private BigDecimal expectedMax;
 
     private Integer throwDepartment;
 
@@ -140,11 +136,11 @@ public class Product {
         this.pid = pid;
     }
 
-    public Byte getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Byte status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
@@ -236,12 +232,12 @@ public class Product {
         this.dividendDay = dividendDay == null ? null : dividendDay.trim();
     }
 
-    public String getAnnualYield() {
+    public BigDecimal getAnnualYield() {
         return annualYield;
     }
 
-    public void setAnnualYield(String annualYield) {
-        this.annualYield = annualYield == null ? null : annualYield.trim();
+    public void setAnnualYield(BigDecimal annualYield) {
+        this.annualYield = annualYield;
     }
 
     public String getIncomeDistributionType() {
@@ -396,35 +392,35 @@ public class Product {
         this.notice = notice == null ? null : notice.trim();
     }
 
-    public Byte getScoreFactor() {
+    public BigDecimal getScoreFactor() {
         return scoreFactor;
     }
 
-    public void setScoreFactor(Byte scoreFactor) {
+    public void setScoreFactor(BigDecimal scoreFactor) {
         this.scoreFactor = scoreFactor;
     }
 
-    public Byte getIsRecommend() {
+    public Integer getIsRecommend() {
         return isRecommend;
     }
 
-    public void setIsRecommend(Byte isRecommend) {
+    public void setIsRecommend(Integer isRecommend) {
         this.isRecommend = isRecommend;
     }
 
-    public Byte getIsDisplay() {
+    public Integer getIsDisplay() {
         return isDisplay;
     }
 
-    public void setIsDisplay(Byte isDisplay) {
+    public void setIsDisplay(Integer isDisplay) {
         this.isDisplay = isDisplay;
     }
 
-    public Byte getIsRenew() {
+    public Integer getIsRenew() {
         return isRenew;
     }
 
-    public void setIsRenew(Byte isRenew) {
+    public void setIsRenew(Integer isRenew) {
         this.isRenew = isRenew;
     }
 
@@ -466,22 +462,6 @@ public class Product {
 
     public void setInvestThreshold(BigDecimal investThreshold) {
         this.investThreshold = investThreshold;
-    }
-
-    public BigDecimal getExpectedMin() {
-        return expectedMin;
-    }
-
-    public void setExpectedMin(BigDecimal expectedMin) {
-        this.expectedMin = expectedMin;
-    }
-
-    public BigDecimal getExpectedMax() {
-        return expectedMax;
-    }
-
-    public void setExpectedMax(BigDecimal expectedMax) {
-        this.expectedMax = expectedMax;
     }
 
     public Integer getThrowDepartment() {

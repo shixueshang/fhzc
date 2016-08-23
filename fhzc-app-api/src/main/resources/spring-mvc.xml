@@ -18,6 +18,9 @@
 
 	<context:component-scan base-package="com.fhzc.app.api.*"/>
 
+    <!-- 静态文件过滤配置 -->
+    <mvc:resources mapping="/h5/**" location="/h5/" />
+
     <mvc:interceptors>
         <!-- 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->
         <bean class="com.fhzc.app.api.interceptor.BaseInterceptor"/>

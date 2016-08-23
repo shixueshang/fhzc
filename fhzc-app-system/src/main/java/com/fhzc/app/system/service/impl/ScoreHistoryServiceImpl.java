@@ -1,10 +1,9 @@
 package com.fhzc.app.system.service.impl;
 
 import com.fhzc.app.dao.mybatis.inter.ScoreHistoryMapper;
+import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.model.Dictionary;
-import com.fhzc.app.dao.mybatis.model.Rights;
-import com.fhzc.app.dao.mybatis.model.ScoreHistory;
-import com.fhzc.app.dao.mybatis.model.User;
+import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.dao.mybatis.util.EncryptUtils;
 import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.commons.util.excel.ExcelImporter;
@@ -399,4 +398,16 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 	public void addHistoryScore(ScoreHistory scoreHistory) {
 		scoreHistoryMapper.insert(scoreHistory);
 	}
+
+    @Override
+    public List<ScoreHistory> findScoreByProduct(Integer userId, Integer productId) {
+        ScoreHistoryExample example = new ScoreHistoryExample();
+        ScoreHistoryExample.Criteria criteria = example.createCriteria();
+        criteria.andUidEqualTo(userId);
+        criteria.andFromTypeEqualTo(Const.FROM_TYPE.PRODUCT);
+        criteria.andEventIdEqualTo(productId);
+        criteria.andIsApproveEqualTo(Const.YES_OR_NO.NO);
+        criteria.andIsVaildEqualTo(Const.SCORE_VAILD.IS_VAILD);
+        return scoreHistoryMapper.selectByExample(example);
+    }
 }

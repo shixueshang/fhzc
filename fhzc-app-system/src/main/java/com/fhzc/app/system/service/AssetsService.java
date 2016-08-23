@@ -25,4 +25,10 @@ public interface AssetsService {
      * @return
      */
     List<AssetsHistory> findAllAssets();
+
+    /**
+     * 查询当天导入的已成立的未到期的产品数据
+     * @return
+     */
+    List<AssetsHistory> findAssetsForScore();
 }

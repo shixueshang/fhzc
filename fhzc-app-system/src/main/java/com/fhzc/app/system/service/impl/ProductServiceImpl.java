@@ -130,13 +130,14 @@ public class ProductServiceImpl implements ProductService {
         return -1;
     }
     
-    /**
-     * 获得机构id
-     * @param name
-     * @return
-     */
     public Product getProduct(String name){
-    	return productMapper.selectByName(name);
+        ProductExample example = new ProductExample();
+        ProductExample.Criteria criteria = example.createCriteria();
+        criteria.andNameEqualTo(name);
+        if(productMapper.countByExample(example) > 0){
+            return productMapper.selectByExampleWithBLOBs(example).get(0);
+        }
+        return null;
     }
 
     /**

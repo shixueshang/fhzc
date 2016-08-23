@@ -30,6 +30,7 @@
             <value>
                 /api/auth/** = anon
                 /opt/** = anon
+                /h5/** = anon
                 /api/latestApp = anon
                 /** = authc <!-- 需要认证 -->
             </value>

@@ -5,6 +5,7 @@ import com.fhzc.app.dao.mybatis.inter.ProductMapper;
 import com.fhzc.app.dao.mybatis.model.Product;
 import com.fhzc.app.dao.mybatis.model.ProductExample;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
+import com.fhzc.app.dao.mybatis.util.Const;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
@@ -35,9 +36,9 @@ public class ProductServiceImpl implements ProductService {
     public PageableResult<Product> getProductList(int level,int risk,boolean is_recommend) {
         ProductExample example = new ProductExample();
         ProductExample.Criteria criteria = example.createCriteria();
-        criteria.andIsDisplayEqualTo((byte) 1);
+        criteria.andIsDisplayEqualTo(Const.YES_OR_NO.YES);
         if(is_recommend) {
-            criteria.andIsRecommendEqualTo((byte) 1);
+            criteria.andIsRecommendEqualTo(Const.YES_OR_NO.YES);
         }
         if(productMapper.countByExample(example) > 0) {
             List<Product> list = productMapper.selectByExampleWithBLOBs(example);
@@ -51,8 +52,8 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getRecommendProductList() {
         ProductExample example = new ProductExample();
         ProductExample.Criteria criteria = example.createCriteria();
-        criteria.andIsDisplayEqualTo((byte) 1);
-        criteria.andIsRecommendEqualTo((byte) 1);
+        criteria.andIsDisplayEqualTo(Const.YES_OR_NO.YES);
+        criteria.andIsRecommendEqualTo(Const.YES_OR_NO.YES);
         if(productMapper.countByExample(example) > 0) {
             return productMapper.selectByExampleWithBLOBs(example);
         }else{
@@ -79,7 +80,7 @@ public class ProductServiceImpl implements ProductService {
         ProductExample.Criteria criteria = example.createCriteria();
         example.setOrderByClause("ctime desc");
 
-        criteria.andIsDisplayEqualTo((byte) 1);
+        criteria.andIsDisplayEqualTo(Const.YES_OR_NO.YES);
         if(productMapper.countByExample(example) > 0) {
             return productMapper.selectByExampleWithBLOBs(example);
         }else{

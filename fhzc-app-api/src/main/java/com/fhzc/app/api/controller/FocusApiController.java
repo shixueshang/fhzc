@@ -181,8 +181,6 @@ public class FocusApiController extends BaseController {
                 case "product":
                     Product product = productService.getProduct(fid);
                     map.put("name",product.getName());
-                    map.put("expected_min",product.getExpectedMin());
-                    map.put("expected_max",product.getExpectedMax());
                     map.put("renew_deadline",product.getRenewDeadline());
                     map.put("invest_threshold",product.getInvestThreshold());
                     map.put("collect_start",product.getCollectStart());

@@ -139,6 +139,7 @@ public class ProductController extends BaseController {
         if(product.getInvestThreshold() != null && product.getInvestThreshold().compareTo(new BigDecimal(0)) == 1){
             product.setInvestThreshold(product.getInvestThreshold().multiply(new BigDecimal(10000)));
         }
+        //product.setScoreFactor(product.getScoreFactor() / 100);
         product.setCtime(new Date());
 
         productService.addOrUpdateProduct(product);
