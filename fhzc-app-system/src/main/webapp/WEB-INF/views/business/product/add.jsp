@@ -113,7 +113,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">参考业绩标准(%)</label>
                                                 <div class="controls">
-                                                    <input type="number" name="annualYield" value="${product.annualYield}" placeholder="" class="large m-wrap">
+                                                    <input type="text" name="annualYield" value="${product.annualYield}" placeholder="" class="large m-wrap">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
