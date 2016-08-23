@@ -3,6 +3,7 @@ package com.fhzc.app.system.service;
 import com.fhzc.app.dao.mybatis.model.ScoreHistory;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -46,4 +47,12 @@ public interface ScoreHistoryService {
      * @param scoreHistory
      */
     void addHistoryScore(ScoreHistory scoreHistory);
+
+    /**
+     * 查询某个产品用户的增加积分记录
+     * @param userId
+     * @param productId
+     * @return
+     */
+    List<ScoreHistory> findScoreByProduct(Integer userId, Integer productId);
 }

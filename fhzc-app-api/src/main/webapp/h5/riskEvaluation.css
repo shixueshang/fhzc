@@ -1,0 +1,20 @@
+html, body, div, p, ul, ol, li, form, button, input, a{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+}
+div, p{
+    box-sizing: border-box;
+}
+body {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #333;
+    font-family: Arial, Helvetica, sans-serif;
+}
+form{padding:10px;}
+.q-tit{font-weight:bold;margin-top:10px;margin-bottom:10px;}
+.option-item{font-size: 12px;border:1px solid #EBEBEB;padding:5px;margin-top:3px;}
+.item-check{vertical-align: middle;}
+.submit{background-color: #1E83ED;color:#fff;padding:10px 20px;border-radius: 20px;margin:20px auto;display:block;}

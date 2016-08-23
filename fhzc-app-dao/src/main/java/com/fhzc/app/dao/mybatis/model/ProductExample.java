@@ -203,52 +203,52 @@ public class ProductExample {
             return (Criteria) this;
         }
 
-        public Criteria andStatusEqualTo(Byte value) {
+        public Criteria andStatusEqualTo(Integer value) {
             addCriterion("`status` =", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotEqualTo(Byte value) {
+        public Criteria andStatusNotEqualTo(Integer value) {
             addCriterion("`status` <>", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThan(Byte value) {
+        public Criteria andStatusGreaterThan(Integer value) {
             addCriterion("`status` >", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThanOrEqualTo(Byte value) {
+        public Criteria andStatusGreaterThanOrEqualTo(Integer value) {
             addCriterion("`status` >=", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThan(Byte value) {
+        public Criteria andStatusLessThan(Integer value) {
             addCriterion("`status` <", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThanOrEqualTo(Byte value) {
+        public Criteria andStatusLessThanOrEqualTo(Integer value) {
             addCriterion("`status` <=", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusIn(List<Byte> values) {
+        public Criteria andStatusIn(List<Integer> values) {
             addCriterion("`status` in", values, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotIn(List<Byte> values) {
+        public Criteria andStatusNotIn(List<Integer> values) {
             addCriterion("`status` not in", values, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusBetween(Byte value1, Byte value2) {
+        public Criteria andStatusBetween(Integer value1, Integer value2) {
             addCriterion("`status` between", value1, value2, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotBetween(Byte value1, Byte value2) {
+        public Criteria andStatusNotBetween(Integer value1, Integer value2) {
             addCriterion("`status` not between", value1, value2, "status");
             return (Criteria) this;
         }
@@ -993,62 +993,52 @@ public class ProductExample {
             return (Criteria) this;
         }
 
-        public Criteria andAnnualYieldEqualTo(String value) {
+        public Criteria andAnnualYieldEqualTo(BigDecimal value) {
             addCriterion("`annual_yield` =", value, "annualYield");
             return (Criteria) this;
         }
 
-        public Criteria andAnnualYieldNotEqualTo(String value) {
+        public Criteria andAnnualYieldNotEqualTo(BigDecimal value) {
             addCriterion("`annual_yield` <>", value, "annualYield");
             return (Criteria) this;
         }
 
-        public Criteria andAnnualYieldGreaterThan(String value) {
+        public Criteria andAnnualYieldGreaterThan(BigDecimal value) {
             addCriterion("`annual_yield` >", value, "annualYield");
             return (Criteria) this;
         }
 
-        public Criteria andAnnualYieldGreaterThanOrEqualTo(String value) {
+        public Criteria andAnnualYieldGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("`annual_yield` >=", value, "annualYield");
             return (Criteria) this;
         }
 
-        public Criteria andAnnualYieldLessThan(String value) {
+        public Criteria andAnnualYieldLessThan(BigDecimal value) {
             addCriterion("`annual_yield` <", value, "annualYield");
             return (Criteria) this;
         }
 
-        public Criteria andAnnualYieldLessThanOrEqualTo(String value) {
+        public Criteria andAnnualYieldLessThanOrEqualTo(BigDecimal value) {
             addCriterion("`annual_yield` <=", value, "annualYield");
             return (Criteria) this;
         }
 
-        public Criteria andAnnualYieldLike(String value) {
-            addCriterion("`annual_yield` like", value, "annualYield");
-            return (Criteria) this;
-        }
-
-        public Criteria andAnnualYieldNotLike(String value) {
-            addCriterion("`annual_yield` not like", value, "annualYield");
-            return (Criteria) this;
-        }
-
-        public Criteria andAnnualYieldIn(List<String> values) {
+        public Criteria andAnnualYieldIn(List<BigDecimal> values) {
             addCriterion("`annual_yield` in", values, "annualYield");
             return (Criteria) this;
         }
 
-        public Criteria andAnnualYieldNotIn(List<String> values) {
+        public Criteria andAnnualYieldNotIn(List<BigDecimal> values) {
             addCriterion("`annual_yield` not in", values, "annualYield");
             return (Criteria) this;
         }
 
-        public Criteria andAnnualYieldBetween(String value1, String value2) {
+        public Criteria andAnnualYieldBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("`annual_yield` between", value1, value2, "annualYield");
             return (Criteria) this;
         }
 
-        public Criteria andAnnualYieldNotBetween(String value1, String value2) {
+        public Criteria andAnnualYieldNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("`annual_yield` not between", value1, value2, "annualYield");
             return (Criteria) this;
         }
@@ -2363,52 +2353,52 @@ public class ProductExample {
             return (Criteria) this;
         }
 
-        public Criteria andScoreFactorEqualTo(Byte value) {
+        public Criteria andScoreFactorEqualTo(BigDecimal value) {
             addCriterion("`score_factor` =", value, "scoreFactor");
             return (Criteria) this;
         }
 
-        public Criteria andScoreFactorNotEqualTo(Byte value) {
+        public Criteria andScoreFactorNotEqualTo(BigDecimal value) {
             addCriterion("`score_factor` <>", value, "scoreFactor");
             return (Criteria) this;
         }
 
-        public Criteria andScoreFactorGreaterThan(Byte value) {
+        public Criteria andScoreFactorGreaterThan(BigDecimal value) {
             addCriterion("`score_factor` >", value, "scoreFactor");
             return (Criteria) this;
         }
 
-        public Criteria andScoreFactorGreaterThanOrEqualTo(Byte value) {
+        public Criteria andScoreFactorGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("`score_factor` >=", value, "scoreFactor");
             return (Criteria) this;
         }
 
-        public Criteria andScoreFactorLessThan(Byte value) {
+        public Criteria andScoreFactorLessThan(BigDecimal value) {
             addCriterion("`score_factor` <", value, "scoreFactor");
             return (Criteria) this;
         }
 
-        public Criteria andScoreFactorLessThanOrEqualTo(Byte value) {
+        public Criteria andScoreFactorLessThanOrEqualTo(BigDecimal value) {
             addCriterion("`score_factor` <=", value, "scoreFactor");
             return (Criteria) this;
         }
 
-        public Criteria andScoreFactorIn(List<Byte> values) {
+        public Criteria andScoreFactorIn(List<BigDecimal> values) {
             addCriterion("`score_factor` in", values, "scoreFactor");
             return (Criteria) this;
         }
 
-        public Criteria andScoreFactorNotIn(List<Byte> values) {
+        public Criteria andScoreFactorNotIn(List<BigDecimal> values) {
             addCriterion("`score_factor` not in", values, "scoreFactor");
             return (Criteria) this;
         }
 
-        public Criteria andScoreFactorBetween(Byte value1, Byte value2) {
+        public Criteria andScoreFactorBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("`score_factor` between", value1, value2, "scoreFactor");
             return (Criteria) this;
         }
 
-        public Criteria andScoreFactorNotBetween(Byte value1, Byte value2) {
+        public Criteria andScoreFactorNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("`score_factor` not between", value1, value2, "scoreFactor");
             return (Criteria) this;
         }
@@ -2423,52 +2413,52 @@ public class ProductExample {
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendEqualTo(Byte value) {
+        public Criteria andIsRecommendEqualTo(Integer value) {
             addCriterion("`is_ recommend` =", value, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendNotEqualTo(Byte value) {
+        public Criteria andIsRecommendNotEqualTo(Integer value) {
             addCriterion("`is_ recommend` <>", value, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendGreaterThan(Byte value) {
+        public Criteria andIsRecommendGreaterThan(Integer value) {
             addCriterion("`is_ recommend` >", value, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendGreaterThanOrEqualTo(Byte value) {
+        public Criteria andIsRecommendGreaterThanOrEqualTo(Integer value) {
             addCriterion("`is_ recommend` >=", value, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendLessThan(Byte value) {
+        public Criteria andIsRecommendLessThan(Integer value) {
             addCriterion("`is_ recommend` <", value, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendLessThanOrEqualTo(Byte value) {
+        public Criteria andIsRecommendLessThanOrEqualTo(Integer value) {
             addCriterion("`is_ recommend` <=", value, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendIn(List<Byte> values) {
+        public Criteria andIsRecommendIn(List<Integer> values) {
             addCriterion("`is_ recommend` in", values, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendNotIn(List<Byte> values) {
+        public Criteria andIsRecommendNotIn(List<Integer> values) {
             addCriterion("`is_ recommend` not in", values, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendBetween(Byte value1, Byte value2) {
+        public Criteria andIsRecommendBetween(Integer value1, Integer value2) {
             addCriterion("`is_ recommend` between", value1, value2, "isRecommend");
             return (Criteria) this;
         }
 
-        public Criteria andIsRecommendNotBetween(Byte value1, Byte value2) {
+        public Criteria andIsRecommendNotBetween(Integer value1, Integer value2) {
             addCriterion("`is_ recommend` not between", value1, value2, "isRecommend");
             return (Criteria) this;
         }
@@ -2483,52 +2473,52 @@ public class ProductExample {
             return (Criteria) this;
         }
 
-        public Criteria andIsDisplayEqualTo(Byte value) {
+        public Criteria andIsDisplayEqualTo(Integer value) {
             addCriterion("`is_display` =", value, "isDisplay");
             return (Criteria) this;
         }
 
-        public Criteria andIsDisplayNotEqualTo(Byte value) {
+        public Criteria andIsDisplayNotEqualTo(Integer value) {
             addCriterion("`is_display` <>", value, "isDisplay");
             return (Criteria) this;
         }
 
-        public Criteria andIsDisplayGreaterThan(Byte value) {
+        public Criteria andIsDisplayGreaterThan(Integer value) {
             addCriterion("`is_display` >", value, "isDisplay");
             return (Criteria) this;
         }
 
-        public Criteria andIsDisplayGreaterThanOrEqualTo(Byte value) {
+        public Criteria andIsDisplayGreaterThanOrEqualTo(Integer value) {
             addCriterion("`is_display` >=", value, "isDisplay");
             return (Criteria) this;
         }
 
-        public Criteria andIsDisplayLessThan(Byte value) {
+        public Criteria andIsDisplayLessThan(Integer value) {
             addCriterion("`is_display` <", value, "isDisplay");
             return (Criteria) this;
         }
 
-        public Criteria andIsDisplayLessThanOrEqualTo(Byte value) {
+        public Criteria andIsDisplayLessThanOrEqualTo(Integer value) {
             addCriterion("`is_display` <=", value, "isDisplay");
             return (Criteria) this;
         }
 
-        public Criteria andIsDisplayIn(List<Byte> values) {
+        public Criteria andIsDisplayIn(List<Integer> values) {
             addCriterion("`is_display` in", values, "isDisplay");
             return (Criteria) this;
         }
 
-        public Criteria andIsDisplayNotIn(List<Byte> values) {
+        public Criteria andIsDisplayNotIn(List<Integer> values) {
             addCriterion("`is_display` not in", values, "isDisplay");
             return (Criteria) this;
         }
 
-        public Criteria andIsDisplayBetween(Byte value1, Byte value2) {
+        public Criteria andIsDisplayBetween(Integer value1, Integer value2) {
             addCriterion("`is_display` between", value1, value2, "isDisplay");
             return (Criteria) this;
         }
 
-        public Criteria andIsDisplayNotBetween(Byte value1, Byte value2) {
+        public Criteria andIsDisplayNotBetween(Integer value1, Integer value2) {
             addCriterion("`is_display` not between", value1, value2, "isDisplay");
             return (Criteria) this;
         }
@@ -2543,52 +2533,52 @@ public class ProductExample {
             return (Criteria) this;
         }
 
-        public Criteria andIsRenewEqualTo(Byte value) {
+        public Criteria andIsRenewEqualTo(Integer value) {
             addCriterion("`is_renew` =", value, "isRenew");
             return (Criteria) this;
         }
 
-        public Criteria andIsRenewNotEqualTo(Byte value) {
+        public Criteria andIsRenewNotEqualTo(Integer value) {
             addCriterion("`is_renew` <>", value, "isRenew");
             return (Criteria) this;
         }
 
-        public Criteria andIsRenewGreaterThan(Byte value) {
+        public Criteria andIsRenewGreaterThan(Integer value) {
             addCriterion("`is_renew` >", value, "isRenew");
             return (Criteria) this;
         }
 
-        public Criteria andIsRenewGreaterThanOrEqualTo(Byte value) {
+        public Criteria andIsRenewGreaterThanOrEqualTo(Integer value) {
             addCriterion("`is_renew` >=", value, "isRenew");
             return (Criteria) this;
         }
 
-        public Criteria andIsRenewLessThan(Byte value) {
+        public Criteria andIsRenewLessThan(Integer value) {
             addCriterion("`is_renew` <", value, "isRenew");
             return (Criteria) this;
         }
 
-        public Criteria andIsRenewLessThanOrEqualTo(Byte value) {
+        public Criteria andIsRenewLessThanOrEqualTo(Integer value) {
             addCriterion("`is_renew` <=", value, "isRenew");
             return (Criteria) this;
         }
 
-        public Criteria andIsRenewIn(List<Byte> values) {
+        public Criteria andIsRenewIn(List<Integer> values) {
             addCriterion("`is_renew` in", values, "isRenew");
             return (Criteria) this;
         }
 
-        public Criteria andIsRenewNotIn(List<Byte> values) {
+        public Criteria andIsRenewNotIn(List<Integer> values) {
             addCriterion("`is_renew` not in", values, "isRenew");
             return (Criteria) this;
         }
 
-        public Criteria andIsRenewBetween(Byte value1, Byte value2) {
+        public Criteria andIsRenewBetween(Integer value1, Integer value2) {
             addCriterion("`is_renew` between", value1, value2, "isRenew");
             return (Criteria) this;
         }
 
-        public Criteria andIsRenewNotBetween(Byte value1, Byte value2) {
+        public Criteria andIsRenewNotBetween(Integer value1, Integer value2) {
             addCriterion("`is_renew` not between", value1, value2, "isRenew");
             return (Criteria) this;
         }
@@ -2900,126 +2890,6 @@ public class ProductExample {
 
         public Criteria andInvestThresholdNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("`invest_threshold` not between", value1, value2, "investThreshold");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpectedMinIsNull() {
-            addCriterion("`expected_min` is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpectedMinIsNotNull() {
-            addCriterion("`expected_min` is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpectedMinEqualTo(BigDecimal value) {
-            addCriterion("`expected_min` =", value, "expectedMin");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpectedMinNotEqualTo(BigDecimal value) {
-            addCriterion("`expected_min` <>", value, "expectedMin");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpectedMinGreaterThan(BigDecimal value) {
-            addCriterion("`expected_min` >", value, "expectedMin");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpectedMinGreaterThanOrEqualTo(BigDecimal value) {
-            addCriterion("`expected_min` >=", value, "expectedMin");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpectedMinLessThan(BigDecimal value) {
-            addCriterion("`expected_min` <", value, "expectedMin");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpectedMinLessThanOrEqualTo(BigDecimal value) {
-            addCriterion("`expected_min` <=", value, "expectedMin");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpectedMinIn(List<BigDecimal> values) {
-            addCriterion("`expected_min` in", values, "expectedMin");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpectedMinNotIn(List<BigDecimal> values) {
-            addCriterion("`expected_min` not in", values, "expectedMin");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpectedMinBetween(BigDecimal value1, BigDecimal value2) {
-            addCriterion("`expected_min` between", value1, value2, "expectedMin");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpectedMinNotBetween(BigDecimal value1, BigDecimal value2) {
-            addCriterion("`expected_min` not between", value1, value2, "expectedMin");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpectedMaxIsNull() {
-            addCriterion("`expected_max` is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpectedMaxIsNotNull() {
-            addCriterion("`expected_max` is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpectedMaxEqualTo(BigDecimal value) {
-            addCriterion("`expected_max` =", value, "expectedMax");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpectedMaxNotEqualTo(BigDecimal value) {
-            addCriterion("`expected_max` <>", value, "expectedMax");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpectedMaxGreaterThan(BigDecimal value) {
-            addCriterion("`expected_max` >", value, "expectedMax");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpectedMaxGreaterThanOrEqualTo(BigDecimal value) {
-            addCriterion("`expected_max` >=", value, "expectedMax");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpectedMaxLessThan(BigDecimal value) {
-            addCriterion("`expected_max` <", value, "expectedMax");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpectedMaxLessThanOrEqualTo(BigDecimal value) {
-            addCriterion("`expected_max` <=", value, "expectedMax");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpectedMaxIn(List<BigDecimal> values) {
-            addCriterion("`expected_max` in", values, "expectedMax");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpectedMaxNotIn(List<BigDecimal> values) {
-            addCriterion("`expected_max` not in", values, "expectedMax");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpectedMaxBetween(BigDecimal value1, BigDecimal value2) {
-            addCriterion("`expected_max` between", value1, value2, "expectedMax");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpectedMaxNotBetween(BigDecimal value1, BigDecimal value2) {
-            addCriterion("`expected_max` not between", value1, value2, "expectedMax");
             return (Criteria) this;
         }
 
