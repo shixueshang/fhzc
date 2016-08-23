@@ -329,7 +329,7 @@ public class UserController extends BaseController {
         List<String> imageList = FileUtils.saveFilesToDisk(request, savePath);
         String imageFile = null;
         if (imageList.size() > 0) {
-            User user  = userService.getUser(getCurrentUser().getUid());
+            User user  = super.getCurrentUser();
             imageFile = savePath +  imageList.get(0);
             user.setAvatar(imageFile);
             userService.updateUser(user);

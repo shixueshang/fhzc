@@ -28,6 +28,7 @@
         <property name="unauthorizedUrl" value="/unauth"/>
         <property name="filterChainDefinitions">
             <value>
+                /druid/** = anon
                 /api/auth/** = anon
                 /opt/** = anon
                 /h5/** = anon

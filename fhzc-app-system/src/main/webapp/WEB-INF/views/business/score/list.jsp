@@ -166,7 +166,7 @@
                                                     <span class="label label-warning">待审批</span>
                                                 </c:when>
                                                 <c:when test="${score.isApprove == 1}">
-                                                    <span class="label label-warning">已审批</span>
+                                                    <span class="label label-success">已审批</span>
                                                 </c:when>
                                             </c:choose>
                                         </td>
