@@ -167,6 +167,10 @@ public class PersonalController extends BaseController {
             map.put("notice",product.getNotice());//产品成立公告
             map.put("proveUrl",product.getProveUrl());//备案证明
 
+            map.put("collectStart",product.getCollectStart());
+            map.put("collectEnd",product.getCollectEnd());
+
+
             result.add(map);
         }
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
