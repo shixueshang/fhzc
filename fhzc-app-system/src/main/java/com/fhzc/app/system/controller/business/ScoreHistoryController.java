@@ -129,16 +129,33 @@ public class ScoreHistoryController extends BaseController {
     @SystemControllerLog(description = "查看积分列表")
     public ModelAndView findScore(String identity, Integer isApprove){
         ModelAndView mav = new ModelAndView("business/score/list");
-        User user = new User();
+        List<User> users = new ArrayList<User>();
         List<Customer> customers = new ArrayList<Customer>();
+        List<Integer> customerIds = new ArrayList<Integer>();
         String customerName = "";
+//      User user = new User();
+//        if(StringUtils.isNotBlank(identity)){
+//             user = userService.getUserByIdentity(identity);
+//             users = userService.getUsersByName(identity.trim()); 
+//             if(users.isEmpty()){
+//             	return mav;
+//             }
+//        }
+//        
         if(StringUtils.isNotBlank(identity)){
-             user = userService.getUserByIdentity(identity);
+          users = userService.getUsersByName(identity.trim());
+    	  if(users.isEmpty()){
+          	return mav;
+          }else{
+    	     for(User user : users){
+	        	if(customerService.getCustomerByUid(user.getUid(),"single") == null){
+	        		return mav;
+	        	} 
+	        	customerIds.add(customerService.getCustomerByUid(user.getUid(),"single").getCustomerId());
+    	     }
+          }
         }
-        if(user == null){
-        	return mav;
-        }
-        PageableResult<ScoreHistory> pageableResult = scoreService.findPageScore(user == null ? null : user.getUid(), identity, isApprove, page, size);
+        PageableResult<ScoreHistory> pageableResult = scoreService.findPageScores(customerIds, isApprove, page, size);
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("scores", pageableResult.getItems());
         if(StringUtils.isBlank(identity)){
@@ -154,7 +171,11 @@ public class ScoreHistoryController extends BaseController {
         	}
         }else{
         	for(ScoreHistory score : pageableResult.getItems()){
-        		score.setCustomerName(user.getRealname());
+        		for (User user : users) {
+					if(customerService.getCustomerByUid(user.getUid() , "single").getCustomerId()== score.getUid()){
+						score.setCustomerName(user.getRealname());
+					}
+				}
         	}
         }
         mav.addObject("isApprove", isApprove);

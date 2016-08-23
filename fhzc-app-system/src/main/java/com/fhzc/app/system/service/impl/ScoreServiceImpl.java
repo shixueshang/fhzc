@@ -6,6 +6,7 @@ import com.fhzc.app.dao.mybatis.model.ScoreHistoryExample;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.service.ScoreService;
+
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
@@ -104,6 +105,25 @@ public class ScoreServiceImpl implements ScoreService {
         return new PageableResult<ScoreHistory>(page, size, scoreHistoryMapper.countByExample(example), list);
     }
 
+    @Override
+    public PageableResult<ScoreHistory> findPageScores(List<Integer> customerIds, Integer isApprove, int page, int size) {
+        ScoreHistoryExample example = new ScoreHistoryExample();
+        ScoreHistoryExample.Criteria criteria = example.createCriteria();
+        if(!(customerIds.isEmpty())){
+        	criteria.andUidIn(customerIds);
+        }
+//        if(!"".equals(identity)  && userId == null){
+//            return new PageableResult<ScoreHistory>(page, size, 0, new ArrayList<ScoreHistory>());
+//        }
+        if(isApprove !=null ){
+        	criteria.andIsApproveEqualTo(isApprove);
+        }
+        criteria.andIsVaildEqualTo(Const.SCORE_VAILD.IS_VAILD);
+        RowBounds rowBounds = new RowBounds((page - 1) * size, size);
+        List<ScoreHistory> list = scoreHistoryMapper.selectByExampleWithRowbounds(example, rowBounds);
+        return new PageableResult<ScoreHistory>(page, size, scoreHistoryMapper.countByExample(example), list);
+    }
+    
     @Override
     public void approve(Integer id) {
         ScoreHistory scoreHistory = scoreHistoryMapper.selectByPrimaryKey(id);
