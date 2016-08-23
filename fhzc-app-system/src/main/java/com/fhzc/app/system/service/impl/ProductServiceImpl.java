@@ -188,4 +188,13 @@ public class ProductServiceImpl implements ProductService {
         criteria.andProductIdEqualTo(pId);
         return productReservationMapper.selectByExample(example);
     }
+    
+    @Override
+    public List<ProductReservation> findSuccessOrdersByPid(Integer pId, String result) {
+        ProductReservationExample example = new ProductReservationExample();
+        ProductReservationExample.Criteria criteria = example.createCriteria();
+        criteria.andProductIdEqualTo(pId);
+        criteria.andResultEqualTo(result);
+        return productReservationMapper.selectByExample(example);
+    }
 }

@@ -56,8 +56,6 @@
                         <label class="col-sm-2 control-label">活动名称:</label>
                         <input class="form-control" id="activityName" name="activityName" value="${param.activityName}">
 
-                        <label class="col-sm-2 control-label">身份证号:</label>
-                        <input class="form-control" id="identityId" name="identityId" value="${param.identityId}">
                         <label class="col-sm-2 control-label">预约时间:</label>
                         <input class="form-control" id="startTime" name="startTime" style="width: 180px" value="${param.startTime}">
                         ~
@@ -71,7 +69,7 @@
             <div class="row-fluid">
                 <div class="span12">
 
-                    <div class="portlet box yellow">
+                    <div class="portlet box blue">
                         <div class="portlet-title">
                             <h4><i class="icon-reorder"></i></h4>
                         </div>

@@ -1,7 +1,6 @@
 package com.fhzc.app.system.controller.business;
 
 import com.alibaba.fastjson.JSON;
-import com.fhzc.app.dao.mybatis.bo.ActivityApplyBo;
 import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.model.Dictionary;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
@@ -15,7 +14,6 @@ import com.fhzc.app.system.commons.vo.RightReservationVo;
 import com.fhzc.app.system.commons.vo.RightVo;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.*;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,9 +40,6 @@ public class RightsController extends BaseController{
     private DictionaryService dictionaryService;
 
     @Resource
-    private DepartmentService departmentService;
-
-    @Resource
     private CustomerService customerService;
 
     @Resource
@@ -52,6 +47,9 @@ public class RightsController extends BaseController{
 
     @Resource
     private ScoreHistoryService scoreHistoryService;
+    
+    @Resource
+    private FocusService focusService;
 
     /**
      * 权益列表
@@ -62,11 +60,16 @@ public class RightsController extends BaseController{
     public ModelAndView listRights(){
         ModelAndView mav = new ModelAndView("business/rights/list");
         PageableResult<Rights> pageableResult = rightsService.findPageRights(page, size);
+        for(Rights rights : pageableResult.getItems() ){
+        	List<Focus> focuses = focusService.findFocusByType(Const.FOCUS_TYPE.RIGHTS, rights.getId(),1);
+        	rights.setFocusNum(focuses.size() > 0 ? focuses.size() : 0);
+        	List<RightsReservation> orders= rightsService.findSuccessOrdersById(rights.getId(), 1);
+        	rights.setOrderNum(orders.size() > 0 ? orders.size() : 0);
+        }
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("rights", pageableResult.getItems());
         mav.addObject("customerLevel", dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL));
         mav.addObject("rightsCategory", dictionaryService.findDicByType(Const.DIC_CAT.RIGHTS_CATEGORY));
-        mav.addObject("departments", departmentService.findDeptByParent(Const.ROOT_DEPT_ID));
         mav.addObject("url", "business/rights");
         return mav;
     }
@@ -78,7 +81,6 @@ public class RightsController extends BaseController{
         Collections.reverse(list);
         mav.addObject("customerLevel", JSON.toJSON(list));
         mav.addObject("rightsCategory", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.RIGHTS_CATEGORY)));
-        mav.addObject("departments", JSON.toJSON(departmentService.findDeptByParent(Const.ROOT_DEPT_ID)));
         mav.addObject("url", "business/rights");
         return mav;
     }
@@ -98,7 +100,6 @@ public class RightsController extends BaseController{
             FileUtil.transferFile(coverPath, coverName, coverFile);
             rights.setCover(coverPath + coverName);
         }
-        rights.setCtime(new Date());
         rightsService.addOrUpdateRights(rights);
 
         return "redirect:/business/rights/list";
@@ -113,7 +114,6 @@ public class RightsController extends BaseController{
     public ModelAndView detail(@PathVariable(value = "id") Integer id){
         ModelAndView mav = new ModelAndView("business/rights/add");
         mav.addObject("right", rightsService.getRights(id));
-        mav.addObject("departments", JSON.toJSON(departmentService.findDeptByParent(1)));
         mav.addObject("customerLevel", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL)));
         mav.addObject("rightsCategory", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.RIGHTS_CATEGORY)));
         return mav;

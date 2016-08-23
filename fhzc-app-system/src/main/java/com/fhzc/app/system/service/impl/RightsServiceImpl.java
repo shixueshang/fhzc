@@ -12,6 +12,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,6 +39,7 @@ public class RightsServiceImpl implements RightsService {
     public void addOrUpdateRights(Rights rights) {
         Integer id = rights.getId();
         if(id == null){
+            rights.setCtime(new Date());
             rightsMapper.insert(rights);
         }else{
             rightsMapper.updateByPrimaryKey(rights);
@@ -77,4 +79,13 @@ public class RightsServiceImpl implements RightsService {
         RightsExample example = new RightsExample();
         return rightsMapper.selectByExample(example);
     }
+
+	@Override
+	public List<RightsReservation> findSuccessOrdersById(Integer id, Integer status) {
+		RightsReservationExample example = new RightsReservationExample();
+		RightsReservationExample.Criteria criteria = example.createCriteria();
+	        criteria.andRightsIdEqualTo(id);
+	        criteria.andStatusEqualTo(status);
+	        return rightsReservationMapper.selectByExample(example);
+	}
 }

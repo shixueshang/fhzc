@@ -7,8 +7,8 @@
     <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="apply_begin_time" property="applyBeginTime" jdbcType="TIMESTAMP" />
     <result column="apply_end_time" property="applyEndTime" jdbcType="TIMESTAMP" />
-    <result column="begin_time" property="beginTime" jdbcType="DATE" />
-    <result column="end_time" property="endTime" jdbcType="DATE" />
+    <result column="begin_time" property="beginTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
     <result column="memo" property="memo" jdbcType="VARCHAR" />
     <result column="sponsor" property="sponsor" jdbcType="VARCHAR" />
     <result column="area_id" property="areaId" jdbcType="INTEGER" />
@@ -152,7 +152,7 @@
       `cover`, `department_id`, `is_ recommend`, 
       `user_req`, `content`)
     values (#{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{applyBeginTime,jdbcType=TIMESTAMP}, 
-      #{applyEndTime,jdbcType=TIMESTAMP}, #{beginTime,jdbcType=DATE}, #{endTime,jdbcType=DATE}, 
+      #{applyEndTime,jdbcType=TIMESTAMP}, #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
       #{memo,jdbcType=VARCHAR}, #{sponsor,jdbcType=VARCHAR}, #{areaId,jdbcType=INTEGER}, 
       #{ctime,jdbcType=TIMESTAMP}, #{url,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
       #{isDisplay,jdbcType=INTEGER}, #{summary,jdbcType=VARCHAR}, #{cid,jdbcType=INTEGER}, 
@@ -240,10 +240,10 @@
         #{applyEndTime,jdbcType=TIMESTAMP},
       </if>
       <if test="beginTime != null" >
-        #{beginTime,jdbcType=DATE},
+        #{beginTime,jdbcType=TIMESTAMP},
       </if>
       <if test="endTime != null" >
-        #{endTime,jdbcType=DATE},
+        #{endTime,jdbcType=TIMESTAMP},
       </if>
       <if test="memo != null" >
         #{memo,jdbcType=VARCHAR},
@@ -314,10 +314,10 @@
         `apply_end_time` = #{record.applyEndTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.beginTime != null" >
-        `begin_time` = #{record.beginTime,jdbcType=DATE},
+        `begin_time` = #{record.beginTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.endTime != null" >
-        `end_time` = #{record.endTime,jdbcType=DATE},
+        `end_time` = #{record.endTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.memo != null" >
         `memo` = #{record.memo,jdbcType=VARCHAR},
@@ -373,8 +373,8 @@
       `address` = #{record.address,jdbcType=VARCHAR},
       `apply_begin_time` = #{record.applyBeginTime,jdbcType=TIMESTAMP},
       `apply_end_time` = #{record.applyEndTime,jdbcType=TIMESTAMP},
-      `begin_time` = #{record.beginTime,jdbcType=DATE},
-      `end_time` = #{record.endTime,jdbcType=DATE},
+      `begin_time` = #{record.beginTime,jdbcType=TIMESTAMP},
+      `end_time` = #{record.endTime,jdbcType=TIMESTAMP},
       `memo` = #{record.memo,jdbcType=VARCHAR},
       `sponsor` = #{record.sponsor,jdbcType=VARCHAR},
       `area_id` = #{record.areaId,jdbcType=INTEGER},
@@ -400,8 +400,8 @@
       `address` = #{record.address,jdbcType=VARCHAR},
       `apply_begin_time` = #{record.applyBeginTime,jdbcType=TIMESTAMP},
       `apply_end_time` = #{record.applyEndTime,jdbcType=TIMESTAMP},
-      `begin_time` = #{record.beginTime,jdbcType=DATE},
-      `end_time` = #{record.endTime,jdbcType=DATE},
+      `begin_time` = #{record.beginTime,jdbcType=TIMESTAMP},
+      `end_time` = #{record.endTime,jdbcType=TIMESTAMP},
       `memo` = #{record.memo,jdbcType=VARCHAR},
       `sponsor` = #{record.sponsor,jdbcType=VARCHAR},
       `area_id` = #{record.areaId,jdbcType=INTEGER},
@@ -435,10 +435,10 @@
         `apply_end_time` = #{applyEndTime,jdbcType=TIMESTAMP},
       </if>
       <if test="beginTime != null" >
-        `begin_time` = #{beginTime,jdbcType=DATE},
+        `begin_time` = #{beginTime,jdbcType=TIMESTAMP},
       </if>
       <if test="endTime != null" >
-        `end_time` = #{endTime,jdbcType=DATE},
+        `end_time` = #{endTime,jdbcType=TIMESTAMP},
       </if>
       <if test="memo != null" >
         `memo` = #{memo,jdbcType=VARCHAR},
@@ -491,8 +491,8 @@
       `address` = #{address,jdbcType=VARCHAR},
       `apply_begin_time` = #{applyBeginTime,jdbcType=TIMESTAMP},
       `apply_end_time` = #{applyEndTime,jdbcType=TIMESTAMP},
-      `begin_time` = #{beginTime,jdbcType=DATE},
-      `end_time` = #{endTime,jdbcType=DATE},
+      `begin_time` = #{beginTime,jdbcType=TIMESTAMP},
+      `end_time` = #{endTime,jdbcType=TIMESTAMP},
       `memo` = #{memo,jdbcType=VARCHAR},
       `sponsor` = #{sponsor,jdbcType=VARCHAR},
       `area_id` = #{areaId,jdbcType=INTEGER},
@@ -515,8 +515,8 @@
       `address` = #{address,jdbcType=VARCHAR},
       `apply_begin_time` = #{applyBeginTime,jdbcType=TIMESTAMP},
       `apply_end_time` = #{applyEndTime,jdbcType=TIMESTAMP},
-      `begin_time` = #{beginTime,jdbcType=DATE},
-      `end_time` = #{endTime,jdbcType=DATE},
+      `begin_time` = #{beginTime,jdbcType=TIMESTAMP},
+      `end_time` = #{endTime,jdbcType=TIMESTAMP},
       `memo` = #{memo,jdbcType=VARCHAR},
       `sponsor` = #{sponsor,jdbcType=VARCHAR},
       `area_id` = #{areaId,jdbcType=INTEGER},

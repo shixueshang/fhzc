@@ -46,7 +46,9 @@ public class SystemLogServiceImpl implements SystemLogService {
     public PageableResult<SystemLog> findPageLogs(Date date, int page, int size) {
         SystemLogExample example = new SystemLogExample();
         SystemLogExample.Criteria criteria = example.createCriteria();
-        criteria.andCreateTimeBetween(DateUtil.getStartTimeOfDate(date), DateUtil.getEndTimeOfDate(date));
+        if(date != null){
+            criteria.andCreateTimeBetween(DateUtil.getStartTimeOfDate(date), DateUtil.getEndTimeOfDate(date));
+        }
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<SystemLog> list = systemLogMapper.selectByExampleWithRowbounds(example, rowBounds);
         return new PageableResult<SystemLog>(page, size, systemLogMapper.countByExample(example), list);

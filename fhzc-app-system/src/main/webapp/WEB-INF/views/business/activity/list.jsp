@@ -62,19 +62,18 @@
                                 <thead>
                                 <tr>
                                     <td>活动id</td>
-                                    <td>活动名</td>
+                                    <td style="width:18%">活动名</td>
                                     <td>活动类型</td>
                                     <td>活动状态</td>
                                     <td>活动地点</td>
                                     <td>活动开始时间</td>
                                     <td>活动结束时间</td>
-                                    <td>活动主办方</td>
-                                  <!--<td>投放分公司</td>-->
+                                    <td style="width:18%">活动主办方</td>
                                     <td>是否显示</td>
                                     <td>是否推荐</td>
                                     <td>关注人数</td>
                                     <td>预约人数</td>
-                                    <td>操作</td>
+                                    <td style="width: 80px;" >操作</td>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -100,8 +99,8 @@
                                             </c:choose>
                                         </td>
                                         <td>${activity.address}</td>
-                                        <td><fmt:formatDate value="${activity.beginTime}" pattern="yyyy-MM-dd"/></td>
-                                        <td><fmt:formatDate value="${activity.endTime}" pattern="yyyy-MM-dd"/></td>
+                                        <td><fmt:formatDate value="${activity.beginTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+                                        <td><fmt:formatDate value="${activity.endTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
                                         <td>${activity.sponsor}</td>
                                         <td>
                                             <c:choose>
@@ -123,8 +122,8 @@
                                                 </c:when>
                                             </c:choose>
                                         </td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>${activity.focusNum}</td>
+                                        <td>${activity.orderNum}</td>
                                         
                                         <td>
                                             <a href="<%=contextPath%>/business/activity/detail/${activity.id}" class="btn mini purple"><i class="icon-edit"></i> 编辑</a>

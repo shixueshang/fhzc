@@ -63,7 +63,7 @@
                                 <thead>
                                 <tr>
                                     <td>报告id</td>
-                                    <td>报告名</td>
+                                    <td style="width:18%">报告名</td>
                                     <td>封面图</td>
                                     <td>报告类型</td>
                                    <!--   <td>生效状态</td>-->
@@ -108,7 +108,7 @@
                                                 </c:when>
                                             </c:choose>
                                         </td>
-                                        <td></td>
+                                        <td>${report.focusNum}</td>
                                         <td><a href="<%=contextPath%>/business/report/detail/${report.id}" class="btn mini purple"><i class="icon-edit"></i>编辑</a>
                                         </td>
                                     </tr>

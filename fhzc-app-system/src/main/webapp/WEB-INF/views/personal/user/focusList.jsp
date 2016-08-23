@@ -70,7 +70,7 @@
             <div class="row-fluid">
                 <div class="span12">
 
-                    <div class="portlet box yellow">
+                    <div class="portlet box blue">
                         <div class="portlet-title">
                             <h4><i class="icon-reorder"></i></h4>
                         </div>

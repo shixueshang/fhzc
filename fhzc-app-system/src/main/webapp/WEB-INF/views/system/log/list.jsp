@@ -53,10 +53,7 @@
                 <form  class="form-inline" action="<%=contextPath%>/system/log/find" method="GET">
                     <div class="form-group">
                         <label class="control-label" style="margin-left: 20px">操作日期</label>
-                        <input type="text" class="form-control form_datetime"  data-date-format="yyyy-mm-dd"  id="operationDate"  name="operationDate" style="width:180px;"/>
-                        <script>
-                            $("#operationDate").datepicker({ dateFormat: 'yy-mm',startView: 3, minView: 3, autoclose: true });
-                        </script>
+                        <input type="text" class="form-control date-picker"  id="operationDate"  name="operationDate" style="width:180px;"/>
                         <input type="submit"  value="查询"/>
                     </div>
                 </form>
@@ -76,7 +73,7 @@
                                 <tr>
                                     <td>操作</td>
                                     <td>操作人</td>
-                                    <td>调用方法</td>
+                                    <td style="width:20%">调用方法</td>
                                     <td>操作类型</td>
                                     <td>日志级别</td>
                                     <td>请求地址</td>
@@ -127,3 +124,9 @@
 </div>
 
 <jsp:include page="../../include/footer.jsp"/>
+<script>
+    $(function(){
+        $("#operationDate").datepicker({ format: 'yyyy-mm-dd', startView: 'month', autoclose: true, defaultDate:new Date() });
+    })
+
+</script>

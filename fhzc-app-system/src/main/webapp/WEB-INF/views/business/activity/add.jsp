@@ -24,6 +24,12 @@
 
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/bootstrap-datepicker/css/datepicker.css">
 
+<!-- test -->
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/jquery-ui/jquery-ui-1.10.1.custom.css">
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/custom_datepicker/jquery-ui-timepicker-addon.css">
+<script src="<%=contextPath%>/assets/jquery-ui/jquery-ui-1.10.1.custom.min.js"></script>
+<script src="<%=contextPath%>/assets/custom_datepicker/jquery-ui-timepicker-addon.js"></script>
+<!-- end -->
 <!-- BEGIN CONTAINER -->
 <div class="page-container row-fluid">
     <jsp:include page="../../include/left.jsp"/>
@@ -117,7 +123,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">报名开始日期</label>
                                                 <div class="controls">
-                                                    <input type="text" name="applyBeginTime" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${activity.applyBeginTime}" pattern="yyyy-MM-dd"/>">
+                                                    <input type="text" name="applyBeginTime" placeholder="" size="16" id="applyBeginTime" value="<fmt:formatDate value="${activity.applyBeginTime}" pattern="yyyy-MM-dd HH:mm:ss"/>">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -125,7 +131,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">报名结束日期</label>
                                                 <div class="controls">
-                                                    <input type="text" name="applyEndTime" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${activity.applyEndTime}" pattern="yyyy-MM-dd"/>">
+                                                    <input type="text" name="applyEndTime" placeholder="" size="16" id="applyEndTime" value="<fmt:formatDate value="${activity.applyEndTime}" pattern="yyyy-MM-dd HH:mm:ss"/>">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -133,7 +139,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">活动开始日期</label>
                                                 <div class="controls">
-                                                    <input type="text" name="beginTime" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${activity.beginTime}" pattern="yyyy-MM-dd"/>">
+                                                    <input type="text" name="beginTime" placeholder="" size="16" id="beginTime" value="<fmt:formatDate value="${activity.beginTime}" pattern="yyyy-MM-dd HH:mm:ss"/>">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -141,7 +147,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">活动结束日期</label>
                                                 <div class="controls">
-                                                    <input type="text" name="endTime" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${activity.endTime}" pattern="yyyy-MM-dd"/>">
+                                                    <input type="text" name="endTime" placeholder="" size="16" id="endTime"  value="<fmt:formatDate value="${activity.endTime}" pattern="yyyy-MM-dd HH:mm:ss"/>">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -165,7 +171,7 @@
                                                        <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
                                                        <span class="fileupload-exists">更换</span>
                                                        <input type="file" name="coverFile" class="default" /></span>
-                                                            <input type="hidden" name="cover" value="${activity.cover}" class="default" />
+                                                       <input type="hidden" name="cover" value="${activity.cover}" />
                                                             <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
                                                         </div>
                                                     </div>
@@ -261,7 +267,9 @@
 
 <jsp:include page="../../include/footer.jsp"/>
 <script type="text/javascript" src="<%=contextPath%>/assets/jquery-validation/dist/jquery.validate.min.js"></script>
+<!--  
 <script type="text/javascript" src="<%=contextPath%>/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+-->
 <script>
     $(function(){
 
@@ -307,7 +315,39 @@
             $.uniform.update($("input[name='isRecommend'][value='1']").attr("checked", false));
             $.uniform.update($("input[name='isRecommend'][value='0']").attr("checked", true));
         }
+        
+        $("#applyBeginTime").datetimepicker({
+            timeFormat: 'HH:mm:ss',
+            dateFormat: "yy-mm-dd"
+        });
+        $("#applyEndTime").datetimepicker({
+            timeFormat: 'HH:mm:ss',
+            dateFormat: "yy-mm-dd"
+        });
+        $("#beginTime").datetimepicker({
+            timeFormat: 'HH:mm:ss',
+            dateFormat: "yy-mm-dd"
+        });
+        $("#endTime").datetimepicker({
+            timeFormat: 'HH:mm:ss',
+            dateFormat: "yy-mm-dd"
+        });
+        /*
+        $("#reservationTime").change(function () {
+            clearDateError();
+        });
+        function validateDateError(text) {
+            clearDateError();
+            var error =  "<p style='color:red; margin: 0'>"+text+"</p>"
+            $("#reservationTime").parent().append(error);
+        }
 
+        function clearDateError() {
+            if ($("#reservationTime").parent().find("p").size() > 0){
+                $("#reservationTime").parent().find("p").remove();
+            }
+        }
+        */
         var form1 = $('#form_sample_1');
         var error1 = $('.alert-error', form1);
         var success1 = $('.alert-success', form1);
