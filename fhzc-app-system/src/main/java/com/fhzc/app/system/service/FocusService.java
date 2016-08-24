@@ -26,5 +26,5 @@ public interface FocusService {
      * @param typeId
      * @return
      */
-    List<Focus> findFocusByType(String type, Integer typeId, Integer status);
+    List<Focus> findFocusByType(String type, Integer typeId);
 }

@@ -20,7 +20,7 @@ public interface RightsService {
     PageableResult<Rights> findPageRights(int page, int size);
 
     /**
-     * 添加或这修改权益
+     * 添加或修改权益
      * @param rights
      */
     void addOrUpdateRights(Rights rights);
@@ -33,7 +33,7 @@ public interface RightsService {
     Rights getRights(Integer id);
 
     /**
-     * 获得权益信息
+     * 权益预约
      * @param reservation
      * @return
      */

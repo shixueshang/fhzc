@@ -44,7 +44,7 @@
                             <a href="javascript:void(0);">权益管理</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li class="active"><a href="javascript:void(0);">新增权益预约</a></li>
+                        <li class="active"><a href="javascript:void(0);">权益预约</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
@@ -147,12 +147,6 @@
                                                 </div>
                                             </div>
 
-                                            <div class="control-group">
-                                                <label class="control-label">预约时间</label>
-                                                <div class="controls">
-                                                    <input class="form-control" id="reservationTime" name="reservationTime" style="width: 180px">
-                                                </div>
-                                            </div>
                                             <div class="form-actions">
                                                 <input name="id" type="hidden" value="${right.id}" />
                                                 <button type="submit" id="submit_btn" class="btn blue"><i class="icon-ok"></i> 添加</button>
@@ -195,25 +189,24 @@
                     contentType:'application/json;charset=utf-8',
                     data: {phoneNum:phoneNum},
                     success: function (data) {
-                        console.info(data)
                         if (data == null){
-                            validatePhoneError('请确认输入的为客户的有效手机号');
+                            validatePhoneError('客户不存在');
                             $("#rightValid").val("0");
                             return;
                         }
-                        if (data.name != null && data.name != ''){
-                            $("#cname").val(data.name);
+                        if (data.customerName != null && data.customerName != ''){
+                            $("#cname").val(data.customerName);
                         } else {
                             validatePhoneError('请确认输入的为客户的有效手机号');
                         }
 
-                        if (data.customerLevel != null && data.customerLevel != ''){
-                            $("#clevel").val(data.customerLevel);
+                        if (data.levelId != null && data.levelId != ''){
+                            $("#clevel").val(data.levelName);
                         } else {
                             validatePhoneError('请确认输入的为客户的有效手机号');
                         }
 
-                        if (data.name != null && data.name != '' && data.customerLevel != null && data.customerLevel != ''){
+                        if (data.customerName != null && data.customerName != '' && data.levelId != null && data.levelId != ''){
                             $("#customerId").val(data.customerId);
                             $("#rightValid").val("1");
                         } else {
@@ -302,10 +295,10 @@
             return false;
         }
 
-        if ($("#reservationTime").val() == ''){
-            validateDateError("请选择输入日期");
+       /* if($('#csore').val() < $('#exchangeScore').val()){
+            validateRightsError("您的积分不够");
             return false;
-        }
+        }*/
 
         $("#submit_btn").attr("disabled",true);
     }

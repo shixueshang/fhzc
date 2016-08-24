@@ -77,7 +77,7 @@
                                 <thead>
                                 <tr>
                                     <td>预约时间</td>
-                                    <td>权利名称</td>
+                                    <td>权益名称</td>
                                     <td>客户姓名</td>
                                     <td>客户电话</td>
                                     <td>消耗积分</td>
@@ -88,13 +88,34 @@
                                 <tbody>
                                 <c:forEach items="${reservations}" var="reservation">
                                     <tr>
-                                        <td><fmt:formatDate value="${reservation.reservationTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+                                        <td><fmt:formatDate value="${reservation.markDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                                         <td>${reservation.rightName}</td>
                                         <td>${reservation.customerName}</td>
-                                        <td>${reservation.phoneNum}</td>
-                                        <td>${reservation.score}</td>
-                                        <td>${reservation.reservationStatus}</td>
-                                        <td><a class="btn mini purple Deal_Reser" data-id="${reservation.id}">处理预约</a></td>
+                                        <td>${reservation.customerMobile}</td>
+                                        <td>${reservation.scoreCost}</td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${reservation.status == '0'}">
+                                                    <span class="label">预约中</span>
+                                                </c:when>
+                                                <c:when test="${reservation.status == '1'}">
+                                                    <span class="label label-success">预约成功</span>
+                                                </c:when>
+                                                <c:when test="${reservation.status == '2'}">
+                                                    <span class="label label-important">预约失败</span>
+                                                </c:when>
+                                                <c:when test="${reservation.status == '3'}">
+                                                    <span class="label label-warning">客户取消预约</span>
+                                                </c:when>
+                                                <c:when test="${reservation.status == '4'}">
+                                                    <span class="label label-warning">客户消费</span>
+                                                </c:when>
+                                                <c:when test="${reservation.status == '5'}">
+                                                    <span class="label label-warning">客户缺席</span>
+                                                </c:when>
+                                            </c:choose>
+                                        </td>
+                                        <td><a class="btn mini purple Deal_Reser" data-id="${reservation.id}">取消预约</a></td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>
@@ -117,8 +138,21 @@
 $(document).ready(function () {
     $(".Deal_Reser").click(function () {
         var id = $(this).data("id");
-        var url = '<%=contextPath%>/business/rights/reservation/deal?id='+id;
+        var url = '<%=contextPath%>/business/rights/reservation/cancel?id='+id;
         window.location.href = url;
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function(result) {
+                if(result){
+                    $("#delete_success").css("display", "block").hide(3000);
+                    window.location.reload();
+                }
+            },
+            error: function(xhr, textStatus, errorThrown){
+                $("#delete_fail").css("display", "block").hide(3000);
+            }
+        });
     });
 
 });

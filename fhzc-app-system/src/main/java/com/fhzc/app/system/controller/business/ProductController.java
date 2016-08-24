@@ -66,13 +66,11 @@ public class ProductController extends BaseController {
         List<Product> products = new ArrayList<Product>();
         for(Product product : pageableResult.getItems()){
             //获得产品关注人数
-//            List<Focus> focuses = focusService.findFocusByType(Const.FOCUS_TYPE.PRODUCT, product.getPid());
-        	List<Focus> focuses = focusService.findFocusByType(Const.FOCUS_TYPE.PRODUCT, product.getPid(),1);
+            List<Focus> focuses = focusService.findFocusByType(Const.FOCUS_TYPE.PRODUCT, product.getPid());
             product.setFocusNum(focuses.size() > 0 ? focuses.size() : 0);
 
             //获得预约人数
-//            List<ProductReservation> orders = productService.findOrdersByPid(product.getPid());
-            List<ProductReservation> orders = productService.findSuccessOrdersByPid(product.getPid(), "success");
+            List<ProductReservation> orders = productService.findOrdersByPid(product.getPid(), Const.ORDER_RESULT.Success);
             product.setOrderNum(orders.size() > 0 ? orders.size() : 0);
             BigDecimal orderAmount = new BigDecimal(0.00);
             for(ProductReservation order : orders){
@@ -354,10 +352,9 @@ public class ProductController extends BaseController {
         productReservation.setApplyTime(reservationTime);
         productReservation.setPlannerId(planner.getId());
         productReservation.setProductId((int)productId);
-        productReservation.setResult("success");
+        productReservation.setResult(Const.ORDER_RESULT.Success);
         productService.addProductReservation(productReservation);
 
-        //ModelAndView mav = new ModelAndView("business/product/addReservation");
         return true;
     }
 
@@ -393,7 +390,7 @@ public class ProductController extends BaseController {
     	}else{
     	  	Product preProduct = products.get(i);
         	finalId = preProduct.getDisplayOrder();
-        	Product product = productService.getProductById(Integer.parseInt(pid));
+        	Product product = productService.getProduct(Integer.parseInt(pid));
         	originId = product.getDisplayOrder();
         	temId = finalId;
         	finalId = originId;
@@ -429,7 +426,7 @@ public class ProductController extends BaseController {
     	}else{
         	Product proProduct = products.get(i);
         	finalId = proProduct.getDisplayOrder();
-        	Product product = productService.getProductById(Integer.parseInt(pid));
+        	Product product = productService.getProduct(Integer.parseInt(pid));
         	originId = product.getDisplayOrder();
         	temId = finalId;
         	finalId = originId;

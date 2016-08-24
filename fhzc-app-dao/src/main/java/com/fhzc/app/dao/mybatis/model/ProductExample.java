@@ -2962,6 +2962,76 @@ public class ProductExample {
             addCriterionForJDBCDate("`collect_end` not between", value1, value2, "collectEnd");
             return (Criteria) this;
         }
+
+        public Criteria andInvestTermIsNull() {
+            addCriterion("`invest_term` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermIsNotNull() {
+            addCriterion("`invest_term` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermEqualTo(String value) {
+            addCriterion("`invest_term` =", value, "investTerm");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermNotEqualTo(String value) {
+            addCriterion("`invest_term` <>", value, "investTerm");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermGreaterThan(String value) {
+            addCriterion("`invest_term` >", value, "investTerm");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermGreaterThanOrEqualTo(String value) {
+            addCriterion("`invest_term` >=", value, "investTerm");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermLessThan(String value) {
+            addCriterion("`invest_term` <", value, "investTerm");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermLessThanOrEqualTo(String value) {
+            addCriterion("`invest_term` <=", value, "investTerm");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermLike(String value) {
+            addCriterion("`invest_term` like", value, "investTerm");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermNotLike(String value) {
+            addCriterion("`invest_term` not like", value, "investTerm");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermIn(List<String> values) {
+            addCriterion("`invest_term` in", values, "investTerm");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermNotIn(List<String> values) {
+            addCriterion("`invest_term` not in", values, "investTerm");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermBetween(String value1, String value2) {
+            addCriterion("`invest_term` between", value1, value2, "investTerm");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermNotBetween(String value1, String value2) {
+            addCriterion("`invest_term` not between", value1, value2, "investTerm");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -51,7 +51,7 @@ public class ActivityController extends BaseController {
         ModelAndView mav = new ModelAndView("business/activity/list");
         PageableResult<Activity> pageableResult = activityService.findPageActivies(page, size);
         for (Activity activity : pageableResult.getItems()) {
-        	List<Focus> focuses = focusService.findFocusByType(Const.FOCUS_TYPE.ACTIVITY, activity.getId(),1);
+        	List<Focus> focuses = focusService.findFocusByType(Const.FOCUS_TYPE.ACTIVITY, activity.getId());
         	activity.setFocusNum(focuses.size() > 0 ? focuses.size() : 0);
         	List<ActivityApply> orders = activityService.findSuccessOrdersById(activity.getId(), 1);
         	int personNum = 0;

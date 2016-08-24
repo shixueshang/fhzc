@@ -185,24 +185,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductReservation> findOrdersByPid(Integer pId) {
+    public List<ProductReservation> findOrdersByPid(Integer pId, String result) {
         ProductReservationExample example = new ProductReservationExample();
         ProductReservationExample.Criteria criteria = example.createCriteria();
         criteria.andProductIdEqualTo(pId);
+        if(result != null){
+            criteria.andResultEqualTo(result);
+        }
         return productReservationMapper.selectByExample(example);
     }
     
-    @Override
-    public List<ProductReservation> findSuccessOrdersByPid(Integer pId, String result) {
-        ProductReservationExample example = new ProductReservationExample();
-        ProductReservationExample.Criteria criteria = example.createCriteria();
-        criteria.andProductIdEqualTo(pId);
-        criteria.andResultEqualTo(result);
-        return productReservationMapper.selectByExample(example);
-    }
-
-	@Override
-	public Product getProductById(Integer pId) {
-		 return productMapper.selectByPrimaryKey(pId);
-	}
 }

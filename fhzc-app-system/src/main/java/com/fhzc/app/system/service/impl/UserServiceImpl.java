@@ -3,6 +3,7 @@ package com.fhzc.app.system.service.impl;
 import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.model.UserExample;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
+import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.dao.mybatis.util.EncryptUtils;
 import com.fhzc.app.system.commons.util.excel.ExcelImporter;
 import com.fhzc.app.system.commons.util.excel.ImportCallBack;
@@ -199,6 +200,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByMobile(String mobileNum) {
         UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        criteria.andLoginRoleEqualTo(Const.USER_ROLE.CUSTOMER);
         List<User> users = decryptUser(userMapper.selectByExample(example));
         for(User user : users){
             if(mobileNum.equals(user.getMobile())){

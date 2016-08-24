@@ -90,6 +90,8 @@ public class Product {
 
     private Date collectEnd;
 
+    private String investTerm;
+
     private String desc;
 
     private String detailContent;
@@ -466,6 +468,14 @@ public class Product {
 
     public void setCollectEnd(Date collectEnd) {
         this.collectEnd = collectEnd;
+    }
+
+    public String getInvestTerm() {
+        return investTerm;
+    }
+
+    public void setInvestTerm(String investTerm) {
+        this.investTerm = investTerm == null ? null : investTerm.trim();
     }
 
     public String getDesc() {

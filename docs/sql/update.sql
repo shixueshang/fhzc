@@ -156,3 +156,6 @@ CHANGE COLUMN `is_renew` `is_renew` INT(1) UNSIGNED NULL DEFAULT '0' COMMENT '�
 ALTER TABLE `bank`.`activity`
 CHANGE COLUMN `begin_time` `begin_time` DATETIME NULL DEFAULT NULL COMMENT '活动开始时间' ,
 CHANGE COLUMN `end_time` `end_time` DATETIME NULL DEFAULT NULL COMMENT '活动结束时间' ;
+
+ALTER TABLE `bank`.`product`
+ADD COLUMN `invest_term` VARCHAR(45) NULL COMMENT '投资期限' AFTER `collect_end`;

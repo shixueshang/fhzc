@@ -477,5 +477,17 @@ public class Const {
          */
         public static final String SERIOUS_ERROR = "serious_error";
     }
+
+
+    public static class ORDER_RESULT{
+
+        public static final String Cancel = "cancel";
+
+        public static final String Success = "success";
+
+        public static final String Failed = "failed";
+
+        public static final String Wait = "wait";
+    }
 }
 
