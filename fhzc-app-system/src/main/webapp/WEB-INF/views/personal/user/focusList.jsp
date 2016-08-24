@@ -48,7 +48,7 @@
             </div>
 
             <div class="row-fluid">
-                <form name="searchForm" class="form-inline" action="/personal/user/focus/list">
+                <form name="searchForm" class="form-inline" action="/personal/focus/list">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">关注类型:</label>
                         <select id="ftype" name="ftype">
