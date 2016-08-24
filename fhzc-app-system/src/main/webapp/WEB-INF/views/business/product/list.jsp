@@ -72,6 +72,7 @@
                                     <td>关注人数</td>
                                     <td>预约人数</td>
                                     <td>预约金额(万元)</td>
+                                    <td>排序</td>
                                     <td>操作</td>
                                 </tr>
                                 </thead>
@@ -120,6 +121,9 @@
                                         <td>${product.focusNum}</td>
                                         <td>${product.orderNum}</td>
                                         <td>${product.orderAmount}</td>
+                                        <td style="margin: center;vertical-align: middle;">
+                                        <a href="#" id="up" class="up" onclick="moveUp(${product.pid})">上移</a>&nbsp&nbsp<a href="#" id="down" class="down" onclick="moveDown(${product.pid})">下移</a></br>
+                                        </td>
                                         <td>
                                             <a href="<%=contextPath%>/business/product/detail/${product.pid}" class="btn mini purple"><i class="icon-edit"></i> 编辑</a>
                                             <a href="<%=contextPath%>/business/product/order/${product.pid}" class="btn mini blue"><i class="icon-share"></i> 预约</a>
@@ -144,3 +148,35 @@
 
 
 <jsp:include page="../../include/footer.jsp"/>
+<script type="text/javascript">
+	function moveUp(id){
+		 $.ajax({
+		    type:"get",
+		    cache:false,
+		    url:"<%=contextPath%>/business/product/upDisplayOrder?pid="+id, 
+		    dataType:"text",
+		    success: function(data) {
+		    	if("top" == data){
+		    		alert("该条记录已是最顶端");
+		    	}else{
+		    		window.location.href="<%=contextPath%>/business/product/list"; 
+		    	}
+		     },
+		   });
+	}
+	function moveDown(id){
+		 $.ajax({
+			    type:"get",
+			    cache:false,
+			    url:"<%=contextPath%>/business/product/downDisplayOrder?pid="+id, 
+			    dataType:"text",
+			    success: function(data) { 
+			      	if("bottom" == data){
+			    		alert("该条记录已是最底端");
+			    	}else{
+			    		window.location.href="<%=contextPath%>/business/product/list"; 
+			    	}
+			     },
+			   });
+	}
+</script>
