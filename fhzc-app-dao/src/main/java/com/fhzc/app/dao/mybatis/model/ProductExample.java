@@ -993,52 +993,62 @@ public class ProductExample {
             return (Criteria) this;
         }
 
-        public Criteria andAnnualYieldEqualTo(BigDecimal value) {
+        public Criteria andAnnualYieldEqualTo(String value) {
             addCriterion("`annual_yield` =", value, "annualYield");
             return (Criteria) this;
         }
 
-        public Criteria andAnnualYieldNotEqualTo(BigDecimal value) {
+        public Criteria andAnnualYieldNotEqualTo(String value) {
             addCriterion("`annual_yield` <>", value, "annualYield");
             return (Criteria) this;
         }
 
-        public Criteria andAnnualYieldGreaterThan(BigDecimal value) {
+        public Criteria andAnnualYieldGreaterThan(String value) {
             addCriterion("`annual_yield` >", value, "annualYield");
             return (Criteria) this;
         }
 
-        public Criteria andAnnualYieldGreaterThanOrEqualTo(BigDecimal value) {
+        public Criteria andAnnualYieldGreaterThanOrEqualTo(String value) {
             addCriterion("`annual_yield` >=", value, "annualYield");
             return (Criteria) this;
         }
 
-        public Criteria andAnnualYieldLessThan(BigDecimal value) {
+        public Criteria andAnnualYieldLessThan(String value) {
             addCriterion("`annual_yield` <", value, "annualYield");
             return (Criteria) this;
         }
 
-        public Criteria andAnnualYieldLessThanOrEqualTo(BigDecimal value) {
+        public Criteria andAnnualYieldLessThanOrEqualTo(String value) {
             addCriterion("`annual_yield` <=", value, "annualYield");
             return (Criteria) this;
         }
 
-        public Criteria andAnnualYieldIn(List<BigDecimal> values) {
+        public Criteria andAnnualYieldLike(String value) {
+            addCriterion("`annual_yield` like", value, "annualYield");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnnualYieldNotLike(String value) {
+            addCriterion("`annual_yield` not like", value, "annualYield");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnnualYieldIn(List<String> values) {
             addCriterion("`annual_yield` in", values, "annualYield");
             return (Criteria) this;
         }
 
-        public Criteria andAnnualYieldNotIn(List<BigDecimal> values) {
+        public Criteria andAnnualYieldNotIn(List<String> values) {
             addCriterion("`annual_yield` not in", values, "annualYield");
             return (Criteria) this;
         }
 
-        public Criteria andAnnualYieldBetween(BigDecimal value1, BigDecimal value2) {
+        public Criteria andAnnualYieldBetween(String value1, String value2) {
             addCriterion("`annual_yield` between", value1, value2, "annualYield");
             return (Criteria) this;
         }
 
-        public Criteria andAnnualYieldNotBetween(BigDecimal value1, BigDecimal value2) {
+        public Criteria andAnnualYieldNotBetween(String value1, String value2) {
             addCriterion("`annual_yield` not between", value1, value2, "annualYield");
             return (Criteria) this;
         }

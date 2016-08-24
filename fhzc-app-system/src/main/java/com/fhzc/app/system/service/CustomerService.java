@@ -1,10 +1,7 @@
 package com.fhzc.app.system.service;
 
-
-
 import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
-import com.fhzc.app.system.commons.vo.CustomerVo;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -67,13 +64,6 @@ public interface CustomerService {
     PlannerCustomer getPlannerByCustomerId(Integer customerId);
 
     /**
-     * 通过移动号码获取客户信息
-     * @param mobileNum
-     * @return
-     */
-    CustomerVo getCustomerInfoByMobile(String mobileNum);
-
-    /**
      * 根据客户id查询客户权益享用人
      * @return
      */
@@ -100,7 +90,6 @@ public interface CustomerService {
     
     /**
      * 获取所有用户
-     * @param id
      */
 	List<Customer> findAllCustomer();
 }

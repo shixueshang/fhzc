@@ -21,9 +21,8 @@
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/jquery-tags-input/jquery.tagsinput.css" />
 <link rel="stylesheet" href="<%=contextPath%>/assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" />
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/jquery-ui/jquery-ui-1.10.1.custom.css">
-<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/custom_datepicker/jquery-ui-timepicker-addon.css">
-<script src="<%=contextPath%>/assets/jquery-ui/jquery-ui-1.10.1.custom.min.js"></script>
-<script src="<%=contextPath%>/assets/custom_datepicker/jquery-ui-timepicker-addon.js"></script>
+
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/bootstrap-datepicker/css/datepicker.css">
 
 
 <!-- BEGIN CONTAINER -->
@@ -86,7 +85,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">用户手机号<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <input type="text" name="phoneNum" id="phoneNum" data-required="1" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="phoneNum" maxlength="11" id="phoneNum" data-required="1" placeholder="输入客户的手机号" >
                                                     <button type="button" name="checkPhone" id="checkPhone">验证</button>
                                                     <span class="help-inline"></span>
                                                 </div>
@@ -180,63 +179,15 @@
 
 <script>
     $(function(){
-        var form1 = $('#form_sample_1');
-        var error1 = $('.alert-error', form1);
-        var success1 = $('.alert-success', form1);
-
-        /*form1.validate({
-            errorElement: 'span', //default input error message container
-            errorClass: 'help-inline', // default input error message class
-            focusInvalid: false, // do not focus the last invalid input
-            ignore: "",
-            /!*rules: {
-                name: {
-                    required: true
-                },
-                url: {
-                    url: true
-                },
-                spendScore: {
-                    number: true,
-                    min:0
-                }
-            },*!/
-
-            invalidHandler: function (event, validator) { //display error alert on form submit
-                success1.hide();
-                error1.show();
-                App.scrollTo(error1, -200);
-                return false;
-            },
-
-            highlight: function (element) { // hightlight error inputs
-                $(element)
-                        .closest('.help-inline').removeClass('ok'); // display OK icon
-                $(element)
-                        .closest('.control-group').removeClass('success').addClass('error'); // set error class to the control group
-            },
-
-            unhighlight: function (element) { // revert the change dony by hightlight
-                $(element)
-                        .closest('.control-group').removeClass('error'); // set error class to the control group
-            },
-
-            success: function (label) {
-                label
-                        .addClass('valid').addClass('help-inline ok') // mark the current input as valid and display OK icon
-                        .closest('.control-group').removeClass('error').addClass('success'); // set success class to the control group
-            },
-
-            submitHandler: function (form) {
-                success1.show();
-                error1.hide();
-                form.submit();
-            }
-        });*/
-
         $("#checkPhone").click(function () {
             var phoneNum = $("#phoneNum").val();
-            if (phoneNum != null && phoneNum != ''){
+            if(phoneNum == null || phoneNum == ''){
+                BootstrapDialog.show({
+                    title: '提示',
+                    message: '请输入手机号'
+                });
+                return false;
+            }
                 clearPhoneError();
                 $.ajax({
                     url: "<%=contextPath%>/business/rights/check/phone",
@@ -250,9 +201,6 @@
                             $("#rightValid").val("0");
                             return;
                         }
-
-
-
                         if (data.name != null && data.name != ''){
                             $("#cname").val(data.name);
                         } else {
@@ -278,7 +226,6 @@
                         validatePhoneError('请确认收入的手机号为有效客户的有效手机号');
                     }
                 });
-            }
         });
 
         $("#reservationRight").change(function () {
@@ -350,7 +297,7 @@
     
     function checkInputs() {
         if ($("#rightValid").val() == '0'){
-            validatePhoneError('请确认收入的手机号为有效客户的有效手机号');
+            validatePhoneError('请确认输入的为客户的有效手机号');
             $("html,body").animate({scrollTop:0});
             return false;
         }

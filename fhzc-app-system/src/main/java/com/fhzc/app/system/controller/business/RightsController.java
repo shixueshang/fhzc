@@ -9,7 +9,6 @@ import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.aop.SystemControllerLog;
 import com.fhzc.app.system.commons.util.FileUtil;
 import com.fhzc.app.system.commons.util.TextUtils;
-import com.fhzc.app.system.commons.vo.CustomerVo;
 import com.fhzc.app.system.commons.vo.RightReservationVo;
 import com.fhzc.app.system.commons.vo.RightVo;
 import com.fhzc.app.system.controller.BaseController;
@@ -50,6 +49,9 @@ public class RightsController extends BaseController{
     
     @Resource
     private FocusService focusService;
+
+    @Resource
+    private ScoreService scoreService;
 
     /**
      * 权益列表
@@ -135,11 +137,11 @@ public class RightsController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/reservation/pub", method = RequestMethod.GET)
-    @SystemControllerLog(description = "创建权益预约")
+    @SystemControllerLog(description = "新增权益预约")
     public ModelAndView preReservationAdd(){
         ModelAndView mav = new ModelAndView("business/rights/addRightReservation");
-        PageableResult<Rights> pageableResult = rightsService.findPageRights(1, 500);
-        mav.addObject("rights", pageableResult.getItems());
+
+        mav.addObject("url", "business/rights");
         return mav;
     }
 
@@ -149,9 +151,15 @@ public class RightsController extends BaseController{
      */
     @RequestMapping(value = "/check/phone", method = RequestMethod.GET)
     @ResponseBody
-    public CustomerVo checkPhone(String phoneNum){
-        CustomerVo vo = customerService.getCustomerInfoByMobile(phoneNum);
-        return vo;
+    public Customer checkPhone(String phoneNum){
+        User user = userService.getUserByMobile(phoneNum.trim());
+        if(user == null){
+            return null;
+        }
+        Customer customer = customerService.getCustomerByUid(user.getUid(), null);
+        customer.setCustomerName(user.getRealname());
+        customer.setAvailableScore(scoreService.sumScore(scoreService.getAvailableList(user.getUid())));
+        return customer;
     }
 
     /**
@@ -204,20 +212,13 @@ public class RightsController extends BaseController{
     }
 
     @RequestMapping(value = "/reservation/deal", method = RequestMethod.GET)
-    public ModelAndView dealReservation(long id){
+    public ModelAndView dealReservation(Integer id){
         ModelAndView mav = new ModelAndView("business/rights/dealReservation");
-        RightsReservation reservation = rightsService.getReservationById((int)id);
-        CustomerVo vo = new CustomerVo();
+        RightsReservation reservation = rightsService.getReservationById(id);
         Customer customer = customerService.getCustomer(reservation.getCustomerId());
-        Dictionary dictionary = dictionaryService.findCustomerLevel(customer.getLevelId()+"");
-        vo.setCustomerId(customer.getCustomerId());
-        vo.setCustomerLevel(dictionary.getKey());
-
         User user = userService.getUser(customer.getUid());
-        vo.setName(user.getRealname());
-
-        Integer score = scoreHistoryService.getScoreByUserId(user.getUid());
-        vo.setAvailableScore(score+"");
+        customer.setCustomerName(user.getRealname());
+        customer.setAvailableScore(scoreHistoryService.getScoreByUserId(user.getUid()));
 
         RightVo rvo = new RightVo();
         Rights rights = rightsService.getRights(reservation.getRightsId());
@@ -229,7 +230,7 @@ public class RightsController extends BaseController{
         mav.addObject("reservation", reservation);
         mav.addObject("rights", pageableResult.getItems());
 
-        mav.addObject("customer", vo);
+        mav.addObject("customer", customer);
         mav.addObject("providerInfo", rvo);
         return mav;
     }

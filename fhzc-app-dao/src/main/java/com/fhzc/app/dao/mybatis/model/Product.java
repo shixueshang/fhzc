@@ -30,7 +30,7 @@ public class Product {
 
     private String dividendDay;
 
-    private BigDecimal annualYield;
+    private String annualYield;
 
     private String incomeDistributionType;
 
@@ -97,36 +97,6 @@ public class Product {
     private String desc;
 
     private String detailContent;
-
-    private Integer focusNum;
-
-    private Integer orderNum;
-
-    private BigDecimal orderAmount;
-
-    public Integer getFocusNum() {
-        return focusNum;
-    }
-
-    public void setFocusNum(Integer focusNum) {
-        this.focusNum = focusNum;
-    }
-
-    public Integer getOrderNum() {
-        return orderNum;
-    }
-
-    public void setOrderNum(Integer orderNum) {
-        this.orderNum = orderNum;
-    }
-
-    public BigDecimal getOrderAmount() {
-        return orderAmount;
-    }
-
-    public void setOrderAmount(BigDecimal orderAmount) {
-        this.orderAmount = orderAmount;
-    }
 
     public Integer getPid() {
         return pid;
@@ -232,12 +202,12 @@ public class Product {
         this.dividendDay = dividendDay == null ? null : dividendDay.trim();
     }
 
-    public BigDecimal getAnnualYield() {
+    public String getAnnualYield() {
         return annualYield;
     }
 
-    public void setAnnualYield(BigDecimal annualYield) {
-        this.annualYield = annualYield;
+    public void setAnnualYield(String annualYield) {
+        this.annualYield = annualYield == null ? null : annualYield.trim();
     }
 
     public String getIncomeDistributionType() {

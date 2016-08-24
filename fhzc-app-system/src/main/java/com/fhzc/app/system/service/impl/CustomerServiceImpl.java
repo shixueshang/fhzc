@@ -7,9 +7,7 @@ import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.commons.util.excel.ExcelImporter;
 import com.fhzc.app.system.commons.util.excel.ImportCallBack;
 import com.fhzc.app.system.commons.util.excel.ImportConfig;
-import com.fhzc.app.system.commons.vo.CustomerVo;
 import com.fhzc.app.system.service.CustomerService;
-import com.fhzc.app.system.service.*;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -32,15 +30,6 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Resource
     private CustomerMapper customerMapper;
-
-    @Resource
-    private UserService userService;
-
-    @Resource
-    private DictionaryMapper dictionaryMapper;
-
-    @Resource
-    private ScoreHistoryMapper scoreHistoryMapper;
 
     @Resource
     private PlannerCustomerMapper plannerCustomerMapper;
@@ -125,7 +114,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 
     /**
-     * 获得机构id
+     * 获得客户
      * @param uId
      * @return
      */
@@ -155,48 +144,6 @@ public class CustomerServiceImpl implements CustomerService {
         return null;
     }
 
-    /**
-     * 通过移动号码获取客户信息
-     * @param mobileNum
-     * @return
-     */
-    @Override
-    public CustomerVo getCustomerInfoByMobile(String mobileNum) {
-        //List<User> users = userMapper.selectUserByMobile(mobileNum);
-        User user = userService.getUserByMobile(mobileNum);
-
-        if (user != null){
-            CustomerVo vo = new CustomerVo();
-            vo.setName(user.getRealname());
-            // TODO 需要根据手机号判断是个人客户还是机构客户
-            Customer customer = this.getCustomerByUid(user.getUid(), Const.CUSTOMER_TYPE.SINGLE_CUSTOMER);
-            vo.setCustomerId(customer.getCustomerId());
-            if (customer != null){
-                DictionaryExample example = new DictionaryExample();
-                DictionaryExample.Criteria criteria = example.createCriteria();
-                criteria.andCatEqualTo(Const.DIC_CAT.CUSTOMER_LEVEL);
-                List<com.fhzc.app.dao.mybatis.model.Dictionary> dicts = dictionaryMapper.selectByExample(example);
-
-                for(com.fhzc.app.dao.mybatis.model.Dictionary dict : dicts){
-                    if(dict.getValue().equals(customer.getLevelId()+"")){
-                        vo.setCustomerLevel(dict.getKey());
-                        break;
-                    }
-                }
-            }
-
-            Integer score = scoreHistoryMapper.getScoreByUid(user.getUid());
-            if (score == null){
-                vo.setAvailableScore(0+"");
-            } else {
-                vo.setAvailableScore(score+"");
-            }
-
-            return vo;
-        }
-
-        return null;
-    }
 
     @Override
     public List<CustomerOrgan> findOrganCustomer(Integer customerId) {

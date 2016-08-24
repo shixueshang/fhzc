@@ -146,7 +146,7 @@ ALTER TABLE `bank`.`product`
 DROP COLUMN `expected_max`,
 DROP COLUMN `expected_min`,
 CHANGE COLUMN `status` `status` INT(1) NULL DEFAULT '-1' COMMENT '基金状态 -1未知|0产品预热|1募集中|2募集结束|3募集失败|4产品成立|5产品到期|6提前结束' ,
-CHANGE COLUMN `annual_yield` `annual_yield` DECIMAL(8,2) NULL DEFAULT NULL COMMENT '年化收益率(参考业绩标准)' ,
+CHANGE COLUMN `annual_yield` `annual_yield` VARCHAR(100) NULL DEFAULT NULL COMMENT '年化收益率(参考业绩标准)' ,
 CHANGE COLUMN `score_factor` `score_factor` DECIMAL(8,2) UNSIGNED NULL DEFAULT '100' COMMENT '产品积分系数百分比,默认100%' ,
 CHANGE COLUMN `is_ recommend` `is_ recommend` INT(1) UNSIGNED NULL DEFAULT '0' COMMENT '是否推荐 1是|0否' ,
 CHANGE COLUMN `is_display` `is_display` INT(1) UNSIGNED NULL DEFAULT '0' COMMENT '产品是否显示 1显示|0不显示' ,

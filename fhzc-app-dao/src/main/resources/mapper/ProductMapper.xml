@@ -15,7 +15,7 @@
     <result column="product_type" property="productType" jdbcType="VARCHAR" />
     <result column="renew_deadline" property="renewDeadline" jdbcType="VARCHAR" />
     <result column="dividend_day" property="dividendDay" jdbcType="VARCHAR" />
-    <result column="annual_yield" property="annualYield" jdbcType="DECIMAL" />
+    <result column="annual_yield" property="annualYield" jdbcType="VARCHAR" />
     <result column="income_distribution_type" property="incomeDistributionType" jdbcType="VARCHAR" />
     <result column="credit" property="credit" jdbcType="VARCHAR" />
     <result column="investment_orientation" property="investmentOrientation" jdbcType="VARCHAR" />
@@ -195,7 +195,7 @@
       #{foundDay,jdbcType=DATE}, #{buyDay,jdbcType=VARCHAR}, #{redeemDay,jdbcType=VARCHAR}, 
       #{valueDay,jdbcType=DATE}, #{expiryDay,jdbcType=DATE}, #{issueType,jdbcType=INTEGER}, 
       #{productType,jdbcType=VARCHAR}, #{renewDeadline,jdbcType=VARCHAR}, #{dividendDay,jdbcType=VARCHAR}, 
-      #{annualYield,jdbcType=DECIMAL}, #{incomeDistributionType,jdbcType=VARCHAR}, #{credit,jdbcType=VARCHAR}, 
+      #{annualYield,jdbcType=VARCHAR}, #{incomeDistributionType,jdbcType=VARCHAR}, #{credit,jdbcType=VARCHAR}, 
       #{investmentOrientation,jdbcType=VARCHAR}, #{increaseTrust,jdbcType=VARCHAR}, #{highlights,jdbcType=VARCHAR}, 
       #{fundManagementFee,jdbcType=VARCHAR}, #{fundSubscriptionFee,jdbcType=VARCHAR}, 
       #{fundManager,jdbcType=VARCHAR}, #{custodian,jdbcType=VARCHAR}, #{investmentType,jdbcType=VARCHAR}, 
@@ -391,7 +391,7 @@
         #{dividendDay,jdbcType=VARCHAR},
       </if>
       <if test="annualYield != null" >
-        #{annualYield,jdbcType=DECIMAL},
+        #{annualYield,jdbcType=VARCHAR},
       </if>
       <if test="incomeDistributionType != null" >
         #{incomeDistributionType,jdbcType=VARCHAR},
@@ -543,7 +543,7 @@
         `dividend_day` = #{record.dividendDay,jdbcType=VARCHAR},
       </if>
       <if test="record.annualYield != null" >
-        `annual_yield` = #{record.annualYield,jdbcType=DECIMAL},
+        `annual_yield` = #{record.annualYield,jdbcType=VARCHAR},
       </if>
       <if test="record.incomeDistributionType != null" >
         `income_distribution_type` = #{record.incomeDistributionType,jdbcType=VARCHAR},
@@ -664,7 +664,7 @@
       `product_type` = #{record.productType,jdbcType=VARCHAR},
       `renew_deadline` = #{record.renewDeadline,jdbcType=VARCHAR},
       `dividend_day` = #{record.dividendDay,jdbcType=VARCHAR},
-      `annual_yield` = #{record.annualYield,jdbcType=DECIMAL},
+      `annual_yield` = #{record.annualYield,jdbcType=VARCHAR},
       `income_distribution_type` = #{record.incomeDistributionType,jdbcType=VARCHAR},
       `credit` = #{record.credit,jdbcType=VARCHAR},
       `investment_orientation` = #{record.investmentOrientation,jdbcType=VARCHAR},
@@ -717,7 +717,7 @@
       `product_type` = #{record.productType,jdbcType=VARCHAR},
       `renew_deadline` = #{record.renewDeadline,jdbcType=VARCHAR},
       `dividend_day` = #{record.dividendDay,jdbcType=VARCHAR},
-      `annual_yield` = #{record.annualYield,jdbcType=DECIMAL},
+      `annual_yield` = #{record.annualYield,jdbcType=VARCHAR},
       `income_distribution_type` = #{record.incomeDistributionType,jdbcType=VARCHAR},
       `credit` = #{record.credit,jdbcType=VARCHAR},
       `investment_orientation` = #{record.investmentOrientation,jdbcType=VARCHAR},
@@ -793,7 +793,7 @@
         `dividend_day` = #{dividendDay,jdbcType=VARCHAR},
       </if>
       <if test="annualYield != null" >
-        `annual_yield` = #{annualYield,jdbcType=DECIMAL},
+        `annual_yield` = #{annualYield,jdbcType=VARCHAR},
       </if>
       <if test="incomeDistributionType != null" >
         `income_distribution_type` = #{incomeDistributionType,jdbcType=VARCHAR},
@@ -911,7 +911,7 @@
       `product_type` = #{productType,jdbcType=VARCHAR},
       `renew_deadline` = #{renewDeadline,jdbcType=VARCHAR},
       `dividend_day` = #{dividendDay,jdbcType=VARCHAR},
-      `annual_yield` = #{annualYield,jdbcType=DECIMAL},
+      `annual_yield` = #{annualYield,jdbcType=VARCHAR},
       `income_distribution_type` = #{incomeDistributionType,jdbcType=VARCHAR},
       `credit` = #{credit,jdbcType=VARCHAR},
       `investment_orientation` = #{investmentOrientation,jdbcType=VARCHAR},
@@ -961,7 +961,7 @@
       `product_type` = #{productType,jdbcType=VARCHAR},
       `renew_deadline` = #{renewDeadline,jdbcType=VARCHAR},
       `dividend_day` = #{dividendDay,jdbcType=VARCHAR},
-      `annual_yield` = #{annualYield,jdbcType=DECIMAL},
+      `annual_yield` = #{annualYield,jdbcType=VARCHAR},
       `income_distribution_type` = #{incomeDistributionType,jdbcType=VARCHAR},
       `credit` = #{credit,jdbcType=VARCHAR},
       `investment_orientation` = #{investmentOrientation,jdbcType=VARCHAR},
