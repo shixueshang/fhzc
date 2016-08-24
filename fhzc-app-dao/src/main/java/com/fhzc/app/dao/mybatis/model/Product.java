@@ -82,10 +82,6 @@ public class Product {
 
     private String detailUrl;
 
-    private Integer investTermMin;
-
-    private Integer investTermMax;
-
     private BigDecimal investThreshold;
 
     private Integer throwDepartment;
@@ -438,22 +434,6 @@ public class Product {
 
     public void setDetailUrl(String detailUrl) {
         this.detailUrl = detailUrl == null ? null : detailUrl.trim();
-    }
-
-    public Integer getInvestTermMin() {
-        return investTermMin;
-    }
-
-    public void setInvestTermMin(Integer investTermMin) {
-        this.investTermMin = investTermMin;
-    }
-
-    public Integer getInvestTermMax() {
-        return investTermMax;
-    }
-
-    public void setInvestTermMax(Integer investTermMax) {
-        this.investTermMax = investTermMax;
     }
 
     public BigDecimal getInvestThreshold() {

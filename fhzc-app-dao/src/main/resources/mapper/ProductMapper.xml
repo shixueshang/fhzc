@@ -41,8 +41,6 @@
     <result column="is_renew" property="isRenew" jdbcType="INTEGER" />
     <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
     <result column="detail_url" property="detailUrl" jdbcType="VARCHAR" />
-    <result column="invest_term_min" property="investTermMin" jdbcType="INTEGER" />
-    <result column="invest_term_max" property="investTermMax" jdbcType="INTEGER" />
     <result column="invest_threshold" property="investThreshold" jdbcType="DECIMAL" />
     <result column="throw_department" property="throwDepartment" jdbcType="INTEGER" />
     <result column="collect_start" property="collectStart" jdbcType="DATE" />
@@ -117,8 +115,8 @@
     `highlights`, `fund_management_fee`, `fund_subscription_fee`, `fund_manager`, `custodian`, 
     `investment_type`, `project_source`, `issuer`, `is_record`, `prove_url`, `display_order`, 
     `level`, `risk`, `cover`, `notice`, `score_factor`, `is_ recommend`, `is_display`, 
-    `is_renew`, `ctime`, `detail_url`, `invest_term_min`, `invest_term_max`, `invest_threshold`, 
-    `throw_department`, `collect_start`, `collect_end`
+    `is_renew`, `ctime`, `detail_url`, `invest_threshold`, `throw_department`, `collect_start`, 
+    `collect_end`
   </sql>
   <sql id="Blob_Column_List" >
     `desc`, `detail_content`
@@ -188,9 +186,9 @@
       `risk`, `cover`, `notice`, 
       `score_factor`, `is_ recommend`, `is_display`, 
       `is_renew`, `ctime`, `detail_url`, 
-      `invest_term_min`, `invest_term_max`, `invest_threshold`, 
-      `throw_department`, `collect_start`, `collect_end`, 
-      `desc`, `detail_content`)
+      `invest_threshold`, `throw_department`, `collect_start`, 
+      `collect_end`, `desc`, `detail_content`
+      )
     values (#{status,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{foundDay,jdbcType=DATE}, #{buyDay,jdbcType=VARCHAR}, #{redeemDay,jdbcType=VARCHAR}, 
       #{valueDay,jdbcType=DATE}, #{expiryDay,jdbcType=DATE}, #{issueType,jdbcType=INTEGER}, 
@@ -204,9 +202,9 @@
       #{risk,jdbcType=INTEGER}, #{cover,jdbcType=VARCHAR}, #{notice,jdbcType=VARCHAR}, 
       #{scoreFactor,jdbcType=DECIMAL}, #{isRecommend,jdbcType=INTEGER}, #{isDisplay,jdbcType=INTEGER}, 
       #{isRenew,jdbcType=INTEGER}, #{ctime,jdbcType=TIMESTAMP}, #{detailUrl,jdbcType=VARCHAR}, 
-      #{investTermMin,jdbcType=INTEGER}, #{investTermMax,jdbcType=INTEGER}, #{investThreshold,jdbcType=DECIMAL}, 
-      #{throwDepartment,jdbcType=INTEGER}, #{collectStart,jdbcType=DATE}, #{collectEnd,jdbcType=DATE}, 
-      #{desc,jdbcType=LONGVARCHAR}, #{detailContent,jdbcType=LONGVARCHAR})
+      #{investThreshold,jdbcType=DECIMAL}, #{throwDepartment,jdbcType=INTEGER}, #{collectStart,jdbcType=DATE}, 
+      #{collectEnd,jdbcType=DATE}, #{desc,jdbcType=LONGVARCHAR}, #{detailContent,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.Product" >
     <selectKey resultType="java.lang.Integer" keyProperty="pid" order="AFTER" >
@@ -327,12 +325,6 @@
       </if>
       <if test="detailUrl != null" >
         `detail_url`,
-      </if>
-      <if test="investTermMin != null" >
-        `invest_term_min`,
-      </if>
-      <if test="investTermMax != null" >
-        `invest_term_max`,
       </if>
       <if test="investThreshold != null" >
         `invest_threshold`,
@@ -467,12 +459,6 @@
       </if>
       <if test="detailUrl != null" >
         #{detailUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="investTermMin != null" >
-        #{investTermMin,jdbcType=INTEGER},
-      </if>
-      <if test="investTermMax != null" >
-        #{investTermMax,jdbcType=INTEGER},
       </if>
       <if test="investThreshold != null" >
         #{investThreshold,jdbcType=DECIMAL},
@@ -620,12 +606,6 @@
       <if test="record.detailUrl != null" >
         `detail_url` = #{record.detailUrl,jdbcType=VARCHAR},
       </if>
-      <if test="record.investTermMin != null" >
-        `invest_term_min` = #{record.investTermMin,jdbcType=INTEGER},
-      </if>
-      <if test="record.investTermMax != null" >
-        `invest_term_max` = #{record.investTermMax,jdbcType=INTEGER},
-      </if>
       <if test="record.investThreshold != null" >
         `invest_threshold` = #{record.investThreshold,jdbcType=DECIMAL},
       </if>
@@ -690,8 +670,6 @@
       `is_renew` = #{record.isRenew,jdbcType=INTEGER},
       `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
       `detail_url` = #{record.detailUrl,jdbcType=VARCHAR},
-      `invest_term_min` = #{record.investTermMin,jdbcType=INTEGER},
-      `invest_term_max` = #{record.investTermMax,jdbcType=INTEGER},
       `invest_threshold` = #{record.investThreshold,jdbcType=DECIMAL},
       `throw_department` = #{record.throwDepartment,jdbcType=INTEGER},
       `collect_start` = #{record.collectStart,jdbcType=DATE},
@@ -743,8 +721,6 @@
       `is_renew` = #{record.isRenew,jdbcType=INTEGER},
       `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
       `detail_url` = #{record.detailUrl,jdbcType=VARCHAR},
-      `invest_term_min` = #{record.investTermMin,jdbcType=INTEGER},
-      `invest_term_max` = #{record.investTermMax,jdbcType=INTEGER},
       `invest_threshold` = #{record.investThreshold,jdbcType=DECIMAL},
       `throw_department` = #{record.throwDepartment,jdbcType=INTEGER},
       `collect_start` = #{record.collectStart,jdbcType=DATE},
@@ -870,12 +846,6 @@
       <if test="detailUrl != null" >
         `detail_url` = #{detailUrl,jdbcType=VARCHAR},
       </if>
-      <if test="investTermMin != null" >
-        `invest_term_min` = #{investTermMin,jdbcType=INTEGER},
-      </if>
-      <if test="investTermMax != null" >
-        `invest_term_max` = #{investTermMax,jdbcType=INTEGER},
-      </if>
       <if test="investThreshold != null" >
         `invest_threshold` = #{investThreshold,jdbcType=DECIMAL},
       </if>
@@ -937,8 +907,6 @@
       `is_renew` = #{isRenew,jdbcType=INTEGER},
       `ctime` = #{ctime,jdbcType=TIMESTAMP},
       `detail_url` = #{detailUrl,jdbcType=VARCHAR},
-      `invest_term_min` = #{investTermMin,jdbcType=INTEGER},
-      `invest_term_max` = #{investTermMax,jdbcType=INTEGER},
       `invest_threshold` = #{investThreshold,jdbcType=DECIMAL},
       `throw_department` = #{throwDepartment,jdbcType=INTEGER},
       `collect_start` = #{collectStart,jdbcType=DATE},
@@ -987,8 +955,6 @@
       `is_renew` = #{isRenew,jdbcType=INTEGER},
       `ctime` = #{ctime,jdbcType=TIMESTAMP},
       `detail_url` = #{detailUrl,jdbcType=VARCHAR},
-      `invest_term_min` = #{investTermMin,jdbcType=INTEGER},
-      `invest_term_max` = #{investTermMax,jdbcType=INTEGER},
       `invest_threshold` = #{investThreshold,jdbcType=DECIMAL},
       `throw_department` = #{throwDepartment,jdbcType=INTEGER},
       `collect_start` = #{collectStart,jdbcType=DATE},

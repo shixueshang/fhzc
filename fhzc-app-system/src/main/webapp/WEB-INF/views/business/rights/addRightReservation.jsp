@@ -20,7 +20,6 @@
 <link href="<%=contextPath%>/assets/bootstrap-fileupload/bootstrap-fileupload.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/jquery-tags-input/jquery.tagsinput.css" />
 <link rel="stylesheet" href="<%=contextPath%>/assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" />
-<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/jquery-ui/jquery-ui-1.10.1.custom.css">
 
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/bootstrap-datepicker/css/datepicker.css">
 
@@ -196,21 +195,22 @@
                     contentType:'application/json;charset=utf-8',
                     data: {phoneNum:phoneNum},
                     success: function (data) {
+                        console.info(data)
                         if (data == null){
-                            validatePhoneError('请确认收入的手机号为有效客户的有效手机号');
+                            validatePhoneError('请确认输入的为客户的有效手机号');
                             $("#rightValid").val("0");
                             return;
                         }
                         if (data.name != null && data.name != ''){
                             $("#cname").val(data.name);
                         } else {
-                            validatePhoneError('请确认收入的手机号为有效客户的有效手机号');
+                            validatePhoneError('请确认输入的为客户的有效手机号');
                         }
 
                         if (data.customerLevel != null && data.customerLevel != ''){
                             $("#clevel").val(data.customerLevel);
                         } else {
-                            validatePhoneError('请确认收入的手机号为有效客户的有效手机号');
+                            validatePhoneError('请确认输入的为客户的有效手机号');
                         }
 
                         if (data.name != null && data.name != '' && data.customerLevel != null && data.customerLevel != ''){
@@ -223,7 +223,7 @@
                         $("#csore").val(data.availableScore);
                     },
                     error: function (err) {
-                        validatePhoneError('请确认收入的手机号为有效客户的有效手机号');
+                        validatePhoneError('请确认输入的为客户的有效手机号');
                     }
                 });
         });
@@ -247,11 +247,6 @@
                     }
                 });
             }
-        });
-
-        $("#reservationTime").datetimepicker({
-            timeFormat: 'HH:mm:ss',
-            dateFormat: "yy-mm-dd"
         });
 
         $("#reservationTime").change(function () {

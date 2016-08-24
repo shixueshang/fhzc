@@ -557,7 +557,7 @@ CREATE TABLE IF NOT EXISTS `bank`.`product` (
   `product_type` VARCHAR(200) NULL DEFAULT NULL COMMENT '产品类型',
   `renew_deadline` VARCHAR(200) NULL DEFAULT NULL COMMENT '产品续存期限',
   `dividend_day` VARCHAR(200) NULL DEFAULT NULL COMMENT '派息日',
-  `annual_yield` VARCHAR(200) NULL DEFAULT NULL COMMENT '年化收益率',
+  `annual_yield` VARCHAR(200) NULL DEFAULT NULL COMMENT '参考业绩标准',
   `income_distribution_type` VARCHAR(200) NULL DEFAULT NULL COMMENT '收益分配方式',
   `credit` VARCHAR(255) NULL DEFAULT NULL COMMENT '增信措施',
   `investment_orientation` VARCHAR(200) NULL DEFAULT NULL COMMENT '投资方向',

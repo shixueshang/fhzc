@@ -21,9 +21,6 @@
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/jquery-tags-input/jquery.tagsinput.css" />
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" />
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/jquery-ui/jquery-ui-1.10.1.custom.css">
-<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/custom_datepicker/jquery-ui-timepicker-addon.css">
-<script src="<%=contextPath%>/assets/jquery-ui/jquery-ui-1.10.1.custom.min.js"></script>
-<script src="<%=contextPath%>/assets/custom_datepicker/jquery-ui-timepicker-addon.js"></script>
 <!-- BEGIN CONTAINER -->
 <div class="page-container row-fluid">
     <jsp:include page="../../include/left.jsp"/>
@@ -124,15 +121,6 @@ $(document).ready(function () {
         window.location.href = url;
     });
 
-    $('#startTime').datetimepicker({
-        timeFormat: 'HH:mm:ss',
-        dateFormat: "yy-mm-dd"
-    });
-
-    $('#endTime').datetimepicker({
-        timeFormat: 'HH:mm:ss',
-        dateFormat: "yy-mm-dd"
-    });
 });
 </script>
 
