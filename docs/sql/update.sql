@@ -151,3 +151,8 @@ CHANGE COLUMN `score_factor` `score_factor` DECIMAL(8,2) UNSIGNED NULL DEFAULT '
 CHANGE COLUMN `is_ recommend` `is_ recommend` INT(1) UNSIGNED NULL DEFAULT '0' COMMENT '是否推荐 1是|0否' ,
 CHANGE COLUMN `is_display` `is_display` INT(1) UNSIGNED NULL DEFAULT '0' COMMENT '产品是否显示 1显示|0不显示' ,
 CHANGE COLUMN `is_renew` `is_renew` INT(1) UNSIGNED NULL DEFAULT '0' COMMENT '是否是续存期产品 0否|1是' ;
+
+#2016-08-24
+ALTER TABLE `bank`.`activity`
+CHANGE COLUMN `begin_time` `begin_time` DATETIME NULL DEFAULT NULL COMMENT '活动开始时间' ,
+CHANGE COLUMN `end_time` `end_time` DATETIME NULL DEFAULT NULL COMMENT '活动结束时间' ;
