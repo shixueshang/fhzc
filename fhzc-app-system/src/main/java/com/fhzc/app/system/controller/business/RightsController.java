@@ -61,7 +61,7 @@ public class RightsController extends BaseController{
     @SystemControllerLog(description = "查看权益列表")
     public ModelAndView listRights(){
         ModelAndView mav = new ModelAndView("business/rights/list");
-        PageableResult<Rights> pageableResult = rightsService.findPageRights(page, size);
+        PageableResult<Rights> pageableResult = rightsService.findPageRights(page, 300);
         for(Rights rights : pageableResult.getItems() ){
         	List<Focus> focuses = focusService.findFocusByType(Const.FOCUS_TYPE.RIGHTS, rights.getId(),1);
         	rights.setFocusNum(focuses.size() > 0 ? focuses.size() : 0);
