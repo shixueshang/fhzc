@@ -101,6 +101,7 @@ public class RightsController extends BaseController{
             FileUtil.transferFile(coverPath, coverName, coverFile);
             rights.setCover(coverPath + coverName);
         }
+        rights.setCtime(new Date());
         rightsService.addOrUpdateRights(rights);
 
         return "redirect:/business/rights/list";
