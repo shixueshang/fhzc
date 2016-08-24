@@ -371,4 +371,75 @@ public class ProductController extends BaseController {
             return true;
         }
     }
+    
+    @RequestMapping(value = "/upDisplayOrder", method = RequestMethod.GET)
+    @ResponseBody
+    public String upDisplayOrder(String pid){
+    	if(StringUtils.isBlank(pid)){
+    		return "redirect:/business/product/list";
+    	}
+    	String msg;
+    	int originId;
+    	int finalId; 
+    	int temId;
+    	List<Product> products = productService.findAllProduct();
+    	List<Integer> list = new ArrayList<Integer>();
+    	for (Product product : products) {
+			list.add(product.getPid());
+		}
+    	int i = list.indexOf(Integer.parseInt(pid))-1;
+    	if(i==-1){
+    		msg = "top";
+    	}else{
+    	  	Product preProduct = products.get(i);
+        	finalId = preProduct.getDisplayOrder();
+        	Product product = productService.getProductById(Integer.parseInt(pid));
+        	originId = product.getDisplayOrder();
+        	temId = finalId;
+        	finalId = originId;
+        	originId = temId;
+        	product.setDisplayOrder(originId);
+        	preProduct.setDisplayOrder(finalId);
+        	productService.addOrUpdateProduct(product);
+        	productService.addOrUpdateProduct(preProduct);
+        	msg= "success";
+    	}
+  
+    	return msg;
+    }
+    
+    @RequestMapping(value = "/downDisplayOrder", method = RequestMethod.GET)
+    @ResponseBody
+    public String downDisplayOrder(String pid){
+    	if(StringUtils.isBlank(pid)){
+    		return "redirect:/business/product/list";
+    	}
+    	String msg;
+    	int originId;
+    	int finalId; 
+    	int temId;
+    	List<Product> products = productService.findAllProduct();
+    	List<Integer> list = new ArrayList<Integer>();
+    	for (Product product : products) {
+			list.add(product.getPid());
+		}
+    	int i = list.indexOf(Integer.parseInt(pid))+1;
+    	if(i==list.size()){
+    		msg = "bottom";
+    	}else{
+        	Product proProduct = products.get(i);
+        	finalId = proProduct.getDisplayOrder();
+        	Product product = productService.getProductById(Integer.parseInt(pid));
+        	originId = product.getDisplayOrder();
+        	temId = finalId;
+        	finalId = originId;
+        	originId = temId;
+        	product.setDisplayOrder(originId);
+        	proProduct.setDisplayOrder(finalId);
+        	productService.addOrUpdateProduct(product);
+        	productService.addOrUpdateProduct(proProduct);
+        	msg = "success";
+    	}
+    	return msg;
+    }
 }

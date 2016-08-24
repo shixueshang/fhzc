@@ -38,6 +38,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public PageableResult<Product> findPageProducts(int page, int size) {
         ProductExample example = new ProductExample();
+        example.setOrderByClause("`display_order` desc");
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<Product> list = productMapper.selectByExampleWithRowbounds(example, rowBounds);
         return new PageableResult<Product>(page, size, productMapper.countByExample(example), list);
@@ -171,6 +172,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> findAllProduct() {
         ProductExample example = new ProductExample();
+        example.setOrderByClause("`display_order` desc");
         return productMapper.selectByExample(example);
     }
 
@@ -198,4 +200,9 @@ public class ProductServiceImpl implements ProductService {
         criteria.andResultEqualTo(result);
         return productReservationMapper.selectByExample(example);
     }
+
+	@Override
+	public Product getProductById(Integer pId) {
+		 return productMapper.selectByPrimaryKey(pId);
+	}
 }

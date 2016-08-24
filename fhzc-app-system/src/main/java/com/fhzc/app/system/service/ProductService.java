@@ -114,4 +114,12 @@ public interface ProductService {
      * @return
      */
     List<ProductReservation> findSuccessOrdersByPid(Integer pId,String result);
+    
+	/**
+     * 查询产品
+     * @param name
+     * @return
+     */
+	 Product getProductById(Integer pId);
+    
 }
