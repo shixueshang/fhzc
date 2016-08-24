@@ -125,7 +125,7 @@
         	
         	
             $('#example').DataTable({
-            
+            	"bAutoWidth" : false,
                 "oLanguage": {//语言设置
                         "sProcessing":   "处理中...",
                         "sLengthMenu":   "_MENU_ 记录/页",

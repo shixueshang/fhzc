@@ -121,7 +121,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">投资期限(月)<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <input type="text" name="investTermMin" value="${product.renewDeadline}" data-required="1" placeholder="" class="m-wrap small">
+                                                    <input type="text" name="investTermMin" value="${product.renewDeadline}" data-required="1" placeholder="" class="large m-wrap">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -584,8 +584,6 @@ $(function(){
             },
             investTermMin: {
                 required: true,
-                number: true,
-                min:0
             },
             investTermMax: {
                 required: true,
