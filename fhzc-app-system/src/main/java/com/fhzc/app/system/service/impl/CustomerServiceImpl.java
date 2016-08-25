@@ -133,11 +133,13 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public PlannerCustomer getPlannerByCustomerId(Integer customerId) {
+    public PlannerCustomer getPlannerByCustomerId(Integer customerId, Integer isMain) {
         PlannerCustomerExample example = new PlannerCustomerExample();
         PlannerCustomerExample.Criteria criteria = example.createCriteria();
         criteria.andCustomerIdEqualTo(customerId);
-        criteria.andIsMainEqualTo(Byte.valueOf(Const.YES_OR_NO.YES.toString()));
+        if(isMain != null){
+            criteria.andIsMainEqualTo(Byte.valueOf(isMain.toString()));
+        }
         if(plannerCustomerMapper.countByExample(example) > 0){
             return plannerCustomerMapper.selectByExample(example).get(0);
         }

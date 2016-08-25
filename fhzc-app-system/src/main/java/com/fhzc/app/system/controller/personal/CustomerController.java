@@ -76,7 +76,14 @@ public class CustomerController extends BaseController {
         for(User user : pageableResult.getItems()){
             Customer customer = customerService.getCustomerByUid(user.getUid(), Const.CUSTOMER_TYPE.SINGLE_CUSTOMER);
             if(customer != null){
-                customerList.add(customer);
+
+                PlannerCustomer pc = customerService.getPlannerByCustomerId(customer.getCustomerId(), null);
+                if(pc != null){
+                  Planner planner = plannerService.getPlanner(pc.getPlannerId());
+                    if(planner.getStatus().equals(Const.PLANNER_STATUS.ON)){
+                        customerList.add(customer);
+                    }
+                }
 
                 Map<String, Object> scoreMap = new HashMap<String, Object>();
                 scoreMap.put("customerId", customer.getCustomerId());
@@ -107,7 +114,7 @@ public class CustomerController extends BaseController {
         mav.addObject("availableScore", JSON.toJSON(scoreService.sumScore(scoreService.getAvailableList(customer.getUid()))));
         mav.addObject("frozenScore", JSON.toJSON(scoreService.sumScore(scoreService.getFrozen(customer.getUid()))));
 
-        PlannerCustomer plannerCustomer = customerService.getPlannerByCustomerId(customer.getCustomerId());
+        PlannerCustomer plannerCustomer = customerService.getPlannerByCustomerId(customer.getCustomerId(), Const.YES_OR_NO.YES);
         Planner planner = plannerService.getPlanner(plannerCustomer.getPlannerId());
         mav.addObject("planner", JSON.toJSON(planner));
         mav.addObject("plannerUser", JSON.toJSON(userService.getUser(planner.getUid())));
@@ -149,7 +156,13 @@ public class CustomerController extends BaseController {
         for(User user : pageableResult.getItems()){
             Customer customer = customerService.getCustomerByUid(user.getUid(), Const.CUSTOMER_TYPE.ORGAN_CUSTOMER);
             if(customer != null){
-                customerList.add(customer);
+                PlannerCustomer pc = customerService.getPlannerByCustomerId(customer.getCustomerId(), null);
+                if(pc != null){
+                    Planner planner = plannerService.getPlanner(pc.getPlannerId());
+                    if(planner.getStatus().equals(Const.PLANNER_STATUS.ON)){
+                        customerList.add(customer);
+                    }
+                }
 
                 Map<String, Object> scoreMap = new HashMap<String, Object>();
                 scoreMap.put("customerId", customer.getCustomerId());
@@ -208,7 +221,7 @@ public class CustomerController extends BaseController {
         mav.addObject("availableScore", JSON.toJSON(scoreService.sumScore(scoreService.getAvailableList(customer.getUid()))));
         mav.addObject("frozenScore", JSON.toJSON(scoreService.sumScore(scoreService.getFrozen(customer.getUid()))));
         mav.addObject("departments", JSON.toJSON(departmentService.getDepartmentTree()));
-        PlannerCustomer plannerCustomer = customerService.getPlannerByCustomerId(customer.getCustomerId());
+        PlannerCustomer plannerCustomer = customerService.getPlannerByCustomerId(customer.getCustomerId(), Const.YES_OR_NO.YES);
         if(plannerCustomer != null){
             Planner planner = plannerService.getPlanner(plannerCustomer.getPlannerId());
             mav.addObject("planner", JSON.toJSON(planner));
@@ -277,6 +290,44 @@ public class CustomerController extends BaseController {
         customerService.delete(id);
         attr.addAttribute("id", customerOrgan.getCustomerId());
         return "redirect:/personal/customer/organ/enjoy/list/{id}";
+    }
+
+
+    /**
+     * 根据姓名查询缺位的客户
+     * @param name
+     * @return
+     */
+    @RequestMapping(value = "/missPlanner", method = RequestMethod.GET)
+    @SystemControllerLog(description = "查看缺位客户列表")
+    public ModelAndView findCustomersWithoutPlanner(String name){
+        ModelAndView mav = new ModelAndView("personal/customer/missPlanner");
+        PageableResult<User> pageableResult = userService.findPageUsers(name, page, size);
+
+        Admin admin = super.getCurrentUser();
+        List<Department> departments = departmentService.findChildren(admin.getOrgan());
+        List<Customer> customerList = new ArrayList<Customer>();
+        for(User user : pageableResult.getItems()){
+            Customer customer = customerService.getCustomerByUid(user.getUid(), Const.CUSTOMER_TYPE.ORGAN_CUSTOMER);
+            if(customer != null){
+                PlannerCustomer pc = customerService.getPlannerByCustomerId(customer.getCustomerId(), null);
+                if(pc != null){
+                    Planner planner = plannerService.getPlanner(pc.getPlannerId());
+                    if(planner.getStatus().equals(Const.PLANNER_STATUS.ON)){
+                        customerList.add(customer);
+                    }
+                }
+
+            }
+
+        }
+
+        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
+        mav.addObject("customers", customerList);
+        mav.addObject("users", pageableResult.getItems());
+        mav.addObject("customerLevel", dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL));
+        mav.addObject("url", "personal/customer");
+        return mav;
     }
 
 }

@@ -23,8 +23,6 @@ public interface PlannerMapper {
 
     Planner selectByPrimaryKey(Integer id);
 
-    Planner selectByWorkNum(String workNum);
-
     int updateByExampleSelective(@Param("record") Planner record, @Param("example") PlannerExample example);
 
     int updateByExample(@Param("record") Planner record, @Param("example") PlannerExample example);

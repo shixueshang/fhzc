@@ -57,11 +57,12 @@ public interface CustomerService {
 	 Customer getCustomerByUid(Integer uId, String customerType);
 
     /**
-     * 获得客户的主理财师
+     * 获得客户的理财师
      * @param customerId
+     * @param isMain
      * @return
      */
-    PlannerCustomer getPlannerByCustomerId(Integer customerId);
+    PlannerCustomer getPlannerByCustomerId(Integer customerId, Integer isMain);
 
     /**
      * 根据客户id查询客户权益享用人

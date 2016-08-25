@@ -11,8 +11,6 @@ public class Planner {
 
     private Integer departmentId;
 
-    private String avatar;
-
     private String status;
 
     private Integer roleId;
@@ -55,14 +53,6 @@ public class Planner {
 
     public void setDepartmentId(Integer departmentId) {
         this.departmentId = departmentId;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar == null ? null : avatar.trim();
     }
 
     public String getStatus() {

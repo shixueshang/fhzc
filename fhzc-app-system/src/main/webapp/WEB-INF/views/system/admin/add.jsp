@@ -86,34 +86,34 @@
                                                 </div>
                                             </div>
                                             <div class="control-group">
-                                                <label class="control-label">用户密码</label>
+                                                <label class="control-label">用户密码<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <input type="password" name="password" id="password"  placeholder="请填写密码" class="large m-wrap" >
+                                                    <input type="password" required="1" name="password" id="password"  placeholder="请填写密码" class="large m-wrap" >
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">用户真实姓名</label>
+                                                <label class="control-label">用户真实姓名<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <input type="text" name="realname" id="realname" placeholder="请填写真实姓名" class="large m-wrap" >
+                                                    <input type="text" required="1" name="realname" id="realname" placeholder="请填写真实姓名" class="large m-wrap" >
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
 
 
                                             <div class="control-group">
-                                                <label class="control-label">所属角色</label>
+                                                <label class="control-label">所属角色<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <select name="role" id="belongRole" class="large m-wrap"  tabindex="1">
+                                                    <select name="role" required="1" id="belongRole" class="large m-wrap"  tabindex="1">
                                                     </select>
                                                 </div>
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">所属机构</label>
+                                                <label class="control-label">所属机构<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <input type="text" id="department" onclick="showTreeData(); return false;" class="large m-wrap"/>
+                                                    <input type="text" required="1" id="department" onclick="showTreeData(); return false;" class="large m-wrap"/>
                                                     <input type="hidden" name="organ" id="department_value" />
                                                 </div>
                                             </div>

@@ -6,7 +6,6 @@
     <result column="uid" property="uid" jdbcType="INTEGER" />
     <result column="work_num" property="workNum" jdbcType="VARCHAR" />
     <result column="department_id" property="departmentId" jdbcType="INTEGER" />
-    <result column="avatar" property="avatar" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="CHAR" />
     <result column="role_id" property="roleId" jdbcType="INTEGER" />
     <result column="entry_time" property="entryTime" jdbcType="DATE" />
@@ -73,8 +72,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    `id`, `uid`, `work_num`, `department_id`, `avatar`, `status`, `role_id`, `entry_time`, 
-    `leave_time`, `job_title_cn`, `position`
+    `id`, `uid`, `work_num`, `department_id`, `status`, `role_id`, `entry_time`, `leave_time`, 
+    `job_title_cn`, `position`
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.PlannerExample" >
     select
@@ -96,14 +95,6 @@
     from `planner`
     where `id` = #{id,jdbcType=INTEGER}
   </select>
-
-  <select id="selectByWorkNum" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select
-    <include refid="Base_Column_List" />
-    from `planner`
-    where `work_num` = #{workNum}
-  </select>
-
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from `planner`
     where `id` = #{id,jdbcType=INTEGER}
@@ -119,13 +110,13 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into `planner` (`uid`, `work_num`, `department_id`, 
-      `avatar`, `status`, `role_id`, 
-      `entry_time`, `leave_time`, `job_title_cn`, 
-      `position`)
+      `status`, `role_id`, `entry_time`, 
+      `leave_time`, `job_title_cn`, `position`
+      )
     values (#{uid,jdbcType=INTEGER}, #{workNum,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER}, 
-      #{avatar,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{roleId,jdbcType=INTEGER}, 
-      #{entryTime,jdbcType=DATE}, #{leaveTime,jdbcType=DATE}, #{jobTitleCn,jdbcType=VARCHAR}, 
-      #{position,jdbcType=VARCHAR})
+      #{status,jdbcType=CHAR}, #{roleId,jdbcType=INTEGER}, #{entryTime,jdbcType=DATE}, 
+      #{leaveTime,jdbcType=DATE}, #{jobTitleCn,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.Planner" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
@@ -141,9 +132,6 @@
       </if>
       <if test="departmentId != null" >
         `department_id`,
-      </if>
-      <if test="avatar != null" >
-        `avatar`,
       </if>
       <if test="status != null" >
         `status`,
@@ -173,9 +161,6 @@
       </if>
       <if test="departmentId != null" >
         #{departmentId,jdbcType=INTEGER},
-      </if>
-      <if test="avatar != null" >
-        #{avatar,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         #{status,jdbcType=CHAR},
@@ -218,9 +203,6 @@
       <if test="record.departmentId != null" >
         `department_id` = #{record.departmentId,jdbcType=INTEGER},
       </if>
-      <if test="record.avatar != null" >
-        `avatar` = #{record.avatar,jdbcType=VARCHAR},
-      </if>
       <if test="record.status != null" >
         `status` = #{record.status,jdbcType=CHAR},
       </if>
@@ -250,7 +232,6 @@
       `uid` = #{record.uid,jdbcType=INTEGER},
       `work_num` = #{record.workNum,jdbcType=VARCHAR},
       `department_id` = #{record.departmentId,jdbcType=INTEGER},
-      `avatar` = #{record.avatar,jdbcType=VARCHAR},
       `status` = #{record.status,jdbcType=CHAR},
       `role_id` = #{record.roleId,jdbcType=INTEGER},
       `entry_time` = #{record.entryTime,jdbcType=DATE},
@@ -272,9 +253,6 @@
       </if>
       <if test="departmentId != null" >
         `department_id` = #{departmentId,jdbcType=INTEGER},
-      </if>
-      <if test="avatar != null" >
-        `avatar` = #{avatar,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         `status` = #{status,jdbcType=CHAR},
@@ -302,7 +280,6 @@
     set `uid` = #{uid,jdbcType=INTEGER},
       `work_num` = #{workNum,jdbcType=VARCHAR},
       `department_id` = #{departmentId,jdbcType=INTEGER},
-      `avatar` = #{avatar,jdbcType=VARCHAR},
       `status` = #{status,jdbcType=CHAR},
       `role_id` = #{roleId,jdbcType=INTEGER},
       `entry_time` = #{entryTime,jdbcType=DATE},

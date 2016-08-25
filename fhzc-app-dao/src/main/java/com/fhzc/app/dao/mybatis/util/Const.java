@@ -489,5 +489,15 @@ public class Const {
 
         public static final String Wait = "wait";
     }
+
+    /**
+     * 理财师状态
+     */
+    public static class PLANNER_STATUS{
+
+        public static final String ON = "on";
+
+        public static final String OFF = "off";
+    }
 }
 
