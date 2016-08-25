@@ -180,4 +180,9 @@ public class CustomerServiceImpl implements CustomerService {
 		CustomerExample example = new CustomerExample();
 	    return customerMapper.selectByExample(example);
 	}
+
+    @Override
+    public void updatePlannerCustomer(PlannerCustomer pc) {
+       plannerCustomerMapper.updateByPrimaryKey(pc);
+    }
 }

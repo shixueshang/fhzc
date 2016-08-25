@@ -65,6 +65,13 @@ public interface DepartmentService {
     List<Department> findChildren(Integer parentId);
 
     /**
+     * 根据父级查询所有子级机构
+     * @param parentId
+     * @return
+     */
+    List<Department> findAllChildren(Integer parentId);
+
+    /**
      * 获得机构id
      * @param name
      * @return

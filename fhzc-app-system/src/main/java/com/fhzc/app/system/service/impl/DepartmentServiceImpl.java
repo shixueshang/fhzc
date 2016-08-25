@@ -106,6 +106,24 @@ public class DepartmentServiceImpl implements DepartmentService{
     }
 
     @Override
+    public List<Department> findAllChildren(Integer parentId) {
+        List<Department> result = new ArrayList<Department>();
+        List<Department> departments = this.findChildren(parentId);
+        recurseTree(result, departments);
+        return result;
+    }
+
+    private void recurseTree(List<Department> rs, List<Department> departments) {
+        for (Department node : departments) {
+            rs.add(node);
+            if (node.getLeaf() == Const.YES_OR_NO.NO) {
+                List<Department> children = this.findChildren(node.getDepartmentId());
+                recurseTree(rs, children);
+            }
+        }
+    }
+
+    @Override
     public Department getDeparent(String name) {
         DepartmentExample example = new DepartmentExample();
         DepartmentExample.Criteria criteria = example.createCriteria();

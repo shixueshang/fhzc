@@ -1,6 +1,7 @@
 package com.fhzc.app.system.service.impl;
 
 import com.fhzc.app.dao.mybatis.page.PageableResult;
+import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.dao.mybatis.util.EncryptUtils;
 import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.commons.util.excel.ExcelImporter;
@@ -387,6 +388,7 @@ public class PlannerServiceImpl implements PlannerService {
         PlannerExample example = new PlannerExample();
         PlannerExample.Criteria criteria = example.createCriteria();
         criteria.andWorkNumEqualTo(workNum);
+        criteria.andStatusEqualTo(Const.PLANNER_STATUS.ON);
         if(plannerMapper.countByExample(example) > 0){
             return plannerMapper.selectByExample(example).get(0);
         }
@@ -398,6 +400,7 @@ public class PlannerServiceImpl implements PlannerService {
         PlannerExample example = new PlannerExample();
         PlannerExample.Criteria criteria = example.createCriteria();
         criteria.andDepartmentIdEqualTo(departmentId);
+        criteria.andStatusEqualTo(Const.PLANNER_STATUS.ON);
         return plannerMapper.selectByExample(example);
     }
 
@@ -406,6 +409,7 @@ public class PlannerServiceImpl implements PlannerService {
         PlannerExample example = new PlannerExample();
         PlannerExample.Criteria criteria = example.createCriteria();
         criteria.andDepartmentIdIn(depts);
+        criteria.andStatusEqualTo(Const.PLANNER_STATUS.ON);
         List<Planner> planners = plannerMapper.selectByExample(example);
         List<Integer> plannerIds = new ArrayList<Integer>();
         for(Planner planner : planners){
@@ -420,6 +424,8 @@ public class PlannerServiceImpl implements PlannerService {
     @Override
     public List<Planner> findAllPlanner() {
         PlannerExample example = new PlannerExample();
+        PlannerExample.Criteria criteria = example.createCriteria();
+        criteria.andStatusEqualTo(Const.PLANNER_STATUS.ON);
         return plannerMapper.selectByExample(example);
     }
 }

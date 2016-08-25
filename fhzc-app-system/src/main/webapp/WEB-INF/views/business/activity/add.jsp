@@ -23,11 +23,6 @@
 <link rel="stylesheet" href="<%=contextPath%>/assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" />
 
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/bootstrap-datepicker/css/datepicker.css">
-
-<!-- test -->
-<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/jquery-ui/jquery-ui-1.10.1.custom.css">
-<script src="<%=contextPath%>/assets/jquery-ui/jquery-ui-1.10.1.custom.min.js"></script>
-<!-- end -->
 <!-- BEGIN CONTAINER -->
 <div class="page-container row-fluid">
     <jsp:include page="../../include/left.jsp"/>
@@ -121,7 +116,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">报名开始日期</label>
                                                 <div class="controls">
-                                                    <input type="text" name="applyBeginTime" placeholder="" size="16" id="applyBeginTime" value="<fmt:formatDate value="${activity.applyBeginTime}" pattern="yyyy-MM-dd HH:mm:ss"/>">
+                                                    <input type="text" name="applyBeginTime" class="m-wrap m-ctrl-medium date-picker" placeholder="" size="16" id="applyBeginTime" value="<fmt:formatDate value="${activity.applyBeginTime}" pattern="yyyy-MM-dd HH:mm:ss"/>">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -129,7 +124,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">报名结束日期</label>
                                                 <div class="controls">
-                                                    <input type="text" name="applyEndTime" placeholder="" size="16" id="applyEndTime" value="<fmt:formatDate value="${activity.applyEndTime}" pattern="yyyy-MM-dd HH:mm:ss"/>">
+                                                    <input type="text" name="applyEndTime" class="m-wrap m-ctrl-medium date-picker" placeholder="" size="16" id="applyEndTime" value="<fmt:formatDate value="${activity.applyEndTime}" pattern="yyyy-MM-dd HH:mm:ss"/>">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -137,7 +132,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">活动开始日期</label>
                                                 <div class="controls">
-                                                    <input type="text" name="beginTime" placeholder="" size="16" id="beginTime" value="<fmt:formatDate value="${activity.beginTime}" pattern="yyyy-MM-dd HH:mm:ss"/>">
+                                                    <input type="text" name="beginTime" class="m-wrap m-ctrl-medium date-picker" placeholder="" size="16" id="beginTime" value="<fmt:formatDate value="${activity.beginTime}" pattern="yyyy-MM-dd HH:mm:ss"/>">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -145,7 +140,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">活动结束日期</label>
                                                 <div class="controls">
-                                                    <input type="text" name="endTime" placeholder="" size="16" id="endTime"  value="<fmt:formatDate value="${activity.endTime}" pattern="yyyy-MM-dd HH:mm:ss"/>">
+                                                    <input type="text" name="endTime" class="m-wrap m-ctrl-medium date-picker" placeholder="" size="16" id="endTime"  value="<fmt:formatDate value="${activity.endTime}" pattern="yyyy-MM-dd HH:mm:ss"/>">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>

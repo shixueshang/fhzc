@@ -574,26 +574,9 @@ $(function(){
                     }
                 }
             },
-            expectedMin: {
-                number: true,
-                min:0
-            },
-            expectedMax: {
-                number: true,
-                min:0
-            },
-            investTermMin: {
-                required: true,
-                number: true,
-                min:0
-            },
+
             investTerm:{
-            	required: true,
-            },
-            investTermMax: {
-                required: true,
-                number: true,
-                min:1
+            	required: true
             },
             investThreshold: {
                 required: true,

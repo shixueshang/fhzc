@@ -8,7 +8,7 @@ TRUNCATE TABLE `system_module`;
 -- Query: SELECT * FROM bank.admin
 -- Date: 2016-07-08 16:31
 */
-INSERT INTO `admin` (`id`,`login`,`password`,`realname`,`role`,`login_ip`,`last_login_time`) VALUES (1,'admin','098f6bcd4621d373cade4e832627b4f6','管理员',1,NULL,NULL);
+INSERT INTO `admin` (`id`,`login`,`password`,`realname`,`role`,`login_ip`,`organ`) VALUES (1,'admin','098f6bcd4621d373cade4e832627b4f6','管理员',1,NULL,'1');
 
 /*
 -- Query: SELECT * FROM bank.system_module
@@ -71,6 +71,7 @@ INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (57, '消息列表', '/system/notice/list',NULL, 16, 3, 1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (58, '财务日报列表','/business/contract/list', NULL, 45, 3, 1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (59, '操作日志','/system/log/list',NULL,16,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (60, '缺位管理', '/personal/customer/missPlanner',NULL, 27, 3, 1);
 
 
 /*

@@ -90,7 +90,14 @@ public interface CustomerService {
     void delete(Integer id);
     
     /**
-     * 获取所有用户
+     * 获取所有客户
      */
 	List<Customer> findAllCustomer();
+
+    /**
+     * 更新客户理财师关系
+     * @param pc
+     * @return
+     */
+    void updatePlannerCustomer(PlannerCustomer pc);
 }

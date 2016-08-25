@@ -126,6 +126,9 @@
                         <shiro:hasPermission name="/personal/focus/list"><li>
                                 <a href="<%=contextPath%>/personal/focus/list">关注列表</a>
                             </li></shiro:hasPermission>
+                        <shiro:hasPermission name="/personal/customer/missPlanner"><li>
+                                <a href="<%=contextPath%>/personal/customer/missPlanner">缺位管理</a>
+                            </li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>
 

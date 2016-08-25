@@ -23,6 +23,16 @@ public class Planner {
 
     private String position;
 
+    private String plannerName;
+
+    public String getPlannerName() {
+        return plannerName;
+    }
+
+    public void setPlannerName(String plannerName) {
+        this.plannerName = plannerName;
+    }
+
     public Integer getId() {
         return id;
     }

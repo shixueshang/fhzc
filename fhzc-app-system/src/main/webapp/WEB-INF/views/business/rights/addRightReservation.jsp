@@ -295,10 +295,10 @@
             return false;
         }
 
-       /* if($('#csore').val() < $('#exchangeScore').val()){
+        if($('#csore').val() < $('#exchangeScore').val()){
             validateRightsError("您的积分不够");
             return false;
-        }*/
+        }
 
         $("#submit_btn").attr("disabled",true);
     }

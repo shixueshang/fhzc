@@ -133,7 +133,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">详情链接</label>
                                                 <div class="controls">
-                                                    <input type="text" name="url" value="${report.url}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <textarea name="url" placeholder="" class="span12 ckeditor m-wrap" rows="3">${report.url}</textarea>
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -186,6 +186,7 @@
 </div>
 
 <jsp:include page="../../include/footer.jsp"/>
+<script type="text/javascript" src="<%=contextPath%>/assets/ckeditor/ckeditor.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/assets/jquery-validation/dist/jquery.validate.min.js"></script>
 
 <script>

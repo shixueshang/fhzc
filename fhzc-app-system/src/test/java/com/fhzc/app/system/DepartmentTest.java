@@ -36,4 +36,13 @@ public class DepartmentTest extends Base {
             logger.info(tree.getId() + " : " + tree.getName());
         }
     }
+
+    @org.junit.Test
+    public void findAllChildren(){
+
+        List<Department> list = departmentService.findAllChildren(7);
+        for(Department department : list){
+            logger.info(department.getDepartmentId() + " : " + department.getTitle());
+        }
+    }
 }
