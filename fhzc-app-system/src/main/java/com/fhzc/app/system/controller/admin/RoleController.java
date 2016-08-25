@@ -116,6 +116,7 @@ public class RoleController extends BaseController {
         mav.addObject("role", adminRoleService.findRoleById(id));
         mav.addObject("resources", result);
         mav.addObject("children", children);
+        mav.addObject("url", "system/role");
         return mav;
     }
 

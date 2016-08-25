@@ -993,52 +993,62 @@ public class ProductExample {
             return (Criteria) this;
         }
 
-        public Criteria andAnnualYieldEqualTo(BigDecimal value) {
+        public Criteria andAnnualYieldEqualTo(String value) {
             addCriterion("`annual_yield` =", value, "annualYield");
             return (Criteria) this;
         }
 
-        public Criteria andAnnualYieldNotEqualTo(BigDecimal value) {
+        public Criteria andAnnualYieldNotEqualTo(String value) {
             addCriterion("`annual_yield` <>", value, "annualYield");
             return (Criteria) this;
         }
 
-        public Criteria andAnnualYieldGreaterThan(BigDecimal value) {
+        public Criteria andAnnualYieldGreaterThan(String value) {
             addCriterion("`annual_yield` >", value, "annualYield");
             return (Criteria) this;
         }
 
-        public Criteria andAnnualYieldGreaterThanOrEqualTo(BigDecimal value) {
+        public Criteria andAnnualYieldGreaterThanOrEqualTo(String value) {
             addCriterion("`annual_yield` >=", value, "annualYield");
             return (Criteria) this;
         }
 
-        public Criteria andAnnualYieldLessThan(BigDecimal value) {
+        public Criteria andAnnualYieldLessThan(String value) {
             addCriterion("`annual_yield` <", value, "annualYield");
             return (Criteria) this;
         }
 
-        public Criteria andAnnualYieldLessThanOrEqualTo(BigDecimal value) {
+        public Criteria andAnnualYieldLessThanOrEqualTo(String value) {
             addCriterion("`annual_yield` <=", value, "annualYield");
             return (Criteria) this;
         }
 
-        public Criteria andAnnualYieldIn(List<BigDecimal> values) {
+        public Criteria andAnnualYieldLike(String value) {
+            addCriterion("`annual_yield` like", value, "annualYield");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnnualYieldNotLike(String value) {
+            addCriterion("`annual_yield` not like", value, "annualYield");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnnualYieldIn(List<String> values) {
             addCriterion("`annual_yield` in", values, "annualYield");
             return (Criteria) this;
         }
 
-        public Criteria andAnnualYieldNotIn(List<BigDecimal> values) {
+        public Criteria andAnnualYieldNotIn(List<String> values) {
             addCriterion("`annual_yield` not in", values, "annualYield");
             return (Criteria) this;
         }
 
-        public Criteria andAnnualYieldBetween(BigDecimal value1, BigDecimal value2) {
+        public Criteria andAnnualYieldBetween(String value1, String value2) {
             addCriterion("`annual_yield` between", value1, value2, "annualYield");
             return (Criteria) this;
         }
 
-        public Criteria andAnnualYieldNotBetween(BigDecimal value1, BigDecimal value2) {
+        public Criteria andAnnualYieldNotBetween(String value1, String value2) {
             addCriterion("`annual_yield` not between", value1, value2, "annualYield");
             return (Criteria) this;
         }
@@ -2713,126 +2723,6 @@ public class ProductExample {
             return (Criteria) this;
         }
 
-        public Criteria andInvestTermMinIsNull() {
-            addCriterion("`invest_term_min` is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvestTermMinIsNotNull() {
-            addCriterion("`invest_term_min` is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvestTermMinEqualTo(Integer value) {
-            addCriterion("`invest_term_min` =", value, "investTermMin");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvestTermMinNotEqualTo(Integer value) {
-            addCriterion("`invest_term_min` <>", value, "investTermMin");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvestTermMinGreaterThan(Integer value) {
-            addCriterion("`invest_term_min` >", value, "investTermMin");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvestTermMinGreaterThanOrEqualTo(Integer value) {
-            addCriterion("`invest_term_min` >=", value, "investTermMin");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvestTermMinLessThan(Integer value) {
-            addCriterion("`invest_term_min` <", value, "investTermMin");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvestTermMinLessThanOrEqualTo(Integer value) {
-            addCriterion("`invest_term_min` <=", value, "investTermMin");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvestTermMinIn(List<Integer> values) {
-            addCriterion("`invest_term_min` in", values, "investTermMin");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvestTermMinNotIn(List<Integer> values) {
-            addCriterion("`invest_term_min` not in", values, "investTermMin");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvestTermMinBetween(Integer value1, Integer value2) {
-            addCriterion("`invest_term_min` between", value1, value2, "investTermMin");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvestTermMinNotBetween(Integer value1, Integer value2) {
-            addCriterion("`invest_term_min` not between", value1, value2, "investTermMin");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvestTermMaxIsNull() {
-            addCriterion("`invest_term_max` is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvestTermMaxIsNotNull() {
-            addCriterion("`invest_term_max` is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvestTermMaxEqualTo(Integer value) {
-            addCriterion("`invest_term_max` =", value, "investTermMax");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvestTermMaxNotEqualTo(Integer value) {
-            addCriterion("`invest_term_max` <>", value, "investTermMax");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvestTermMaxGreaterThan(Integer value) {
-            addCriterion("`invest_term_max` >", value, "investTermMax");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvestTermMaxGreaterThanOrEqualTo(Integer value) {
-            addCriterion("`invest_term_max` >=", value, "investTermMax");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvestTermMaxLessThan(Integer value) {
-            addCriterion("`invest_term_max` <", value, "investTermMax");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvestTermMaxLessThanOrEqualTo(Integer value) {
-            addCriterion("`invest_term_max` <=", value, "investTermMax");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvestTermMaxIn(List<Integer> values) {
-            addCriterion("`invest_term_max` in", values, "investTermMax");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvestTermMaxNotIn(List<Integer> values) {
-            addCriterion("`invest_term_max` not in", values, "investTermMax");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvestTermMaxBetween(Integer value1, Integer value2) {
-            addCriterion("`invest_term_max` between", value1, value2, "investTermMax");
-            return (Criteria) this;
-        }
-
-        public Criteria andInvestTermMaxNotBetween(Integer value1, Integer value2) {
-            addCriterion("`invest_term_max` not between", value1, value2, "investTermMax");
-            return (Criteria) this;
-        }
-
         public Criteria andInvestThresholdIsNull() {
             addCriterion("`invest_threshold` is null");
             return (Criteria) this;
@@ -3070,6 +2960,76 @@ public class ProductExample {
 
         public Criteria andCollectEndNotBetween(Date value1, Date value2) {
             addCriterionForJDBCDate("`collect_end` not between", value1, value2, "collectEnd");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermIsNull() {
+            addCriterion("`invest_term` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermIsNotNull() {
+            addCriterion("`invest_term` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermEqualTo(String value) {
+            addCriterion("`invest_term` =", value, "investTerm");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermNotEqualTo(String value) {
+            addCriterion("`invest_term` <>", value, "investTerm");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermGreaterThan(String value) {
+            addCriterion("`invest_term` >", value, "investTerm");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermGreaterThanOrEqualTo(String value) {
+            addCriterion("`invest_term` >=", value, "investTerm");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermLessThan(String value) {
+            addCriterion("`invest_term` <", value, "investTerm");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermLessThanOrEqualTo(String value) {
+            addCriterion("`invest_term` <=", value, "investTerm");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermLike(String value) {
+            addCriterion("`invest_term` like", value, "investTerm");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermNotLike(String value) {
+            addCriterion("`invest_term` not like", value, "investTerm");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermIn(List<String> values) {
+            addCriterion("`invest_term` in", values, "investTerm");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermNotIn(List<String> values) {
+            addCriterion("`invest_term` not in", values, "investTerm");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermBetween(String value1, String value2) {
+            addCriterion("`invest_term` between", value1, value2, "investTerm");
+            return (Criteria) this;
+        }
+
+        public Criteria andInvestTermNotBetween(String value1, String value2) {
+            addCriterion("`invest_term` not between", value1, value2, "investTerm");
             return (Criteria) this;
         }
     }

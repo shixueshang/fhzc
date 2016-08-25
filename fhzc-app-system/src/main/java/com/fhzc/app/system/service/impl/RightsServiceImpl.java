@@ -39,7 +39,6 @@ public class RightsServiceImpl implements RightsService {
     public void addOrUpdateRights(Rights rights) {
         Integer id = rights.getId();
         if(id == null){
-            rights.setCtime(new Date());
             rightsMapper.insert(rights);
         }else{
             rightsMapper.updateByPrimaryKey(rights);

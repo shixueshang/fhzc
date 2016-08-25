@@ -4,6 +4,7 @@ import com.fhzc.app.dao.mybatis.inter.FocusMapper;
 import com.fhzc.app.dao.mybatis.model.Focus;
 import com.fhzc.app.dao.mybatis.model.FocusExample;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
+import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.service.FocusService;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.session.RowBounds;
@@ -35,12 +36,12 @@ public class FocusServiceImpl implements FocusService{
     }
 
     @Override
-    public List<Focus> findFocusByType(String type, Integer typeId, Integer status) {
+    public List<Focus> findFocusByType(String type, Integer typeId) {
         FocusExample example = new FocusExample();
         FocusExample.Criteria criteria = example.createCriteria();
         criteria.andFtypeEqualTo(type);
         criteria.andFidEqualTo(typeId);
-        criteria.andStatusEqualTo(status);
+        criteria.andStatusEqualTo(Const.FOCUS_STATUS.ON);
         return focusMapper.selectByExample(example);
     }
 }

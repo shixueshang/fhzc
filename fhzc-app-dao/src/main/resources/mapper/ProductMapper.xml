@@ -15,7 +15,7 @@
     <result column="product_type" property="productType" jdbcType="VARCHAR" />
     <result column="renew_deadline" property="renewDeadline" jdbcType="VARCHAR" />
     <result column="dividend_day" property="dividendDay" jdbcType="VARCHAR" />
-    <result column="annual_yield" property="annualYield" jdbcType="DECIMAL" />
+    <result column="annual_yield" property="annualYield" jdbcType="VARCHAR" />
     <result column="income_distribution_type" property="incomeDistributionType" jdbcType="VARCHAR" />
     <result column="credit" property="credit" jdbcType="VARCHAR" />
     <result column="investment_orientation" property="investmentOrientation" jdbcType="VARCHAR" />
@@ -41,12 +41,11 @@
     <result column="is_renew" property="isRenew" jdbcType="INTEGER" />
     <result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
     <result column="detail_url" property="detailUrl" jdbcType="VARCHAR" />
-    <result column="invest_term_min" property="investTermMin" jdbcType="INTEGER" />
-    <result column="invest_term_max" property="investTermMax" jdbcType="INTEGER" />
     <result column="invest_threshold" property="investThreshold" jdbcType="DECIMAL" />
     <result column="throw_department" property="throwDepartment" jdbcType="INTEGER" />
     <result column="collect_start" property="collectStart" jdbcType="DATE" />
     <result column="collect_end" property="collectEnd" jdbcType="DATE" />
+    <result column="invest_term" property="investTerm" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.fhzc.app.dao.mybatis.model.Product" extends="BaseResultMap" >
     <result column="desc" property="desc" jdbcType="LONGVARCHAR" />
@@ -117,8 +116,8 @@
     `highlights`, `fund_management_fee`, `fund_subscription_fee`, `fund_manager`, `custodian`, 
     `investment_type`, `project_source`, `issuer`, `is_record`, `prove_url`, `display_order`, 
     `level`, `risk`, `cover`, `notice`, `score_factor`, `is_ recommend`, `is_display`, 
-    `is_renew`, `ctime`, `detail_url`, `invest_term_min`, `invest_term_max`, `invest_threshold`, 
-    `throw_department`, `collect_start`, `collect_end`
+    `is_renew`, `ctime`, `detail_url`, `invest_threshold`, `throw_department`, `collect_start`, 
+    `collect_end`, `invest_term`
   </sql>
   <sql id="Blob_Column_List" >
     `desc`, `detail_content`
@@ -188,14 +187,14 @@
       `risk`, `cover`, `notice`, 
       `score_factor`, `is_ recommend`, `is_display`, 
       `is_renew`, `ctime`, `detail_url`, 
-      `invest_term_min`, `invest_term_max`, `invest_threshold`, 
-      `throw_department`, `collect_start`, `collect_end`, 
-      `desc`, `detail_content`)
+      `invest_threshold`, `throw_department`, `collect_start`, 
+      `collect_end`, `invest_term`, `desc`, 
+      `detail_content`)
     values (#{status,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{foundDay,jdbcType=DATE}, #{buyDay,jdbcType=VARCHAR}, #{redeemDay,jdbcType=VARCHAR}, 
       #{valueDay,jdbcType=DATE}, #{expiryDay,jdbcType=DATE}, #{issueType,jdbcType=INTEGER}, 
       #{productType,jdbcType=VARCHAR}, #{renewDeadline,jdbcType=VARCHAR}, #{dividendDay,jdbcType=VARCHAR}, 
-      #{annualYield,jdbcType=DECIMAL}, #{incomeDistributionType,jdbcType=VARCHAR}, #{credit,jdbcType=VARCHAR}, 
+      #{annualYield,jdbcType=VARCHAR}, #{incomeDistributionType,jdbcType=VARCHAR}, #{credit,jdbcType=VARCHAR}, 
       #{investmentOrientation,jdbcType=VARCHAR}, #{increaseTrust,jdbcType=VARCHAR}, #{highlights,jdbcType=VARCHAR}, 
       #{fundManagementFee,jdbcType=VARCHAR}, #{fundSubscriptionFee,jdbcType=VARCHAR}, 
       #{fundManager,jdbcType=VARCHAR}, #{custodian,jdbcType=VARCHAR}, #{investmentType,jdbcType=VARCHAR}, 
@@ -204,9 +203,9 @@
       #{risk,jdbcType=INTEGER}, #{cover,jdbcType=VARCHAR}, #{notice,jdbcType=VARCHAR}, 
       #{scoreFactor,jdbcType=DECIMAL}, #{isRecommend,jdbcType=INTEGER}, #{isDisplay,jdbcType=INTEGER}, 
       #{isRenew,jdbcType=INTEGER}, #{ctime,jdbcType=TIMESTAMP}, #{detailUrl,jdbcType=VARCHAR}, 
-      #{investTermMin,jdbcType=INTEGER}, #{investTermMax,jdbcType=INTEGER}, #{investThreshold,jdbcType=DECIMAL}, 
-      #{throwDepartment,jdbcType=INTEGER}, #{collectStart,jdbcType=DATE}, #{collectEnd,jdbcType=DATE}, 
-      #{desc,jdbcType=LONGVARCHAR}, #{detailContent,jdbcType=LONGVARCHAR})
+      #{investThreshold,jdbcType=DECIMAL}, #{throwDepartment,jdbcType=INTEGER}, #{collectStart,jdbcType=DATE}, 
+      #{collectEnd,jdbcType=DATE}, #{investTerm,jdbcType=VARCHAR}, #{desc,jdbcType=LONGVARCHAR}, 
+      #{detailContent,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.Product" >
     <selectKey resultType="java.lang.Integer" keyProperty="pid" order="AFTER" >
@@ -328,12 +327,6 @@
       <if test="detailUrl != null" >
         `detail_url`,
       </if>
-      <if test="investTermMin != null" >
-        `invest_term_min`,
-      </if>
-      <if test="investTermMax != null" >
-        `invest_term_max`,
-      </if>
       <if test="investThreshold != null" >
         `invest_threshold`,
       </if>
@@ -345,6 +338,9 @@
       </if>
       <if test="collectEnd != null" >
         `collect_end`,
+      </if>
+      <if test="investTerm != null" >
+        `invest_term`,
       </if>
       <if test="desc != null" >
         `desc`,
@@ -391,7 +387,7 @@
         #{dividendDay,jdbcType=VARCHAR},
       </if>
       <if test="annualYield != null" >
-        #{annualYield,jdbcType=DECIMAL},
+        #{annualYield,jdbcType=VARCHAR},
       </if>
       <if test="incomeDistributionType != null" >
         #{incomeDistributionType,jdbcType=VARCHAR},
@@ -468,12 +464,6 @@
       <if test="detailUrl != null" >
         #{detailUrl,jdbcType=VARCHAR},
       </if>
-      <if test="investTermMin != null" >
-        #{investTermMin,jdbcType=INTEGER},
-      </if>
-      <if test="investTermMax != null" >
-        #{investTermMax,jdbcType=INTEGER},
-      </if>
       <if test="investThreshold != null" >
         #{investThreshold,jdbcType=DECIMAL},
       </if>
@@ -485,6 +475,9 @@
       </if>
       <if test="collectEnd != null" >
         #{collectEnd,jdbcType=DATE},
+      </if>
+      <if test="investTerm != null" >
+        #{investTerm,jdbcType=VARCHAR},
       </if>
       <if test="desc != null" >
         #{desc,jdbcType=LONGVARCHAR},
@@ -543,7 +536,7 @@
         `dividend_day` = #{record.dividendDay,jdbcType=VARCHAR},
       </if>
       <if test="record.annualYield != null" >
-        `annual_yield` = #{record.annualYield,jdbcType=DECIMAL},
+        `annual_yield` = #{record.annualYield,jdbcType=VARCHAR},
       </if>
       <if test="record.incomeDistributionType != null" >
         `income_distribution_type` = #{record.incomeDistributionType,jdbcType=VARCHAR},
@@ -620,12 +613,6 @@
       <if test="record.detailUrl != null" >
         `detail_url` = #{record.detailUrl,jdbcType=VARCHAR},
       </if>
-      <if test="record.investTermMin != null" >
-        `invest_term_min` = #{record.investTermMin,jdbcType=INTEGER},
-      </if>
-      <if test="record.investTermMax != null" >
-        `invest_term_max` = #{record.investTermMax,jdbcType=INTEGER},
-      </if>
       <if test="record.investThreshold != null" >
         `invest_threshold` = #{record.investThreshold,jdbcType=DECIMAL},
       </if>
@@ -637,6 +624,9 @@
       </if>
       <if test="record.collectEnd != null" >
         `collect_end` = #{record.collectEnd,jdbcType=DATE},
+      </if>
+      <if test="record.investTerm != null" >
+        `invest_term` = #{record.investTerm,jdbcType=VARCHAR},
       </if>
       <if test="record.desc != null" >
         `desc` = #{record.desc,jdbcType=LONGVARCHAR},
@@ -664,7 +654,7 @@
       `product_type` = #{record.productType,jdbcType=VARCHAR},
       `renew_deadline` = #{record.renewDeadline,jdbcType=VARCHAR},
       `dividend_day` = #{record.dividendDay,jdbcType=VARCHAR},
-      `annual_yield` = #{record.annualYield,jdbcType=DECIMAL},
+      `annual_yield` = #{record.annualYield,jdbcType=VARCHAR},
       `income_distribution_type` = #{record.incomeDistributionType,jdbcType=VARCHAR},
       `credit` = #{record.credit,jdbcType=VARCHAR},
       `investment_orientation` = #{record.investmentOrientation,jdbcType=VARCHAR},
@@ -690,12 +680,11 @@
       `is_renew` = #{record.isRenew,jdbcType=INTEGER},
       `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
       `detail_url` = #{record.detailUrl,jdbcType=VARCHAR},
-      `invest_term_min` = #{record.investTermMin,jdbcType=INTEGER},
-      `invest_term_max` = #{record.investTermMax,jdbcType=INTEGER},
       `invest_threshold` = #{record.investThreshold,jdbcType=DECIMAL},
       `throw_department` = #{record.throwDepartment,jdbcType=INTEGER},
       `collect_start` = #{record.collectStart,jdbcType=DATE},
       `collect_end` = #{record.collectEnd,jdbcType=DATE},
+      `invest_term` = #{record.investTerm,jdbcType=VARCHAR},
       `desc` = #{record.desc,jdbcType=LONGVARCHAR},
       `detail_content` = #{record.detailContent,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
@@ -717,7 +706,7 @@
       `product_type` = #{record.productType,jdbcType=VARCHAR},
       `renew_deadline` = #{record.renewDeadline,jdbcType=VARCHAR},
       `dividend_day` = #{record.dividendDay,jdbcType=VARCHAR},
-      `annual_yield` = #{record.annualYield,jdbcType=DECIMAL},
+      `annual_yield` = #{record.annualYield,jdbcType=VARCHAR},
       `income_distribution_type` = #{record.incomeDistributionType,jdbcType=VARCHAR},
       `credit` = #{record.credit,jdbcType=VARCHAR},
       `investment_orientation` = #{record.investmentOrientation,jdbcType=VARCHAR},
@@ -743,12 +732,11 @@
       `is_renew` = #{record.isRenew,jdbcType=INTEGER},
       `ctime` = #{record.ctime,jdbcType=TIMESTAMP},
       `detail_url` = #{record.detailUrl,jdbcType=VARCHAR},
-      `invest_term_min` = #{record.investTermMin,jdbcType=INTEGER},
-      `invest_term_max` = #{record.investTermMax,jdbcType=INTEGER},
       `invest_threshold` = #{record.investThreshold,jdbcType=DECIMAL},
       `throw_department` = #{record.throwDepartment,jdbcType=INTEGER},
       `collect_start` = #{record.collectStart,jdbcType=DATE},
-      `collect_end` = #{record.collectEnd,jdbcType=DATE}
+      `collect_end` = #{record.collectEnd,jdbcType=DATE},
+      `invest_term` = #{record.investTerm,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -793,7 +781,7 @@
         `dividend_day` = #{dividendDay,jdbcType=VARCHAR},
       </if>
       <if test="annualYield != null" >
-        `annual_yield` = #{annualYield,jdbcType=DECIMAL},
+        `annual_yield` = #{annualYield,jdbcType=VARCHAR},
       </if>
       <if test="incomeDistributionType != null" >
         `income_distribution_type` = #{incomeDistributionType,jdbcType=VARCHAR},
@@ -870,12 +858,6 @@
       <if test="detailUrl != null" >
         `detail_url` = #{detailUrl,jdbcType=VARCHAR},
       </if>
-      <if test="investTermMin != null" >
-        `invest_term_min` = #{investTermMin,jdbcType=INTEGER},
-      </if>
-      <if test="investTermMax != null" >
-        `invest_term_max` = #{investTermMax,jdbcType=INTEGER},
-      </if>
       <if test="investThreshold != null" >
         `invest_threshold` = #{investThreshold,jdbcType=DECIMAL},
       </if>
@@ -887,6 +869,9 @@
       </if>
       <if test="collectEnd != null" >
         `collect_end` = #{collectEnd,jdbcType=DATE},
+      </if>
+      <if test="investTerm != null" >
+        `invest_term` = #{investTerm,jdbcType=VARCHAR},
       </if>
       <if test="desc != null" >
         `desc` = #{desc,jdbcType=LONGVARCHAR},
@@ -911,7 +896,7 @@
       `product_type` = #{productType,jdbcType=VARCHAR},
       `renew_deadline` = #{renewDeadline,jdbcType=VARCHAR},
       `dividend_day` = #{dividendDay,jdbcType=VARCHAR},
-      `annual_yield` = #{annualYield,jdbcType=DECIMAL},
+      `annual_yield` = #{annualYield,jdbcType=VARCHAR},
       `income_distribution_type` = #{incomeDistributionType,jdbcType=VARCHAR},
       `credit` = #{credit,jdbcType=VARCHAR},
       `investment_orientation` = #{investmentOrientation,jdbcType=VARCHAR},
@@ -937,12 +922,11 @@
       `is_renew` = #{isRenew,jdbcType=INTEGER},
       `ctime` = #{ctime,jdbcType=TIMESTAMP},
       `detail_url` = #{detailUrl,jdbcType=VARCHAR},
-      `invest_term_min` = #{investTermMin,jdbcType=INTEGER},
-      `invest_term_max` = #{investTermMax,jdbcType=INTEGER},
       `invest_threshold` = #{investThreshold,jdbcType=DECIMAL},
       `throw_department` = #{throwDepartment,jdbcType=INTEGER},
       `collect_start` = #{collectStart,jdbcType=DATE},
       `collect_end` = #{collectEnd,jdbcType=DATE},
+      `invest_term` = #{investTerm,jdbcType=VARCHAR},
       `desc` = #{desc,jdbcType=LONGVARCHAR},
       `detail_content` = #{detailContent,jdbcType=LONGVARCHAR}
     where `pid` = #{pid,jdbcType=INTEGER}
@@ -961,7 +945,7 @@
       `product_type` = #{productType,jdbcType=VARCHAR},
       `renew_deadline` = #{renewDeadline,jdbcType=VARCHAR},
       `dividend_day` = #{dividendDay,jdbcType=VARCHAR},
-      `annual_yield` = #{annualYield,jdbcType=DECIMAL},
+      `annual_yield` = #{annualYield,jdbcType=VARCHAR},
       `income_distribution_type` = #{incomeDistributionType,jdbcType=VARCHAR},
       `credit` = #{credit,jdbcType=VARCHAR},
       `investment_orientation` = #{investmentOrientation,jdbcType=VARCHAR},
@@ -987,12 +971,11 @@
       `is_renew` = #{isRenew,jdbcType=INTEGER},
       `ctime` = #{ctime,jdbcType=TIMESTAMP},
       `detail_url` = #{detailUrl,jdbcType=VARCHAR},
-      `invest_term_min` = #{investTermMin,jdbcType=INTEGER},
-      `invest_term_max` = #{investTermMax,jdbcType=INTEGER},
       `invest_threshold` = #{investThreshold,jdbcType=DECIMAL},
       `throw_department` = #{throwDepartment,jdbcType=INTEGER},
       `collect_start` = #{collectStart,jdbcType=DATE},
-      `collect_end` = #{collectEnd,jdbcType=DATE}
+      `collect_end` = #{collectEnd,jdbcType=DATE},
+      `invest_term` = #{investTerm,jdbcType=VARCHAR}
     where `pid` = #{pid,jdbcType=INTEGER}
   </update>
   <select resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.ProductExample" id="selectByExampleWithBLOBsWithRowbounds" >

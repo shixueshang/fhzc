@@ -4,7 +4,7 @@
 <div class="footer" style="text-align: center; color: #fff">
     <a href="http://www.foriseassets.com" style="color: #fff">
         复华资产
-    </a> Copyright. 版本：0.1.3
+    </a> Copyright. 版本：0.1.20
 </div>
 <!-- END FOOTER -->
 

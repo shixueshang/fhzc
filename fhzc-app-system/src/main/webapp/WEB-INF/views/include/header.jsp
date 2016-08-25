@@ -32,7 +32,6 @@
 
     <script src="<%=contextPath%>/assets/flot/jquery.flot.js"></script>
     <script src="<%=contextPath%>/assets/flot/jquery.flot.resize.js"></script>
-    <script type="text/javascript" src="<%=contextPath%>/assets/gritter/js/jquery.gritter.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/assets/js/jquery.pulsate.min.js"></script>
 
     <!-- ie8 fixes -->

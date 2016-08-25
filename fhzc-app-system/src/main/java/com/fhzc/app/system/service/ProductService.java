@@ -104,14 +104,10 @@ public interface ProductService {
     /**
      * 根据产品id获得产品预约列表
      * @param pId
+     * @param result
      * @return
      */
-    List<ProductReservation> findOrdersByPid(Integer pId);
+    List<ProductReservation> findOrdersByPid(Integer pId, String result);
     
-    /**
-     * 根据产品id获得产品预约成功的产品
-     * @param pId
-     * @return
-     */
-    List<ProductReservation> findSuccessOrdersByPid(Integer pId,String result);
+
 }

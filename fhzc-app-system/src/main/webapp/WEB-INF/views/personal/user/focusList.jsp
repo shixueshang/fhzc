@@ -21,9 +21,6 @@
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/jquery-tags-input/jquery.tagsinput.css" />
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" />
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/jquery-ui/jquery-ui-1.10.1.custom.css">
-<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/custom_datepicker/jquery-ui-timepicker-addon.css">
-<script src="<%=contextPath%>/assets/jquery-ui/jquery-ui-1.10.1.custom.min.js"></script>
-<script src="<%=contextPath%>/assets/custom_datepicker/jquery-ui-timepicker-addon.js"></script>
 <!-- BEGIN CONTAINER -->
 <div class="page-container row-fluid">
     <jsp:include page="../../include/left.jsp"/>
@@ -51,7 +48,7 @@
             </div>
 
             <div class="row-fluid">
-                <form name="searchForm" class="form-inline" action="/personal/user/focus/list">
+                <form name="searchForm" class="form-inline" action="/personal/focus/list">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">关注类型:</label>
                         <select id="ftype" name="ftype">
@@ -114,19 +111,5 @@
     </div>
 
 </div>
-
-<script type="text/javascript">
-$(document).ready(function () {
-    $('#startTime').datetimepicker({
-        timeFormat: 'HH:mm:ss',
-        dateFormat: "yy-mm-dd"
-    });
-
-    $('#endTime').datetimepicker({
-        timeFormat: 'HH:mm:ss',
-        dateFormat: "yy-mm-dd"
-    });
-});
-</script>
 
 <jsp:include page="../../include/footer.jsp"/>

@@ -30,7 +30,7 @@ public class Product {
 
     private String dividendDay;
 
-    private BigDecimal annualYield;
+    private String annualYield;
 
     private String incomeDistributionType;
 
@@ -82,10 +82,6 @@ public class Product {
 
     private String detailUrl;
 
-    private Integer investTermMin;
-
-    private Integer investTermMax;
-
     private BigDecimal investThreshold;
 
     private Integer throwDepartment;
@@ -93,6 +89,8 @@ public class Product {
     private Date collectStart;
 
     private Date collectEnd;
+
+    private String investTerm;
 
     private String desc;
 
@@ -232,12 +230,12 @@ public class Product {
         this.dividendDay = dividendDay == null ? null : dividendDay.trim();
     }
 
-    public BigDecimal getAnnualYield() {
+    public String getAnnualYield() {
         return annualYield;
     }
 
-    public void setAnnualYield(BigDecimal annualYield) {
-        this.annualYield = annualYield;
+    public void setAnnualYield(String annualYield) {
+        this.annualYield = annualYield == null ? null : annualYield.trim();
     }
 
     public String getIncomeDistributionType() {
@@ -440,22 +438,6 @@ public class Product {
         this.detailUrl = detailUrl == null ? null : detailUrl.trim();
     }
 
-    public Integer getInvestTermMin() {
-        return investTermMin;
-    }
-
-    public void setInvestTermMin(Integer investTermMin) {
-        this.investTermMin = investTermMin;
-    }
-
-    public Integer getInvestTermMax() {
-        return investTermMax;
-    }
-
-    public void setInvestTermMax(Integer investTermMax) {
-        this.investTermMax = investTermMax;
-    }
-
     public BigDecimal getInvestThreshold() {
         return investThreshold;
     }
@@ -486,6 +468,14 @@ public class Product {
 
     public void setCollectEnd(Date collectEnd) {
         this.collectEnd = collectEnd;
+    }
+
+    public String getInvestTerm() {
+        return investTerm;
+    }
+
+    public void setInvestTerm(String investTerm) {
+        this.investTerm = investTerm == null ? null : investTerm.trim();
     }
 
     public String getDesc() {

@@ -47,7 +47,7 @@ public class ReportController extends BaseController {
         ModelAndView mav = new ModelAndView("business/report/list");
         PageableResult<Report> pageableResult =  reportService.findPageReports(page, size);
         for (Report report : pageableResult.getItems()) {
-        	List<Focus> focuses = focusService.findFocusByType(Const.FOCUS_TYPE.REPORT, report.getId(),1);
+        	List<Focus> focuses = focusService.findFocusByType(Const.FOCUS_TYPE.REPORT, report.getId());
         	report.setFocusNum(focuses.size() > 0 ? focuses.size() : 0);
 		}
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));

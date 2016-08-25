@@ -58,7 +58,7 @@
                             <h4><i class="icon-reorder"></i></h4>
                         </div>
                         <div class="portlet-body">
-                            <table class="table table-bordered table-hover">
+                            <table id = "example" class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
                                     <td>产品代码</td>
@@ -72,6 +72,7 @@
                                     <td>关注人数</td>
                                     <td>预约人数</td>
                                     <td>预约金额(万元)</td>
+                                    <td>排序</td>
                                     <td>操作</td>
                                 </tr>
                                 </thead>
@@ -120,6 +121,9 @@
                                         <td>${product.focusNum}</td>
                                         <td>${product.orderNum}</td>
                                         <td>${product.orderAmount}</td>
+                                        <td style="margin: center;vertical-align: middle;">
+                                        <a href="#" id="up" class="up" onclick="moveUp(${product.pid})">上移</a>&nbsp&nbsp<a href="#" id="down" class="down" onclick="moveDown(${product.pid})">下移</a></br>
+                                        </td>
                                         <td>
                                             <a href="<%=contextPath%>/business/product/detail/${product.pid}" class="btn mini purple"><i class="icon-edit"></i> 编辑</a>
                                             <a href="<%=contextPath%>/business/product/order/${product.pid}" class="btn mini blue"><i class="icon-share"></i> 预约</a>
@@ -144,3 +148,58 @@
 
 
 <jsp:include page="../../include/footer.jsp"/>
+<script type="text/javascript">
+	function moveUp(id){
+		 $.ajax({
+		    type:"get",
+		    cache:false,
+		    url:"<%=contextPath%>/business/product/upDisplayOrder?pid="+id, 
+		    dataType:"text",
+		    success: function(data) {
+		    	if("top" == data){
+		    		alert("该条记录已是最顶端");
+		    	}else{
+		    		window.location.href="<%=contextPath%>/business/product/list"; 
+		    	}
+		     },
+		   });
+	}
+	function moveDown(id){
+		 $.ajax({
+			    type:"get",
+			    cache:false,
+			    url:"<%=contextPath%>/business/product/downDisplayOrder?pid="+id, 
+			    dataType:"text",
+			    success: function(data) { 
+			      	if("bottom" == data){
+			    		alert("该条记录已是最底端");
+			    	}else{
+			    		window.location.href="<%=contextPath%>/business/product/list"; 
+			    	}
+			     },
+			   });
+	}
+	$('#example').DataTable({
+    	"bAutoWidth" : false,
+    	"bFilter": true, //过滤功能
+    	"bSort": false, //排序功能
+        "oLanguage": {
+                "sProcessing":   "处理中...",
+                "sLengthMenu":   "_MENU_ 记录/页",
+                "sZeroRecords":  "没有匹配的记录",
+                "sInfo":         "显示第 _START_ 至 _END_ 项记录，共 _TOTAL_ 项",
+                "sInfoEmpty":    "显示第 0 至 0 项记录，共 0 项",
+                "sInfoFiltered": "(由 _MAX_ 项记录过滤)",
+                "sInfoPostFix":  "",
+                "sSearch":       "搜索:",
+                "sUrl":          "",
+                "oPaginate": {
+                    "sFirst":    "首页",
+                    "sPrevious": "上页",
+                    "sNext":     "下页",
+                    "sLast":     "末页"
+                }
+            }
+        
+    });
+</script>

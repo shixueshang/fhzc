@@ -20,10 +20,8 @@
 
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/jquery-tags-input/jquery.tagsinput.css" />
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" />
-<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/jquery-ui/jquery-ui-1.10.1.custom.css">
-<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/custom_datepicker/jquery-ui-timepicker-addon.css">
-<script src="<%=contextPath%>/assets/jquery-ui/jquery-ui-1.10.1.custom.min.js"></script>
-<script src="<%=contextPath%>/assets/custom_datepicker/jquery-ui-timepicker-addon.js"></script>
+
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/bootstrap-datepicker/css/datepicker.css">
 <!-- BEGIN CONTAINER -->
 <div class="page-container row-fluid">
     <jsp:include page="../../include/left.jsp"/>
@@ -57,9 +55,9 @@
                         <input class="form-control" id="productName" name="productName" value="${param.productName}">
 
                         <label class="col-sm-2 control-label">预约时间:</label>
-                        <input class="form-control" id="startTime" name="startTime" style="width: 180px" value="${param.startTime}">
+                        <input class="form-control date-picker" id="startTime" name="startTime" style="width: 180px" value="${param.startTime}">
                         ~
-                        <input class="form-control" id="endTime" name="endTime" style="width: 180px" value="${param.endTime}">
+                        <input class="form-control date-picker" id="endTime" name="endTime" style="width: 180px" value="${param.endTime}">
                         <button type="submit">查找</button>
                     </div>
                 </form>
@@ -117,19 +115,5 @@
     </div>
 
 </div>
-
-<script type="text/javascript">
-$(document).ready(function () {
-    $('#startTime').datetimepicker({
-        timeFormat: 'HH:mm:ss',
-        dateFormat: "yy-mm-dd"
-    });
-
-    $('#endTime').datetimepicker({
-        timeFormat: 'HH:mm:ss',
-        dateFormat: "yy-mm-dd"
-    });
-});
-</script>
 
 <jsp:include page="../../include/footer.jsp"/>

@@ -23,6 +23,36 @@ public class RightsReservation {
 
     private Date ctime;
 
+    private String rightName;
+
+    private String customerName;
+
+    private String customerMobile;
+
+    public String getRightName() {
+        return rightName;
+    }
+
+    public void setRightName(String rightName) {
+        this.rightName = rightName;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getCustomerMobile() {
+        return customerMobile;
+    }
+
+    public void setCustomerMobile(String customerMobile) {
+        this.customerMobile = customerMobile;
+    }
+
     public Integer getId() {
         return id;
     }

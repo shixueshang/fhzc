@@ -100,10 +100,10 @@
                                 <a href="<%=contextPath%>/business/rights/pub">权益新增</a>
                             </li></shiro:hasPermission>
                         <shiro:hasPermission name="/business/rights/reservation/pub"><li>
-                            <a href="<%=contextPath%>/business/rights/reservation/pub">添加权益预约</a>
+                            <a href="<%=contextPath%>/business/rights/reservation/pub">权益预约</a>
                         </li></shiro:hasPermission>
                         <shiro:hasPermission name="/business/rights/reservations"><li>
-                            <a href="<%=contextPath%>/business/rights/reservations">权益预约列表</a>
+                            <a href="<%=contextPath%>/business/rights/reservations">预约列表</a>
                         </li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>

@@ -9,13 +9,11 @@ import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.aop.SystemControllerLog;
 import com.fhzc.app.system.commons.util.FileUtil;
 import com.fhzc.app.system.commons.util.TextUtils;
-import com.fhzc.app.system.commons.vo.CustomerVo;
-import com.fhzc.app.system.commons.vo.RightReservationVo;
 import com.fhzc.app.system.commons.vo.RightVo;
+import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.*;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -51,6 +49,9 @@ public class RightsController extends BaseController{
     @Resource
     private FocusService focusService;
 
+    @Resource
+    private ScoreService scoreService;
+
     /**
      * 权益列表
      * @return
@@ -59,11 +60,11 @@ public class RightsController extends BaseController{
     @SystemControllerLog(description = "查看权益列表")
     public ModelAndView listRights(){
         ModelAndView mav = new ModelAndView("business/rights/list");
-        PageableResult<Rights> pageableResult = rightsService.findPageRights(page, size);
+        PageableResult<Rights> pageableResult = rightsService.findPageRights(page, 300);
         for(Rights rights : pageableResult.getItems() ){
-        	List<Focus> focuses = focusService.findFocusByType(Const.FOCUS_TYPE.RIGHTS, rights.getId(),1);
+        	List<Focus> focuses = focusService.findFocusByType(Const.FOCUS_TYPE.RIGHTS, rights.getId());
         	rights.setFocusNum(focuses.size() > 0 ? focuses.size() : 0);
-        	List<RightsReservation> orders= rightsService.findSuccessOrdersById(rights.getId(), 1);
+        	List<RightsReservation> orders= rightsService.findSuccessOrdersById(rights.getId(), Const.FOCUS_STATUS.ON);
         	rights.setOrderNum(orders.size() > 0 ? orders.size() : 0);
         }
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
@@ -100,6 +101,7 @@ public class RightsController extends BaseController{
             FileUtil.transferFile(coverPath, coverName, coverFile);
             rights.setCover(coverPath + coverName);
         }
+        rights.setCtime(new Date());
         rightsService.addOrUpdateRights(rights);
 
         return "redirect:/business/rights/list";
@@ -120,26 +122,15 @@ public class RightsController extends BaseController{
     }
 
     /**
-     * 权益预约列表
-     * @return
-     */
-    @RequestMapping(value = "/order/list", method = RequestMethod.GET)
-    public ModelAndView listRightsOrder(){
-        ModelAndView mav = new ModelAndView("business/rights/order/list");
-
-        return mav;
-    }
-
-    /**
      * 创建权益预约
      * @return
      */
     @RequestMapping(value = "/reservation/pub", method = RequestMethod.GET)
-    @SystemControllerLog(description = "创建权益预约")
+    @SystemControllerLog(description = "新增权益预约")
     public ModelAndView preReservationAdd(){
         ModelAndView mav = new ModelAndView("business/rights/addRightReservation");
-        PageableResult<Rights> pageableResult = rightsService.findPageRights(1, 500);
-        mav.addObject("rights", pageableResult.getItems());
+        mav.addObject("rights", rightsService.getAllRights());
+        mav.addObject("url", "business/rights");
         return mav;
     }
 
@@ -149,9 +140,16 @@ public class RightsController extends BaseController{
      */
     @RequestMapping(value = "/check/phone", method = RequestMethod.GET)
     @ResponseBody
-    public CustomerVo checkPhone(String phoneNum){
-        CustomerVo vo = customerService.getCustomerInfoByMobile(phoneNum);
-        return vo;
+    public Customer checkPhone(String phoneNum){
+        User user = userService.getUserByMobile(phoneNum.trim());
+        if(user == null){
+            return null;
+        }
+        Customer customer = customerService.getCustomerByUid(user.getUid(), null);
+        customer.setCustomerName(user.getRealname());
+        customer.setAvailableScore(scoreService.sumScore(scoreService.getAvailableList(user.getUid())));
+        customer.setLevelName(super.getDicName(customer.getLevelId(), Const.DIC_CAT.CUSTOMER_LEVEL));
+        return customer;
     }
 
     /**
@@ -170,174 +168,65 @@ public class RightsController extends BaseController{
     }
 
     /**
-     * 获取权益信息
+     * 权益预约
      * @return
      */
     @RequestMapping(value = "/reservation/add", method = RequestMethod.GET)
-    public ModelAndView addReservation(long reservationRight, long customerId, Integer exchangeScore, Date reservationTime){
+    @SystemControllerLog(description = "权益预约")
+    public String addReservation(Integer reservationRight, Integer customerId, Integer exchangeScore){
         RightsReservation reservation = new RightsReservation();
         reservation.setCtime(new Date());
-        reservation.setRightsId((int) reservationRight);
-        reservation.setCustomerId((int)customerId);
+        reservation.setRightsId(reservationRight);
+        reservation.setCustomerId(customerId);
         reservation.setScoreCost(exchangeScore);
-        reservation.setMarkDate(reservationTime);
+        reservation.setMarkDate(new Date());
         reservation.setStatus(1);
         rightsService.addRightsReservation(reservation);
 
-        ModelAndView mav = new ModelAndView("business/rights/addRightReservation");
-        PageableResult<Rights> pageableResult = rightsService.findPageRights(1, 500);
-        mav.addObject("rights", pageableResult.getItems());
-        return mav;
+        return "redirect:/business/rights/reservations";
     }
 
+    /**
+     * 权益预约列表
+     * @param rightName
+     * @param identityId
+     * @param startTime
+     * @param endTime
+     * @return
+     */
     @RequestMapping(value = "/reservations", method = RequestMethod.GET)
     public ModelAndView listRightReservations(String rightName, String identityId, Date startTime, Date endTime){
         ModelAndView mav = new ModelAndView("business/rights/reservationList");
         PageableResult<RightsReservation> pageableResult = rightsService.listRightReservations(page, size);
-        List<RightsReservation> reservations = pageableResult.getItems();
-        List<RightReservationVo> vos = convertReserVo(reservations);
 
+        List<RightsReservation> list = new ArrayList<RightsReservation>();
+        for(RightsReservation reservation : pageableResult.getItems()){
+            Rights rights = rightsService.getRights(reservation.getRightsId());
+            Customer customer = customerService.getCustomer(reservation.getCustomerId());
+             User user = userService.getUser(customer.getUid());
+            reservation.setCustomerName(user.getRealname());
+            reservation.setCustomerMobile(user.getMobile());
+            reservation.setRightName(rights.getName());
+            list.add(reservation);
+        }
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
-        mav.addObject("reservations", vos);
+        mav.addObject("reservations", list);
         mav.addObject("url", "business/rights");
         return mav;
     }
 
-    @RequestMapping(value = "/reservation/deal", method = RequestMethod.GET)
-    public ModelAndView dealReservation(long id){
-        ModelAndView mav = new ModelAndView("business/rights/dealReservation");
-        RightsReservation reservation = rightsService.getReservationById((int)id);
-        CustomerVo vo = new CustomerVo();
-        Customer customer = customerService.getCustomer(reservation.getCustomerId());
-        Dictionary dictionary = dictionaryService.findCustomerLevel(customer.getLevelId()+"");
-        vo.setCustomerId(customer.getCustomerId());
-        vo.setCustomerLevel(dictionary.getKey());
-
-        User user = userService.getUser(customer.getUid());
-        vo.setName(user.getRealname());
-
-        Integer score = scoreHistoryService.getScoreByUserId(user.getUid());
-        vo.setAvailableScore(score+"");
-
-        RightVo rvo = new RightVo();
-        Rights rights = rightsService.getRights(reservation.getRightsId());
-        rvo.setScore(rights.getSpendScore());
-        rvo.setProviderName(rights.getSupply());
-        rvo.setRightId(reservation.getRightsId());
-
-        PageableResult<Rights> pageableResult = rightsService.findPageRights(page, size);
-        mav.addObject("reservation", reservation);
-        mav.addObject("rights", pageableResult.getItems());
-
-        mav.addObject("customer", vo);
-        mav.addObject("providerInfo", rvo);
-        return mav;
-    }
-
     /**
-     * 处理权益信息
+     * 取消预约
+     * @param id
      * @return
      */
-    @RequestMapping(value = "/reservation/save", method = RequestMethod.GET)
-    public ModelAndView saveReservation(String reservationRight, long id, Integer exchangeScore, Date reservationTime, long reservationStatus){
-        //RightsReservation reservation = new RightsReservation();
-        RightsReservation reservation = rightsService.getReservationById((int)id);
-        if (!reservation.getRightsId().toString().equals(reservationRight)){
-            reservation.setRightsId(Integer.parseInt(reservationRight));
-            reservation.setScoreCost(exchangeScore);
-        }
-
-        Integer oldStatus = reservation.getStatus();
-        reservation.setStatus((int)reservationStatus);
-        reservation.setMarkDate(reservationTime);
+    @RequestMapping(value = "/reservation/cancel", method = RequestMethod.GET)
+    @ResponseBody
+    @SystemControllerLog(description = "取消预约")
+    public AjaxJson dealReservation(Integer id){
+        RightsReservation reservation = rightsService.getReservationById(id);
+        reservation.setStatus(3);
         rightsService.updateReservation(reservation);
-
-        if (oldStatus != reservation.getStatus() && oldStatus != 4 && oldStatus != 5 && (reservationStatus == 4 || reservationStatus == 5)){
-            Customer customer = customerService.getCustomer(reservation.getCustomerId());
-
-            ScoreHistory scoreHistory = new ScoreHistory();
-            scoreHistory.setCtime(new Date());
-            scoreHistory.setUid(customer.getUid());
-            scoreHistory.setFromType("rights");
-            scoreHistory.setScore(0 - reservation.getScoreCost());
-            scoreHistory.setVaildTime(reservation.getMarkDate());
-            scoreHistory.setStatus("consume");
-            scoreHistory.setOperatorType("admin");
-            scoreHistory.setOperatorId(1);
-            scoreHistory.setIsApprove(1);
-            scoreHistory.setIsVaild(1);
-            if (reservationStatus == 4){
-                scoreHistory.setDetail("客户消费");
-            }
-
-            if (reservationStatus == 5){
-                scoreHistory.setDetail("客户缺席");
-            }
-            scoreHistoryService.addHistoryScore(scoreHistory);
-        }
-
-        ModelAndView mav = new ModelAndView("business/rights/reservationList");
-        PageableResult<RightsReservation> pageableResult = rightsService.listRightReservations(page, size);
-        List<RightsReservation> reservations = pageableResult.getItems();
-        List<RightReservationVo> vos = convertReserVo(reservations);
-
-        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
-        mav.addObject("reservations", vos);
-        return mav;
-    }
-
-    List<RightReservationVo> convertReserVo(List<RightsReservation> reservations){
-        List<RightReservationVo> vos = new LinkedList<RightReservationVo>();
-        if (!CollectionUtils.isEmpty(reservations)){
-            for (RightsReservation reser : reservations){
-                RightReservationVo vo = new RightReservationVo();
-                vo.setId(reser.getId());
-                Rights r = rightsService.getRights(reser.getRightsId());
-                vo.setRightName(r.getName());
-
-                Customer c = customerService.getCustomer(reser.getCustomerId());
-                User u = userService.getUser(c.getUid());
-                vo.setCustomerName(u.getRealname());
-                vo.setPhoneNum(u.getMobile());
-
-                vo.setScore(reser.getScoreCost());
-                vo.setReservationTime(reser.getMarkDate());
-                switch (reser.getStatus()){
-                    case 0:{
-                        vo.setReservationStatus("预约中");
-                        break;
-                    }
-
-                    case 1:{
-                        vo.setReservationStatus("预约成功");
-                        break;
-                    }
-
-                    case 2:{
-                        vo.setReservationStatus("预约失败");
-                        break;
-                    }
-
-                    case 3:{
-                        vo.setReservationStatus("预约取消");
-                        break;
-                    }
-
-                    case 4:{
-                        vo.setReservationStatus("客户消费");
-                        break;
-                    }
-
-                    case 5:{
-                        vo.setReservationStatus("客户缺席");
-                        break;
-                    }
-                }
-
-                vos.add(vo);
-            }
-        }
-
-        return vos;
+        return new AjaxJson(true);
     }
 }

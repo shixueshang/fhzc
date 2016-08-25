@@ -121,7 +121,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">投资期限(月)<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <input type="number" name="investTermMin" value="${product.investTermMin}" data-required="1" placeholder="" class="m-wrap small"> ~ <input type="number" name="investTermMax" value="${product.investTermMax}" data-required="1" placeholder="" class="m-wrap small">
+                                                    <input type="text" name="investTerm" value="${product.investTerm}" data-required="1" placeholder="" class="large m-wrap">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -586,6 +586,9 @@ $(function(){
                 required: true,
                 number: true,
                 min:0
+            },
+            investTerm:{
+            	required: true,
             },
             investTermMax: {
                 required: true,
