@@ -139,15 +139,10 @@ public class ScoreHistoryController extends BaseController {
           	return mav;
           }else{
     	     for(User user : users){
-	        	if(customerService.getCustomerByUid(user.getUid(),"single") == null && customerService.getCustomerByUid(user.getUid(),"organ") == null){
-	        		return mav;
-	        	}
-	        	if(customerService.getCustomerByUid(user.getUid(),"single") != null){
-	        		customerIds.add(customerService.getCustomerByUid(user.getUid(),"single").getCustomerId());
-	        	}else{
-	        		customerIds.add(customerService.getCustomerByUid(user.getUid(),"organ").getCustomerId());
-	        	}
-	        	
+    	    	if( customerService.getCustomerByUid(user.getUid(), null) == null){
+    	    		return mav;
+    	    	}
+    	    	customerIds.add(customerService.getCustomerByUid(user.getUid(),null).getCustomerId());
     	     }
           }
         }
@@ -168,16 +163,10 @@ public class ScoreHistoryController extends BaseController {
         }else{
         	for(ScoreHistory score : pageableResult.getItems()){
         		for (User user : users) {
-        		  	if(customerService.getCustomerByUid(user.getUid(),"single") != null){
-        		  		if(customerService.getCustomerByUid(user.getUid() , "single").getCustomerId()== score.getUid()){
-    						score.setCustomerName(user.getRealname());
-    					}
-        		  	}else{
-        		  		if(customerService.getCustomerByUid(user.getUid() , "organ").getCustomerId()== score.getUid()){
-    						score.setCustomerName(user.getRealname());
-    					}
-    	        	}
-					
+        			if(customerService.getCustomerByUid(user.getUid() , null).getCustomerId()== score.getUid()){
+						score.setCustomerName(user.getRealname());
+					}
+        			
 				}
         	}
         }

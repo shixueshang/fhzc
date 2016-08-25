@@ -6,7 +6,6 @@ import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.aop.SystemControllerLog;
-import com.fhzc.app.system.commons.util.DateUtil;
 import com.fhzc.app.system.commons.util.FileUtil;
 import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.controller.BaseController;
@@ -122,12 +121,6 @@ public class ActivityController extends BaseController {
         if (endTime != null){
             query.setEndDate(endTime);
         }
-//        if(startTime != null && endTime != null){
-//        	if(DateUtil.getEndTimeOfDate(endTime)
-//        			DateUtil.getEndTimeOfDate(startTime)){
-//        		
-//        	}
-//        }
         PageableResult<ActivityApply> pageableResult = activityService.findPageActivityApplies(query, page, size);
         List<ActivityApply> list = new ArrayList<ActivityApply>();
         for(ActivityApply apply : pageableResult.getItems()){

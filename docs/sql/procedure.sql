@@ -164,6 +164,9 @@ BEGIN
 	
 	select area_id into _user_area_id from areas where area_name= p_branch_agent;
 	
+	select id,department_id into _planner_id,_department_id from planner where work_num=p_plannner_work_num;
+	select pid into _product_id from product where name=p_product;	
+	
 	if _userid =-1 then
 	
 		INSERT INTO user(login, password, realname, gender, birthday, passport_type_id, passport_code, passport_agent, passport_address, passport_expire
@@ -207,8 +210,7 @@ BEGIN
 	
 	end if;
 	
-	select id into _planner_id from planner where work_num=p_plannner_work_num;
-	select pid into _product_id from product where name=p_product;	
+
 	select customer_id into _customer_Id from customer where uid =_userid;
 	
 	
@@ -247,7 +249,7 @@ BEGIN
 	if _exists = 0 then 
 		insert into planner_customer(planner_id,customer_id,is_main) values(_planner_id,_customer_Id,0); 
 	end if; 
-	-- 增加积分记录
+
 	
 END
 ;;
@@ -284,6 +286,9 @@ BEGIN
 	declare _customer_Id int ; -- 客户id
 	declare _assets_id int ; -- 客户资产id
 	Declare _customer_type varchar(20); -- 客户类型
+	Declare _department_id int; -- 所属部门ID
+	
+	set _department_id =-1;
 	
 	set _userid = -1;
 	set _contract_id =-1;
@@ -321,7 +326,7 @@ BEGIN
 					set _userid = last_insert_id();
 					
 					insert into customer(uid,cb_id,level_id,risk,department_id,bank_info_id,customer_type) 
-					select _userid, -1, dictionary.value,null,-1,-1,_customer_type from dictionary where cat='customer_level' and dictionary.key='投资人';
+					select _userid, -1, dictionary.value,null,_department_id,-1,_customer_type from dictionary where cat='customer_level' and dictionary.key='投资人';
 
 					
 					select customer_id into _customer_Id from customer where uid =_userid;
@@ -521,6 +526,9 @@ BEGIN
 		update user,areas set passport_code =p_passport_code, mobile=p_mobile,salt =p_salt, user.area_id=areas.area_id   where user.uid=_user_id and area_name=p_area;
 		update planner set planner.department_id=_dept_id, job_title_cn = p_job_title_cn, position = p_position  
 				where id =_planner_id ;
+		
+		-- add by xiaoqiang in 2016-08-25
+		update customer set department_id=_dept_id where customer_id in(select customer_id from planner_customer where planner_id=_planner_id and is_main=1);
 	
 	end if;
 	
@@ -578,6 +586,8 @@ DROP PROCEDURE IF EXISTS `sp_removeoffer_planner`;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_removeoffer_planner`(p_work_num varchar(45))
 BEGIN
+	-- 2016-08-25 remove planner_customer logic by xiaoqiang
+	
 	declare _planner_id int;
 	set _planner_id =-1;
 	
@@ -587,7 +597,7 @@ BEGIN
 	update planner set status='off' where work_num = P_work_num;
 	
 	-- 进行理财师对应客户缺位管理
-	update planner_customer set is_main=0 where planner_id=_planner_id;
+	-- update planner_customer set is_main=0 where planner_id=_planner_id;
 END
 ;;
 DELIMITER ;
@@ -733,6 +743,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_add_plannerachivementdaily`(p_tr
 )
 BEGIN
 	-- 理财师业绩日报
+	-- 2016-08-25 delete history data of current month by xiaoqiang  
+	
 	Declare _root_dept_id int;  -- 一级部门ID
 	Declare _area int ;  -- 所属大区ID
 	Declare _subcompany_id int; -- 分公司ID
@@ -787,8 +799,10 @@ BEGIN
 		select parent_dept_id,`level` into _parent_department_id,_level from department where department_id=_area;
 		set _root_dept_id = _parent_department_id;
 	End if;
-
-
+	
+	-- delete history data of current month
+	delete from planner_achivements_daily where ctime<DATE_SUB(now(), INTERVAL 1 HOUR) and YEAR(transfer_date) =YEAR(p_transfer_date) and  MONTH(transfer_date)=  MONTH(p_transfer_date);
+	
 	insert into `planner_achivements_daily` (`transfer_date`, `area_id`, `planner_uid`, 
        `product_id`, `annualised`, `contract_amount`,`period`, `product_type`, `memo`, `ctime`, `root_dept`, `area`,`company`, `team`, `department_id`) 
         select p_transfer_date,area_id,_planner_id,pid,p_annualised,p_contract_amount,p_period,p_product_type,p_memo,NOW(),_root_dept_id,_area, _subcompany_id,_team_id,_department_id
