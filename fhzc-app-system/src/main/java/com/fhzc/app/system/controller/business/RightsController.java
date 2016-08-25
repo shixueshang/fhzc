@@ -13,6 +13,7 @@ import com.fhzc.app.system.commons.vo.RightVo;
 import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.*;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -170,16 +174,17 @@ public class RightsController extends BaseController{
     /**
      * 权益预约
      * @return
+     * @throws ParseException 
      */
     @RequestMapping(value = "/reservation/add", method = RequestMethod.GET)
     @SystemControllerLog(description = "权益预约")
-    public String addReservation(Integer reservationRight, Integer customerId, Integer exchangeScore){
+    public String addReservation(Integer reservationRight, Integer customerId, Integer exchangeScore, String markDate) throws ParseException{
         RightsReservation reservation = new RightsReservation();
         reservation.setCtime(new Date());
         reservation.setRightsId(reservationRight);
         reservation.setCustomerId(customerId);
         reservation.setScoreCost(exchangeScore);
-        reservation.setMarkDate(new Date());
+        reservation.setMarkDate(new SimpleDateFormat("yyyy-mm-dd HH:mm:ss").parse(markDate));
         reservation.setStatus(1);
         rightsService.addRightsReservation(reservation);
 

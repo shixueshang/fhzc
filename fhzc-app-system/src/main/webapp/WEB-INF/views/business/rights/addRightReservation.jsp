@@ -146,7 +146,12 @@
                                                     <input type="text" name="exchangeScore" id="exchangeScore" readonly>
                                                 </div>
                                             </div>
-
+                                            <div class="control-group">
+                                                <label class="control-label">预订时间</label>
+                                                <div class="controls">
+                                                    <input type="text" name="markDate" id="markDate" placeholder="yyyy-MM-dd HH:mm:ss" >
+                                                </div>
+                                            </div>
                                             <div class="form-actions">
                                                 <input name="id" type="hidden" value="${right.id}" />
                                                 <button type="submit" id="submit_btn" class="btn blue"><i class="icon-ok"></i> 添加</button>
@@ -181,6 +186,9 @@
                 });
                 return false;
             }
+            
+      
+            
                 clearPhoneError();
                 $.ajax({
                     url: "<%=contextPath%>/business/rights/check/phone",
@@ -245,6 +253,7 @@
         $("#reservationTime").change(function () {
             clearDateError();
         });
+
     });
 
     function validatePhoneError(text) {
@@ -274,15 +283,15 @@
     function validateDateError(text) {
         clearDateError();
         var error =  "<p style='color:red; margin: 0'>"+text+"</p>"
-        $("#reservationTime").parent().append(error);
+        $("#markDate").parent().append(error);
     }
 
     function clearDateError() {
-        if ($("#reservationTime").parent().find("p").size() > 0){
-            $("#reservationTime").parent().find("p").remove();
+        if ($("#markDate").parent().find("p").size() > 0){
+            $("#markDate").parent().find("p").remove();
         }
     }
-    
+
     function checkInputs() {
         if ($("#rightValid").val() == '0'){
             validatePhoneError('请确认输入的为客户的有效手机号');
@@ -299,7 +308,17 @@
             validateRightsError("您的积分不够");
             return false;
         }*/
-
+	     	var markDate = $("#markDate").val();
+	        if(markDate == null || markDate == ''){
+	        	validateDateError('请输入预订时间');
+                return false;
+	        }else{
+	         	var str = "((19|20)[0-9]{2})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])(\\s+)(0\\d{1}|1\\d{1}|2[0-3]):([0-5]\\d{1}):([0-5]\\d{1})";
+	        	if(!(markDate.match(str))){
+					validateDateError('请确认输入合格的时间格式');
+	                return false;
+	          	} 
+	        }
         $("#submit_btn").attr("disabled",true);
     }
 </script>

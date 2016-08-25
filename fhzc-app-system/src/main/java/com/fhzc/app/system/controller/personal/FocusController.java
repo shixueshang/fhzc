@@ -1,7 +1,6 @@
 package com.fhzc.app.system.controller.personal;
 
 import com.fhzc.app.dao.mybatis.model.*;
-import com.fhzc.app.dao.mybatis.model.Dictionary;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.system.aop.SystemControllerLog;
@@ -83,7 +82,7 @@ public class FocusController extends BaseController {
                 }
 
                 vo.setUserName(user.getRealname());
-
+               
                 switch (focus.getFtype()){
                     case "product": {
                         vo.setContentType("产品");
@@ -140,9 +139,7 @@ public class FocusController extends BaseController {
                         logger.error("Could not find customer with id {}", user.getUid());
                         continue;
                     }
-
-                    Dictionary customerLevel = dictionaryService.findCustomerLevel(customer.getLevelId().toString());
-                    vo.setUserType(customerLevel.getKey());
+                    vo.setUserType("single".equals(customerService.getCustomerByUid(user.getUid(), null).getCustomerType())?"个人客户":"机构客户");
                 } else {
                     vo.setUserType("理财师");
                 }
@@ -150,7 +147,6 @@ public class FocusController extends BaseController {
                 vos.add(vo);
             }
         }
-
         return vos;
     }
 
