@@ -132,26 +132,22 @@ public class ScoreHistoryController extends BaseController {
         List<User> users = new ArrayList<User>();
         List<Customer> customers = new ArrayList<Customer>();
         List<Integer> customerIds = new ArrayList<Integer>();
-        String customerName = "";
-//      User user = new User();
-//        if(StringUtils.isNotBlank(identity)){
-//             user = userService.getUserByIdentity(identity);
-//             users = userService.getUsersByName(identity.trim()); 
-//             if(users.isEmpty()){
-//             	return mav;
-//             }
-//        }
-//        
+        String customerName = "";       
         if(StringUtils.isNotBlank(identity)){
           users = userService.getUsersByName(identity.trim());
     	  if(users.isEmpty()){
           	return mav;
           }else{
     	     for(User user : users){
-	        	if(customerService.getCustomerByUid(user.getUid(),"single") == null){
+	        	if(customerService.getCustomerByUid(user.getUid(),"single") == null && customerService.getCustomerByUid(user.getUid(),"organ") == null){
 	        		return mav;
-	        	} 
-	        	customerIds.add(customerService.getCustomerByUid(user.getUid(),"single").getCustomerId());
+	        	}
+	        	if(customerService.getCustomerByUid(user.getUid(),"single") != null){
+	        		customerIds.add(customerService.getCustomerByUid(user.getUid(),"single").getCustomerId());
+	        	}else{
+	        		customerIds.add(customerService.getCustomerByUid(user.getUid(),"organ").getCustomerId());
+	        	}
+	        	
     	     }
           }
         }
@@ -172,9 +168,16 @@ public class ScoreHistoryController extends BaseController {
         }else{
         	for(ScoreHistory score : pageableResult.getItems()){
         		for (User user : users) {
-					if(customerService.getCustomerByUid(user.getUid() , "single").getCustomerId()== score.getUid()){
-						score.setCustomerName(user.getRealname());
-					}
+        		  	if(customerService.getCustomerByUid(user.getUid(),"single") != null){
+        		  		if(customerService.getCustomerByUid(user.getUid() , "single").getCustomerId()== score.getUid()){
+    						score.setCustomerName(user.getRealname());
+    					}
+        		  	}else{
+        		  		if(customerService.getCustomerByUid(user.getUid() , "organ").getCustomerId()== score.getUid()){
+    						score.setCustomerName(user.getRealname());
+    					}
+    	        	}
+					
 				}
         	}
         }

@@ -6,6 +6,7 @@ import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.aop.SystemControllerLog;
+import com.fhzc.app.system.commons.util.DateUtil;
 import com.fhzc.app.system.commons.util.FileUtil;
 import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.controller.BaseController;
@@ -53,7 +54,7 @@ public class ActivityController extends BaseController {
         for (Activity activity : pageableResult.getItems()) {
         	List<Focus> focuses = focusService.findFocusByType(Const.FOCUS_TYPE.ACTIVITY, activity.getId());
         	activity.setFocusNum(focuses.size() > 0 ? focuses.size() : 0);
-        	List<ActivityApply> orders = activityService.findSuccessOrdersById(activity.getId(), 1);
+        	List<ActivityApply> orders = activityService.findSuccessOrdersById(activity.getId(), Const.FOCUS_STATUS.ON);
         	int personNum = 0;
         	if(orders.size() > 0){
             	for (ActivityApply activityApply : orders) {
@@ -107,22 +108,26 @@ public class ActivityController extends BaseController {
         ModelAndView mav = new ModelAndView("business/activity/registerList");
         ActivityApplyQuery query = new ActivityApplyQuery();
 
-        if(StringUtils.isNotEmpty(activityName)){
-            Activity activity = activityService.findActivityByName(activityName);
+        if(StringUtils.isNotBlank(activityName)){
+            Activity activity = activityService.findActivityByName(activityName.trim());
             if(activity != null){
                 query.setActivityId(activity.getId());
+            }else{
+            	return mav;
             }
         }
-        query.setActivityName(activityName);
-
         if (startTime != null){
             query.setStartDate(startTime);
         }
-
         if (endTime != null){
             query.setEndDate(endTime);
         }
-
+//        if(startTime != null && endTime != null){
+//        	if(DateUtil.getEndTimeOfDate(endTime)
+//        			DateUtil.getEndTimeOfDate(startTime)){
+//        		
+//        	}
+//        }
         PageableResult<ActivityApply> pageableResult = activityService.findPageActivityApplies(query, page, size);
         List<ActivityApply> list = new ArrayList<ActivityApply>();
         for(ActivityApply apply : pageableResult.getItems()){
@@ -133,7 +138,6 @@ public class ActivityController extends BaseController {
             apply.setMobile(userService.getUser(customer.getUid()).getMobile());
             list.add(apply);
         }
-
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("activityApplies", list);
         mav.addObject("url", "business/activity");
