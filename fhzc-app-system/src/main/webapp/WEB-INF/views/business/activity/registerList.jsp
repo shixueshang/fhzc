@@ -39,7 +39,7 @@
                     <ul class="breadcrumb">
                         <li>
                             <i class="icon-home"></i>
-                            <a href="javascript:void(0);">产品管理</a>
+                            <a href="javascript:void(0);">活动管理</a>
                             <i class="icon-angle-right"></i>
                         </li>
                         <li class="active"><a href="javascript:void(0);">报名管理</a></li>
@@ -49,7 +49,7 @@
             </div>
 
             <div class="row-fluid">
-                <form name="searchForm" class="form-inline" action="/business/activity/registers">
+                <form name="searchForm" id="form_sample_1" class="form-inline" action="/business/activity/registers">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">活动名称:</label>
                         <input class="form-control" id="activityName" name="activityName" value="${param.activityName}">
@@ -58,7 +58,7 @@
                         <input class="form-control date-picker" id="startTime" name="startTime" style="width: 180px" value="${param.startTime}">
                         ~
                         <input class="form-control date-picker" id="endTime" name="endTime" style="width: 180px" value="${param.endTime}">
-                        <button type="submit">查找</button>
+                        <button type="submit" onclick="validate();">查找</button>
                     </div>
                 </form>
             </div>
@@ -120,3 +120,23 @@
 </div>
 
 <jsp:include page="../../include/footer.jsp"/>
+<script>
+
+		function validate(){
+			var form1 = $('#form_sample_1');
+			var start = $("#startTime").val();
+			var end = $("#endTime").val();
+			var date1 = new Date(start);
+			var date2 = new Date(end);
+			if(date1 != null && date2 != null){
+				if(date2.getTime()<date1.getTime()){
+					alert("请输入正确的时间范围");
+					window.event.returnValue = false;
+				}
+			}else{
+				form1.submit();
+			}
+		    
+		}
+	
+</script>
