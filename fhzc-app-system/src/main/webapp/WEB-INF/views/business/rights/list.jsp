@@ -126,7 +126,8 @@
         	
             $('#example').DataTable({
             	"bAutoWidth" : false,
-                "oLanguage": {//语言设置
+            	"bFilter": true, //过滤功能
+                "oLanguage": {
                         "sProcessing":   "处理中...",
                         "sLengthMenu":   "_MENU_ 记录/页",
                         "sZeroRecords":  "没有匹配的记录",

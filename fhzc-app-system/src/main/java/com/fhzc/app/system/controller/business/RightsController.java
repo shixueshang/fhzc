@@ -64,7 +64,7 @@ public class RightsController extends BaseController{
         for(Rights rights : pageableResult.getItems() ){
         	List<Focus> focuses = focusService.findFocusByType(Const.FOCUS_TYPE.RIGHTS, rights.getId());
         	rights.setFocusNum(focuses.size() > 0 ? focuses.size() : 0);
-        	List<RightsReservation> orders= rightsService.findSuccessOrdersById(rights.getId(), 1);
+        	List<RightsReservation> orders= rightsService.findSuccessOrdersById(rights.getId(), Const.FOCUS_STATUS.ON);
         	rights.setOrderNum(orders.size() > 0 ? orders.size() : 0);
         }
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));

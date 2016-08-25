@@ -139,7 +139,8 @@ public class ProductController extends BaseController {
         }
         product.setScoreFactor(product.getScoreFactor().divide(new BigDecimal(100)));
         product.setCtime(new Date());
-
+        productService.addOrUpdateProduct(product);
+        product.setDisplayOrder(product.getPid());
         productService.addOrUpdateProduct(product);
 
         return "redirect:/business/product/list";
