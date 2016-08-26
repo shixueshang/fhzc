@@ -72,6 +72,10 @@ INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (58, '财务日报列表','/business/contract/list', NULL, 45, 3, 1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (59, '操作日志','/system/log/list',NULL,16,3,1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (60, '缺位管理', '/personal/customer/missPlanner',NULL, 27, 3, 1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES ('61', '产品关注列表', '/business/product/focus/list', null, '2', '3', '1');
+INSERT INTO `system_module`(`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES ('62', '活动关注列表', '/business/activity/focusList', null, '8', '3', '1');
+INSERT INTO `system_module`(`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES ('63', '报告关注列表', '/business/report/focusList', null, '5', '3', '1');
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`)VALUES ('64', '权益关注列表', '/business/rights/focusList', null, '11', '3', '1');
 
 
 /*
