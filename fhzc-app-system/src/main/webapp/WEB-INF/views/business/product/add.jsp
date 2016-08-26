@@ -85,7 +85,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">产品名<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <input type="text" name="name" value="${product.name}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <input type="text"  name="name" value="${product.name}" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline hide">该名称已存在,请换一个名字</span>
                                                 </div>
                                             </div>
@@ -129,8 +129,8 @@
                                             <div class="control-group">
                                                 <label class="control-label">募集期的开始和结束</label>
                                                 <div class="controls">
-                                                    <input type="text" name="collectStart"  placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${product.collectStart}" pattern="yyyy-MM-dd"/>"> ~
-                                                    <input type="text" name="collectEnd"  placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${product.collectEnd}" pattern="yyyy-MM-dd"/>">
+                                                    <input type="text" id="collectStart" name="collectStart"  placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${product.collectStart}" pattern="yyyy-MM-dd"/>"> ~
+                                                    <input type="text" id="collectEnd" name="collectEnd"  placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${product.collectEnd}" pattern="yyyy-MM-dd"/>">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -154,7 +154,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">成立日</label>
                                                 <div class="controls">
-                                                    <input type="text" name="foundDay"  placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${product.foundDay}" pattern="yyyy-MM-dd"/>">
+                                                    <input type="text" id="foundDay" name="foundDay"  placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${product.foundDay}" pattern="yyyy-MM-dd"/>">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -185,7 +185,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">到期日</label>
                                                 <div class="controls">
-                                                    <input type="text" name="expiryDay" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${product.expiryDay}" pattern="yyyy-MM-dd"/>">
+                                                    <input type="text" id= "expiryDay" name="expiryDay" placeholder="" size="16" class="m-wrap m-ctrl-medium date-picker" value="<fmt:formatDate value="${product.expiryDay}" pattern="yyyy-MM-dd"/>">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -287,9 +287,9 @@
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">积分系数(%)</label>
+                                                <label class="control-label">积分系数(%)<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <input type="text" name="scoreFactor" value="${product.scoreFactor}" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="scoreFactor" value="${product.scoreFactor}" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -416,7 +416,7 @@
 
                                             <div class="form-actions">
                                                 <input name="pid" type="hidden" value="${product.pid}" />
-                                                <button type="submit" class="btn blue"><i class="icon-ok"></i> 保存</button>
+                                                <button type="submit" id="submit_btn" class="btn blue"><i class="icon-ok"></i> 保存</button>
                                             </div>
                                         </form>
                                         <!-- END FORM-->
@@ -588,6 +588,7 @@ $(function(){
                 min:0
             },
             scoreFactor: {
+            	required: true,
                 number: true,
                 min:0
             },
@@ -637,12 +638,43 @@ $(function(){
         },
 
         submitHandler: function (form) {
-            success1.show();
-            error1.hide();
-            form.submit();
+        		if(!checkCollectDate()){
+        			return false;
+        		}
+        		if(!checkProductDate()){
+        			return false;
+        		}
+        		success1.show();
+                error1.hide();
+                form.submit();
+                
+        
         }
     });
-
+    function checkCollectDate() {
+    	var start = $("#collectStart").val();
+    	var end = $("#collectEnd").val();
+    	var date1 = new Date(start);
+    	var date2 = new Date(end);
+    	if(date1 != null && date2 != null){
+    		if(date2.getTime()<date1.getTime()){
+    			alert("请输入正确的募集时间范围");
+    			return false;
+    		}
+    	}
+    };
+    function checkProductDate() {
+    	var start = $("#foundDay").val();
+    	var end = $("#expiryDay").val();
+    	var date1 = new Date(start);
+    	var date2 = new Date(end);
+    	if(date1 != null && date2 != null){
+    		if(date2.getTime()<date1.getTime()){
+    			alert("请输入正确的成立到期时间");
+    			return false;
+    		}
+    	}
+    };
     $('#dividend_day_tags,#buy_day_tags,#redeem_day_tags').tagsInput({
         width: 300,
         defaultText: "请添加日期",
@@ -657,4 +689,6 @@ $(function(){
     });
 
 })
+
+
 </script>

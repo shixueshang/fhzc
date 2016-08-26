@@ -424,8 +424,8 @@ public class PlannerServiceImpl implements PlannerService {
     @Override
     public List<Planner> findAllPlanner() {
         PlannerExample example = new PlannerExample();
-        PlannerExample.Criteria criteria = example.createCriteria();
-        criteria.andStatusEqualTo(Const.PLANNER_STATUS.ON);
+//        PlannerExample.Criteria criteria = example.createCriteria();
+//        criteria.andStatusEqualTo(Const.PLANNER_STATUS.ON);
         return plannerMapper.selectByExample(example);
     }
 }
