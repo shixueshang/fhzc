@@ -12,9 +12,11 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.crypto.Mac;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,6 +102,22 @@ public class AssetsController extends BaseController {
         mav.addObject("assets", assetsHistories);
         mav.addObject("assetsStatus", dictionaryService.findDicByType(Const.DIC_CAT.ASSETS_STATUS));
         mav.addObject("url", "business/assets");
+        return mav;
+    }
+
+    /**
+     * 客户资产持仓情况
+     * @return
+     */
+    @RequestMapping(value = "/holdings/find", method = RequestMethod.GET)
+    public ModelAndView holdings(@RequestParam( required = false) String name){
+        ModelAndView mav = new ModelAndView();
+        PageableResult<Customer> pageableResult = customerService.findPageCustomers(page, size);
+
+        List<CustomerHolding> list = new ArrayList<CustomerHolding>();
+        for(Customer customer : pageableResult.getItems()){
+
+        }
         return mav;
     }
 }

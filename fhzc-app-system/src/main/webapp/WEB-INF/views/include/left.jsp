@@ -209,6 +209,9 @@
                             <shiro:hasPermission name="/business/score/list"><li>
                                 <a href="<%=contextPath%>/business/score/list">积分列表</a>
                             </li></shiro:hasPermission>
+                            <shiro:hasPermission name="/business/score/query"><li>
+                                <a href="<%=contextPath%>/business/score/query">积分查询</a>
+                            </li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>
 

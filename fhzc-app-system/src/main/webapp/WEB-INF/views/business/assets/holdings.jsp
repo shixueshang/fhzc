@@ -39,19 +39,17 @@
                     <ul class="breadcrumb">
                         <li>
                             <i class="icon-home"></i>
-                            <a href="javascript:void(0);">积分管理</a>
+                            <a href="javascript:void(0);">客户管理</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li class="active"><a href="javascript:void(0);">积分查询</a></li>
+                        <li class="active"><a href="javascript:void(0);">资产持仓</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
             </div>
 
-
-
             <div class="row-fluid">
-                <form  class="form-inline" action="<%=contextPath%>/business/score/query" method="GET">
+                <form  class="form-inline" action="<%=contextPath%>/business/assets/holdings/find" method="GET">
                     <div class="form-group">
                         <label class="control-label" style="margin-left: 20px">客户姓名</label>
                         <input class="form-control" name="name" placeholder="输入客户姓名"  >
@@ -76,18 +74,29 @@
                                 <thead>
                                 <tr>
                                     <td>客户姓名</td>
-                                    <td>可用积分</td>
-                                    <td>冻结积分</td>
-                                    <td>即将过期积分</td>
+                                    <td>身份证号</td>
+                                    <td>手机号</td>
+                                    <td>会员等级</td>
+                                    <td>客户积分</td>
+                                    <td>积分详情</td>
+                                    <td>所属理财师</td>
+                                    <td>所属分公司</td>
+                                    <td>所属区总</td>
+                                    <td>操作</td>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <c:forEach items="${customers}" var="customer">
                                     <tr>
                                         <td>${customer.customerName}</td>
-                                        <td>${customer.avaliableScore}</td>
-                                        <td>${customer.frozeScore}</td>
-                                        <td>${customer.willExpireScore}</td>
+                                        <td>${customer.identity}</td>
+                                        <td>${customer.mobile}</td>
+                                        <td>${customer.level}</td>
+                                        <td>${customer.score}</td>
+                                        <td><a>详情</a></td>
+                                        <td>${customer.planner}</td>
+                                        <td>${customer.company}</td>
+                                        <td>${customer.area}</td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>

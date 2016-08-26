@@ -42,7 +42,7 @@ public class ActivityApiController extends BaseController{
     @RequestMapping(value = "/api/activity", method = RequestMethod.GET)
     @ResponseBody
     public ApiJsonResult activityList(){
-        PageableResult<Activity> activityList = activityService.findPageActivies(0,100);
+        PageableResult<Activity> activityList = activityService.findPageActivies(page,size);
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,activityList);
     }
 

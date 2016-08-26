@@ -1,6 +1,7 @@
 package com.fhzc.app.system.controller.business;
 
 import com.fhzc.app.dao.mybatis.model.Customer;
+import com.fhzc.app.dao.mybatis.model.CustomerScore;
 import com.fhzc.app.dao.mybatis.model.ScoreHistory;
 import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
@@ -209,10 +210,36 @@ public class ScoreHistoryController extends BaseController {
         ModelAndView mav = new ModelAndView("/business/score/query");
         PageableResult<Customer> pageableResult = customerService.findPageCustomers(page, size);
 
+        List<CustomerScore> list = new ArrayList<CustomerScore>();
+        if(name == null || "".equals(name.trim())){
+            for(Customer customer :  pageableResult.getItems()){
+                User user  = userService.getUser(customer.getUid());
+                    CustomerScore cs =  buildCustomerScore(customer, user);
+                    list.add(cs);
+            }
+        }else{
+            for(Customer customer :  pageableResult.getItems()){
+                User user  = userService.getUser(customer.getUid());
+                if(name.trim().equals(user.getRealname())){
+                    CustomerScore cs =  buildCustomerScore(customer, user);
+                    list.add(cs);
+                }
+            }
+        }
 
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
-        //mav.addObject("customers", );
+        mav.addObject("customers", list);
         mav.addObject("url", "business/score");
         return mav;
+    }
+
+    private CustomerScore buildCustomerScore(Customer customer, User user){
+        CustomerScore cs = new CustomerScore();
+        cs.setCustomerId(customer.getCustomerId());
+        cs.setCustomerName(user.getRealname());
+        cs.setAvaliableScore(scoreService.sumScore(scoreService.getAvailableList(user.getUid())));
+        cs.setFrozeScore(scoreService.sumScore(scoreService.getFrozen(user.getUid())));
+        cs.setWillExpireScore(scoreService.sumScore(scoreService.getExpiredList(user.getUid())));
+        return cs;
     }
 }
