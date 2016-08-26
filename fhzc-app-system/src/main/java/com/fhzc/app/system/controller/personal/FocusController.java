@@ -53,7 +53,7 @@ public class FocusController extends BaseController {
     @SystemControllerLog(description = "查看用户关注列表")
     public ModelAndView listSingleCustomer(String ftype){
         ModelAndView mav = new ModelAndView("personal/user/focusList");
-        PageableResult<Focus> presult = focusService.getFocusByType(ftype, page, size);
+        PageableResult<Focus> presult = focusService.getFocusByType(ftype, new ArrayList<Integer>(), page, size);
 
         mav.addObject("page", PageHelper.getPageModel(request, presult));
         mav.addObject("focuses", getFocusVos(presult));
