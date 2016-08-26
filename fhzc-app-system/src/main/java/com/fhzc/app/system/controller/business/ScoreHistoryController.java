@@ -153,7 +153,7 @@ public class ScoreHistoryController extends BaseController {
         	customers = customerService.findAllCustomer();
         	for(ScoreHistory score : pageableResult.getItems()){
         		for (Customer customer : customers) {
-					if(customer.getCustomerId() == score.getUid()){
+					if(customer.getUid() == score.getUid()){
 						customerName = userService.getUser(customer.getUid()).getRealname();
 						score.setCustomerName(customerName);
 					}
@@ -163,7 +163,7 @@ public class ScoreHistoryController extends BaseController {
         }else{
         	for(ScoreHistory score : pageableResult.getItems()){
         		for (User user : users) {
-        			if(customerService.getCustomerByUid(user.getUid() , null).getCustomerId()== score.getUid()){
+        			if(user.getUid() == score.getUid()){
 						score.setCustomerName(user.getRealname());
 					}
         			
@@ -202,5 +202,17 @@ public class ScoreHistoryController extends BaseController {
             scoreService.approve(id);
         }
         return true;
+    }
+
+    @RequestMapping(value = "/query", method = RequestMethod.GET)
+    public ModelAndView query(@RequestParam(required = false) String name){
+        ModelAndView mav = new ModelAndView("/business/score/query");
+        PageableResult<Customer> pageableResult = customerService.findPageCustomers(page, size);
+
+
+        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
+        //mav.addObject("customers", );
+        mav.addObject("url", "business/score");
+        return mav;
     }
 }

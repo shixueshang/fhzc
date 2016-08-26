@@ -7,7 +7,7 @@ import com.fhzc.app.dao.mybatis.util.EncryptUtils;
  */
 public class TestEncrypt {
     public static void main(String[] args) throws Exception {
-       String info =  EncryptUtils.encryptToDES("07168414", "13810465136");
+       String info =  EncryptUtils.encryptToDES("07168414", "421181199107168414");
         System.out.println(info);
     }
 }

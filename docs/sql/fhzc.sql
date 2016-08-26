@@ -747,7 +747,7 @@ DROP TABLE IF EXISTS `bank`.`score_history` ;
 
 CREATE TABLE IF NOT EXISTS `bank`.`score_history` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `uid` INT(11) NOT NULL,
+  `uid` INT(11) NOT NULL COMMENT '用户id',
   `score` INT(11) NOT NULL COMMENT '积分数值，扣件为负数，增加为正数',
   `event_id` INT(11) NULL DEFAULT NULL COMMENT '获得或者扣减积分的来源id(产品购买+、参加活动+，兑换权益-)',
   `status` ENUM('add', 'consume', 'frozen', 'expire') NOT NULL DEFAULT 'frozen',

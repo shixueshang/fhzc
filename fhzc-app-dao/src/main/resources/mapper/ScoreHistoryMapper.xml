@@ -349,8 +349,5 @@
       order by ${orderByClause}
     </if>
   </select>
-  
-  <select id="getScoreByUid" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-    select sum(score) from score_history s where s.vaild_time >= now() and s.uid = #{uid};
-  </select>
+
 </mapper>
