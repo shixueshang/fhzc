@@ -9,12 +9,15 @@ import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.aop.SystemControllerLog;
 import com.fhzc.app.system.commons.util.FileUtil;
 import com.fhzc.app.system.commons.util.TextUtils;
+import com.fhzc.app.system.commons.vo.FocusVo;
 import com.fhzc.app.system.commons.vo.RightVo;
 import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.*;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -233,5 +236,82 @@ public class RightsController extends BaseController{
         reservation.setStatus(3);
         rightsService.updateReservation(reservation);
         return new AjaxJson(true);
+    }
+    
+    /**
+     * 权益关注列表
+     * @return
+     */
+    @RequestMapping(value = "/focusList", method = RequestMethod.GET)
+    @SystemControllerLog(description = "查看权益关注列表")
+    public ModelAndView listRightsFocus(){
+        ModelAndView mav = new ModelAndView("business/rights/focusList");
+        mav.addObject("url", "business/rights");
+        return mav;
+    }
+    
+    /**
+     * 权益关注列表
+     * @return
+     */
+    @RequestMapping(value = "/focusFind", method = RequestMethod.GET)
+    @SystemControllerLog(description = "查看权益关注列表")
+    public ModelAndView listRightsFocus(String rightsName){
+        ModelAndView mav = new ModelAndView("business/rights/focusList");
+        List<Integer> rids = new ArrayList<Integer>();
+        List<Rights> rightss = new ArrayList<Rights>();
+        if(StringUtils.isNotBlank(rightsName)){
+        	rightss = rightsService.getAllRights();
+        	for (Rights rights : rightss) {
+				if(rights.getName().contains(rightsName.trim())){
+					rids.add(rights.getId());
+				}
+			}
+        	if(rids.isEmpty()){
+        		return mav;
+        	}
+        }
+        PageableResult<Focus> presult = focusService.getFocusByType(Const.FOCUS_TYPE.RIGHTS, rids, page, size);
+        mav.addObject("page", PageHelper.getPageModel(request, presult));
+        mav.addObject("focuses", getFocusVos(presult));
+        mav.addObject("url", "business/rights");
+        return mav;
+    }
+    
+    List<FocusVo> getFocusVos(PageableResult<Focus> presult){
+        List<FocusVo> vos = new LinkedList<>();
+        if (!CollectionUtils.isEmpty(presult.getItems())){
+            for (Focus focus : presult.getItems()){
+                FocusVo vo = new FocusVo();
+                vo.setId(focus.getId());
+                vo.setFocusTime(focus.getCtime());
+                if (focus.getStatus() == 0){
+                    vo.setStatus("取消关注");
+                } else if (focus.getStatus() == 1) {
+                    vo.setStatus("关注");
+                }
+                User user = null;
+                try{
+                    user = userService.getUser(focus.getUid());
+                } catch (Exception ex){
+                    continue;
+                }
+                vo.setUserName(user.getRealname());
+                Rights r = rightsService.getRights(focus.getFid());
+                vo.setContentName(r.getName());
+                if ("customer".equalsIgnoreCase(user.getLoginRole().trim().toLowerCase())){
+                    Customer customer = customerService.getCustomerByUid(user.getUid(), null);
+                    if (customer == null){
+                        logger.error("Could not find customer with id {}", user.getUid());
+                        continue;
+                    }
+                    vo.setUserType("single".equals(customerService.getCustomerByUid(user.getUid(), null).getCustomerType())?"个人客户":"机构客户");
+                } else {
+                    vo.setUserType("理财师");
+                }
+                vos.add(vo);
+            }
+        }
+        return vos;
     }
 }

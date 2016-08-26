@@ -1,5 +1,7 @@
 package com.fhzc.app.system.service;
 
+import java.util.List;
+
 import com.fhzc.app.dao.mybatis.model.Report;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 
@@ -28,4 +30,12 @@ public interface ReportService {
      * @return
      */
     Report getReport(Integer id);
+    
+    /**
+     * 获得所有投研报告
+     * @param page
+     * @param size
+     * @return
+     */
+    List<Report> findAllReport();
 }

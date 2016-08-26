@@ -23,13 +23,15 @@ public class FocusServiceImpl implements FocusService{
     private FocusMapper focusMapper;
 
     @Override
-    public PageableResult<Focus> getFocusByType(String ftype, int page, int size) {
+    public PageableResult<Focus> getFocusByType(String ftype, List<Integer> fids,  int page, int size) {
         FocusExample example = new FocusExample();
         FocusExample.Criteria criteria = example.createCriteria();
         if (StringUtils.isNotBlank(ftype)){
             criteria.andFtypeEqualTo(ftype);
         }
-
+        if (!(fids.isEmpty())){
+            criteria.andFidIn(fids);
+        }
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<Focus> focuses = focusMapper.selectByExampleWithRowbounds(example, rowBounds);
         return new PageableResult<Focus>(page, size, focusMapper.countByExample(example), focuses);

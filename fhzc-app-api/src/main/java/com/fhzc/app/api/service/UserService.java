@@ -38,7 +38,8 @@ public interface UserService {
     /**
      * 查询手机号是否存在
      * @param mobile
+     * @param user
      * @return
      */
-    public boolean checkMobileExists(String mobile);
+    public boolean checkMobileExists(String mobile, User user);
 }

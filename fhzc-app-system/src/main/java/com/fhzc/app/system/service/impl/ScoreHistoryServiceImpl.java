@@ -390,11 +390,6 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
 	}
 
 	@Override
-	public Integer getScoreByUserId(Integer uid) {
-		return scoreHistoryMapper.getScoreByUid(uid);
-	}
-
-	@Override
 	public void addHistoryScore(ScoreHistory scoreHistory) {
 		scoreHistoryMapper.insert(scoreHistory);
 	}

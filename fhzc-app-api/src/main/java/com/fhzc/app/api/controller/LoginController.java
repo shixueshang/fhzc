@@ -7,7 +7,6 @@ import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
 import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.util.Const;
-import com.fhzc.app.dao.mybatis.util.EncryptUtils;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -224,14 +223,8 @@ public class LoginController extends BaseController {
         }
 
         if(user != null){
-            try {
-                mobile = EncryptUtils.encryptToDES(user.getSalt(), mobile);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            if(!userService.checkMobileExists(mobile)){
-                return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"该手机号未注册");
+            if(!userService.checkMobileExists(mobile, user)){
+                return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"该手机号不存在");
             }
         }
 
