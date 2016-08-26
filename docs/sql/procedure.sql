@@ -22,7 +22,7 @@ BEGIN
 	set _customer_Id = -1;
 	set _status ='add';
 	select dictionary.value into _passport_type_id from dictionary where cat='passport' and dictionary.key=p_passport_type;
-	select customer_Id into _customer_Id from customer,user where customer.uid =user.uid and user.passport_type_id=_passport_type_id and passport_code = p_passport_code;
+	select uid into _userid from user where user.passport_type_id=_passport_type_id and passport_code = p_passport_code;
 	
 	select dictionary.value into _status from dictionary where cat='score_status' and dictionary.key=p_addflag;
 
@@ -47,11 +47,11 @@ BEGIN
 	
 	if _status ='add' then
 		insert into score_history(uid,score,event_id,status,operator_type,operator_id,detail,from_type,vaild_time,ctime,is_vaild,is_approve)
-		  values(_customer_Id,p_consume_score,_event_id,_status,'admin',p_operator_id, CONCAT('积分', p_addflag , '，类型：',p_type ,',名称：' , p_from)
+		  values(_userid,p_consume_score,_event_id,_status,'admin',p_operator_id, CONCAT('积分', p_addflag , '，类型：',p_type ,',名称：' , p_from)
 			,_from_type,p_vaild_time,p_operate_time,1,1);
 	else
 		insert into score_history(uid,score,event_id,status,operator_type,operator_id,detail,from_type,ctime,is_vaild,is_approve)
-		  values(_customer_Id,p_consume_score,_event_id,_status,'admin',p_operator_id, CONCAT('积分', p_addflag , '，类型：',p_type ,',名称：' , p_from)
+		  values(_userid,p_consume_score,_event_id,_status,'admin',p_operator_id, CONCAT('积分', p_addflag , '，类型：',p_type ,',名称：' , p_from)
 			,_from_type,p_operate_time,1,1);
 	End if;
 
@@ -79,13 +79,13 @@ BEGIN
 	set _rights_id = -1;	
 	set _customer_Id = -1;
 	select dictionary.value into _passport_type_id from dictionary where cat='passport' and dictionary.key=p_passport_type;
-	select customer_Id into _customer_Id from customer,user where customer.uid =user.uid and user.passport_type_id=_passport_type_id and passport_code = p_passport_code;
+	select uid into _userid from user where user.passport_type_id=_passport_type_id and passport_code = p_passport_code;
 	
 	select id into _rights_id from rights where name=p_rightsname limit 1;
 	if _rights_id >0 then 
 
 		insert into score_history(uid,score,event_id,status,operator_type,operator_id,detail,from_type,ctime,is_vaild,is_approve)
-		  values(_customer_Id,-1*p_consume_score,_rights_id,'consume','admin',p_operator_id,CONCAT('积分减，类型：权益消费,名称：',p_rightsname),'rights',p_consume_time,1,1);
+		  values(_userid,-1*p_consume_score,_rights_id,'consume','admin',p_operator_id,CONCAT('积分减，类型：权益消费,名称：',p_rightsname),'rights',p_consume_time,1,1);
 
 	end if;
 END
