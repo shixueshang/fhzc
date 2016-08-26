@@ -42,4 +42,10 @@ public class ReportServiceImpl implements ReportService {
     public Report getReport(Integer id) {
         return reportMapper.selectByPrimaryKey(id);
     }
+
+	@Override
+	public List<Report> findAllReport() {
+		ReportExample example = new ReportExample();
+        return reportMapper.selectByExample(example);
+	}
 }
