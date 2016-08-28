@@ -5,6 +5,7 @@ import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.aop.SystemControllerLog;
+import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.*;
 
@@ -13,10 +14,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
-import javax.crypto.Mac;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +46,12 @@ public class AssetsController extends BaseController {
 
     @Resource
     private ProductService productService;
+
+    @Resource
+    private ScoreService scoreService;
+
+    @Resource
+    private DepartmentService departmentService;
 
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -111,13 +119,101 @@ public class AssetsController extends BaseController {
      */
     @RequestMapping(value = "/holdings/find", method = RequestMethod.GET)
     public ModelAndView holdings(@RequestParam( required = false) String name){
-        ModelAndView mav = new ModelAndView();
+        ModelAndView mav = new ModelAndView("business/assets/holdings");
         PageableResult<Customer> pageableResult = customerService.findPageCustomers(page, size);
 
         List<CustomerHolding> list = new ArrayList<CustomerHolding>();
         for(Customer customer : pageableResult.getItems()){
+            if(name == null || "".equals(name)){
+                User user  = userService.getUser(customer.getUid());
+                CustomerHolding holding = this.buildHolding(user, customer);
+                list.add(holding);
+            }else{
+                User user  = userService.getUser(customer.getUid());
+                if (name.equals(user.getRealname())) {
+                    CustomerHolding holding = this.buildHolding(user, customer);
+                    list.add(holding);
+                }
+            }
 
         }
+        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
+        mav.addObject("customers", list);
+        mav.addObject("url", "business/assets");
         return mav;
     }
+
+    private CustomerHolding buildHolding(User user, Customer customer){
+        CustomerHolding holding  = new CustomerHolding();
+        holding.setCustomerId(customer.getCustomerId());
+        holding.setCustomerName(user.getRealname());
+        holding.setLevel(super.getDicName(customer.getLevelId(), Const.DIC_CAT.CUSTOMER_LEVEL));
+        holding.setIdentity(user.getPassportCode());
+        holding.setScore(scoreService.sumScore(scoreService.getAvailableList(user.getUid())));
+        holding.setMobile(user.getMobile());
+        PlannerCustomer pc = customerService.getPlannerByCustomerId(customer.getCustomerId(), Const.YES_OR_NO.YES);
+        Planner planner = plannerService.getPlanner(pc.getPlannerId());
+        holding.setPlanner(userService.getUser(planner.getUid()).getRealname());
+        holding.setDepartment(departmentService.getDeparent(customer.getDepartmentId()).getTitle());
+        return holding;
+    }
+
+    @RequestMapping(value = "/holdings/current", method = RequestMethod.GET)
+    @ResponseBody
+    @SystemControllerLog(description = "查看客户当前持仓")
+    public AjaxJson currentHoldings(Integer customerId){
+        //查询客户未过期或没有兑付记录的产品
+        List<AssetsHistory> assetsHistories = assetsService.findCurrentHoldings(customerId);
+
+        List<CurrentHistoryHoldings> result = new ArrayList<CurrentHistoryHoldings>();
+        for(AssetsHistory assetsHistory : assetsHistories){
+            CurrentHistoryHoldings holdings = new CurrentHistoryHoldings();
+            Product product = productService.getProduct(assetsHistory.getProductId());
+            holdings.setProductName(product.getName());
+            holdings.setAmount(new BigDecimal(assetsHistory.getAmount()));
+            holdings.setInvestTerm(assetsHistory.getPeriod());
+            holdings.setBuyDay(product.getBuyDay());
+            holdings.setDividendDay(product.getDividendDay());
+            holdings.setPaymentDay(assetsHistory.getPaymentDate());
+            holdings.setBank(assetsHistory.getBank());
+            holdings.setBankAccount(assetsHistory.getBankAccount());
+            holdings.setEarningRate(assetsHistory.getEarningRate());
+            holdings.setFoundDay(assetsHistory.getProductFoundDay());
+            holdings.setLot(assetsHistory.getLot());
+            holdings.setSerial(assetsHistory.getSerial());
+            result.add(holdings);
+        }
+
+        return new AjaxJson(true, result);
+    }
+
+    @RequestMapping(value = "/holdings/history", method = RequestMethod.GET)
+    @ResponseBody
+    @SystemControllerLog(description = "查看客户历史持仓")
+    public AjaxJson historyHoldings(Integer customerId){
+        //查询客户已过期并且有兑付记录的产品
+        List<AssetsHistory> assetsHistories = assetsService.findHistoryHoldings(customerId);
+
+        List<CurrentHistoryHoldings> result = new ArrayList<CurrentHistoryHoldings>();
+        for(AssetsHistory assetsHistory : assetsHistories){
+            CurrentHistoryHoldings holdings = new CurrentHistoryHoldings();
+            Product product = productService.getProduct(assetsHistory.getProductId());
+            holdings.setProductName(product.getName());
+            holdings.setAmount(new BigDecimal(assetsHistory.getAmount()));
+            holdings.setInvestTerm(assetsHistory.getPeriod());
+            holdings.setBuyDay(product.getBuyDay());
+            holdings.setDividendDay(product.getDividendDay());
+            holdings.setPaymentDay(assetsHistory.getPaymentDate());
+            holdings.setBank(assetsHistory.getBank());
+            holdings.setBankAccount(assetsHistory.getBankAccount());
+            holdings.setEarningRate(assetsHistory.getEarningRate());
+            holdings.setFoundDay(assetsHistory.getProductFoundDay());
+            holdings.setLot(assetsHistory.getLot());
+           // holdings.setTotalAmount();
+            result.add(holdings);
+        }
+
+        return new AjaxJson(true, result);
+    }
+
 }

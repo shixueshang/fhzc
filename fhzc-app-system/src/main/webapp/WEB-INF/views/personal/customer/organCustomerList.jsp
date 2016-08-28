@@ -54,7 +54,7 @@
                     <div class="form-group">
                         <input class="form-control" id="name" placeholder="输入联系人姓名" name="name" >
 
-                        <button type="submit">查询</button>
+                        <button type="submit" class="btn blue"><i class="icon-search"></i> 查询</button>
                     </div>
                 </form>
             </div>

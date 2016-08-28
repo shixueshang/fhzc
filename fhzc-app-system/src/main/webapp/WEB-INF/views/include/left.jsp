@@ -182,7 +182,7 @@
                     <shiro:hasPermission name="/business/assets"><li class="has-sub">
                         <a href="javascript:;">
                             <i class="icon-shopping-cart"></i>
-                            <span class="title">订单管理</span>
+                            <span class="title"> 资产管理</span>
                             <span class="selected"></span>
                             <span class="arrow open"></span>
                         </a>
@@ -193,6 +193,9 @@
                             </li></shiro:hasPermission>
                             <shiro:hasPermission name="/business/contract/list"><li>
                                 <a href="<%=contextPath%>/business/contract/list">财务日报列表</a>
+                            </li></shiro:hasPermission>
+                            <shiro:hasPermission name="/business/assets/holdings/find"><li>
+                                <a href="<%=contextPath%>/business/assets/holdings/find">客户持仓</a>
                             </li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>

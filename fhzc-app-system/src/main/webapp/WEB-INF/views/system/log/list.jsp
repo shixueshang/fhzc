@@ -53,7 +53,7 @@
                     <div class="form-group">
                         <label class="control-label" style="margin-left: 20px">操作日期</label>
                         <input type="text" class="form-control date-picker"  id="operationDate"  name="operationDate" style="width:180px;"/>
-                        <input type="submit"  value="查询"/>
+                        <button type="submit" class="btn blue"><i class="icon-search"></i> 查询</button>
                     </div>
                 </form>
             </div>

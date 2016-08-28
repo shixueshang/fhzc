@@ -31,4 +31,16 @@ public interface AssetsService {
      * @return
      */
     List<AssetsHistory> findAssetsForScore();
+
+    /**
+     * 查询客户的当前持仓
+     * @return
+     */
+    List<AssetsHistory> findCurrentHoldings(Integer customerId);
+
+    /**
+     * 查询客户的历史持仓
+     * @return
+     */
+    List<AssetsHistory> findHistoryHoldings(Integer customerId);
 }

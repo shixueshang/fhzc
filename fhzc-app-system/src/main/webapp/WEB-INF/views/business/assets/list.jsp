@@ -58,7 +58,7 @@
                         <label class="control-label" style="margin-left: 20px">客户姓名</label>
                         <input class="form-control" id="customerName" placeholder="输入客户姓名" name="customerName" >
 
-                        <button type="submit">查询</button>
+                        <button type="submit" class="btn blue"><i class="icon-search"></i> 查询</button>
                     </div>
                 </form>
             </div>

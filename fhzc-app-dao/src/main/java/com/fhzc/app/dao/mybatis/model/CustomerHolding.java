@@ -3,7 +3,7 @@ package com.fhzc.app.dao.mybatis.model;
 /**
  * Created by lihongde on 2016/8/26 17:58
  */
-public class CustomerHolding {
+public class  CustomerHolding {
 
     private Integer customerId;
 
@@ -19,9 +19,8 @@ public class CustomerHolding {
 
     private String planner;
 
-    private String company;
+    private String department;
 
-     private String area;
 
     public Integer getCustomerId() {
         return customerId;
@@ -79,19 +78,11 @@ public class CustomerHolding {
         this.planner = planner;
     }
 
-    public String getCompany() {
-        return company;
+    public String getDepartment() {
+        return department;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
-    }
-
-    public String getArea() {
-        return area;
-    }
-
-    public void setArea(String area) {
-        this.area = area;
+    public void setDepartment(String department) {
+        this.department = department;
     }
 }

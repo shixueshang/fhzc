@@ -58,7 +58,7 @@
                         <input class="form-control date-picker" id="startTime" name="startTime" style="width: 180px" value="${param.startTime}">
                         ~
                         <input class="form-control date-picker" id="endTime" name="endTime" style="width: 180px" value="${param.endTime}">
-                        <button type="submit">查找</button>
+                        <button type="submit" class="btn blue"><i class="icon-search"></i> 查询</button>
                     </div>
                 </form>
             </div>
