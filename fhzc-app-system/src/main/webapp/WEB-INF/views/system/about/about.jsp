@@ -77,6 +77,19 @@
                                                 </div>
                                             </div>
                                             <div class="control-group">
+                                          		<label class="control-label">Android地址</label>
+                                                <div class="controls">
+                                                    <input type="text" name="androidUrl" value="${about.androidUrl}" placeholder="" class="m-wrap large">
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
+                                           		<label class="control-label">ios地址</label>
+                                                <div class="controls">
+                                                    <input type="text" name="iosUrl" value="${about.iosUrl}" placeholder="" class="m-wrap large">
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
                                                 <label class="control-label">简介</label>
                                                 <div class="controls">
                                                     <textarea name="introduction" class="span12 ckeditor m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;">${about.introduction}</textarea>
