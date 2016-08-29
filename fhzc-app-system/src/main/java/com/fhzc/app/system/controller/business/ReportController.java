@@ -107,6 +107,7 @@ public class ReportController extends BaseController {
         ModelAndView mav = new ModelAndView("/business/report/add");
         mav.addObject("report", reportService.getReport(id));
         mav.addObject("reportTypes", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.REPORT_CATEGORY)));
+        mav.addObject("url", "business/report");
         return mav;
     }
     
