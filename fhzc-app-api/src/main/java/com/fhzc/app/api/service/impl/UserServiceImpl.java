@@ -83,9 +83,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean checkMobileExists(String mobile) {
+    public boolean checkMobileExists(String mobile, User user) {
         UserExample example = new UserExample();
         UserExample.Criteria criteria = example.createCriteria();
+        try {
+            mobile = EncryptUtils.encryptToDES(user.getSalt(), mobile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         criteria.andMobileEqualTo(mobile);
         return userMapper.countByExample(example) > 0;
     }

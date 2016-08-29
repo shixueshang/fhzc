@@ -107,7 +107,7 @@
                             <option value="1">已审批</option>
                         </select>
 
-                        <button type="submit">查询</button>
+                        <button type="submit" class="btn blue"><i class="icon-search"></i> 查询</button>
                     </div>
                 </form>
             </div>

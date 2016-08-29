@@ -54,4 +54,29 @@ public class AssetsServiceImpl implements AssetsService {
         criteria.andProductFoundDayLessThanOrEqualTo(new Date());
         return assetsHistoryMapper.selectByExample(example);
     }
+
+    @Override
+    public List<AssetsHistory> findCurrentHoldings(Integer customerId) {
+        AssetsHistoryExample example = new AssetsHistoryExample();
+        AssetsHistoryExample.Criteria criteria = example.createCriteria();
+        criteria.andCustomerIdEqualTo(customerId);
+        criteria.andProductExpireDayGreaterThan(new Date());
+
+        AssetsHistoryExample.Criteria criteria1 = example.createCriteria();
+        criteria1.andCustomerIdEqualTo(customerId);
+        criteria1.andPaymentDateIsNull();
+        example.or(criteria1);
+
+        return assetsHistoryMapper.selectByExample(example);
+    }
+
+    @Override
+    public List<AssetsHistory> findHistoryHoldings(Integer customerId) {
+        AssetsHistoryExample example = new AssetsHistoryExample();
+        AssetsHistoryExample.Criteria criteria = example.createCriteria();
+        criteria.andCustomerIdEqualTo(customerId);
+        criteria.andProductExpireDayLessThanOrEqualTo(new Date());
+        criteria.andPaymentDateIsNotNull();
+        return assetsHistoryMapper.selectByExample(example);
+    }
 }

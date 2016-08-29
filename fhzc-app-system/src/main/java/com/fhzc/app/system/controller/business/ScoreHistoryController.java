@@ -1,6 +1,7 @@
 package com.fhzc.app.system.controller.business;
 
 import com.fhzc.app.dao.mybatis.model.Customer;
+import com.fhzc.app.dao.mybatis.model.CustomerScore;
 import com.fhzc.app.dao.mybatis.model.ScoreHistory;
 import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
@@ -132,26 +133,17 @@ public class ScoreHistoryController extends BaseController {
         List<User> users = new ArrayList<User>();
         List<Customer> customers = new ArrayList<Customer>();
         List<Integer> customerIds = new ArrayList<Integer>();
-        String customerName = "";
-//      User user = new User();
-//        if(StringUtils.isNotBlank(identity)){
-//             user = userService.getUserByIdentity(identity);
-//             users = userService.getUsersByName(identity.trim()); 
-//             if(users.isEmpty()){
-//             	return mav;
-//             }
-//        }
-//        
+        String customerName = "";       
         if(StringUtils.isNotBlank(identity)){
           users = userService.getUsersByName(identity.trim());
     	  if(users.isEmpty()){
           	return mav;
           }else{
     	     for(User user : users){
-	        	if(customerService.getCustomerByUid(user.getUid(),"single") == null){
-	        		return mav;
-	        	} 
-	        	customerIds.add(customerService.getCustomerByUid(user.getUid(),"single").getCustomerId());
+    	    	if( customerService.getCustomerByUid(user.getUid(), null) == null){
+    	    		return mav;
+    	    	}
+    	    	customerIds.add(customerService.getCustomerByUid(user.getUid(),null).getCustomerId());
     	     }
           }
         }
@@ -162,7 +154,7 @@ public class ScoreHistoryController extends BaseController {
         	customers = customerService.findAllCustomer();
         	for(ScoreHistory score : pageableResult.getItems()){
         		for (Customer customer : customers) {
-					if(customer.getCustomerId() == score.getUid()){
+					if(customer.getUid() == score.getUid()){
 						customerName = userService.getUser(customer.getUid()).getRealname();
 						score.setCustomerName(customerName);
 					}
@@ -172,9 +164,10 @@ public class ScoreHistoryController extends BaseController {
         }else{
         	for(ScoreHistory score : pageableResult.getItems()){
         		for (User user : users) {
-					if(customerService.getCustomerByUid(user.getUid() , "single").getCustomerId()== score.getUid()){
+        			if(user.getUid() == score.getUid()){
 						score.setCustomerName(user.getRealname());
 					}
+        			
 				}
         	}
         }
@@ -210,5 +203,43 @@ public class ScoreHistoryController extends BaseController {
             scoreService.approve(id);
         }
         return true;
+    }
+
+    @RequestMapping(value = "/query", method = RequestMethod.GET)
+    public ModelAndView query(@RequestParam(required = false) String name){
+        ModelAndView mav = new ModelAndView("/business/score/query");
+        PageableResult<Customer> pageableResult = customerService.findPageCustomers(page, size);
+
+        List<CustomerScore> list = new ArrayList<CustomerScore>();
+        if(name == null || "".equals(name.trim())){
+            for(Customer customer :  pageableResult.getItems()){
+                User user  = userService.getUser(customer.getUid());
+                    CustomerScore cs =  buildCustomerScore(customer, user);
+                    list.add(cs);
+            }
+        }else{
+            for(Customer customer :  pageableResult.getItems()){
+                User user  = userService.getUser(customer.getUid());
+                if(name.trim().equals(user.getRealname())){
+                    CustomerScore cs =  buildCustomerScore(customer, user);
+                    list.add(cs);
+                }
+            }
+        }
+
+        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
+        mav.addObject("customers", list);
+        mav.addObject("url", "business/score");
+        return mav;
+    }
+
+    private CustomerScore buildCustomerScore(Customer customer, User user){
+        CustomerScore cs = new CustomerScore();
+        cs.setCustomerId(customer.getCustomerId());
+        cs.setCustomerName(user.getRealname());
+        cs.setAvaliableScore(scoreService.sumScore(scoreService.getAvailableList(user.getUid())));
+        cs.setFrozeScore(scoreService.sumScore(scoreService.getFrozen(user.getUid())));
+        cs.setWillExpireScore(scoreService.sumScore(scoreService.getExpiredList(user.getUid())));
+        return cs;
     }
 }

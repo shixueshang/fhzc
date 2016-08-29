@@ -21,7 +21,6 @@
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/jquery-tags-input/jquery.tagsinput.css" />
 <link rel="stylesheet" href="<%=contextPath%>/assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" />
 
-<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/bootstrap-datepicker/css/datepicker.css">
 
 <!-- BEGIN CONTAINER -->
 <div class="page-container row-fluid">
@@ -40,28 +39,28 @@
                     <ul class="breadcrumb">
                         <li>
                             <i class="icon-home"></i>
-                            <a href="javascript:void(0);">订单管理</a>
+                            <a href="javascript:void(0);">积分管理</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li class="active"><a href="javascript:void(0);">订单列表</a></li>
+                        <li class="active"><a href="javascript:void(0);">积分查询</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
             </div>
 
+
+
             <div class="row-fluid">
-                <form  class="form-inline" action="<%=contextPath%>/business/assets/find" method="GET">
+                <form  class="form-inline" action="<%=contextPath%>/business/score/query" method="GET">
                     <div class="form-group">
-                        <label class="control-label" style="margin-left: 20px">产品名称</label>
-                        <input class="form-control" id="productName" placeholder="输入产品名称" name="productName" >
-
                         <label class="control-label" style="margin-left: 20px">客户姓名</label>
-                        <input class="form-control" id="customerName" placeholder="输入客户姓名" name="customerName" >
+                        <input class="form-control" name="name" placeholder="输入客户姓名"  >
 
-                        <button type="submit" class="btn blue"><i class="icon-search"></i> 查询</button>
+                        <button type="submit">查询</button>
                     </div>
                 </form>
             </div>
+
 
             <!--页面操作详细内容 开始-->
             <div class="row-fluid">
@@ -69,41 +68,26 @@
 
                     <div class="portlet box blue">
                         <div class="portlet-title">
-                            <h4><i class="icon-reorder"></i></h4>
+                            <h4><i class="icon-reorder">
+                            </i></h4>
                         </div>
                         <div class="portlet-body" style="height: 630px; overflow: scroll">
-                            <table class="table table-bordered table-hover">
+                            <table class="table table-striped table-bordered table-hover" id="score_table" >
                                 <thead>
                                 <tr>
-                                    <td>订单编号</td>
-                                    <td>订单状态</td>
-                                    <td>客户编号</td>
                                     <td>客户姓名</td>
-                                    <td style="width:18%">投资产品</td>
-                                    <td>产品编号</td>
-                                    <td>投资金额(美元)</td>
-                                    <td>投资金额(人民币)</td>
-                                    <td>理财师</td>
+                                    <td>可用积分</td>
+                                    <td>冻结积分</td>
+                                    <td>即将过期积分</td>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach items="${assets}" var="asset">
+                                <c:forEach items="${customers}" var="customer">
                                     <tr>
-                                        <td>${asset.serial}</td>
-                                        <td>
-                                            <c:forEach items="${assetsStatus}" var="assetStat">
-                                                <c:if test="${asset.type == assetStat.value}">
-                                                    ${assetStat.key}
-                                                </c:if>
-                                            </c:forEach>
-                                        </td>
-                                        <td>${asset.customerNum}</td>
-                                        <td>${asset.customerName}</td>
-                                        <td>${asset.productName}</td>
-                                        <td>${asset.productCode}</td>
-                                        <td>${asset.amountUsd}</td>
-                                        <td>${asset.amountRmb}</td>
-                                        <td>${asset.planner}</td>
+                                        <td>${customer.customerName}</td>
+                                        <td>${customer.avaliableScore}</td>
+                                        <td>${customer.frozeScore}</td>
+                                        <td>${customer.willExpireScore}</td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>

@@ -20,8 +20,7 @@
 
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/jquery-tags-input/jquery.tagsinput.css" />
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" />
-
-<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/bootstrap-datepicker/css/datepicker.css">
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/jquery-ui/jquery-ui-1.10.1.custom.css">
 <!-- BEGIN CONTAINER -->
 <div class="page-container row-fluid">
     <jsp:include page="../../include/left.jsp"/>
@@ -39,26 +38,21 @@
                     <ul class="breadcrumb">
                         <li>
                             <i class="icon-home"></i>
-                            <a href="javascript:void(0);">产品管理</a>
+                            <a href="javascript:void(0);">权益管理</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li class="active"><a href="javascript:void(0);">产品预约列表</a></li>
+                        <li class="active"><a href="javascript:void(0);">关注列表</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
             </div>
 
             <div class="row-fluid">
-                <form name="searchForm" class="form-inline" action="/business/product/order/filter">
+                <form name="searchForm" class="form-inline" action="/business/rights/focusFind">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">产品名称:</label>
-                        <input class="form-control" id="productName" name="productName" value="${param.productName}">
-
-                        <label class="col-sm-2 control-label">预约时间:</label>
-                        <input class="form-control date-picker" id="startTime" name="startTime" style="width: 180px" value="${param.startTime}">
-                        ~
-                        <input class="form-control date-picker" id="endTime" name="endTime" style="width: 180px" value="${param.endTime}">
-                        <button type="submit" class="btn blue"><i class="icon-search"></i> 查询</button>
+                   		<label class="control-label" style="margin-left: 20px">权益名称:</label>
+                        <input class="form-control" name="rightsName" placeholder="输入权益名称"  >
+                        <button type="submit">查找</button>
                     </div>
                 </form>
             </div>
@@ -66,7 +60,6 @@
             <!--页面操作详细内容 开始-->
             <div class="row-fluid">
                 <div class="span12">
-
                     <div class="portlet box blue">
                         <div class="portlet-title">
                             <h4><i class="icon-reorder"></i></h4>
@@ -75,29 +68,23 @@
                             <table class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <td>预约时间</td>
-                                    <td>产品名称</td>
-                                    <td>预约金额</td>
-                                    <td>客户编号</td>
-                                    <td>客户姓名</td>
-                                    <td>关联理财师工号</td>
-                                    <td>关联理财师</td>
-                                    <td>理财师手机号</td>
-                                    <td>理财师处理状态</td>
+                                    <td>关注id</td>
+                                    <td>关注内容</td>
+                                    <td>关注时间</td>
+                                    <td>关注用户名</td>
+                                    <td>关注用户类型</td>
+                                    <td>状态</td>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach items="${reservations}" var="reservation">
+                                <c:forEach items="${focuses}" var="focus">
                                     <tr>
-                                        <td><fmt:formatDate value="${reservation.applyTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-                                        <td>${reservation.productName}</td>
-                                        <td>${reservation.amount}</td>
-                                        <td>${reservation.customerNum}</td>
-                                        <td>${reservation.customerName}</td>
-                                        <td>${reservation.plannerNum}</td>
-                                        <td>${reservation.plannerName}</td>
-                                        <td>${reservation.plannerMobile}</td>
-                                        <td>${reservation.result}</td>
+                                        <td>${focus.id}</td>
+                                        <td>${focus.contentName}</td>
+                                        <td><fmt:formatDate value="${focus.focusTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+                                        <td>${focus.userName}</td>
+                                        <td>${focus.userType}</td>
+                                        <td>${focus.status}</td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>

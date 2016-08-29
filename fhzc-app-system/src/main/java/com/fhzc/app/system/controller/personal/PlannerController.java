@@ -374,5 +374,28 @@ public class PlannerController extends BaseController {
         return result;
     }
 
+    /**
+     * 获得当前用户部门的理财师
+     * @return
+     */
+    @RequestMapping(value = "/getPlanner", method = RequestMethod.GET)
+    @ResponseBody
+    public AjaxJson getPlanners(){
+        Admin admin = super.getCurrentUser();
+        List<Department> departments = departmentService.findAllChildren(admin.getOrgan());
+        List<Integer> deptIds = new ArrayList<Integer>();
+        for(Department department : departments){
+            deptIds.add(department.getDepartmentId());
+        }
+        List<Integer> plannersIds = plannerService.findPlannerByDepartment(deptIds);
+        List<Planner> planners = new ArrayList<Planner>();
+        for(Integer plannerId : plannersIds){
+            Planner planner = plannerService.getPlanner(plannerId);
+            User user = userService.getUser(planner.getUid());
+            planner.setPlannerName(user.getRealname());
+            planners.add(planner);
+        }
+        return new AjaxJson(true, planners);
+    }
 
 }

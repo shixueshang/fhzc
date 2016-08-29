@@ -884,6 +884,146 @@ public class RightsExample {
             addCriterion("`notice` not between", value1, value2, "notice");
             return (Criteria) this;
         }
+
+        public Criteria andAdvanceDayIsNull() {
+            addCriterion("`advance_day` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvanceDayIsNotNull() {
+            addCriterion("`advance_day` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvanceDayEqualTo(String value) {
+            addCriterion("`advance_day` =", value, "advanceDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvanceDayNotEqualTo(String value) {
+            addCriterion("`advance_day` <>", value, "advanceDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvanceDayGreaterThan(String value) {
+            addCriterion("`advance_day` >", value, "advanceDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvanceDayGreaterThanOrEqualTo(String value) {
+            addCriterion("`advance_day` >=", value, "advanceDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvanceDayLessThan(String value) {
+            addCriterion("`advance_day` <", value, "advanceDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvanceDayLessThanOrEqualTo(String value) {
+            addCriterion("`advance_day` <=", value, "advanceDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvanceDayLike(String value) {
+            addCriterion("`advance_day` like", value, "advanceDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvanceDayNotLike(String value) {
+            addCriterion("`advance_day` not like", value, "advanceDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvanceDayIn(List<String> values) {
+            addCriterion("`advance_day` in", values, "advanceDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvanceDayNotIn(List<String> values) {
+            addCriterion("`advance_day` not in", values, "advanceDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvanceDayBetween(String value1, String value2) {
+            addCriterion("`advance_day` between", value1, value2, "advanceDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvanceDayNotBetween(String value1, String value2) {
+            addCriterion("`advance_day` not between", value1, value2, "advanceDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupplyPhoneIsNull() {
+            addCriterion("`supply_phone` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupplyPhoneIsNotNull() {
+            addCriterion("`supply_phone` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupplyPhoneEqualTo(String value) {
+            addCriterion("`supply_phone` =", value, "supplyPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupplyPhoneNotEqualTo(String value) {
+            addCriterion("`supply_phone` <>", value, "supplyPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupplyPhoneGreaterThan(String value) {
+            addCriterion("`supply_phone` >", value, "supplyPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupplyPhoneGreaterThanOrEqualTo(String value) {
+            addCriterion("`supply_phone` >=", value, "supplyPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupplyPhoneLessThan(String value) {
+            addCriterion("`supply_phone` <", value, "supplyPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupplyPhoneLessThanOrEqualTo(String value) {
+            addCriterion("`supply_phone` <=", value, "supplyPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupplyPhoneLike(String value) {
+            addCriterion("`supply_phone` like", value, "supplyPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupplyPhoneNotLike(String value) {
+            addCriterion("`supply_phone` not like", value, "supplyPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupplyPhoneIn(List<String> values) {
+            addCriterion("`supply_phone` in", values, "supplyPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupplyPhoneNotIn(List<String> values) {
+            addCriterion("`supply_phone` not in", values, "supplyPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupplyPhoneBetween(String value1, String value2) {
+            addCriterion("`supply_phone` between", value1, value2, "supplyPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupplyPhoneNotBetween(String value1, String value2) {
+            addCriterion("`supply_phone` not between", value1, value2, "supplyPhone");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

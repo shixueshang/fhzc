@@ -9,11 +9,13 @@ import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.aop.SystemControllerLog;
 import com.fhzc.app.system.commons.util.FileUtil;
 import com.fhzc.app.system.commons.util.TextUtils;
+import com.fhzc.app.system.commons.vo.FocusVo;
 import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.*;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -79,8 +81,6 @@ public class ProductController extends BaseController {
             product.setOrderAmount(orderAmount);
             products.add(product);
         }
-
-
         mav.addObject("products", products);
         mav.addObject("productTypes", dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_TYPE));
         mav.addObject("productStatus", dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_STATUS));
@@ -265,7 +265,84 @@ public class ProductController extends BaseController {
 
         return mav;
     }
-
+    
+    /**
+     * 产品关注列表
+     * @return
+     */
+    @RequestMapping(value = "/focus/list", method = RequestMethod.GET)
+    @SystemControllerLog(description = "查看产品关注列表")
+    public ModelAndView listProductFocus(){
+        ModelAndView mav = new ModelAndView("business/product/focusList");
+        mav.addObject("url", "business/product");
+        return mav;
+    }
+    
+    /**
+     * 产品关注列表
+     * @return
+     */
+    @RequestMapping(value = "/focus/find", method = RequestMethod.GET)
+    @SystemControllerLog(description = "查看产品关注列表")
+    public ModelAndView listProductFocus(String productName){
+        ModelAndView mav = new ModelAndView("business/product/focusList");
+        List<Integer> pids = new ArrayList<Integer>();
+        List<Product> products = new ArrayList<Product>();
+        if(StringUtils.isNotBlank(productName)){
+        	products = productService.findAllProduct();
+        	for (Product product : products) {
+				if(product.getName().contains(productName.trim())){
+					pids.add(product.getPid());
+				}
+			}
+        	if(pids.isEmpty()){
+        		return mav;
+        	}
+        }
+        PageableResult<Focus> presult = focusService.getFocusByType(Const.FOCUS_TYPE.PRODUCT, pids, page, size);
+        mav.addObject("page", PageHelper.getPageModel(request, presult));
+        mav.addObject("focuses", getFocusVos(presult));
+        mav.addObject("url", "business/product");
+        return mav;
+    }
+    
+    List<FocusVo> getFocusVos(PageableResult<Focus> presult){
+        List<FocusVo> vos = new LinkedList<>();
+        if (!CollectionUtils.isEmpty(presult.getItems())){
+            for (Focus focus : presult.getItems()){
+                FocusVo vo = new FocusVo();
+                vo.setId(focus.getId());
+                vo.setFocusTime(focus.getCtime());
+                if (focus.getStatus() == 0){
+                    vo.setStatus("取消关注");
+                } else if (focus.getStatus() == 1) {
+                    vo.setStatus("关注");
+                }
+                User user = null;
+                try{
+                    user = userService.getUser(focus.getUid());
+                } catch (Exception ex){
+                    continue;
+                }
+                vo.setUserName(user.getRealname());
+                Product p = productService.getProduct(focus.getFid());
+                vo.setContentName(p.getName());
+                if ("customer".equalsIgnoreCase(user.getLoginRole().trim().toLowerCase())){
+                    Customer customer = customerService.getCustomerByUid(user.getUid(), null);
+                    if (customer == null){
+                        logger.error("Could not find customer with id {}", user.getUid());
+                        continue;
+                    }
+                    vo.setUserType("single".equals(customerService.getCustomerByUid(user.getUid(), null).getCustomerType())?"个人客户":"机构客户");
+                } else {
+                    vo.setUserType("理财师");
+                }
+                vos.add(vo);
+            }
+        }
+        return vos;
+    }
+    
     /**
      * 产品分类
      * @return
@@ -402,7 +479,6 @@ public class ProductController extends BaseController {
         	productService.addOrUpdateProduct(preProduct);
         	msg= "success";
     	}
-  
     	return msg;
     }
     

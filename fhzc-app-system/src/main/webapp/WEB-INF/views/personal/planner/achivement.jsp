@@ -72,7 +72,7 @@
                         <script>
                             $("#startDate").datepicker({ dateFormat: 'yy-mm',startView: 3, minView: 3, autoclose: true });
                         </script>
-                        <input type="button" id="button_search" onclick="formSubmit()" value="查询"/>
+                        <button type="button" id="button_search" class="btn blue" onclick="formSubmit()" ><i class="icon-search"></i> 查询</button>
                     </div>
                 </form>
             </div>

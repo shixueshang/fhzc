@@ -93,7 +93,10 @@ public class ContractController extends BaseController {
         List<Planner> planners = plannerService.findAllPlanner();
         for (Contract contract : pageableResult.getItems()) {
         	for (Customer customer : customers) {
-				if(customer.getCustomerId() == contract.getCustomerId()){
+				if(contract.getCustomerId() == -1){
+					contract.setCustomerName(contract.getCustomerName());
+				}
+        		if(customer.getCustomerId() == contract.getCustomerId()){
 					contract.setCustomerName(userService.getUser(customer.getUid()).getRealname());
 				}
 			}

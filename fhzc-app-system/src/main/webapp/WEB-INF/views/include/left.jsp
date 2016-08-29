@@ -39,7 +39,11 @@
                             <li>
                                 <a href="<%=contextPath%>/business/product/order/list">产品预约列表</a>
                             </li></shiro:hasPermission>
-                            <shiro:hasPermission name="/business/product/type">
+                         <shiro:hasPermission name="/business/product/focus/list">
+                            <li>
+                                <a href="<%=contextPath%>/business/product/focus/list">产品关注列表</a>
+                            </li></shiro:hasPermission>
+                          <shiro:hasPermission name="/business/product/type">
                                 <li>
                                     <a href="<%=contextPath%>/business/product/type">产品分类维护</a>
                                 </li></shiro:hasPermission>
@@ -64,6 +68,9 @@
                             <shiro:hasPermission name="/business/activity/registers">   <li>
                                 <a href="<%=contextPath%>/business/activity/registers">活动报名</a>
                             </li></shiro:hasPermission>
+                             <shiro:hasPermission name="/business/activity/focusList">   <li>
+                                <a href="<%=contextPath%>/business/activity/focusList">活动关注列表</a>
+                            </li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>
 
@@ -80,6 +87,9 @@
                             </li></shiro:hasPermission>
                         <shiro:hasPermission name="/business/report/pub"><li>
                                 <a href="<%=contextPath%>/business/report/pub">新增报告</a>
+                            </li></shiro:hasPermission>
+                       <shiro:hasPermission name="/business/report/focusList"><li>
+                                <a href="<%=contextPath%>/business/report/focusList">报告关注列表</a>
                             </li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>
@@ -105,6 +115,9 @@
                         <shiro:hasPermission name="/business/rights/reservations"><li>
                             <a href="<%=contextPath%>/business/rights/reservations">预约列表</a>
                         </li></shiro:hasPermission>
+                        <shiro:hasPermission name="/business/rights/focusList"><li>
+                            <a href="<%=contextPath%>/business/rights/focusList">权益关注列表</a>
+                        </li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>
 
@@ -125,6 +138,9 @@
                             </li></shiro:hasPermission>
                         <shiro:hasPermission name="/personal/focus/list"><li>
                                 <a href="<%=contextPath%>/personal/focus/list">关注列表</a>
+                            </li></shiro:hasPermission>
+                        <shiro:hasPermission name="/personal/customer/missPlanner"><li>
+                                <a href="<%=contextPath%>/personal/customer/missPlanner">缺位管理</a>
                             </li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>
@@ -166,7 +182,7 @@
                     <shiro:hasPermission name="/business/assets"><li class="has-sub">
                         <a href="javascript:;">
                             <i class="icon-shopping-cart"></i>
-                            <span class="title">订单管理</span>
+                            <span class="title"> 资产管理</span>
                             <span class="selected"></span>
                             <span class="arrow open"></span>
                         </a>
@@ -177,6 +193,9 @@
                             </li></shiro:hasPermission>
                             <shiro:hasPermission name="/business/contract/list"><li>
                                 <a href="<%=contextPath%>/business/contract/list">财务日报列表</a>
+                            </li></shiro:hasPermission>
+                            <shiro:hasPermission name="/business/assets/holdings/find"><li>
+                                <a href="<%=contextPath%>/business/assets/holdings/find">客户持仓</a>
                             </li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>
@@ -192,6 +211,9 @@
                         <ul class="sub">
                             <shiro:hasPermission name="/business/score/list"><li>
                                 <a href="<%=contextPath%>/business/score/list">积分列表</a>
+                            </li></shiro:hasPermission>
+                            <shiro:hasPermission name="/business/score/query"><li>
+                                <a href="<%=contextPath%>/business/score/query">积分查询</a>
                             </li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>

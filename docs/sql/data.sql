@@ -8,7 +8,7 @@ TRUNCATE TABLE `system_module`;
 -- Query: SELECT * FROM bank.admin
 -- Date: 2016-07-08 16:31
 */
-INSERT INTO `admin` (`id`,`login`,`password`,`realname`,`role`,`login_ip`,`last_login_time`) VALUES (1,'admin','098f6bcd4621d373cade4e832627b4f6','管理员',1,NULL,NULL);
+INSERT INTO `admin` (`id`,`login`,`password`,`realname`,`role`,`login_ip`,`organ`) VALUES (1,'admin','098f6bcd4621d373cade4e832627b4f6','管理员',1,NULL,'1');
 
 /*
 -- Query: SELECT * FROM bank.system_module
@@ -56,7 +56,7 @@ INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (42,'机构投资人档案表导入','/business/customerdocument/importoragent',NULL,33,3,1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (43,'积分历史导入','/business/score/importoradd',NULL,33,3,1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (44,'权益消费导入','/business/score/importorconsume',NULL,33,3,1);
-INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (45,'订单管理','/business/assets',NULL,1,2,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (45,'资产管理','/business/assets',NULL,1,2,1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (46,'订单列表','/business/assets/list',NULL,45,3,1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (47,'离职理财师导入','/personal/planner/importoroff',NULL,33,3,1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (48,'积分管理','/business/score',NULL,1,2,1);
@@ -71,6 +71,13 @@ INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (57, '消息列表', '/system/notice/list',NULL, 16, 3, 1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (58, '财务日报列表','/business/contract/list', NULL, 45, 3, 1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (59, '操作日志','/system/log/list',NULL,16,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (60, '缺位管理', '/personal/customer/missPlanner',NULL, 27, 3, 1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES ('61', '产品关注列表', '/business/product/focus/list', null, '2', '3', '1');
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES ('62', '活动关注列表', '/business/activity/focusList', null, '8', '3', '1');
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES ('63', '报告关注列表', '/business/report/focusList', null, '5', '3', '1');
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`)VALUES ('64', '权益关注列表', '/business/rights/focusList', null, '11', '3', '1');
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (65, '积分查询', '/business/score/query',NULL,48, 3, 1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (66, '资产持仓', '/business/assets/holdings/find',NULL,45, 3, 1);
 
 
 /*

@@ -123,10 +123,10 @@
                                             <td>
                                                 <c:choose>
                                                     <c:when test="${planner.status == 'on'}">
-                                                        在职
+                                                        <span class="label label-success">在职</span>
                                                     </c:when>
                                                     <c:when test="${planner.status == 'off'}">
-                                                        离职
+                                                        <span class="label label-important">离职</span>
                                                     </c:when>
                                                 </c:choose>
                                             </td>

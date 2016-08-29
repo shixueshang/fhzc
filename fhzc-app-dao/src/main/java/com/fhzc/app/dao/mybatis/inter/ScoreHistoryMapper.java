@@ -31,5 +31,4 @@ public interface ScoreHistoryMapper {
 
     int updateByPrimaryKey(ScoreHistory record);
 
-    Integer getScoreByUid(Integer uid);
 }

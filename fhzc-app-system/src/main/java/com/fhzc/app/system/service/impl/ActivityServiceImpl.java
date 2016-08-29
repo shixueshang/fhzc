@@ -10,11 +10,11 @@ import com.fhzc.app.dao.mybatis.model.ActivityExample;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.system.commons.util.DateUtil;
 import com.fhzc.app.system.service.ActivityService;
+
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -56,14 +56,17 @@ public class ActivityServiceImpl implements ActivityService {
     public PageableResult<ActivityApply> findPageActivityApplies(ActivityApplyQuery query, int page, int size) {
         ActivityApplyExample example = new ActivityApplyExample();
         ActivityApplyExample.Criteria criteria = example.createCriteria();
-        if(query.getActivityName() != null && query.getActivityId() == null){
-            return new PageableResult<ActivityApply>(page, size, activityApplyMapper.countByExample(example), new ArrayList<ActivityApply>());
-        }
-        if(query.getActivityName() != null && query.getActivityId() != null){
-            criteria.andActivityIdEqualTo(query.getActivityId());
+        if(null != query.getActivityId()){
+        	criteria.andActivityIdEqualTo(query.getActivityId());
         }
         if(query.getStartDate() != null && query.getEndDate() != null){
             criteria.andCtimeBetween(DateUtil.getStartTimeOfDate(query.getStartDate()), DateUtil.getEndTimeOfDate(query.getEndDate()));
+        }
+        if(query.getStartDate() != null && query.getEndDate() == null){
+        	criteria.andCtimeGreaterThanOrEqualTo(DateUtil.getStartTimeOfDate(query.getStartDate()));
+        }
+        if(query.getStartDate() == null && query.getEndDate() != null){
+        	criteria.andCtimeLessThanOrEqualTo(DateUtil.getEndTimeOfDate(query.getEndDate()));
         }
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<ActivityApply> list = activityApplyMapper.selectByExampleWithRowbounds(example, rowBounds);

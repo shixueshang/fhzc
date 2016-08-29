@@ -11,8 +11,6 @@ public class Planner {
 
     private Integer departmentId;
 
-    private String avatar;
-
     private String status;
 
     private Integer roleId;
@@ -24,6 +22,16 @@ public class Planner {
     private String jobTitleCn;
 
     private String position;
+
+    private String plannerName;
+
+    public String getPlannerName() {
+        return plannerName;
+    }
+
+    public void setPlannerName(String plannerName) {
+        this.plannerName = plannerName;
+    }
 
     public Integer getId() {
         return id;
@@ -55,14 +63,6 @@ public class Planner {
 
     public void setDepartmentId(Integer departmentId) {
         this.departmentId = departmentId;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar == null ? null : avatar.trim();
     }
 
     public String getStatus() {

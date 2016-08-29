@@ -8,7 +8,15 @@ public class RightVo {
     private String providerPhone;
     private int score;
     private long rightId;
+    private String notice;
 
+    public String getNotice() {
+        return notice;
+    }
+
+    public void setNotice(String notice) {
+        this.notice = notice;
+    }
     public long getRightId() {
         return rightId;
     }

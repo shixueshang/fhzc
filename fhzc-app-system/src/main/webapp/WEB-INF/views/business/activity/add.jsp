@@ -23,11 +23,6 @@
 <link rel="stylesheet" href="<%=contextPath%>/assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" />
 
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/bootstrap-datepicker/css/datepicker.css">
-
-<!-- test -->
-<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/jquery-ui/jquery-ui-1.10.1.custom.css">
-<script src="<%=contextPath%>/assets/jquery-ui/jquery-ui-1.10.1.custom.min.js"></script>
-<!-- end -->
 <!-- BEGIN CONTAINER -->
 <div class="page-container row-fluid">
     <jsp:include page="../../include/left.jsp"/>
@@ -85,8 +80,8 @@
                                             <div class="control-group">
                                                 <label class="control-label">活动名<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <input type="text" name="name" value="${activity.name}" data-required="1" placeholder="" class="m-wrap large">
-                                                    <span class="help-inline"></span>
+                                                    <input type="text" id="name" name="name" value="${activity.name}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <span class="help-inline hide">该名称已存在,请换一个名字</span>
                                                 </div>
                                             </div>
                                             <div class="control-group">
@@ -111,41 +106,41 @@
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">活动地点</label>
+                                                <label class="control-label">活动地点 <span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <input type="text" name="address" value="${activity.address}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <input type="text" id="address" name="address" value="${activity.address}" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">报名开始日期</label>
+                                                <label class="control-label">报名开始日期<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <input type="text" name="applyBeginTime" placeholder="" size="16" id="applyBeginTime" value="<fmt:formatDate value="${activity.applyBeginTime}" pattern="yyyy-MM-dd HH:mm:ss"/>">
+                                                    <input type="text" name="applyBeginTime" data-required="1" class="m-wrap m-ctrl-medium " placeholder="yyyy-MM-dd HH:mm:ss" size="16" id="applyBeginTime" value="<fmt:formatDate value="${activity.applyBeginTime}" pattern="yyyy-MM-dd HH:mm:ss"/>">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">报名结束日期</label>
+                                                <label class="control-label">报名结束日期<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <input type="text" name="applyEndTime" placeholder="" size="16" id="applyEndTime" value="<fmt:formatDate value="${activity.applyEndTime}" pattern="yyyy-MM-dd HH:mm:ss"/>">
+                                                    <input type="text" id="applyEndTime" name="applyEndTime" data-required="1" class="m-wrap m-ctrl-medium" placeholder="yyyy-MM-dd HH:mm:ss" size="16" id="applyEndTime" value="<fmt:formatDate value="${activity.applyEndTime}" pattern="yyyy-MM-dd HH:mm:ss"/>">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">活动开始日期</label>
+                                                <label class="control-label">活动开始日期<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <input type="text" name="beginTime" placeholder="" size="16" id="beginTime" value="<fmt:formatDate value="${activity.beginTime}" pattern="yyyy-MM-dd HH:mm:ss"/>">
+                                                    <input type="text" id="beginTime" name="beginTime" data-required="1" class="m-wrap m-ctrl-medium" placeholder="yyyy-MM-dd HH:mm:ss" size="16" id="beginTime" value="<fmt:formatDate value="${activity.beginTime}" pattern="yyyy-MM-dd HH:mm:ss"/>">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">活动结束日期</label>
+                                                <label class="control-label">活动结束日期<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <input type="text" name="endTime" placeholder="" size="16" id="endTime"  value="<fmt:formatDate value="${activity.endTime}" pattern="yyyy-MM-dd HH:mm:ss"/>">
+                                                    <input type="text" id="endTime" name="endTime" data-required="1" class="m-wrap m-ctrl-medium" placeholder="yyyy-MM-dd HH:mm:ss" size="16" id="endTime"  value="<fmt:formatDate value="${activity.endTime}" pattern="yyyy-MM-dd HH:mm:ss"/>">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -184,7 +179,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">活动内容</label>
                                                 <div class="controls">
-                                                    <textarea name="content"  class="span6 m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;">${activity.content}</textarea>
+                                                    <textarea id="content" name="content"  class="span6 m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;">${activity.content}</textarea>
                                                 </div>
                                             </div>
 
@@ -197,7 +192,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">活动主办方</label>
                                                 <div class="controls">
-                                                    <textarea name="sponsor" class="span6 m-wrap" maxlength="250" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;">${activity.sponsor}</textarea>
+                                                    <textarea id="sponsor" name="sponsor" class="span6 m-wrap" maxlength="250" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;">${activity.sponsor}</textarea>
                                                 </div>
                                             </div>
                                             <div class="control-group">
@@ -265,9 +260,7 @@
 
 <jsp:include page="../../include/footer.jsp"/>
 <script type="text/javascript" src="<%=contextPath%>/assets/jquery-validation/dist/jquery.validate.min.js"></script>
-<!--  
-<script type="text/javascript" src="<%=contextPath%>/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
--->
+
 <script>
     $(function(){
 
@@ -314,38 +307,6 @@
             $.uniform.update($("input[name='isRecommend'][value='0']").attr("checked", true));
         }
         
-        $("#applyBeginTime").datetimepicker({
-            timeFormat: 'HH:mm:ss',
-            dateFormat: "yy-mm-dd"
-        });
-        $("#applyEndTime").datetimepicker({
-            timeFormat: 'HH:mm:ss',
-            dateFormat: "yy-mm-dd"
-        });
-        $("#beginTime").datetimepicker({
-            timeFormat: 'HH:mm:ss',
-            dateFormat: "yy-mm-dd"
-        });
-        $("#endTime").datetimepicker({
-            timeFormat: 'HH:mm:ss',
-            dateFormat: "yy-mm-dd"
-        });
-        /*
-        $("#reservationTime").change(function () {
-            clearDateError();
-        });
-        function validateDateError(text) {
-            clearDateError();
-            var error =  "<p style='color:red; margin: 0'>"+text+"</p>"
-            $("#reservationTime").parent().append(error);
-        }
-
-        function clearDateError() {
-            if ($("#reservationTime").parent().find("p").size() > 0){
-                $("#reservationTime").parent().find("p").remove();
-            }
-        }
-        */
         var form1 = $('#form_sample_1');
         var error1 = $('.alert-error', form1);
         var success1 = $('.alert-success', form1);
@@ -355,21 +316,38 @@
             errorClass: 'help-inline', // default input error message class
             focusInvalid: false, // do not focus the last invalid input
             ignore: "",
+            messages: {
+                
+            },
             rules: {
                 name: {
-                    required: true
+                    required: true,
                 },
                 url: {
-                    required: true,
                     url: true
+                },
+                address:{
+                	required: true
+                },
+                applyBeginTime:{
+                	required: true
+                },
+                applyEndTime:{
+                	required: true
+                },
+                beginTime:{
+                	required: true
+                },
+                endTime:{
+                	required: true
                 }
+                
             },
-
+          
             invalidHandler: function (event, validator) { //display error alert on form submit
                 success1.hide();
                 error1.show();
                 App.scrollTo(error1, -200);
-                return false;
             },
 
             highlight: function (element) { // hightlight error inputs
@@ -391,11 +369,185 @@
             },
 
             submitHandler: function (form) {
-                success1.show();
+       //     	checkApplyDate();
+         //   	checkDate();
+            	if(!checkApplyDate()){
+            		return false;
+        		}
+       			if(!checkDate()){
+           			return false;
+           		}
+       			if(!checkTwoDate()){
+           			return false;
+           		}
+            	success1.show();
                 error1.hide();
                 form.submit();
             }
         });
-
+        
+        function checkApplyDate() {
+        	var start = $("#applyBeginTime").val();
+        	var end = $("#applyEndTime").val();
+        	var date1 = new Date(start);
+        	var date2 = new Date(end);
+        	if(date1 != null && date2 != null){
+        		if(date2.getTime()<date1.getTime()){
+        			alert("请输入正确的报名时间范围");
+        			return false;
+        		}else{
+        			return true;
+        		}
+        	}
+        };
+        function checkDate() {
+        	var start = $("#beginTime").val();
+        	var end = $("#endTime").val();
+        	var date1 = new Date(start);
+        	var date2 = new Date(end);
+        	if(date1 != null && date2 != null){
+        		if(date2.getTime()<date1.getTime()){
+        			alert("请输入正确的开始结束时间范围");
+        			return false;
+        		}else{
+        			return true;
+        		}
+        	}
+        };
+        function checkTwoDate() {
+        	var start = $("#applyEndTime").val();
+        	var end = $("#beginTime").val();
+        	var date1 = new Date(start);
+        	var date2 = new Date(end);
+        	if(date1 != null && date2 != null){
+        		if(date2.getTime()<date1.getTime()){
+        			alert("请确认活动开始时间晚于报名结束时间");
+        			return false;
+        		}else{
+        			return true;
+        		}
+        	}
+        };
+        
     })
+    
+    $("#applyBeginTime").change(function(){
+    	var applyBeginTime = $("#applyBeginTime").val();
+    	var str = "((19|20)[0-9]{2})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])(\\s+)(0\\d{1}|1\\d{1}|2[0-3]):([0-5]\\d{1}):([0-5]\\d{1})";
+    	if(!(applyBeginTime.match(str))){
+			validateDateError('请确认输入正确的时间格式');
+			$("#applyBeginTime").focus();
+		    if(applyBeginTime != null){
+		    	$("#applyBeginTime").blur(function(){
+		    		var applyBeginTime = $("#applyBeginTime").val();
+					if(!(applyBeginTime.match(str))){
+						$("#applyBeginTime").focus();
+					}
+				})
+		    }
+            return false;
+      	}else{
+      		 clearDateError();
+      	}
+    })
+
+    
+    $("#applyEndTime").change(function(){
+    	var applyEndTime = $("#applyEndTime").val();
+    	var str = "((19|20)[0-9]{2})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])(\\s+)(0\\d{1}|1\\d{1}|2[0-3]):([0-5]\\d{1}):([0-5]\\d{1})";
+    	if(!(applyEndTime.match(str))){
+			validateDateError1('请确认输入正确的时间格式');
+			$("#applyEndTime").focus();
+			if(applyEndTime != null){
+		    	$("#applyEndTime").blur(function(){
+		    		var applyEndTime = $("#applyEndTime").val();
+					if(!(applyEndTime.match(str))){
+						$("#applyEndTime").focus();
+					}
+				})
+		    }
+            return false;
+      	}else{
+      		 clearDateError1();
+      	}
+    })
+    $("#beginTime").change(function(){
+    	var beginTime = $("#beginTime").val();
+    	var str = "((19|20)[0-9]{2})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])(\\s+)(0\\d{1}|1\\d{1}|2[0-3]):([0-5]\\d{1}):([0-5]\\d{1})";
+    	if(!(beginTime.match(str))){
+			validateDateError2('请确认输入正确的时间格式');
+			$("#beginTime").focus();
+			if(beginTime != null){
+		    	$("#beginTime").blur(function(){
+		    		var beginTime = $("#beginTime").val();
+					if(!(beginTime.match(str))){
+						$("#beginTime").focus();
+					}
+				})
+		    }
+            return false;
+      	}else{
+      		 clearDateError2();
+      	}
+    })
+    $("#endTime").change(function(){
+    	var endTime = $("#endTime").val();
+    	var str = "((19|20)[0-9]{2})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])(\\s+)(0\\d{1}|1\\d{1}|2[0-3]):([0-5]\\d{1}):([0-5]\\d{1})";
+    	if(!(endTime.match(str))){
+			validateDateError3('请确认输入正确的时间格式');
+			$("#endTime").focus();
+			if(endTime != null){
+		    	$("#endTime").blur(function(){
+		    		var endTime = $("#endTime").val();
+					if(!(endTime.match(str))){
+						$("#endTime").focus();
+					}
+				})
+		    }
+            return false;
+      	}else{
+      		 clearDateError3();
+      	}
+    })
+    function validateDateError(text) {
+        clearDateError();
+        var error =  "<p style='color:red; margin: 0'>"+text+"</p>"
+        $("#applyBeginTime").parent().append(error);
+    }
+    function clearDateError() {
+        if ($("#applyBeginTime").parent().find("p").size() > 0){
+            $("#applyBeginTime").parent().find("p").remove();
+        }
+    }
+    function validateDateError1(text) {
+        clearDateError1();
+        var error =  "<p style='color:red; margin: 0'>"+text+"</p>"
+        $("#applyEndTime").parent().append(error);
+    }
+    function clearDateError1() {
+        if ($("#applyEndTime").parent().find("p").size() > 0){
+            $("#applyEndTime").parent().find("p").remove();
+        }
+    }
+    function validateDateError2(text) {
+        clearDateError2();
+        var error =  "<p style='color:red; margin: 0'>"+text+"</p>"
+        $("#beginTime").parent().append(error);
+    }
+    function clearDateError2() {
+        if ($("#beginTime").parent().find("p").size() > 0){
+            $("#beginTime").parent().find("p").remove();
+        }
+    }
+    function validateDateError3(text) {
+        clearDateError3();
+        var error =  "<p style='color:red; margin: 0'>"+text+"</p>"
+        $("#endTime").parent().append(error);
+    }
+    function clearDateError3() {
+        if ($("#endTime").parent().find("p").size() > 0){
+            $("#endTime").parent().find("p").remove();
+        }
+    }
+    
 </script>

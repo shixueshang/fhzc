@@ -8,12 +8,14 @@ import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.aop.SystemControllerLog;
 import com.fhzc.app.system.commons.util.FileUtil;
 import com.fhzc.app.system.commons.util.TextUtils;
+import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -49,6 +51,9 @@ public class CustomerController extends BaseController {
     @Resource
     private DepartmentService departmentService;
 
+    @Resource
+    private SystemLogService systemLogService;
+
 
     /**
      * 个人客户列表页面
@@ -76,7 +81,14 @@ public class CustomerController extends BaseController {
         for(User user : pageableResult.getItems()){
             Customer customer = customerService.getCustomerByUid(user.getUid(), Const.CUSTOMER_TYPE.SINGLE_CUSTOMER);
             if(customer != null){
-                customerList.add(customer);
+
+                PlannerCustomer pc = customerService.getPlannerByCustomerId(customer.getCustomerId(), null);
+                if(pc != null){
+                  Planner planner = plannerService.getPlanner(pc.getPlannerId());
+                    if(planner.getStatus().equals(Const.PLANNER_STATUS.ON)){
+                        customerList.add(customer);
+                    }
+                }
 
                 Map<String, Object> scoreMap = new HashMap<String, Object>();
                 scoreMap.put("customerId", customer.getCustomerId());
@@ -107,7 +119,7 @@ public class CustomerController extends BaseController {
         mav.addObject("availableScore", JSON.toJSON(scoreService.sumScore(scoreService.getAvailableList(customer.getUid()))));
         mav.addObject("frozenScore", JSON.toJSON(scoreService.sumScore(scoreService.getFrozen(customer.getUid()))));
 
-        PlannerCustomer plannerCustomer = customerService.getPlannerByCustomerId(customer.getCustomerId());
+        PlannerCustomer plannerCustomer = customerService.getPlannerByCustomerId(customer.getCustomerId(), Const.YES_OR_NO.YES);
         Planner planner = plannerService.getPlanner(plannerCustomer.getPlannerId());
         mav.addObject("planner", JSON.toJSON(planner));
         mav.addObject("plannerUser", JSON.toJSON(userService.getUser(planner.getUid())));
@@ -149,7 +161,13 @@ public class CustomerController extends BaseController {
         for(User user : pageableResult.getItems()){
             Customer customer = customerService.getCustomerByUid(user.getUid(), Const.CUSTOMER_TYPE.ORGAN_CUSTOMER);
             if(customer != null){
-                customerList.add(customer);
+                PlannerCustomer pc = customerService.getPlannerByCustomerId(customer.getCustomerId(), null);
+                if(pc != null){
+                    Planner planner = plannerService.getPlanner(pc.getPlannerId());
+                    if(planner.getStatus().equals(Const.PLANNER_STATUS.ON)){
+                        customerList.add(customer);
+                    }
+                }
 
                 Map<String, Object> scoreMap = new HashMap<String, Object>();
                 scoreMap.put("customerId", customer.getCustomerId());
@@ -208,7 +226,7 @@ public class CustomerController extends BaseController {
         mav.addObject("availableScore", JSON.toJSON(scoreService.sumScore(scoreService.getAvailableList(customer.getUid()))));
         mav.addObject("frozenScore", JSON.toJSON(scoreService.sumScore(scoreService.getFrozen(customer.getUid()))));
         mav.addObject("departments", JSON.toJSON(departmentService.getDepartmentTree()));
-        PlannerCustomer plannerCustomer = customerService.getPlannerByCustomerId(customer.getCustomerId());
+        PlannerCustomer plannerCustomer = customerService.getPlannerByCustomerId(customer.getCustomerId(), Const.YES_OR_NO.YES);
         if(plannerCustomer != null){
             Planner planner = plannerService.getPlanner(plannerCustomer.getPlannerId());
             mav.addObject("planner", JSON.toJSON(planner));
@@ -277,6 +295,81 @@ public class CustomerController extends BaseController {
         customerService.delete(id);
         attr.addAttribute("id", customerOrgan.getCustomerId());
         return "redirect:/personal/customer/organ/enjoy/list/{id}";
+    }
+
+    @RequestMapping(value = "/missPlanner", method = RequestMethod.GET)
+    public ModelAndView missPlanner(){
+        ModelAndView mav = new ModelAndView("personal/customer/missPlanner");
+        mav.addObject("url", "personal/customer");
+        return mav;
+    }
+
+    /**
+     * 根据姓名查询缺位的客户
+     * @param name
+     * @return
+     */
+    @RequestMapping(value = "/find/missPlanner", method = RequestMethod.GET)
+    @SystemControllerLog(description = "查看缺位客户列表")
+    public ModelAndView findCustomersWithoutPlanner(String name){
+        ModelAndView mav = new ModelAndView("personal/customer/missPlanner");
+        PageableResult<User> pageableResult = userService.findPageUsers(name, page, size);
+
+        Admin admin = super.getCurrentUser();
+        List<Department> departments = departmentService.findAllChildren(admin.getOrgan());
+        List<Customer> customerList = new ArrayList<Customer>();
+        for(User user : pageableResult.getItems()){
+            Customer customer = customerService.getCustomerByUid(user.getUid(), null);
+            if(customer != null){
+                PlannerCustomer pc = customerService.getPlannerByCustomerId(customer.getCustomerId(), null);
+                if(pc == null){
+                    customerList.add(customer);
+                }else{
+                    Planner planner = plannerService.getPlanner(pc.getPlannerId());
+                    if(planner.getStatus().equals(Const.PLANNER_STATUS.OFF)){
+                        customerList.add(customer);
+                    }
+                }
+
+            }
+        }
+
+        List<Customer> list = new ArrayList<Customer>();
+        for(Department department : departments){
+            for(Customer customer : customerList){
+                if(department.getDepartmentId() == customer.getDepartmentId()){
+                    list.add(customer);
+                }
+            }
+        }
+
+        mav.addObject("customers", list);
+        mav.addObject("users", pageableResult.getItems());
+        mav.addObject("customerLevel", dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL));
+        mav.addObject("url", "personal/customer");
+        return mav;
+    }
+
+    /**
+     * 为客户指定理财师
+     * @param customerId
+     * @param plannerId
+     * @return
+     */
+    @RequestMapping(value = "/assignPlanner", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxJson assignPlanner(Integer customerId, Integer plannerId){
+
+        PlannerCustomer pc = customerService.getPlannerByCustomerId(customerId, Const.YES_OR_NO.YES);
+        pc.setPlannerId(plannerId);
+        customerService.updatePlannerCustomer(pc);
+
+        //更换新客户的部门为理财师的部门
+        Planner planner = plannerService.getPlanner(plannerId);
+        Customer customer = customerService.getCustomer(customerId);
+        customer.setDepartmentId(planner.getDepartmentId());
+        customerService.addOrUpdateCustomer(customer);
+        return new AjaxJson(true);
     }
 
 }

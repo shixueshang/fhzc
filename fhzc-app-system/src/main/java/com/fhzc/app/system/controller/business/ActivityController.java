@@ -8,11 +8,13 @@ import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.aop.SystemControllerLog;
 import com.fhzc.app.system.commons.util.FileUtil;
 import com.fhzc.app.system.commons.util.TextUtils;
+import com.fhzc.app.system.commons.vo.FocusVo;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.*;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -53,7 +55,7 @@ public class ActivityController extends BaseController {
         for (Activity activity : pageableResult.getItems()) {
         	List<Focus> focuses = focusService.findFocusByType(Const.FOCUS_TYPE.ACTIVITY, activity.getId());
         	activity.setFocusNum(focuses.size() > 0 ? focuses.size() : 0);
-        	List<ActivityApply> orders = activityService.findSuccessOrdersById(activity.getId(), 1);
+        	List<ActivityApply> orders = activityService.findSuccessOrdersById(activity.getId(), Const.FOCUS_STATUS.ON);
         	int personNum = 0;
         	if(orders.size() > 0){
             	for (ActivityApply activityApply : orders) {
@@ -80,7 +82,6 @@ public class ActivityController extends BaseController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @SystemControllerLog(description = "新增或修改活动")
     public String addActivity(Activity activity, MultipartFile coverFile){
-
         if(!coverFile.isEmpty()){
             String coverName = FileUtil.generatePictureName(coverFile);
             String coverPath = TextUtils.getConfig(Const.CONFIG_KEY_SYSTEM_IMAGE_SAVE_PATH, this);
@@ -89,7 +90,6 @@ public class ActivityController extends BaseController {
         }
         activity.setCtime(new Date());
         activityService.addOrUpdateActivity(activity);
-
         return "redirect:/business/activity/list";
     }
 
@@ -106,23 +106,20 @@ public class ActivityController extends BaseController {
     public ModelAndView listActivityApplies(String activityName, Date startTime, Date endTime){
         ModelAndView mav = new ModelAndView("business/activity/registerList");
         ActivityApplyQuery query = new ActivityApplyQuery();
-
-        if(StringUtils.isNotEmpty(activityName)){
-            Activity activity = activityService.findActivityByName(activityName);
+        if(StringUtils.isNotBlank(activityName)){
+            Activity activity = activityService.findActivityByName(activityName.trim());
             if(activity != null){
                 query.setActivityId(activity.getId());
+            }else{
+            	return mav;
             }
         }
-        query.setActivityName(activityName);
-
         if (startTime != null){
             query.setStartDate(startTime);
         }
-
         if (endTime != null){
             query.setEndDate(endTime);
         }
-
         PageableResult<ActivityApply> pageableResult = activityService.findPageActivityApplies(query, page, size);
         List<ActivityApply> list = new ArrayList<ActivityApply>();
         for(ActivityApply apply : pageableResult.getItems()){
@@ -133,12 +130,86 @@ public class ActivityController extends BaseController {
             apply.setMobile(userService.getUser(customer.getUid()).getMobile());
             list.add(apply);
         }
-
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("activityApplies", list);
         mav.addObject("url", "business/activity");
         return mav;
     }
-
-
+    
+    /**
+     * 活动关注列表
+     * @return
+     */
+    @RequestMapping(value = "/focusList", method = RequestMethod.GET)
+    @SystemControllerLog(description = "查看活动关注列表")
+    public ModelAndView listActivtyFocus(){
+        ModelAndView mav = new ModelAndView("business/activity/focusList");
+        mav.addObject("url", "business/activity");
+        return mav;
+    }
+    
+    /**
+     * 产品关注列表
+     * @return
+     */
+    @RequestMapping(value = "/focusFind", method = RequestMethod.GET)
+    @SystemControllerLog(description = "查看活动关注列表")
+    public ModelAndView listActivityFocus(String activtyName){
+        ModelAndView mav = new ModelAndView("business/activity/focusList");
+        List<Integer> aids = new ArrayList<Integer>();
+        List<Activity> activitys = new ArrayList<Activity>();
+        if(StringUtils.isNotBlank(activtyName)){
+        	activitys = activityService.getAllActivities();
+        	for (Activity activity : activitys) {
+				if(activity.getName().contains(activtyName.trim())){
+					aids.add(activity.getId());
+				}
+			}
+        	if(aids.isEmpty()){
+        		return mav;
+        	}
+        }
+        PageableResult<Focus> presult = focusService.getFocusByType(Const.FOCUS_TYPE.ACTIVITY, aids, page, size);
+        mav.addObject("page", PageHelper.getPageModel(request, presult));
+        mav.addObject("focuses", getFocusVos(presult));
+        mav.addObject("url", "business/product");
+        return mav;
+    }
+    
+    List<FocusVo> getFocusVos(PageableResult<Focus> presult){
+        List<FocusVo> vos = new LinkedList<>();
+        if (!CollectionUtils.isEmpty(presult.getItems())){
+            for (Focus focus : presult.getItems()){
+                FocusVo vo = new FocusVo();
+                vo.setId(focus.getId());
+                vo.setFocusTime(focus.getCtime());
+                if (focus.getStatus() == 0){
+                    vo.setStatus("取消关注");
+                } else if (focus.getStatus() == 1) {
+                    vo.setStatus("关注");
+                }
+                User user = null;
+                try{
+                    user = userService.getUser(focus.getUid());
+                } catch (Exception ex){
+                    continue;
+                }
+                vo.setUserName(user.getRealname());
+                Activity a = activityService.getActivity(focus.getFid());
+                vo.setContentName(a.getName());
+                if ("customer".equalsIgnoreCase(user.getLoginRole().trim().toLowerCase())){
+                    Customer customer = customerService.getCustomerByUid(user.getUid(), null);
+                    if (customer == null){
+                        logger.error("Could not find customer with id {}", user.getUid());
+                        continue;
+                    }
+                    vo.setUserType("single".equals(customerService.getCustomerByUid(user.getUid(), null).getCustomerType())?"个人客户":"机构客户");
+                } else {
+                    vo.setUserType("理财师");
+                }
+                vos.add(vo);
+            }
+        }
+        return vos;
+    }
 }

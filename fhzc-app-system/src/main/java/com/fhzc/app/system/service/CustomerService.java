@@ -57,11 +57,12 @@ public interface CustomerService {
 	 Customer getCustomerByUid(Integer uId, String customerType);
 
     /**
-     * 获得客户的主理财师
+     * 获得客户的理财师
      * @param customerId
+     * @param isMain
      * @return
      */
-    PlannerCustomer getPlannerByCustomerId(Integer customerId);
+    PlannerCustomer getPlannerByCustomerId(Integer customerId, Integer isMain);
 
     /**
      * 根据客户id查询客户权益享用人
@@ -89,7 +90,14 @@ public interface CustomerService {
     void delete(Integer id);
     
     /**
-     * 获取所有用户
+     * 获取所有客户
      */
 	List<Customer> findAllCustomer();
+
+    /**
+     * 更新客户理财师关系
+     * @param pc
+     * @return
+     */
+    void updatePlannerCustomer(PlannerCustomer pc);
 }

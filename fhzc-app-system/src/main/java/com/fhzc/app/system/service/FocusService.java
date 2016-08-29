@@ -18,7 +18,7 @@ public interface FocusService {
      * @param size
      * @return
      */
-    PageableResult<Focus> getFocusByType(String ftype, int page, int size);
+    PageableResult<Focus> getFocusByType(String ftype, List<Integer> fids, int page, int size);
 
     /**
      * 获得某个类型的关注数
