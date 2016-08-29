@@ -14,6 +14,8 @@
     <result column="url" property="url" jdbcType="VARCHAR" />
     <result column="is_ recommend" property="isRecommend" jdbcType="INTEGER" />
     <result column="notice" property="notice" jdbcType="VARCHAR" />
+    <result column="advance_day" property="advanceDay" jdbcType="VARCHAR" />
+    <result column="supply_phone" property="supplyPhone" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.fhzc.app.dao.mybatis.model.Rights" extends="BaseResultMap" >
     <result column="summary" property="summary" jdbcType="LONGVARCHAR" />
@@ -78,7 +80,7 @@
   </sql>
   <sql id="Base_Column_List" >
     `id`, `cid`, `name`, `spend_score`, `spend_type`, `level`, `ctime`, `supply`, `cover`, 
-    `url`, `is_ recommend`, `notice`
+    `url`, `is_ recommend`, `notice`, `advance_day`, `supply_phone`
   </sql>
   <sql id="Blob_Column_List" >
     `summary`
@@ -138,13 +140,13 @@
     insert into `rights` (`cid`, `name`, `spend_score`, 
       `spend_type`, `level`, `ctime`, 
       `supply`, `cover`, `url`, 
-      `is_ recommend`, `notice`, `summary`
-      )
+      `is_ recommend`, `notice`, `advance_day`, 
+      `supply_phone`, `summary`)
     values (#{cid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{spendScore,jdbcType=INTEGER}, 
       #{spendType,jdbcType=CHAR}, #{level,jdbcType=INTEGER}, #{ctime,jdbcType=TIMESTAMP}, 
       #{supply,jdbcType=VARCHAR}, #{cover,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
-      #{isRecommend,jdbcType=INTEGER}, #{notice,jdbcType=VARCHAR}, #{summary,jdbcType=LONGVARCHAR}
-      )
+      #{isRecommend,jdbcType=INTEGER}, #{notice,jdbcType=VARCHAR}, #{advanceDay,jdbcType=VARCHAR}, 
+      #{supplyPhone,jdbcType=VARCHAR}, #{summary,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.Rights" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
@@ -185,6 +187,12 @@
       <if test="notice != null" >
         `notice`,
       </if>
+      <if test="advanceDay != null" >
+        `advance_day`,
+      </if>
+      <if test="supplyPhone != null" >
+        `supply_phone`,
+      </if>
       <if test="summary != null" >
         `summary`,
       </if>
@@ -222,6 +230,12 @@
       </if>
       <if test="notice != null" >
         #{notice,jdbcType=VARCHAR},
+      </if>
+      <if test="advanceDay != null" >
+        #{advanceDay,jdbcType=VARCHAR},
+      </if>
+      <if test="supplyPhone != null" >
+        #{supplyPhone,jdbcType=VARCHAR},
       </if>
       <if test="summary != null" >
         #{summary,jdbcType=LONGVARCHAR},
@@ -273,6 +287,12 @@
       <if test="record.notice != null" >
         `notice` = #{record.notice,jdbcType=VARCHAR},
       </if>
+      <if test="record.advanceDay != null" >
+        `advance_day` = #{record.advanceDay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supplyPhone != null" >
+        `supply_phone` = #{record.supplyPhone,jdbcType=VARCHAR},
+      </if>
       <if test="record.summary != null" >
         `summary` = #{record.summary,jdbcType=LONGVARCHAR},
       </if>
@@ -295,6 +315,8 @@
       `url` = #{record.url,jdbcType=VARCHAR},
       `is_ recommend` = #{record.isRecommend,jdbcType=INTEGER},
       `notice` = #{record.notice,jdbcType=VARCHAR},
+      `advance_day` = #{record.advanceDay,jdbcType=VARCHAR},
+      `supply_phone` = #{record.supplyPhone,jdbcType=VARCHAR},
       `summary` = #{record.summary,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -313,7 +335,9 @@
       `cover` = #{record.cover,jdbcType=VARCHAR},
       `url` = #{record.url,jdbcType=VARCHAR},
       `is_ recommend` = #{record.isRecommend,jdbcType=INTEGER},
-      `notice` = #{record.notice,jdbcType=VARCHAR}
+      `notice` = #{record.notice,jdbcType=VARCHAR},
+      `advance_day` = #{record.advanceDay,jdbcType=VARCHAR},
+      `supply_phone` = #{record.supplyPhone,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -354,6 +378,12 @@
       <if test="notice != null" >
         `notice` = #{notice,jdbcType=VARCHAR},
       </if>
+      <if test="advanceDay != null" >
+        `advance_day` = #{advanceDay,jdbcType=VARCHAR},
+      </if>
+      <if test="supplyPhone != null" >
+        `supply_phone` = #{supplyPhone,jdbcType=VARCHAR},
+      </if>
       <if test="summary != null" >
         `summary` = #{summary,jdbcType=LONGVARCHAR},
       </if>
@@ -373,6 +403,8 @@
       `url` = #{url,jdbcType=VARCHAR},
       `is_ recommend` = #{isRecommend,jdbcType=INTEGER},
       `notice` = #{notice,jdbcType=VARCHAR},
+      `advance_day` = #{advanceDay,jdbcType=VARCHAR},
+      `supply_phone` = #{supplyPhone,jdbcType=VARCHAR},
       `summary` = #{summary,jdbcType=LONGVARCHAR}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
@@ -388,7 +420,9 @@
       `cover` = #{cover,jdbcType=VARCHAR},
       `url` = #{url,jdbcType=VARCHAR},
       `is_ recommend` = #{isRecommend,jdbcType=INTEGER},
-      `notice` = #{notice,jdbcType=VARCHAR}
+      `notice` = #{notice,jdbcType=VARCHAR},
+      `advance_day` = #{advanceDay,jdbcType=VARCHAR},
+      `supply_phone` = #{supplyPhone,jdbcType=VARCHAR}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
   <select resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.RightsExample" id="selectByExampleWithBLOBsWithRowbounds" >

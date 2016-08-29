@@ -27,27 +27,11 @@ public class Rights {
 
     private String notice;
 
+    private String advanceDay;
+
+    private String supplyPhone;
+
     private String summary;
-    
-    private Integer focusNum;
-
-    private Integer orderNum;
-    
-    public Integer getFocusNum() {
-        return focusNum;
-    }
-
-    public void setFocusNum(Integer focusNum) {
-        this.focusNum = focusNum;
-    }
-
-    public Integer getOrderNum() {
-        return orderNum;
-    }
-
-    public void setOrderNum(Integer orderNum) {
-        this.orderNum = orderNum;
-    }
 
     public Integer getId() {
         return id;
@@ -143,6 +127,22 @@ public class Rights {
 
     public void setNotice(String notice) {
         this.notice = notice == null ? null : notice.trim();
+    }
+
+    public String getAdvanceDay() {
+        return advanceDay;
+    }
+
+    public void setAdvanceDay(String advanceDay) {
+        this.advanceDay = advanceDay == null ? null : advanceDay.trim();
+    }
+
+    public String getSupplyPhone() {
+        return supplyPhone;
+    }
+
+    public void setSupplyPhone(String supplyPhone) {
+        this.supplyPhone = supplyPhone == null ? null : supplyPhone.trim();
     }
 
     public String getSummary() {

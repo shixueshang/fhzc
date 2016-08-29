@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fhzc.app.dao.mybatis.inter.DeviceInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.fhzc.app.dao.mybatis.model.DeviceInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="version" property="version" jdbcType="VARCHAR" />
+    <result column="model" property="model" jdbcType="VARCHAR" />
+    <result column="os_version" property="osVersion" jdbcType="VARCHAR" />
+    <result column="resolution" property="resolution" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    `id`, `user_id`, `version`, `model`, `os_version`, `resolution`, `create_time`
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.DeviceInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from `device_info`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from `device_info`
+    where `id` = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from `device_info`
+    where `id` = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fhzc.app.dao.mybatis.model.DeviceInfoExample" >
+    delete from `device_info`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fhzc.app.dao.mybatis.model.DeviceInfo" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `device_info` (`user_id`, `version`, `model`, 
+      `os_version`, `resolution`, `create_time`
+      )
+    values (#{userId,jdbcType=INTEGER}, #{version,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR}, 
+      #{osVersion,jdbcType=VARCHAR}, #{resolution,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.DeviceInfo" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into `device_info`
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        `user_id`,
+      </if>
+      <if test="version != null" >
+        `version`,
+      </if>
+      <if test="model != null" >
+        `model`,
+      </if>
+      <if test="osVersion != null" >
+        `os_version`,
+      </if>
+      <if test="resolution != null" >
+        `resolution`,
+      </if>
+      <if test="createTime != null" >
+        `create_time`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null" >
+        #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="osVersion != null" >
+        #{osVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="resolution != null" >
+        #{resolution,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fhzc.app.dao.mybatis.model.DeviceInfoExample" resultType="java.lang.Integer" >
+    select count(*) from `device_info`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update `device_info`
+    <set >
+      <if test="record.id != null" >
+        `id` = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        `user_id` = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.version != null" >
+        `version` = #{record.version,jdbcType=VARCHAR},
+      </if>
+      <if test="record.model != null" >
+        `model` = #{record.model,jdbcType=VARCHAR},
+      </if>
+      <if test="record.osVersion != null" >
+        `os_version` = #{record.osVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resolution != null" >
+        `resolution` = #{record.resolution,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        `create_time` = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update `device_info`
+    set `id` = #{record.id,jdbcType=INTEGER},
+      `user_id` = #{record.userId,jdbcType=INTEGER},
+      `version` = #{record.version,jdbcType=VARCHAR},
+      `model` = #{record.model,jdbcType=VARCHAR},
+      `os_version` = #{record.osVersion,jdbcType=VARCHAR},
+      `resolution` = #{record.resolution,jdbcType=VARCHAR},
+      `create_time` = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fhzc.app.dao.mybatis.model.DeviceInfo" >
+    update `device_info`
+    <set >
+      <if test="userId != null" >
+        `user_id` = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        `version` = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null" >
+        `model` = #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="osVersion != null" >
+        `os_version` = #{osVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="resolution != null" >
+        `resolution` = #{resolution,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        `create_time` = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where `id` = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fhzc.app.dao.mybatis.model.DeviceInfo" >
+    update `device_info`
+    set `user_id` = #{userId,jdbcType=INTEGER},
+      `version` = #{version,jdbcType=VARCHAR},
+      `model` = #{model,jdbcType=VARCHAR},
+      `os_version` = #{osVersion,jdbcType=VARCHAR},
+      `resolution` = #{resolution,jdbcType=VARCHAR},
+      `create_time` = #{createTime,jdbcType=TIMESTAMP}
+    where `id` = #{id,jdbcType=INTEGER}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.DeviceInfoExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from `device_info`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

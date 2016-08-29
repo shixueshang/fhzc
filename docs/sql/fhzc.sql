@@ -743,6 +743,8 @@ CREATE TABLE IF NOT EXISTS `bank`.`rights` (
   `url` VARCHAR(255) NULL DEFAULT NULL COMMENT '详情链接',
   `is_ recommend` INT(10) UNSIGNED NULL DEFAULT '0' COMMENT '是否精选 1是|0否',
   `notice` VARCHAR(255) NULL DEFAULT '无' COMMENT '报名须知',
+  `advance_day` VARCHAR(45) NULL DEFAULT NULL COMMENT '提前预约天数',
+  `supply_phone` VARCHAR(45) NULL DEFAULT NULL COMMENT '供应商联系电话',
   PRIMARY KEY (`id`),
   INDEX `cid_index` (`cid` ASC))
   ENGINE = InnoDB
@@ -1013,6 +1015,20 @@ CREATE TABLE IF NOT EXISTS `bank`.`verify_code` (
   DEFAULT CHARACTER SET = utf8
   COMMENT = '短信验证码';
 
+
+DROP TABLE IF EXISTS `bank`.`device_info` ;
+CREATE TABLE `bank`.`device_info` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT(11) NULL,
+  `version` VARCHAR(45) NULL COMMENT 'app当前版本',
+  `model` VARCHAR(45) NULL COMMENT '设备型号',
+  `os_version` VARCHAR(45) NULL COMMENT '系统版本',
+  `resolution` VARCHAR(45) NULL COMMENT '分辨率',
+  `create_time` DATETIME NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`))
+  ENGINE = InnoDB
+  DEFAULT CHARACTER SET = utf8
+  COMMENT = '设备信息统计';
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
