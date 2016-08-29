@@ -1,7 +1,9 @@
 package com.fhzc.app.api.service.impl;
 
 import com.fhzc.app.api.service.PushTokenService;
+import com.fhzc.app.dao.mybatis.inter.DeviceInfoMapper;
 import com.fhzc.app.dao.mybatis.inter.PushTokenMapper;
+import com.fhzc.app.dao.mybatis.model.DeviceInfo;
 import com.fhzc.app.dao.mybatis.model.PushToken;
 import com.fhzc.app.dao.mybatis.model.PushTokenExample;
 import com.fhzc.app.dao.mybatis.thirdparty.push.umengpush.AndroidNotification;
@@ -22,6 +24,9 @@ public class PushTokenServiceImpl implements PushTokenService {
 
     @Resource
     private PushTokenMapper pushTokenMapper;
+
+    @Resource
+    private DeviceInfoMapper deviceInfoMapper;
 
     private PushClient client = new PushClient();
 
@@ -78,6 +83,11 @@ public class PushTokenServiceImpl implements PushTokenService {
                 client.send(unicast);
             }
         }
+    }
+
+    @Override
+    public void collectDeviceInfo(DeviceInfo deviceInfo) {
+        deviceInfoMapper.insert(deviceInfo);
     }
 
 

@@ -103,4 +103,17 @@ public class DateUtil {
         return calendar.getTime();
     }
 
+    /**
+     * 得到日期后几天日期
+     * @param date
+     * @param num
+     * @return
+     */
+    public static Date getDateNextDays(Date date, int num) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DAY_OF_MONTH, num);
+        return cal.getTime();
+    }
+
 }

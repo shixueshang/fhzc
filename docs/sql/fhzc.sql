@@ -629,7 +629,7 @@ DROP TABLE IF EXISTS `bank`.`push_token` ;
 CREATE TABLE IF NOT EXISTS `bank`.`push_token` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `user_id` INT(11) NOT NULL,
-  `device_type` INT(1) NULL DEFAULT NULL COMMENT '设备类型',
+  `device_type` VARCHAR(10) NULL DEFAULT NULL COMMENT '设备类型',
   `device_token` VARCHAR(100) NULL DEFAULT NULL COMMENT '设备编号',
   `allow_push` INT(1) NULL DEFAULT NULL COMMENT '是否允许推送',
   `allow_sound` INT(1) NULL DEFAULT NULL COMMENT '是否开启声音',
