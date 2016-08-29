@@ -660,6 +660,8 @@ $(function(){
     		if(date2.getTime()<date1.getTime()){
     			alert("请输入正确的募集时间范围");
     			return false;
+    		}else{
+    			return true;
     		}
     	}
     };
@@ -672,6 +674,8 @@ $(function(){
     		if(date2.getTime()<date1.getTime()){
     			alert("请输入正确的成立到期时间");
     			return false;
+    		}else{
+    			return true;
     		}
     	}
     };
@@ -689,6 +693,4 @@ $(function(){
     });
 
 })
-
-
 </script>
