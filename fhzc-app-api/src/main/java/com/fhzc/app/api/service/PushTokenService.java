@@ -1,5 +1,6 @@
 package com.fhzc.app.api.service;
 
+import com.fhzc.app.dao.mybatis.model.DeviceInfo;
 import com.fhzc.app.dao.mybatis.model.PushToken;
 
 import java.util.List;
@@ -33,5 +34,11 @@ public interface PushTokenService {
      * @param content
      * @throws Exception
      */
-    public void pushMessageToUser(Integer toUserId, String content) throws Exception;
+    void pushMessageToUser(Integer toUserId, String content) throws Exception;
+
+    /**
+     * 收集设备信息
+     * @param deviceInfo
+     */
+    void collectDeviceInfo(DeviceInfo deviceInfo);
 }

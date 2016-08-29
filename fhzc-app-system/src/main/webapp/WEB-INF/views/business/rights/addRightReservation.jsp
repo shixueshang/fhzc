@@ -147,6 +147,12 @@
                                                 </div>
                                             </div>
                                             <div class="control-group">
+                                                <label class="control-label">预约须知</label>
+                                                <div class="controls">
+                                                    <input type="text" name="notice" id="notice" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
                                                 <label class="control-label">预订时间</label>
                                                 <div class="controls">
                                                     <input type="text" name="markDate" id="markDate" placeholder="yyyy-MM-dd HH:mm:ss" >
@@ -242,6 +248,8 @@
                     success: function (data) {
                         $("#exchangeScore").val(data.score);
                         $("#provider").val(data.providerName);
+                        $("#providerPhone").val(data.providerPhone);
+                        $("#notice").val(data.notice);
                     },
                     error: function (err) {
 

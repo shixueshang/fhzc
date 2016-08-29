@@ -33,6 +33,26 @@ public class Rights {
 
     private String summary;
 
+    private Integer focusNum;
+
+    private Integer orderNum;
+
+    public Integer getFocusNum() {
+        return focusNum;
+    }
+
+    public void setFocusNum(Integer focusNum) {
+        this.focusNum = focusNum;
+    }
+
+    public Integer getOrderNum() {
+        return orderNum;
+    }
+
+    public void setOrderNum(Integer orderNum) {
+        this.orderNum = orderNum;
+    }
+
     public Integer getId() {
         return id;
     }

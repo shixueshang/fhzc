@@ -234,4 +234,19 @@ public class LoginController extends BaseController {
 
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
     }
+
+    /**
+     * 获得设备信息
+     * @return
+     */
+    @RequestMapping(value = "/api/device/info", method = RequestMethod.POST)
+    @ResponseBody
+    public ApiJsonResult deviceInfo(DeviceInfo deviceInfo){
+
+        User user = super.getCurrentUser();
+        deviceInfo.setUserId(user.getUid());
+        deviceInfo.setCreateTime(new Date());
+        pushTokenService.collectDeviceInfo(deviceInfo);
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
+    }
 }

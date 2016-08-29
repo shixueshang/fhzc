@@ -25,6 +25,8 @@ public class ReportServiceImpl implements ReportService {
     public PageableResult<Report> findPageReports(int page, int size) {
         ReportExample example = new ReportExample();
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
+        ReportExample.Criteria criteria = example.createCriteria();
+        criteria.andIsDisplayEqualTo(Const.YES_OR_NO.YES);
         List<Report> list = reportMapper.selectByExampleWithBLOBsWithRowbounds(example, rowBounds);
         return new PageableResult<Report>(page, size, list.size(), list);
     }

@@ -28,7 +28,6 @@ public class ActivityServiceImpl implements ActivityService {
         ActivityExample.Criteria criteria = example.createCriteria();
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         criteria.andIsDisplayEqualTo(Const.YES_OR_NO.YES);
-        criteria.andIsRecommendEqualTo(Const.YES_OR_NO.YES);
         example.setOrderByClause("`begin_time` desc");
         List<Activity> list = activityMapper.selectByExampleWithBLOBsWithRowbounds(example, rowBounds);
         List<Activity> result = this.setActivityListStatus(list);
