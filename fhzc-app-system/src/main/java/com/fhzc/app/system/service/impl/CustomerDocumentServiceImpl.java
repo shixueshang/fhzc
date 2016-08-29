@@ -5,6 +5,7 @@ import com.fhzc.app.dao.mybatis.model.Department;
 import com.fhzc.app.dao.mybatis.model.Dictionary;
 import com.fhzc.app.dao.mybatis.model.Planner;
 import com.fhzc.app.dao.mybatis.model.Product;
+import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.util.EncryptUtils;
 import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.commons.util.excel.ExcelImporter;
@@ -16,6 +17,7 @@ import com.fhzc.app.system.service.DepartmentService;
 import com.fhzc.app.system.service.DictionaryService;
 import com.fhzc.app.system.service.PlannerService;
 import com.fhzc.app.system.service.ProductService;
+import com.fhzc.app.system.service.UserService;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -54,6 +56,9 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
     
     @Resource
     private AssetsService assetsService;
+    
+    @Resource
+    private UserService userService;    
 
     //个人客户导入
     @Override
@@ -64,6 +69,8 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
        List<Planner> planners =  plannerService.findAllPlanner();
        List<Dictionary> cdics = dictionaryService.findDicByType("customer_level");
 	   List<AssetsHistory> ahs =  assetsService.findAllAssets();
+	   List<User> users = userService.findAllUsers();
+	   
        int sheetnum = 0;
        int rownum = 2;
     	Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
@@ -101,7 +108,9 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
 	    				return errordata; 
 	    			}
 	        		
-	        		//判断证件类型的写法与数据库保持一致
+	        		int passport_type = -1;
+		    		
+		    		//判断证件类型是否存在
 		    		errordata  = TextUtils.checkEmptyString(i+3, 4, objects[3]);
 	    			if (errordata.size() >0){
 	    				return errordata;
@@ -110,6 +119,7 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
     				for(Dictionary dictionary : pdics){
     					if(dictionary.getKey().equals(objects[3].toString().trim())){
     						isExist = true;
+    						passport_type = TextUtils.StringtoInteger(dictionary.getValue());
     						break;
     					}
     				}
@@ -117,12 +127,18 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
 	    				errordata = TextUtils.setErrorMessage(i+3, 4, objects[3].toString()+ ", 该证件类型不存在！");
 	    				return errordata;
 	    			}
+	        		        		
+	
 		    		
 	        		//证件号必填
 		    		errordata  = TextUtils.checkEmptyString(i+3, 5, objects[4]);
 		    		if (errordata.size() >0){
 	    				return errordata;
 	    			}
+		    		
+
+	      		
+		    		
 		    		
 	        		//年月日数字
 		    		errordata  = TextUtils.checkNumber(i+3, 6, objects[5], false);
@@ -143,6 +159,30 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
 	        		if (errordata.size() >0){
 	    				return errordata;
 	    			}
+	        		
+
+	    			
+	    			//检测该手机号码是否已被其他人使用
+	    			isExist = false;
+
+    				for(User user : users){
+    					if(user.getLoginRole().trim().equals("customer")){
+    						if(user.getMobile().equals(phone)){
+		    					if( user.getPassportTypeId() == passport_type && !user.getPassportCode().equals(objects[4].toString())){
+		    						isExist = true;
+		    						break;
+		    					}
+    						}
+    					}
+    				}
+    				
+		    		if(isExist){
+	    				errordata = TextUtils.setErrorMessage(i+3, 12, phone + "，该手机号码已被其他人使用！");
+	    				return errordata;
+	    			}
+
+		      		
+	        		
 	        		
 	        		//检验产品列不为空,且购买产品存在
 	        		errordata  = TextUtils.checkEmptyString(i+3, 20, objects[19]);
@@ -347,6 +387,7 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
        List<Planner> planners =  plannerService.findAllPlanner();
        List<Dictionary> cdics = dictionaryService.findDicByType("customer_level");
        List<AssetsHistory> ahs =  assetsService.findAllAssets();
+       List<User> users = userService.findAllUsers();
 	   int sheetnum = 0;
 	   int rownum = 2 ;
 		Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
@@ -384,6 +425,8 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
 			    				return errordata; 
 			    			}
 			        		
+			        		int passport_type = -1;
+			        		
 			        		//证件类型
 			        		errordata  = TextUtils.checkEmptyString(i+3, 3, objects[2]);
 			    			if (errordata.size() >0){
@@ -393,6 +436,7 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
 		    				for(Dictionary dictionary : pdics){
 		    					if(dictionary.getKey().equals(objects[2].toString().trim())){
 		    						isExist = true;
+		    						passport_type = TextUtils.StringtoInteger(dictionary.getValue());
 		    						break;
 		    					}
 		    				}
@@ -412,6 +456,27 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
 			        		if (errordata.size() >0){
 			    				return errordata;
 			    			}
+			        		
+			        		
+			        		//检测该手机号码是否已被其他人使用
+			    			isExist = false;
+
+		    				for(User user : users){
+		    					if(user.getLoginRole().trim().equals("customer")){
+		    						if(user.getMobile().equals(phone)){
+				    					if( user.getPassportTypeId() == passport_type && !user.getPassportCode().equals(objects[3].toString())){
+				    						isExist = true;
+				    						break;
+				    					}
+		    						}
+		    					}
+		    				}
+		    				
+				    		if(isExist){
+			    				errordata = TextUtils.setErrorMessage(i+3, 10, phone + "，该手机号码已被其他人使用！");
+			    				return errordata;
+			    			}
+		        		
 			        		
 			        		//产品
 			        		errordata  = TextUtils.checkEmptyString(i+3, 17, objects[16]);
@@ -512,7 +577,7 @@ public class CustomerDocumentServiceImpl implements CustomerDocumentService {
 		    						errordata = TextUtils.setErrorMessage(i+3, 30, objects[29].toString()+",该合同编号已存在！");
 		    	    				return errordata;
 		    					}
-		    					break;
+
 		    				}
 		    				
 			        		//会员级别
