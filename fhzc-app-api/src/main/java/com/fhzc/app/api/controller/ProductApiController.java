@@ -5,7 +5,6 @@ import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
 import com.fhzc.app.api.tools.ObjUtils;
 import com.fhzc.app.dao.mybatis.model.*;
-import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,9 +43,7 @@ public class ProductApiController extends BaseController {
     @RequestMapping(value = "/api/product", method = RequestMethod.GET)
     @ResponseBody
     public ApiJsonResult productList() {
-        PageableResult<Product> productList = productService.getProductList(0, 0, false);
-
-        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, productList);
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, productService.findPageProducts(page, size, false));
     }
 
     /**
@@ -57,9 +54,7 @@ public class ProductApiController extends BaseController {
     @RequestMapping(value = "/api/product/select", method = RequestMethod.GET)
     @ResponseBody
     public ApiJsonResult productListSelect() {
-        PageableResult<Product> productList = productService.getProductList(0, 0, true);
-
-        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, productList);
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, productService.findPageProducts(page, size, true));
     }
 
     /**

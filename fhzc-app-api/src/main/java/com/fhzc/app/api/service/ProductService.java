@@ -14,18 +14,10 @@ public interface ProductService {
      * 查询产品列表
      * @param page
      * @param size
+     * @param isRecommend 是否推荐
      * @return
      */
-    PageableResult<Product> findPageProducts(int page, int size);
-
-    /**
-     * 条件查询产品列表
-     * @param level
-     * @param risk
-     * @param b
-     * @return
-     */
-    PageableResult<Product> getProductList(int level, int risk, boolean b);
+    PageableResult<Product> findPageProducts(int page, int size, boolean isRecommend);
 
     /**
      * 查询推荐产品列表
