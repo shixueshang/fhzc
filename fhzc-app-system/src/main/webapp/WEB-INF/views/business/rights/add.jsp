@@ -100,7 +100,13 @@
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
-
+     										<div class="control-group">
+                                                <label class="control-label">供应商联系方式</label>
+                                                <div class="controls">
+                                                    <input type="text" name="supplyPhone" value="${right.supplyPhone}"  placeholder="" class="m-wrap large">
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
                                             <div class="control-group">
                                                 <label class="control-label">客户等级要求</label>
                                                 <div class="controls">
@@ -116,7 +122,13 @@
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
-
+     										<div class="control-group">
+                                                <label class="control-label">提前预约天数</label>
+                                                <div class="controls">
+                                                    <input type="text" name="advanceDay" value="${right.advanceDay}"  placeholder="" class="m-wrap large">
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
                                             <div class="control-group">
                                                 <label class="control-label">权益简介</label>
                                                 <div class="controls">

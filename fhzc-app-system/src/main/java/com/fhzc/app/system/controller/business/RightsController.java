@@ -109,6 +109,7 @@ public class RightsController extends BaseController{
             rights.setCover(coverPath + coverName);
         }
         rights.setCtime(new Date());
+        rights.setNotice("需提前"+rights.getAdvanceDay()+"天报名");
         rightsService.addOrUpdateRights(rights);
 
         return "redirect:/business/rights/list";
@@ -170,7 +171,8 @@ public class RightsController extends BaseController{
         Rights rights = rightsService.getRights((int)rightId);
         vo.setScore(rights.getSpendScore());
         vo.setProviderName(rights.getSupply());
-
+        vo.setProviderPhone(rights.getSupplyPhone());
+        vo.setNotice(rights.getNotice());
         return vo;
     }
 
