@@ -48,4 +48,12 @@ public class ReportServiceImpl implements ReportService {
 		ReportExample example = new ReportExample();
         return reportMapper.selectByExample(example);
 	}
+
+	@Override
+	public List<Report> getReportByType(String typeId) {
+		ReportExample example = new ReportExample();
+		ReportExample.Criteria criteria = example.createCriteria();
+	    criteria.andCidEqualTo(Integer.parseInt(typeId));
+	    return reportMapper.selectByExample(example);
+	}
 }

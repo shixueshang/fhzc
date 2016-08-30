@@ -45,7 +45,7 @@
                             </li></shiro:hasPermission>
                           <shiro:hasPermission name="/business/product/type">
                                 <li>
-                                    <a href="<%=contextPath%>/business/product/type">产品分类维护</a>
+                                   <a href="<%=contextPath%>/business/product/type">产品分类维护</a>
                                 </li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>
@@ -71,6 +71,9 @@
                              <shiro:hasPermission name="/business/activity/focusList">   <li>
                                 <a href="<%=contextPath%>/business/activity/focusList">活动关注列表</a>
                             </li></shiro:hasPermission>
+                            <shiro:hasPermission name="/business/activity/type"><li>
+                                 <a href="<%=contextPath%>/business/activity/type">活动分类维护</a>
+                        	</li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>
 
@@ -91,6 +94,9 @@
                        <shiro:hasPermission name="/business/report/focusList"><li>
                                 <a href="<%=contextPath%>/business/report/focusList">报告关注列表</a>
                             </li></shiro:hasPermission>
+                        <shiro:hasPermission name="/business/report/type"><li>
+                                 <a href="<%=contextPath%>/business/report/type">报告分类维护</a>
+                        	</li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>
 
@@ -117,6 +123,9 @@
                         </li></shiro:hasPermission>
                         <shiro:hasPermission name="/business/rights/focusList"><li>
                             <a href="<%=contextPath%>/business/rights/focusList">权益关注列表</a>
+                        </li></shiro:hasPermission>
+                        <shiro:hasPermission name="/business/rights/type"><li>
+                             <a href="<%=contextPath%>/business/rights/type">权益分类维护</a>
                         </li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>

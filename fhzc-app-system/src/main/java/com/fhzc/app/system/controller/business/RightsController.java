@@ -316,4 +316,56 @@ public class RightsController extends BaseController{
         }
         return vos;
     }
+    
+    /**
+     * 权益分类
+     * @return
+     */
+    @RequestMapping(value = "/type", method = RequestMethod.GET)
+    public ModelAndView listType(){
+        ModelAndView mav = new ModelAndView("business/rights/rightsType");
+        mav.addObject("rightsTypes", dictionaryService.findDicByType(Const.DIC_CAT.RIGHTS_CATEGORY));
+        mav.addObject("url", "business/rights");
+        return mav;
+    }
+    
+    @RequestMapping(value = "/isKeyExists", method = RequestMethod.GET)
+    @ResponseBody
+    public Object isKeyExists(String key){
+        boolean flag = dictionaryService.isKeyOrValueExists(Const.DIC_CAT.RIGHTS_CATEGORY, "key", key);
+        return !flag;
+    }
+    
+    @RequestMapping(value = "/isValueExists", method = RequestMethod.GET)
+    @ResponseBody
+    public Object isValueExists(String value){
+        boolean flag = dictionaryService.isKeyOrValueExists(Const.DIC_CAT.RIGHTS_CATEGORY, "value", value);
+        return !flag;
+    }
+    
+    @RequestMapping(value = "/type/add", method = RequestMethod.POST)
+    public String add(Dictionary dictionary){
+        dictionary.setStatus(Const.Data_Status.DATA_NORMAL);
+        dictionary.setCat(Const.DIC_CAT.RIGHTS_CATEGORY);
+        dictionary.setIsDefault(Const.YES_OR_NO.NO);
+        dictionary.setIsModify(Const.YES_OR_NO.NO);
+        dictionary.setName("权益类型");
+        dictionaryService.addOrUpdate(dictionary);
+        return "redirect:/business/rights/type";
+    }
+
+    @RequestMapping(value = "/type/delete/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public AjaxJson delete(@PathVariable(value = "id") Integer id){
+
+        //判断该分类是否被使用
+        Dictionary dictionary = dictionaryService.getDictionary(id);
+        List<Rights> rights = rightsService.getRightsByType(dictionary.getValue());
+        if(rights.size() > 0){
+            return new AjaxJson(false, "已被权益使用，不能删除");
+        }
+        dictionaryService.delete(id);
+        return new AjaxJson(true);
+    }
+
 }
