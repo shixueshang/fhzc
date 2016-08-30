@@ -121,12 +121,13 @@
                                         <td>${product.focusNum}</td>
                                         <td>${product.orderNum}</td>
                                         <td>${product.orderAmount}</td>
-                                        <td style="margin: center;vertical-align: middle;">
+                                        <td style="margin:auto;vertical-align: middle;">
                                         <a href="#" id="up" class="up" onclick="moveUp(${product.pid})">上移</a>&nbsp&nbsp<a href="#" id="down" class="down" onclick="moveDown(${product.pid})">下移</a></br>
                                         </td>
                                         <td>
                                             <a href="<%=contextPath%>/business/product/detail/${product.pid}" class="btn mini purple"><i class="icon-edit"></i> 编辑</a>
-                                            <a href="<%=contextPath%>/business/product/order/${product.pid}" class="btn mini blue"><i class="icon-share"></i> 预约</a>
+                                            <a href="<%=contextPath%>/business/product/order/${product.pid}" class="btn mini purple"><i class="icon-share"></i> 预约</a>
+                                            <a href="#modal_edit" role="button" class="btn mini purple product_push"><i class="icon-signin"></i> 推送</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -161,7 +162,7 @@
 		    	}else{
 		    		window.location.href="<%=contextPath%>/business/product/list"; 
 		    	}
-		     },
+		     }
 		   });
 	}
 	function moveDown(id){
@@ -176,7 +177,7 @@
 			    	}else{
 			    		window.location.href="<%=contextPath%>/business/product/list"; 
 			    	}
-			     },
+			     }
 			   });
 	}
 	$('#example').DataTable({

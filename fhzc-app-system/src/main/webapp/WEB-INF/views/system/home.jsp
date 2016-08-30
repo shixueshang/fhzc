@@ -21,33 +21,27 @@
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/jquery-tags-input/jquery.tagsinput.css" />
 <link rel="stylesheet" href="<%=contextPath%>/assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" />
 
-<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/bootstrap-datepicker/css/datepicker.css">
 
 <!-- BEGIN CONTAINER -->
-<div class="page-container row-fluid">
+<div class="page-container row-fluid" >
     <jsp:include page="../include/left.jsp"/>
     <!-- BEGIN PAGE -->
-    <div class="page-content">
+    <div class="page-content" style="background: url('/static/image/background.jpg');background-size: cover;">
 
         <div class="container-fluid">
             <!-- BEGIN PAGE HEADER-->
             <div class="row-fluid">
                 <div class="span12">
                     <!-- BEGIN PAGE TITLE & BREADCRUMB-->
-                    <h3 class="page-title">
-                        复华资产 欢迎你
+                    <h3 class="page-title"style="color:#fff;">
+                        复华资产 欢迎您
                         <small></small>
                     </h3>
-                    <ul class="breadcrumb">
-                        <li>
-                            <i class="icon-home"></i>
-                            <a href="#">Home</a>
-                        </li>
-                    </ul>
-                    <!-- END PAGE TITLE & BREADCRUMB-->
+
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 

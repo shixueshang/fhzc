@@ -20,11 +20,8 @@
 <link href="<%=contextPath%>/assets/bootstrap-fileupload/bootstrap-fileupload.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/jquery-tags-input/jquery.tagsinput.css" />
 <link rel="stylesheet" href="<%=contextPath%>/assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" />
-<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/jquery-ui/jquery-ui-1.10.1.custom.css">
-<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/custom_datepicker/jquery-ui-timepicker-addon.css">
-<script src="<%=contextPath%>/assets/jquery-ui/jquery-ui-1.10.1.custom.min.js"></script>
-<script src="<%=contextPath%>/assets/custom_datepicker/jquery-ui-timepicker-addon.js"></script>
 
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/bootstrap-datepicker/css/datepicker.css">
 
 <!-- BEGIN CONTAINER -->
 <div class="page-container row-fluid">
@@ -150,7 +147,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">预约时间</label>
                                                 <div class="controls">
-                                                    <input class="form-control" id="reservationTime" name="reservationTime" style="width: 180px">
+                                                    <input class="form-control date-picker"  id="reservationTime" name="reservationTime" style="width: 180px">
                                                 </div>
                                             </div>
 

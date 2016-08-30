@@ -8,7 +8,7 @@
         <div class="header navbar navbar-inverse navbar-fixed-top">
             <!-- BEGIN TOP NAVIGATION BAR -->
             <div class="navbar-inner">
-                <div class="container-fluid">
+                <div class="container-fluid" style="background-color: #acbff3">
                     <!-- BEGIN LOGO -->
                     <a class="brand" href="javascript:void(0);">
                         <img src="<%=contextPath%>/assets/images/logo_a.png" style="height: 25px;"/>
