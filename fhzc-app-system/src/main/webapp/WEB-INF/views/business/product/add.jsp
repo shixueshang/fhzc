@@ -301,7 +301,7 @@
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
-
+                                            
                                             <div class="control-group">
                                                 <label class="control-label">产品封面</label>
                                                 <div class="controls">
@@ -320,19 +320,66 @@
                                                         <div>
                                                        <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
                                                        <span class="fileupload-exists">更换</span>
-                                                       <input type="file" name="coverFile" id="cover_img" class="default" /></span>
-                                                       <input type="hidden" name="cover" value="${procuct.cover}" />
+                                                       <input type="file" name="coverFile" id="cover_img" class="default" accept="image/gif,image/jpeg,image/jpg,image/png,"/></span>
+                                                       <input type="hidden" name="cover" value="${product.cover}" />
+                                                            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                 <label class="control-label">成立公告</label>
+                                                <div class="controls">
+                                                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                                                        <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                                            <c:choose>
+                                                                <c:when test="${product.notice == null}" >
+                                                                    <img src="/static/image/no-image.png" alt=""  />
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <img src="<%=basePath%>${product.notice}" alt=""  />
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </div>
+                                                        <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                                        <div>
+                                                       <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
+                                                       <span class="fileupload-exists">更换</span>
+                                                       <input type="file" name="noticeFile"  class="default" accept="image/gif,image/jpeg,image/jpg,image/png,"/></span>
+                                                       <input type="hidden" name="notice" value="${product.notice}" />
+                                                            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                 <label class="control-label">备案证明</label>
+                                                <div class="controls">
+                                                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                                                        <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                                            <c:choose>
+                                                                <c:when test="${product.proveUrl == null}" >
+                                                                    <img src="/static/image/no-image.png" alt="" />
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <img src="<%=basePath%>${product.proveUrl}" alt="" />
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </div>
+                                                        <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                                        <div>
+                                                       <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
+                                                       <span class="fileupload-exists">更换</span>
+                                                       <input type="file" name="proveFile" id="cover_img" class="default" accept="image/gif,image/jpeg,image/jpg,image/png,"/></span>
+                                                       <input type="hidden" name="proveUrl " value="${product.proveUrl}" />
                                                             <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
                                                         </div>
                                                     </div>
                                                     <span class="label label-important">注意!</span>
                                                  <span>
-                                                 上传图片预览仅支持Firefox, Chrome, Opera,
+                                                 	上传图片预览仅支持Firefox, Chrome, Opera,
                                                  Safari ,Internet Explorer 10
                                                  </span>
                                                 </div>
                                             </div>
-
+<!--  
                                             <div class="control-group">
                                                 <label class="control-label">成立公告</label>
                                                 <div class="controls">
@@ -345,7 +392,7 @@
                                                            <span class="btn btn-file">
                                                            <span class="fileupload-new">选择文件</span>
                                                            <span class="fileupload-exists">更换</span>
-                                                           <input type="file" name="noticeFile" class="default" />
+                                                           <input type="file" name="noticeFile" class="default" value="${product.notice}"/>
                                                            </span>
                                                             <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
                                                         </div>
@@ -364,13 +411,14 @@
                                                            <span class="btn btn-file">
                                                            <span class="fileupload-new">选择文件</span>
                                                            <span class="fileupload-exists">更换</span>
-                                                           <input type="file" name="proveFile" class="default" />
+                                                           <input type="file" name="proveFile" class="default" value="${product.proveUrl}" />
                                                            </span>
                                                             <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            -->
                                             <div class="control-group">
                                                 <label class="control-label">详细内容</label>
                                                 <div class="controls">
