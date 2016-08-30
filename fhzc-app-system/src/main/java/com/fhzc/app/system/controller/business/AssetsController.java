@@ -154,7 +154,7 @@ public class AssetsController extends BaseController {
         PlannerCustomer pc = customerService.getPlannerByCustomerId(customer.getCustomerId(), Const.YES_OR_NO.YES);
         Planner planner = plannerService.getPlanner(pc.getPlannerId());
         holding.setPlanner(userService.getUser(planner.getUid()).getRealname());
-        holding.setDepartment(departmentService.getDeparent(customer.getDepartmentId()).getTitle());
+        holding.setDepartment(departmentService.getDepartment(customer.getDepartmentId()).getTitle());
         return holding;
     }
 

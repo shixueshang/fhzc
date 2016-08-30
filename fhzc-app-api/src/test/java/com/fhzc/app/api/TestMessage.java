@@ -31,7 +31,7 @@ public class TestMessage extends Base {
     public void sendText() throws Exception {
         ImMessage message = new ImMessage();
         message.setUserId(16);
-        message.setToUserId(2);
+        message.setToUserId(17);
 
 
         //查询对话历史,确定sessionId
@@ -46,7 +46,7 @@ public class TestMessage extends Base {
 
         ImMessage result = messageService.sendMessgeToSession(message);
 
-        pushTokenService.pushMessageToUser(2, "我是张三");
+        pushTokenService.pushMessageToUser(17, "我是张三");
     }
 
     @Test

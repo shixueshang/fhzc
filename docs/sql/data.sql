@@ -157,6 +157,13 @@ INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,
 INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (77,'push_channel','推送渠道','短信','2',0,0,0,NULL,NULL);
 INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (78,'push_channel','推送渠道','推送','3',0,0,0,NULL,NULL);
 INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (79,'push_channel','推送渠道','邮件','4',0,0,0,NULL,NULL);
+INSERT INTO `dictionary` (`id`,`cat`,`name`,`key`,`value`,`is_default`,`status`,`is_modify`,`date_created`,`last_updated`) VALUES (80, 'reservation_status', '预约状态', '预约中', '0', '0', '0', '0', NULL ,NULL);
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`,`date_created`,`last_updated`) VALUES ('81', 'reservation_status', '预约状态', '预约成功', '1', '0', '0', '0', NULL,NULL );
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`,`date_created`,`last_updated`) VALUES ('82', 'reservation_status', '预约状态', '预约失败', '2', '0', '0', '0',NULL ,NULL );
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`,`date_created`,`last_updated`) VALUES ('83', 'reservation_status', '预约状态', '客户取消预约', '3', '0', '0', '0',NULL ,NULL );
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`,`date_created`,`last_updated`) VALUES ('84', 'reservation_status', '预约状态', '客户消费', '4', '0', '0', '0',NULL ,NULL );
+INSERT INTO `bank`.`dictionary` (`id`, `cat`, `name`, `key`, `value`, `is_default`, `status`, `is_modify`,`date_created`,`last_updated`) VALUES ('85', 'reservation_status', '预约状态', '客户缺席', '5', '0', '0', '0',NULL ,NULL );
+
 
 
 TRUNCATE TABLE `areas`;

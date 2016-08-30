@@ -1,6 +1,7 @@
 package com.fhzc.app.system;
 
 import com.fhzc.app.dao.mybatis.model.Department;
+import com.fhzc.app.dao.mybatis.model.Dept;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.system.commons.util.Tree;
 import com.fhzc.app.system.context.Base;
@@ -21,10 +22,10 @@ public class DepartmentTest extends Base {
 
     @org.junit.Test
     public void list(){
-       PageableResult<Department> pageDepts = departmentService.findPageDepartments(0, 20);
+       PageableResult<Dept> pageDepts = departmentService.findPageDepartments(0, 20);
 
-        for(Department department : pageDepts.getItems()){
-            logger.info(department.getDepartmentId() + " : " + department.getTitle());
+        for(Dept department : pageDepts.getItems()){
+            logger.info(department.getId() + " : " + department.getName());
         }
     }
 

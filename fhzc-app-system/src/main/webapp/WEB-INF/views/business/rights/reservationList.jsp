@@ -115,7 +115,7 @@
                                                 </c:when>
                                             </c:choose>
                                         </td>
-                                        <td><a class="btn mini purple Deal_Reser" data-id="${reservation.id}">取消预约</a></td>
+                                        <td><a href="#modal_edit" role="button" class="btn mini purple deal_reser" data-toggle="modal" data-id="${reservation.id}"><i class="icon-edit"></i>处理预约</a></td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>
@@ -126,7 +126,23 @@
 
             </div>
             <!--页面操作详细内容 开始-->
+            <div id="modal_edit" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="my_modal_edit" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h3 id="myModalLabel2">处理预约</h3>
+                </div>
+                <div class="modal-body" style="height: 120px;">
+                    <p><select  id="reser_status" value="" class="m-wrap large">
 
+                    </select></p>
+                    <input type="hidden"  id="reser_id" />
+                    <input type="hidden"  id="status" />
+                </div>
+                <div class="modal-footer">
+                    <button data-dismiss="modal" class="btn blue" id="do_mod_reser">确定</button>
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+                </div>
+            </div>
         </div>
 
         <jsp:include page="../../include/page.jsp"/>
@@ -136,25 +152,43 @@
 
 <script type="text/javascript">
 $(document).ready(function () {
-    $(".Deal_Reser").click(function () {
-        var id = $(this).data("id");
-        var url = '<%=contextPath%>/business/rights/reservation/cancel?id='+id;
-        window.location.href = url;
+    $(".deal_reser").click(function () {
+        $('#reser_id').val($(this).data("id"));
+        $('#reser_status').empty();
+        $('#reser_status').append("<option value=''>--请选择状态--</option>");
         $.ajax({
-            url: url,
+            url: '<%=contextPath%>/business/rights/reservation/status',
             type: 'GET',
             success: function(result) {
-                if(result){
-                    $("#delete_success").css("display", "block").hide(3000);
-                    window.location.reload();
-                }
+                $.each(result.children, function (i, val) {
+                    $("#reser_status").append("<option value='" + val.value + "'>" + val.key + "</option>");
+                });
             },
             error: function(xhr, textStatus, errorThrown){
-                $("#delete_fail").css("display", "block").hide(3000);
             }
         });
     });
 
+    $("#reser_status").change(function () {
+        $('#status').val($('#reser_status').val());
+    });
+
+    $("#do_mod_reser").click(function () {
+        var status = $("#reser_status").val();
+        if (status == null || status == '') {
+            BootstrapDialog.alert({
+                title: '提示',
+                message: '请选择状态'
+            });
+            return false;
+        }
+        $.post("<%=contextPath%>/business/rights/reservation/deal", {
+            'reserId': $("#reser_id").val(),
+            'status': status
+        }, function (data) {
+            window.location.reload();
+        })
+    });
 });
 </script>
 

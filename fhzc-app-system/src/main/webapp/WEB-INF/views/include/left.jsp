@@ -15,8 +15,6 @@
                     </li>
                     <li class="start">
                         <a href="<%=contextPath%>/system/home">
-                            <i class="icon-home"></i>
-                            <span class="title">Dashboard</span>
                             <span class="selected"></span>
                         </a>
                     </li>

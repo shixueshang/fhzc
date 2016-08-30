@@ -68,7 +68,8 @@ public class PushTokenServiceImpl implements PushTokenService {
                 if(pushToken.getAllowSound() == Const.YES_OR_NO.YES){
                     unicast.setSound("default");
                 }
-                unicast.setProductionMode();
+                //unicast.setProductionMode();  //正式环境
+                unicast.setTestMode();  //测试环境
                 client.send(unicast);
 
             }else if(Const.DEVICE_TYPE.ANDROID.equals(pushToken.getDeviceType())){

@@ -50,7 +50,6 @@ public class AssetsServiceImpl implements AssetsService {
         AssetsHistoryExample.Criteria criteria = example.createCriteria();
         criteria.andTypeEqualTo(Const.ASSETS_TYPE.PURCHASE);
         criteria.andCtimeBetween(DateUtil.getStartTimeOfDate(new Date()), DateUtil.getEndTimeOfDate(new Date()));
-        criteria.andProductExpireDayGreaterThan(new Date());
         criteria.andProductFoundDayLessThanOrEqualTo(new Date());
         return assetsHistoryMapper.selectByExample(example);
     }

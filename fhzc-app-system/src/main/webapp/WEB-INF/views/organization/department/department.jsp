@@ -108,8 +108,10 @@
                                 <thead>
                                 <tr>
                                     <th>部门id</th>
-                                    <th>部门名称</th>
-                                    <th>父级部门</th>
+                                    <th>总部</th>
+                                    <th>区总</th>
+                                    <th>分公司</th>
+                                    <th>团队</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
@@ -117,12 +119,14 @@
 
                                 <c:forEach items="${depts}" var="dept">
                                     <tr>
-                                        <td>${dept.departmentId}</td>
-                                        <td>${dept.title}</td>
-                                        <td>${dept.parentName}</td>
+                                        <td>${dept.id}</td>
+                                        <td>${dept.head}</td>
+                                        <td>${dept.area}</td>
+                                        <td>${dept.company}</td>
+                                        <td>${dept.team}</td>
                                         <td>
-                                            <a href="#modal_edit" role="button" class="btn mini purple mod_dep" data-toggle="modal" data-id="${dept.departmentId}" data-title="${dept.title}" data-pid="${dept.parentDeptId}"><i class="icon-edit"></i> 修改</a>
-                                            <a href="#modal_del" role="button" class="btn mini black del_dep" data-toggle="modal" data-id="${dept.departmentId}" ><i class="icon-trash"></i> 删除</a>
+                                            <a href="#modal_edit" role="button" class="btn mini purple mod_dep" data-toggle="modal" data-id="${dept.id}" data-title="${dept.name}" data-pid="${dept.parentId}"><i class="icon-edit"></i> 修改</a>
+                                            <a href="#modal_del" role="button" class="btn mini black del_dep" data-toggle="modal" data-id="${dept.id}" ><i class="icon-trash"></i> 删除</a>
                                         </td>
                                     </tr>
                                 </c:forEach>

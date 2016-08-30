@@ -1,6 +1,7 @@
 package com.fhzc.app.system.service;
 
 import com.fhzc.app.dao.mybatis.model.Department;
+import com.fhzc.app.dao.mybatis.model.Dept;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.system.commons.util.Tree;
 
@@ -17,7 +18,7 @@ public interface DepartmentService {
      * @param size
      * @return
      */
-    PageableResult<Department> findPageDepartments(int page, int size);
+    PageableResult<Dept> findPageDepartments(int page, int size);
 
     /**
      * 获得机构树
@@ -36,7 +37,7 @@ public interface DepartmentService {
      * @param id
      * @return
      */
-    Department getDeparent(Integer id);
+    Department getDepartment(Integer id);
 
     /**
      * 删除(逻辑)

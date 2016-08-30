@@ -44,31 +44,34 @@ public class ScoreTaskJob {
     public void execute(){
         //查询assets_history中当天的并且已经成立的未过期的产品数据
         try{
-
             List<AssetsHistory> list = assetsService.findAssetsForScore();
             for(AssetsHistory asset : list){
-                //根据客户和产品id查询积分历史记录
-                Customer customer = customerService.getCustomer(asset.getCustomerId());
-                List<ScoreHistory> scoreHistories = scoreHistoryService.findScoreByProduct(customer.getUid(), asset.getProductId());
-                if(scoreHistories.size() == 0){
-                    //把当前的asset记录插入到历史积分表
-                    Product product = productService.getProduct(asset.getProductId());
-                    ScoreHistory history = new ScoreHistory();
-                    history.setUid(customer.getUid());
-                    history.setScore(calculateScore(product, asset.getAmount()));
-                    history.setCustomerName(userService.getUser(customer.getUid()).getRealname());
-                    history.setDetail("积分增加，类型：产品,名称：" + product.getName() + "");
-                    history.setEventId(product.getPid());
-                    history.setVaildTime(DateUtil.getDateNextDays(product.getExpiryDay(), 30));
-                    history.setFromType(Const.FROM_TYPE.PRODUCT);
-                    history.setIsApprove(Const.YES_OR_NO.NO);
-                    history.setIsVaild(Const.SCORE_VAILD.IS_VAILD);
-                    history.setCtime(new Date());
-                    scoreHistoryService.addHistoryScore(history);
+                Product product = productService.getProduct(asset.getProductId());
+                if(product.getExpiryDay().getTime() > new Date().getTime()){
+                    //根据客户和产品id查询积分历史记录
+                    Customer customer = customerService.getCustomer(asset.getCustomerId());
+                    List<ScoreHistory> scoreHistories = scoreHistoryService.findScoreByProduct(customer.getUid(), asset.getProductId());
+                    if(scoreHistories.size() == 0){
+                        //把当前的asset记录插入到历史积分表
+
+                        ScoreHistory history = new ScoreHistory();
+                        history.setUid(customer.getUid());
+                        history.setScore(calculateScore(product, Integer.parseInt(asset.getPeriod()), asset.getAmount()));
+                        history.setStatus(Const.Score.ADD);
+                        history.setDetail("积分增加，类型：产品,名称：" + product.getName() + "");
+                        history.setEventId(product.getPid());
+                        history.setVaildTime(DateUtil.getDateNextDays(product.getExpiryDay(), 30));
+                        history.setFromType(Const.FROM_TYPE.PRODUCT);
+                        history.setIsApprove(Const.YES_OR_NO.NO);
+                        history.setIsVaild(Const.SCORE_VAILD.IS_VAILD);
+                        history.setCtime(new Date());
+                        scoreHistoryService.addHistoryScore(history);
+                    }
                 }
             }
             logger.info("task execute success");
         }catch (Exception e){
+            e.printStackTrace();
             logger.error("task execute failure", e.getMessage());
         }
     }
@@ -79,8 +82,7 @@ public class ScoreTaskJob {
      * @param amount
      * @return
      */
-    private Integer calculateScore(Product product, Integer amount){
-        Integer term = Integer.parseInt(product.getInvestTerm());
+    private Integer calculateScore(Product product, Integer term, Integer amount){
         float termFactor = 0;
         if(term >= 36){
             termFactor = 1.2f;

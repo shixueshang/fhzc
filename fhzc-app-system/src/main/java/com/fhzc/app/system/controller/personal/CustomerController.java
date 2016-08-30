@@ -208,7 +208,7 @@ public class CustomerController extends BaseController {
             FileUtil.transferFile(path, fileName, entrustedLetterFile);
             customer.setEntrustedLetter(path + fileName);
         }
-        Department department = departmentService.getDeparent(customer.getDepartmentId());
+        Department department = departmentService.getDepartment(customer.getDepartmentId());
         customer.setOrganName(department.getTitle());
         customerService.addOrUpdateCustomer(customer);
         userService.addOrUpdateUser(user);

@@ -152,6 +152,11 @@ public class Const {
          * 推送渠道
          */
         public static final String PUSH_CHANNEL = "push_channel";
+
+        /**
+         * 预约状态
+         */
+        public static final String RESERVATION_STATUS = "reservation_status";
     }
 
     /**

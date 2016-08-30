@@ -3,6 +3,7 @@ package com.fhzc.app.system.service.impl;
 import com.fhzc.app.dao.mybatis.inter.DepartmentMapper;
 import com.fhzc.app.dao.mybatis.model.Department;
 import com.fhzc.app.dao.mybatis.model.DepartmentExample;
+import com.fhzc.app.dao.mybatis.model.Dept;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.commons.util.Tree;
@@ -25,20 +26,33 @@ public class DepartmentServiceImpl implements DepartmentService{
     private DepartmentMapper departmentMapper;
 
     @Override
-    public PageableResult<Department> findPageDepartments(int page, int size) {
+    public PageableResult<Dept> findPageDepartments(int page, int size) {
         DepartmentExample example = new DepartmentExample();
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<Department> list = departmentMapper.selectByExampleWithRowbounds(example, rowBounds);
 
-        List<Department> result = new ArrayList<Department>();
+        List<Dept> result = new ArrayList<Dept>();
         for(Department department : list){
-            if(department.getParentDeptId() != null){
-                department.setParentName(this.getDeparent(department.getParentDeptId()).getTitle());
+            Dept dept = new Dept();
+            dept.setParentId(department.getParentDeptId());
+            dept.setId(department.getDepartmentId());
+            dept.setName(department.getTitle());
+            if(department.getLevel() == 1){
+                dept.setHead(department.getTitle());
+            }else if(department.getLevel() == 2){
+                dept.setArea(department.getTitle());
+            }else if(department.getLevel() == 3){
+                dept.setArea(this.getDepartment(department.getParentDeptId()).getTitle());
+                dept.setCompany(department.getTitle());
+            }else{
+                dept.setArea(this.getDepartment(this.getDepartment(department.getParentDeptId()).getParentDeptId()).getTitle());
+                dept.setCompany(this.getDepartment(department.getParentDeptId()).getTitle());
+                dept.setTeam(department.getTitle());
             }
-            result.add(department);
+            result.add(dept);
         }
 
-        return new PageableResult<Department>(page, size, departmentMapper.countByExample(example), result);
+        return new PageableResult<Dept>(page, size, departmentMapper.countByExample(example), result);
     }
 
     @Override
@@ -60,13 +74,13 @@ public class DepartmentServiceImpl implements DepartmentService{
     }
 
     @Override
-    public Department getDeparent(Integer id) {
+    public Department getDepartment(Integer id) {
         return departmentMapper.selectByPrimaryKey(id);
     }
 
     @Override
     public void delete(Integer id) {
-        Department department = this.getDeparent(id);
+        Department department = this.getDepartment(id);
         department.setStatus(Const.Data_Status.DATA_DELETE);
         departmentMapper.updateByPrimaryKey(department);
     }
@@ -80,10 +94,6 @@ public class DepartmentServiceImpl implements DepartmentService{
         }
         return this.buildTree(departmentMapper.selectByExample(example));
     }
-
-
-
-
 
     /**
      * 获得顶级部门

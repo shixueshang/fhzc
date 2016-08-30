@@ -261,15 +261,15 @@ public class PlannerController extends BaseController {
             map.put("percent", percent);
             map.put("date", achivementsDaily.getTransferDate());
             if(type.equals("area")){
-                Department department = departmentService.getDeparent(achivementsDaily.getArea());
+                Department department = departmentService.getDepartment(achivementsDaily.getArea());
                 map.put("name", department.getTitle());
             }
             if(type.equals("company")){
-                Department department = departmentService.getDeparent(achivementsDaily.getCompany());
+                Department department = departmentService.getDepartment(achivementsDaily.getCompany());
                 map.put("name", department.getTitle());
             }
             if(type.equals("team")){
-                Department department = departmentService.getDeparent(achivementsDaily.getTeam());
+                Department department = departmentService.getDepartment(achivementsDaily.getTeam());
                 map.put("name", department.getTitle());
             }
             if(type.equals("planner")){
@@ -353,15 +353,15 @@ public class PlannerController extends BaseController {
             map.put("percent", percent);
             map.put("date", achivementsMonthly.getTransferDate());
             if(type.equals("area")){
-                Department department = departmentService.getDeparent(achivementsMonthly.getArea());
+                Department department = departmentService.getDepartment(achivementsMonthly.getArea());
                 map.put("name", department.getTitle());
             }
             if(type.equals("company")){
-                Department department = departmentService.getDeparent(achivementsMonthly.getCompany());
+                Department department = departmentService.getDepartment(achivementsMonthly.getCompany());
                 map.put("name", department.getTitle());
             }
             if(type.equals("team")){
-                Department department = departmentService.getDeparent(achivementsMonthly.getTeam());
+                Department department = departmentService.getDepartment(achivementsMonthly.getTeam());
                 map.put("name", department.getTitle());
             }
             if(type.equals("planner")){

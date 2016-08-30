@@ -801,9 +801,9 @@ CREATE TABLE IF NOT EXISTS `bank`.`score_history` (
   `score` INT(11) NOT NULL COMMENT '积分数值，扣件为负数，增加为正数',
   `event_id` INT(11) NULL DEFAULT NULL COMMENT '获得或者扣减积分的来源id(产品购买+、参加活动+，兑换权益-)',
   `status` ENUM('add', 'consume', 'frozen', 'expire') NOT NULL DEFAULT 'frozen',
-  `operator_type` ENUM('user', 'admin') NOT NULL COMMENT '操作触发人员类型:用户|管理员',
-  `operator_id` INT(11) NOT NULL COMMENT '操作人id',
-  `detail` VARCHAR(45) NULL DEFAULT NULL COMMENT '积分变动描述',
+  `operator_type` ENUM('user', 'admin') NULL COMMENT '操作触发人员类型:用户|管理员',
+  `operator_id` INT(11) NULL COMMENT '操作人id',
+  `detail` VARCHAR(200) NULL DEFAULT NULL COMMENT '积分变动描述',
   `from_type` ENUM('activity', 'product', 'rights', 'other') NOT NULL DEFAULT 'other' COMMENT '积分变动来源',
   `vaild_time` DATE NULL DEFAULT NULL COMMENT '积分有效时间',
   `ctime` DATETIME NOT NULL COMMENT '记录创建时间',
@@ -1029,6 +1029,18 @@ CREATE TABLE `bank`.`device_info` (
   ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8
   COMMENT = '设备信息统计';
+
+DROP TABLE IF EXISTS `bank`.`assets_recommend` ;
+CREATE TABLE `bank`.`assets_recommend` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `recommend_type` VARCHAR(45) NULL COMMENT '推荐配置类别',
+  `proportion` DECIMAL(4,2) NULL COMMENT '配置比例',
+  `status` INT(1) NULL COMMENT '状态0正常1删除',
+  PRIMARY KEY (`id`))
+  ENGINE = InnoDB
+  DEFAULT CHARACTER SET = utf8
+  COMMENT = '资产推荐配置';
+
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

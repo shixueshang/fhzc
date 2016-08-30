@@ -2,6 +2,7 @@ package com.fhzc.app.system.controller.organization;
 
 import com.alibaba.fastjson.JSON;
 import com.fhzc.app.dao.mybatis.model.Department;
+import com.fhzc.app.dao.mybatis.model.Dept;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
@@ -36,9 +37,9 @@ public class OrganizationController extends BaseController {
      */
     @RequestMapping(value = "/department", method = RequestMethod.GET)
     @SystemControllerLog(description = "查看机构列表")
-    public ModelAndView listResources(){
+    public ModelAndView listDepartments(){
         ModelAndView mav = new ModelAndView("organization/department/department");
-        PageableResult<Department> pageableResult =  departmentService.findPageDepartments(page, size);
+        PageableResult<Dept> pageableResult =  departmentService.findPageDepartments(page, size);
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("depts", pageableResult.getItems());
         mav.addObject("deptsForAdd", JSON.toJSON(departmentService.getDepartmentTree()));
@@ -59,13 +60,13 @@ public class OrganizationController extends BaseController {
         //判断父级机构是否有子机构，如果没有则修改父级机构的leaf=0
         List<Department> list = departmentService.findChildren(department.getParentDeptId());
         if(list.size() == 0){
-            Department parentDept = departmentService.getDeparent(department.getParentDeptId());
+            Department parentDept = departmentService.getDepartment(department.getParentDeptId());
             parentDept.setLeaf(Const.YES_OR_NO.NO);
             departmentService.addOrUpdateDept(parentDept);
         }
 
         //根据父级的level设置自己level
-        Department parent = departmentService.getDeparent(department.getParentDeptId());
+        Department parent = departmentService.getDepartment(department.getParentDeptId());
         department.setLevel(parent.getLevel() + 1);
         department.setLeaf(Const.YES_OR_NO.YES);
         departmentService.addOrUpdateDept(department);
@@ -83,7 +84,7 @@ public class OrganizationController extends BaseController {
     @ResponseBody
     public AjaxJson edit(@PathVariable(value = "id") Integer id){
 
-        return new AjaxJson(true, departmentService.getDeparent(id));
+        return new AjaxJson(true, departmentService.getDepartment(id));
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)

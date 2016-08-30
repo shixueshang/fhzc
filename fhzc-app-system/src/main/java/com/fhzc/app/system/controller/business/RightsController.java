@@ -225,17 +225,24 @@ public class RightsController extends BaseController{
         return mav;
     }
 
+    @RequestMapping(value = "/reservation/status", method = RequestMethod.GET)
+    @ResponseBody
+    public AjaxJson reserStatus(){
+        return  new AjaxJson(true, dictionaryService.findDicByType(Const.DIC_CAT.RESERVATION_STATUS));
+    }
+
     /**
      * 取消预约
-     * @param id
+     * @param reserId
+     * @param status
      * @return
      */
-    @RequestMapping(value = "/reservation/cancel", method = RequestMethod.GET)
+    @RequestMapping(value = "/reservation/deal", method = RequestMethod.POST)
     @ResponseBody
-    @SystemControllerLog(description = "取消预约")
-    public AjaxJson dealReservation(Integer id){
-        RightsReservation reservation = rightsService.getReservationById(id);
-        reservation.setStatus(3);
+    @SystemControllerLog(description = "处理预约")
+    public AjaxJson dealReservation(Integer reserId, Integer status){
+        RightsReservation reservation = rightsService.getReservationById(reserId);
+        reservation.setStatus(status);
         rightsService.updateReservation(reservation);
         return new AjaxJson(true);
     }
