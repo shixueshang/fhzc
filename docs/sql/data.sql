@@ -78,6 +78,9 @@ INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`)VALUES ('64', '权益关注列表', '/business/rights/focusList', null, '11', '3', '1');
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (65, '积分查询', '/business/score/query',NULL,48, 3, 1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (66, '资产持仓', '/business/assets/holdings/find',NULL,45, 3, 1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES ('67', '权益分类维护', '/business/rights/type', null, '11', '3', '1');
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES ('68', '活动分类维护', '/business/activity/type', null, '8', '3', '1');
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES ('69', '报告分类维护', '/business/report/type', null, '5', '3', '1');
 
 
 /*
