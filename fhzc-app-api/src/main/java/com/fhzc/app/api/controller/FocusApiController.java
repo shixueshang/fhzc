@@ -190,6 +190,8 @@ public class FocusApiController extends BaseController {
                     map.put("incomeDistributionType", product.getIncomeDistributionType());
                     map.put("annualYield",product.getAnnualYield());
                     map.put("investTerm",product.getInvestTerm());
+                    map.put("foundDay",product.getFoundDay());
+                    map.put("expiryDay",product.getExpiryDay());
                     productList.add(map);
                     break;
                 case "report":
