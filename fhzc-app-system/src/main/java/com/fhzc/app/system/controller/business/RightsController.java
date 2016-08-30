@@ -189,7 +189,7 @@ public class RightsController extends BaseController{
         reservation.setRightsId(reservationRight);
         reservation.setCustomerId(customerId);
         reservation.setScoreCost(exchangeScore);
-        reservation.setMarkDate(new SimpleDateFormat("yyyy-mm-dd HH:mm:ss").parse(markDate));
+        reservation.setMarkDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(markDate));
         reservation.setStatus(1);
         rightsService.addRightsReservation(reservation);
 
