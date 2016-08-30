@@ -74,4 +74,11 @@ public interface RightsService {
      * @return
      */
     List<RightsReservation> findSuccessOrdersById(Integer id, Integer status);
+    
+    /**
+     * 根据权益类型获得权益
+     * @param typeId
+     * @return
+     */
+    List<Rights> getRightsByType(String typeId);
 }

@@ -36,7 +36,7 @@ public class Rights {
     private Integer focusNum;
 
     private Integer orderNum;
-    
+
     public Integer getFocusNum() {
         return focusNum;
     }
@@ -52,6 +52,7 @@ public class Rights {
     public void setOrderNum(Integer orderNum) {
         this.orderNum = orderNum;
     }
+
     public Integer getId() {
         return id;
     }

@@ -55,8 +55,8 @@ public class ScoreServiceImpl implements ScoreService {
 
         List<ScoreHistory> result = new ArrayList<>();
         for(ScoreHistory score : scoreHistories){
-            long diff=System.currentTimeMillis() - score.getVaildTime().getTime();
-            if(Const.Score.LONGDAY < (diff / (1000 * 60 * 60 * 24))){
+            long diff= score.getVaildTime().getTime() - System.currentTimeMillis();
+            if(Const.Score.LONGDAY > (diff / (1000 * 60 * 60 * 24))){
                 result.add(score);
             }
         }

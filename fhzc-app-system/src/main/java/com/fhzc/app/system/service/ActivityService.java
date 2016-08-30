@@ -52,6 +52,18 @@ public interface ActivityService {
      */
     List<ActivityApply>findSuccessOrdersById(Integer id, Integer result);
 
+    /**
+     * 根据活动名称获取活动
+     * @param name
+     * @return
+     */
     Activity findActivityByName(String name);
+    
+    /**
+     * 根据活动类型获取活动
+     * @param typeId
+     * @return
+     */
+    List<Activity> getActivityByType(String typeId);
     
 }

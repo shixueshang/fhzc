@@ -2,6 +2,7 @@ package com.fhzc.app.system.controller.business;
 
 import com.alibaba.fastjson.JSON;
 import com.fhzc.app.dao.mybatis.model.*;
+import com.fhzc.app.dao.mybatis.model.Dictionary;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
@@ -9,6 +10,7 @@ import com.fhzc.app.system.aop.SystemControllerLog;
 import com.fhzc.app.system.commons.util.FileUtil;
 import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.commons.vo.FocusVo;
+import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.*;
 
@@ -18,6 +20,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -211,5 +214,55 @@ public class ActivityController extends BaseController {
             }
         }
         return vos;
+    }
+    
+    /**
+     * 活动分类
+     * @return
+     */
+    @RequestMapping(value = "/type", method = RequestMethod.GET)
+    public ModelAndView listType(){
+        ModelAndView mav = new ModelAndView("business/activity/activityType");
+        mav.addObject("activityTypes", dictionaryService.findDicByType(Const.DIC_CAT.ACTIVITY_CATEGORY));
+        mav.addObject("url", "business/activity");
+        return mav;
+    }
+    
+    @RequestMapping(value = "/isKeyExists", method = RequestMethod.GET)
+    @ResponseBody
+    public Object isKeyExists(String key){
+        boolean flag = dictionaryService.isKeyOrValueExists(Const.DIC_CAT.ACTIVITY_CATEGORY, "key", key);
+        return !flag;
+    }
+    
+    @RequestMapping(value = "/isValueExists", method = RequestMethod.GET)
+    @ResponseBody
+    public Object isValueExists(String value){
+        boolean flag = dictionaryService.isKeyOrValueExists(Const.DIC_CAT.ACTIVITY_CATEGORY, "value", value);
+        return !flag;
+    }
+    
+    @RequestMapping(value = "/type/add", method = RequestMethod.POST)
+    public String add(Dictionary dictionary){
+        dictionary.setStatus(Const.Data_Status.DATA_NORMAL);
+        dictionary.setCat(Const.DIC_CAT.ACTIVITY_CATEGORY);
+        dictionary.setIsDefault(Const.YES_OR_NO.NO);
+        dictionary.setIsModify(Const.YES_OR_NO.NO);
+        dictionary.setName("活动类型");
+        dictionaryService.addOrUpdate(dictionary);
+        return "redirect:/business/activity/type";
+    }
+
+    @RequestMapping(value = "/type/delete/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public AjaxJson delete(@PathVariable(value = "id") Integer id){
+        //判断该分类是否被使用
+        Dictionary dictionary = dictionaryService.getDictionary(id);
+        List<Activity> activitys = activityService.getActivityByType(dictionary.getValue());
+        if(activitys.size() > 0){
+            return new AjaxJson(false, "已被使用，不能删除");
+        }
+        dictionaryService.delete(id);
+        return new AjaxJson(true);
     }
 }

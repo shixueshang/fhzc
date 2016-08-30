@@ -38,4 +38,11 @@ public interface ReportService {
      * @return
      */
     List<Report> findAllReport();
+    
+    /**
+     * 根据报告类型获得权益
+     * @param typeId
+     * @return
+     */
+    List<Report> getReportByType(String typeId);
 }

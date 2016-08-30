@@ -98,4 +98,12 @@ public class ActivityServiceImpl implements ActivityService {
         }
         return null;
     }
+
+	@Override
+	public List<Activity> getActivityByType(String typeId) {
+		ActivityExample example = new ActivityExample();
+		ActivityExample.Criteria criteria = example.createCriteria();
+	    criteria.andCidEqualTo(Integer.parseInt(typeId));
+	    return activityMapper.selectByExample(example);
+	}
 }

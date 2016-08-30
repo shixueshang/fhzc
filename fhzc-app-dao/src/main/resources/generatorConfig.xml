@@ -46,10 +46,10 @@
 
         <!--生成对应表及类名 -->
 
-        <table tableName="device_info"
+        <table tableName="score_history"
                delimitAllColumns="true"
                delimitIdentifiers="true"
-               domainObjectName="DeviceInfo">
+               domainObjectName="ScoreHistory">
             <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
         </table>
 

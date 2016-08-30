@@ -5,11 +5,14 @@ import com.fhzc.app.dao.mybatis.model.Customer;
 import com.fhzc.app.dao.mybatis.model.Product;
 import com.fhzc.app.dao.mybatis.model.ScoreHistory;
 import com.fhzc.app.dao.mybatis.util.Const;
+import com.fhzc.app.system.commons.util.DateUtil;
 import com.fhzc.app.system.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 
@@ -56,6 +59,7 @@ public class ScoreTaskJob {
                     history.setCustomerName(userService.getUser(customer.getUid()).getRealname());
                     history.setDetail("积分增加，类型：产品,名称：" + product.getName() + "");
                     history.setEventId(product.getPid());
+                    history.setVaildTime(DateUtil.getDateNextDays(product.getExpiryDay(), 30));
                     history.setFromType(Const.FROM_TYPE.PRODUCT);
                     history.setIsApprove(Const.YES_OR_NO.NO);
                     history.setIsVaild(Const.SCORE_VAILD.IS_VAILD);
@@ -76,6 +80,15 @@ public class ScoreTaskJob {
      * @return
      */
     private Integer calculateScore(Product product, Integer amount){
-        return amount / 500 * product.getScoreFactor().intValue() * Integer.parseInt(product.getRenewDeadline());
+        Integer term = Integer.parseInt(product.getInvestTerm());
+        float termFactor = 0;
+        if(term >= 36){
+            termFactor = 1.2f;
+        }else if(term >= 12){
+            termFactor = 1.0f;
+        }else{
+            termFactor = term / 12 ;
+        }
+        return new BigDecimal(amount).divide(new BigDecimal(500)).multiply(product.getScoreFactor()).multiply(new BigDecimal(termFactor)).setScale(0, RoundingMode.HALF_EVEN).intValue();
     }
 }

@@ -86,4 +86,12 @@ public class RightsServiceImpl implements RightsService {
 	        criteria.andStatusEqualTo(status);
 	        return rightsReservationMapper.selectByExample(example);
 	}
+
+	@Override
+	public List<Rights> getRightsByType(String typeId) {
+		RightsExample example = new RightsExample();
+		RightsExample.Criteria criteria = example.createCriteria();
+	    criteria.andCidEqualTo(Integer.parseInt(typeId));
+	    return rightsMapper.selectByExample(example);
+	}
 }

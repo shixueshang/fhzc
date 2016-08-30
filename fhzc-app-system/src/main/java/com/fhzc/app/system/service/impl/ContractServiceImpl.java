@@ -6,6 +6,7 @@ import com.fhzc.app.dao.mybatis.model.Department;
 import com.fhzc.app.dao.mybatis.model.Dictionary;
 import com.fhzc.app.dao.mybatis.model.Planner;
 import com.fhzc.app.dao.mybatis.model.Product;
+import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.EncryptUtils;
 import com.fhzc.app.system.commons.util.TextUtils;
@@ -18,6 +19,7 @@ import com.fhzc.app.system.service.DepartmentService;
 import com.fhzc.app.system.service.DictionaryService;
 import com.fhzc.app.system.service.PlannerService;
 import com.fhzc.app.system.service.ProductService;
+import com.fhzc.app.system.service.UserService;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.ibatis.session.RowBounds;
@@ -54,6 +56,9 @@ public class ContractServiceImpl implements ContractService {
     
     @Resource
     private DepartmentService departmentService;
+
+    @Resource
+    private UserService userService;    
     
     @Override
     public PageableResult<Contract> findPageContracts(Integer productId, List<Integer> plannerIds, int page, int size) {
@@ -86,6 +91,8 @@ public class ContractServiceImpl implements ContractService {
     	List<Planner> planners =  plannerService.findAllPlanner();
     	List<Dictionary> dics = dictionaryService.findDicByType("passport");
     	List<Department> deps = departmentService.findAllDepartment();
+ 	   	List<User> users = userService.findAllUsers();
+ 	   
     	int sheetnum = 0;
     	int rownum = 3;
     	Map<String, Object> importResult = importer.setImportConfig(new ImportConfig() {
@@ -158,6 +165,8 @@ public class ContractServiceImpl implements ContractService {
 	    				return errordata;
 	    			}
 		    		
+		    		int passport_type = -1;
+		    		
 	        		//判断证件类型的写法与数据库保持一致
 		    		errordata  = TextUtils.checkEmptyString(i+4, 4, objects[3]);
 	    			if (errordata.size() >0){
@@ -167,6 +176,7 @@ public class ContractServiceImpl implements ContractService {
     				for(Dictionary dictionary : dics){
     					if(dictionary.getKey().equals(objects[3].toString().trim())){
     						isExist = true;
+    						passport_type = TextUtils.StringtoInteger(dictionary.getValue());
     						break;
     					}
     				}
@@ -174,6 +184,30 @@ public class ContractServiceImpl implements ContractService {
 	    				errordata = TextUtils.setErrorMessage(i+4, 4, objects[3].toString()+ ", 该证件类型不存在！");
 	    				return errordata;
 	    			}
+		    		
+		    		if(phone != "" && pcode != ""){
+		    			//检测该手机号码是否已被其他人使用
+		    			isExist = false;
+	
+	    				for(User user : users){
+	    					if(user.getLoginRole().trim().equals("customer")){
+	    						if(user.getMobile().equals(phone)){
+			    					if( user.getPassportTypeId() == passport_type && !user.getPassportCode().equals(pcode)){
+			    						isExist = true;
+			    						break;
+			    					}
+	    						}
+	    					}
+	    				}
+	    				
+			    		if(isExist){
+		    				errordata = TextUtils.setErrorMessage(i+4, 7, phone + "，该手机号码已被其他人使用！");
+		    				return errordata;
+		    			}
+		    		}
+
+		    		
+		    		
 		    		
 	        		//检验理财师是否存在
 	    			errordata  = TextUtils.checkEmptyString(i+4, 16, objects[15]);
