@@ -87,6 +87,7 @@ public class ProductApiController extends BaseController {
         result.put("riskLevel", super.getDicName(product.getRisk(), Const.DIC_CAT.RISK_LEVEL));
         result.put("customerLevel", super.getDicName(product.getLevel(), Const.DIC_CAT.CUSTOMER_LEVEL));
         result.put("issueType", super.getDicName(product.getIssueType(), Const.DIC_CAT.PRODUCT_ISSUE_TYPE));
+        result.put("productTypeName", super.getDicName(Integer.parseInt(product.getProductType()), Const.DIC_CAT.PRODUCT_TYPE));
         if(product.getStatus() != null){
             result.put("productStatus", super.getDicName((Integer.parseInt(product.getStatus().toString())), Const.DIC_CAT.PRODUCT_STATUS));
         }
