@@ -133,6 +133,13 @@ public class ProductController extends BaseController {
             FileUtil.transferFile(proveUrlPath, proveUrlName, proveFile);
             product.setProveUrl(proveUrlPath + proveUrlName);
         }
+        
+        if(!noticeFile.isEmpty()){
+            String noticeName = FileUtil.generatePictureName(noticeFile);
+            String noticePath = TextUtils.getConfig(Const.CONFIG_KEY_SYSTEM_IMAGE_SAVE_PATH, this);
+            FileUtil.transferFile(noticePath, noticeName, noticeFile);
+            product.setNotice(noticePath + noticeName);
+        }
 
         if(product.getInvestThreshold() != null && product.getInvestThreshold().compareTo(new BigDecimal(0)) == 1){
             product.setInvestThreshold(product.getInvestThreshold().multiply(new BigDecimal(10000)));
