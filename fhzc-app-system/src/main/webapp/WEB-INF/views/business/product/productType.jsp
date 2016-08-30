@@ -57,7 +57,7 @@
                         <div class="portlet-title">
                             <h4>
                                 <i class="icon-plus"></i>
-                                <span class="hidden-480"></span>
+                                <span class="hidden-480">新增类别</span>
                                 &nbsp;
                             </h4>
                         </div>
