@@ -10,6 +10,7 @@ import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.thirdparty.sms.SMSTemplate;
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.aop.SystemControllerLog;
+import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.NoticeService;
@@ -84,13 +85,10 @@ public class NoticeController extends BaseController {
     public AjaxJson addOrUpdate(SystemNotice systemNotice){
         systemNotice.setPublishTime(new Date());
         noticeService.addOrUpdate(systemNotice);
-        if(systemNotice.getId() == null){
-            preHandle(systemNotice);
-        }else{
-            //删除原来system_notice_record表的记录
+        if(systemNotice.getId() != null){
             noticeService.deleteRecordByNoticeId(systemNotice.getId());
-            preHandle(systemNotice);
         }
+        preHandle(systemNotice);
         return new AjaxJson(true);
     }
 
@@ -193,7 +191,7 @@ public class NoticeController extends BaseController {
                 }
                 if(record.getPushChannel() == Const.PUSH_CHANNEL.SMS){
                     User user = userService.getUser(record.getUserId());
-                    SMSTemplate smsTemplate = new SMSTemplate(Const.SMS_PARAM.SMS_USERNAME, Const.SMS_PARAM.SMS_PASSWORD, Const.SMS_PARAM.SMS_APPIKEY, record.getContent());
+                    SMSTemplate smsTemplate = new SMSTemplate(TextUtils.getConfig(Const.SMS_PARAM.SMS_USERNAME, this),TextUtils.getConfig(Const.SMS_PARAM.SMS_PASSWORD, this), TextUtils.getConfig(Const.SMS_PARAM.SMS_APPIKEY, this), record.getContent());
                     smsTemplate.sendTemplateSMS(user.getMobile());
                 }
                 if(record.getPushChannel() == Const.PUSH_CHANNEL.EMAIL){

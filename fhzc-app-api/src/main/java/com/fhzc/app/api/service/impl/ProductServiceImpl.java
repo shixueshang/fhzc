@@ -27,6 +27,7 @@ public class ProductServiceImpl implements ProductService {
         ProductExample example = new ProductExample();
         ProductExample.Criteria criteria = example.createCriteria();
         criteria.andIsDisplayEqualTo(Const.YES_OR_NO.YES);
+        example.setOrderByClause("`display_order` desc");
         if(isRecommend) {
             criteria.andIsRecommendEqualTo(Const.YES_OR_NO.YES);
         }

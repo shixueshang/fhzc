@@ -18,6 +18,11 @@ public class Const {
     public static final String CONFIG_KEY_SYSTEM_IMAGE_SAVE_PATH =  "system_image_save_path";
 
     /**
+     * 消息轮询时间
+     */
+    public static final String MESSAGE_POLLING_TIME =  "message_polling_time";
+
+    /**
      * 设备类型
      */
     public static class DEVICE_TYPE{
@@ -32,11 +37,11 @@ public class Const {
      */
     public static class SMS_PARAM{
 
-        public static final String SMS_USERNAME = "lixs";
+        public static final String SMS_USERNAME = "sms_username";
 
-        public static final String SMS_PASSWORD = "6572BDAFF799084B973320F43F09B363";
+        public static final String SMS_PASSWORD = "sms_password";
 
-        public static final String SMS_APPIKEY = "2eb2712e29a0838998705ddc3f66b973";
+        public static final String SMS_APPIKEY = "sms_appikey";
     }
 
 
@@ -223,6 +228,11 @@ public class Const {
     }
 
     public static class ASSETS_TYPE{
+        /**
+         * 成立
+         */
+        public static final String FOUND = "found";
+
         /**
          * 派息
          */

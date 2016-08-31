@@ -33,6 +33,16 @@ public class Customer {
 
     private String levelName;
 
+    private String oldPlanner;
+
+    public String getOldPlanner() {
+        return oldPlanner;
+    }
+
+    public void setOldPlanner(String oldPlanner) {
+        this.oldPlanner = oldPlanner;
+    }
+
     public String getLevelName() {
         return levelName;
     }

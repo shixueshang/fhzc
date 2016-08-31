@@ -7,7 +7,6 @@ import com.fhzc.app.api.tools.ApiJsonResult;
 import com.fhzc.app.api.tools.ObjUtils;
 import com.fhzc.app.dao.mybatis.model.Product;
 import com.fhzc.app.dao.mybatis.model.ProductReservation;
-import com.fhzc.app.dao.mybatis.page.PageableResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -69,7 +68,7 @@ public class ProductOrderApiController extends BaseController{
     @ResponseBody
     public ApiJsonResult personalProductOrder(Integer customer_id) throws Exception {
         List<ProductReservation> reservationList = productReservationService.getUserProductList(customer_id);
-        List<Map> result = new ArrayList<Map>();
+        List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
         for(ProductReservation reserv : reservationList) {
             Product product = productService.getProduct(reserv.getProductId());
             if(product != null){

@@ -78,4 +78,24 @@ public class AssetsServiceImpl implements AssetsService {
         criteria.andPaymentDateIsNotNull();
         return assetsHistoryMapper.selectByExample(example);
     }
+
+    @Override
+    public List<AssetsHistory> findAssetsByProduct(String type, Integer pid) {
+        AssetsHistoryExample example = new AssetsHistoryExample();
+        AssetsHistoryExample.Criteria criteria = example.createCriteria();
+        if(!type.equals(Const.ASSETS_TYPE.FOUND)){
+            criteria.andTypeEqualTo(type);
+        }
+        criteria.andProductIdEqualTo(pid);
+        if(type.equals(Const.ASSETS_TYPE.FOUND)){
+            criteria.andProductFoundDayBetween(DateUtil.getStartTimeOfDate(new Date()), DateUtil.getEndTimeOfDate(new Date()));
+        }
+        if(type.equals(Const.ASSETS_TYPE.PURCHASE)){
+            criteria.andBuyTimeBetween(DateUtil.getStartTimeOfDate(new Date()), DateUtil.getEndTimeOfDate(new Date()));
+        }
+        if(type.equals(Const.ASSETS_TYPE.REDEMPTION)){
+            criteria.andExpireDayNotBetween(DateUtil.getStartTimeOfDate(new Date()), DateUtil.getEndTimeOfDate(new Date()));
+        }
+        return assetsHistoryMapper.selectByExample(example);
+    }
 }

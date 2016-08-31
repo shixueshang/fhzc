@@ -52,9 +52,6 @@ public class UserServiceImpl implements UserService {
         UserExample.Criteria criteria = example.createCriteria();
         criteria.andLoginEqualTo(loginName);
 
-        UserExample.Criteria criteria1 = example.createCriteria();
-        criteria1.andMobileEqualTo(loginName);
-        example.or(criteria1);
         if(userMapper.countByExample(example) > 0){
             return decryptUser(userMapper.selectByExample(example).get(0));
         }else{

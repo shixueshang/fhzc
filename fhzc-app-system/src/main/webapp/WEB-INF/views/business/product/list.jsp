@@ -21,7 +21,6 @@
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/bootstrap-fileupload/bootstrap-fileupload.css" />
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/jquery-tags-input/jquery.tagsinput.css" />
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" />
-<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/bootstrap-datepicker/css/datepicker.css">
 
 <!-- BEGIN CONTAINER -->
 <div class="page-container row-fluid">
@@ -127,7 +126,7 @@
                                         <td>
                                             <a href="<%=contextPath%>/business/product/detail/${product.pid}" class="btn mini purple"><i class="icon-edit"></i> 编辑</a>
                                             <a href="<%=contextPath%>/business/product/order/${product.pid}" class="btn mini purple"><i class="icon-share"></i> 预约</a>
-                                            <a href="#modal_edit" role="button" class="btn mini purple product_push"><i class="icon-signin"></i> 推送</a>
+                                            <a href="#modal_edit" role="button" data-toggle="modal" data-id="${product.pid}" class="btn mini purple product_push"><i class="icon-signin"></i> 推送</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -139,7 +138,51 @@
 
             </div>
             <!--页面操作详细内容 开始-->
+            <div id="modal_edit" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="my_modal_edit" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h3 id="myModalLabel2">消息推送</h3>
+                </div>
+                <form id="push_form">
+                <div class="modal-body" style="height: 300px;width: 600px;">
 
+                    <div class="control-group">
+                        <label class="control-label" style="display: inline-block">消息标题</label>
+                        <div class="controls" style="display: inline-block;margin-top: 10px;margin-left: 20px;">
+                            <select name="title"  class="m-wrap medium">
+                                <option value="1">产品成立</option>
+                                <option value="2">产品购买</option>
+                                <option value="3">产品兑付</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" style="display: inline-block">消息内容</label>
+                        <div class="controls" style="width:250px;display: inline-block;margin-top: 10px;margin-left: 20px;">
+                            <textarea  name="content" maxlength="500" style="width: 300px; height: 100px;"  data-required="1" ></textarea>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" style="display: inline-block">推送渠道</label>
+                        <div class="controls" style="display: inline-block;margin-top: 10px;margin-left: 20px;">
+                            <input type="checkbox" id="channel_system" value="1"/>系统&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox" id="channel_sms" value="2"/>短信&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox" id="channel_push" value="3"/>推送&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox" id="channel_email" value="4"/>邮件&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <input name="pushChannel" type="hidden"  id="pushChannel"/>
+                    <input name="id" type="hidden"  id="dataId"/>
+                    <button data-dismiss="modal" class="btn blue" id="do_mod_push">推送</button>
+                    <button data-dismiss="modal" class="btn blue" aria-hidden="true">取消</button>
+                </div>
+                </form>
+            </div>
         </div>
 
         <jsp:include page="../../include/page.jsp"/>
@@ -203,4 +246,42 @@
             }
         
     });
+
+    $(function(){
+
+        $(".product_push").click(function () {
+            $('#dataId').val($(this).data("id"));
+        });
+
+        $("#do_mod_push").click(function () {
+            if($('input[type="checkbox"]:checked').length == 0){
+                BootstrapDialog.alert({
+                    title: '提示',
+                    message: '请至少选择一个推送渠道!'
+                });
+                return false;
+            }
+
+            var channels = new Array();
+
+            $('input[type="checkbox"]:checked').each(function(){
+                channels.push($(this).val());
+            });
+
+            $('#pushChannel').val(channels);
+
+            $.ajax({
+                url:"<%=contextPath%>/business/product/push",
+                type:"POST",
+                data:$('#push_form').serialize(),
+                dataType:"json",
+                success:function(data){
+                    window.location.reload();
+                },error:function(data){
+
+                }
+            });
+        });
+    });
+
 </script>

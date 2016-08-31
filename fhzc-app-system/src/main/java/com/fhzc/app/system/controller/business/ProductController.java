@@ -5,6 +5,7 @@ import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.model.Dictionary;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
+import com.fhzc.app.dao.mybatis.thirdparty.sms.SMSTemplate;
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.aop.SystemControllerLog;
 import com.fhzc.app.system.commons.util.FileUtil;
@@ -55,18 +56,25 @@ public class ProductController extends BaseController {
     @Resource
     private FocusService focusService;
 
+    @Resource
+    private AssetsService assetsService;
+
+    @Resource
+    private PushTokenService pushTokenService;
+
     /**
      * 产品列表
+     *
      * @return
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @SystemControllerLog(description = "查询产品列表")
-    public ModelAndView listProduct(){
+    public ModelAndView listProduct() {
         ModelAndView mav = new ModelAndView("business/product/list");
         PageableResult<Product> pageableResult = productService.findPageProducts(page, size);
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         List<Product> products = new ArrayList<Product>();
-        for(Product product : pageableResult.getItems()){
+        for (Product product : pageableResult.getItems()) {
             //获得产品关注人数
             List<Focus> focuses = focusService.findFocusByType(Const.FOCUS_TYPE.PRODUCT, product.getPid());
             product.setFocusNum(focuses.size() > 0 ? focuses.size() : 0);
@@ -75,7 +83,7 @@ public class ProductController extends BaseController {
             List<ProductReservation> orders = productService.findOrdersByPid(product.getPid(), Const.ORDER_RESULT.Success);
             product.setOrderNum(orders.size() > 0 ? orders.size() : 0);
             BigDecimal orderAmount = new BigDecimal(0.00);
-            for(ProductReservation order : orders){
+            for (ProductReservation order : orders) {
                 orderAmount = orderAmount.add(new BigDecimal(order.getAmount() / 10000));
             }
             product.setOrderAmount(orderAmount);
@@ -92,10 +100,11 @@ public class ProductController extends BaseController {
 
     /**
      * 产品发布页面
+     *
      * @return
      */
     @RequestMapping(value = "/pub")
-    public ModelAndView pubProduct(){
+    public ModelAndView pubProduct() {
         ModelAndView mav = new ModelAndView("business/product/add");
         mav.addObject("productTypes", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_TYPE)));
         mav.addObject("productStatus", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_STATUS)));
@@ -110,38 +119,39 @@ public class ProductController extends BaseController {
 
     /**
      * 产品发布
-     * @param product 产品信息
-     * @param coverFile 产品封面
-     * @param proveFile 备案证明
+     *
+     * @param product    产品信息
+     * @param coverFile  产品封面
+     * @param proveFile  备案证明
      * @param noticeFile 产品成立公告
      * @return
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @SystemControllerLog(description = "新增或修改产品")
-    public String addOrUpdateProduct(Product product, MultipartFile coverFile, MultipartFile proveFile, MultipartFile noticeFile){
+    public String addOrUpdateProduct(Product product, MultipartFile coverFile, MultipartFile proveFile, MultipartFile noticeFile) {
 
-        if(!coverFile.isEmpty()){
+        if (!coverFile.isEmpty()) {
             String coverName = FileUtil.generatePictureName(coverFile);
             String coverPath = TextUtils.getConfig(Const.CONFIG_KEY_SYSTEM_IMAGE_SAVE_PATH, this);
             FileUtil.transferFile(coverPath, coverName, coverFile);
             product.setCover(coverPath + coverName);
         }
 
-        if(!proveFile.isEmpty()){
+        if (!proveFile.isEmpty()) {
             String proveUrlName = FileUtil.generatePictureName(proveFile);
             String proveUrlPath = TextUtils.getConfig(Const.CONFIG_KEY_SYSTEM_IMAGE_SAVE_PATH, this);
             FileUtil.transferFile(proveUrlPath, proveUrlName, proveFile);
             product.setProveUrl(proveUrlPath + proveUrlName);
         }
-        
-        if(!noticeFile.isEmpty()){
+
+        if (!noticeFile.isEmpty()) {
             String noticeName = FileUtil.generatePictureName(noticeFile);
             String noticePath = TextUtils.getConfig(Const.CONFIG_KEY_SYSTEM_IMAGE_SAVE_PATH, this);
             FileUtil.transferFile(noticePath, noticeName, noticeFile);
             product.setNotice(noticePath + noticeName);
         }
 
-        if(product.getInvestThreshold() != null && product.getInvestThreshold().compareTo(new BigDecimal(0)) == 1){
+        if (product.getInvestThreshold() != null && product.getInvestThreshold().compareTo(new BigDecimal(0)) == 1) {
             product.setInvestThreshold(product.getInvestThreshold().multiply(new BigDecimal(10000)));
         }
         product.setScoreFactor(product.getScoreFactor().divide(new BigDecimal(100)));
@@ -155,11 +165,12 @@ public class ProductController extends BaseController {
 
     /**
      * 产品编辑
+     *
      * @param pid
      * @return
      */
-    @RequestMapping(value="/detail/{pid}", method = RequestMethod.GET)
-    public ModelAndView detail(@PathVariable(value = "pid") Integer pid){
+    @RequestMapping(value = "/detail/{pid}", method = RequestMethod.GET)
+    public ModelAndView detail(@PathVariable(value = "pid") Integer pid) {
         ModelAndView mav = new ModelAndView("business/product/add");
         mav.addObject("product", productService.getProduct(pid));
         mav.addObject("productTypes", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_TYPE)));
@@ -174,33 +185,34 @@ public class ProductController extends BaseController {
 
     @RequestMapping(value = "/isNameExists", method = RequestMethod.GET)
     @ResponseBody
-    public Object isNameExists(String name){
+    public Object isNameExists(String name) {
         boolean flag = productService.isNameExists(name);
         return !flag;
     }
-    
+
     @RequestMapping(value = "/isCodeExists", method = RequestMethod.GET)
     @ResponseBody
-    public Object isCodeExists(String code){
+    public Object isCodeExists(String code) {
         boolean flag = productService.isCodeExists(code);
         return !flag;
     }
 
     @RequestMapping(value = "/importor")
-    public String importorProduct(){
+    public String importorProduct() {
 
         return "business/product/importor";
     }
 
     /**
      * excel导入
+     *
      * @param multiFile
      * @return
      */
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     @ResponseBody
     @SystemControllerLog(description = "导入产品")
-    public Map<String, Object> importExcel(MultipartFile multiFile){
+    public Map<String, Object> importExcel(MultipartFile multiFile) {
         Map<String, Object> result = new HashMap<String, Object>();
         try {
             result = productService.importExcelFile(multiFile);
@@ -215,11 +227,12 @@ public class ProductController extends BaseController {
 
     /**
      * 产品预约列表
+     *
      * @return
      */
     @RequestMapping(value = "/order/list", method = RequestMethod.GET)
     @SystemControllerLog(description = "查看产品预约列表")
-    public ModelAndView listProductOrdered(){
+    public ModelAndView listProductOrdered() {
         ModelAndView mav = new ModelAndView("business/product/reservationList");
         mav.addObject("url", "business/product");
         return mav;
@@ -227,32 +240,33 @@ public class ProductController extends BaseController {
 
     /**
      * 产品预约列表
+     *
      * @return
      */
     @RequestMapping(value = "/order/filter", method = RequestMethod.GET)
-    public ModelAndView listProductOrderedByFilter(String productName, String identityId, Date startTime, Date endTime){
+    public ModelAndView listProductOrderedByFilter(String productName, String identityId, Date startTime, Date endTime) {
         ModelAndView mav = new ModelAndView("business/product/reservationList");
         ProductReserQuery query = new ProductReserQuery();
-        if (StringUtils.isNotBlank(productName)){
+        if (StringUtils.isNotBlank(productName)) {
             query.setProductName(productName);
             Product product = productService.getProduct(productName.trim());
-            if (product != null){
+            if (product != null) {
                 query.setProductName(product.getName());
                 query.setProductId(product.getPid());
             }
         }
 
-        if (startTime != null){
+        if (startTime != null) {
             query.setStartDate(startTime);
         }
 
-        if (endTime != null){
+        if (endTime != null) {
             query.setEndDate(endTime);
         }
 
         PageableResult<ProductReservation> pageableResult = productService.findPageProductReservations(query, page, size);
         List<ProductReservation> result = new ArrayList<ProductReservation>();
-        for(ProductReservation productReservation : pageableResult.getItems()){
+        for (ProductReservation productReservation : pageableResult.getItems()) {
             productReservation.setProductName(productService.getProduct(productReservation.getProductId()).getName());
             Customer customer = customerService.getCustomer(productReservation.getCustomerId());
             User customUser = userService.getUser(customer.getUid());
@@ -272,39 +286,41 @@ public class ProductController extends BaseController {
 
         return mav;
     }
-    
+
     /**
      * 产品关注列表
+     *
      * @return
      */
     @RequestMapping(value = "/focus/list", method = RequestMethod.GET)
     @SystemControllerLog(description = "查看产品关注列表")
-    public ModelAndView listProductFocus(){
+    public ModelAndView listProductFocus() {
         ModelAndView mav = new ModelAndView("business/product/focusList");
         mav.addObject("url", "business/product");
         return mav;
     }
-    
+
     /**
      * 产品关注列表
+     *
      * @return
      */
     @RequestMapping(value = "/focus/find", method = RequestMethod.GET)
     @SystemControllerLog(description = "查看产品关注列表")
-    public ModelAndView listProductFocus(String productName){
+    public ModelAndView listProductFocus(String productName) {
         ModelAndView mav = new ModelAndView("business/product/focusList");
         List<Integer> pids = new ArrayList<Integer>();
         List<Product> products = new ArrayList<Product>();
-        if(StringUtils.isNotBlank(productName)){
-        	products = productService.findAllProduct();
-        	for (Product product : products) {
-				if(product.getName().contains(productName.trim())){
-					pids.add(product.getPid());
-				}
-			}
-        	if(pids.isEmpty()){
-        		return mav;
-        	}
+        if (StringUtils.isNotBlank(productName)) {
+            products = productService.findAllProduct();
+            for (Product product : products) {
+                if (product.getName().contains(productName.trim())) {
+                    pids.add(product.getPid());
+                }
+            }
+            if (pids.isEmpty()) {
+                return mav;
+            }
         }
         PageableResult<Focus> presult = focusService.getFocusByType(Const.FOCUS_TYPE.PRODUCT, pids, page, size);
         mav.addObject("page", PageHelper.getPageModel(request, presult));
@@ -312,35 +328,35 @@ public class ProductController extends BaseController {
         mav.addObject("url", "business/product");
         return mav;
     }
-    
-    List<FocusVo> getFocusVos(PageableResult<Focus> presult){
+
+    List<FocusVo> getFocusVos(PageableResult<Focus> presult) {
         List<FocusVo> vos = new LinkedList<>();
-        if (!CollectionUtils.isEmpty(presult.getItems())){
-            for (Focus focus : presult.getItems()){
+        if (!CollectionUtils.isEmpty(presult.getItems())) {
+            for (Focus focus : presult.getItems()) {
                 FocusVo vo = new FocusVo();
                 vo.setId(focus.getId());
                 vo.setFocusTime(focus.getCtime());
-                if (focus.getStatus() == 0){
+                if (focus.getStatus() == 0) {
                     vo.setStatus("取消关注");
                 } else if (focus.getStatus() == 1) {
                     vo.setStatus("关注");
                 }
                 User user = null;
-                try{
+                try {
                     user = userService.getUser(focus.getUid());
-                } catch (Exception ex){
+                } catch (Exception ex) {
                     continue;
                 }
                 vo.setUserName(user.getRealname());
                 Product p = productService.getProduct(focus.getFid());
                 vo.setContentName(p.getName());
-                if ("customer".equalsIgnoreCase(user.getLoginRole().trim().toLowerCase())){
+                if ("customer".equalsIgnoreCase(user.getLoginRole().trim().toLowerCase())) {
                     Customer customer = customerService.getCustomerByUid(user.getUid(), null);
-                    if (customer == null){
+                    if (customer == null) {
                         logger.error("Could not find customer with id {}", user.getUid());
                         continue;
                     }
-                    vo.setUserType("single".equals(customerService.getCustomerByUid(user.getUid(), null).getCustomerType())?"个人客户":"机构客户");
+                    vo.setUserType("single".equals(customerService.getCustomerByUid(user.getUid(), null).getCustomerType()) ? "个人客户" : "机构客户");
                 } else {
                     vo.setUserType("理财师");
                 }
@@ -349,35 +365,36 @@ public class ProductController extends BaseController {
         }
         return vos;
     }
-    
+
     /**
      * 产品分类
+     *
      * @return
      */
     @RequestMapping(value = "/type", method = RequestMethod.GET)
-    public ModelAndView listType(){
+    public ModelAndView listType() {
         ModelAndView mav = new ModelAndView("business/product/productType");
         mav.addObject("productTypes", dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_TYPE));
         mav.addObject("url", "business/product");
         return mav;
     }
-    
+
     @RequestMapping(value = "/isKeyExists", method = RequestMethod.GET)
     @ResponseBody
-    public Object isKeyExists(String key){
+    public Object isKeyExists(String key) {
         boolean flag = dictionaryService.isKeyOrValueExists(Const.DIC_CAT.PRODUCT_TYPE, "key", key);
         return !flag;
     }
-    
+
     @RequestMapping(value = "/isValueExists", method = RequestMethod.GET)
     @ResponseBody
-    public Object isValueExists(String value){
+    public Object isValueExists(String value) {
         boolean flag = dictionaryService.isKeyOrValueExists(Const.DIC_CAT.PRODUCT_TYPE, "value", value);
         return !flag;
     }
-    
+
     @RequestMapping(value = "/type/add", method = RequestMethod.POST)
-    public String add(Dictionary dictionary){
+    public String add(Dictionary dictionary) {
 
         dictionary.setStatus(Const.Data_Status.DATA_NORMAL);
         dictionary.setCat(Const.DIC_CAT.PRODUCT_TYPE);
@@ -390,12 +407,12 @@ public class ProductController extends BaseController {
 
     @RequestMapping(value = "/type/delete/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public AjaxJson delete(@PathVariable(value = "id") Integer id){
+    public AjaxJson delete(@PathVariable(value = "id") Integer id) {
 
         //判断该分类是否被使用
         Dictionary dictionary = dictionaryService.getDictionary(id);
         List<Product> products = productService.getProductByType(dictionary.getValue());
-        if(products.size() > 0){
+        if (products.size() > 0) {
             return new AjaxJson(false, "已被产品使用，不能删除");
         }
 
@@ -405,38 +422,40 @@ public class ProductController extends BaseController {
 
     /**
      * 产品预约
+     *
      * @param pid
      * @return
      */
-    @RequestMapping(value="/order/{pid}", method = RequestMethod.GET)
-    public ModelAndView reservationPub(@PathVariable(value = "pid") Integer pid){
+    @RequestMapping(value = "/order/{pid}", method = RequestMethod.GET)
+    public ModelAndView reservationPub(@PathVariable(value = "pid") Integer pid) {
         ModelAndView mav = new ModelAndView("business/product/addReservation");
         mav.addObject("product", productService.getProduct(pid));
-        mav.addObject("customer_level", dictionaryService.findCustomerLevel(productService.getProduct(pid).getLevel()+""));
-        mav.addObject("risk_level", dictionaryService.findRiskLevel(productService.getProduct(pid).getRisk()+""));
+        mav.addObject("customer_level", dictionaryService.findCustomerLevel(productService.getProduct(pid).getLevel() + ""));
+        mav.addObject("risk_level", dictionaryService.findRiskLevel(productService.getProduct(pid).getRisk() + ""));
         mav.addObject("url", "business/product");
         return mav;
     }
 
     /**
      * 产品预约
+     *
      * @param customerId
      * @param reservationAmount
      * @param reservationTime
      * @param productId
      * @return
      */
-    @RequestMapping(value="/reservationSave", method = RequestMethod.GET)
+    @RequestMapping(value = "/reservationSave", method = RequestMethod.GET)
     @ResponseBody
-    public boolean reservationSave(long customerId, long reservationAmount, Date reservationTime, long productId, String workNum){
+    public boolean reservationSave(long customerId, long reservationAmount, Date reservationTime, long productId, String workNum) {
         Planner planner = plannerService.getPlannerByWorkNum(workNum);
         ProductReservation productReservation = new ProductReservation();
         productReservation.setCtime(new Date());
-        productReservation.setAmount((int)reservationAmount);
-        productReservation.setCustomerId((int)customerId);
+        productReservation.setAmount((int) reservationAmount);
+        productReservation.setCustomerId((int) customerId);
         productReservation.setApplyTime(reservationTime);
         productReservation.setPlannerId(planner.getId());
-        productReservation.setProductId((int)productId);
+        productReservation.setProductId((int) productId);
         productReservation.setResult(Const.ORDER_RESULT.Success);
         productService.addProductReservation(productReservation);
 
@@ -445,82 +464,167 @@ public class ProductController extends BaseController {
 
     @RequestMapping(value = "/validateWorkNum", method = RequestMethod.GET)
     @ResponseBody
-    public boolean validateWorkNum(String workNum){
+    public boolean validateWorkNum(String workNum) {
         Planner planner = plannerService.getPlannerByWorkNum(workNum);
-        if (planner == null){
+        if (planner == null) {
             return false;
         } else {
             return true;
         }
     }
-    
+
     @RequestMapping(value = "/upDisplayOrder", method = RequestMethod.GET)
     @ResponseBody
-    public String upDisplayOrder(String pid){
-    	if(StringUtils.isBlank(pid)){
-    		return "redirect:/business/product/list";
-    	}
-    	String msg;
-    	int originId;
-    	int finalId; 
-    	int temId;
-    	List<Product> products = productService.findAllProduct();
-    	List<Integer> list = new ArrayList<Integer>();
-    	for (Product product : products) {
-			list.add(product.getPid());
-		}
-    	int i = list.indexOf(Integer.parseInt(pid))-1;
-    	if(i==-1){
-    		msg = "top";
-    	}else{
-    	  	Product preProduct = products.get(i);
-        	finalId = preProduct.getDisplayOrder();
-        	Product product = productService.getProduct(Integer.parseInt(pid));
-        	originId = product.getDisplayOrder();
-        	temId = finalId;
-        	finalId = originId;
-        	originId = temId;
-        	product.setDisplayOrder(originId);
-        	preProduct.setDisplayOrder(finalId);
-        	productService.addOrUpdateProduct(product);
-        	productService.addOrUpdateProduct(preProduct);
-        	msg= "success";
-    	}
-    	return msg;
+    public String upDisplayOrder(String pid) {
+        if (StringUtils.isBlank(pid)) {
+            return "redirect:/business/product/list";
+        }
+        String msg;
+        int originId;
+        int finalId;
+        int temId;
+        List<Product> products = productService.findAllProduct();
+        List<Integer> list = new ArrayList<Integer>();
+        for (Product product : products) {
+            list.add(product.getPid());
+        }
+        int i = list.indexOf(Integer.parseInt(pid)) - 1;
+        if (i == -1) {
+            msg = "top";
+        } else {
+            Product preProduct = products.get(i);
+            finalId = preProduct.getDisplayOrder();
+            Product product = productService.getProduct(Integer.parseInt(pid));
+            originId = product.getDisplayOrder();
+            temId = finalId;
+            finalId = originId;
+            originId = temId;
+            product.setDisplayOrder(originId);
+            preProduct.setDisplayOrder(finalId);
+            productService.addOrUpdateProduct(product);
+            productService.addOrUpdateProduct(preProduct);
+            msg = "success";
+        }
+        return msg;
     }
-    
+
     @RequestMapping(value = "/downDisplayOrder", method = RequestMethod.GET)
     @ResponseBody
-    public String downDisplayOrder(String pid){
-    	if(StringUtils.isBlank(pid)){
-    		return "redirect:/business/product/list";
-    	}
-    	String msg;
-    	int originId;
-    	int finalId; 
-    	int temId;
-    	List<Product> products = productService.findAllProduct();
-    	List<Integer> list = new ArrayList<Integer>();
-    	for (Product product : products) {
-			list.add(product.getPid());
-		}
-    	int i = list.indexOf(Integer.parseInt(pid))+1;
-    	if(i==list.size()){
-    		msg = "bottom";
-    	}else{
-        	Product proProduct = products.get(i);
-        	finalId = proProduct.getDisplayOrder();
-        	Product product = productService.getProduct(Integer.parseInt(pid));
-        	originId = product.getDisplayOrder();
-        	temId = finalId;
-        	finalId = originId;
-        	originId = temId;
-        	product.setDisplayOrder(originId);
-        	proProduct.setDisplayOrder(finalId);
-        	productService.addOrUpdateProduct(product);
-        	productService.addOrUpdateProduct(proProduct);
-        	msg = "success";
-    	}
-    	return msg;
+    public String downDisplayOrder(String pid) {
+        if (StringUtils.isBlank(pid)) {
+            return "redirect:/business/product/list";
+        }
+        String msg;
+        int originId;
+        int finalId;
+        int temId;
+        List<Product> products = productService.findAllProduct();
+        List<Integer> list = new ArrayList<Integer>();
+        for (Product product : products) {
+            list.add(product.getPid());
+        }
+        int i = list.indexOf(Integer.parseInt(pid)) + 1;
+        if (i == list.size()) {
+            msg = "bottom";
+        } else {
+            Product proProduct = products.get(i);
+            finalId = proProduct.getDisplayOrder();
+            Product product = productService.getProduct(Integer.parseInt(pid));
+            originId = product.getDisplayOrder();
+            temId = finalId;
+            finalId = originId;
+            originId = temId;
+            product.setDisplayOrder(originId);
+            proProduct.setDisplayOrder(finalId);
+            productService.addOrUpdateProduct(product);
+            productService.addOrUpdateProduct(proProduct);
+            msg = "success";
+        }
+        return msg;
+    }
+
+    /**
+     * 产品推送,根据产品的不同状态推送给对应客户和理财师
+     *
+     * @return
+     */
+    @RequestMapping(value = "/push", method = RequestMethod.POST)
+    @ResponseBody
+    @SystemControllerLog(description = "产品推送")
+    public AjaxJson productPush(SystemNotice notice) {
+        Integer pid = notice.getId();
+        List<AssetsHistory> list = new ArrayList<AssetsHistory>();
+        if("1".equals(notice.getTitle())){  //产品成立
+            list =  assetsService.findAssetsByProduct(Const.ASSETS_TYPE.FOUND, pid);
+        }
+        if("2".equals(notice.getTitle())){ //产品购买
+            list =  assetsService.findAssetsByProduct(Const.ASSETS_TYPE.PURCHASE, pid);
+        }
+        if("3".equals(notice.getTitle())){ //产品兑付
+            list =  assetsService.findAssetsByProduct(Const.ASSETS_TYPE.REDEMPTION, pid);
+        }
+
+        List<Integer> customerIds = new ArrayList<Integer>();
+        for(AssetsHistory assetsHistory : list){
+            if(!customerIds.contains(assetsHistory.getCustomerId())){
+                customerIds.add(assetsHistory.getCustomerId());
+            }
+        }
+
+        //获得发送对象
+        List<Integer> pushUsers = new ArrayList<Integer>();
+        for(Integer cId : customerIds){
+            pushUsers.add(customerService.getCustomer(cId).getUid());
+            pushUsers.add(plannerService.getPlanner(customerService.getPlannerByCustomerId(cId, Const.YES_OR_NO.YES).getPlannerId()).getUid());
+        }
+
+        preHandle(notice, pushUsers);
+
+        return new AjaxJson(true);
+    }
+
+    private void preHandle(SystemNotice systemNotice, List<Integer> pushUsers){
+        String channel = systemNotice.getPushChannel();
+        String[] channelArr = channel.split(",");
+        for(String cha : channelArr){
+            if(cha.equals(Const.PUSH_CHANNEL.SYSTEM.toString())){
+                continue;
+            }
+            if(cha.equals(Const.PUSH_CHANNEL.SMS.toString())){
+                this.doHandleSystemSMS(systemNotice, pushUsers);
+            }
+            if(cha.equals(Const.PUSH_CHANNEL.MESSAGE.toString())){
+                this.doHandleSystemMessage(systemNotice, pushUsers);
+            }
+        }
+    }
+
+    /**
+     * 处理短信
+     * @param systemNotice
+     * @param pushUsers
+     */
+    private void doHandleSystemSMS(SystemNotice systemNotice, List<Integer> pushUsers){
+        for(Integer userId : pushUsers){
+            User user = userService.getUser(userId);
+            SMSTemplate smsTemplate = new SMSTemplate(Const.SMS_PARAM.SMS_USERNAME, Const.SMS_PARAM.SMS_PASSWORD, Const.SMS_PARAM.SMS_APPIKEY, systemNotice.getContent());
+            smsTemplate.sendTemplateSMS(user.getMobile());
+        }
+    }
+
+    /**
+     * 处理消息推送
+     * @param systemNotice
+     * @param pushUsers
+     */
+    private void doHandleSystemMessage(SystemNotice systemNotice, List<Integer> pushUsers){
+        for(Integer userId : pushUsers){
+            try {
+                pushTokenService.pushMessageToUser(userId, systemNotice.getContent());
+            } catch (Exception e) {
+                logger.error("推送失败");
+                e.printStackTrace();
+            }
+        }
     }
 }

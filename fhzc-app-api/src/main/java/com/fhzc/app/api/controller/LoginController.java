@@ -5,6 +5,7 @@ import com.fhzc.app.api.exception.NeedLoginRequestException;
 import com.fhzc.app.api.service.*;
 import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
+import com.fhzc.app.api.tools.TextUtils;
 import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.util.Const;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -101,6 +102,7 @@ public class LoginController extends BaseController {
             map.put("uid",user.getUid());
             map.put("realname",user.getRealname());
             map.put("role",user.getLoginRole());
+            map.put("pollingTime", TextUtils.getConfig(Const.MESSAGE_POLLING_TIME, this));
 
             if (user.getLoginRole().equals(Const.USER_ROLE.PLANNER)) {
                 Planner planner = plannerService.getPlannerByUid(user.getUid());
@@ -178,6 +180,26 @@ public class LoginController extends BaseController {
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
     }
 
+
+    /**
+     * 忘记密码
+     * @param login    登录名
+     * @param newPwd    新密码
+     * @param confirmPwd    确认新密码
+     * @return
+     */
+    @RequestMapping(value = "/api/password/forget", method = RequestMethod.POST)
+    @ResponseBody
+    public ApiJsonResult forget(String login, String newPwd, String confirmPwd){
+        User user = userService.getUserByLogin(login);
+        if(!newPwd.equals(confirmPwd)){
+            throw new BadRequestException("两次输入的密码不一致");
+        }
+        user.setPassword(DigestUtils.md5Hex(newPwd));
+        userService.updateUser(user);
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
+    }
+
     /**
      * 登陆后绑定设备
      * @param token 设备唯一标识
@@ -212,10 +234,11 @@ public class LoginController extends BaseController {
     /**
      * 发送短信验证码
      * @param mobile
+     * @param login 登录名，只在忘记密码是需要传
      * @return
      */
     @RequestMapping(value="/api/auth/sms",method =  RequestMethod.POST )
-    @ResponseBody ApiJsonResult getSmsCode(String mobile)  {
+    @ResponseBody ApiJsonResult sendSmsCode(String mobile, String login)  {
 
         User user = getCurrentUser();
         if(mobile == null || mobile.length() == 0){
@@ -224,7 +247,17 @@ public class LoginController extends BaseController {
 
         if(user != null){
             if(!userService.checkMobileExists(mobile, user)){
-                return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"该手机号不存在");
+                throw new BadRequestException("该手机号不存在");
+            }
+        }
+
+        if(login != null){
+            User u = userService.getUserByLogin(login);
+            if(u == null){
+                throw new BadRequestException("登录名输入错误");
+            }
+            if(!mobile.equals(u.getMobile())){
+                throw new BadRequestException("该手机号不存在");
             }
         }
 
@@ -232,7 +265,7 @@ public class LoginController extends BaseController {
 
         logger.debug("mobile=" + mobile + " verifyCode=" + verifyCode.getCodeValue());
 
-        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, verifyCode.getCodeValue());
     }
 
     /**

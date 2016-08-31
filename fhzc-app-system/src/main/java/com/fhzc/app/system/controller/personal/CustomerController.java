@@ -327,6 +327,7 @@ public class CustomerController extends BaseController {
                 }else{
                     Planner planner = plannerService.getPlanner(pc.getPlannerId());
                     if(planner.getStatus().equals(Const.PLANNER_STATUS.OFF)){
+                        customer.setOldPlanner(userService.getUser(planner.getUid()).getRealname());
                         customerList.add(customer);
                     }
                 }

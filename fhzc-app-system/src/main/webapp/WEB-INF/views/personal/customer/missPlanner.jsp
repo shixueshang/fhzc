@@ -73,6 +73,7 @@
                                 <tr>
                                     <td>客户编号</td>
                                     <td>会员等级</td>
+                                    <td>原理财师</td>
                                     <td>操作</td>
                                 </tr>
                                 </thead>
@@ -91,7 +92,7 @@
                                                 </c:if>
                                             </c:forEach>
                                         </td>
-
+                                        <td>${customer.oldPlanner}</td>
                                         <td><a href="#modal_edit" role="button" class="btn mini purple mod_planner" data-toggle="modal" data-id="${customer.customerId}"><i class="icon-edit"></i>指定理财师</a></td>
                                     </tr>
                                 </c:forEach>

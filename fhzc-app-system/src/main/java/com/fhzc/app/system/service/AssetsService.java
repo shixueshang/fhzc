@@ -43,4 +43,12 @@ public interface AssetsService {
      * @return
      */
     List<AssetsHistory> findHistoryHoldings(Integer customerId);
+
+    /**
+     * 根据产品以及状态查询购买的客户
+     * @param type
+     * @param pid
+     * @return
+     */
+    List<AssetsHistory> findAssetsByProduct(String type, Integer pid);
 }

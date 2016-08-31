@@ -578,7 +578,7 @@ CREATE TABLE IF NOT EXISTS `bank`.`product` (
   `level` INT(11) NULL DEFAULT NULL COMMENT '允许购买的客户等级',
   `risk` INT(11) NULL DEFAULT NULL COMMENT '能接受的客户风险等级',
   `cover` VARCHAR(255) NULL DEFAULT NULL COMMENT '产品封面',
-  `notice` VARCHAR(45) NULL DEFAULT NULL COMMENT '产品成立公告',
+  `notice` VARCHAR(255) NULL DEFAULT NULL COMMENT '产品成立公告',
   `score_factor` DECIMAL(8,2) NULL DEFAULT '100.00' COMMENT '产品积分系数百分比,默认100%',
   `is_ recommend` INT(1) UNSIGNED NULL DEFAULT '0' COMMENT '是否推荐 1是|0否',
   `is_display` INT(1) UNSIGNED NULL DEFAULT '0' COMMENT '产品是否显示 1显示|0不显示',

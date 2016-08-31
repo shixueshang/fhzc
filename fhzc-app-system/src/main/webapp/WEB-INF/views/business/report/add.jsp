@@ -133,7 +133,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">详情链接</label>
                                                 <div class="controls">
-                                                    <textarea name="url" class="span12 ckeditor m-wrap" rows="3">${report.url}</textarea>
+                                                    <textarea name="url" id="detail_url" class="span12 ckeditor m-wrap" rows="3">${report.url}</textarea>
                                                 </div>
                                             </div>
 
@@ -190,6 +190,11 @@
 <script>
     $(function(){
 
+        CKEDITOR.replace('detail_url', {
+            filebrowserBrowseUrl:'',
+            filebrowserImageUploadUrl: ''
+        });
+
         var reportId =  '${report.id}';
         if(reportId != null && reportId != ''){
             $('#report_title').text('编辑报告');
@@ -238,8 +243,7 @@
                     required: true
                 },
                 url: {
-                    required: true,
-                    url: true
+                    required: true
                 }
             },
 
