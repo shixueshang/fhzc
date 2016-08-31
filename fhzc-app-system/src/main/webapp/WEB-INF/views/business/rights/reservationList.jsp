@@ -77,7 +77,9 @@
                                 <thead>
                                 <tr>
                                     <td>预约时间</td>
-                                    <td>权益名称</td>
+                                    <td style="width:16%">权益名称</td>
+                                    <td style="width:16%">供应商</td>
+                                    <td>供应商联系方式</td>
                                     <td>客户姓名</td>
                                     <td>客户电话</td>
                                     <td>消耗积分</td>
@@ -90,6 +92,8 @@
                                     <tr>
                                         <td><fmt:formatDate value="${reservation.markDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                                         <td>${reservation.rightName}</td>
+                                        <td>${reservation.supply}</td>
+                                        <td>${reservation.supplyPhone}</td>
                                         <td>${reservation.customerName}</td>
                                         <td>${reservation.customerMobile}</td>
                                         <td>${reservation.scoreCost}</td>

@@ -28,7 +28,25 @@ public class RightsReservation {
     private String customerName;
 
     private String customerMobile;
+    
+    private String supply;
 
+    private String supplyPhone;
+
+    public String getSupply() {
+        return supply;
+    }
+
+    public void setSupply(String supply) {
+        this.supply = supply;
+    }
+    public String getSupplyPhone() {
+        return supplyPhone;
+    }
+
+    public void setSupplyPhone(String supplyPhone) {
+        this.supplyPhone = supplyPhone;
+    }
     public String getRightName() {
         return rightName;
     }
