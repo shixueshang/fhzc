@@ -208,7 +208,6 @@ public class RightsController extends BaseController{
     public ModelAndView listRightReservations(String rightName, String identityId, Date startTime, Date endTime){
         ModelAndView mav = new ModelAndView("business/rights/reservationList");
         PageableResult<RightsReservation> pageableResult = rightsService.listRightReservations(page, size);
-
         List<RightsReservation> list = new ArrayList<RightsReservation>();
         for(RightsReservation reservation : pageableResult.getItems()){
             Rights rights = rightsService.getRights(reservation.getRightsId());
@@ -217,6 +216,8 @@ public class RightsController extends BaseController{
             reservation.setCustomerName(user.getRealname());
             reservation.setCustomerMobile(user.getMobile());
             reservation.setRightName(rights.getName());
+            reservation.setSupply(rights.getSupply());
+            reservation.setSupplyPhone(rights.getSupplyPhone());
             list.add(reservation);
         }
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));

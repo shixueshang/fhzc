@@ -204,6 +204,9 @@
                             <shiro:hasPermission name="/business/assets/holdings/find"><li>
                                 <a href="<%=contextPath%>/business/assets/holdings/find">客户持仓</a>
                             </li></shiro:hasPermission>
+                            <shiro:hasPermission name="/business/assets/recommend"><li>
+                                <a href="<%=contextPath%>/business/assets/recommend">推荐资产配置</a>
+                            </li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>
 

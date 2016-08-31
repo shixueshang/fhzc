@@ -40,10 +40,10 @@
                     <ul class="breadcrumb">
                         <li>
                             <i class="icon-home"></i>
-                            <a href="javascript:void(0);">产品管理</a>
+                            <a href="javascript:void(0);">资产管理</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li class="active"><a href="javascript:void(0);">产品分类</a></li>
+                        <li class="active"><a href="javascript:void(0);">推荐配置</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
@@ -52,81 +52,34 @@
             <!--页面操作详细内容 开始-->
             <div class="row-fluid">
                 <div class="span12">
-                    <!-- BEGIN SAMPLE FORM PORTLET-->
-                    <div class="portlet box blue tabbable">
-                        <div class="portlet-title">
-                            <h4>
-                                <i class="icon-plus"></i>
-                                <span class="hidden-480">新增类别</span>
-                                &nbsp;
-                            </h4>
-                        </div>
-                        <div class="portlet-body form">
-                            <div class="tabbable portlet-tabs">
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="portlet_tab1">
-                                        <!-- BEGIN FORM-->
-                                        <form action="<%=contextPath%>/business/product/type/add" id="form_sample_1" method="POST" class="form-horizontal">
-                                            <div class="alert alert-error hide">
-                                                <button class="close" data-dismiss="alert"></button>
-                                                	您的表单验证失败,请检查.
-                                            </div>
-                                            <div class="alert alert-success hide">
-                                                <button class="close" data-dismiss="alert"></button>
-                                               		 表单内容验证成功!
-                                            </div>
-                                           
-                                            <div class="control-group">
-                                            </div>
-                                            <div class="control-group">
-                                                <label class="control-label">产品类型值</label>
-                                                <div class="controls">
-                                                    <input type="number" name="value" placeholder="输入值" class="m-wrap large">
-                                                    <span class="help-inline"></span>
-                                                </div>
-                                            </div>
-                                            <div class="control-group">
-                                                <label class="control-label">产品类型</label>
-                                                <div class="controls">
-                                                    <input type="text" name="key" placeholder="输入键" class="m-wrap large">
-                                                    <span class="help-inline"></span>
-                                                </div>
-                                            </div>
-                                            <div class="form-actions">
-                                                <button type="submit" class="btn blue"><i class="icon-ok"></i> 保存</button>
-                                            </div>
-                                        </form>
-                                        <!-- END FORM-->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+					<!-- BEGIN SAMPLE FORM PORTLET-->
+                 
                     <!-- END SAMPLE FORM PORTLET-->
-
                     <div class="portlet box blue">
                         <div class="portlet-title">
                             <h4><i class="icon-reorder"></i></h4>
                         </div>
-                        <div class="portlet-body">
+                        
+                        <div class="portlet-body" style="height: 630px; overflow: scroll">
                             <table class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <td>产品类型值</td>
-                                    <td>产品类型</td>
-                                    <td>操作</td>
+                                    <td>序号</td>
+                                    <td>推荐配置类别</td>
+                                    <td>推荐配置比例(%)</td>
+                               		<td>操作</td>
                                 </tr>
                                 </thead>
                                 <tbody>
-
-                                <c:forEach items="${productTypes}" var="productType">
-                                    <tr>
-                                        <td>${productType.value}</td>
-                                        <td>${productType.key}</td>
+                                <c:forEach items="${assetsRecommends}" var="assetsRecommend">
+                                        <td>${assetsRecommend.id}</td>
+                                        <td>${assetsRecommend.recommendType}</td>
+                                        <td>${assetsRecommend.proportion}</td>
                                         <td>
-
-                                            <a href="#modal_edit" role="button" class="btn mini purple mod_ptype" data-toggle="modal" data-id="${productType.id}" data-key="${productType.key}" data-value="${productType.value}"><i class="icon-edit"></i> 修改</a>
-                                            <a href="#modal_del" role="button" class="btn mini black del_ptype" data-toggle="modal" data-id="${productType.id}" ><i class="icon-trash"></i> 删除</a>
+                                            <a href="#modal_edit" role="button" class="btn mini purple mod_ptype" data-toggle="modal" data-id="${assetsRecommend.id}" data-type="${assetsRecommend.recommendType}" data-proportion="${assetsRecommend.proportion}" data-status="${assetsRecommend.status}"><i class="icon-edit"></i> 编辑</a>
+                                           <!--  
+                                            <a href="#modal_del" role="button" class="btn mini black del_ptype" data-toggle="modal" data-id="${assetsRecommend.id}" ><i class="icon-trash"></i> 删除</a>
+                                            -->
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -137,15 +90,17 @@
                 </div>
             </div>
             <!--页面操作详细内容 开始-->
-            <div id="modal_edit" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="my_modal_edit" aria-hidden="true">
+ 			<div id="modal_edit" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="my_modal_edit" aria-hidden="true">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h3 id="myModalLabel2">修改名称</h3>
+                    <h3 id="myModalLabel2">编辑</h3>
                 </div>
                 <div class="modal-body">
-                    <p><input type="text" id="productType_key" value="" class="m-wrap large"></p>
-                    <input type="hidden" id="dict_id" />
-                    <input type="hidden" id="productType_value"/>
+                    <p><label class="control-label">配置比例</label><input type="number" id="assetsRecommend_proportion" value="" class="m-wrap large"></p>
+                    <input type="hidden" id="assetsRecommend_id" />
+                    <input type="hidden" id="assetsRecommend_status"/>
+                    <input type="hidden" id="assetsRecommend_recommendType"/>
+                    
                 </div>
                 <div class="modal-footer">
                     <button data-dismiss="modal" class="btn green" id="do_mod_productType">确定</button>
@@ -166,21 +121,20 @@
                     <button data-dismiss="modal" class="btn blue" id="do_del_productType">删除</button>
                 </div>
             </div>
-
         </div>
         <jsp:include page="../../include/page.jsp"/>
     </div>
 </div>
 
+<jsp:include page="../../include/footer.jsp"/>
+
 <script>
-
     $(function(){
-
-
         $(".mod_ptype").click(function(){
-            $("#productType_key").val($(this).data('key'));
-            $("#dict_id").val($(this).data('id'));
-            $("#productType_value").val($(this).data('value'));
+            $("#assetsRecommend_recommendType").val($(this).data('type'));
+            $("#assetsRecommend_proportion").val($(this).data('proportion'));
+            $("#assetsRecommend_id").val($(this).data('id'));
+            $("#assetsRecommend_status").val($(this).data('status'));
         });
 
         $(".del_ptype").click(function(){
@@ -188,28 +142,21 @@
         });
 
         $("#do_mod_productType").click(function () {
-        	$.get("<%=contextPath%>/business/product/isKeyExists?key="+$("#productType_key").val(),
-        		function (data) {
-	        		if(false == data){
-	        			alert("产品类别已存在");
-	        			return false;
-	        		}else{
-	        			$.post("<%=contextPath%>/business/product/type/add",{'id':$("#dict_id").val(),'key':$("#productType_key").val(),'value':$("#productType_value").val()},function (data) {window.location.reload();})
-	        		}
-        	});
+   			$.post("<%=contextPath%>/business/assets/recommend/add",{'id':$("#assetsRecommend_id").val(),'recommendType':$("#assetsRecommend_recommendType").val(),'proportion':$("#assetsRecommend_proportion").val(),'status':$("#assetsRecommend_status").val()},function (data) {window.location.reload();})
+        	
         });
 
+    //以下内容备用    
         $("#do_del_productType").click(function () {
-            $.get("<%=contextPath%>/business/product/type/delete/" + $("#ptype_del_id").val(),function (data) {
+        	alert($("#assetsRecommend_id").val());
+            $.get("<%=contextPath%>/business/assets/recommend/delete/" + $("#ptype_del_id").val(),function (data) {
                 if(!data.success){
                     BootstrapDialog.alert({
                         title: '提示',
                         message: data.message
                     });
-
                     return false;
                 }
-
                 window.location.reload();
             })
         });
@@ -264,56 +211,10 @@
                         }
                     }
                 },
-                expectedMin: {
+                proportion: {
                     number: true,
                     min:0
                 },
-                expectedMax: {
-                    number: true,
-                    min:0
-                },
-                investTermMin: {
-                    required: true,
-                    number: true,
-                    min:0
-                },
-                investTermMax: {
-                    required: true,
-                    number: true,
-                    min:1
-                },
-                investThreshold: {
-                    required: true,
-                    number: true,
-                    min:0
-                },
-                renewDeadline: {
-                    number: true,
-                    min:0
-                },
-                scoreFactor: {
-                    number: true,
-                    min:0
-                },
-                detailUrl: {
-                    url: true
-                },
-                fundManagementFee: {
-                    required: true,
-                    number: true,
-                    min:0
-                },
-                fundSubscriptionFee: {
-                    required: true,
-                    number: true,
-                    min:0
-                },
-                fundManager: {
-                    required: true
-                },
-                custodian: {
-                    required: true
-                }
             },
 
             invalidHandler: function (event, validator) { //display error alert on form submit
@@ -351,5 +252,3 @@
 
 
 </script>
-
-<jsp:include page="../../include/footer.jsp"/>
