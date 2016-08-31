@@ -187,7 +187,16 @@
         });
 
         $("#do_mod_productType").click(function () {
-            $.post("<%=contextPath%>/business/report/type/add",{'id':$("#dict_id").val(),'key':$("#reportType_key").val(),'value':$("#reportType_value").val()},function (data) {window.location.reload();})
+           	$.get("<%=contextPath%>/business/report/isKeyExists?key="+$("#reportType_key").val(),
+            		function (data) {
+    	        		if(false == data){
+    	        			alert("报告类别已存在");
+    	        			return false;
+    	        		}else{
+    	        			$.post("<%=contextPath%>/business/report/type/add",{'id':$("#dict_id").val(),'key':$("#reportType_key").val(),'value':$("#reportType_value").val()},function (data) {window.location.reload();})
+    	        		}
+            	});
+            
         });
 
         $("#do_del_productType").click(function () {

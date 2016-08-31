@@ -187,7 +187,16 @@
         });
 
         $("#do_mod_productType").click(function () {
-            $.post("<%=contextPath%>/business/activity/type/add",{'id':$("#dict_id").val(),'key':$("#activityType_key").val(),'value':$("#activityType_value").val()},function (data) {window.location.reload();})
+        	$.get("<%=contextPath%>/business/activity/isKeyExists?key="+$("#activityType_key").val(),
+            		function (data) {
+    	        		if(false == data){
+    	        			alert("活动类别已存在");
+    	        			return false;
+    	        		}else{
+    	        			$.post("<%=contextPath%>/business/activity/type/add",{'id':$("#dict_id").val(),'key':$("#activityType_key").val(),'value':$("#activityType_value").val()},function (data) {window.location.reload();})
+    	        		}
+            	});
+            
         });
 
         $("#do_del_productType").click(function () {

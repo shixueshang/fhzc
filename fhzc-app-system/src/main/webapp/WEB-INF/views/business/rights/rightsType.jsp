@@ -187,7 +187,16 @@
         });
 
         $("#do_mod_productType").click(function () {
-            $.post("<%=contextPath%>/business/rights/type/add",{'id':$("#dict_id").val(),'key':$("#rightsType_key").val(),'value':$("#rightsType_value").val()},function (data) {window.location.reload();})
+           	$.get("<%=contextPath%>/business/rights/isKeyExists?key="+$("#rightsType_key").val(),
+            		function (data) {
+    	        		if(false == data){
+    	        			alert("权益类别已存在");
+    	        			return false;
+    	        		}else{
+    	        			$.post("<%=contextPath%>/business/rights/type/add",{'id':$("#dict_id").val(),'key':$("#rightsType_key").val(),'value':$("#rightsType_value").val()},function (data) {window.location.reload();})
+    	        		}
+            	});
+            
         });
 
         $("#do_del_productType").click(function () {

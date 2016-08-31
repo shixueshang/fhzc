@@ -1,8 +1,11 @@
 package com.fhzc.app.system.service.impl;
 
 import com.fhzc.app.dao.mybatis.inter.AssetsHistoryMapper;
+import com.fhzc.app.dao.mybatis.inter.AssetsRecommendMapper;
 import com.fhzc.app.dao.mybatis.model.AssetsHistory;
 import com.fhzc.app.dao.mybatis.model.AssetsHistoryExample;
+import com.fhzc.app.dao.mybatis.model.AssetsRecommend;
+import com.fhzc.app.dao.mybatis.model.AssetsRecommendExample;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.commons.util.DateUtil;
@@ -22,6 +25,9 @@ public class AssetsServiceImpl implements AssetsService {
 
     @Resource
     private AssetsHistoryMapper assetsHistoryMapper;
+    
+    @Resource
+    private AssetsRecommendMapper assetsRecommendMapper;
 
     @Override
     public PageableResult<AssetsHistory> findPageAssets(Integer productId, List<Integer> customerIds, int page, int size) {
@@ -78,4 +84,38 @@ public class AssetsServiceImpl implements AssetsService {
         criteria.andPaymentDateIsNotNull();
         return assetsHistoryMapper.selectByExample(example);
     }
+
+	@Override
+	public List<AssetsRecommend> findAssetsRecomends() {
+		AssetsRecommendExample example = new AssetsRecommendExample();
+		AssetsRecommendExample.Criteria criteria = example.createCriteria();
+		criteria.andStatusEqualTo(Const.Data_Status.DATA_NORMAL);
+		return assetsRecommendMapper.selectByExample(example);
+	}
+
+	@Override
+	public void addOrUpdateAssetsRecommend(AssetsRecommend assetsRecommend) {
+	      Integer id = assetsRecommend.getId();
+	        if(id == null){
+	        	assetsRecommendMapper.insertSelective(assetsRecommend);
+	        }else{
+	        	assetsRecommendMapper.updateByPrimaryKeySelective(assetsRecommend);
+	        }
+	}
+
+	@Override
+	public AssetsRecommend getAssetsRecommendByType(String type) {
+		AssetsRecommendExample example = new AssetsRecommendExample();
+		AssetsRecommendExample.Criteria criteria = example.createCriteria();
+		criteria.andRecommendTypeEqualTo(type);
+		if(assetsRecommendMapper.countByExample(example)>0){
+			return assetsRecommendMapper.selectByExample(example).get(0);
+		}
+		return null;
+	}
+
+	@Override
+	public void delRecommend(Integer id) {
+		assetsRecommendMapper.deleteByPrimaryKey(id);
+	}
 }

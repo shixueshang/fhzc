@@ -11,6 +11,7 @@ import com.fhzc.app.system.service.*;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -215,5 +216,50 @@ public class AssetsController extends BaseController {
 
         return new AjaxJson(true, result);
     }
-
+    
+    //推荐配置
+    @RequestMapping(value = "/recommend", method = RequestMethod.GET)
+    public ModelAndView listRecommend(){
+        ModelAndView mav = new ModelAndView("business/assets/recommend");
+        List<AssetsRecommend> assetsRecommends = assetsService.findAssetsRecomends();
+        List<Dictionary> dics = dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_TYPE);
+        for (AssetsRecommend assetsRecommend : assetsRecommends) {
+        	for (Dictionary dictionary : dics) {
+				if(dictionary.getValue().equals(assetsRecommend.getRecommendType())){
+					assetsRecommend.setRecommendType(dictionary.getKey());
+				}
+				continue;
+			}
+        	continue;
+        }
+        mav.addObject("assetsRecommends", assetsRecommends);
+        mav.addObject("url", "business/assets");
+        return mav;
+    }
+    
+    @RequestMapping(value = "/recommend/add", method = RequestMethod.POST)
+    public String addRecommend(AssetsRecommend assetsRecommend){
+    	assetsRecommend.setStatus(Const.Data_Status.DATA_NORMAL);
+    	List<Dictionary> dics = dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_TYPE);
+    	for (Dictionary dictionary : dics) {
+			if(dictionary.getKey().equals(assetsRecommend.getRecommendType())){
+				assetsRecommend.setRecommendType(dictionary.getValue());
+			}
+		}
+    	assetsService.addOrUpdateAssetsRecommend(assetsRecommend);
+    	return "redirect:/business/assets/recommend";
+    }
+    
+    @RequestMapping(value = "/recommend/delete/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public AjaxJson delete(@PathVariable(value = "id") Integer id){
+        //判断该分类是否被使用
+//        Dictionary dictionary = dictionaryService.getDictionary(id);
+//        List<Product> products = productService.getProductByType(dictionary.getValue());
+//        if(products.size() > 0){
+//            return new AjaxJson(false, "已被产品使用，不能删除");
+//        }
+        assetsService.delRecommend(id);
+        return new AjaxJson(true);
+    }
 }

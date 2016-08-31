@@ -54,6 +54,9 @@ public class ProductController extends BaseController {
 
     @Resource
     private FocusService focusService;
+    
+    @Resource
+    private AssetsService assetsService;
 
     /**
      * 产品列表
@@ -385,6 +388,18 @@ public class ProductController extends BaseController {
         dictionary.setIsModify(Const.YES_OR_NO.NO);
         dictionary.setName("产品类型");
         dictionaryService.addOrUpdate(dictionary);
+   
+        AssetsRecommend assetsRecommend = new AssetsRecommend();
+        assetsRecommend.setRecommendType(dictionary.getValue());
+        AssetsRecommend temassetsRecommend = assetsService.getAssetsRecommendByType(dictionaryService.getDictionary(dictionary.getId()).getValue());
+        if(temassetsRecommend != null){
+        	assetsRecommend.setId(temassetsRecommend.getId());
+        	assetsRecommend.setProportion(temassetsRecommend.getProportion());
+        }else{
+        	assetsRecommend.setProportion(BigDecimal.valueOf(0));
+        }
+        assetsRecommend.setStatus(Const.Data_Status.DATA_NORMAL);
+        assetsService.addOrUpdateAssetsRecommend(assetsRecommend);
         return "redirect:/business/product/type";
     }
 
@@ -399,6 +414,7 @@ public class ProductController extends BaseController {
             return new AjaxJson(false, "已被产品使用，不能删除");
         }
 
+        assetsService.delRecommend(assetsService.getAssetsRecommendByType(dictionaryService.getDictionary(id).getValue()).getId());
         dictionaryService.delete(id);
         return new AjaxJson(true);
     }
