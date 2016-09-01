@@ -50,6 +50,9 @@ public class ActivityController extends BaseController {
     @Resource
     private UserService userService;
 
+    @Resource
+    private DepartmentService departmentService;
+
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @SystemControllerLog(description = "查询活动列表")
     public ModelAndView listActivities(){
@@ -78,6 +81,8 @@ public class ActivityController extends BaseController {
     public ModelAndView preAdd(){
         ModelAndView mav = new ModelAndView("business/activity/add");
         mav.addObject("activityTypes", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.ACTIVITY_CATEGORY)));
+        Admin admin = super.getCurrentUser();
+        mav.addObject("department", JSON.toJSON(departmentService.getDepartment(admin.getOrgan())));
         mav.addObject("url", "business/activity");
         return mav;
     }
@@ -99,8 +104,10 @@ public class ActivityController extends BaseController {
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
     public ModelAndView detail(@PathVariable(value = "id") Integer id){
         ModelAndView mav = new ModelAndView("business/activity/add");
-        mav.addObject("activity", activityService.getActivity(id));
+        Activity activity = activityService.getActivity(id);
+        mav.addObject("activity", activity);
         mav.addObject("activityTypes", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.ACTIVITY_CATEGORY)));
+        mav.addObject("department", JSON.toJSON(departmentService.getDepartment(activity.getDepartmentId())));
         return mav;
     }
 

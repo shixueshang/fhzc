@@ -20,6 +20,7 @@
     <script src="<%=contextPath%>/assets/js/jquery-1.8.3.min.js"></script>
     <script src="<%=contextPath%>/assets/js/excanvas.js"></script>
     <script src="<%=contextPath%>/assets/js/respond.js"></script>
+    <script src="<%=contextPath%>/assets/js/jquery-ui.min.js"></script>
 
     <script src="<%=contextPath%>/assets/breakpoints/breakpoints.js"></script>
     <script src="<%=contextPath%>/assets/jquery-ui/jquery-ui-1.10.1.custom.min.js"></script>
@@ -58,7 +59,6 @@
         });
     </script>
     <script type="text/javascript" src="<%=contextPath%>/assets/js/jquery.pulsate.min.js"></script>
-    <script type="text/javascript" src="<%=contextPath%>/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/assets/jquery-validation/dist/jquery.validate.min.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/assets/bootstrap/js/bootstrap-dialog.js"></script>
 

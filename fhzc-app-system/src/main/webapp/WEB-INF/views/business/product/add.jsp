@@ -14,16 +14,15 @@
 <jsp:include page="../../include/nav.jsp"/>
 
 <!--扩展样式-->
-<link href="<%=contextPath%>/assets/fancybox/source/jquery.fancybox.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/fancybox/source/jquery.fancybox.css"  />
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/uniform/css/uniform.default.css" />
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/chosen-bootstrap/chosen/chosen.css" />
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/data-tables/DT_bootstrap.css" />
-<link href="<%=contextPath%>/assets/bootstrap-fileupload/bootstrap-fileupload.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/bootstrap-fileupload/bootstrap-fileupload.css"  />
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/jquery-tags-input/jquery.tagsinput.css" />
-<link rel="stylesheet" href="<%=contextPath%>/assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" />
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" />
 
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/bootstrap-datepicker/css/datepicker.css">
-
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/static/zTree/css/zTreeStyle.css">
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/static/zTree/css/demo.css">
 
@@ -320,7 +319,7 @@
                                                         <div>
                                                        <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
                                                        <span class="fileupload-exists">更换</span>
-                                                       <input type="file" name="coverFile" id="cover_img" class="default" accept="image/gif,image/jpeg,image/jpg,image/png,"/></span>
+                                                       <input type="file" name="coverFile"  class="default" accept="image/gif,image/jpeg,image/jpg,image/png,"/></span>
                                                        <input type="hidden" name="cover" value="${product.cover}" />
                                                             <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
                                                         </div>
@@ -367,7 +366,7 @@
                                                         <div>
                                                        <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
                                                        <span class="fileupload-exists">更换</span>
-                                                       <input type="file" name="proveFile" id="cover_img" class="default" accept="image/gif,image/jpeg,image/jpg,image/png,"/></span>
+                                                       <input type="file" name="proveFile" class="default" accept="image/gif,image/jpeg,image/jpg,image/png,"/></span>
                                                        <input type="hidden" name="proveUrl " value="${product.proveUrl}" />
                                                             <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
                                                         </div>
@@ -486,6 +485,7 @@
 </div>
 
 <jsp:include page="../../include/footer.jsp"/>
+<script type="text/javascript" src="<%=contextPath%>/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/assets/ckeditor/ckeditor.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/static/zTree/js/jquery.ztree.core.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/static/zTree/js/tree.js"></script>

@@ -51,9 +51,6 @@ public class RightsController extends BaseController{
     private UserService userService;
 
     @Resource
-    private ScoreHistoryService scoreHistoryService;
-    
-    @Resource
     private FocusService focusService;
 
     @Resource

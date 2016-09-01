@@ -234,11 +234,12 @@ public class LoginController extends BaseController {
     /**
      * 发送短信验证码
      * @param mobile
-     * @param login 登录名，只在忘记密码是需要传
+     * @param login 登录名，只在忘记密码是需要
      * @return
      */
     @RequestMapping(value="/api/auth/sms",method =  RequestMethod.POST )
-    @ResponseBody ApiJsonResult sendSmsCode(String mobile, String login)  {
+    @ResponseBody
+    public ApiJsonResult sendSmsCode(String mobile, String login)  {
 
         User user = getCurrentUser();
         if(mobile == null || mobile.length() == 0){

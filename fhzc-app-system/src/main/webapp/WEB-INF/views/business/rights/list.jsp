@@ -121,7 +121,7 @@
             </div>
             <!--页面操作详细内容 开始-->
             
-            			<script type="text/javascript" charset="utf-8">
+<script type="text/javascript" charset="utf-8">
         	
         	
             $('#example').DataTable({
@@ -156,3 +156,4 @@
 </div>
 
 <jsp:include page="../../include/footer.jsp"/>
+<script type="text/javascript" src="<%=contextPath%>/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
