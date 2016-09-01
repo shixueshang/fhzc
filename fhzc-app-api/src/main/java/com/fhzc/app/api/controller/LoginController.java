@@ -238,7 +238,8 @@ public class LoginController extends BaseController {
      * @return
      */
     @RequestMapping(value="/api/auth/sms",method =  RequestMethod.POST )
-    @ResponseBody ApiJsonResult sendSmsCode(String mobile, String login)  {
+    @ResponseBody
+    public ApiJsonResult sendSmsCode(String mobile, String login)  {
 
         User user = getCurrentUser();
         if(mobile == null || mobile.length() == 0){
