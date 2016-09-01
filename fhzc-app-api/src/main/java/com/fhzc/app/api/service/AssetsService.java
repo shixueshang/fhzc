@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface AssetsService {
     List<AssetsHistory> getHistory(Integer customer_id);
+    List<AssetsHistory> getPayHistoryByPlannerId(Integer planner_id);
 }
