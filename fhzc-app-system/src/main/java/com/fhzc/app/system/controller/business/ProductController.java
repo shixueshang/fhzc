@@ -59,8 +59,6 @@ public class ProductController extends BaseController {
     @Resource
     private AssetsService assetsService;
 
-    @Resource
-    private AssetsService assetsService;
 
     @Resource
     private PushTokenService pushTokenService;
