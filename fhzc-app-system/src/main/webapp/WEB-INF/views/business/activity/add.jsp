@@ -14,15 +14,19 @@
 <jsp:include page="../../include/nav.jsp"/>
 
 <!--扩展样式-->
-<link href="<%=contextPath%>/assets/fancybox/source/jquery.fancybox.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/fancybox/source/jquery.fancybox.css"  />
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/uniform/css/uniform.default.css" />
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/chosen-bootstrap/chosen/chosen.css" />
-<link rel="stylesheet" href="<%=contextPath%>/assets/data-tables/DT_bootstrap.css" />
-<link href="<%=contextPath%>/assets/bootstrap-fileupload/bootstrap-fileupload.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/data-tables/DT_bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/bootstrap-fileupload/bootstrap-fileupload.css"  />
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/jquery-tags-input/jquery.tagsinput.css" />
-<link rel="stylesheet" href="<%=contextPath%>/assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" />
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" />
 
-<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/bootstrap-datepicker/css/datepicker.css">
+
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/custom_datepicker/jquery-ui-1.11.min.css" />
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/custom_datepicker/jquery-ui-timepicker-addon.css" />
+
+
 <!-- BEGIN CONTAINER -->
 <div class="page-container row-fluid">
     <jsp:include page="../../include/left.jsp"/>
@@ -116,7 +120,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">报名开始日期<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <input type="text" name="applyBeginTime" data-required="1" class="m-wrap m-ctrl-medium " placeholder="yyyy-MM-dd HH:mm:ss" size="16" id="applyBeginTime" value="<fmt:formatDate value="${activity.applyBeginTime}" pattern="yyyy-MM-dd HH:mm:ss"/>">
+                                                    <input type="text" name="applyBeginTime" data-required="1" class="m-wrap m-ctrl-medium"  size="16" id="applyBeginTime" value="<fmt:formatDate value="${activity.applyBeginTime}" pattern="yyyy-MM-dd HH:mm"/>">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -124,7 +128,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">报名结束日期<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <input type="text" id="applyEndTime" name="applyEndTime" data-required="1" class="m-wrap m-ctrl-medium" placeholder="yyyy-MM-dd HH:mm:ss" size="16" id="applyEndTime" value="<fmt:formatDate value="${activity.applyEndTime}" pattern="yyyy-MM-dd HH:mm:ss"/>">
+                                                    <input type="text" id="applyEndTime" name="applyEndTime" data-required="1" class="m-wrap m-ctrl-medium"  size="16" id="applyEndTime" value="<fmt:formatDate value="${activity.applyEndTime}" pattern="yyyy-MM-dd HH:mm"/>">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -132,7 +136,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">活动开始日期<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <input type="text" id="beginTime" name="beginTime" data-required="1" class="m-wrap m-ctrl-medium" placeholder="yyyy-MM-dd HH:mm:ss" size="16" id="beginTime" value="<fmt:formatDate value="${activity.beginTime}" pattern="yyyy-MM-dd HH:mm:ss"/>">
+                                                    <input type="text" id="beginTime" name="beginTime" data-required="1" class="m-wrap m-ctrl-medium"  size="16" id="beginTime" value="<fmt:formatDate value="${activity.beginTime}" pattern="yyyy-MM-dd HH:mm"/>">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -140,8 +144,16 @@
                                             <div class="control-group">
                                                 <label class="control-label">活动结束日期<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <input type="text" id="endTime" name="endTime" data-required="1" class="m-wrap m-ctrl-medium" placeholder="yyyy-MM-dd HH:mm:ss" size="16" id="endTime"  value="<fmt:formatDate value="${activity.endTime}" pattern="yyyy-MM-dd HH:mm:ss"/>">
+                                                    <input type="text" id="endTime" name="endTime" data-required="1" class="m-wrap m-ctrl-medium"  size="16" id="endTime"  value="<fmt:formatDate value="${activity.endTime}" pattern="yyyy-MM-dd HH:mm"/>">
                                                     <span class="help-inline"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">投放分公司<span class="required">*</span></label>
+                                                <div class="controls">
+                                                    <input type="text" id="department" readonly  class="large m-wrap"/>
+                                                    <input type="hidden" name="departmentId" id="department_value" />
                                                 </div>
                                             </div>
 
@@ -260,15 +272,32 @@
 
 <jsp:include page="../../include/footer.jsp"/>
 <script type="text/javascript" src="<%=contextPath%>/assets/jquery-validation/dist/jquery.validate.min.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/assets/custom_datepicker/jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/assets/custom_datepicker/i18n/jquery-ui-timepicker-addon-i18n.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/assets/custom_datepicker/jquery-ui-sliderAccess.js"></script>
+
+
+
 
 <script>
     $(function(){
+
+        $('#applyBeginTime, #applyEndTime, #beginTime, #endTime').datetimepicker({
+            timeFormat: "HH:mm",
+            dateFormat: "yy-mm-dd"
+        });
 
         var activityId =  '${activity.id}';
 
         if(activityId != null && activityId != ''){
             $('#activity_title').text('活动编辑');
         }
+
+        var department = '${activity.departmentId}';
+        var dept = '${department}';
+        var deptJson= $.parseJSON(dept);
+        $('#department').val(deptJson.title);
+        $('#department_value').val(deptJson.departmentId);
 
         var activityTypesVal = '${activity.cid}';
         var activityTypes = '${activityTypes}';
@@ -321,7 +350,7 @@
             },
             rules: {
                 name: {
-                    required: true,
+                    required: true
                 },
                 url: {
                     url: true
@@ -433,7 +462,7 @@
     
     $("#applyBeginTime").change(function(){
     	var applyBeginTime = $("#applyBeginTime").val();
-    	var str = "((19|20)[0-9]{2})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])(\\s+)(0\\d{1}|1\\d{1}|2[0-3]):([0-5]\\d{1}):([0-5]\\d{1})";
+    	var str = "((19|20)[0-9]{2})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])(\\s+)(0\\d{1}|1\\d{1}|2[0-3]):([0-5]\\d{1})";
     	if(!(applyBeginTime.match(str))){
 			validateDateError('请确认输入正确的时间格式');
 			$("#applyBeginTime").focus();
@@ -454,7 +483,7 @@
     
     $("#applyEndTime").change(function(){
     	var applyEndTime = $("#applyEndTime").val();
-    	var str = "((19|20)[0-9]{2})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])(\\s+)(0\\d{1}|1\\d{1}|2[0-3]):([0-5]\\d{1}):([0-5]\\d{1})";
+    	var str = "((19|20)[0-9]{2})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])(\\s+)(0\\d{1}|1\\d{1}|2[0-3]):([0-5]\\d{1})";
     	if(!(applyEndTime.match(str))){
 			validateDateError1('请确认输入正确的时间格式');
 			$("#applyEndTime").focus();
@@ -473,7 +502,7 @@
     })
     $("#beginTime").change(function(){
     	var beginTime = $("#beginTime").val();
-    	var str = "((19|20)[0-9]{2})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])(\\s+)(0\\d{1}|1\\d{1}|2[0-3]):([0-5]\\d{1}):([0-5]\\d{1})";
+    	var str = "((19|20)[0-9]{2})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])(\\s+)(0\\d{1}|1\\d{1}|2[0-3]):([0-5]\\d{1})";
     	if(!(beginTime.match(str))){
 			validateDateError2('请确认输入正确的时间格式');
 			$("#beginTime").focus();
@@ -492,7 +521,7 @@
     })
     $("#endTime").change(function(){
     	var endTime = $("#endTime").val();
-    	var str = "((19|20)[0-9]{2})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])(\\s+)(0\\d{1}|1\\d{1}|2[0-3]):([0-5]\\d{1}):([0-5]\\d{1})";
+    	var str = "((19|20)[0-9]{2})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])(\\s+)(0\\d{1}|1\\d{1}|2[0-3]):([0-5]\\d{1})";
     	if(!(endTime.match(str))){
 			validateDateError3('请确认输入正确的时间格式');
 			$("#endTime").focus();

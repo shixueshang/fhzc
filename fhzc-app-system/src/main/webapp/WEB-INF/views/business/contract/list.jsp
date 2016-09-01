@@ -108,3 +108,4 @@
 </div>
 
 <jsp:include page="../../include/footer.jsp"/>
+<script type="text/javascript" src="<%=contextPath%>/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>

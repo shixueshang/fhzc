@@ -99,8 +99,8 @@
                                             </c:choose>
                                         </td>
                                         <td>${activity.address}</td>
-                                        <td><fmt:formatDate value="${activity.beginTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-                                        <td><fmt:formatDate value="${activity.endTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+                                        <td><fmt:formatDate value="${activity.beginTime}" pattern="yyyy-MM-dd HH:mm"/></td>
+                                        <td><fmt:formatDate value="${activity.endTime}" pattern="yyyy-MM-dd HH:mm" /></td>
                                         <td>${activity.sponsor}</td>
                                         <td>
                                             <c:choose>
@@ -144,3 +144,4 @@
 </div>
 
 <jsp:include page="../../include/footer.jsp"/>
+<script type="text/javascript" src="<%=contextPath%>/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
