@@ -433,7 +433,10 @@ public class ProductController extends BaseController {
             return new AjaxJson(false, "已被产品使用，不能删除");
         }
 
-        assetsService.delRecommend(assetsService.getAssetsRecommendByType(dictionaryService.getDictionary(id).getValue()).getId());
+        AssetsRecommend recommend = assetsService.getAssetsRecommendByType(dictionaryService.getDictionary(id).getValue());
+        if(recommend != null){
+            assetsService.delRecommend(recommend.getId());
+        }
         dictionaryService.delete(id);
         return new AjaxJson(true);
     }

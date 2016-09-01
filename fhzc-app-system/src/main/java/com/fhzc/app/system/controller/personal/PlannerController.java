@@ -59,7 +59,7 @@ public class PlannerController extends BaseController {
         ModelAndView mav = new ModelAndView("personal/planner/list");
         Admin admin = super.getCurrentUser();
         List<Integer> departments = departmentService.findAllChildrenIds(admin.getOrgan());
-        PageableResult<Planner> pageableResult = plannerService.findPagePlanners(page, size);
+        PageableResult<Planner> pageableResult = plannerService.findPagePlanners(departments, page, size);
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("planners", pageableResult.getItems());
 

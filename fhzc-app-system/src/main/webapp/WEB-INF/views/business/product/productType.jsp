@@ -225,7 +225,7 @@
             ignore: "",
             messages: {
                 value:{required:"产品类型值不能为空！",remote:jQuery.format("产品类型值已经存在")},
-                key:{required:"产品类型不能为空",remote:jQuery.format("产品类型已经存在")},
+                key:{required:"产品类型不能为空",remote:jQuery.format("产品类型已经存在")}
             },
             rules: {
                 value: {
@@ -263,57 +263,8 @@
                             }
                         }
                     }
-                },
-                expectedMin: {
-                    number: true,
-                    min:0
-                },
-                expectedMax: {
-                    number: true,
-                    min:0
-                },
-                investTermMin: {
-                    required: true,
-                    number: true,
-                    min:0
-                },
-                investTermMax: {
-                    required: true,
-                    number: true,
-                    min:1
-                },
-                investThreshold: {
-                    required: true,
-                    number: true,
-                    min:0
-                },
-                renewDeadline: {
-                    number: true,
-                    min:0
-                },
-                scoreFactor: {
-                    number: true,
-                    min:0
-                },
-                detailUrl: {
-                    url: true
-                },
-                fundManagementFee: {
-                    required: true,
-                    number: true,
-                    min:0
-                },
-                fundSubscriptionFee: {
-                    required: true,
-                    number: true,
-                    min:0
-                },
-                fundManager: {
-                    required: true
-                },
-                custodian: {
-                    required: true
                 }
+
             },
 
             invalidHandler: function (event, validator) { //display error alert on form submit
