@@ -118,6 +118,23 @@
     from `planner_achivements_monthly`
     where `department_id` = #{departmentId,jdbcType=INTEGER}
   </select>
+  <select id="selectAnnualisedOrder" resultMap="BaseResultMap" parameterType="java.util.Date" >
+    SELECT B.planner_uid,
+    B.annualised,
+    (SELECT COUNT(1) + 1
+    FROM (
+    select planner_uid, sum(annualised) annualised from planner_achivements_monthly
+    where transfer_date between #{0} and #{1}
+    group by planner_uid
+    ) A
+    WHERE A.annualised > B.annualised) PM
+    FROM  (
+    select planner_uid, sum(annualised) annualised from planner_achivements_monthly
+    where transfer_date between #{0} and #{1}
+    group by planner_uid
+    ) B
+    ORDER BY PM
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from `planner_achivements_monthly`
     where `id` = #{id,jdbcType=INTEGER}
@@ -132,9 +149,9 @@
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into `planner_achivements_monthly` (`planner_uid`, `planner_percent`, `manager_uid`, 
-      `mannager_percent`, `product_id`, `product_type`, 
-      `customer_uid`, `customer_name`, `customer_buy`, 
+    insert into `planner_achivements_monthly` (`planner_uid`, `planner_percent`, `manager_uid`,
+      `mannager_percent`, `product_id`, `product_type`,
+      `customer_uid`, `customer_name`, `customer_buy`,
       `annualised`, `product_cycle`, `transfer_date`, 
       `memo`, `ctime`, `area_id`, 
       `company`, `team`, `department_id`, 

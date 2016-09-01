@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -290,5 +292,35 @@ public class RankApiController extends BaseController {
         } else {
             return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
         }
+    }
+
+    @RequestMapping(value = "/api/rank/query/between", method = RequestMethod.GET)
+    @ResponseBody
+    public ApiJsonResult personalScoreDetail( @RequestParam String start,
+                                             @RequestParam String end) {
+        SimpleDateFormat sbf = new SimpleDateFormat("yyyy-MM-dd");
+        Date startDate = null;
+        Date endDate = null;
+        try {
+            startDate = sbf.parse(start);
+            endDate = sbf.parse(end);
+        } catch (ParseException e) {
+
+        }
+        List<PlannerAchivementsMonthly> result = rankMonthService.getSortByDate(startDate, endDate);
+        List<Map> sortList = new ArrayList<>();
+        Integer sort = 1;
+        for (PlannerAchivementsMonthly plannerAchivementsMonthly: result) {
+            Map map = new HashMap();
+            map.put("sort",sort++);
+            map.put("annualised", plannerAchivementsMonthly.getAnnualised());
+            map.put("plannerUid", plannerAchivementsMonthly.getPlannerUid());
+            Planner planner = plannerService.getPlanner(plannerAchivementsMonthly.getPlannerUid());
+            User user = userService.getUser(planner.getUid());
+            map.put("avatar", user.getAvatar());
+            map.put("name", user.getRealname());
+            sortList.add(map);
+        }
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,sortList);
     }
 }
