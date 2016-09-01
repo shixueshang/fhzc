@@ -71,8 +71,8 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach items="${assetsRecommends}" var="assetsRecommend">
-                                        <td>${assetsRecommend.id}</td>
+                                <c:forEach items="${assetsRecommends}" var="assetsRecommend"   begin="0" end="${listSize}" step="1" varStatus="status">
+                                        <td>${status.index+1}</td>
                                         <td>${assetsRecommend.recommendType}</td>
                                         <td>${assetsRecommend.proportion}</td>
                                         <td>
