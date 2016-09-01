@@ -248,3 +248,9 @@ TRUNCATE TABLE `user`;
 
 INSERT INTO `bank`.`user` (`uid`, `login`, `password`, `realname`, `gender`, `avatar`, `login_role`,  `ctime`) VALUES ('1', 'fhzs', '14adcfdae177218ed3b7f9806c85c1b4', '复华助手', 'male', '/opt/fhzc/api/image/default-head.jpg', 'planner', now());
 
+TRUNCATE TABLE `assets_recommend`;
+
+INSERT INTO `assets_recommend` (`id`,`recommend_type`,`proportion`,`status`) VALUES ('1', '1', '20.00', '0');
+INSERT INTO `assets_recommend` (`id`,`recommend_type`,`proportion`,`status`) VALUES ('2', '2', '20.00', '0');
+INSERT INTO `assets_recommend` (`id`,`recommend_type`,`proportion`,`status`)VALUES ('3', '3', '10.00', '0');
+INSERT INTO `assets_recommend` (`id`,`recommend_type`,`proportion`,`status`) VALUES ('4', '4', '50.00', '0');

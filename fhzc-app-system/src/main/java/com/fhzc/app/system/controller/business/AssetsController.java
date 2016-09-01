@@ -233,6 +233,7 @@ public class AssetsController extends BaseController {
         	continue;
         }
         mav.addObject("assetsRecommends", assetsRecommends);
+        mav.addObject("listSize",assetsRecommends.size());
         mav.addObject("url", "business/assets");
         return mav;
     }
