@@ -2,9 +2,12 @@ package com.fhzc.app.dao.mybatis.inter;
 
 import com.fhzc.app.dao.mybatis.model.PlannerAchivementsMonthly;
 import com.fhzc.app.dao.mybatis.model.PlannerAchivementsMonthlyExample;
+
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.fhzc.app.dao.mybatis.model.RankMonth;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
@@ -28,6 +31,8 @@ public interface PlannerAchivementsMonthlyMapper {
     List<PlannerAchivementsMonthly> selectDistinctPlannerUid();
 
     List<PlannerAchivementsMonthly> selectDistinctPlannerUidByDeptId(Integer departmentId);
+
+    List<PlannerAchivementsMonthly> selectAnnualisedOrder(Date start, Date end);
 
     int updateByExampleSelective(@Param("record") PlannerAchivementsMonthly record, @Param("example") PlannerAchivementsMonthlyExample example);
 

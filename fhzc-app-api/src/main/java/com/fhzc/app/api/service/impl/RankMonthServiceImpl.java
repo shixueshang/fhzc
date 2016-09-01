@@ -1,7 +1,9 @@
 package com.fhzc.app.api.service.impl;
 
 import com.fhzc.app.api.service.RankMonthService;
+import com.fhzc.app.dao.mybatis.inter.PlannerAchivementsMonthlyMapper;
 import com.fhzc.app.dao.mybatis.inter.RankMonthMapper;
+import com.fhzc.app.dao.mybatis.model.PlannerAchivementsMonthly;
 import com.fhzc.app.dao.mybatis.model.RankMonth;
 import com.fhzc.app.dao.mybatis.model.RankMonthExample;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by freeman on 16/8/18.
@@ -19,6 +22,8 @@ public class RankMonthServiceImpl implements RankMonthService {
     @Resource
     RankMonthMapper rankMonthMapper;
 
+    @Resource
+    PlannerAchivementsMonthlyMapper plannerAchivementsMonthlyMapper;
 
     @Override
     public int addOrUpdate(RankMonth rankMonth) {
@@ -151,5 +156,10 @@ public class RankMonthServiceImpl implements RankMonthService {
         }else{
             return null;
         }
+    }
+
+    @Override
+    public List<PlannerAchivementsMonthly> getSortByDate(Date start, Date end){
+        return plannerAchivementsMonthlyMapper.selectAnnualisedOrder(start, end);
     }
 }

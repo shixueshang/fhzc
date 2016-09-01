@@ -177,4 +177,33 @@ public class PersonalController extends BaseController {
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
     }
 
+
+    /**
+     * 客户到账信息
+     * @return
+     */
+    @RequestMapping(value = "/api/pays",method = RequestMethod.GET)
+    @ResponseBody
+    public  ApiJsonResult personalAssets() {
+        User user = getCurrentUser();
+
+        List<Map> result = new ArrayList<>();
+        //校验是否是登陆理财师的客户请求
+        if (user.getLoginRole().equals(Const.USER_ROLE.PLANNER)) {
+            Planner planner = plannerService.getPlannerByUid(user.getUid());
+            List<AssetsHistory> assetsHistoryList = assetsService.getPayHistoryByPlannerId(planner.getId());
+            if (assetsHistoryList != null) {
+                for (AssetsHistory assetsHistory : assetsHistoryList) {
+                    Map map = new HashMap();
+                    map.put("amount", assetsHistory.getAmount());
+                    Product product = productService.getProduct(assetsHistory.getProductId());
+                    map.put("productName", product.getName());
+                    map.put("paymentDate", assetsHistory.getPaymentDate());
+                    result.add(map);
+                }
+            }
+        }
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
+    }
+
 }
