@@ -236,12 +236,11 @@ public class LoginController extends BaseController {
     /**
      * 发送短信验证码
      * @param mobile
-     * @param login
      * @return
      */
     @RequestMapping(value="/api/auth/sms",method =  RequestMethod.POST )
     @ResponseBody
-    public ApiJsonResult sendSmsCode(String mobile, String login)  {
+    public ApiJsonResult sendSmsCode(String mobile)  {
 
         User user = getCurrentUser();
         if(mobile == null || mobile.length() == 0){
@@ -252,14 +251,9 @@ public class LoginController extends BaseController {
             if(!userService.checkMobileExists(mobile, user)){
                 throw new BadRequestException("该手机号不存在");
             }
-        }
-
-        if(login != null){
-            User u = userService.getUserByLogin(login);
+        }else{
+            User u = userService.getUserByMobile(mobile);
             if(u == null){
-                throw new BadRequestException("登录名输入错误");
-            }
-            if(!mobile.equals(u.getMobile())){
                 throw new BadRequestException("该手机号不存在");
             }
         }
@@ -283,6 +277,15 @@ public class LoginController extends BaseController {
         deviceInfo.setUserId(user.getUid());
         deviceInfo.setCreateTime(new Date());
         pushTokenService.collectDeviceInfo(deviceInfo);
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
+    }
+
+
+    @RequestMapping(value = "api/auth/logout", method = RequestMethod.GET)
+    @ResponseBody
+    public ApiJsonResult logout() {
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
     }
 }

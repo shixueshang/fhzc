@@ -150,7 +150,18 @@ public class PlannerController extends BaseController {
     @RequestMapping(value = "/achivement")
     public ModelAndView achivement(){
         ModelAndView mav = new ModelAndView("personal/planner/achivement");
-        mav.addObject("area", JSON.toJSON(departmentService.findChildren(Const.ROOT_DEPT_ID)));
+        Admin admin = super.getCurrentUser();
+        Department department = departmentService.getDepartment(admin.getOrgan());
+        List<Department> areas = new ArrayList<Department>();
+        if(department.getLevel() == 1){
+            areas = departmentService.findChildren(Const.ROOT_DEPT_ID);
+        }else if(department.getLevel() == 2){
+            areas.add(departmentService.getDepartment(department.getDepartmentId()));
+        }else{
+            areas.add(departmentService.getDepartment(department.getParentDeptId()));
+            mav.addObject("company", JSON.toJSON(departmentService.getDepartment(admin.getOrgan())));
+        }
+        mav.addObject("area", JSON.toJSON(areas));
         return mav;
     }
 

@@ -41,5 +41,12 @@ public interface UserService {
      * @param user
      * @return
      */
-    public boolean checkMobileExists(String mobile, User user);
+    boolean checkMobileExists(String mobile, User user);
+
+    /**
+     * 根据手机号查询用户
+     * @param mobile
+     * @return
+     */
+    User getUserByMobile(String mobile);
 }

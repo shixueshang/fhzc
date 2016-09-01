@@ -50,19 +50,7 @@ public class User implements Serializable{
 
     private String salt;
 
-    private String level;
-
-    private Integer levelId;
-
     private Integer departmentId;
-
-    public Integer getLevelId() {
-        return levelId;
-    }
-
-    public void setLevelId(Integer levelId) {
-        this.levelId = levelId;
-    }
 
     public Integer getDepartmentId() {
         return departmentId;
@@ -72,13 +60,6 @@ public class User implements Serializable{
         this.departmentId = departmentId;
     }
 
-    public String getLevel() {
-        return level;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
-    }
 
     public Integer getUid() {
         return uid;

@@ -53,10 +53,9 @@ public class UserController extends BaseController {
         Map<String, Object> result = ObjUtils.objectToMap(user);
         if(user.getLoginRole().equals(Const.USER_ROLE.CUSTOMER)) {
             Customer customer = customerService.getCustomerByUid(user.getUid());
-            user.setLevelId(customer.getLevelId());
-            user.setLevel(super.getDicName(customer.getLevelId(), Const.DIC_CAT.CUSTOMER_LEVEL));
+            result.put("levelId", customer.getLevelId());
+            result.put("level", super.getDicName(customer.getLevelId(), Const.DIC_CAT.CUSTOMER_LEVEL));
             result.put("cb_id", customer.getCbId());
-
 
             List<PlannerCustomer> plannerCustomers = plannerCustomerService.getCustomerPlannerList(customer.getCustomerId());
             if(plannerCustomers != null) {

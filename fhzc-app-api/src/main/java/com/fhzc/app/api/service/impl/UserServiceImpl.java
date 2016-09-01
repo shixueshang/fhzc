@@ -4,6 +4,7 @@ import com.fhzc.app.api.service.UserService;
 import com.fhzc.app.dao.mybatis.inter.UserMapper;
 import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.model.UserExample;
+import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.dao.mybatis.util.EncryptUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -96,6 +97,18 @@ public class UserServiceImpl implements UserService {
         }
         criteria.andMobileEqualTo(mobile);
         return userMapper.countByExample(example) > 0;
+    }
+
+    @Override
+    public User getUserByMobile(String mobile) {
+        UserExample example = new UserExample();
+        List<User> users = decryptUser(userMapper.selectByExample(example));
+        for(User user : users){
+            if(mobile.equals(user.getMobile())){
+                return user;
+            }
+        }
+        return null;
     }
 
     /**
