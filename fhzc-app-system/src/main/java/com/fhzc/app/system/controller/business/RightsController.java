@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.annotation.Resource;
 
@@ -132,10 +133,11 @@ public class RightsController extends BaseController{
      */
     @RequestMapping(value = "/reservation/pub", method = RequestMethod.GET)
     @SystemControllerLog(description = "新增权益预约")
-    public ModelAndView preReservationAdd(){
+    public ModelAndView preReservationAdd(String flag){
         ModelAndView mav = new ModelAndView("business/rights/addRightReservation");
         mav.addObject("rights", rightsService.getAllRights());
         mav.addObject("url", "business/rights");
+        mav.addObject("flag", flag);
         return mav;
     }
 
@@ -180,8 +182,40 @@ public class RightsController extends BaseController{
      */
     @RequestMapping(value = "/reservation/add", method = RequestMethod.GET)
     @SystemControllerLog(description = "权益预约")
-    public String addReservation(Integer reservationRight, Integer customerId, Integer exchangeScore, String markDate) throws ParseException{
-        RightsReservation reservation = new RightsReservation();
+//    public String addReservation(Integer reservationRight, Integer customerId, Integer exchangeScore, String markDate) throws ParseException{
+//        RightsReservation reservation = new RightsReservation();
+//        List<RightsReservation> temreservations = rightsService.findSuccessOrdersById(reservationRight, Const.FOCUS_STATUS.ON);
+//        if(!(temreservations.isEmpty())){
+//        	for (RightsReservation rightsReservation : temreservations) {
+//				if((rightsReservation.getCustomerId() == customerId) && (rightsReservation.getMarkDate().getTime() == new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(markDate).getTime())){
+//					return "redirect:/business/rights/reservation/pub";
+//				}
+//			}
+//        }
+//        reservation.setCtime(new Date());
+//        reservation.setRightsId(reservationRight);
+//        reservation.setCustomerId(customerId);
+//        reservation.setScoreCost(exchangeScore);
+//        reservation.setMarkDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(markDate));
+//        reservation.setStatus(1);
+//        rightsService.addRightsReservation(reservation);
+//
+//        return "redirect:/business/rights/reservations";
+//    }
+    
+    public ModelAndView addReservation(Integer reservationRight, Integer customerId, Integer exchangeScore, String markDate) throws ParseException{
+    	RightsReservation reservation = new RightsReservation();
+        List<RightsReservation> temreservations = rightsService.findSuccessOrdersById(reservationRight, Const.FOCUS_STATUS.ON);
+        if(!(temreservations.isEmpty())){
+        	for (RightsReservation rightsReservation : temreservations) {
+				if((rightsReservation.getCustomerId() == customerId) && (rightsReservation.getMarkDate().getTime() == new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(markDate).getTime())){
+					RedirectView rview = new RedirectView("/business/rights/reservation/pub");
+					ModelAndView mav = new ModelAndView(rview);
+					mav.addObject("flag", "yes");
+					return mav;
+				}
+			}
+        }
         reservation.setCtime(new Date());
         reservation.setRightsId(reservationRight);
         reservation.setCustomerId(customerId);
@@ -189,8 +223,29 @@ public class RightsController extends BaseController{
         reservation.setMarkDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(markDate));
         reservation.setStatus(1);
         rightsService.addRightsReservation(reservation);
-
-        return "redirect:/business/rights/reservations";
+        return new ModelAndView(new RedirectView("/business/rights/reservations"));
+    }
+    
+    /**
+     * 判断是否已预约过
+     * @param reservationRight
+     * @param customerId
+     * @param markDate
+     * @return
+     * @throws ParseException 
+     */
+    @RequestMapping(value = "/isReserved", method = RequestMethod.GET)
+    @ResponseBody
+    public String isReserved(String rightsId, String customerId, String markDate) throws ParseException{
+        List<RightsReservation> temreservations = rightsService.findSuccessOrdersById(Integer.parseInt(rightsId), Const.FOCUS_STATUS.ON);
+        if(!(temreservations.isEmpty())){
+        	for (RightsReservation rightsReservation : temreservations) {
+				if((rightsReservation.getCustomerId() == Integer.parseInt(customerId)) && (rightsReservation.getMarkDate().getTime() == new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(markDate).getTime())){
+					return "YES";
+				}
+			}
+        }
+    	return "NO";
     }
 
     /**
