@@ -97,7 +97,7 @@ public class LoginController extends BaseController {
             subject.login(token);
             User user = userService.getUserByLogin(username);
             Session session = subject.getSession(true);
-            session.setAttribute("user", user);
+
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("uid",user.getUid());
             map.put("realname",user.getRealname());
@@ -107,15 +107,17 @@ public class LoginController extends BaseController {
             if (user.getLoginRole().equals(Const.USER_ROLE.PLANNER)) {
                 Planner planner = plannerService.getPlannerByUid(user.getUid());
                 map.put("plannerId", planner.getId());
+                user.setDepartmentId(planner.getDepartmentId());
             }
 
             if (user.getLoginRole().equals(Const.USER_ROLE.CUSTOMER)) {
                 Customer customer= customerService.getCustomerByUid(user.getUid());
                 map.put("customerId", customer.getCustomerId());
+                user.setDepartmentId(customer.getDepartmentId());
             }
 
-
-                return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, map);
+            session.setAttribute("user", user);
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, map);
             } catch (UnknownAccountException e) {
             return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST, "账号不存在");
         } catch (IncorrectCredentialsException e) {
@@ -234,7 +236,7 @@ public class LoginController extends BaseController {
     /**
      * 发送短信验证码
      * @param mobile
-     * @param login 登录名，只在忘记密码是需要
+     * @param login
      * @return
      */
     @RequestMapping(value="/api/auth/sms",method =  RequestMethod.POST )

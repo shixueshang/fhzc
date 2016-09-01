@@ -69,7 +69,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByIdentity(String identity) {
 
-
         UserExample example = new UserExample();
         UserExample.Criteria criteria = example.createCriteria();
         try {
@@ -79,7 +78,7 @@ public class UserServiceImpl implements UserService {
         }
         criteria.andPassportCodeEqualTo(identity);
         if (userMapper.countByExample(example) > 0) {
-            return userMapper.selectByExample(example).get(0);
+            return decryptUser(userMapper.selectByExample(example).get(0));
         }
         return null;
 
@@ -95,6 +94,12 @@ public class UserServiceImpl implements UserService {
             user.setPassportCode(EncryptUtils.encryptToDES(key, user.getPassportCode()));
         if(user.getMobile() != null){
             user.setMobile(EncryptUtils.encryptToDES(key, user.getMobile()));
+        }
+        if(user.getPhone() != null){
+            user.setPhone(EncryptUtils.encryptToDES(key, user.getPhone()));
+        }
+        if(user.getPhoneExt() != null){
+            user.setPhoneExt(EncryptUtils.encryptToDES(key, user.getPhoneExt()));
         }
         if(user.getEmail() != null){
             user.setEmail(EncryptUtils.encryptToDES(key, user.getEmail()));

@@ -50,9 +50,10 @@ public class UserController extends BaseController {
     public ApiJsonResult getUserInfo() throws Exception {
         User user  = getCurrentUser();
         user = super.setUserAvatarPath(user);
-        Map result = ObjUtils.objectToMap(user);
+        Map<String, Object> result = ObjUtils.objectToMap(user);
         if(user.getLoginRole().equals(Const.USER_ROLE.CUSTOMER)) {
             Customer customer = customerService.getCustomerByUid(user.getUid());
+            user.setLevelId(customer.getLevelId());
             user.setLevel(super.getDicName(customer.getLevelId(), Const.DIC_CAT.CUSTOMER_LEVEL));
             result.put("cb_id", customer.getCbId());
 
@@ -61,7 +62,7 @@ public class UserController extends BaseController {
             if(plannerCustomers != null) {
                 List<Map<String, Object>> planners = new ArrayList<Map<String, Object>>();
                 for (PlannerCustomer pl : plannerCustomers) {
-                    Map map = new HashMap();
+                    Map<String, Object> map = new HashMap<String, Object>();
                     Planner planner = plannerService.getPlanner(pl.getPlannerId());
                     User plannerUser = userService.getUser(planner.getUid());
                     map.put("plannerId", pl.getPlannerId());

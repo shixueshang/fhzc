@@ -69,6 +69,12 @@ public class UserServiceImpl implements UserService {
             if(user.getMobile() != null){
                 user.setMobile(EncryptUtils.encryptToDES(key, user.getMobile()));
             }
+            if(user.getPhone() != null){
+                user.setPhone(EncryptUtils.encryptToDES(key, user.getPhone()));
+            }
+            if(user.getPhoneExt() != null){
+                user.setPhoneExt(EncryptUtils.encryptToDES(key, user.getPhoneExt()));
+            }
             if(user.getEmail() != null){
                 user.setEmail(EncryptUtils.encryptToDES(key, user.getEmail()));
             }

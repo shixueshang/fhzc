@@ -57,7 +57,12 @@ public class ActivityController extends BaseController {
     @SystemControllerLog(description = "查询活动列表")
     public ModelAndView listActivities(){
         ModelAndView mav = new ModelAndView("business/activity/list");
-        PageableResult<Activity> pageableResult = activityService.findPageActivies(page, size);
+        Admin admin = super.getCurrentUser();
+        List<Integer> departments = new ArrayList<Integer>();
+
+        departments.add(Const.ROOT_DEPT_ID);
+        departments.add(admin.getOrgan());
+        PageableResult<Activity> pageableResult = activityService.findPageActivies(departments, page, size);
         for (Activity activity : pageableResult.getItems()) {
         	List<Focus> focuses = focusService.findFocusByType(Const.FOCUS_TYPE.ACTIVITY, activity.getId());
         	activity.setFocusNum(focuses.size() > 0 ? focuses.size() : 0);
@@ -108,6 +113,7 @@ public class ActivityController extends BaseController {
         mav.addObject("activity", activity);
         mav.addObject("activityTypes", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.ACTIVITY_CATEGORY)));
         mav.addObject("department", JSON.toJSON(departmentService.getDepartment(activity.getDepartmentId())));
+        mav.addObject("url", "business/activity");
         return mav;
     }
 

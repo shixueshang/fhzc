@@ -25,7 +25,7 @@ public interface PlannerService {
      * @param size
      * @return
      */
-    PageableResult<Planner> findPagePlanners(int page, int size);
+    PageableResult<Planner> findPagePlanners(List<Integer> departments, int page, int size);
 
     /**
      * 添加理财师

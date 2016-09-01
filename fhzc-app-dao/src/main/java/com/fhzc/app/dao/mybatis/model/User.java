@@ -52,6 +52,26 @@ public class User implements Serializable{
 
     private String level;
 
+    private Integer levelId;
+
+    private Integer departmentId;
+
+    public Integer getLevelId() {
+        return levelId;
+    }
+
+    public void setLevelId(Integer levelId) {
+        this.levelId = levelId;
+    }
+
+    public Integer getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Integer departmentId) {
+        this.departmentId = departmentId;
+    }
+
     public String getLevel() {
         return level;
     }

@@ -123,6 +123,16 @@ public class DepartmentServiceImpl implements DepartmentService{
         return result;
     }
 
+    @Override
+    public List<Integer> findAllChildrenIds(Integer parentId) {
+        List<Integer> result = new ArrayList<Integer>();
+        List<Department> departments = this.findAllChildren(parentId);
+        for(Department department : departments){
+            result.add(department.getDepartmentId());
+        }
+        return result;
+    }
+
     private void recurseTree(List<Department> rs, List<Department> departments) {
         for (Department node : departments) {
             rs.add(node);

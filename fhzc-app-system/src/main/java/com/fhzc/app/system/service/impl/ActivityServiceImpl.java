@@ -30,8 +30,12 @@ public class ActivityServiceImpl implements ActivityService {
     private ActivityApplyMapper activityApplyMapper;
 
     @Override
-    public PageableResult<Activity> findPageActivies(int page, int size) {
+    public PageableResult<Activity> findPageActivies(List<Integer> departments, int page, int size) {
         ActivityExample example = new ActivityExample();
+        ActivityExample.Criteria criteria = example.createCriteria();
+        if(departments.size() > 0){
+            criteria.andDepartmentIdIn(departments);
+        }
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<Activity> list = activityMapper.selectByExampleWithBLOBsWithRowbounds(example, rowBounds);
         return new PageableResult<Activity>(page, size, activityMapper.countByExample(example), list);

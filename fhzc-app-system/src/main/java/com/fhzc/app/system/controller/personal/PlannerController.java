@@ -7,7 +7,6 @@ import com.fhzc.app.dao.mybatis.page.PageableResult;
 
 
 import com.fhzc.app.dao.mybatis.util.Const;
-import com.fhzc.app.dao.mybatis.util.EncryptUtils;
 import com.fhzc.app.system.aop.SystemControllerLog;
 import com.fhzc.app.system.commons.util.DateUtil;
 import com.fhzc.app.system.controller.AjaxJson;
@@ -58,6 +57,8 @@ public class PlannerController extends BaseController {
     @SystemControllerLog(description = "查看理财师列表")
     public ModelAndView listPlanners(){
         ModelAndView mav = new ModelAndView("personal/planner/list");
+        Admin admin = super.getCurrentUser();
+        List<Integer> departments = departmentService.findAllChildrenIds(admin.getOrgan());
         PageableResult<Planner> pageableResult = plannerService.findPagePlanners(page, size);
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("planners", pageableResult.getItems());
@@ -67,13 +68,6 @@ public class PlannerController extends BaseController {
         List<User> users = new ArrayList<User>();
         for(Planner planner : planners){
             User user = userService.getUser(planner.getUid());
-            try {
-                user.setPassportCode(EncryptUtils.decryptByDES(user.getSalt(), user.getPassportCode()));
-                user.setMobile(EncryptUtils.decryptByDES(user.getSalt(),user.getMobile()));
-                user.setEmail(EncryptUtils.decryptByDES(user.getSalt(), user.getEmail()));
-            } catch (Exception e) {
-                logger.error("解密失败");
-            }
             users.add(user);
         }
 

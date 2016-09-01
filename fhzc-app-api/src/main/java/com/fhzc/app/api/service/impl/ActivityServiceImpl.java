@@ -23,15 +23,18 @@ public class ActivityServiceImpl implements ActivityService {
     private ActivityMapper activityMapper;
 
     @Override
-    public PageableResult<Activity> findPageActivies(int page, int size) {
+    public PageableResult<Activity> findPageActivies(List<Integer> departments, int page, int size) {
         ActivityExample example = new ActivityExample();
         ActivityExample.Criteria criteria = example.createCriteria();
-        RowBounds rowBounds = new RowBounds((page - 1) * size, size);
+        if(departments.size() > 0){
+            criteria.andDepartmentIdIn(departments);
+        }
         criteria.andIsDisplayEqualTo(Const.YES_OR_NO.YES);
         example.setOrderByClause("`begin_time` desc");
+        RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<Activity> list = activityMapper.selectByExampleWithBLOBsWithRowbounds(example, rowBounds);
         List<Activity> result = this.setActivityListStatus(list);
-        return new PageableResult<Activity>(page, size, list.size(), result);
+        return new PageableResult<Activity>(page, size, activityMapper.countByExample(example), result);
     }
     
     @Override

@@ -18,7 +18,7 @@ public interface ActivityService {
      * @param size
      * @return
      */
-    PageableResult<Activity> findPageActivies(int page, int size);
+    PageableResult<Activity> findPageActivies(List<Integer> departments, int page, int size);
 
     /**
      * 添加或者修改活动信息

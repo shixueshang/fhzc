@@ -9,12 +9,15 @@ import com.fhzc.app.api.tools.ApiJsonResult;
 import com.fhzc.app.api.tools.ObjUtils;
 import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
+import com.fhzc.app.dao.mybatis.util.Const;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,7 +45,11 @@ public class ActivityApiController extends BaseController{
     @RequestMapping(value = "/api/activity", method = RequestMethod.GET)
     @ResponseBody
     public ApiJsonResult activityList(){
-        PageableResult<Activity> activityList = activityService.findPageActivies(page,size);
+        User user = super.getCurrentUser();
+        List<Integer> departments = new ArrayList<Integer>();
+        departments.add(Const.ROOT_DEPT_ID);
+        departments.add(user.getDepartmentId());
+        PageableResult<Activity> activityList = activityService.findPageActivies(departments, page,size);
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,activityList);
     }
 

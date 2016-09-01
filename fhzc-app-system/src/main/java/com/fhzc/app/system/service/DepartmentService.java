@@ -72,6 +72,8 @@ public interface DepartmentService {
      */
     List<Department> findAllChildren(Integer parentId);
 
+    List<Integer> findAllChildrenIds(Integer parentId);
+
     /**
      * 获得机构id
      * @param name

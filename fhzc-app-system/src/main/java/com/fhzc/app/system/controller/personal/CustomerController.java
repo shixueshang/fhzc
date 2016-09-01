@@ -51,9 +51,6 @@ public class CustomerController extends BaseController {
     @Resource
     private DepartmentService departmentService;
 
-    @Resource
-    private SystemLogService systemLogService;
-
 
     /**
      * 个人客户列表页面
@@ -78,6 +75,10 @@ public class CustomerController extends BaseController {
         PageableResult<User> pageableResult = userService.findPageUsers(name, page, size);
         List<Customer> customerList = new ArrayList<Customer>();
         List<Map<String, Object>> scores = new ArrayList<Map<String, Object>>();
+
+        Admin admin = super.getCurrentUser();
+        List<Integer> departments = departmentService.findAllChildrenIds(admin.getOrgan());
+
         for(User user : pageableResult.getItems()){
             Customer customer = customerService.getCustomerByUid(user.getUid(), Const.CUSTOMER_TYPE.SINGLE_CUSTOMER);
             if(customer != null){
@@ -86,7 +87,9 @@ public class CustomerController extends BaseController {
                 if(pc != null){
                   Planner planner = plannerService.getPlanner(pc.getPlannerId());
                     if(planner.getStatus().equals(Const.PLANNER_STATUS.ON)){
-                        customerList.add(customer);
+                        if(departments.contains(customer.getDepartmentId())){
+                            customerList.add(customer);
+                        }
                     }
                 }
 
@@ -158,6 +161,9 @@ public class CustomerController extends BaseController {
         PageableResult<User> pageableResult = userService.findPageUsers(name, page, size);
         List<Customer> customerList = new ArrayList<Customer>();
         List<Map<String, Object>> scores = new ArrayList<Map<String, Object>>();
+
+        Admin admin = super.getCurrentUser();
+        List<Integer> departments = departmentService.findAllChildrenIds(admin.getOrgan());
         for(User user : pageableResult.getItems()){
             Customer customer = customerService.getCustomerByUid(user.getUid(), Const.CUSTOMER_TYPE.ORGAN_CUSTOMER);
             if(customer != null){
@@ -165,7 +171,9 @@ public class CustomerController extends BaseController {
                 if(pc != null){
                     Planner planner = plannerService.getPlanner(pc.getPlannerId());
                     if(planner.getStatus().equals(Const.PLANNER_STATUS.ON)){
-                        customerList.add(customer);
+                        if(departments.contains(customer.getDepartmentId())){
+                            customerList.add(customer);
+                        }
                     }
                 }
 
@@ -316,35 +324,31 @@ public class CustomerController extends BaseController {
         PageableResult<User> pageableResult = userService.findPageUsers(name, page, size);
 
         Admin admin = super.getCurrentUser();
-        List<Department> departments = departmentService.findAllChildren(admin.getOrgan());
+        List<Integer> departments = departmentService.findAllChildrenIds(admin.getOrgan());
         List<Customer> customerList = new ArrayList<Customer>();
         for(User user : pageableResult.getItems()){
             Customer customer = customerService.getCustomerByUid(user.getUid(), null);
             if(customer != null){
                 PlannerCustomer pc = customerService.getPlannerByCustomerId(customer.getCustomerId(), null);
                 if(pc == null){
-                    customerList.add(customer);
+                    if(departments.contains(customer.getDepartmentId())){
+                        customerList.add(customer);
+                    }
                 }else{
                     Planner planner = plannerService.getPlanner(pc.getPlannerId());
                     if(planner.getStatus().equals(Const.PLANNER_STATUS.OFF)){
-                        customer.setOldPlanner(userService.getUser(planner.getUid()).getRealname());
-                        customerList.add(customer);
+                        if(departments.contains(customer.getDepartmentId())){
+                            customer.setOldPlanner(userService.getUser(planner.getUid()).getRealname());
+                            customerList.add(customer);
+                        }
                     }
                 }
 
             }
         }
 
-        List<Customer> list = new ArrayList<Customer>();
-        for(Department department : departments){
-            for(Customer customer : customerList){
-                if(department.getDepartmentId() == customer.getDepartmentId()){
-                    list.add(customer);
-                }
-            }
-        }
 
-        mav.addObject("customers", list);
+        mav.addObject("customers", customerList);
         mav.addObject("users", pageableResult.getItems());
         mav.addObject("customerLevel", dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL));
         mav.addObject("url", "personal/customer");

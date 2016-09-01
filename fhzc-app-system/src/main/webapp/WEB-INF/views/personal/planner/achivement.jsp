@@ -68,10 +68,7 @@
                         </select>
 
                         <label class="control-label" style="margin-left: 20px">月份</label>
-                        <input type="text" class="form-control form_datetime"  data-date-format="yyyy-mm"  id="startDate"  name="startDate" style="width:180px;"/>
-                        <script>
-                            $("#startDate").datepicker({ dateFormat: 'yy-mm',startView: 3, minView: 3, autoclose: true });
-                        </script>
+                        <input type="text" class="form-control form_datetime" data-date-format="yyyy-mm" id="startDate"  name="startDate" style="width:180px;"/>
                         <button type="button" id="button_search" class="btn blue" onclick="formSubmit()" ><i class="icon-search"></i> 查询</button>
                     </div>
                 </form>
@@ -105,11 +102,12 @@
 
 <jsp:include page="../../include/footer.jsp"/>
 <script type="text/javascript" src="<%=contextPath%>/static/Echarts/echarts.js"></script>
-
+<script type="text/javascript" src="<%=contextPath%>/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 <script>
 
 $(function(){
-        $("#startDate").datepicker({ dateFormat: 'yy-mm',startView: 3, minView: 3, autoclose: true });
+
+    $("#startDate").datepicker({ dateFormat: 'yy-mm',startView: 3, minView: 3, autoclose: true });
 
         var area = '${area}';
         var json= $.parseJSON(area);

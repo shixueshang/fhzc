@@ -264,6 +264,9 @@ public class ProductController extends BaseController {
             query.setEndDate(endTime);
         }
 
+        Admin admin  = super.getCurrentUser();
+        List<Integer> departments = departmentService.findAllChildrenIds(admin.getOrgan());
+
         PageableResult<ProductReservation> pageableResult = productService.findPageProductReservations(query, page, size);
         List<ProductReservation> result = new ArrayList<ProductReservation>();
         for (ProductReservation productReservation : pageableResult.getItems()) {
@@ -278,12 +281,14 @@ public class ProductController extends BaseController {
             productReservation.setPlannerNum(planner.getWorkNum());
             productReservation.setPlannerMobile(plannerUser.getMobile());
             productReservation.setPlannerName(plannerUser.getRealname());
-            result.add(productReservation);
+            if(departments.contains(customer.getDepartmentId())){
+                result.add(productReservation);
+            }
         }
 
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("reservations", result);
-
+        mav.addObject("url", "business/product");
         return mav;
     }
 

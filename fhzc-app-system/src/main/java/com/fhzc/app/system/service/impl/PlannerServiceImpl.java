@@ -59,8 +59,10 @@ public class PlannerServiceImpl implements PlannerService {
     }
     
     @Override
-    public PageableResult<Planner> findPagePlanners(int page, int size) {
+    public PageableResult<Planner> findPagePlanners(List<Integer> departments, int page, int size) {
         PlannerExample example = new PlannerExample();
+        PlannerExample.Criteria criteria = example.createCriteria();
+        criteria.andDepartmentIdIn(departments);
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<Planner> list = plannerMapper.selectByExampleWithRowbounds(example, rowBounds);
         return new PageableResult<Planner>(page, size, plannerMapper.countByExample(example), list);
