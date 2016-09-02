@@ -67,13 +67,13 @@ public interface ScoreService {
 
     /**
      * 查询积分列表
-     * @param identity  身份证
+     * @param userIds
      * @param isApprove 审批状态
      * @param page
      * @param size
      * @return
      */
-    PageableResult<ScoreHistory> findPageScores(List<Integer> customerIds, Integer isApprove, int page, int size);
+    PageableResult<ScoreHistory> findPageScores(List<Integer> userIds, Integer isApprove, int page, int size);
     
     void approve(Integer id);
 

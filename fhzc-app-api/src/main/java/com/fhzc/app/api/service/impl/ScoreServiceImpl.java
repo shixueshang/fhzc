@@ -22,11 +22,14 @@ public class ScoreServiceImpl implements ScoreService{
     private ScoreHistoryMapper scoreHistoryMapper;
 
     @Override
-    public List<ScoreHistory> getList(Integer customerId, String type){
+    public List<ScoreHistory> getList(Integer userId, String type){
         ScoreHistoryExample example = new ScoreHistoryExample();
         ScoreHistoryExample.Criteria criteria = example.createCriteria();
 
-        criteria.andUidEqualTo(customerId);
+        if(type.equals(Const.Score.ADD)){
+            criteria.andVaildTimeGreaterThan(new Date());
+        }
+        criteria.andUidEqualTo(userId);
         criteria.andStatusEqualTo(type);
         criteria.andIsVaildEqualTo(Const.SCORE_VAILD.IS_VAILD);
         criteria.andIsApproveEqualTo(Const.Score.IS_APPROVE);
@@ -36,21 +39,21 @@ public class ScoreServiceImpl implements ScoreService{
     }
 
     @Override
-    public List<ScoreHistory> getAvailableList(Integer customerId){
-        List<ScoreHistory> scoreHistories = this.getList(customerId, Const.Score.ADD);
+    public List<ScoreHistory> getAvailableList(Integer userId){
+        List<ScoreHistory> scoreHistories = this.getList(userId, Const.Score.ADD);
         return scoreHistories;
     }
 
 
     @Override
-    public List<ScoreHistory> getFrozen(Integer customerId){
-        List<ScoreHistory> scoreHistories = this.getList(customerId, Const.Score.FROZEN);
+    public List<ScoreHistory> getFrozen(Integer userId){
+        List<ScoreHistory> scoreHistories = this.getList(userId, Const.Score.FROZEN);
         return scoreHistories;
     }
 
     @Override
-    public List<ScoreHistory> getConsume(Integer customerId) {
-        List<ScoreHistory> scoreHistories = this.getList(customerId, Const.Score.CONSUME);
+    public List<ScoreHistory> getConsume(Integer userId) {
+        List<ScoreHistory> scoreHistories = this.getList(userId, Const.Score.CONSUME);
         return scoreHistories;
     }
 
@@ -85,14 +88,14 @@ public class ScoreServiceImpl implements ScoreService{
     }
 
     @Override
-    public List<ScoreHistory> getWillExpired(Integer customerId) {
-        return this.calcWillExpired(this.getAvailableList(customerId));
+    public List<ScoreHistory> getWillExpired(Integer userId) {
+        return this.calcWillExpired(this.getAvailableList(userId));
 
     }
 
     @Override
-    public List<ScoreHistory> getExpiredList(Integer customerId){
-        List<ScoreHistory> scoreHistories = this.getList(customerId, Const.Score.EXPIRE);
+    public List<ScoreHistory> getExpiredList(Integer userId){
+        List<ScoreHistory> scoreHistories = this.getList(userId, Const.Score.EXPIRE);
         return scoreHistories;
     }
 
@@ -106,11 +109,11 @@ public class ScoreServiceImpl implements ScoreService{
     }
 
     @Override
-    public List<ScoreHistory> getList(Integer customerId, String type, Date start, Date end){
+    public List<ScoreHistory> getList(Integer userId, String type, Date start, Date end){
         ScoreHistoryExample example = new ScoreHistoryExample();
         ScoreHistoryExample.Criteria criteria = example.createCriteria();
 
-        criteria.andUidEqualTo(customerId);
+        criteria.andUidEqualTo(userId);
         criteria.andStatusEqualTo(type);
         criteria.andIsVaildEqualTo(Const.SCORE_VAILD.IS_VAILD);
         criteria.andIsApproveEqualTo(Const.Score.IS_APPROVE);
@@ -120,28 +123,28 @@ public class ScoreServiceImpl implements ScoreService{
     }
 
     @Override
-    public List<ScoreHistory> getAvailableList(Integer customerId, Date start, Date end){
-        List<ScoreHistory> scoreHistories = this.getList(customerId, Const.Score.ADD,start,end);
+    public List<ScoreHistory> getAvailableList(Integer userId, Date start, Date end){
+        List<ScoreHistory> scoreHistories = this.getList(userId, Const.Score.ADD,start,end);
         return scoreHistories;
     }
 
     @Override
-    public List<ScoreHistory> getFrozen(Integer customerId, Date start, Date end){
-        List<ScoreHistory> scoreHistories = this.getList(customerId, Const.Score.FROZEN,start,end);
+    public List<ScoreHistory> getFrozen(Integer userId, Date start, Date end){
+        List<ScoreHistory> scoreHistories = this.getList(userId, Const.Score.FROZEN,start,end);
         return scoreHistories;
     }
 
     @Override
-    public List<ScoreHistory> getWillExpired(Integer customerId, Date start, Date end){
-        return this.calcWillExpired(this.getAvailableList(customerId,start,end));
+    public List<ScoreHistory> getWillExpired(Integer userId, Date start, Date end){
+        return this.calcWillExpired(this.getAvailableList(userId,start,end));
     }
 
     @Override
-    public List<ScoreHistory> getAllList(Integer customerId, Date start, Date end){
+    public List<ScoreHistory> getAllList(Integer userId, Date start, Date end){
         ScoreHistoryExample example = new ScoreHistoryExample();
         ScoreHistoryExample.Criteria criteria = example.createCriteria();
 
-        criteria.andUidEqualTo(customerId);
+        criteria.andUidEqualTo(userId);
         criteria.andIsVaildEqualTo(Const.SCORE_VAILD.IS_VAILD);
         criteria.andIsApproveEqualTo(Const.Score.IS_APPROVE);
         criteria.andCtimeBetween(start,end);

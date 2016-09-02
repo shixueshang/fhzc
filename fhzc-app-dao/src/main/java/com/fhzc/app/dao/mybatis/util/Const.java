@@ -514,5 +514,42 @@ public class Const {
 
         public static final String OFF = "off";
     }
+
+
+    /**
+     * 权益状态
+     */
+    public static class RIGHTS_STATUS{
+        /**
+         * 预约中
+         */
+        public static int ORDER_ING = 0;
+
+        /**
+         * 预约成功
+         */
+        public static int ORDER_SUCCESS = 1;
+
+        /**
+         * 预约失败
+         */
+        public static int ORDER_FAILED = 2;
+
+        /**
+         * 客户取消预约
+         */
+        public static int ORDER_CANCEL = 3;
+
+        /**
+         * 客户消费
+         */
+        public static int CUSTOMER_SPAEND = 4;
+
+        /**
+         * 客户缺席
+         */
+        public static int CUSTOMER_ABSEND = 5;
+
+    }
 }
 

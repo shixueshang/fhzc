@@ -31,9 +31,6 @@ public class ScoreApiController extends BaseController {
     @Resource
     private ScoreService scoreService;
 
-    @Resource
-    private CustomerService customerService;
-
     /**
      * 积分记录
      * @return

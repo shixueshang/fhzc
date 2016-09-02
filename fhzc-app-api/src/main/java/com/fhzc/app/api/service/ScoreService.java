@@ -10,21 +10,31 @@ import java.util.List;
  */
 public interface ScoreService {
 
-    List<ScoreHistory> getList(Integer customerId, String type);
-    List<ScoreHistory> getAvailableList(Integer customerId);
-    List<ScoreHistory> getFrozen(Integer customerId);
-    List<ScoreHistory> getWillExpired(Integer customerId);
-    List<ScoreHistory> getExpiredList(Integer customerId);
+    List<ScoreHistory> getList(Integer userId, String type);
+
+    List<ScoreHistory> getAvailableList(Integer userId);
+
+    List<ScoreHistory> getFrozen(Integer userId);
+
+    List<ScoreHistory> getWillExpired(Integer userId);
+
+    List<ScoreHistory> getExpiredList(Integer userId);
+
     List<ScoreHistory> calcWillExpired(List<ScoreHistory> scoreHistories);
+
     Integer sumScore(List<ScoreHistory> scoreHistories);
 
-    List<ScoreHistory> getList(Integer customerId, String type, Date start, Date end);
-    List<ScoreHistory> getAvailableList(Integer customerId, Date start, Date end);
-    List<ScoreHistory> getFrozen(Integer customerId, Date start, Date end);
-    List<ScoreHistory> getWillExpired(Integer customerId, Date start, Date end);
-    List<ScoreHistory> getAllList(Integer customerId, Date start, Date end);
+    List<ScoreHistory> getList(Integer userId, String type, Date start, Date end);
 
-    List<ScoreHistory> getConsume(Integer cutomerId);
+    List<ScoreHistory> getAvailableList(Integer userId, Date start, Date end);
+
+    List<ScoreHistory> getFrozen(Integer userId, Date start, Date end);
+
+    List<ScoreHistory> getWillExpired(Integer userId, Date start, Date end);
+
+    List<ScoreHistory> getAllList(Integer userId, Date start, Date end);
+
+    List<ScoreHistory> getConsume(Integer userId);
 
     int add(ScoreHistory scoreHistory);
 
