@@ -185,12 +185,12 @@ public class LoginController extends BaseController {
 
     /**
      * 忘记密码
-     * @param mobile    登录名
+     * @param mobile    手机号
      * @param newPwd    新密码
      * @param confirmPwd    确认新密码
      * @return
      */
-    @RequestMapping(value = "/api/password/forget", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/auth/forget", method = RequestMethod.POST)
     @ResponseBody
     public ApiJsonResult forget(String mobile, String newPwd, String confirmPwd){
         User user = userService.getUserByMobile(mobile);
