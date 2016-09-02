@@ -288,7 +288,7 @@
                                             <div class="control-group">
                                                 <label class="control-label">积分系数(%)<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <input type="text" name="scoreFactor" value="${product.scoreFactor}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="scoreFactor" value="${product.scoreFactor*100}" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
