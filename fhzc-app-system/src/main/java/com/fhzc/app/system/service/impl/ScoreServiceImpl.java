@@ -131,6 +131,14 @@ public class ScoreServiceImpl implements ScoreService {
         scoreHistoryMapper.updateByPrimaryKey(scoreHistory);
 
     }
+    
+    @Override
+    public void approveFailed(Integer id) {
+        ScoreHistory scoreHistory = scoreHistoryMapper.selectByPrimaryKey(id);
+        scoreHistory.setIsApprove(Const.APPROVE_STATUS.FAILED_APPROVED);
+        scoreHistoryMapper.updateByPrimaryKey(scoreHistory);
+
+    }
 
 
 }

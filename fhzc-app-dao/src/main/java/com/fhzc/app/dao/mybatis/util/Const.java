@@ -208,7 +208,6 @@ public class Const {
         public static final int IS_APPROVE = 1;
 
         public static final int NOT_APPROVE = 0;
-
     }
 
     public static class CUSTOMER_TYPE{
@@ -279,6 +278,11 @@ public class Const {
          * 已审批
          */
         public static final Integer APPROVED = 1;
+        
+        /**
+         * 打回审批
+         */
+        public static final Integer FAILED_APPROVED = 2;
     }
 
     public static class RISK{

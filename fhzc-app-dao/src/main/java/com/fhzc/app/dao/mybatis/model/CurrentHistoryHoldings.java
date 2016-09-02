@@ -33,8 +33,18 @@ public class CurrentHistoryHoldings {
     private String earningRate;
 
     private BigDecimal totalAmount;
+    
+    private String payment;
 
-    public BigDecimal getTotalAmount() {
+    public String getPayment() {
+		return payment;
+	}
+
+	public void setPayment(String payment) {
+		this.payment = payment;
+	}
+
+	public BigDecimal getTotalAmount() {
         return totalAmount;
     }
 

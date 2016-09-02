@@ -63,7 +63,7 @@
                             <h4 class="modal-title">提示信息</h4>
                         </div>
                         <div class="modal-body">
-                            <p>您确认要审批吗？</p>
+                            <p>您确认要审批通过吗？</p>
                         </div>
                         <div class="modal-footer">
                             <input type="hidden" id="url"/>
@@ -74,6 +74,27 @@
                 </div>
             </div>
 
+       <!-- 审批确认 -->
+            <div class="modal fade" id="approveFailedModel">
+                <div class="modal-dialog">
+                    <div class="modal-content message_align">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">提示信息</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>您确认要打回审批吗？</p>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="hidden" id="url"/>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <a  onclick="urlSubmit()" class="btn btn-success" data-dismiss="modal">确定</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
             <!-- 批量审批确认 -->
             <div class="modal fade" id="batchApproveModel">
                 <div class="modal-dialog">
@@ -83,7 +104,7 @@
                             <h4 class="modal-title">提示信息</h4>
                         </div>
                         <div class="modal-body">
-                            <p>您确认要审批选中记录吗？</p>
+                            <p>您确认要审批通过选中记录吗？</p>
                         </div>
                         <div class="modal-footer">
                             <input type="hidden" id="batchUrl"/>
@@ -105,6 +126,7 @@
                         	<option value="">全部</option>
                             <option value="0">待审批</option>
                             <option value="1">已审批</option>
+                            <option value="2">审批失败</option>
                         </select>
 
                         <button type="submit" class="btn blue"><i class="icon-search"></i> 查询</button>
@@ -168,11 +190,15 @@
                                                 <c:when test="${score.isApprove == 1}">
                                                     <span class="label label-success">已审批</span>
                                                 </c:when>
+                                                 <c:when test="${score.isApprove == 2}">
+                                                    <span class="label label-success">审批失败</span>
+                                                 </c:when>
                                             </c:choose>
                                         </td>
                                         <td>
                                         <c:if test = "${score.isApprove == 0 }">
                                         <a href="javascript:void(0)" onclick="approveById('<%=contextPath%>/business/score/approve/${score.id}')" class="btn mini purple button_approve" data-toggle="modal" data-target="#confirm-delete"><i class="icon-edit"></i>审批</a>
+                                        <a href="javascript:void(0)" onclick="approveFailedById('<%=contextPath%>/business/score/approveFailed/${score.id}')" class="btn mini purple button_approve" data-toggle="modal" data-target="#confirm-delete"><i class="icon-edit"></i>打回</a>
                                        </c:if>
                                         </td>
                                     </tr>
@@ -215,6 +241,10 @@
         $('#approveModel').modal();
     }
 
+    function approveFailedById(url){
+        $('#url').val(url);//给会话中的隐藏属性URL赋值
+        $('#approveFailedModel').modal();
+    }
     function urlSubmit(){
         var url = $.trim($("#url").val());//获取会话中的隐藏属性URL
         $.ajax({
@@ -231,7 +261,8 @@
             }
         });
     }
-
+    
+    
     function batchApprove(batchUrl){
 
         var arr = new Array();

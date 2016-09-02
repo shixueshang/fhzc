@@ -199,7 +199,7 @@
 
                     $.each(data.children, function(i,val){
                         tBody += "<tr> <td>"+val.productName+"</td> <td>"+val.amount / 10000+"</td> <td>"+getFormatDate(new Date(val.foundDay))+"</td> <td>"+val.dividendDay+"</td> <td>"+val.buyDay+"</td> " +
-                        "<td>"+val.paymentDay+"</td> <td>"+val.serial+"</td> <td>"+val.bank+"</td> <td>"+val.bankAccount+"</td> <td>"+val.lot+"</td> <td>"+val.investTerm+"</td> <td>"+val.earningRate+"</td></tr>";
+                        "<td>"+getFormatDate(new Date(val.paymentDay))+"</td> <td>"+val.serial+"</td> <td>"+val.bank+"</td> <td>"+val.bankAccount+"</td> <td>"+val.lot+"</td> <td>"+val.investTerm+"</td> <td>"+val.earningRate+"</td></tr>";
 
                     });
 
@@ -224,7 +224,7 @@
 
                     $.each(data.children, function(i,val){
                         tBody += "<tr> <td>"+val.productName+"</td> <td>"+val.amount / 10000+"</td> <td>"+getFormatDate(new Date(val.foundDay))+"</td> <td>"+val.dividendDay+"</td> <td>"+val.buyDay+"</td> " +
-                        "<td>"+getFormatDate(new Date(val.paymentDay))+"</td> <td>"+""+"</td> <td>"+val.bank+"</td> <td>"+val.bankAccount+"</td> <td>"+val.lot+"</td> <td>"+val.investTerm+"</td> <td>"+val.earningRate+"</td></tr>";
+                        "<td>"+getFormatDate(new Date(val.paymentDay))+"</td> <td>"+val.payment+"</td> <td>"+val.bank+"</td> <td>"+val.bankAccount+"</td> <td>"+val.lot+"</td> <td>"+val.investTerm+"</td> <td>"+val.earningRate+"</td></tr>";
 
                     });
 
