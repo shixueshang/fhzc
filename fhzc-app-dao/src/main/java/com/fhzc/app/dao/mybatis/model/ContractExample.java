@@ -452,6 +452,76 @@ public class ContractExample {
             return (Criteria) this;
         }
 
+        public Criteria andCustomerNameIsNull() {
+            addCriterion("`customer_name` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerNameIsNotNull() {
+            addCriterion("`customer_name` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerNameEqualTo(String value) {
+            addCriterion("`customer_name` =", value, "customerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerNameNotEqualTo(String value) {
+            addCriterion("`customer_name` <>", value, "customerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerNameGreaterThan(String value) {
+            addCriterion("`customer_name` >", value, "customerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerNameGreaterThanOrEqualTo(String value) {
+            addCriterion("`customer_name` >=", value, "customerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerNameLessThan(String value) {
+            addCriterion("`customer_name` <", value, "customerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerNameLessThanOrEqualTo(String value) {
+            addCriterion("`customer_name` <=", value, "customerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerNameLike(String value) {
+            addCriterion("`customer_name` like", value, "customerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerNameNotLike(String value) {
+            addCriterion("`customer_name` not like", value, "customerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerNameIn(List<String> values) {
+            addCriterion("`customer_name` in", values, "customerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerNameNotIn(List<String> values) {
+            addCriterion("`customer_name` not in", values, "customerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerNameBetween(String value1, String value2) {
+            addCriterion("`customer_name` between", value1, value2, "customerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomerNameNotBetween(String value1, String value2) {
+            addCriterion("`customer_name` not between", value1, value2, "customerName");
+            return (Criteria) this;
+        }
+
         public Criteria andPlannerIdIsNull() {
             addCriterion("`planner_id` is null");
             return (Criteria) this;
@@ -989,6 +1059,66 @@ public class ContractExample {
 
         public Criteria andProductExpireDayNotBetween(Date value1, Date value2) {
             addCriterionForJDBCDate("`product_expire_day` not between", value1, value2, "productExpireDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpireDayIsNull() {
+            addCriterion("`expire_day` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpireDayIsNotNull() {
+            addCriterion("`expire_day` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpireDayEqualTo(Date value) {
+            addCriterionForJDBCDate("`expire_day` =", value, "expireDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpireDayNotEqualTo(Date value) {
+            addCriterionForJDBCDate("`expire_day` <>", value, "expireDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpireDayGreaterThan(Date value) {
+            addCriterionForJDBCDate("`expire_day` >", value, "expireDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpireDayGreaterThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("`expire_day` >=", value, "expireDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpireDayLessThan(Date value) {
+            addCriterionForJDBCDate("`expire_day` <", value, "expireDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpireDayLessThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("`expire_day` <=", value, "expireDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpireDayIn(List<Date> values) {
+            addCriterionForJDBCDate("`expire_day` in", values, "expireDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpireDayNotIn(List<Date> values) {
+            addCriterionForJDBCDate("`expire_day` not in", values, "expireDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpireDayBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("`expire_day` between", value1, value2, "expireDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpireDayNotBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("`expire_day` not between", value1, value2, "expireDay");
             return (Criteria) this;
         }
 

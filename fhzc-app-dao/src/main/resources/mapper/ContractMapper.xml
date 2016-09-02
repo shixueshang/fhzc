@@ -7,6 +7,7 @@
     <result column="serial" property="serial" jdbcType="VARCHAR" />
     <result column="product_id" property="productId" jdbcType="INTEGER" />
     <result column="customer_id" property="customerId" jdbcType="INTEGER" />
+    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
     <result column="planner_id" property="plannerId" jdbcType="INTEGER" />
     <result column="buy_time" property="buyTime" jdbcType="DATE" />
     <result column="amount_usd" property="amountUsd" jdbcType="INTEGER" />
@@ -16,6 +17,7 @@
     <result column="product_found_day" property="productFoundDay" jdbcType="DATE" />
     <result column="value_date" property="valueDate" jdbcType="DATE" />
     <result column="product_expire_day" property="productExpireDay" jdbcType="DATE" />
+    <result column="expire_day" property="expireDay" jdbcType="DATE" />
     <result column="bank" property="bank" jdbcType="VARCHAR" />
     <result column="bank_account" property="bankAccount" jdbcType="VARCHAR" />
     <result column="lot" property="lot" jdbcType="VARCHAR" />
@@ -90,11 +92,11 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    `id`, `period`, `serial`, `product_id`, `customer_id`, `planner_id`, `buy_time`, 
-    `amount_usd`, `amount_rmb`, `annualised`, `invaild`, `product_found_day`, `value_date`, 
-    `product_expire_day`, `bank`, `bank_account`, `lot`, `duration_month`, `duration_day`, 
-    `pub_agent`, `branch_agent`, `is_member`, `memo`, `ctime`, `earning_rate`, `distribute_earning`, 
-    `payment`, `has_passport`
+    `id`, `period`, `serial`, `product_id`, `customer_id`, `customer_name`, `planner_id`, 
+    `buy_time`, `amount_usd`, `amount_rmb`, `annualised`, `invaild`, `product_found_day`, 
+    `value_date`, `product_expire_day`, `expire_day`, `bank`, `bank_account`, `lot`, 
+    `duration_month`, `duration_day`, `pub_agent`, `branch_agent`, `is_member`, `memo`, 
+    `ctime`, `earning_rate`, `distribute_earning`, `payment`, `has_passport`
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.ContractExample" >
     select
@@ -133,25 +135,25 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into `contract` (`period`, `serial`, `product_id`, 
-      `customer_id`, `planner_id`, `buy_time`, 
-      `amount_usd`, `amount_rmb`, `annualised`, 
-      `invaild`, `product_found_day`, `value_date`, 
-      `product_expire_day`, `bank`, `bank_account`, 
-      `lot`, `duration_month`, `duration_day`, 
-      `pub_agent`, `branch_agent`, `is_member`, 
-      `memo`, `ctime`, `earning_rate`, 
-      `distribute_earning`, `payment`, `has_passport`
-      )
+      `customer_id`, `customer_name`, `planner_id`, 
+      `buy_time`, `amount_usd`, `amount_rmb`, 
+      `annualised`, `invaild`, `product_found_day`, 
+      `value_date`, `product_expire_day`, `expire_day`, 
+      `bank`, `bank_account`, `lot`, 
+      `duration_month`, `duration_day`, `pub_agent`, 
+      `branch_agent`, `is_member`, `memo`, 
+      `ctime`, `earning_rate`, `distribute_earning`, 
+      `payment`, `has_passport`)
     values (#{period,jdbcType=VARCHAR}, #{serial,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER}, 
-      #{customerId,jdbcType=INTEGER}, #{plannerId,jdbcType=INTEGER}, #{buyTime,jdbcType=DATE}, 
-      #{amountUsd,jdbcType=INTEGER}, #{amountRmb,jdbcType=INTEGER}, #{annualised,jdbcType=INTEGER}, 
-      #{invaild,jdbcType=TINYINT}, #{productFoundDay,jdbcType=DATE}, #{valueDate,jdbcType=DATE}, 
-      #{productExpireDay,jdbcType=DATE}, #{bank,jdbcType=VARCHAR}, #{bankAccount,jdbcType=VARCHAR}, 
-      #{lot,jdbcType=VARCHAR}, #{durationMonth,jdbcType=INTEGER}, #{durationDay,jdbcType=INTEGER}, 
-      #{pubAgent,jdbcType=VARCHAR}, #{branchAgent,jdbcType=VARCHAR}, #{isMember,jdbcType=TINYINT}, 
-      #{memo,jdbcType=VARCHAR}, #{ctime,jdbcType=TIMESTAMP}, #{earningRate,jdbcType=VARCHAR}, 
-      #{distributeEarning,jdbcType=VARCHAR}, #{payment,jdbcType=VARCHAR}, #{hasPassport,jdbcType=TINYINT}
-      )
+      #{customerId,jdbcType=INTEGER}, #{customerName,jdbcType=VARCHAR}, #{plannerId,jdbcType=INTEGER}, 
+      #{buyTime,jdbcType=DATE}, #{amountUsd,jdbcType=INTEGER}, #{amountRmb,jdbcType=INTEGER}, 
+      #{annualised,jdbcType=INTEGER}, #{invaild,jdbcType=TINYINT}, #{productFoundDay,jdbcType=DATE}, 
+      #{valueDate,jdbcType=DATE}, #{productExpireDay,jdbcType=DATE}, #{expireDay,jdbcType=DATE}, 
+      #{bank,jdbcType=VARCHAR}, #{bankAccount,jdbcType=VARCHAR}, #{lot,jdbcType=VARCHAR}, 
+      #{durationMonth,jdbcType=INTEGER}, #{durationDay,jdbcType=INTEGER}, #{pubAgent,jdbcType=VARCHAR}, 
+      #{branchAgent,jdbcType=VARCHAR}, #{isMember,jdbcType=TINYINT}, #{memo,jdbcType=VARCHAR}, 
+      #{ctime,jdbcType=TIMESTAMP}, #{earningRate,jdbcType=VARCHAR}, #{distributeEarning,jdbcType=VARCHAR}, 
+      #{payment,jdbcType=VARCHAR}, #{hasPassport,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.Contract" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
@@ -170,6 +172,9 @@
       </if>
       <if test="customerId != null" >
         `customer_id`,
+      </if>
+      <if test="customerName != null" >
+        `customer_name`,
       </if>
       <if test="plannerId != null" >
         `planner_id`,
@@ -197,6 +202,9 @@
       </if>
       <if test="productExpireDay != null" >
         `product_expire_day`,
+      </if>
+      <if test="expireDay != null" >
+        `expire_day`,
       </if>
       <if test="bank != null" >
         `bank`,
@@ -254,6 +262,9 @@
       <if test="customerId != null" >
         #{customerId,jdbcType=INTEGER},
       </if>
+      <if test="customerName != null" >
+        #{customerName,jdbcType=VARCHAR},
+      </if>
       <if test="plannerId != null" >
         #{plannerId,jdbcType=INTEGER},
       </if>
@@ -280,6 +291,9 @@
       </if>
       <if test="productExpireDay != null" >
         #{productExpireDay,jdbcType=DATE},
+      </if>
+      <if test="expireDay != null" >
+        #{expireDay,jdbcType=DATE},
       </if>
       <if test="bank != null" >
         #{bank,jdbcType=VARCHAR},
@@ -349,6 +363,9 @@
       <if test="record.customerId != null" >
         `customer_id` = #{record.customerId,jdbcType=INTEGER},
       </if>
+      <if test="record.customerName != null" >
+        `customer_name` = #{record.customerName,jdbcType=VARCHAR},
+      </if>
       <if test="record.plannerId != null" >
         `planner_id` = #{record.plannerId,jdbcType=INTEGER},
       </if>
@@ -375,6 +392,9 @@
       </if>
       <if test="record.productExpireDay != null" >
         `product_expire_day` = #{record.productExpireDay,jdbcType=DATE},
+      </if>
+      <if test="record.expireDay != null" >
+        `expire_day` = #{record.expireDay,jdbcType=DATE},
       </if>
       <if test="record.bank != null" >
         `bank` = #{record.bank,jdbcType=VARCHAR},
@@ -430,6 +450,7 @@
       `serial` = #{record.serial,jdbcType=VARCHAR},
       `product_id` = #{record.productId,jdbcType=INTEGER},
       `customer_id` = #{record.customerId,jdbcType=INTEGER},
+      `customer_name` = #{record.customerName,jdbcType=VARCHAR},
       `planner_id` = #{record.plannerId,jdbcType=INTEGER},
       `buy_time` = #{record.buyTime,jdbcType=DATE},
       `amount_usd` = #{record.amountUsd,jdbcType=INTEGER},
@@ -439,6 +460,7 @@
       `product_found_day` = #{record.productFoundDay,jdbcType=DATE},
       `value_date` = #{record.valueDate,jdbcType=DATE},
       `product_expire_day` = #{record.productExpireDay,jdbcType=DATE},
+      `expire_day` = #{record.expireDay,jdbcType=DATE},
       `bank` = #{record.bank,jdbcType=VARCHAR},
       `bank_account` = #{record.bankAccount,jdbcType=VARCHAR},
       `lot` = #{record.lot,jdbcType=VARCHAR},
@@ -469,6 +491,9 @@
       <if test="customerId != null" >
         `customer_id` = #{customerId,jdbcType=INTEGER},
       </if>
+      <if test="customerName != null" >
+        `customer_name` = #{customerName,jdbcType=VARCHAR},
+      </if>
       <if test="plannerId != null" >
         `planner_id` = #{plannerId,jdbcType=INTEGER},
       </if>
@@ -495,6 +520,9 @@
       </if>
       <if test="productExpireDay != null" >
         `product_expire_day` = #{productExpireDay,jdbcType=DATE},
+      </if>
+      <if test="expireDay != null" >
+        `expire_day` = #{expireDay,jdbcType=DATE},
       </if>
       <if test="bank != null" >
         `bank` = #{bank,jdbcType=VARCHAR},
@@ -547,6 +575,7 @@
     set `serial` = #{serial,jdbcType=VARCHAR},
       `product_id` = #{productId,jdbcType=INTEGER},
       `customer_id` = #{customerId,jdbcType=INTEGER},
+      `customer_name` = #{customerName,jdbcType=VARCHAR},
       `planner_id` = #{plannerId,jdbcType=INTEGER},
       `buy_time` = #{buyTime,jdbcType=DATE},
       `amount_usd` = #{amountUsd,jdbcType=INTEGER},
@@ -556,6 +585,7 @@
       `product_found_day` = #{productFoundDay,jdbcType=DATE},
       `value_date` = #{valueDate,jdbcType=DATE},
       `product_expire_day` = #{productExpireDay,jdbcType=DATE},
+      `expire_day` = #{expireDay,jdbcType=DATE},
       `bank` = #{bank,jdbcType=VARCHAR},
       `bank_account` = #{bankAccount,jdbcType=VARCHAR},
       `lot` = #{lot,jdbcType=VARCHAR},
