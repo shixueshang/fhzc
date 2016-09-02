@@ -62,8 +62,28 @@ public class Contract {
     private String payment;
 
     private Byte hasPassport;
+    
+    private String plannerName;
+    
+    private String productName;
 
-    public Integer getId() {
+    public String getPlannerName() {
+		return plannerName;
+	}
+
+	public void setPlannerName(String plannerName) {
+		this.plannerName = plannerName;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public Integer getId() {
         return id;
     }
 

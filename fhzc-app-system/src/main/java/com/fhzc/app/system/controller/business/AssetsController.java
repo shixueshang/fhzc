@@ -205,10 +205,11 @@ public class AssetsController extends BaseController {
             holdings.setBuyDay(product.getBuyDay());
             holdings.setDividendDay(product.getDividendDay());
             holdings.setPaymentDay(assetsHistory.getPaymentDate());
+            holdings.setPayment(assetsHistory.getPayment());
             holdings.setBank(assetsHistory.getBank());
             holdings.setBankAccount(assetsHistory.getBankAccount());
             holdings.setEarningRate(assetsHistory.getEarningRate());
-            holdings.setFoundDay(assetsHistory.getProductFoundDay());
+            holdings.setFoundDay(product.getFoundDay());
             holdings.setLot(assetsHistory.getLot());
            // holdings.setTotalAmount();
             result.add(holdings);

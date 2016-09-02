@@ -75,6 +75,16 @@ public interface ScoreService {
      */
     PageableResult<ScoreHistory> findPageScores(List<Integer> userIds, Integer isApprove, int page, int size);
     
+    /**
+     * 审批积分通过
+     * @param id
+     */
     void approve(Integer id);
+    
+    /**
+     * 审批积分失败
+     * @param id
+     */
+    void approveFailed(Integer id);
 
 }

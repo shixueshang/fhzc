@@ -189,6 +189,18 @@ public class ScoreHistoryController extends BaseController {
         scoreService.approve(scoreId);
         return "redirect:/business/score/list";
     }
+    
+    /**
+     * 积分审批
+     * @param scoreId
+     * @return
+     */
+    @RequestMapping(value = "/approveFailed/{id}", method = RequestMethod.GET)
+    @SystemControllerLog(description = "积分审批失败")
+    public String approveFailed(@PathVariable(value = "id") Integer scoreId){
+        scoreService.approveFailed(scoreId);
+        return "redirect:/business/score/list";
+    }
 
     /**
      * 批量审批

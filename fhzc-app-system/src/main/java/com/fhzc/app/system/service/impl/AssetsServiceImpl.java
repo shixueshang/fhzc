@@ -80,8 +80,10 @@ public class AssetsServiceImpl implements AssetsService {
         AssetsHistoryExample example = new AssetsHistoryExample();
         AssetsHistoryExample.Criteria criteria = example.createCriteria();
         criteria.andCustomerIdEqualTo(customerId);
-        criteria.andExpireDayLessThanOrEqualTo(new Date());
-        criteria.andPaymentDateIsNotNull();
+        criteria.andPaymentDateLessThanOrEqualTo(new Date());
+//        criteria.andExpireDayLessThanOrEqualTo(new Date());
+        criteria.andTypeEqualTo("redemption");
+//        criteria.andPaymentDateIsNull();
         return assetsHistoryMapper.selectByExample(example);
     }
 
