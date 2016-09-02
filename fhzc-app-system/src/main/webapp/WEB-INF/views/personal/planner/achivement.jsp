@@ -111,15 +111,14 @@ $(function(){
         var company = '${company}';
         var json= $.parseJSON(area);
         if(json.length == 1){
-            console.info(company)
             var companyJson = $.parseJSON(company);
             $("#area").append("<option value='"+json[0].departmentId+"'>"+json[0].title+"</option>");
-            $("#subCompany").append("<option value='"+companyJson[0].departmentId+"'>"+companyJson[0].title+"</option>");
+            $("#subCompany").append("<option value='"+companyJson.departmentId+"'>"+companyJson.title+"</option>");
             $.ajax({
                 type: "GET",
                 url: "<%=contextPath%>/personal/planner/achivement/getDepartment",
                 dataType: "json",
-                data: { "departmentId": companyJson[0].departmentId },
+                data: { "departmentId": companyJson.departmentId },
                 success: function(req) {
                     $.each(req.children, function(i,val){
                         $("#team").append("<option value='"+val.departmentId+"'>"+val.title+"</option>");
@@ -135,6 +134,7 @@ $(function(){
             $.each(json, function(i,val){
                 $("#area").append("<option value='"+val.departmentId+"'>"+val.title+"</option>");
             });
+            $("#subCompany").append("<option value='0'>全部</option>");
         }
 
         var ele = {
@@ -152,17 +152,17 @@ $(function(){
             },
             in_change:function(){
                 $('#area').change(function(){
-                    var subCompany = $('#subCompany').val();
+                    var area = $('#area').val();
                     $.ajax({
                         type: "GET",
                         url: "<%=contextPath%>/personal/planner/achivement/getDepartment",
                         dataType: "json",
-                        data: { "departmentId": subCompany },
+                        data: { "departmentId": area },
                         success: function(req) {
-                            $("#team").empty();
-                            $("#team").append("<option value='0'>全部</option>");
+                            $("#subCompany").empty();
+                            $("#subCompany").append("<option value='0'>全部</option>");
                             $.each(req.children, function(i,val){
-                                $("#team").append("<option value='"+val.departmentId+"'>"+val.title+"</option>");
+                                $("#subCompany").append("<option value='"+val.departmentId+"'>"+val.title+"</option>");
                             });
 
                         },
@@ -174,6 +174,27 @@ $(function(){
             }
         }
 ele.init();
+
+    $('#subCompany').change(function(){
+        var subCompany = $('#subCompany').val();
+        $.ajax({
+            type: "GET",
+            url: "<%=contextPath%>/personal/planner/achivement/getDepartment",
+            dataType: "json",
+            data: { "departmentId": subCompany },
+            success: function(req) {
+                $("#team").empty();
+                $("#team").append("<option value='0'>全部</option>");
+                $.each(req.children, function(i,val){
+                    $("#team").append("<option value='"+val.departmentId+"'>"+val.title+"</option>");
+                });
+
+            },
+            error: function() {
+
+            }
+        });
+    });
 
     });
 

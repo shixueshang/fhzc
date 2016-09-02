@@ -151,6 +151,7 @@ public class PersonalController extends BaseController {
             map.put("amountRMB",asset.getAmountRmb());
             map.put("period",asset.getPeriod());
 
+            map.put("productType",product.getProductType());
             map.put("name",product.getName());
             map.put("foundDay",product.getFoundDay());
             map.put("valueDay",product.getValueDay());
