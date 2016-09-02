@@ -1,7 +1,6 @@
 package com.fhzc.app.api.service.impl;
 
 import com.fhzc.app.api.service.ScoreService;
-import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.dao.mybatis.inter.ScoreHistoryMapper;
 import com.fhzc.app.dao.mybatis.model.ScoreHistory;
 import com.fhzc.app.dao.mybatis.model.ScoreHistoryExample;
@@ -54,6 +53,22 @@ public class ScoreServiceImpl implements ScoreService{
         List<ScoreHistory> scoreHistories = this.getList(customerId, Const.Score.CONSUME);
         return scoreHistories;
     }
+
+    @Override
+    public int add(ScoreHistory scoreHistory) {
+        return scoreHistoryMapper.insert(scoreHistory);
+    }
+
+    @Override
+    public int delete(Integer uid, Integer eventId, String fromType) {
+        ScoreHistoryExample example = new ScoreHistoryExample();
+        ScoreHistoryExample.Criteria criteria = example.createCriteria();
+        criteria.andUidEqualTo(uid);
+        criteria.andEventIdEqualTo(eventId);
+        criteria.andFromTypeEqualTo(fromType);
+        return scoreHistoryMapper.deleteByExample(example);
+    }
+
 
     @Override
     public List<ScoreHistory> calcWillExpired(List<ScoreHistory> scoreHistories){
