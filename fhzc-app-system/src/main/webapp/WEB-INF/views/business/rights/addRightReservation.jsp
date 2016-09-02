@@ -161,7 +161,7 @@
                                             <div class="form-actions">
                                                 <input name="id" type="hidden" value="${right.id}" />
                                                 <button type="submit" id="submit_btn" class="btn blue"><i class="icon-ok"></i> 添加</button>
-                                                <input name="flag" id="flag" type="hidden" value="${flag}" />
+                                               <!--   <input name="flag" id="flag" type="hidden" value="${flag}" />-->
                                             </div>
                                         </form>
                                         <!-- END FORM-->
@@ -185,9 +185,9 @@
 
 <script>
     $(function(){
-    	if($("#flag").val() == "yes"){
-    		alert("该客户已预约了此时间段的该权益消费");
-    	}
+    	//if($("#flag").val() == "yes"){
+    		//alert("该客户已预约了此时间段的该权益消费");
+    	//}
         $("#checkPhone").click(function () {
             var phoneNum = $("#phoneNum").val();
             if(phoneNum == null || phoneNum == ''){
