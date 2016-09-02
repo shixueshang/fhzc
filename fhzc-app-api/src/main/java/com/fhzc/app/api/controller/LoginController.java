@@ -164,16 +164,16 @@ public class LoginController extends BaseController {
 
     /**
      * 修改密码
+     * @param userId
      * @param newPwd  新密码
      * @param confirmPwd  确认密码
      * @return
      */
     @RequestMapping(value = "/api/password/reset", method = RequestMethod.POST)
     @ResponseBody
-    public ApiJsonResult modify(String newPwd, String confirmPwd) {
+    public ApiJsonResult modify(Integer userId, String newPwd, String confirmPwd) {
 
-        User user = getCurrentUser();
-
+        User user = userService.getUser(userId);
         if(!newPwd.equals(confirmPwd)){
             throw new BadRequestException("两次输入的密码不一致");
         }

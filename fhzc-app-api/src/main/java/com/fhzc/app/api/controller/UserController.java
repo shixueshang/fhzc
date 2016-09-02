@@ -1,5 +1,6 @@
 package com.fhzc.app.api.controller;
 
+import com.fhzc.app.api.exception.BadRequestException;
 import com.fhzc.app.api.service.*;
 import com.fhzc.app.api.tools.*;
 import com.fhzc.app.dao.mybatis.model.*;
@@ -209,8 +210,10 @@ public class UserController extends BaseController {
     @RequestMapping(value = "/api/mod/login", method = RequestMethod.POST)
     @ResponseBody
     public ApiJsonResult modLogin(String login){
-        if(login.trim() == ""){
-            return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST);
+
+        User u = userService.getUserByLogin(login.trim());
+        if(u != null){
+            throw new BadRequestException("登录名已存在,请重新输入");
         }
         User user = super.getCurrentUser();
         user.setLogin(login);
@@ -320,16 +323,17 @@ public class UserController extends BaseController {
 
     /**
      * 设置头像
+     * @param userId
      * @return
      */
     @RequestMapping(value = "/api/set/avatar", method = RequestMethod.POST)
     @ResponseBody
-    public ApiJsonResult setAvatar() {
+    public ApiJsonResult setAvatar(Integer userId) {
         String savePath = TextUtils.getConfig(Const.CONFIG_KEY_IMAGE_SAVE_PATH, this);
         List<String> imageList = FileUtils.saveFilesToDisk(request, savePath);
         String imageFile = null;
         if (imageList.size() > 0) {
-            User user  = super.getCurrentUser();
+            User user = userService.getUser(userId);
             imageFile = savePath +  imageList.get(0);
             user.setAvatar(imageFile);
             userService.updateUser(user);
