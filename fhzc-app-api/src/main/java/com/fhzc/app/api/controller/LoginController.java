@@ -185,15 +185,16 @@ public class LoginController extends BaseController {
 
     /**
      * 忘记密码
-     * @param login    登录名
+     * @param mobile    登录名
      * @param newPwd    新密码
      * @param confirmPwd    确认新密码
      * @return
      */
     @RequestMapping(value = "/api/password/forget", method = RequestMethod.POST)
     @ResponseBody
-    public ApiJsonResult forget(String login, String newPwd, String confirmPwd){
-        User user = userService.getUserByLogin(login);
+    public ApiJsonResult forget(String mobile, String newPwd, String confirmPwd){
+        User user = userService.getUserByMobile(mobile);
+
         if(!newPwd.equals(confirmPwd)){
             throw new BadRequestException("两次输入的密码不一致");
         }

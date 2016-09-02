@@ -82,12 +82,12 @@ public class RightsApiController extends BaseController{
         User user = super.getCurrentUser();
         Focus focus = focusService.getFocusByCond(user.getUid(),rightsId,APIConstants.FocusType.Rights);
         result.put("levelNeed",super.getDicName(rights.getLevel(), Const.DIC_CAT.CUSTOMER_LEVEL));
-        result.put("focusStatus",focus.getStatus() == null ? "" : focus.getStatus());
+        result.put("focusStatus",focus == null ? 0 : focus.getStatus());
         Customer customer = customerService.getCustomerByUid(user.getUid());
         if(customer != null) {
             RightsReservation reservation = rightsReservationService.getUserRightsReservation(customer.getCustomerId(), rightsId);
-            result.put("reservationStatus", reservation.getStatus() == null ? "" : reservation.getStatus());
-            result.put("reservationId", reservation.getId() == null ? "" : reservation.getId());
+            result.put("reservationStatus", reservation == null ? "" : reservation.getStatus());
+            result.put("reservationId", reservation == null ? "" : reservation.getId());
         }
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
     }

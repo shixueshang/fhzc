@@ -65,7 +65,7 @@ public class AssetsServiceImpl implements AssetsService {
         AssetsHistoryExample example = new AssetsHistoryExample();
         AssetsHistoryExample.Criteria criteria = example.createCriteria();
         criteria.andCustomerIdEqualTo(customerId);
-        criteria.andProductExpireDayGreaterThan(new Date());
+        criteria.andExpireDayGreaterThan(new Date());
 
         AssetsHistoryExample.Criteria criteria1 = example.createCriteria();
         criteria1.andCustomerIdEqualTo(customerId);
@@ -80,7 +80,7 @@ public class AssetsServiceImpl implements AssetsService {
         AssetsHistoryExample example = new AssetsHistoryExample();
         AssetsHistoryExample.Criteria criteria = example.createCriteria();
         criteria.andCustomerIdEqualTo(customerId);
-        criteria.andProductExpireDayLessThanOrEqualTo(new Date());
+        criteria.andExpireDayLessThanOrEqualTo(new Date());
         criteria.andPaymentDateIsNotNull();
         return assetsHistoryMapper.selectByExample(example);
     }
