@@ -1,6 +1,5 @@
 package com.fhzc.app.api.service;
 
-import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.dao.mybatis.model.ScoreHistory;
 
 import java.util.Date;
@@ -26,4 +25,8 @@ public interface ScoreService {
     List<ScoreHistory> getAllList(Integer customerId, Date start, Date end);
 
     List<ScoreHistory> getConsume(Integer cutomerId);
+
+    int add(ScoreHistory scoreHistory);
+
+    int delete(Integer uid, Integer eventId, String fromType);
 }

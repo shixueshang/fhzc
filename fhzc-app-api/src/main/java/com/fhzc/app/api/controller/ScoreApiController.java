@@ -42,13 +42,12 @@ public class ScoreApiController extends BaseController {
     @ResponseBody
     public ApiJsonResult personalScore(){
         User user = super.getCurrentUser();
-        Customer customer = customerService.getCustomerByUid(user.getUid());
-        Integer customerId = customer.getCustomerId();
+        Integer uid = user.getUid();
 
-        Integer available = scoreService.sumScore(scoreService.getAvailableList(customerId));
-        Integer consume = scoreService.sumScore(scoreService.getConsume(customerId));
-        Integer frozen= scoreService.sumScore(scoreService.getFrozen(customerId));
-        Integer expired = scoreService.sumScore(scoreService.getWillExpired(customerId));
+        Integer available = scoreService.sumScore(scoreService.getAvailableList(uid));
+        Integer consume = scoreService.sumScore(scoreService.getConsume(uid));
+        Integer frozen= scoreService.sumScore(scoreService.getFrozen(uid));
+        Integer expired = scoreService.sumScore(scoreService.getWillExpired(uid));
 
         Map<String, Object> map = new HashMap<String,Object>();
         map.put("yours",available + frozen + consume);
@@ -72,8 +71,7 @@ public class ScoreApiController extends BaseController {
                                              @RequestParam String start,
                                              @RequestParam String end){
         User user = super.getCurrentUser();
-        Customer customer = customerService.getCustomerByUid(user.getUid());
-        Integer customerId = customer.getCustomerId();
+        Integer uid = user.getUid();
         List<ScoreHistory>  scoreHistory = null;
 
         SimpleDateFormat sbf=new SimpleDateFormat("yyyy-MM-dd");
@@ -87,16 +85,16 @@ public class ScoreApiController extends BaseController {
         }
         switch (type){
             case "all":
-                scoreHistory = scoreService.getAllList(customerId,scoreStart,scoreEnd);
+                scoreHistory = scoreService.getAllList(uid,scoreStart,scoreEnd);
                 break;
             case "available":
-                scoreHistory = scoreService.getAvailableList(customerId,scoreStart,scoreEnd);
+                scoreHistory = scoreService.getAvailableList(uid,scoreStart,scoreEnd);
                 break;
             case "frozen":
-                scoreHistory = scoreService.getFrozen(customerId,scoreStart,scoreEnd);
+                scoreHistory = scoreService.getFrozen(uid,scoreStart,scoreEnd);
                 break;
             case "will":
-                scoreHistory = scoreService.getWillExpired(customerId,scoreStart,scoreEnd);
+                scoreHistory = scoreService.getWillExpired(uid,scoreStart,scoreEnd);
                 break;
             default:
                 break;

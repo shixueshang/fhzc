@@ -58,7 +58,31 @@ public class RightsReservationApiController extends BaseController {
         rightsReservation.setCtime(new Date());
         rightsReservation.setScoreCost(rights.getSpendScore());
         rightsReservation.setStatus(APIConstants.RightsOrderStatus.ORDER_ING);
-        rightsReservationService.addOrUpdateRightsReservation(rightsReservation);
+        int rid = rightsReservationService.addOrUpdateRightsReservation(rightsReservation);
+
+        //积分冻结记录添加
+        int eventId;
+        if (rightsReservation.getId() > 0) {
+            eventId = rightsReservation.getId();
+        } else {
+            eventId = rid;
+        }
+
+        ScoreHistory scoreHistory = new ScoreHistory();
+        Integer uid = getCurrentUser().getUid();
+        scoreHistory.setUid(uid);
+        scoreHistory.setScore(rightsReservation.getScoreCost());
+        scoreHistory.setEventId(eventId);
+        scoreHistory.setStatus(Const.Score.FROZEN);
+        scoreHistory.setOperatorId(uid);
+        scoreHistory.setOperatorType("user");
+        scoreHistory.setDetail("用户主动预约权益兑换");
+        scoreHistory.setFromType(Const.FROM_TYPE.RIGHTS);
+        scoreHistory.setCtime(new Date());
+        scoreHistory.setIsVaild(Const.SCORE_VAILD.IS_VAILD);
+        scoreHistory.setIsApprove(Const.APPROVE_STATUS.APPROVED);
+
+        scoreService.add(scoreHistory);
 
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
     }
@@ -72,7 +96,7 @@ public class RightsReservationApiController extends BaseController {
     @RequestMapping(value = "/api/rights/exchange/cancel",method = RequestMethod.POST)
     @ResponseBody
     public ApiJsonResult rightsReservationExchange(Integer id ,HttpServletResponse response ){
-
+        Integer uid = getCurrentUser().getUid();
         RightsReservation rightsReservation =rightsReservationService.getRightsReservation(id);
         //如果状态为预约中（即未审核过的）可以直接取消
         if(APIConstants.RightsOrderStatus.ORDER_ING==rightsReservation.getStatus()){
@@ -84,6 +108,8 @@ public class RightsReservationApiController extends BaseController {
             long diff=System.currentTimeMillis() - rightsReservation.getCtime().getTime();
             if(LONGHOUR<(diff / (1000 * 60 * 60 ))){
                 rightsReservation.setStatus(APIConstants.RightsOrderStatus.ORDER_CANCEL);
+                //取消后恢复积分冻结状态,即删除冻结记录
+                scoreService.delete(uid, id, Const.FROM_TYPE.RIGHTS);
             }else{
                     return new ApiJsonResult(APIConstants.API_JSON_RESULT.FAILED,LESS_THEN_LONGHOUR_MESSAGE);
             }
