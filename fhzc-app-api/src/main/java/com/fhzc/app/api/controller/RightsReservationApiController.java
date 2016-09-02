@@ -71,7 +71,7 @@ public class RightsReservationApiController extends BaseController {
         ScoreHistory scoreHistory = new ScoreHistory();
         Integer uid = getCurrentUser().getUid();
         scoreHistory.setUid(uid);
-        scoreHistory.setScore(rightsReservation.getScoreCost());
+        scoreHistory.setScore(rightsReservation.getScoreCost() * -1);
         scoreHistory.setEventId(eventId);
         scoreHistory.setStatus(Const.Score.FROZEN);
         scoreHistory.setOperatorId(uid);
