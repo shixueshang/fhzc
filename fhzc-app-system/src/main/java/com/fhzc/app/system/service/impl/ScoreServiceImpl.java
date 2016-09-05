@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,10 +25,70 @@ public class ScoreServiceImpl implements ScoreService {
     private ScoreHistoryMapper scoreHistoryMapper;
 
     @Override
-    public List<ScoreHistory> getList(Integer uid, String type){
+    public Integer getTotalScore(Integer uid){
+        List<ScoreHistory> scoreHistories = this.getScoreList(uid, Const.Score.ADD);
+        return this.sumScore(scoreHistories);
+    }
+
+
+    @Override
+    public Integer getFrozenScore(Integer uid){
+        List<ScoreHistory> scoreHistories = this.getScoreList(uid, Const.Score.FROZEN);
+        return this.sumScore(scoreHistories);
+    }
+
+    @Override
+    public Integer getExpiredScore(Integer uid){
+        List<ScoreHistory> scoreHistories = this.getScoreList(uid, Const.Score.EXPIRE);
+        return this.sumScore(scoreHistories);
+    }
+
+    @Override
+    public Integer getConsumeScore(Integer uid){
+        List<ScoreHistory> scoreHistories = this.getScoreList(uid, Const.Score.CONSUME);
+        return this.sumScore(scoreHistories);
+    }
+
+    @Override
+    public Integer getAvailableScore(Integer uid){
+        Integer total = this.getTotalScore(uid);
+        Integer consume = this.getConsumeScore(uid);
+        Integer expire = this.getExpiredScore(uid);
+        Integer frozen = this.getFrozenScore(uid);
+        Integer available = total + consume - expire + frozen;
+        return available;
+    }
+
+
+    @Override
+    public Integer getWillExpiredScore(Integer uid) {
+        List<ScoreHistory> scoreHistories = this.getScoreList(uid, Const.Score.ADD);
+        List<ScoreHistory> result = new ArrayList<>();
+        for(ScoreHistory score : scoreHistories){
+            long diff = score.getVaildTime().getTime() - System.currentTimeMillis();
+            if(Const.Score.LONGDAY > (diff / (1000 * 60 * 60 * 24))){
+                result.add(score);
+            }
+        }
+        return this.sumScore(result);
+
+    }
+
+    private Integer sumScore(List<ScoreHistory> scoreHistories){
+        Integer sum = 0;
+        for(ScoreHistory score : scoreHistories){
+            sum += score.getScore();
+        }
+        return sum;
+    }
+
+    private List<ScoreHistory> getScoreList(Integer uid, String type){
         ScoreHistoryExample example = new ScoreHistoryExample();
         ScoreHistoryExample.Criteria criteria = example.createCriteria();
 
+        if(Const.Score.EXPIRE.equals(type)){
+            criteria.andVaildTimeLessThan(new Date());
+        }
         criteria.andUidEqualTo(uid);
         criteria.andStatusEqualTo(type);
         criteria.andIsVaildEqualTo(Const.SCORE_VAILD.IS_VAILD);
@@ -35,54 +96,6 @@ public class ScoreServiceImpl implements ScoreService {
 
         return scoreHistoryMapper.selectByExample(example);
 
-    }
-
-    @Override
-    public List<ScoreHistory> getAvailableList(Integer uid){
-        List<ScoreHistory> scoreHistories = this.getList(uid, Const.Score.ADD);
-        return scoreHistories;
-    }
-
-
-    @Override
-    public List<ScoreHistory> getFrozen(Integer uid){
-        List<ScoreHistory> scoreHistories = this.getList(uid, Const.Score.FROZEN);
-        return scoreHistories;
-    }
-
-
-    private List<ScoreHistory> calcWillExpired(List<ScoreHistory> scoreHistories){
-
-        List<ScoreHistory> result = new ArrayList<>();
-        for(ScoreHistory score : scoreHistories){
-            long diff= score.getVaildTime().getTime() - System.currentTimeMillis();
-            if(Const.Score.LONGDAY > (diff / (1000 * 60 * 60 * 24))){
-                result.add(score);
-            }
-        }
-
-        return result;
-    }
-
-    @Override
-    public List<ScoreHistory> getWillExpired(Integer uid) {
-        return this.calcWillExpired(this.getAvailableList(uid));
-
-    }
-
-    @Override
-    public List<ScoreHistory> getExpiredList(Integer uid){
-        List<ScoreHistory> scoreHistories = this.getList(uid, Const.Score.EXPIRE);
-        return scoreHistories;
-    }
-
-    @Override
-    public Integer sumScore(List<ScoreHistory> scoreHistories){
-        Integer sum = 0;
-        for(ScoreHistory score : scoreHistories){
-            sum += score.getScore();
-        }
-        return sum;
     }
 
     @Override

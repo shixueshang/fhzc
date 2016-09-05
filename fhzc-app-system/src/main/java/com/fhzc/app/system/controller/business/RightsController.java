@@ -152,7 +152,7 @@ public class RightsController extends BaseController{
         }
         Customer customer = customerService.getCustomerByUid(user.getUid(), null);
         customer.setCustomerName(user.getRealname());
-        customer.setAvailableScore(scoreService.sumScore(scoreService.getAvailableList(user.getUid())));
+        customer.setAvailableScore(scoreService.getAvailableScore(user.getUid()));
         customer.setLevelName(super.getDicName(customer.getLevelId(), Const.DIC_CAT.CUSTOMER_LEVEL));
         return customer;
     }
@@ -193,7 +193,7 @@ public class RightsController extends BaseController{
         //添加一条冻结积分记录
         ScoreHistory history = new ScoreHistory();
         history.setUid(customerService.getCustomer(customerId).getUid());
-        history.setScore(exchangeScore);
+        history.setScore(exchangeScore * -1);
         history.setFromType(Const.FROM_TYPE.RIGHTS);
         history.setEventId(reservationRight);
         history.setDetail("管理员帮忙预约权益");
@@ -216,7 +216,7 @@ public class RightsController extends BaseController{
      * @param customerId
      * @param markDate
      * @return
-     * @throws ParseException 
+     * @throws ParseException
      */
     @RequestMapping(value = "/isReserved", method = RequestMethod.GET)
     @ResponseBody

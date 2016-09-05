@@ -212,8 +212,8 @@ public class ScoreHistoryController extends BaseController {
         if(name == null || "".equals(name.trim())){
             for(Customer customer :  pageableResult.getItems()){
                 User user  = userService.getUser(customer.getUid());
-                    CustomerScore cs =  buildCustomerScore(customer, user);
-                    list.add(cs);
+                CustomerScore cs =  buildCustomerScore(customer, user);
+                list.add(cs);
             }
         }else{
             for(Customer customer :  pageableResult.getItems()){
@@ -235,9 +235,11 @@ public class ScoreHistoryController extends BaseController {
         CustomerScore cs = new CustomerScore();
         cs.setCustomerId(customer.getCustomerId());
         cs.setCustomerName(user.getRealname());
-        cs.setAvaliableScore(scoreService.sumScore(scoreService.getAvailableList(user.getUid())));
-        cs.setFrozeScore(scoreService.sumScore(scoreService.getFrozen(user.getUid())));
-        cs.setWillExpireScore(scoreService.sumScore(scoreService.getExpiredList(user.getUid())));
+        cs.setTotalScore(scoreService.getTotalScore(user.getUid()));
+        cs.setAvaliableScore(scoreService.getAvailableScore(user.getUid()));
+        cs.setFrozeScore(scoreService.getFrozenScore(user.getUid()));
+        cs.setExpiredScore(scoreService.getExpiredScore(user.getUid()));
+        cs.setWillExpireScore(scoreService.getWillExpiredScore(user.getUid()));
         return cs;
     }
 }

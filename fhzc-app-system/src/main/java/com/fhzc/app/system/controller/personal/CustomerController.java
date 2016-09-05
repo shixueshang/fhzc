@@ -95,8 +95,8 @@ public class CustomerController extends BaseController {
 
                 Map<String, Object> scoreMap = new HashMap<String, Object>();
                 scoreMap.put("customerId", customer.getCustomerId());
-                scoreMap.put("availableScore", scoreService.sumScore(scoreService.getAvailableList(customer.getUid())));
-                scoreMap.put("frozenScore", scoreService.sumScore(scoreService.getFrozen(customer.getUid())));
+                scoreMap.put("availableScore", scoreService.getAvailableScore(customer.getUid()));
+                scoreMap.put("frozenScore", scoreService.getFrozenScore(customer.getUid()));
                 scores.add(scoreMap);
             }
         }
@@ -119,8 +119,8 @@ public class CustomerController extends BaseController {
         mav.addObject("user", JSON.toJSON(userService.getUser(customer.getUid())));
         mav.addObject("passports", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.PASSPORT)));
         mav.addObject("customerLevels", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL)));
-        mav.addObject("availableScore", JSON.toJSON(scoreService.sumScore(scoreService.getAvailableList(customer.getUid()))));
-        mav.addObject("frozenScore", JSON.toJSON(scoreService.sumScore(scoreService.getFrozen(customer.getUid()))));
+        mav.addObject("availableScore", JSON.toJSON(scoreService.getAvailableScore(customer.getUid())));
+        mav.addObject("frozenScore", JSON.toJSON(scoreService.getFrozenScore(customer.getUid())));
 
         PlannerCustomer plannerCustomer = customerService.getPlannerByCustomerId(customer.getCustomerId(), Const.YES_OR_NO.YES);
         Planner planner = plannerService.getPlanner(plannerCustomer.getPlannerId());
@@ -179,8 +179,8 @@ public class CustomerController extends BaseController {
 
                 Map<String, Object> scoreMap = new HashMap<String, Object>();
                 scoreMap.put("customerId", customer.getCustomerId());
-                scoreMap.put("availableScore", scoreService.sumScore(scoreService.getAvailableList(customer.getUid())));
-                scoreMap.put("frozenScore", scoreService.sumScore(scoreService.getFrozen(customer.getUid())));
+                scoreMap.put("availableScore", scoreService.getAvailableScore(customer.getUid()));
+                scoreMap.put("frozenScore", scoreService.getFrozenScore(customer.getUid()));
                 scores.add(scoreMap);
             }
 
@@ -231,8 +231,8 @@ public class CustomerController extends BaseController {
         mav.addObject("user", JSON.toJSON(userService.getUser(customer.getUid())));
         mav.addObject("passports", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.PASSPORT)));
         mav.addObject("customerLevels", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL)));
-        mav.addObject("availableScore", JSON.toJSON(scoreService.sumScore(scoreService.getAvailableList(customer.getUid()))));
-        mav.addObject("frozenScore", JSON.toJSON(scoreService.sumScore(scoreService.getFrozen(customer.getUid()))));
+        mav.addObject("availableScore", JSON.toJSON(scoreService.getAvailableScore(customer.getUid())));
+        mav.addObject("frozenScore", JSON.toJSON(scoreService.getFrozenScore(customer.getUid())));
         mav.addObject("departments", JSON.toJSON(departmentService.getDepartmentTree()));
         PlannerCustomer plannerCustomer = customerService.getPlannerByCustomerId(customer.getCustomerId(), Const.YES_OR_NO.YES);
         if(plannerCustomer != null){

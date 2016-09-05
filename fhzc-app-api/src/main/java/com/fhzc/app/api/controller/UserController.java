@@ -156,9 +156,8 @@ public class UserController extends BaseController {
                 if (customerUser.getGender().equals(Const.GENDER.FEMALE)) {
                     map.put("gender", Const.GENDER.FEMALE_ZH);
                 }
-                List<ScoreHistory> availableList= scoreService.getAvailableList(pc.getCustomerId());
-                List<ScoreHistory> consumeList = scoreService.getConsume(pc.getCustomerId());
-                map.put("score", scoreService.sumScore(availableList) + scoreService.sumScore(consumeList));
+
+                map.put("score", scoreService.getTotalScore(customerUser.getUid()));
                 map.put("level", super.getDicName(customer.getLevelId(), Const.DIC_CAT.CUSTOMER_LEVEL));
 
                 result.add(map);

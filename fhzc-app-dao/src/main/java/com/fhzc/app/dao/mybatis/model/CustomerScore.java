@@ -9,11 +9,31 @@ public class CustomerScore {
 
     private String customerName;
 
+    private Integer totalScore;
+
     private Integer avaliableScore;
 
     private Integer frozeScore;
 
+    private Integer expiredScore;
+
     private Integer willExpireScore;
+
+    public Integer getTotalScore() {
+        return totalScore;
+    }
+
+    public void setTotalScore(Integer totalScore) {
+        this.totalScore = totalScore;
+    }
+
+    public Integer getExpiredScore() {
+        return expiredScore;
+    }
+
+    public void setExpiredScore(Integer expiredScore) {
+        this.expiredScore = expiredScore;
+    }
 
     public String getCustomerName() {
         return customerName;

@@ -8,6 +8,7 @@ import com.fhzc.app.api.tools.ApiJsonResult;
 import com.fhzc.app.dao.mybatis.model.Rights;
 import com.fhzc.app.dao.mybatis.model.RightsReservation;
 import com.fhzc.app.dao.mybatis.model.ScoreHistory;
+import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.util.Const;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,8 +48,8 @@ public class RightsReservationApiController extends BaseController {
     @ResponseBody
     public ApiJsonResult rightsReservation(RightsReservation rightsReservation){
 
-        List<ScoreHistory> availableList = scoreService.getAvailableList(rightsReservation.getCustomerId());
-        Integer userScore = scoreService.sumScore(availableList);
+        User user  = super.getCurrentUser();
+        Integer userScore = scoreService.getAvailableScore(user.getUid());
         Rights rights = rightsService.getRights(rightsReservation.getRightsId());
         if (userScore < rights.getSpendScore()) {
             return new ApiJsonResult(APIConstants.API_JSON_RESULT.FAILED,"积分可用余额不足");
@@ -57,7 +58,6 @@ public class RightsReservationApiController extends BaseController {
         rightsReservation.setScoreCost(rights.getSpendScore());
         rightsReservation.setStatus(Const.RIGHTS_STATUS.ORDER_ING);
         rightsReservationService.addOrUpdateRightsReservation(rightsReservation);
-
 
         ScoreHistory scoreHistory = new ScoreHistory();
         Integer uid = getCurrentUser().getUid();

@@ -10,31 +10,55 @@ import java.util.List;
  */
 public interface ScoreService {
 
-    List<ScoreHistory> getList(Integer userId, String type);
+    /**
+     * 客户的总积分, 所有已审批的状态为add的有效积分
+     * @param uid
+     * @return
+     */
+    Integer getTotalScore(Integer uid);
 
-    List<ScoreHistory> getAvailableList(Integer userId);
+    /**
+     * 冻结积分, 所有已审批的状态为frozen的有效积分
+     * @param uid
+     * @return
+     */
+    Integer getFrozenScore(Integer uid);
 
-    List<ScoreHistory> getFrozen(Integer userId);
+    /**
+     * 已过期
+     * @param uid
+     * @return
+     */
+    Integer getExpiredScore(Integer uid);
 
-    List<ScoreHistory> getWillExpired(Integer userId);
+    /**
+     * 已消费积分
+     * @param uid
+     * @return
+     */
+    Integer getConsumeScore(Integer uid);
 
-    List<ScoreHistory> getExpiredList(Integer userId);
+    /**
+     * 当前可用积分, 已审批的 total-consume-expire-forzen
+     * @param uid
+     * @return
+     */
+    Integer getAvailableScore(Integer uid);
 
-    List<ScoreHistory> calcWillExpired(List<ScoreHistory> scoreHistories);
+    /**
+     * 即将过期
+     * @param uid
+     * @return
+     */
+    Integer getWillExpiredScore(Integer uid);
 
-    Integer sumScore(List<ScoreHistory> scoreHistories);
+    List<ScoreHistory> getAvailableScore(Integer userId, Date start, Date end);
 
-    List<ScoreHistory> getList(Integer userId, String type, Date start, Date end);
+    List<ScoreHistory> getFrozenScore(Integer userId, Date start, Date end);
 
-    List<ScoreHistory> getAvailableList(Integer userId, Date start, Date end);
+    List<ScoreHistory> getWillExpiredScore(Integer userId, Date start, Date end);
 
-    List<ScoreHistory> getFrozen(Integer userId, Date start, Date end);
-
-    List<ScoreHistory> getWillExpired(Integer userId, Date start, Date end);
-
-    List<ScoreHistory> getAllList(Integer userId, Date start, Date end);
-
-    List<ScoreHistory> getConsume(Integer userId);
+    List<ScoreHistory> getAllScoreList(Integer userId, Date start, Date end);
 
     void add(ScoreHistory scoreHistory);
 

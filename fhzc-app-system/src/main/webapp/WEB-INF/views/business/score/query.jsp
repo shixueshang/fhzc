@@ -75,8 +75,10 @@
                                 <thead>
                                 <tr>
                                     <td>客户姓名</td>
+                                    <td>总积分</td>
                                     <td>可用积分</td>
                                     <td>冻结积分</td>
+                                    <td>已过期积分</td>
                                     <td>即将过期积分</td>
                                 </tr>
                                 </thead>
@@ -84,8 +86,10 @@
                                 <c:forEach items="${customers}" var="customer">
                                     <tr>
                                         <td>${customer.customerName}</td>
+                                        <td>${customer.totalScore}</td>
                                         <td>${customer.avaliableScore}</td>
                                         <td>${customer.frozeScore}</td>
+                                        <td>${customer.expiredScore}</td>
                                         <td>${customer.willExpireScore}</td>
                                     </tr>
                                 </c:forEach>

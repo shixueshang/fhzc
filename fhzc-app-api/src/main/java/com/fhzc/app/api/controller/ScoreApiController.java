@@ -1,11 +1,8 @@
 package com.fhzc.app.api.controller;
 
-import com.fhzc.app.api.controller.BaseController;
-import com.fhzc.app.api.service.CustomerService;
 import com.fhzc.app.api.service.ScoreService;
 import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
-import com.fhzc.app.dao.mybatis.model.Customer;
 import com.fhzc.app.dao.mybatis.model.ScoreHistory;
 import com.fhzc.app.dao.mybatis.model.User;
 import org.springframework.stereotype.Controller;
@@ -39,18 +36,11 @@ public class ScoreApiController extends BaseController {
     @ResponseBody
     public ApiJsonResult personalScore(){
         User user = super.getCurrentUser();
-        Integer uid = user.getUid();
-
-        Integer available = scoreService.sumScore(scoreService.getAvailableList(uid));
-        Integer consume = scoreService.sumScore(scoreService.getConsume(uid));
-        Integer frozen= scoreService.sumScore(scoreService.getFrozen(uid));
-        Integer expired = scoreService.sumScore(scoreService.getWillExpired(uid));
-
         Map<String, Object> map = new HashMap<String,Object>();
-        map.put("yours",available + frozen + consume);
-        map.put("available",available + consume);
-        map.put("frozen",frozen);
-        map.put("expired",expired);
+        map.put("yours", scoreService.getTotalScore(user.getUid()));
+        map.put("available", scoreService.getAvailableScore(user.getUid()));
+        map.put("frozen", scoreService.getFrozenScore(user.getUid()));
+        map.put("expired", scoreService.getExpiredScore(user.getUid()));
 
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, map);
     }
@@ -82,16 +72,16 @@ public class ScoreApiController extends BaseController {
         }
         switch (type){
             case "all":
-                scoreHistory = scoreService.getAllList(uid,scoreStart,scoreEnd);
+                scoreHistory = scoreService.getAllScoreList(uid,scoreStart,scoreEnd);
                 break;
             case "available":
-                scoreHistory = scoreService.getAvailableList(uid,scoreStart,scoreEnd);
+                scoreHistory = scoreService.getAvailableScore(uid,scoreStart,scoreEnd);
                 break;
             case "frozen":
-                scoreHistory = scoreService.getFrozen(uid,scoreStart,scoreEnd);
+                scoreHistory = scoreService.getFrozenScore(uid,scoreStart,scoreEnd);
                 break;
             case "will":
-                scoreHistory = scoreService.getWillExpired(uid,scoreStart,scoreEnd);
+                scoreHistory = scoreService.getWillExpiredScore(uid,scoreStart,scoreEnd);
                 break;
             default:
                 break;

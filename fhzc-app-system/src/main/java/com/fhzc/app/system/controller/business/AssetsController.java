@@ -150,7 +150,7 @@ public class AssetsController extends BaseController {
         holding.setCustomerName(user.getRealname());
         holding.setLevel(super.getDicName(customer.getLevelId(), Const.DIC_CAT.CUSTOMER_LEVEL));
         holding.setIdentity(user.getPassportCode());
-        holding.setScore(scoreService.sumScore(scoreService.getAvailableList(user.getUid())));
+        holding.setScore(scoreService.getAvailableScore(user.getUid()));
         holding.setMobile(user.getMobile());
         PlannerCustomer pc = customerService.getPlannerByCustomerId(customer.getCustomerId(), Const.YES_OR_NO.YES);
         Planner planner = plannerService.getPlanner(pc.getPlannerId());

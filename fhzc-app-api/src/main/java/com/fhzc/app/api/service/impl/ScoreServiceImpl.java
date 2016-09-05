@@ -21,40 +21,80 @@ public class ScoreServiceImpl implements ScoreService{
     @Resource
     private ScoreHistoryMapper scoreHistoryMapper;
 
-    @Override
-    public List<ScoreHistory> getList(Integer userId, String type){
-        ScoreHistoryExample example = new ScoreHistoryExample();
-        ScoreHistoryExample.Criteria criteria = example.createCriteria();
 
-        if(type.equals(Const.Score.ADD)){
-            criteria.andVaildTimeGreaterThan(new Date());
+    @Override
+    public Integer getTotalScore(Integer uid){
+        List<ScoreHistory> scoreHistories = this.getScoreList(uid, Const.Score.ADD);
+        return this.sumScore(scoreHistories);
+    }
+
+
+    @Override
+    public Integer getFrozenScore(Integer uid){
+        List<ScoreHistory> scoreHistories = this.getScoreList(uid, Const.Score.FROZEN);
+        return this.sumScore(scoreHistories);
+    }
+
+    @Override
+    public Integer getExpiredScore(Integer uid){
+        List<ScoreHistory> scoreHistories = this.getScoreList(uid, Const.Score.EXPIRE);
+        return this.sumScore(scoreHistories);
+    }
+
+    @Override
+    public Integer getConsumeScore(Integer uid){
+        List<ScoreHistory> scoreHistories = this.getScoreList(uid, Const.Score.CONSUME);
+        return this.sumScore(scoreHistories);
+    }
+
+    @Override
+    public Integer getAvailableScore(Integer uid){
+        Integer total = this.getTotalScore(uid);
+        Integer consume = this.getConsumeScore(uid);
+        Integer expire = this.getExpiredScore(uid);
+        Integer frozen = this.getFrozenScore(uid);
+        Integer available = total + consume - expire + frozen;
+        return available;
+    }
+
+
+    @Override
+    public Integer getWillExpiredScore(Integer uid) {
+        List<ScoreHistory> scoreHistories = this.getScoreList(uid, Const.Score.ADD);
+        List<ScoreHistory> result = new ArrayList<>();
+        for(ScoreHistory score : scoreHistories){
+            long diff = score.getVaildTime().getTime() - System.currentTimeMillis();
+            if(Const.Score.LONGDAY > (diff / (1000 * 60 * 60 * 24))){
+                result.add(score);
+            }
         }
-        criteria.andUidEqualTo(userId);
-        criteria.andStatusEqualTo(type);
-        criteria.andIsVaildEqualTo(Const.SCORE_VAILD.IS_VAILD);
-        criteria.andIsApproveEqualTo(Const.Score.IS_APPROVE);
-
-        return scoreHistoryMapper.selectByExample(example);
+        return this.sumScore(result);
 
     }
 
     @Override
-    public List<ScoreHistory> getAvailableList(Integer userId){
-        List<ScoreHistory> scoreHistories = this.getList(userId, Const.Score.ADD);
-        return scoreHistories;
-    }
-
-
-    @Override
-    public List<ScoreHistory> getFrozen(Integer userId){
-        List<ScoreHistory> scoreHistories = this.getList(userId, Const.Score.FROZEN);
+    public List<ScoreHistory> getAvailableScore(Integer userId, Date start, Date end){
+        List<ScoreHistory> scoreHistories = this.getScoreList(userId, Const.Score.ADD, start, end);
         return scoreHistories;
     }
 
     @Override
-    public List<ScoreHistory> getConsume(Integer userId) {
-        List<ScoreHistory> scoreHistories = this.getList(userId, Const.Score.CONSUME);
+    public List<ScoreHistory> getFrozenScore(Integer userId, Date start, Date end){
+        List<ScoreHistory> scoreHistories = this.getScoreList(userId, Const.Score.FROZEN, start, end);
         return scoreHistories;
+    }
+
+    @Override
+    public List<ScoreHistory> getWillExpiredScore(Integer userId, Date start, Date end){
+        List<ScoreHistory> scoreHistories = this.getScoreList(userId, Const.Score.ADD, start, end);
+        List<ScoreHistory> result = new ArrayList<>();
+        for(ScoreHistory score : scoreHistories){
+            long diff = score.getVaildTime().getTime() - System.currentTimeMillis();
+            if(Const.Score.LONGDAY > (diff / (1000 * 60 * 60 * 24))){
+                result.add(score);
+            }
+        }
+        return result;
     }
 
     @Override
@@ -74,35 +114,7 @@ public class ScoreServiceImpl implements ScoreService{
         scoreHistoryMapper.updateByPrimaryKey(history);
     }
 
-
-    @Override
-    public List<ScoreHistory> calcWillExpired(List<ScoreHistory> scoreHistories){
-
-        List<ScoreHistory> result = new ArrayList<>();
-        for(ScoreHistory score : scoreHistories){
-            long diff= score.getVaildTime().getTime() - System.currentTimeMillis();
-            if(Const.Score.LONGDAY > (diff / (1000 * 60 * 60 * 24))){
-                result.add(score);
-            }
-        }
-
-        return result;
-    }
-
-    @Override
-    public List<ScoreHistory> getWillExpired(Integer userId) {
-        return this.calcWillExpired(this.getAvailableList(userId));
-
-    }
-
-    @Override
-    public List<ScoreHistory> getExpiredList(Integer userId){
-        List<ScoreHistory> scoreHistories = this.getList(userId, Const.Score.EXPIRE);
-        return scoreHistories;
-    }
-
-    @Override
-    public Integer sumScore(List<ScoreHistory> scoreHistories){
+    private Integer sumScore(List<ScoreHistory> scoreHistories){
         Integer sum = 0;
         for(ScoreHistory score : scoreHistories){
             sum += score.getScore();
@@ -110,39 +122,46 @@ public class ScoreServiceImpl implements ScoreService{
         return sum;
     }
 
-    @Override
-    public List<ScoreHistory> getList(Integer userId, String type, Date start, Date end){
+    private List<ScoreHistory> getScoreList(Integer uid, String type){
         ScoreHistoryExample example = new ScoreHistoryExample();
         ScoreHistoryExample.Criteria criteria = example.createCriteria();
 
-        criteria.andUidEqualTo(userId);
+        if(Const.Score.EXPIRE.equals(type)){
+            criteria.andVaildTimeLessThan(new Date());
+        }
+        criteria.andUidEqualTo(uid);
         criteria.andStatusEqualTo(type);
         criteria.andIsVaildEqualTo(Const.SCORE_VAILD.IS_VAILD);
         criteria.andIsApproveEqualTo(Const.Score.IS_APPROVE);
-        criteria.andCtimeBetween(start,end);
 
         return scoreHistoryMapper.selectByExample(example);
+
     }
 
-    @Override
-    public List<ScoreHistory> getAvailableList(Integer userId, Date start, Date end){
-        List<ScoreHistory> scoreHistories = this.getList(userId, Const.Score.ADD,start,end);
-        return scoreHistories;
+    private List<ScoreHistory> getScoreList(Integer uid, String type, Date start, Date end){
+        ScoreHistoryExample example = new ScoreHistoryExample();
+        ScoreHistoryExample.Criteria criteria = example.createCriteria();
+
+        if(Const.Score.EXPIRE.equals(type)){
+            criteria.andVaildTimeLessThan(new Date());
+        }
+
+        if(start != null && end != null){
+            criteria.andCtimeBetween(start, end);
+        }
+
+        criteria.andUidEqualTo(uid);
+        criteria.andStatusEqualTo(type);
+        criteria.andIsVaildEqualTo(Const.SCORE_VAILD.IS_VAILD);
+        criteria.andIsApproveEqualTo(Const.Score.IS_APPROVE);
+
+        return scoreHistoryMapper.selectByExample(example);
+
     }
 
-    @Override
-    public List<ScoreHistory> getFrozen(Integer userId, Date start, Date end){
-        List<ScoreHistory> scoreHistories = this.getList(userId, Const.Score.FROZEN,start,end);
-        return scoreHistories;
-    }
 
     @Override
-    public List<ScoreHistory> getWillExpired(Integer userId, Date start, Date end){
-        return this.calcWillExpired(this.getAvailableList(userId,start,end));
-    }
-
-    @Override
-    public List<ScoreHistory> getAllList(Integer userId, Date start, Date end){
+    public List<ScoreHistory> getAllScoreList(Integer userId, Date start, Date end){
         ScoreHistoryExample example = new ScoreHistoryExample();
         ScoreHistoryExample.Criteria criteria = example.createCriteria();
 

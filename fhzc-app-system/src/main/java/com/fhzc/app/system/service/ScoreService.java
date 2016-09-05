@@ -10,49 +10,48 @@ import java.util.List;
  */
 public interface ScoreService {
 
-    /**
-     * 根据积分类型获取用户积分列表
-     * @param uid
-     * @param type  积分类型
-     * @return
-     */
-    List<ScoreHistory> getList(Integer uid, String type);
 
     /**
-     * 当前可用积分
+     * 客户的总积分, 所有已审批的状态为add的有效积分
      * @param uid
      * @return
      */
-    List<ScoreHistory> getAvailableList(Integer uid);
+    Integer getTotalScore(Integer uid);
 
     /**
-     * 冻结积分
+     * 冻结积分, 所有已审批的状态为frozen的有效积分
      * @param uid
      * @return
      */
-    List<ScoreHistory> getFrozen(Integer uid);
-
-    /**
-     * 即将过期
-     * @param uid
-     * @return
-     */
-    List<ScoreHistory> getWillExpired(Integer uid);
+    Integer getFrozenScore(Integer uid);
 
     /**
      * 已过期
      * @param uid
      * @return
      */
-    List<ScoreHistory> getExpiredList(Integer uid);
-
+    Integer getExpiredScore(Integer uid);
 
     /**
-     * 统计
-     * @param scoreHistories
+     * 已消费积分
+     * @param uid
      * @return
      */
-    Integer sumScore(List<ScoreHistory> scoreHistories);
+    Integer getConsumeScore(Integer uid);
+
+    /**
+     * 当前可用积分, 已审批的 total-consume-expire-forzen
+     * @param uid
+     * @return
+     */
+    Integer getAvailableScore(Integer uid);
+
+    /**
+     * 即将过期
+     * @param uid
+     * @return
+     */
+    Integer getWillExpiredScore(Integer uid);
 
     /**
      * 查询积分列表
