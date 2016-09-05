@@ -121,56 +121,37 @@ public class ScoreHistoryController extends BaseController {
     }
 
     /**
-     * 积分列表
-     * @param identity  身份证
+     * 积分审批列表
+     * @param name  客户姓名
      * @param isApprove 审批状态
      * @return
      */
     @RequestMapping(value = "/find", method = RequestMethod.GET)
     @SystemControllerLog(description = "查看积分列表")
-    public ModelAndView findScore(String identity, Integer isApprove){
+    public ModelAndView findScore(String name, Integer isApprove){
         ModelAndView mav = new ModelAndView("business/score/list");
         List<User> users = new ArrayList<User>();
-        List<Customer> customers = new ArrayList<Customer>();
-        List<Integer> customerIds = new ArrayList<Integer>();
-        String customerName = "";       
-        if(StringUtils.isNotBlank(identity)){
-          users = userService.getUsersByName(identity.trim());
-    	  if(users.isEmpty()){
-          	return mav;
-          }else{
-    	     for(User user : users){
-    	    	if( customerService.getCustomerByUid(user.getUid(), null) == null){
-    	    		return mav;
-    	    	}
-    	    	customerIds.add(customerService.getCustomerByUid(user.getUid(),null).getCustomerId());
-    	     }
-          }
+        if(StringUtils.isNotEmpty(name)){
+            users = userService.getUsersByName(name);
         }
-        PageableResult<ScoreHistory> pageableResult = scoreService.findPageScores(customerIds, isApprove, page, size);
+
+        List<Integer> userIds = new ArrayList<Integer>();
+        for(User user : users){
+            userIds.add(user.getUid());
+        }
+
+        PageableResult<ScoreHistory> pageableResult = scoreService.findPageScore(userIds, name,  isApprove, page, size);
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
-        mav.addObject("scores", pageableResult.getItems());
-        if(StringUtils.isBlank(identity)){
-        	customers = customerService.findAllCustomer();
-        	for(ScoreHistory score : pageableResult.getItems()){
-        		for (Customer customer : customers) {
-					if(customer.getUid() == score.getUid()){
-						customerName = userService.getUser(customer.getUid()).getRealname();
-						score.setCustomerName(customerName);
-					}
-				}
-        		
-        	}
-        }else{
-        	for(ScoreHistory score : pageableResult.getItems()){
-        		for (User user : users) {
-        			if(user.getUid() == score.getUid()){
-						score.setCustomerName(user.getRealname());
-					}
-        			
-				}
-        	}
+
+        List<ScoreHistory> list = new ArrayList<ScoreHistory>();
+        for(ScoreHistory history : pageableResult.getItems()){
+            User customer = userService.getUser(history.getUid());
+            history.setCustomerName(customer.getRealname());
+            list.add(history);
         }
+
+        mav.addObject("scores", list);
+
         mav.addObject("isApprove", isApprove);
         mav.addObject("scoreStatus", dictionaryService.findDicByType(Const.DIC_CAT.SCORE_STATUS));
         mav.addObject("fromTypes", dictionaryService.findDicByType(Const.DIC_CAT.SCORE_FROM_TYPE));
@@ -217,6 +198,11 @@ public class ScoreHistoryController extends BaseController {
         return true;
     }
 
+    /**
+     * 积分查询
+     * @param name
+     * @return
+     */
     @RequestMapping(value = "/query", method = RequestMethod.GET)
     public ModelAndView query(@RequestParam(required = false) String name){
         ModelAndView mav = new ModelAndView("/business/score/query");

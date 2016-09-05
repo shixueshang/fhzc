@@ -56,25 +56,15 @@ public interface ScoreService {
 
     /**
      * 查询积分列表
-     * @param userId
-     * @param identity  身份证
-     * @param isApprove 审批状态
-     * @param page
-     * @param size
-     * @return
-     */
-    PageableResult<ScoreHistory> findPageScore(Integer userId, String identity, Integer isApprove, int page, int size);
-
-    /**
-     * 查询积分列表
      * @param userIds
+     * @param name  姓名
      * @param isApprove 审批状态
      * @param page
      * @param size
      * @return
      */
-    PageableResult<ScoreHistory> findPageScores(List<Integer> userIds, Integer isApprove, int page, int size);
-    
+    PageableResult<ScoreHistory> findPageScore(List<Integer> userIds, String name, Integer isApprove, int page, int size);
+
     /**
      * 审批积分通过
      * @param id
@@ -86,5 +76,10 @@ public interface ScoreService {
      * @param id
      */
     void approveFailed(Integer id);
+
+    /**
+     * @param history
+     */
+    void addSCoreRecord(ScoreHistory history);
 
 }

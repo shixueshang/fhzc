@@ -58,18 +58,20 @@ public class ScoreServiceImpl implements ScoreService{
     }
 
     @Override
-    public int add(ScoreHistory scoreHistory) {
-        return scoreHistoryMapper.insert(scoreHistory);
+    public void add(ScoreHistory scoreHistory) {
+        scoreHistoryMapper.insert(scoreHistory);
     }
 
     @Override
-    public int delete(Integer uid, Integer eventId, String fromType) {
+    public void delete(Integer uid, Integer eventId, String fromType) {
         ScoreHistoryExample example = new ScoreHistoryExample();
         ScoreHistoryExample.Criteria criteria = example.createCriteria();
         criteria.andUidEqualTo(uid);
         criteria.andEventIdEqualTo(eventId);
         criteria.andFromTypeEqualTo(fromType);
-        return scoreHistoryMapper.deleteByExample(example);
+        ScoreHistory history = scoreHistoryMapper.selectByExample(example).get(0);
+        history.setIsVaild(Const.SCORE_VAILD.NOT_VAILD);
+        scoreHistoryMapper.updateByPrimaryKey(history);
     }
 
 

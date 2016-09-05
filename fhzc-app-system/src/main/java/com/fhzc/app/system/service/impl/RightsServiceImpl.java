@@ -51,7 +51,7 @@ public class RightsServiceImpl implements RightsService {
 
     @Override
     public int addRightsReservation(RightsReservation reservation) {
-        return rightsReservationMapper.insert(reservation);
+        return rightsReservationMapper.insertSelective(reservation);
     }
 
     @Override

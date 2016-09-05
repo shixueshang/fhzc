@@ -74,26 +74,6 @@
                 </div>
             </div>
 
-       <!-- 审批确认 -->
-            <div class="modal fade" id="approveFailedModel">
-                <div class="modal-dialog">
-                    <div class="modal-content message_align">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                            <h4 class="modal-title">提示信息</h4>
-                        </div>
-                        <div class="modal-body">
-                            <p>您确认要打回审批吗？</p>
-                        </div>
-                        <div class="modal-footer">
-                            <input type="hidden" id="url"/>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                            <a  onclick="urlSubmit()" class="btn btn-success" data-dismiss="modal">确定</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
 
             <!-- 批量审批确认 -->
             <div class="modal fade" id="batchApproveModel">
@@ -119,7 +99,7 @@
                 <form  class="form-inline" action="<%=contextPath%>/business/score/find" method="GET">
                     <div class="form-group">
                         <label class="control-label" style="margin-left: 20px">客户姓名</label>
-                        <input class="form-control" name="identity" placeholder="输入客户姓名"  >
+                        <input class="form-control" name="name" placeholder="输入客户姓名"  >
 
                         <label class="control-label" style="margin-left: 20px">审批状态</label>
                         <select class="form-control" name="isApprove" id="isApprove" >
@@ -221,7 +201,7 @@
 
         var isApprove = '${isApprove}';
         $('#isApprove').val(isApprove);
-        if(isApprove == 1){
+        if(isApprove != '0'){
             $('#batchApprove').css("display", "none");
             $('.button_approve').css("display", "none");
         }

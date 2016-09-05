@@ -18,12 +18,12 @@ public class RightsReservationServiceImpl implements RightsReservationService{
     private RightsReservationMapper rightsReservationMapper;
 
     @Override
-    public int addOrUpdateRightsReservation(RightsReservation rightsReservation) {
+    public void addOrUpdateRightsReservation(RightsReservation rightsReservation) {
         Integer id= rightsReservation.getId();
         if(id == null){
-            return rightsReservationMapper.insert(rightsReservation);
+            rightsReservationMapper.insertSelective(rightsReservation);
         }else{
-            return rightsReservationMapper.updateByPrimaryKey(rightsReservation);
+            rightsReservationMapper.updateByPrimaryKey(rightsReservation);
         }
     }
     @Override

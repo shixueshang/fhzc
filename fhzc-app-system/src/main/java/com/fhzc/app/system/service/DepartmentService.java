@@ -14,11 +14,12 @@ public interface DepartmentService {
 
     /**
      * 查询所有机构信息
+     * @param departments
      * @param page
      * @param size
      * @return
      */
-    PageableResult<Dept> findPageDepartments(int page, int size);
+    PageableResult<Dept> findPageDepartments(List<Integer> departments, int page, int size);
 
     /**
      * 获得机构树

@@ -401,8 +401,6 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
         criteria.andUidEqualTo(userId);
         criteria.andFromTypeEqualTo(Const.FROM_TYPE.PRODUCT);
         criteria.andEventIdEqualTo(productId);
-        criteria.andIsApproveEqualTo(Const.YES_OR_NO.NO);
-        criteria.andIsVaildEqualTo(Const.SCORE_VAILD.IS_VAILD);
         return scoreHistoryMapper.selectByExample(example);
     }
 }

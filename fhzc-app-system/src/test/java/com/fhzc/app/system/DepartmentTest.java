@@ -22,7 +22,7 @@ public class DepartmentTest extends Base {
 
     @org.junit.Test
     public void list(){
-       PageableResult<Dept> pageDepts = departmentService.findPageDepartments(0, 20);
+       PageableResult<Dept> pageDepts = departmentService.findPageDepartments(null, 0, 20);
 
         for(Dept department : pageDepts.getItems()){
             logger.info(department.getId() + " : " + department.getName());
