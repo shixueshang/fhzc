@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -57,22 +55,15 @@ public class RightsReservationApiController extends BaseController {
         }
         rightsReservation.setCtime(new Date());
         rightsReservation.setScoreCost(rights.getSpendScore());
-        rightsReservation.setStatus(APIConstants.RightsOrderStatus.ORDER_ING);
-        int rid = rightsReservationService.addOrUpdateRightsReservation(rightsReservation);
+        rightsReservation.setStatus(Const.RIGHTS_STATUS.ORDER_ING);
+        rightsReservationService.addOrUpdateRightsReservation(rightsReservation);
 
-        //积分冻结记录添加
-        int eventId;
-        if (rightsReservation.getId() > 0) {
-            eventId = rightsReservation.getId();
-        } else {
-            eventId = rid;
-        }
 
         ScoreHistory scoreHistory = new ScoreHistory();
         Integer uid = getCurrentUser().getUid();
         scoreHistory.setUid(uid);
         scoreHistory.setScore(rightsReservation.getScoreCost() * -1);
-        scoreHistory.setEventId(eventId);
+        scoreHistory.setEventId(rightsReservation.getRightsId());
         scoreHistory.setStatus(Const.Score.FROZEN);
         scoreHistory.setOperatorId(uid);
         scoreHistory.setOperatorType("user");
@@ -81,6 +72,7 @@ public class RightsReservationApiController extends BaseController {
         scoreHistory.setCtime(new Date());
         scoreHistory.setIsVaild(Const.SCORE_VAILD.IS_VAILD);
         scoreHistory.setIsApprove(Const.APPROVE_STATUS.APPROVED);
+
 
         scoreService.add(scoreHistory);
 
@@ -98,16 +90,14 @@ public class RightsReservationApiController extends BaseController {
     public ApiJsonResult rightsReservationExchange(Integer id ,HttpServletResponse response ){
         Integer uid = getCurrentUser().getUid();
         RightsReservation rightsReservation =rightsReservationService.getRightsReservation(id);
-        //如果状态为预约中（即未审核过的）可以直接取消
-        if(APIConstants.RightsOrderStatus.ORDER_ING==rightsReservation.getStatus()){
-            rightsReservation.setStatus(APIConstants.RightsOrderStatus.ORDER_CANCEL);
-         //如果状态为预约成功了 则
-        }else if(APIConstants.RightsOrderStatus.ORDER_SUCCESS==rightsReservation.getStatus()){
+        if(Const.RIGHTS_STATUS.ORDER_ING == rightsReservation.getStatus()){
+            rightsReservation.setStatus(Const.RIGHTS_STATUS.ORDER_CANCEL);
+        }else if(Const.RIGHTS_STATUS.ORDER_SUCCESS == rightsReservation.getStatus()){
             rightsReservation.getCtime().getTime();
             //预约时间如果是24小时内 则直接取消  LONGHOUR=24小时
-            long diff=System.currentTimeMillis() - rightsReservation.getCtime().getTime();
-            if(LONGHOUR<(diff / (1000 * 60 * 60 ))){
-                rightsReservation.setStatus(APIConstants.RightsOrderStatus.ORDER_CANCEL);
+            long diff = System.currentTimeMillis() - rightsReservation.getCtime().getTime();
+            if(LONGHOUR < (diff / (1000 * 60 * 60 ))){
+                rightsReservation.setStatus(Const.RIGHTS_STATUS.ORDER_CANCEL);
                 //取消后恢复积分冻结状态,即删除冻结记录
                 scoreService.delete(uid, id, Const.FROM_TYPE.RIGHTS);
             }else{

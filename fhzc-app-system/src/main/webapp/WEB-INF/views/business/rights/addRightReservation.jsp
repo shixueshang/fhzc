@@ -21,7 +21,8 @@
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/jquery-tags-input/jquery.tagsinput.css" />
 <link rel="stylesheet" href="<%=contextPath%>/assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" />
 
-<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/bootstrap-datepicker/css/datepicker.css">
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/custom_datepicker/jquery-ui-1.11.min.css" />
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/custom_datepicker/jquery-ui-timepicker-addon.css" />
 
 
 <!-- BEGIN CONTAINER -->
@@ -155,13 +156,12 @@
                                             <div class="control-group">
                                                 <label class="control-label">预订时间</label>
                                                 <div class="controls">
-                                                    <input type="text" name="markDate" id="markDate" placeholder="yyyy-MM-dd HH:mm:ss" >
+                                                    <input type="text" name="markDate" id="markDate"  >
                                                 </div>
                                             </div>
                                             <div class="form-actions">
                                                 <input name="id" type="hidden" value="${right.id}" />
                                                 <button type="submit" id="submit_btn" class="btn blue"><i class="icon-ok"></i> 添加</button>
-                                               <!--   <input name="flag" id="flag" type="hidden" value="${flag}" />-->
                                             </div>
                                         </form>
                                         <!-- END FORM-->
@@ -181,13 +181,19 @@
 
 <jsp:include page="../../include/footer.jsp"/>
 <script type="text/javascript" src="<%=contextPath%>/assets/jquery-validation/dist/jquery.validate.min.js"></script>
-<script type="text/javascript" src="<%=contextPath%>/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/assets/jquery-validation/dist/jquery.validate.min.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/assets/custom_datepicker/jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/assets/custom_datepicker/i18n/jquery-ui-timepicker-addon-i18n.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/assets/custom_datepicker/jquery-ui-sliderAccess.js"></script>
 
 <script>
     $(function(){
-    	//if($("#flag").val() == "yes"){
-    		//alert("该客户已预约了此时间段的该权益消费");
-    	//}
+
+        $('#markDate').datetimepicker({
+            timeFormat: "HH:mm",
+            dateFormat: "yy-mm-dd"
+        });
+
         $("#checkPhone").click(function () {
             var phoneNum = $("#phoneNum").val();
             if(phoneNum == null || phoneNum == ''){
@@ -325,7 +331,7 @@
         	validateDateError('请输入预订时间');
                return false;
         }else{
-         	var str = "((19|20)[0-9]{2})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])(\\s+)(0\\d{1}|1\\d{1}|2[0-3]):([0-5]\\d{1}):([0-5]\\d{1})";
+         	var str = "((19|20)[0-9]{2})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])(\\s+)(0\\d{1}|1\\d{1}|2[0-3]):([0-5]\\d{1})";
         	if(!(markDate.match(str))){
 				validateDateError('请确认输入合格的时间格式');
                 return false;

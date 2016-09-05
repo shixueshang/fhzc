@@ -1,6 +1,7 @@
 package com.fhzc.app.system.controller.organization;
 
 import com.alibaba.fastjson.JSON;
+import com.fhzc.app.dao.mybatis.model.Admin;
 import com.fhzc.app.dao.mybatis.model.Department;
 import com.fhzc.app.dao.mybatis.model.Dept;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
@@ -39,7 +40,9 @@ public class OrganizationController extends BaseController {
     @SystemControllerLog(description = "查看机构列表")
     public ModelAndView listDepartments(){
         ModelAndView mav = new ModelAndView("organization/department/department");
-        PageableResult<Dept> pageableResult =  departmentService.findPageDepartments(page, size);
+        Admin admin = super.getCurrentUser();
+        List<Integer> departments = departmentService.findAllChildrenIds(admin.getOrgan());
+        PageableResult<Dept> pageableResult =  departmentService.findPageDepartments(departments, page, size);
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("depts", pageableResult.getItems());
         mav.addObject("deptsForAdd", JSON.toJSON(departmentService.getDepartmentTree()));

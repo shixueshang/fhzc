@@ -26,8 +26,12 @@ public class DepartmentServiceImpl implements DepartmentService{
     private DepartmentMapper departmentMapper;
 
     @Override
-    public PageableResult<Dept> findPageDepartments(int page, int size) {
+    public PageableResult<Dept> findPageDepartments(List<Integer> departments, int page, int size) {
         DepartmentExample example = new DepartmentExample();
+        DepartmentExample.Criteria criteria = example.createCriteria();
+        if(departments != null){
+            criteria.andDepartmentIdIn(departments);
+        }
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<Department> list = departmentMapper.selectByExampleWithRowbounds(example, rowBounds);
 
@@ -126,6 +130,7 @@ public class DepartmentServiceImpl implements DepartmentService{
     @Override
     public List<Integer> findAllChildrenIds(Integer parentId) {
         List<Integer> result = new ArrayList<Integer>();
+        result.add(parentId);
         List<Department> departments = this.findAllChildren(parentId);
         for(Department department : departments){
             result.add(department.getDepartmentId());

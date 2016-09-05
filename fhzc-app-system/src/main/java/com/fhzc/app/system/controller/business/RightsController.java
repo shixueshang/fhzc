@@ -180,45 +180,39 @@ public class RightsController extends BaseController{
      */
     @RequestMapping(value = "/reservation/add", method = RequestMethod.GET)
     @SystemControllerLog(description = "权益预约")
-    public String addReservation(Integer reservationRight, Integer customerId, Integer exchangeScore, String markDate) throws ParseException{
+    public String addReservation(Integer reservationRight, Integer customerId, Integer exchangeScore, Date markDate) throws ParseException{
         RightsReservation reservation = new RightsReservation();
         reservation.setCtime(new Date());
         reservation.setRightsId(reservationRight);
         reservation.setCustomerId(customerId);
         reservation.setScoreCost(exchangeScore);
-        reservation.setMarkDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(markDate));
-        reservation.setStatus(1);
+        reservation.setMarkDate(markDate);
+        reservation.setStatus(Const.RIGHTS_STATUS.ORDER_ING);
         rightsService.addRightsReservation(reservation);
+
+        //添加一条冻结积分记录
+        ScoreHistory history = new ScoreHistory();
+        history.setUid(customerService.getCustomer(customerId).getUid());
+        history.setScore(exchangeScore);
+        history.setFromType(Const.FROM_TYPE.RIGHTS);
+        history.setEventId(reservationRight);
+        history.setDetail("管理员帮忙预约权益");
+        history.setOperatorType("admin");
+        history.setOperatorId(super.getCurrentUser().getId());
+        history.setStatus(Const.Score.FROZEN);
+        history.setCtime(new Date());
+        history.setIsVaild(Const.SCORE_VAILD.IS_VAILD);
+        history.setIsApprove(Const.APPROVE_STATUS.APPROVED);
+        scoreService.addSCoreRecord(history);
 
         return "redirect:/business/rights/reservations";
     }
     
-//    public ModelAndView addReservation(Integer reservationRight, Integer customerId, Integer exchangeScore, String markDate) throws ParseException{
-//    	RightsReservation reservation = new RightsReservation();
-//        List<RightsReservation> temreservations = rightsService.findSuccessOrdersById(reservationRight, Const.FOCUS_STATUS.ON);
-//        if(!(temreservations.isEmpty())){
-//        	for (RightsReservation rightsReservation : temreservations) {
-//				if((rightsReservation.getCustomerId() == customerId) && (rightsReservation.getMarkDate().getTime() == new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(markDate).getTime())){
-//					RedirectView rview = new RedirectView("/business/rights/reservation/pub");
-//					ModelAndView mav = new ModelAndView(rview);
-//					mav.addObject("flag", "yes");
-//					return mav;
-//				}
-//			}
-//        }
-//        reservation.setCtime(new Date());
-//        reservation.setRightsId(reservationRight);
-//        reservation.setCustomerId(customerId);
-//        reservation.setScoreCost(exchangeScore);
-//        reservation.setMarkDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(markDate));
-//        reservation.setStatus(1);
-//        rightsService.addRightsReservation(reservation);
-//        return new ModelAndView(new RedirectView("/business/rights/reservations"));
-//    }
+
     
     /**
      * 判断是否已预约过
-     * @param reservationRight
+     * @param rightsId
      * @param customerId
      * @param markDate
      * @return

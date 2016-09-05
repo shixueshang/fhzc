@@ -86,35 +86,16 @@ public class ScoreServiceImpl implements ScoreService {
     }
 
     @Override
-    public PageableResult<ScoreHistory> findPageScore(Integer userId, String identity, Integer isApprove, int page, int size) {
+    public PageableResult<ScoreHistory> findPageScore(List<Integer> userIds, String name, Integer isApprove, int page, int size) {
         ScoreHistoryExample example = new ScoreHistoryExample();
         ScoreHistoryExample.Criteria criteria = example.createCriteria();
-        if(userId != null){
-            criteria.andUidEqualTo(userId);
+        if(userIds.size() > 0){
+            criteria.andUidIn(userIds);
         }
 
-        if(!"".equals(identity)  && userId == null){
+        if(org.apache.commons.lang.StringUtils.isNotEmpty(name) && userIds.isEmpty()){
             return new PageableResult<ScoreHistory>(page, size, 0, new ArrayList<ScoreHistory>());
         }
-        if(isApprove !=null ){
-        	criteria.andIsApproveEqualTo(isApprove);
-        }
-        criteria.andIsVaildEqualTo(Const.SCORE_VAILD.IS_VAILD);
-        RowBounds rowBounds = new RowBounds((page - 1) * size, size);
-        List<ScoreHistory> list = scoreHistoryMapper.selectByExampleWithRowbounds(example, rowBounds);
-        return new PageableResult<ScoreHistory>(page, size, scoreHistoryMapper.countByExample(example), list);
-    }
-
-    @Override
-    public PageableResult<ScoreHistory> findPageScores(List<Integer> customerIds, Integer isApprove, int page, int size) {
-        ScoreHistoryExample example = new ScoreHistoryExample();
-        ScoreHistoryExample.Criteria criteria = example.createCriteria();
-        if(!(customerIds.isEmpty())){
-        	criteria.andUidIn(customerIds);
-        }
-//        if(!"".equals(identity)  && userId == null){
-//            return new PageableResult<ScoreHistory>(page, size, 0, new ArrayList<ScoreHistory>());
-//        }
         if(isApprove !=null ){
         	criteria.andIsApproveEqualTo(isApprove);
         }
@@ -138,6 +119,11 @@ public class ScoreServiceImpl implements ScoreService {
         scoreHistory.setIsApprove(Const.APPROVE_STATUS.FAILED_APPROVED);
         scoreHistoryMapper.updateByPrimaryKey(scoreHistory);
 
+    }
+
+    @Override
+    public void addSCoreRecord(ScoreHistory history) {
+        scoreHistoryMapper.insert(history);
     }
 
 

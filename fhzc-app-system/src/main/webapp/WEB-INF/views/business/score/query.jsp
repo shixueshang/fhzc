@@ -49,7 +49,6 @@
             </div>
 
 
-
             <div class="row-fluid">
                 <form  class="form-inline" action="<%=contextPath%>/business/score/query" method="GET">
                     <div class="form-group">

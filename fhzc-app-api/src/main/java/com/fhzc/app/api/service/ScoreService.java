@@ -36,7 +36,14 @@ public interface ScoreService {
 
     List<ScoreHistory> getConsume(Integer userId);
 
-    int add(ScoreHistory scoreHistory);
+    void add(ScoreHistory scoreHistory);
 
-    int delete(Integer uid, Integer eventId, String fromType);
+    /**
+     * 权益取消或者预约失败时把该条冻结的积分设置为无效
+     * @param uid
+     * @param eventId
+     * @param fromType
+     * @return
+     */
+    void delete(Integer uid, Integer eventId, String fromType);
 }

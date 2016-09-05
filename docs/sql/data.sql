@@ -60,7 +60,7 @@ INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (46,'订单列表','/business/assets/list',NULL,45,3,1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (47,'离职理财师导入','/personal/planner/importoroff',NULL,33,3,1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (48,'积分管理','/business/score',NULL,1,2,1);
-INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (49,'积分列表','/business/score/list',NULL,48,3,1);
+INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (49,'积分审批','/business/score/list',NULL,48,3,1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (50,'理财师业绩','/personal/planner/achivement',NULL,25,3,1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (51,'banner列表','/system/banner/list',NULL,16,3,1);
 INSERT INTO `system_module` (`id`,`name`,`url`,`desc`,`parent_module_id`,`level`,`is_valid`) VALUES (52,'banner新增','/system/banner/pub',NULL,16,3,1);
