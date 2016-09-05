@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -103,7 +105,18 @@ public class ProductApiController extends BaseController {
     @RequestMapping(value = "/api/suggest/assets", method = RequestMethod.GET)
     @ResponseBody
     public ApiJsonResult suggestAssets() {
-        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, dictionaryService.findDicByType(Const.DIC_CAT.ASSET_CONFIG));
+        List<AssetsRecommend>  list = productService.findAssetsRecommend();
+        List<AssetsRecommend> result = new ArrayList<AssetsRecommend>();
+        for(AssetsRecommend assetsRecommend : list){
+            List<Dictionary> dicts =  dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_TYPE);
+            for(Dictionary dictionary : dicts){
+                if(assetsRecommend.getRecommendType().equals(dictionary.getValue())){
+                    assetsRecommend.setTypeName(dictionary.getValue());
+                    result.add(assetsRecommend);
+                }
+            }
+        }
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
     }
 
 

@@ -1,7 +1,11 @@
 package com.fhzc.app.api.service.impl;
 
 import com.fhzc.app.api.service.ProductService;
+import com.fhzc.app.dao.mybatis.inter.AssetsHistoryMapper;
+import com.fhzc.app.dao.mybatis.inter.AssetsRecommendMapper;
 import com.fhzc.app.dao.mybatis.inter.ProductMapper;
+import com.fhzc.app.dao.mybatis.model.AssetsRecommend;
+import com.fhzc.app.dao.mybatis.model.AssetsRecommendExample;
 import com.fhzc.app.dao.mybatis.model.Product;
 import com.fhzc.app.dao.mybatis.model.ProductExample;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
@@ -20,6 +24,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Resource
     private ProductMapper productMapper;
+
+    @Resource
+    private AssetsRecommendMapper assetsRecommendMapper;
 
 
     @Override
@@ -85,5 +92,13 @@ public class ProductServiceImpl implements ProductService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<AssetsRecommend> findAssetsRecommend() {
+        AssetsRecommendExample example = new AssetsRecommendExample();
+        AssetsRecommendExample.Criteria criteria = example.createCriteria();
+        criteria.andStatusEqualTo(Const.Data_Status.DATA_NORMAL);
+        return assetsRecommendMapper.selectByExample(example);
     }
 }

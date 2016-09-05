@@ -78,6 +78,7 @@
                                     <td>总积分</td>
                                     <td>可用积分</td>
                                     <td>冻结积分</td>
+                                    <td>已消费积分</td>
                                     <td>已过期积分</td>
                                     <td>即将过期积分</td>
                                 </tr>
@@ -89,6 +90,7 @@
                                         <td>${customer.totalScore}</td>
                                         <td>${customer.avaliableScore}</td>
                                         <td>${customer.frozeScore}</td>
+                                        <td>${customer.consumeScore}</td>
                                         <td>${customer.expiredScore}</td>
                                         <td>${customer.willExpireScore}</td>
                                     </tr>

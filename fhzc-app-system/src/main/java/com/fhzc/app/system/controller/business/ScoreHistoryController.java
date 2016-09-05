@@ -240,6 +240,7 @@ public class ScoreHistoryController extends BaseController {
         cs.setFrozeScore(scoreService.getFrozenScore(user.getUid()));
         cs.setExpiredScore(scoreService.getExpiredScore(user.getUid()));
         cs.setWillExpireScore(scoreService.getWillExpiredScore(user.getUid()));
+        cs.setConsumeScore(scoreService.getConsumeScore(user.getUid()));
         return cs;
     }
 }

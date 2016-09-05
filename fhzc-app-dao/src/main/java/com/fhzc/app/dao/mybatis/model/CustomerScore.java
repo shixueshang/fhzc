@@ -19,6 +19,16 @@ public class CustomerScore {
 
     private Integer willExpireScore;
 
+    private Integer consumeScore;
+
+    public Integer getConsumeScore() {
+        return consumeScore;
+    }
+
+    public void setConsumeScore(Integer consumeScore) {
+        this.consumeScore = consumeScore;
+    }
+
     public Integer getTotalScore() {
         return totalScore;
     }

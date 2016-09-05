@@ -1033,7 +1033,7 @@ CREATE TABLE `bank`.`device_info` (
 DROP TABLE IF EXISTS `bank`.`assets_recommend` ;
 CREATE TABLE `bank`.`assets_recommend` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `recommend_type` VARCHAR(45) NULL COMMENT '推荐配置类别',
+  `recommend_type` VARCHAR(45) NULL COMMENT '推荐配置类别(对应字典表产品类型的value)',
   `proportion` DECIMAL(4,2) NULL COMMENT '配置比例',
   `status` INT(1) NULL COMMENT '状态0正常1删除',
   PRIMARY KEY (`id`))

@@ -3,6 +3,7 @@ package com.fhzc.app.system;
 import com.fhzc.app.system.context.Base;
 import com.fhzc.app.system.service.ScoreService;
 import org.junit.*;
+import org.junit.Test;
 
 import javax.annotation.Resource;
 
@@ -23,5 +24,10 @@ public class ScoreTest extends Base {
         Integer willExpire = scoreService.getWillExpiredScore(uid);
 
         logger.info("userId="+ uid +" 的即将过期积分：" + willExpire);
+    }
+
+    @Test
+    public void list(){
+
     }
 }

@@ -1,6 +1,7 @@
 package com.fhzc.app.system;
 
 
+import com.fhzc.app.dao.mybatis.model.ScoreHistory;
 import com.fhzc.app.system.commons.util.DateUtil;
 
 import java.util.Date;
@@ -10,8 +11,6 @@ import java.util.Date;
 */
 public class Test {
     public static void main(String[] args){
-        Date d = new Date();
-
 
     }
 }

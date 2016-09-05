@@ -11,9 +11,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by lihongde on 2016/8/1 11:53
@@ -66,11 +64,33 @@ public class ScoreServiceImpl implements ScoreService {
         List<ScoreHistory> result = new ArrayList<>();
         for(ScoreHistory score : scoreHistories){
             long diff = score.getVaildTime().getTime() - System.currentTimeMillis();
-            if(Const.Score.LONGDAY > (diff / (1000 * 60 * 60 * 24))){
+            if(diff > 0 && Const.Score.LONGDAY > (diff / (1000 * 60 * 60 * 24))){
                 result.add(score);
             }
         }
-        return this.sumScore(result);
+
+        Integer willExpire = this.sumScore(result);
+        //获得累计消费的积分
+        Integer consume = this.getConsumeScore(uid);
+        if(Math.abs(consume) > willExpire){ //如果累计消费积分大于即将过期的，根据优先消费原则没有即将过期积分
+            return 0;
+        }else{
+            //按有效日期升序
+            /*Collections.sort(result, new Comparator<ScoreHistory>() {
+                public int compare(ScoreHistory arg0, ScoreHistory arg1) {
+                    return arg0.getVaildTime().compareTo(arg1.getVaildTime());
+                }
+            });*/
+
+            Integer scoreCount = 0;
+           for(ScoreHistory sh : result){
+               scoreCount += sh.getScore();
+           }
+
+            willExpire = scoreCount - Math.abs(consume);
+        }
+
+        return willExpire;
 
     }
 
@@ -86,9 +106,6 @@ public class ScoreServiceImpl implements ScoreService {
         ScoreHistoryExample example = new ScoreHistoryExample();
         ScoreHistoryExample.Criteria criteria = example.createCriteria();
 
-        if(Const.Score.EXPIRE.equals(type)){
-            criteria.andVaildTimeLessThan(new Date());
-        }
         criteria.andUidEqualTo(uid);
         criteria.andStatusEqualTo(type);
         criteria.andIsVaildEqualTo(Const.SCORE_VAILD.IS_VAILD);

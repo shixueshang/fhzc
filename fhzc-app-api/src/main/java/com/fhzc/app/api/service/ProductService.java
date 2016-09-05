@@ -1,5 +1,6 @@
 package com.fhzc.app.api.service;
 
+import com.fhzc.app.dao.mybatis.model.AssetsRecommend;
 import com.fhzc.app.dao.mybatis.model.Product;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 
@@ -45,4 +46,6 @@ public interface ProductService {
      * @return
      */
     boolean isNameExists(String name);
+
+    List<AssetsRecommend> findAssetsRecommend();
 }
