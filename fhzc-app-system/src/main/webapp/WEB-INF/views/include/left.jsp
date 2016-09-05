@@ -13,11 +13,13 @@
                         <div class="sidebar-toggler hidden-phone" style="margin-bottom:5px;"></div>
                         <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
                     </li>
-<!--                     <li class="start"> -->
-<%--                         <a href="<%=contextPath%>/system/home"> --%>
-<!--                             <span class="selected"></span> -->
-<!--                         </a> -->
-<!--                     </li> -->
+                    <!--  
+                    <li class="start">
+                        <a href="<%=contextPath%>/system/home">
+                            <span class="selected"></span>
+                        </a>
+                    </li>
+                    -->
 
                     <shiro:hasPermission name="/business/product"><li class="has-sub">
                         <a href="javascript:;">
