@@ -127,9 +127,7 @@ public class ScoreServiceImpl implements ScoreService {
         if(org.apache.commons.lang.StringUtils.isNotEmpty(name) && userIds.isEmpty()){
             return new PageableResult<ScoreHistory>(page, size, 0, new ArrayList<ScoreHistory>());
         }
-        if(isApprove !=null ){
-        	criteria.andIsApproveEqualTo(isApprove);
-        }
+        criteria.andIsApproveEqualTo(isApprove);
         criteria.andIsVaildEqualTo(Const.SCORE_VAILD.IS_VAILD);
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<ScoreHistory> list = scoreHistoryMapper.selectByExampleWithRowbounds(example, rowBounds);

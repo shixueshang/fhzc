@@ -159,6 +159,7 @@ public class ProductController extends BaseController {
         }else{
         	product.setScoreFactor(product.getScoreFactor().divide(new BigDecimal(100)));
         }
+        product.setScoreFactor(product.getScoreFactor().divide(new BigDecimal(100)));
         product.setCtime(new Date());
         productService.addOrUpdateProduct(product);
         product.setDisplayOrder(product.getPid());
@@ -653,5 +654,23 @@ public class ProductController extends BaseController {
                 e.printStackTrace();
             }
         }
+    }
+
+    @RequestMapping(value = "/getScoreFactor", method = RequestMethod.GET)
+    @ResponseBody
+    public AjaxJson getProductFactor(String productType){
+        String factor = "";
+        if(StringUtils.isNotEmpty(productType)){
+            if(Const.PRODUCT_FACTOR.FORIGN.equals(productType)){
+                factor = TextUtils.getConfig(Const.PRODUCT_FACTOR.FACTOR_FORIGN, this);
+            }else if(Const.PRODUCT_FACTOR.OTHER.equals(productType)){
+                factor = TextUtils.getConfig(Const.PRODUCT_FACTOR.FACTOR_OTHER, this);
+            }else if(Const.PRODUCT_FACTOR.TOUR.equals(productType)){
+                factor = TextUtils.getConfig(Const.PRODUCT_FACTOR.FACTOR_TOUR, this);
+            }else{
+                factor = TextUtils.getConfig(Const.PRODUCT_FACTOR.FACTOR_RIGHT, this);
+            }
+        }
+        return new AjaxJson(true, (Object)factor);
     }
 }

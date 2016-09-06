@@ -103,7 +103,6 @@
 
                         <label class="control-label" style="margin-left: 20px">审批状态</label>
                         <select class="form-control" name="isApprove" id="isApprove" >
-                        	<option value="">全部</option>
                             <option value="0">待审批</option>
                             <option value="1">已审批</option>
                             <option value="2">审批失败</option>

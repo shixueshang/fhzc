@@ -23,6 +23,28 @@ public class Const {
     public static final String MESSAGE_POLLING_TIME =  "message_polling_time";
 
     /**
+     * 产品积分系数
+     */
+    public static class PRODUCT_FACTOR{
+
+        public static final String OTHER = "1";
+
+        public static final String TOUR = "2";
+
+        public static final String FORIGN = "3";
+
+        public static final String RIGHT = "4";
+
+        public static final String  FACTOR_FORIGN = "factor_forign";
+
+        public static final String  FACTOR_TOUR = "factor_tour";
+
+        public static final String  FACTOR_RIGHT = "factor_right";
+
+        public static final String  FACTOR_OTHER = "factor_other";
+    }
+
+    /**
      * 设备类型
      */
     public static class DEVICE_TYPE{

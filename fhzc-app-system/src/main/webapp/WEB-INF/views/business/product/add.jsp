@@ -96,10 +96,18 @@
                                                 </div>
                                             </div>
                                             <div class="control-group">
-                                                <label class="control-label">产品类型</label>
+                                                <label class="control-label">产品类型<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <select class="large m-wrap" name="productType" id="productType" tabindex="1">
+                                                    <select class="large m-wrap" name="productType" data-required="1" id="productType" tabindex="1">
+                                                        <option value="">请选择产品类型</option>
                                                     </select>
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <label class="control-label">积分系数(%)</label>
+                                                <div class="controls">
+                                                    <input type="text" name="scoreFactor" id="scoreFactor" readonly value="${product.scoreFactor}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <span class="help-inline"></span>
                                                 </div>
                                             </div>
                                             <div class="control-group">
@@ -286,14 +294,6 @@
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">积分系数(%)</label>
-                                                <div class="controls">
-                                                    <input type="text" name="scoreFactor" value="${product.scoreFactor}" data-required="1" placeholder="" class="m-wrap large">
-                                                    <span class="help-inline"></span>
-                                                </div>
-                                            </div>
-
-                                            <div class="control-group">
                                                 <label class="control-label">产品简介</label>
                                                 <div class="controls">
                                                     <textarea name="desc"  class="span12 ckeditor m-wrap" rows="3">${product.desc}</textarea>
@@ -378,46 +378,7 @@
                                                  </span>
                                                 </div>
                                             </div>
-<!--  
-                                            <div class="control-group">
-                                                <label class="control-label">成立公告</label>
-                                                <div class="controls">
-                                                    <div class="fileupload fileupload-new" data-provides="fileupload">
-                                                        <div class="input-append">
-                                                            <div class="uneditable-input">
-                                                                <i class="icon-file fileupload-exists"></i>
-                                                                <span class="fileupload-preview"></span>
-                                                            </div>
-                                                           <span class="btn btn-file">
-                                                           <span class="fileupload-new">选择文件</span>
-                                                           <span class="fileupload-exists">更换</span>
-                                                           <input type="file" name="noticeFile" class="default" value="${product.notice}"/>
-                                                           </span>
-                                                            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="control-group">
-                                                <label class="control-label">备案证明</label>
-                                                <div class="controls">
-                                                    <div class="fileupload fileupload-new" data-provides="fileupload">
-                                                        <div class="input-append">
-                                                            <div class="uneditable-input">
-                                                                <i class="icon-file fileupload-exists"></i>
-                                                                <span class="fileupload-preview"></span>
-                                                            </div>
-                                                           <span class="btn btn-file">
-                                                           <span class="fileupload-new">选择文件</span>
-                                                           <span class="fileupload-exists">更换</span>
-                                                           <input type="file" name="proveFile" class="default" value="${product.proveUrl}" />
-                                                           </span>
-                                                            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            -->
+
                                             <div class="control-group">
                                                 <label class="control-label">详细内容</label>
                                                 <div class="controls">
@@ -572,6 +533,22 @@ $(function(){
         $.uniform.update($("input[name='isRecommend'][value='0']").attr("checked", true));
     }
 
+    $("#productType").change(function(){
+        var productType = $("#productType").val();
+        $.ajax({
+            type: "GET",
+            url: "<%=contextPath%>/business/product/getScoreFactor",
+            dataType: "json",
+            data: { "productType": productType },
+            success: function(req) {
+               $("#scoreFactor").val(req.children);
+            },
+            error: function() {
+
+            }
+        });
+    });
+
     var form1 = $('#form_sample_1');
     var error1 = $('.alert-error', form1);
     var success1 = $('.alert-success', form1);
@@ -634,6 +611,9 @@ $(function(){
             renewDeadline: {
                 number: true,
                 min:0
+            },
+            productType: {
+                required: true
             },
             scoreFactor: {
                 number: true,

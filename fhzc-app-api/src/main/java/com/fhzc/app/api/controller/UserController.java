@@ -76,6 +76,11 @@ public class UserController extends BaseController {
                 }
                 result.put("planners", planners);
             }
+        }else{
+            Planner pl = plannerService.getPlannerByUid(user.getUid());
+            result.put("position", pl.getJobTitleCn());
+            result.put("department", departmentService.getDeparent(pl.getDepartmentId()).getTitle());
+
         }
 
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
