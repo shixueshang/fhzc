@@ -48,7 +48,7 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
         }
 
         String content = "您好，您的验证码是: "+verifyCode.getCodeValue()+"【复华资产】,在5分钟之内有效。如非本人操作请忽略本短信。";
-        SMSTemplate smsTemplate = new SMSTemplate(Const.SMS_PARAM.SMS_USERNAME, Const.SMS_PARAM.SMS_PASSWORD, Const.SMS_PARAM.SMS_APPIKEY, content);
+        SMSTemplate smsTemplate = new SMSTemplate(TextUtils.getConfig(Const.SMS_PARAM.SMS_USERNAME, this),TextUtils.getConfig(Const.SMS_PARAM.SMS_PASSWORD, this), TextUtils.getConfig(Const.SMS_PARAM.SMS_APPIKEY, this), content);
         smsTemplate.sendTemplateSMS(mobile);
         return verifyCode;
     }

@@ -152,6 +152,7 @@ public class PersonalController extends BaseController {
             map.put("period",asset.getPeriod());
 
             map.put("productType",product.getProductType());
+            map.put("productTypeName", super.getDicName(Integer.parseInt(product.getProductType()), Const.DIC_CAT.PRODUCT_TYPE));
             map.put("name",product.getName());
             map.put("foundDay",product.getFoundDay());
             map.put("valueDay",product.getValueDay());

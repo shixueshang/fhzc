@@ -151,7 +151,7 @@
                         <div class="controls" style="display: inline-block;margin-top: 10px;margin-left: 20px;">
                             <select name="title"  class="m-wrap medium">
                                 <option value="1">产品成立</option>
-                                <option value="2">产品购买</option>
+                                <option value="2">产品派息</option>
                                 <option value="3">产品兑付</option>
                             </select>
                         </div>

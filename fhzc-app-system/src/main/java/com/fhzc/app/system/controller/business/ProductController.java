@@ -8,6 +8,7 @@ import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.thirdparty.sms.SMSTemplate;
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.aop.SystemControllerLog;
+import com.fhzc.app.system.commons.util.DateUtil;
 import com.fhzc.app.system.commons.util.FileUtil;
 import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.commons.vo.FocusVo;
@@ -581,21 +582,21 @@ public class ProductController extends BaseController {
     @SystemControllerLog(description = "产品推送")
     public AjaxJson productPush(SystemNotice notice) {
         Integer pid = notice.getId();
-        List<AssetsHistory> list = new ArrayList<AssetsHistory>();
-        if("1".equals(notice.getTitle())){  //产品成立
-            list =  assetsService.findAssetsByProduct(Const.ASSETS_TYPE.FOUND, pid);
-        }
-        if("2".equals(notice.getTitle())){ //产品购买
-            list =  assetsService.findAssetsByProduct(Const.ASSETS_TYPE.PURCHASE, pid);
-        }
-        if("3".equals(notice.getTitle())){ //产品兑付
-            list =  assetsService.findAssetsByProduct(Const.ASSETS_TYPE.REDEMPTION, pid);
-        }
+
+        List<AssetsHistory>   list =  assetsService.findAssetsByProduct(null, pid);
 
         List<Integer> customerIds = new ArrayList<Integer>();
         for(AssetsHistory assetsHistory : list){
             if(!customerIds.contains(assetsHistory.getCustomerId())){
-                customerIds.add(assetsHistory.getCustomerId());
+                Date expireDay = assetsHistory.getExpireDay();
+                Date before = DateUtil.getDateNextDays(expireDay, 10);  //过期10天
+                if(expireDay == null){
+                    customerIds.add(assetsHistory.getCustomerId());
+                }else if(expireDay.getTime() > System.currentTimeMillis()){
+                    customerIds.add(assetsHistory.getCustomerId());
+                }else if(before.getTime() > System.currentTimeMillis()){
+                    customerIds.add(assetsHistory.getCustomerId());
+                }
             }
         }
 
@@ -635,7 +636,7 @@ public class ProductController extends BaseController {
     private void doHandleSystemSMS(SystemNotice systemNotice, List<Integer> pushUsers){
         for(Integer userId : pushUsers){
             User user = userService.getUser(userId);
-            SMSTemplate smsTemplate = new SMSTemplate(Const.SMS_PARAM.SMS_USERNAME, Const.SMS_PARAM.SMS_PASSWORD, Const.SMS_PARAM.SMS_APPIKEY, systemNotice.getContent());
+            SMSTemplate smsTemplate = new SMSTemplate(TextUtils.getConfig(Const.SMS_PARAM.SMS_USERNAME, this),TextUtils.getConfig(Const.SMS_PARAM.SMS_PASSWORD, this), TextUtils.getConfig(Const.SMS_PARAM.SMS_APPIKEY, this), systemNotice.getContent());
             smsTemplate.sendTemplateSMS(user.getMobile());
         }
     }
