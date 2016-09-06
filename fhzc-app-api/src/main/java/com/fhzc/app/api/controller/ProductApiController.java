@@ -111,7 +111,7 @@ public class ProductApiController extends BaseController {
             List<Dictionary> dicts =  dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_TYPE);
             for(Dictionary dictionary : dicts){
                 if(assetsRecommend.getRecommendType().equals(dictionary.getValue())){
-                    assetsRecommend.setTypeName(dictionary.getValue());
+                    assetsRecommend.setTypeName(dictionary.getKey());
                     result.add(assetsRecommend);
                 }
             }

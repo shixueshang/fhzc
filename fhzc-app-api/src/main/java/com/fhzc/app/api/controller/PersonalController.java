@@ -128,8 +128,8 @@ public class PersonalController extends BaseController {
 
         if(user.getLoginRole().equals(Const.USER_ROLE.CUSTOMER)) {
             Customer customer = customerService.getCustomerByUid(user.getUid());
-            if(!customer.getCustomerId().equals(customer_id)){
-                return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"不得其他查看客户资料");
+            if(customer.getCustomerId() != customer_id){
+                return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"不得查看其他客户资料");
             }
         }
 

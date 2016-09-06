@@ -16,10 +16,29 @@
     <!-- 定义触发时间 -->
     <bean id="doScoreTaskTime"
           class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-        <property name="jobDetail" ref="scoreTaskBean" />
+        <property name="jobDetail" ref="expireScoreTaskBean" />
         <!-- cron表达式 -->
-        <property name="cronExpression" value="0 0/60 * * * ?" />
+        <property name="cronExpression" value="0 30 23 * * ?" />
     </bean>
+
+    <!--每日任务计算过期积分-->
+    <bean id="expireScoreTaskJob" class="com.fhzc.app.system.job.ScoreTaskJob" />
+    <bean id="expireScoreTaskBean"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <!-- 调用的类 -->
+        <property name="targetObject" ref="expireScoreTaskJob"/>
+        <!-- 调用类中的方法 -->
+        <property name="targetMethod" value="run"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <!-- 定义触发时间 -->
+    <bean id="doExpireScoreTaskTime"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="expireScoreTaskBean" />
+        <!-- cron表达式 -->
+        <property name="cronExpression" value="0 0 23 * * ?" />
+    </bean>
+
 
     <!-- 总管理类 如果将lazy-init='false' 容器启动就会执行调度程序 -->
     <bean id="startQuertz" lazy-init="false" autowire="no"
@@ -27,6 +46,7 @@
         <property name="triggers">
             <list>
                 <ref bean="doScoreTaskTime" />
+                <ref bean="doExpireScoreTaskTime" />
             </list>
         </property>
     </bean>

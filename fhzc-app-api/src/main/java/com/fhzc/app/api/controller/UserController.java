@@ -5,6 +5,9 @@ import com.fhzc.app.api.service.*;
 import com.fhzc.app.api.tools.*;
 import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.util.Const;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -336,6 +339,11 @@ public class UserController extends BaseController {
             imageFile = savePath +  imageList.get(0);
             user.setAvatar(imageFile);
             userService.updateUser(user);
+
+            Subject subject = SecurityUtils.getSubject();
+            Session session = subject.getSession();
+            session.setAttribute("user", user);
+
             return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, imageFile);
         }
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.FAILED, "上传失败");

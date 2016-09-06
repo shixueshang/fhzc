@@ -81,4 +81,12 @@ public interface ScoreService {
      */
     void addSCoreRecord(ScoreHistory history);
 
+    /**
+     * 查询当天过期积分列表
+     * @return
+     */
+    List<ScoreHistory> getExpiredScore();
+
+    void update(ScoreHistory history);
+
 }

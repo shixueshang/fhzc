@@ -36,7 +36,8 @@ public class UserServiceImpl implements UserService {
         UserExample.Criteria criteria = example.createCriteria();
         criteria.andPassportTypeIdEqualTo(identity);
         try {
-            identityNum = EncryptUtils.encryptToDES(identityNum.substring(identityNum.length() - 8), identityNum);
+            String key = identityNum.substring(identityNum.length() - 8);
+            identityNum = EncryptUtils.encryptToDES(key, identityNum);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -38,6 +38,9 @@ public class ScoreTaskJob {
     @Resource
     private UserService userService;
 
+    @Resource
+    private ScoreService scoreService;
+
     /**
      * 定时查询投资人档案表的信息，插入到积分表
      */
@@ -92,5 +95,25 @@ public class ScoreTaskJob {
             termFactor = term / 12 ;
         }
         return new BigDecimal(amount).divide(new BigDecimal(500)).multiply(product.getScoreFactor()).multiply(new BigDecimal(termFactor)).setScale(0, RoundingMode.HALF_EVEN).intValue();
+    }
+
+
+    /**
+     * 每日任务计算过期积分
+     */
+    public void run(){
+        //查询当天到期的积分
+        try{
+            List<ScoreHistory> expires = scoreService.getExpiredScore();
+            for(ScoreHistory history : expires){
+                history.setStatus(Const.Score.EXPIRE);
+                scoreService.update(history);
+            }
+            logger.info("task execute success");
+        }catch (Exception e){
+            e.printStackTrace();
+            logger.error("task execute failure", e.getMessage());
+        }
+
     }
 }

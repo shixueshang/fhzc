@@ -5,6 +5,7 @@ import com.fhzc.app.dao.mybatis.model.ScoreHistory;
 import com.fhzc.app.dao.mybatis.model.ScoreHistoryExample;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
+import com.fhzc.app.system.commons.util.DateUtil;
 import com.fhzc.app.system.service.ScoreService;
 
 import org.apache.ibatis.session.RowBounds;
@@ -154,6 +155,21 @@ public class ScoreServiceImpl implements ScoreService {
     @Override
     public void addSCoreRecord(ScoreHistory history) {
         scoreHistoryMapper.insert(history);
+    }
+
+    @Override
+    public List<ScoreHistory> getExpiredScore() {
+        ScoreHistoryExample example = new ScoreHistoryExample();
+        ScoreHistoryExample.Criteria criteria = example.createCriteria();
+        criteria.andVaildTimeBetween(DateUtil.getStartTimeOfDate(new Date()), DateUtil.getEndTimeOfDate(new Date()));
+        criteria.andIsVaildEqualTo(Const.SCORE_VAILD.IS_VAILD);
+        criteria.andIsApproveEqualTo(Const.APPROVE_STATUS.APPROVED);
+        return scoreHistoryMapper.selectByExample(example);
+    }
+
+    @Override
+    public void update(ScoreHistory history) {
+        scoreHistoryMapper.updateByPrimaryKey(history);
     }
 
 

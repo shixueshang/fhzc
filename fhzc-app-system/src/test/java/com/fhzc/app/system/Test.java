@@ -2,6 +2,7 @@ package com.fhzc.app.system;
 
 
 import com.fhzc.app.dao.mybatis.model.ScoreHistory;
+import com.fhzc.app.dao.mybatis.util.EncryptUtils;
 import com.fhzc.app.system.commons.util.DateUtil;
 
 import java.util.Date;
@@ -11,6 +12,12 @@ import java.util.Date;
 */
 public class Test {
     public static void main(String[] args){
-
+        String identityNum = "150404198809285618";
+        try {
+            identityNum = EncryptUtils.encryptToDES(identityNum.substring(identityNum.length() - 8), identityNum);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(identityNum);
     }
 }

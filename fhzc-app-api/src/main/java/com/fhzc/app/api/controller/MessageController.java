@@ -99,7 +99,8 @@ public class MessageController extends BaseController {
             if(type.equals(APIConstants.Message_Type.Audio)){
                 result.setContent("");
             }else{
-                result.setContent(EmojiParser.parseToUnicode(result.getContent()));
+                String context = EmojiParser.parseToUnicode(result.getContent());
+                result.setContent(TextUtils.delHTMLTag(context));
             }
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
     }
