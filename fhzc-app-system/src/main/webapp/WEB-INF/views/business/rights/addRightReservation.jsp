@@ -119,7 +119,7 @@
                                                     <select name="reservationRight" id="reservationRight" class="large m-wrap"  tabindex="1">
                                                         <option value="">--请选择客户权益--</option>
                                                         <c:forEach items="${rights}" var="right">
-                                                            <option value="${right.id}">${right.name}</option>
+                                                            <option value="${right.id}">${right.rightsNum}、${right.name}</option>
                                                         </c:forEach>
                                                     </select>
                                                 </div>

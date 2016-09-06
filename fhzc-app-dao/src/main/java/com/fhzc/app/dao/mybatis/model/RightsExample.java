@@ -165,6 +165,66 @@ public class RightsExample {
             return (Criteria) this;
         }
 
+        public Criteria andRightsNumIsNull() {
+            addCriterion("`rights_num` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightsNumIsNotNull() {
+            addCriterion("`rights_num` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightsNumEqualTo(String value) {
+            addCriterion("`rights_num` =", value, "rightsNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightsNumNotEqualTo(String value) {
+            addCriterion("`rights_num` <>", value, "rightsNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightsNumGreaterThan(String value) {
+            addCriterion("`rights_num` >", value, "rightsNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightsNumGreaterThanOrEqualTo(String value) {
+            addCriterion("`rights_num` >=", value, "rightsNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightsNumLessThan(String value) {
+            addCriterion("`rights_num` <", value, "rightsNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightsNumLessThanOrEqualTo(String value) {
+            addCriterion("`rights_num` <=", value, "rightsNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightsNumIn(List<String> values) {
+            addCriterion("`rights_num` in", values, "rightsNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightsNumNotIn(List<String> values) {
+            addCriterion("`rights_num` not in", values, "rightsNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightsNumBetween(String value1, String value2) {
+            addCriterion("`rights_num` between", value1, value2, "rightsNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andRightsNumNotBetween(String value1, String value2) {
+            addCriterion("`rights_num` not between", value1, value2, "rightsNum");
+            return (Criteria) this;
+        }
+
         public Criteria andCidIsNull() {
             addCriterion("`cid` is null");
             return (Criteria) this;

@@ -90,6 +90,13 @@ public class RightsController extends BaseController{
         return mav;
     }
 
+    
+    @RequestMapping(value = "/isNumExists", method = RequestMethod.GET)
+    @ResponseBody
+    public Object isNumExists(String rightsNum) {
+        boolean flag = rightsService.isNumExists(rightsNum);
+        return !flag;
+    }
     /**
      * 添加权益
      * @param rights

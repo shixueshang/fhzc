@@ -81,4 +81,11 @@ public interface RightsService {
      * @return
      */
     List<Rights> getRightsByType(String typeId);
+    
+    /**
+     * 检查权益编号是否存在
+     * @param rightsNum
+     * @return
+     */
+    boolean isNumExists(String rightsNum);
 }

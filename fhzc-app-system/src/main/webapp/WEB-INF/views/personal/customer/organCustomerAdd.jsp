@@ -197,7 +197,7 @@
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">联系人姓名</label>
+                                                <label class="control-label">机构全称</label>
                                                 <div class="controls">
                                                     <input type="text" name="realname" value="${user.realname}" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>

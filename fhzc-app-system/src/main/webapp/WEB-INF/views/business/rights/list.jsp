@@ -62,6 +62,7 @@
                             <table id="example" class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
+                                	<td>权益编号</td>
                                     <td style="width:18%">权益名</td>
                                     <td>权益类型</td>
                                     <td>权益图片</td>
@@ -77,6 +78,7 @@
                                 <tbody>
                                 <c:forEach items="${rights}" var="right">
                                     <tr>
+                                    	<td>${right.rightsNum}</td>
                                         <td>${right.name}</td>
                                         <td>
                                             <c:forEach items="${rightsCategory}" var="category">
