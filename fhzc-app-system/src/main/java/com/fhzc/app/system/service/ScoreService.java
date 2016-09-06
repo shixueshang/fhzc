@@ -89,4 +89,13 @@ public interface ScoreService {
 
     void update(ScoreHistory history);
 
+    /**
+     * 权益取消或者预约失败时把该条冻结的积分设置为无效
+     * @param uid
+     * @param eventId
+     * @param fromType
+     * @return
+     */
+    void delete(Integer uid, Integer eventId, String fromType);
+
 }

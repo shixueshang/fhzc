@@ -276,7 +276,7 @@ public class RightsController extends BaseController{
     }
 
     /**
-     * 取消预约
+     * 处理预约, 取消预约则删除冻结的积分
      * @param reserId
      * @param status
      * @return
@@ -285,7 +285,14 @@ public class RightsController extends BaseController{
     @ResponseBody
     @SystemControllerLog(description = "处理预约")
     public AjaxJson dealReservation(Integer reserId, Integer status){
+
         RightsReservation reservation = rightsService.getReservationById(reserId);
+
+        if(status == Const.RIGHTS_STATUS.ORDER_CANCEL){
+            Customer customer = customerService.getCustomer(reservation.getCustomerId());
+            scoreService.delete(customer.getUid(), reservation.getRightsId(), Const.FROM_TYPE.RIGHTS);
+        }
+
         reservation.setStatus(status);
         rightsService.updateReservation(reservation);
         return new AjaxJson(true);

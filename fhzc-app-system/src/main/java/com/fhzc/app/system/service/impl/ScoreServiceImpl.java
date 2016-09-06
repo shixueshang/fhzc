@@ -170,5 +170,16 @@ public class ScoreServiceImpl implements ScoreService {
         scoreHistoryMapper.updateByPrimaryKey(history);
     }
 
+    @Override
+    public void delete(Integer uid, Integer eventId, String fromType) {
+        ScoreHistoryExample example = new ScoreHistoryExample();
+        ScoreHistoryExample.Criteria criteria = example.createCriteria();
+        criteria.andUidEqualTo(uid);
+        criteria.andEventIdEqualTo(eventId);
+        criteria.andFromTypeEqualTo(fromType);
+        ScoreHistory history = scoreHistoryMapper.selectByExample(example).get(0);
+        history.setIsVaild(Const.SCORE_VAILD.NOT_VAILD);
+        scoreHistoryMapper.updateByPrimaryKey(history);
+    }
 
 }
