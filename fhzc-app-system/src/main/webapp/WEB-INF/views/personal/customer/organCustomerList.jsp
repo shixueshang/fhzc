@@ -76,7 +76,7 @@
                                     <td>会员等级</td>
                                     <td>当前可用积分</td>
                                     <td>冻结积分</td>
-                                    <td>联系人姓名</td>
+                                    <!--  <td>联系人姓名</td> -->
                                     <td>联系人手机号</td>
                                     <td>固定电话</td>
                                     <td>操作</td>
@@ -86,7 +86,13 @@
                                 <c:forEach items="${customers}" var="customer">
                                     <tr>
                                         <td>${customer.cbId}</td>
-                                        <td>${customer.organName}</td>
+                                        <td>
+                                            <c:forEach items="${users}" var="user">
+                                                <c:if test="${customer.uid == user.uid}">
+                                                    ${user.realname}
+                                                </c:if>
+                                            </c:forEach>
+                                        </td>
                                         <td>
                                             <c:forEach items="${users}" var="user">
                                                 <c:if test="${customer.uid == user.uid}">
@@ -112,6 +118,7 @@
                                                 </c:if>
                                             </c:forEach>
                                         </td>
+                                        <!--  
                                         <td>
                                             <c:forEach items="${users}" var="user">
                                                 <c:if test="${customer.uid == user.uid}">
@@ -119,7 +126,7 @@
                                                 </c:if>
                                             </c:forEach>
                                         </td>
-
+										-->
                                         <td>
                                             <c:forEach items="${users}" var="user">
                                                 <c:if test="${customer.uid == user.uid}">

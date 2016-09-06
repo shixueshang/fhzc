@@ -94,4 +94,15 @@ public class RightsServiceImpl implements RightsService {
 	    criteria.andCidEqualTo(Integer.parseInt(typeId));
 	    return rightsMapper.selectByExample(example);
 	}
+	
+    @Override
+    public boolean isNumExists(String rightsNum) {
+    	RightsExample example = new RightsExample();
+    	RightsExample.Criteria criteria = example.createCriteria();
+        criteria.andRightsNumEqualTo(Integer.parseInt(rightsNum));
+        if(rightsMapper.countByExample(example) > 0){
+            return true;
+        }
+        return false;
+    }
 }

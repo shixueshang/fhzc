@@ -3,6 +3,7 @@
 <mapper namespace="com.fhzc.app.dao.mybatis.inter.RightsMapper" >
   <resultMap id="BaseResultMap" type="com.fhzc.app.dao.mybatis.model.Rights" >
     <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="rights_num" property="rightsNum" jdbcType="INTEGER" />
     <result column="cid" property="cid" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="spend_score" property="spendScore" jdbcType="INTEGER" />
@@ -79,8 +80,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    `id`, `cid`, `name`, `spend_score`, `spend_type`, `level`, `ctime`, `supply`, `cover`, 
-    `url`, `is_ recommend`, `notice`, `advance_day`, `supply_phone`
+    `id`, `rights_num`, `cid`, `name`, `spend_score`, `spend_type`, `level`, `ctime`, 
+    `supply`, `cover`, `url`, `is_ recommend`, `notice`, `advance_day`, `supply_phone`
   </sql>
   <sql id="Blob_Column_List" >
     `summary`
@@ -137,16 +138,18 @@
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into `rights` (`cid`, `name`, `spend_score`, 
-      `spend_type`, `level`, `ctime`, 
-      `supply`, `cover`, `url`, 
-      `is_ recommend`, `notice`, `advance_day`, 
-      `supply_phone`, `summary`)
-    values (#{cid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{spendScore,jdbcType=INTEGER}, 
-      #{spendType,jdbcType=CHAR}, #{level,jdbcType=INTEGER}, #{ctime,jdbcType=TIMESTAMP}, 
-      #{supply,jdbcType=VARCHAR}, #{cover,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
-      #{isRecommend,jdbcType=INTEGER}, #{notice,jdbcType=VARCHAR}, #{advanceDay,jdbcType=VARCHAR}, 
-      #{supplyPhone,jdbcType=VARCHAR}, #{summary,jdbcType=LONGVARCHAR})
+    insert into `rights` (`rights_num`, `cid`, `name`, 
+      `spend_score`, `spend_type`, `level`, 
+      `ctime`, `supply`, `cover`, 
+      `url`, `is_ recommend`, `notice`, 
+      `advance_day`, `supply_phone`, `summary`
+      )
+    values (#{rightsNum,jdbcType=INTEGER}, #{cid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{spendScore,jdbcType=INTEGER}, #{spendType,jdbcType=CHAR}, #{level,jdbcType=INTEGER}, 
+      #{ctime,jdbcType=TIMESTAMP}, #{supply,jdbcType=VARCHAR}, #{cover,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{isRecommend,jdbcType=INTEGER}, #{notice,jdbcType=VARCHAR}, 
+      #{advanceDay,jdbcType=VARCHAR}, #{supplyPhone,jdbcType=VARCHAR}, #{summary,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.Rights" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
@@ -154,6 +157,9 @@
     </selectKey>
     insert into `rights`
     <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rightsNum != null" >
+        `rights_num`,
+      </if>
       <if test="cid != null" >
         `cid`,
       </if>
@@ -198,6 +204,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rightsNum != null" >
+        #{rightsNum,jdbcType=INTEGER},
+      </if>
       <if test="cid != null" >
         #{cid,jdbcType=INTEGER},
       </if>
@@ -254,6 +263,9 @@
       <if test="record.id != null" >
         `id` = #{record.id,jdbcType=INTEGER},
       </if>
+      <if test="record.rightsNum != null" >
+        `rights_num` = #{record.rightsNum,jdbcType=INTEGER},
+      </if>
       <if test="record.cid != null" >
         `cid` = #{record.cid,jdbcType=INTEGER},
       </if>
@@ -304,6 +316,7 @@
   <update id="updateByExampleWithBLOBs" parameterType="map" >
     update `rights`
     set `id` = #{record.id,jdbcType=INTEGER},
+      `rights_num` = #{record.rightsNum,jdbcType=INTEGER},
       `cid` = #{record.cid,jdbcType=INTEGER},
       `name` = #{record.name,jdbcType=VARCHAR},
       `spend_score` = #{record.spendScore,jdbcType=INTEGER},
@@ -325,6 +338,7 @@
   <update id="updateByExample" parameterType="map" >
     update `rights`
     set `id` = #{record.id,jdbcType=INTEGER},
+      `rights_num` = #{record.rightsNum,jdbcType=INTEGER},
       `cid` = #{record.cid,jdbcType=INTEGER},
       `name` = #{record.name,jdbcType=VARCHAR},
       `spend_score` = #{record.spendScore,jdbcType=INTEGER},
@@ -345,6 +359,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.fhzc.app.dao.mybatis.model.Rights" >
     update `rights`
     <set >
+      <if test="rightsNum != null" >
+        `rights_num` = #{rightsNum,jdbcType=INTEGER},
+      </if>
       <if test="cid != null" >
         `cid` = #{cid,jdbcType=INTEGER},
       </if>
@@ -392,7 +409,8 @@
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.Rights" >
     update `rights`
-    set `cid` = #{cid,jdbcType=INTEGER},
+    set `rights_num` = #{rightsNum,jdbcType=INTEGER},
+      `cid` = #{cid,jdbcType=INTEGER},
       `name` = #{name,jdbcType=VARCHAR},
       `spend_score` = #{spendScore,jdbcType=INTEGER},
       `spend_type` = #{spendType,jdbcType=CHAR},
@@ -410,7 +428,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.fhzc.app.dao.mybatis.model.Rights" >
     update `rights`
-    set `cid` = #{cid,jdbcType=INTEGER},
+    set `rights_num` = #{rightsNum,jdbcType=INTEGER},
+      `cid` = #{cid,jdbcType=INTEGER},
       `name` = #{name,jdbcType=VARCHAR},
       `spend_score` = #{spendScore,jdbcType=INTEGER},
       `spend_type` = #{spendType,jdbcType=CHAR},

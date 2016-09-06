@@ -79,6 +79,14 @@
                                             <div class="control-group">
                                             </div>
                                             <div class="control-group">
+                                                <label class="control-label">权益编号<span class="required">*</span></label>
+                                                <div class="controls">
+                                                    <input type="number" name="rightsNum" value="${right.rightsNum}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="control-group">
                                                 <label class="control-label">权益名<span class="required">*</span></label>
                                                 <div class="controls">
                                                     <input type="text" name="name" value="${right.name}" data-required="1" placeholder="" class="m-wrap large">
@@ -125,7 +133,7 @@
      										<div class="control-group">
                                                 <label class="control-label">提前预约天数</label>
                                                 <div class="controls">
-                                                    <input type="text" name="advanceDay" value="${right.advanceDay}"  placeholder="" class="m-wrap large">
+                                                    <input type="number" name="advanceDay" value="${right.advanceDay}"  placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
@@ -262,7 +270,29 @@
             errorClass: 'help-inline', // default input error message class
             focusInvalid: false, // do not focus the last invalid input
             ignore: "",
+            messages: {
+            	rightsNum:{required:"权益编号不能为空！",remote:jQuery.format("权益编号已经存在")},
+            },
             rules: {
+            	rightsNum:{
+            	    required: true,
+            	    min:0,
+                    remote: {
+                        url: "/business/rights/isNumExists",
+                        type: "get",
+                        data: {
+                            name: function() {
+                                var old_name = '${rights.rightsNum}';
+                                var new_name = $("input[rightsNum='rightsNum']").val();
+                                if(old_name == new_name){
+                                    return old_name + 'no check';
+                                }else {
+                                    return new_name;
+                                }
+                            }
+                        }
+                    }
+            	},
                 name: {
                     required: true
                 },
@@ -272,6 +302,10 @@
                 spendScore: {
                     number: true,
                     min:0
+                },
+                advanceDay:{
+                	 number: true,
+                     min:0
                 }
             },
 
