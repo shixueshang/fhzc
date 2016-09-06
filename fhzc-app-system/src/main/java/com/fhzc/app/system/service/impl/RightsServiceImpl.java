@@ -99,7 +99,7 @@ public class RightsServiceImpl implements RightsService {
     public boolean isNumExists(String rightsNum) {
     	RightsExample example = new RightsExample();
     	RightsExample.Criteria criteria = example.createCriteria();
-        criteria.andRightsNumEqualTo(Integer.parseInt(rightsNum));
+        criteria.andRightsNumEqualTo(rightsNum);
         if(rightsMapper.countByExample(example) > 0){
             return true;
         }

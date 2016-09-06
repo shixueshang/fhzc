@@ -9,3 +9,7 @@ CREATE TABLE `bank`.`assets_recommend` (
   ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8
   COMMENT = '资产推荐配置';
+  
+ #2016-09-06
+ alter table product modify column annual_yield varchar(500) ;
+ alter table rights add column rights_num varchar(45) not null;

@@ -175,52 +175,52 @@ public class RightsExample {
             return (Criteria) this;
         }
 
-        public Criteria andRightsNumEqualTo(Integer value) {
+        public Criteria andRightsNumEqualTo(String value) {
             addCriterion("`rights_num` =", value, "rightsNum");
             return (Criteria) this;
         }
 
-        public Criteria andRightsNumNotEqualTo(Integer value) {
+        public Criteria andRightsNumNotEqualTo(String value) {
             addCriterion("`rights_num` <>", value, "rightsNum");
             return (Criteria) this;
         }
 
-        public Criteria andRightsNumGreaterThan(Integer value) {
+        public Criteria andRightsNumGreaterThan(String value) {
             addCriterion("`rights_num` >", value, "rightsNum");
             return (Criteria) this;
         }
 
-        public Criteria andRightsNumGreaterThanOrEqualTo(Integer value) {
+        public Criteria andRightsNumGreaterThanOrEqualTo(String value) {
             addCriterion("`rights_num` >=", value, "rightsNum");
             return (Criteria) this;
         }
 
-        public Criteria andRightsNumLessThan(Integer value) {
+        public Criteria andRightsNumLessThan(String value) {
             addCriterion("`rights_num` <", value, "rightsNum");
             return (Criteria) this;
         }
 
-        public Criteria andRightsNumLessThanOrEqualTo(Integer value) {
+        public Criteria andRightsNumLessThanOrEqualTo(String value) {
             addCriterion("`rights_num` <=", value, "rightsNum");
             return (Criteria) this;
         }
 
-        public Criteria andRightsNumIn(List<Integer> values) {
+        public Criteria andRightsNumIn(List<String> values) {
             addCriterion("`rights_num` in", values, "rightsNum");
             return (Criteria) this;
         }
 
-        public Criteria andRightsNumNotIn(List<Integer> values) {
+        public Criteria andRightsNumNotIn(List<String> values) {
             addCriterion("`rights_num` not in", values, "rightsNum");
             return (Criteria) this;
         }
 
-        public Criteria andRightsNumBetween(Integer value1, Integer value2) {
+        public Criteria andRightsNumBetween(String value1, String value2) {
             addCriterion("`rights_num` between", value1, value2, "rightsNum");
             return (Criteria) this;
         }
 
-        public Criteria andRightsNumNotBetween(Integer value1, Integer value2) {
+        public Criteria andRightsNumNotBetween(String value1, String value2) {
             addCriterion("`rights_num` not between", value1, value2, "rightsNum");
             return (Criteria) this;
         }

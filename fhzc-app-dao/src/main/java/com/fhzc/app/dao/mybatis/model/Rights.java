@@ -5,7 +5,7 @@ import java.util.Date;
 public class Rights {
     private Integer id;
 
-    private Integer rightsNum;
+    private String rightsNum;
 
     private Integer cid;
 
@@ -63,11 +63,11 @@ public class Rights {
         this.id = id;
     }
 
-    public Integer getRightsNum() {
+    public String getRightsNum() {
         return rightsNum;
     }
 
-    public void setRightsNum(Integer rightsNum) {
+    public void setRightsNum(String rightsNum) {
         this.rightsNum = rightsNum;
     }
 
