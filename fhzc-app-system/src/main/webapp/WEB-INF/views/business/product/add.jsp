@@ -118,9 +118,16 @@
                                                 </div>
                                             </div>
                                             <div class="control-group">
-                                                <label class="control-label">参考业绩标准(%)</label>
+                                                <label class="control-label">参考业绩标准详细(%)</label>
                                                 <div class="controls">
                                                     <input type="text" name="annualYield" value="${product.annualYield}" placeholder="" class="large m-wrap">
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <label class="control-label">参考业绩标准区间(%)</label>
+                                                <div class="controls">
+                                                    <input type="text" name="annualInterval" value="${product.annualInterval}" placeholder="" class="large m-wrap">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>

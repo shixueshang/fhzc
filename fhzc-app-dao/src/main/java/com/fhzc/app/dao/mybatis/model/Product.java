@@ -92,10 +92,12 @@ public class Product {
 
     private String investTerm;
 
+    private String annualInterval;
+
     private String desc;
 
     private String detailContent;
-
+    
     private Integer focusNum;
 
     private Integer orderNum;
@@ -476,6 +478,14 @@ public class Product {
 
     public void setInvestTerm(String investTerm) {
         this.investTerm = investTerm == null ? null : investTerm.trim();
+    }
+
+    public String getAnnualInterval() {
+        return annualInterval;
+    }
+
+    public void setAnnualInterval(String annualInterval) {
+        this.annualInterval = annualInterval == null ? null : annualInterval.trim();
     }
 
     public String getDesc() {
