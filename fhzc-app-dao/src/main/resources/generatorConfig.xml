@@ -46,10 +46,10 @@
 
         <!--生成对应表及类名 -->
 
-        <table tableName="contract"
+        <table tableName="system_notice_record"
                delimitAllColumns="true"
                delimitIdentifiers="true"
-               domainObjectName="Contract">
+               domainObjectName="SystemNoticeRecord">
             <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
         </table>
 
