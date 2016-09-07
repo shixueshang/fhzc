@@ -14,6 +14,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,6 +50,10 @@ public class ProductServiceImpl implements ProductService {
         ProductExample.Criteria criteria = example.createCriteria();
         criteria.andIsDisplayEqualTo(Const.YES_OR_NO.YES);
         criteria.andIsRecommendEqualTo(Const.YES_OR_NO.YES);
+        List<Integer> status = new ArrayList<Integer>();
+        status.add(0);
+        status.add(1);
+        criteria.andStatusIn(status);
         if(productMapper.countByExample(example) > 0) {
             return productMapper.selectByExampleWithBLOBs(example);
         }else{
@@ -58,15 +63,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product getProduct(Integer pid) {
-        ProductExample example = new ProductExample();
-        ProductExample.Criteria criteria = example.createCriteria();
-        criteria.andPidEqualTo(pid);
-        if(productMapper.countByExample(example) > 0){
-            return productMapper.selectByPrimaryKey(pid);
-        }else{
-            return null;
-        }
-
+        return productMapper.selectByPrimaryKey(pid);
     }
 
     @Override

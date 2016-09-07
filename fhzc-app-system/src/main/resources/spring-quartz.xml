@@ -3,7 +3,7 @@
        xsi:schemaLocation="
 	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!--每日任务计算积分-->
+    <!--每日任务计算待审批积分-->
     <bean id="scoreTaskJob" class="com.fhzc.app.system.job.ScoreTaskJob" />
     <bean id="scoreTaskBean"
           class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">

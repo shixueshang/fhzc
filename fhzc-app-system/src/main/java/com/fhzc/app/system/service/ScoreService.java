@@ -87,7 +87,6 @@ public interface ScoreService {
      */
     List<ScoreHistory> getExpiredScore();
 
-    void update(ScoreHistory history);
 
     /**
      * 权益取消或者预约失败时把该条冻结的积分设置为无效

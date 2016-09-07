@@ -5,6 +5,7 @@ import com.fhzc.app.api.service.ReportService;
 import com.fhzc.app.api.tools.APIConstants;
 import com.fhzc.app.api.tools.ApiJsonResult;
 import com.fhzc.app.api.tools.ObjUtils;
+import com.fhzc.app.api.tools.TextUtils;
 import com.fhzc.app.dao.mybatis.model.Focus;
 import com.fhzc.app.dao.mybatis.model.Report;
 import com.fhzc.app.dao.mybatis.model.User;
@@ -36,7 +37,7 @@ public class ReportApiController extends BaseController{
     @RequestMapping(value = "/api/report",method = RequestMethod.GET)
     @ResponseBody
     public ApiJsonResult reportList(){
-        PageableResult<Report> reportList =  reportService.findPageReports(0,100);
+        PageableResult<Report> reportList =  reportService.findPageReports(page, size);
 
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,reportList);
     }
@@ -51,6 +52,7 @@ public class ReportApiController extends BaseController{
     @ResponseBody
     public  ApiJsonResult reportDetail(Integer reportId) throws Exception {
         Report report = reportService.getReport(reportId);
+        report.setUrl(TextUtils.delHTMLTag(report.getUrl()));
         Map result = ObjUtils.objectToMap(report);
         User user = super.getCurrentUser();
         Focus focus = focusService.getFocusByCond(user.getUid(),reportId,APIConstants.FocusType.Product);
