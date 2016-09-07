@@ -14,3 +14,4 @@ CREATE TABLE `bank`.`assets_recommend` (
  alter table product modify column annual_yield varchar(500) ;
  alter table rights add column rights_num varchar(45) not null;
  alter table product add column annual_interval varchar(50) NULL COMMENT '参考业绩标准区间(%)'
+ alter table product modify column fund_manager varchar(200) ;
