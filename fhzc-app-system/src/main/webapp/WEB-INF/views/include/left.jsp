@@ -270,6 +270,9 @@
                         <shiro:hasPermission name="/system/notice/list"><li>
                                 <a href="<%=contextPath%>/system/notice/list">消息列表</a>
                             </li></shiro:hasPermission>
+                        <shiro:hasPermission name="/system/suggest/list"><li>
+                                <a href="<%=contextPath%>/system/suggest/list">意见列表</a>
+                            </li></shiro:hasPermission>
                         <shiro:hasPermission name="/system/log/list"><li>
                                 <a href="<%=contextPath%>/system/log/list">操作日志</a>
                             </li></shiro:hasPermission>
