@@ -13,3 +13,7 @@ CREATE TABLE `bank`.`assets_recommend` (
  #2016-09-06
  alter table product modify column annual_yield varchar(500) ;
  alter table rights add column rights_num varchar(45) not null;
+
+#2016-09-07
+ALTER TABLE `bank`.`system_notice_record`
+ADD COLUMN `push_time` DATETIME NULL COMMENT '推送时间' AFTER `push_channel`;
