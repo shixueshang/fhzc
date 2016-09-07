@@ -165,10 +165,6 @@ public class ScoreServiceImpl implements ScoreService {
         return scoreHistoryMapper.selectByExample(example);
     }
 
-    @Override
-    public void update(ScoreHistory history) {
-        scoreHistoryMapper.updateByPrimaryKey(history);
-    }
 
     @Override
     public void delete(Integer uid, Integer eventId, String fromType) {

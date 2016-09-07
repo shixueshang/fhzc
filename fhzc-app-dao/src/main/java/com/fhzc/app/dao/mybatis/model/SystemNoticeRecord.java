@@ -1,5 +1,7 @@
 package com.fhzc.app.dao.mybatis.model;
 
+import java.util.Date;
+
 public class SystemNoticeRecord {
     private Integer id;
 
@@ -10,6 +12,8 @@ public class SystemNoticeRecord {
     private Integer pushStatus;
 
     private Integer pushChannel;
+
+    private Date pushTime;
 
     private String content;
 
@@ -51,6 +55,14 @@ public class SystemNoticeRecord {
 
     public void setPushChannel(Integer pushChannel) {
         this.pushChannel = pushChannel;
+    }
+
+    public Date getPushTime() {
+        return pushTime;
+    }
+
+    public void setPushTime(Date pushTime) {
+        this.pushTime = pushTime;
     }
 
     public String getContent() {

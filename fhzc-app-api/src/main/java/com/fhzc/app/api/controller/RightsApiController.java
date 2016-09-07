@@ -64,8 +64,7 @@ public class RightsApiController extends BaseController{
     @RequestMapping(value = "/api/rights/select",method = RequestMethod.GET)
     @ResponseBody
     public ApiJsonResult rightsSelectList(){
-        PageableResult<Rights> rightsList =  rightsService.findPageRights(0,100);
-        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,rightsList);
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, rightsService.findPageRights(page, size));
     }
 
     /**

@@ -267,9 +267,18 @@ public class MessageController extends BaseController {
     @RequestMapping(value = "/api/notice", method = RequestMethod.GET)
     @ResponseBody
     public ApiJsonResult notice(){
+        List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
         User user = getCurrentUser();
-        List<SystemNoticeRecord> list = systemNoticeRecordService.getByUserId(user.getUid());
+        List<SystemNoticeRecord> list = systemNoticeRecordService.getNoticeRecordByUser(user.getUid());
+        for(SystemNoticeRecord record : list){
+            SystemNotice notice = systemNoticeRecordService.getNotice(record.getNoticeId());
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("title", notice.getTitle());
+            map.put("content", notice.getContent());
+            map.put("publishTime", notice.getPublishTime());
+            result.add(map);
+        }
 
-        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,list);
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK,result);
     }
 }

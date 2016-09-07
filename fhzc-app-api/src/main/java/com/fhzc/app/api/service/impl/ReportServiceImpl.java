@@ -28,7 +28,7 @@ public class ReportServiceImpl implements ReportService {
         ReportExample.Criteria criteria = example.createCriteria();
         criteria.andIsDisplayEqualTo(Const.YES_OR_NO.YES);
         List<Report> list = reportMapper.selectByExampleWithBLOBsWithRowbounds(example, rowBounds);
-        return new PageableResult<Report>(page, size, list.size(), list);
+        return new PageableResult<Report>(page, size, reportMapper.countByExample(example), list);
     }
 
     @Override
@@ -38,20 +38,12 @@ public class ReportServiceImpl implements ReportService {
         example.setOrderByClause("ctime desc");
         criteria.andIsDisplayEqualTo(Const.YES_OR_NO.YES);
         criteria.andIsRecommendEqualTo(Const.YES_OR_NO.YES);
-        RowBounds rowBounds = new RowBounds(0, 3);
 
-        return reportMapper.selectByExampleWithBLOBsWithRowbounds(example,rowBounds);
+        return reportMapper.selectByExample(example);
     }
 
     @Override
     public Report getReport(Integer id) {
-        ReportExample example = new ReportExample();
-        ReportExample.Criteria criteria = example.createCriteria();
-        criteria.andIdEqualTo(id);
-        if(reportMapper.countByExample(example) > 0) {
-            return reportMapper.selectByPrimaryKey(id);
-        }else{
-            return null;
-        }
+        return reportMapper.selectByPrimaryKey(id);
     }
 }

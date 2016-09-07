@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -50,7 +51,6 @@ public class ScoreTaskJob {
             List<AssetsHistory> list = assetsService.findAssetsForScore();
             for(AssetsHistory asset : list){
                 Product product = productService.getProduct(asset.getProductId());
-                if(product.getExpiryDay().getTime() > new Date().getTime()){
                     //根据客户和产品id查询积分历史记录
                     Customer customer = customerService.getCustomer(asset.getCustomerId());
                     List<ScoreHistory> scoreHistories = scoreHistoryService.findScoreByProduct(customer.getUid(), asset.getProductId());
@@ -70,7 +70,7 @@ public class ScoreTaskJob {
                         history.setCtime(new Date());
                         scoreHistoryService.addHistoryScore(history);
                     }
-                }
+
             }
             logger.info("task execute success");
         }catch (Exception e){
@@ -102,13 +102,42 @@ public class ScoreTaskJob {
      * 每日任务计算过期积分
      */
     public void run(){
-        //查询当天到期的积分
         try{
+            //查询当天过期的积分列表
             List<ScoreHistory> expires = scoreService.getExpiredScore();
+            //获得存在过期积分的用户
+            List<Integer> userIds = new ArrayList<Integer>();
             for(ScoreHistory history : expires){
-                history.setStatus(Const.Score.EXPIRE);
-                scoreService.update(history);
+                if(!userIds.contains(history.getUid())){
+                    userIds.add(history.getUid());
+                }
             }
+
+            for(Integer userId : userIds){
+                Integer consume = Math.abs(scoreService.getConsumeScore(userId));
+                Integer frozen = Math.abs(scoreService.getFrozenScore(userId));
+                Integer expire = 0;  //客户当天的过期积分
+                for(ScoreHistory sh : expires){
+                    if(sh.getUid() == userId){
+                        expire += sh.getScore();
+                    }
+                }
+                if((consume + frozen) < expire){ //有过期积分, 需要向积分记录表插入一条过期积分
+                    Integer score = consume + frozen - expire;
+                    ScoreHistory scoreHistory = new ScoreHistory();
+                    scoreHistory.setUid(userId);
+                    scoreHistory.setStatus(Const.Score.EXPIRE);
+                    scoreHistory.setDetail("积分自动失效");
+                    scoreHistory.setIsApprove(Const.APPROVE_STATUS.APPROVED);
+                    scoreHistory.setIsVaild(Const.SCORE_VAILD.IS_VAILD);
+                    scoreHistory.setScore(score);
+                    scoreHistory.setCtime(new Date());scoreHistory.setEventId(-1);
+                    scoreHistory.setFromType(Const.FROM_TYPE.OTHER);
+                    scoreService.addSCoreRecord(scoreHistory);
+                }
+
+            }
+
             logger.info("task execute success");
         }catch (Exception e){
             e.printStackTrace();

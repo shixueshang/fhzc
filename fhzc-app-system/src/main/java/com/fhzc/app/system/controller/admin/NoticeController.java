@@ -199,6 +199,7 @@ public class NoticeController extends BaseController {
                 }
 
                 //更新状态为已推送
+                record.setPushTime(new Date());
                 record.setPushStatus(Const.PUSH_STATUS.PUSHED);
                 noticeService.addOrUpdateNoticeRecord(record);
                 SystemNotice notice = noticeService.getSystemNotice(noticeId);

@@ -35,9 +35,7 @@ public class RightsReservationApiController extends BaseController {
 
     public static long LONGHOUR = 24;
 
-    public static String LESS_THEN_LONGHOUR_MESSAGE = "未超过24小时不能取消";
-
-    public static String GETSTATUS_FAIL_MESSAGE = "获取状态错误";
+    public static String LESS_THEN_LONGHOUR_MESSAGE = "不能取消,请联系客服";
 
     /**
      * 权益兑换
@@ -87,25 +85,20 @@ public class RightsReservationApiController extends BaseController {
      */
     @RequestMapping(value = "/api/rights/exchange/cancel",method = RequestMethod.POST)
     @ResponseBody
-    public ApiJsonResult rightsReservationExchange(Integer id ,HttpServletResponse response ){
+    public ApiJsonResult rightsReservationExchange(Integer id, HttpServletResponse response) {
         Integer uid = getCurrentUser().getUid();
-        RightsReservation rightsReservation =rightsReservationService.getRightsReservation(id);
-        if(Const.RIGHTS_STATUS.ORDER_ING == rightsReservation.getStatus()){
+        RightsReservation rightsReservation = rightsReservationService.getRightsReservation(id);
+
+        //在指定预约时间24小时之内不允许取消
+        long diff = rightsReservation.getMarkDate().getTime() - System.currentTimeMillis();
+        if (LONGHOUR < (diff / (1000 * 60 * 60))) {
             rightsReservation.setStatus(Const.RIGHTS_STATUS.ORDER_CANCEL);
-        }else if(Const.RIGHTS_STATUS.ORDER_SUCCESS == rightsReservation.getStatus()){
-            rightsReservation.getCtime().getTime();
-            //预约时间如果是24小时内 则直接取消  LONGHOUR=24小时
-            long diff = System.currentTimeMillis() - rightsReservation.getCtime().getTime();
-            if(LONGHOUR < (diff / (1000 * 60 * 60 ))){
-                rightsReservation.setStatus(Const.RIGHTS_STATUS.ORDER_CANCEL);
-                //取消后恢复积分冻结状态,即删除冻结记录
-                scoreService.delete(uid, id, Const.FROM_TYPE.RIGHTS);
-            }else{
-                    return new ApiJsonResult(APIConstants.API_JSON_RESULT.FAILED,LESS_THEN_LONGHOUR_MESSAGE);
-            }
-        }else{
-            return new ApiJsonResult(APIConstants.API_JSON_RESULT.FAILED,GETSTATUS_FAIL_MESSAGE);
+            //取消后恢复积分冻结状态,即删除冻结记录
+            scoreService.delete(uid, id, Const.FROM_TYPE.RIGHTS);
+        } else {
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.FAILED, LESS_THEN_LONGHOUR_MESSAGE);
         }
+
         rightsReservationService.addOrUpdateRightsReservation(rightsReservation);
 
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
