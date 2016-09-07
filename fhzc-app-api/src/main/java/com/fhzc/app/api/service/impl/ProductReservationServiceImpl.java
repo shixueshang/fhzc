@@ -4,6 +4,7 @@ import com.fhzc.app.api.service.ProductReservationService;
 import com.fhzc.app.dao.mybatis.inter.ProductReservationMapper;
 import com.fhzc.app.dao.mybatis.model.ProductReservation;
 import com.fhzc.app.dao.mybatis.model.ProductReservationExample;
+import com.fhzc.app.dao.mybatis.util.Const;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -38,6 +39,8 @@ public class ProductReservationServiceImpl implements ProductReservationService 
         ProductReservationExample.Criteria criteria = example.createCriteria();
         example.setOrderByClause("id desc");
         criteria.andCustomerIdEqualTo(customer_id);
+        criteria.andResultEqualTo(Const.ORDER_RESULT.Success);
+
         return productReservationMapper.selectByExample(example);
     }
 

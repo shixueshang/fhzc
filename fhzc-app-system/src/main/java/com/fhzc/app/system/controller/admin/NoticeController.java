@@ -183,9 +183,6 @@ public class NoticeController extends BaseController {
         List<SystemNoticeRecord> list = noticeService.findRecordByNoticeId(noticeId);
         try{
             for(SystemNoticeRecord record : list){
-                if(record.getPushChannel() == Const.PUSH_CHANNEL.SYSTEM){
-                    continue;
-                }
                 if(record.getPushChannel() == Const.PUSH_CHANNEL.MESSAGE){
                     pushTokenService.pushMessageToUser(record.getUserId(), record.getContent());
                 }

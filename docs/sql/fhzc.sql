@@ -547,7 +547,7 @@ DROP TABLE IF EXISTS `bank`.`product` ;
 
 CREATE TABLE IF NOT EXISTS `bank`.`product` (
   `pid` INT(11) NOT NULL AUTO_INCREMENT,
-  `status` INT(1) NULL DEFAULT '-1' COMMENT '基金状态 -1未知|0产品预热|1募集中|2募集结束|3募集失败|4产品成立|5产品到期|6提前结束',
+  `status` INT(1) NULL DEFAULT '-1' COMMENT '基金状态 0未知|1产品预热|2募集中|3募集结束|4募集失败|5产品成立|6产品到期|7提前结束',
   `code` VARCHAR(45) NULL DEFAULT NULL COMMENT '产品代码',
   `name` VARCHAR(45) NOT NULL COMMENT '产品名称',
   `found_day` DATE NULL DEFAULT NULL COMMENT '成立日',
