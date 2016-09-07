@@ -46,6 +46,7 @@
     <result column="collect_start" property="collectStart" jdbcType="DATE" />
     <result column="collect_end" property="collectEnd" jdbcType="DATE" />
     <result column="invest_term" property="investTerm" jdbcType="VARCHAR" />
+    <result column="annual_interval" property="annualInterval" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.fhzc.app.dao.mybatis.model.Product" extends="BaseResultMap" >
     <result column="desc" property="desc" jdbcType="LONGVARCHAR" />
@@ -117,7 +118,7 @@
     `investment_type`, `project_source`, `issuer`, `is_record`, `prove_url`, `display_order`, 
     `level`, `risk`, `cover`, `notice`, `score_factor`, `is_ recommend`, `is_display`, 
     `is_renew`, `ctime`, `detail_url`, `invest_threshold`, `throw_department`, `collect_start`, 
-    `collect_end`, `invest_term`
+    `collect_end`, `invest_term`, `annual_interval`
   </sql>
   <sql id="Blob_Column_List" >
     `desc`, `detail_content`
@@ -188,8 +189,8 @@
       `score_factor`, `is_ recommend`, `is_display`, 
       `is_renew`, `ctime`, `detail_url`, 
       `invest_threshold`, `throw_department`, `collect_start`, 
-      `collect_end`, `invest_term`, `desc`, 
-      `detail_content`)
+      `collect_end`, `invest_term`, `annual_interval`, 
+      `desc`, `detail_content`)
     values (#{status,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{foundDay,jdbcType=DATE}, #{buyDay,jdbcType=VARCHAR}, #{redeemDay,jdbcType=VARCHAR}, 
       #{valueDay,jdbcType=DATE}, #{expiryDay,jdbcType=DATE}, #{issueType,jdbcType=INTEGER}, 
@@ -204,8 +205,8 @@
       #{scoreFactor,jdbcType=DECIMAL}, #{isRecommend,jdbcType=INTEGER}, #{isDisplay,jdbcType=INTEGER}, 
       #{isRenew,jdbcType=INTEGER}, #{ctime,jdbcType=TIMESTAMP}, #{detailUrl,jdbcType=VARCHAR}, 
       #{investThreshold,jdbcType=DECIMAL}, #{throwDepartment,jdbcType=INTEGER}, #{collectStart,jdbcType=DATE}, 
-      #{collectEnd,jdbcType=DATE}, #{investTerm,jdbcType=VARCHAR}, #{desc,jdbcType=LONGVARCHAR}, 
-      #{detailContent,jdbcType=LONGVARCHAR})
+      #{collectEnd,jdbcType=DATE}, #{investTerm,jdbcType=VARCHAR}, #{annualInterval,jdbcType=VARCHAR}, 
+      #{desc,jdbcType=LONGVARCHAR}, #{detailContent,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.Product" >
     <selectKey resultType="java.lang.Integer" keyProperty="pid" order="AFTER" >
@@ -341,6 +342,9 @@
       </if>
       <if test="investTerm != null" >
         `invest_term`,
+      </if>
+      <if test="annualInterval != null" >
+        `annual_interval`,
       </if>
       <if test="desc != null" >
         `desc`,
@@ -478,6 +482,9 @@
       </if>
       <if test="investTerm != null" >
         #{investTerm,jdbcType=VARCHAR},
+      </if>
+      <if test="annualInterval != null" >
+        #{annualInterval,jdbcType=VARCHAR},
       </if>
       <if test="desc != null" >
         #{desc,jdbcType=LONGVARCHAR},
@@ -628,6 +635,9 @@
       <if test="record.investTerm != null" >
         `invest_term` = #{record.investTerm,jdbcType=VARCHAR},
       </if>
+      <if test="record.annualInterval != null" >
+        `annual_interval` = #{record.annualInterval,jdbcType=VARCHAR},
+      </if>
       <if test="record.desc != null" >
         `desc` = #{record.desc,jdbcType=LONGVARCHAR},
       </if>
@@ -685,6 +695,7 @@
       `collect_start` = #{record.collectStart,jdbcType=DATE},
       `collect_end` = #{record.collectEnd,jdbcType=DATE},
       `invest_term` = #{record.investTerm,jdbcType=VARCHAR},
+      `annual_interval` = #{record.annualInterval,jdbcType=VARCHAR},
       `desc` = #{record.desc,jdbcType=LONGVARCHAR},
       `detail_content` = #{record.detailContent,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
@@ -736,7 +747,8 @@
       `throw_department` = #{record.throwDepartment,jdbcType=INTEGER},
       `collect_start` = #{record.collectStart,jdbcType=DATE},
       `collect_end` = #{record.collectEnd,jdbcType=DATE},
-      `invest_term` = #{record.investTerm,jdbcType=VARCHAR}
+      `invest_term` = #{record.investTerm,jdbcType=VARCHAR},
+      `annual_interval` = #{record.annualInterval,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -873,6 +885,9 @@
       <if test="investTerm != null" >
         `invest_term` = #{investTerm,jdbcType=VARCHAR},
       </if>
+      <if test="annualInterval != null" >
+        `annual_interval` = #{annualInterval,jdbcType=VARCHAR},
+      </if>
       <if test="desc != null" >
         `desc` = #{desc,jdbcType=LONGVARCHAR},
       </if>
@@ -927,6 +942,7 @@
       `collect_start` = #{collectStart,jdbcType=DATE},
       `collect_end` = #{collectEnd,jdbcType=DATE},
       `invest_term` = #{investTerm,jdbcType=VARCHAR},
+      `annual_interval` = #{annualInterval,jdbcType=VARCHAR},
       `desc` = #{desc,jdbcType=LONGVARCHAR},
       `detail_content` = #{detailContent,jdbcType=LONGVARCHAR}
     where `pid` = #{pid,jdbcType=INTEGER}
@@ -975,7 +991,8 @@
       `throw_department` = #{throwDepartment,jdbcType=INTEGER},
       `collect_start` = #{collectStart,jdbcType=DATE},
       `collect_end` = #{collectEnd,jdbcType=DATE},
-      `invest_term` = #{investTerm,jdbcType=VARCHAR}
+      `invest_term` = #{investTerm,jdbcType=VARCHAR},
+      `annual_interval` = #{annualInterval,jdbcType=VARCHAR}
     where `pid` = #{pid,jdbcType=INTEGER}
   </update>
   <select resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.ProductExample" id="selectByExampleWithBLOBsWithRowbounds" >

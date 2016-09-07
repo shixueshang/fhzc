@@ -5,6 +5,8 @@ import com.fhzc.app.dao.mybatis.model.Dictionary;
 import com.fhzc.app.dao.mybatis.model.DictionaryExample;
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.service.DictionaryService;
+
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -94,5 +96,20 @@ public class DictionaryServiceImpl implements DictionaryService {
         }
         return false;
     }
+
+	@Override
+	public List<Dictionary> findDicByTypeAndValue(String cat, String value) {
+		 DictionaryExample example = new DictionaryExample();
+	     DictionaryExample.Criteria criteria = example.createCriteria();
+	     if(StringUtils.isNotBlank(cat)){
+	    	 criteria.andCatEqualTo(cat);
+	     }
+	     if(StringUtils.isNotBlank(value)){
+	    	 criteria.andValueEqualTo(value);
+	     }
+		 return dictionaryMapper.selectByExample(example);
+	}
+    
+    
 
 }

@@ -48,7 +48,7 @@
                             <a href="javascript:void(0);">积分管理</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li class="active"><a href="javascript:void(0);">积分列表</a></li>
+                        <li class="active"><a href="javascript:void(0);">积分审批</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
@@ -96,26 +96,18 @@
             </div>
 
             <div class="row-fluid">
-                <form  class="form-inline" action="<%=contextPath%>/business/score/find" method="GET">
+                <form  class="form-inline" action="<%=contextPath%>/business/score/findpending" method="GET">
                     <div class="form-group">
                         <label class="control-label" style="margin-left: 20px">客户姓名</label>
                         <input class="form-control" name="name" placeholder="输入客户姓名"  >
-<!--  
+
                         <label class="control-label" style="margin-left: 20px">审批状态</label>
                         <select class="form-control" name="isApprove" id="isApprove" >
                             <option value="0">待审批</option>
                             <option value="1">已审批</option>
                             <option value="2">审批失败</option>
                         </select>
--->
-                 		<label class="control-label" style="margin-left: 20px">积分来源</label>
-                        <select class="form-control" name="fromType" id="fromType" >
-                            <option value="0">全部</option>
-                            <option value="1">产品</option>
-                            <option value="2">活动</option>
-                            <option value="3">权益</option>
-                            <option value="4">其他</option>
-                        </select>
+
                         <button type="submit" class="btn blue"><i class="icon-search"></i> 查询</button>
                     </div>
                 </form>
@@ -136,17 +128,16 @@
                             <table class="table table-striped table-bordered table-hover" id="score_table" >
                                 <thead>
                                 <tr>
-                                    <td style="width:6%"><input type="checkbox" id="checkAll" name="checkAll" />全选</td>
+                                    <td><input type="checkbox" id="checkAll" name="checkAll" />全选</td>
                                     <td>客户姓名</td>
                                     <td>积分</td>
-                                    <td style="width:6%">积分状态</td>
-                                    <td style="width:30%">描述</td>
-                                    <td style="width:6%">变动来源</td>
+                                    <td style="width:18%">产品名称</td>
+                                    <td>产品类型</td>
+                                    <td>购买金额</td>
+                                    <td>购买期限</td>
                                     <td>有效时间</td>
-                                    <!--  
                                     <td>审批状态</td>
                                     <td>操作</td>
-                                    -->
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -155,23 +146,11 @@
                                         <td><input type="checkbox" name="subBox" value="${score.id}"/></td>
                                         <td>${score.customerName}</td>
                                         <td>${score.score}</td>
-                                        <td>
-                                            <c:forEach items="${scoreStatus}" var="scoreStat">
-                                                <c:if test="${score.status == scoreStat.value}">
-                                                    ${scoreStat.key}
-                                                </c:if>
-                                            </c:forEach>
-                                        </td>
-                                        <td>${score.detail}</td>
-                                        <td>
-                                            <c:forEach items="${fromTypes}" var="fromType">
-                                                <c:if test="${score.fromType == fromType.value}">
-                                                    ${fromType.key}
-                                                </c:if>
-                                            </c:forEach>
-                                        </td>
+                                        <td>${score.productName}</td>
+                                        <td>${score.productType}</td>
+                                        <td>${score.amount}</td>
+                                        <td>${score.period}</td>
                                         <td><fmt:formatDate value="${score.vaildTime}" pattern="yyyy-MM-dd"/></td>
-                              <!-- 
                                         <td>
                                             <c:choose>
                                                 <c:when test="${score.isApprove == 0}">
@@ -185,14 +164,12 @@
                                                  </c:when>
                                             </c:choose>
                                         </td>
-                                         
                                         <td>
                                         <c:if test = "${score.isApprove == 0 }">
                                         <a href="javascript:void(0)" onclick="approveById('<%=contextPath%>/business/score/approve/${score.id}')" class="btn mini purple button_approve" data-toggle="modal" data-target="#confirm-delete"><i class="icon-edit"></i>审批</a>
                                         <a href="javascript:void(0)" onclick="approveFailedById('<%=contextPath%>/business/score/approveFailed/${score.id}')" class="btn mini purple button_approve" data-toggle="modal" data-target="#confirm-delete"><i class="icon-edit"></i>打回</a>
                                        </c:if>
                                         </td>
-                                        -->
                                     </tr>
                                 </c:forEach>
                                 </tbody>

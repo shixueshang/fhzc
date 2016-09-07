@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE generatorConfiguration
         PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
@@ -46,11 +46,12 @@
 
         <!--生成对应表及类名 -->
 
-        <table tableName="system_notice_record"
+
+        <table tableName="product"
                delimitAllColumns="true"
                delimitIdentifiers="true"
-               domainObjectName="SystemNoticeRecord">
-            <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
+               domainObjectName="Product">
+            <generatedKey column="pid" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
         </table>
 
     </context>

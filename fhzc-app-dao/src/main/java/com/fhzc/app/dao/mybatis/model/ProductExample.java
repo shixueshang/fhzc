@@ -3032,6 +3032,76 @@ public class ProductExample {
             addCriterion("`invest_term` not between", value1, value2, "investTerm");
             return (Criteria) this;
         }
+
+        public Criteria andAnnualIntervalIsNull() {
+            addCriterion("`annual_interval` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnnualIntervalIsNotNull() {
+            addCriterion("`annual_interval` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnnualIntervalEqualTo(String value) {
+            addCriterion("`annual_interval` =", value, "annualInterval");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnnualIntervalNotEqualTo(String value) {
+            addCriterion("`annual_interval` <>", value, "annualInterval");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnnualIntervalGreaterThan(String value) {
+            addCriterion("`annual_interval` >", value, "annualInterval");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnnualIntervalGreaterThanOrEqualTo(String value) {
+            addCriterion("`annual_interval` >=", value, "annualInterval");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnnualIntervalLessThan(String value) {
+            addCriterion("`annual_interval` <", value, "annualInterval");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnnualIntervalLessThanOrEqualTo(String value) {
+            addCriterion("`annual_interval` <=", value, "annualInterval");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnnualIntervalLike(String value) {
+            addCriterion("`annual_interval` like", value, "annualInterval");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnnualIntervalNotLike(String value) {
+            addCriterion("`annual_interval` not like", value, "annualInterval");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnnualIntervalIn(List<String> values) {
+            addCriterion("`annual_interval` in", values, "annualInterval");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnnualIntervalNotIn(List<String> values) {
+            addCriterion("`annual_interval` not in", values, "annualInterval");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnnualIntervalBetween(String value1, String value2) {
+            addCriterion("`annual_interval` between", value1, value2, "annualInterval");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnnualIntervalNotBetween(String value1, String value2) {
+            addCriterion("`annual_interval` not between", value1, value2, "annualInterval");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -55,4 +55,12 @@ public interface ContractService {
      * @return
      */
     List<Contract> findAllContract();
+    
+    /**
+     * 根据客户和产品获取
+     * @param customerId
+     * @param productId
+     * @return
+     */
+    List<Contract> getContract(Integer customerId,Integer productId);
 }

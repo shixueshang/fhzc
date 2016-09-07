@@ -17,3 +17,5 @@ CREATE TABLE `bank`.`assets_recommend` (
 #2016-09-07
 ALTER TABLE `bank`.`system_notice_record`
 ADD COLUMN `push_time` DATETIME NULL COMMENT '推送时间' AFTER `push_channel`;
+ alter table rights add column rights_num varchar(45) not null;
+ alter table product add column annual_interval varchar(50) NULL COMMENT '参考业绩标准区间(%)'

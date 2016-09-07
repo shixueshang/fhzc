@@ -15,6 +15,7 @@ import com.fhzc.app.system.commons.util.excel.ImportCallBack;
 import com.fhzc.app.system.commons.util.excel.ImportConfig;
 import com.fhzc.app.dao.mybatis.inter.ContractMapper;
 import com.fhzc.app.system.service.ContractService;
+import com.fhzc.app.system.service.CustomerService;
 import com.fhzc.app.system.service.DepartmentService;
 import com.fhzc.app.system.service.DictionaryService;
 import com.fhzc.app.system.service.PlannerService;
@@ -58,7 +59,10 @@ public class ContractServiceImpl implements ContractService {
     private DepartmentService departmentService;
 
     @Resource
-    private UserService userService;    
+    private UserService userService;
+    
+    @Resource
+    private CustomerService customerService;   
     
     @Override
     public PageableResult<Contract> findPageContracts(Integer productId, List<Integer> plannerIds, int page, int size) {
@@ -325,6 +329,15 @@ public class ContractServiceImpl implements ContractService {
 	public List<Contract> findAllContract() {
 		ContractExample example = new ContractExample();
 	    return contractMapper.selectByExample(example);
+	}
+
+	@Override
+	public List<Contract> getContract(Integer uId, Integer productId) {
+		ContractExample example = new ContractExample();
+		ContractExample.Criteria criteria = example.createCriteria();
+		criteria.andCustomerIdEqualTo(customerService.getCustomerByUid(uId,null).getCustomerId());
+		criteria.andProductIdEqualTo(productId);
+		return contractMapper.selectByExample(example);
 	}
 
 }
