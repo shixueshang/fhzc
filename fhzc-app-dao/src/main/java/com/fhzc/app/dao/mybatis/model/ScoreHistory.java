@@ -31,7 +31,47 @@ public class ScoreHistory {
     
     private String customerName;
     
-    public String getCustomerName() {
+    private String productName;
+    
+    private String period;
+    
+    private Integer amount;
+    
+    private String productType;
+    
+    public String getProductType() {
+		return productType;
+	}
+
+	public void setProductType(String productType) {
+		this.productType = productType;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public String getPeriod() {
+		return period;
+	}
+
+	public void setPeriod(String period) {
+		this.period = period;
+	}
+
+	public Integer getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Integer amount) {
+		this.amount = amount;
+	}
+
+	public String getCustomerName() {
         return customerName;
     }
 

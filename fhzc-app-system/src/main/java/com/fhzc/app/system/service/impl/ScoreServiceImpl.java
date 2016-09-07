@@ -117,7 +117,7 @@ public class ScoreServiceImpl implements ScoreService {
     }
 
     @Override
-    public PageableResult<ScoreHistory> findPageScore(List<Integer> userIds, String name, Integer isApprove, int page, int size) {
+    public PageableResult<ScoreHistory> findPageScore(List<Integer> userIds, String name, Integer fromType, Integer isApprove, int page, int size) {
         ScoreHistoryExample example = new ScoreHistoryExample();
         ScoreHistoryExample.Criteria criteria = example.createCriteria();
         if(userIds.size() > 0){
@@ -127,7 +127,24 @@ public class ScoreServiceImpl implements ScoreService {
         if(org.apache.commons.lang.StringUtils.isNotEmpty(name) && userIds.isEmpty()){
             return new PageableResult<ScoreHistory>(page, size, 0, new ArrayList<ScoreHistory>());
         }
-        criteria.andIsApproveEqualTo(isApprove);
+        if(fromType != null){
+        	List<String> scoreType = new ArrayList<String>();
+            switch(fromType){
+        	case 0: scoreType.add("product");
+        			scoreType.add("activity");
+        			scoreType.add("rights");
+        			scoreType.add("other");
+        			break;
+        	case 1:	scoreType.add("product");break;
+        	case 2:	scoreType.add("activity");break;
+        	case 3:	scoreType.add("rights");break;
+        	case 4:	scoreType.add("other");break;
+        }
+            criteria.andFromTypeIn(scoreType);
+        }
+        if(isApprove != null){
+        	 criteria.andIsApproveEqualTo(isApprove);
+        }
         criteria.andIsVaildEqualTo(Const.SCORE_VAILD.IS_VAILD);
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<ScoreHistory> list = scoreHistoryMapper.selectByExampleWithRowbounds(example, rowBounds);

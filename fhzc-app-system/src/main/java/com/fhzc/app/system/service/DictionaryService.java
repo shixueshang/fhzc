@@ -38,6 +38,11 @@ public interface DictionaryService {
      */
     Dictionary findRiskLevel(String levelValue);
 
+    /**
+     * 根据id获取
+     * @param id
+     * @return
+     */
     Dictionary getDictionary(Integer id);
     
     /**
@@ -48,5 +53,12 @@ public interface DictionaryService {
      * @return
      */
     boolean isKeyOrValueExists(String cat, String type, String kv);
+    
+    /**
+     * 根据分类和value获取字典数据
+     * @param cat
+     * @return
+     */
+    List<Dictionary> findDicByTypeAndValue(String cat, String value);
 
 }

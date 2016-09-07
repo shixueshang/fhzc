@@ -1,16 +1,20 @@
 package com.fhzc.app.system.controller.business;
 
+import com.fhzc.app.dao.mybatis.model.Contract;
 import com.fhzc.app.dao.mybatis.model.Customer;
 import com.fhzc.app.dao.mybatis.model.CustomerScore;
 import com.fhzc.app.dao.mybatis.model.ScoreHistory;
 import com.fhzc.app.dao.mybatis.model.User;
+import com.fhzc.app.dao.mybatis.model.Dictionary;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.aop.SystemControllerLog;
 import com.fhzc.app.system.controller.BaseController;
+import com.fhzc.app.system.service.ContractService;
 import com.fhzc.app.system.service.CustomerService;
 import com.fhzc.app.system.service.DictionaryService;
+import com.fhzc.app.system.service.ProductService;
 import com.fhzc.app.system.service.ScoreHistoryService;
 import com.fhzc.app.system.service.ScoreService;
 import com.fhzc.app.system.service.UserService;
@@ -44,6 +48,12 @@ public class ScoreHistoryController extends BaseController {
     
     @Resource
     private CustomerService customerService;
+    
+    @Resource
+    private ContractService contractService;
+    
+    @Resource
+    private ProductService productService;
 
     /**
      * 积分历史导入页面
@@ -119,39 +129,97 @@ public class ScoreHistoryController extends BaseController {
         mav.addObject("url", "business/score");
         return mav;
     }
+    
+    @RequestMapping(value = "/listpending" ,method = RequestMethod.GET)
+    public ModelAndView listpending(){
+        ModelAndView mav = new ModelAndView("business/score/listpending");
+        mav.addObject("url", "business/score");
+        return mav;
+    }
 
+    
+    /**
+     * 积分列表
+     * @param name  客户姓名
+     * @param fromType 积分变动原因
+     * @return
+     */
+    @RequestMapping(value = "/find", method = RequestMethod.GET)
+    @SystemControllerLog(description = "查看积分列表")
+    public ModelAndView findScore(String name, Integer fromType){
+        ModelAndView mav = new ModelAndView("business/score/list");
+        List<User> users = new ArrayList<User>();
+        
+        if(StringUtils.isNotEmpty(name)){
+            users = userService.getUsersByName(name);
+        }
+        List<Integer> userIds = new ArrayList<Integer>();
+        for(User user : users){
+            userIds.add(user.getUid());
+        }
+        PageableResult<ScoreHistory> pageableResult = scoreService.findPageScore(userIds, name, fromType, null, page, size);
+        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
+        List<ScoreHistory> list = new ArrayList<ScoreHistory>();
+        List<Contract> clist = new ArrayList<Contract>();
+        for(ScoreHistory history : pageableResult.getItems()){
+            User customer = userService.getUser(history.getUid());
+            history.setCustomerName(customer.getRealname());
+            clist = contractService.getContract(history.getUid(), history.getEventId());
+            if(clist.isEmpty()){
+            	
+            }
+            list.add(history);
+        }
+
+        mav.addObject("scores", list);
+        mav.addObject("scoreStatus", dictionaryService.findDicByType(Const.DIC_CAT.SCORE_STATUS));
+        mav.addObject("fromTypes", dictionaryService.findDicByType(Const.DIC_CAT.SCORE_FROM_TYPE));
+        mav.addObject("url", "business/score");
+        return mav;
+    }
     /**
      * 积分审批列表
      * @param name  客户姓名
      * @param isApprove 审批状态
      * @return
      */
-    @RequestMapping(value = "/find", method = RequestMethod.GET)
-    @SystemControllerLog(description = "查看积分列表")
-    public ModelAndView findScore(String name, Integer isApprove){
-        ModelAndView mav = new ModelAndView("business/score/list");
+    @RequestMapping(value = "/findpending", method = RequestMethod.GET)
+    @SystemControllerLog(description = "查看积分审批列表")
+    public ModelAndView findPendingScore(String name, Integer isApprove){
+        ModelAndView mav = new ModelAndView("business/score/listpending");
         List<User> users = new ArrayList<User>();
         if(StringUtils.isNotEmpty(name)){
             users = userService.getUsersByName(name);
         }
-
         List<Integer> userIds = new ArrayList<Integer>();
         for(User user : users){
             userIds.add(user.getUid());
         }
-
-        PageableResult<ScoreHistory> pageableResult = scoreService.findPageScore(userIds, name,  isApprove, page, size);
+        PageableResult<ScoreHistory> pageableResult = scoreService.findPageScore(userIds, name, 1, isApprove, page, size);
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
-
         List<ScoreHistory> list = new ArrayList<ScoreHistory>();
+        List<Contract> clist = new ArrayList<Contract>();
+        List<Dictionary> dlist = new ArrayList<Dictionary>();
         for(ScoreHistory history : pageableResult.getItems()){
             User customer = userService.getUser(history.getUid());
             history.setCustomerName(customer.getRealname());
+            clist = contractService.getContract(history.getUid(), history.getEventId());
+            if(!(clist.isEmpty())){
+            	for (Contract contract : clist) {
+            		history.setAmount(contract.getAmountRmb());
+            		history.setPeriod(contract.getPeriod());
+            		history.setProductName(productService.getProduct(contract.getProductId()).getName());
+            		dlist = dictionaryService.findDicByTypeAndValue(Const.DIC_CAT.PRODUCT_TYPE,productService.getProduct(contract.getProductId()).getProductType());
+            		if(!(dlist.isEmpty())){
+            			for (Dictionary dictionary : dlist) {
+    					history.setProductType(dictionary.getKey());	
+    					}
+            		}
+				}
+            }
             list.add(history);
         }
-
         mav.addObject("scores", list);
-
         mav.addObject("isApprove", isApprove);
         mav.addObject("scoreStatus", dictionaryService.findDicByType(Const.DIC_CAT.SCORE_STATUS));
         mav.addObject("fromTypes", dictionaryService.findDicByType(Const.DIC_CAT.SCORE_FROM_TYPE));
@@ -172,7 +240,7 @@ public class ScoreHistoryController extends BaseController {
     }
     
     /**
-     * 积分审批
+     * 积分审批失败
      * @param scoreId
      * @return
      */

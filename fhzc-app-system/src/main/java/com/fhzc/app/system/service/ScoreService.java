@@ -62,7 +62,7 @@ public interface ScoreService {
      * @param size
      * @return
      */
-    PageableResult<ScoreHistory> findPageScore(List<Integer> userIds, String name, Integer isApprove, int page, int size);
+    PageableResult<ScoreHistory> findPageScore(List<Integer> userIds, String name, Integer fromType, Integer isApprove, int page, int size);
 
     /**
      * 审批积分通过
