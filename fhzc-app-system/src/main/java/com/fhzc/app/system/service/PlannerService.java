@@ -76,7 +76,7 @@ public interface PlannerService {
      * @param workNum
      * @return
      */
-    Planner getPlannerByWorkNum(String workNum);
+    Planner getPlannerByWorkNum(String workNum, String status);
 
     /**
      * 查询某团队的理财师

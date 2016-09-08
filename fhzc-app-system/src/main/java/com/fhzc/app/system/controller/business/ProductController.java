@@ -469,7 +469,7 @@ public class ProductController extends BaseController {
     @RequestMapping(value = "/reservationSave", method = RequestMethod.GET)
     @ResponseBody
     public boolean reservationSave(long customerId, long reservationAmount, Date reservationTime, long productId, String workNum) {
-        Planner planner = plannerService.getPlannerByWorkNum(workNum);
+        Planner planner = plannerService.getPlannerByWorkNum(workNum, Const.PLANNER_STATUS.ON);
         ProductReservation productReservation = new ProductReservation();
         productReservation.setCtime(new Date());
         productReservation.setAmount((int) reservationAmount);
@@ -486,7 +486,7 @@ public class ProductController extends BaseController {
     @RequestMapping(value = "/validateWorkNum", method = RequestMethod.GET)
     @ResponseBody
     public boolean validateWorkNum(String workNum) {
-        Planner planner = plannerService.getPlannerByWorkNum(workNum);
+        Planner planner = plannerService.getPlannerByWorkNum(workNum, Const.PLANNER_STATUS.ON);
         if (planner == null) {
             return false;
         } else {
