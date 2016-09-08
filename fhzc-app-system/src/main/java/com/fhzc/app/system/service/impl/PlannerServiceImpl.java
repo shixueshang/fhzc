@@ -386,11 +386,13 @@ public class PlannerServiceImpl implements PlannerService {
 	}
 
     @Override
-    public Planner getPlannerByWorkNum(String workNum) {
+    public Planner getPlannerByWorkNum(String workNum, String status) {
         PlannerExample example = new PlannerExample();
         PlannerExample.Criteria criteria = example.createCriteria();
         criteria.andWorkNumEqualTo(workNum);
-        criteria.andStatusEqualTo(Const.PLANNER_STATUS.ON);
+        if(status != null){
+        	criteria.andStatusEqualTo(status);
+        }
         if(plannerMapper.countByExample(example) > 0){
             return plannerMapper.selectByExample(example).get(0);
         }

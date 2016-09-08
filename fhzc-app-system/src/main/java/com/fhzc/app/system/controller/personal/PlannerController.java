@@ -79,6 +79,41 @@ public class PlannerController extends BaseController {
     }
 
     /**
+     * 根据工号查询客户
+     * @param workNum
+     * @return
+     */
+    @RequestMapping(value = "/find", method = RequestMethod.GET)
+    @SystemControllerLog(description = "查看理财师列表")
+    public ModelAndView findSingleCustomers(String workNum){
+        ModelAndView mav = new ModelAndView("personal/planner/list");
+        Admin admin = super.getCurrentUser();
+        List<Integer> departments = departmentService.findAllChildrenIds(admin.getOrgan());
+        PageableResult<Planner> pageableResult = plannerService.findPagePlanners(departments, page, size);
+        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
+        List<Planner> planners = pageableResult.getItems();
+        List<Planner> temPlanners = new ArrayList<Planner>();
+        List<User> users = new ArrayList<User>();
+	    if(planners.isEmpty()){
+	    	 return mav;
+	     }else{
+	    	  for (Planner planner : planners) {
+	    		  if(planner.getWorkNum().equals(workNum.trim())){
+	    			  User user = userService.getUser(planner.getUid());
+	    			  temPlanners.add(planner);
+	    			  users.add(user);
+	    		  }
+	    	  }
+	    	  mav.addObject("planners", temPlanners);
+			  mav.addObject("users", users);
+		      mav.addObject("departments", departmentService.findDeptByParent(Const.ROOT_DEPT_ID));
+		      mav.addObject("areas", areasService.getAllAreas());
+		      mav.addObject("url", "personal/planner");
+		      return mav;
+	     }
+    }
+    
+    /**
      * 在职理财师导入页面
      * @return
      */
