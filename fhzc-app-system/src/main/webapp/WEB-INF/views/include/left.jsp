@@ -244,10 +244,10 @@
 
                         <ul class="sub">
                         <shiro:hasPermission name="/system/admin/list"><li>
-                                <a href="<%=contextPath%>/system/admin/list">管理员列表</a>
+                                <a href="<%=contextPath%>/system/admin/list">用户列表</a>
                             </li></shiro:hasPermission>
                         <shiro:hasPermission name="/system/admin/pub"><li>
-                                <a href="<%=contextPath%>/system/admin/pub">管理员新增</a>
+                                <a href="<%=contextPath%>/system/admin/pub">用户新增</a>
                             </li></shiro:hasPermission>
                         <shiro:hasPermission name="/system/role/list"><li>
                                 <a href="<%=contextPath%>/system/role/list">角色列表</a>
