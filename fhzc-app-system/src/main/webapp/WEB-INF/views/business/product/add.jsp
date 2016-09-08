@@ -104,7 +104,7 @@
                                                 </div>
                                             </div>
                                             <div class="control-group">
-                                                <label class="control-label">积分系数(%)</label>
+                                                <label class="control-label">积分系数</label>
                                                 <div class="controls">
                                                     <input type="text" name="scoreFactor" id="scoreFactor" readonly value="${product.scoreFactor}" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
