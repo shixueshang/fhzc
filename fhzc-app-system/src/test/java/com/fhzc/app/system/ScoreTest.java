@@ -28,6 +28,6 @@ public class ScoreTest extends Base {
 
     @Test
     public void list(){
-
+        System.out.println("userId="+ 17 +" 的可用积分：" + scoreService.getAvailableScore(17));
     }
 }
