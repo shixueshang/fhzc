@@ -107,7 +107,6 @@
                                                 <label class="control-label">推送渠道</label>
                                                 <div class="controls" >
                                                     <input type="checkbox" id="channel_system" value="1"/>系统&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <input type="checkbox" id="channel_sms" value="2"/>短信&nbsp;&nbsp;&nbsp;&nbsp;
                                                     <input type="checkbox" id="channel_push" value="3"/>推送&nbsp;&nbsp;&nbsp;&nbsp;
                                                     <input type="checkbox" id="channel_email" value="4"/>邮件&nbsp;&nbsp;&nbsp;&nbsp;
                                                 </div>
@@ -152,11 +151,6 @@
                     system.parent().addClass('checked');
                     system.prop("checked", "checked");
                 }
-                var sms = $('#channel_sms');
-                if(arr[i] == sms.val()){
-                    sms.parent().addClass('checked');
-                    sms.prop("checked", "checked");
-                }
                 var push = $('#channel_push');
                 if(arr[i] == push.val()){
                     push.parent().addClass('checked');
@@ -173,15 +167,9 @@
         var pushStatus = '${notice.pushStatus}';
         if(pushStatus == 0 || pushStatus == null || pushStatus == ''){
             $.uniform.update($("input[name='pushStatus'][value='0']").attr("checked", true));
-            $.uniform.update($("input[name='pushStatus'][value='1']").attr("checked", false));
-            $.uniform.update($("input[name='pushStatus'][value='2']").attr("checked", false));
-        }else if(pushStatus == 1){
-            $.uniform.update($("input[name='pushStatus'][value='0']").attr("checked", false));
-            $.uniform.update($("input[name='pushStatus'][value='1']").attr("checked", true));
             $.uniform.update($("input[name='pushStatus'][value='2']").attr("checked", false));
         }else{
             $.uniform.update($("input[name='pushStatus'][value='0']").attr("checked", false));
-            $.uniform.update($("input[name='pushStatus'][value='1']").attr("checked", false));
             $.uniform.update($("input[name='pushStatus'][value='2']").attr("checked", true));
         }
 

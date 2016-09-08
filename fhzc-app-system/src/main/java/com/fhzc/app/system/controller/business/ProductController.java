@@ -5,7 +5,6 @@ import com.fhzc.app.dao.mybatis.model.*;
 import com.fhzc.app.dao.mybatis.model.Dictionary;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
-import com.fhzc.app.dao.mybatis.thirdparty.sms.SMSTemplate;
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.aop.SystemControllerLog;
 import com.fhzc.app.system.commons.util.DateUtil;
@@ -619,25 +618,9 @@ public class ProductController extends BaseController {
             if(cha.equals(Const.PUSH_CHANNEL.SYSTEM.toString())){
                 continue;
             }
-            if(cha.equals(Const.PUSH_CHANNEL.SMS.toString())){
-                this.doHandleSystemSMS(systemNotice, pushUsers);
-            }
             if(cha.equals(Const.PUSH_CHANNEL.MESSAGE.toString())){
                 this.doHandleSystemMessage(systemNotice, pushUsers);
             }
-        }
-    }
-
-    /**
-     * 处理短信
-     * @param systemNotice
-     * @param pushUsers
-     */
-    private void doHandleSystemSMS(SystemNotice systemNotice, List<Integer> pushUsers){
-        for(Integer userId : pushUsers){
-            User user = userService.getUser(userId);
-            SMSTemplate smsTemplate = new SMSTemplate(TextUtils.getConfig(Const.SMS_PARAM.SMS_USERNAME, this),TextUtils.getConfig(Const.SMS_PARAM.SMS_PASSWORD, this), TextUtils.getConfig(Const.SMS_PARAM.SMS_APPIKEY, this), systemNotice.getContent());
-            smsTemplate.sendTemplateSMS(user.getMobile());
         }
     }
 

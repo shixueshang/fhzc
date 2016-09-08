@@ -168,7 +168,6 @@
                         <label class="control-label" style="display: inline-block">推送渠道</label>
                         <div class="controls" style="display: inline-block;margin-top: 10px;margin-left: 20px;">
                             <input type="checkbox" id="channel_system" value="1"/>系统&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type="checkbox" id="channel_sms" value="2"/>短信&nbsp;&nbsp;&nbsp;&nbsp;
                             <input type="checkbox" id="channel_push" value="3"/>推送&nbsp;&nbsp;&nbsp;&nbsp;
                             <input type="checkbox" id="channel_email" value="4"/>邮件&nbsp;&nbsp;&nbsp;&nbsp;
                         </div>

@@ -4,13 +4,10 @@ import com.alibaba.fastjson.JSON;
 import com.fhzc.app.dao.mybatis.model.PushToken;
 import com.fhzc.app.dao.mybatis.model.SystemNotice;
 import com.fhzc.app.dao.mybatis.model.SystemNoticeRecord;
-import com.fhzc.app.dao.mybatis.model.User;
 import com.fhzc.app.dao.mybatis.page.PageHelper;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
-import com.fhzc.app.dao.mybatis.thirdparty.sms.SMSTemplate;
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.aop.SystemControllerLog;
-import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.NoticeService;
@@ -116,9 +113,6 @@ public class NoticeController extends BaseController {
             if(cha.equals(Const.PUSH_CHANNEL.SYSTEM.toString())){
                 this.doHandleSystemNotice(systemNotice, Const.PUSH_CHANNEL.SYSTEM);
             }
-            if(cha.equals(Const.PUSH_CHANNEL.SMS.toString())){
-                this.doHandleSystemSMS(systemNotice, Const.PUSH_CHANNEL.SMS);
-            }
             if(cha.equals(Const.PUSH_CHANNEL.MESSAGE.toString())){
                 this.doHandleSystemMessage(systemNotice, Const.PUSH_CHANNEL.MESSAGE);
             }
@@ -134,18 +128,6 @@ public class NoticeController extends BaseController {
         List<PushToken> list = pushTokenService.getAllTokens();
         for(PushToken pushToken : list){
             this.addNoticeRecord(systemNotice, channel, pushToken.getUserId());
-        }
-    }
-
-    /**
-     * 处理发送短信
-     * @param systemNotice
-     * @param channel
-     */
-    private void doHandleSystemSMS(SystemNotice systemNotice, Integer channel){
-        List<User> list = userService.findAllUsers();
-        for(User user : list){
-            this.addNoticeRecord(systemNotice, channel, user.getUid());
         }
     }
 
@@ -185,11 +167,6 @@ public class NoticeController extends BaseController {
             for(SystemNoticeRecord record : list){
                 if(record.getPushChannel() == Const.PUSH_CHANNEL.MESSAGE){
                     pushTokenService.pushMessageToUser(record.getUserId(), record.getContent());
-                }
-                if(record.getPushChannel() == Const.PUSH_CHANNEL.SMS){
-                    User user = userService.getUser(record.getUserId());
-                    SMSTemplate smsTemplate = new SMSTemplate(TextUtils.getConfig(Const.SMS_PARAM.SMS_USERNAME, this),TextUtils.getConfig(Const.SMS_PARAM.SMS_PASSWORD, this), TextUtils.getConfig(Const.SMS_PARAM.SMS_APPIKEY, this), record.getContent());
-                    smsTemplate.sendTemplateSMS(user.getMobile());
                 }
                 if(record.getPushChannel() == Const.PUSH_CHANNEL.EMAIL){
                     continue;
