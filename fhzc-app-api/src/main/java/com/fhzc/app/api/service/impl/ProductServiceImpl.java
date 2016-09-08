@@ -51,8 +51,8 @@ public class ProductServiceImpl implements ProductService {
         criteria.andIsDisplayEqualTo(Const.YES_OR_NO.YES);
         criteria.andIsRecommendEqualTo(Const.YES_OR_NO.YES);
         List<Integer> status = new ArrayList<Integer>();
-        status.add(1);
-        status.add(2);
+        status.add(Const.PRODUCT_STATUS.PREHEAT);
+        status.add(Const.PRODUCT_STATUS.COLLECTING);
         criteria.andStatusIn(status);
         if(productMapper.countByExample(example) > 0) {
             return productMapper.selectByExampleWithBLOBs(example);

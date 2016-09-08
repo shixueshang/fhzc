@@ -46,6 +46,7 @@ public class ActivityApplyApiController extends BaseController {
     @ResponseBody
     public ApiJsonResult activityApplyJoin(ActivityApply activityApply){
 
+        Map<String, Object> result = new HashMap<String, Object>();
         //判断该客户是否已经报名
         ActivityApply apply = activityApplyService.getActivityIdByCustomerId(activityApply.getCustomerId(), activityApply.getActivityId());
         if(apply != null){
@@ -67,14 +68,16 @@ public class ActivityApplyApiController extends BaseController {
         Integer status = activityService.getActivityStatus(activity);
         if (status.equals(Const.ACTIVITY_STATUS.GOING)) {
             activityApply.setPlannerId(plannerId);
-            activityApply.setType(APIConstants.ActivityApply.TYPE_SELF);
+            activityApply.setType(plannerId == 0 ? APIConstants.ActivityApply.TYPE_INVITE : APIConstants.ActivityApply.TYPE_SELF);
             activityApply.setCtime(new Date());
             activityApply.setPersonNum(activityApply.getPersonNum());
             Customer customer = customerService.getCustomer(activityApply.getCustomerId());
             activityApply.setPersonName(userService.getUser(customer.getUid()).getRealname());
             activityApply.setResult(APIConstants.ActivityApply.RESULT_YES);
             activityApplyService.addOrUpdateActivityApply(activityApply);
-            return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
+
+            result.put("type", plannerId == 0 ? APIConstants.ActivityApply.TYPE_INVITE : APIConstants.ActivityApply.TYPE_SELF);
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
         }
         if (status.equals(Const.ACTIVITY_STATUS.WILL)) {
             return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"未到活动报名时间,敬请期待");

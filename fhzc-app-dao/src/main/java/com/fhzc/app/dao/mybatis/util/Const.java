@@ -577,5 +577,45 @@ public class Const {
         public static int CUSTOMER_ABSEND = 5;
 
     }
+
+    /**
+     * 产品(基金)状态
+     */
+    public static class PRODUCT_STATUS{
+
+        /**
+         * 未知
+         */
+        public static final Integer UNKNOW = 0;
+        /**
+         * 产品预热
+         */
+        public static final Integer PREHEAT = 1;
+        /**
+         * 募集中
+         */
+        public static final Integer COLLECTING = 2;
+        /**
+         * 募集结束
+         */
+        public static final Integer COLLECTED = 3;
+        /**
+         * 募集失败
+         */
+        public static final Integer COLLECT_FAIL = 4;
+        /**
+         * 产品成立
+         */
+        public static final Integer FOUND = 5;
+        /**
+         * 产品到期
+         */
+        public static final Integer EXPIRE = 6;
+        /**
+         * 提前结束
+         */
+        public static final Integer EARLY_END = 7;
+
+    }
 }
 

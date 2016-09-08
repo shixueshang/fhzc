@@ -1,5 +1,6 @@
 package com.fhzc.app.api.controller;
 
+import com.fhzc.app.api.exception.BadRequestException;
 import com.fhzc.app.api.service.ProductReservationService;
 import com.fhzc.app.api.service.ProductService;
 import com.fhzc.app.api.tools.APIConstants;
@@ -7,6 +8,7 @@ import com.fhzc.app.api.tools.ApiJsonResult;
 import com.fhzc.app.api.tools.ObjUtils;
 import com.fhzc.app.dao.mybatis.model.Product;
 import com.fhzc.app.dao.mybatis.model.ProductReservation;
+import com.fhzc.app.dao.mybatis.util.Const;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,6 +37,12 @@ public class ProductOrderApiController extends BaseController{
     @RequestMapping(value = "/api/product/order",method = RequestMethod.POST)
     @ResponseBody
     public ApiJsonResult productOrder(ProductReservation productReservation){
+
+        Product product = productService.getProduct(productReservation.getProductId());
+        if(product.getStatus() != Const.PRODUCT_STATUS.PREHEAT || product.getStatus() != Const.PRODUCT_STATUS.COLLECTING){
+            throw new BadRequestException("产品不在募集期");
+        }
+
         productReservation.setApplyTime(new Date());
         productReservation.setCtime(new Date());
         productReservation.setResult(APIConstants.OrderResult.Success);
