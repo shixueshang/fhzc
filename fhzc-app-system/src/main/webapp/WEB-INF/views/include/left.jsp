@@ -291,10 +291,12 @@
                         </a>
 
                         <ul class="sub">
+                           <!--  
                             <shiro:hasPermission name="/business/product/importor">
                                 <li>
                                     <a href="<%=contextPath%>/business/product/importor">产品导入</a>
                                 </li></shiro:hasPermission>
+                            -->
                             <shiro:hasPermission name="/personal/planner/importor"><li>
                                 <a href="<%=contextPath%>/personal/planner/importor">在职理财师导入</a>
                             </li></shiro:hasPermission>
