@@ -1,6 +1,7 @@
 package com.fhzc.app.system.service;
 
 import com.fhzc.app.dao.mybatis.model.Rights;
+import com.fhzc.app.dao.mybatis.model.RightsReserQuery;
 import com.fhzc.app.dao.mybatis.model.RightsReservation;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
 
@@ -88,4 +89,20 @@ public interface RightsService {
      * @return
      */
     boolean isNumExists(String rightsNum);
+    
+    /**
+     * 根据名字获取权益
+     * @param rightsName
+     * @return
+     */
+    Rights getRightsByName(String rightsName);
+    
+    /**
+     * 获得权益预约列表
+     * @param query 过滤条件
+     * @param page
+     * @param size
+     * @return
+     */
+    PageableResult<RightsReservation> findPageRightsReservations(RightsReserQuery query, int page, int size);
 }
