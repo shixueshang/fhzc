@@ -82,7 +82,7 @@
                                                 <label class="control-label">权益编号<span class="required">*</span></label>
                                                 <div class="controls">
                                                     <input type="number" name="rightsNum" value="${right.rightsNum}" data-required="1" placeholder="" class="m-wrap large">
-                                                    <span class="help-inline"></span>
+                                                    <span class="help-inline hide">该编号已存在,请更换</span>
                                                 </div>
                                             </div>
                                             
@@ -281,17 +281,17 @@
                         url: "/business/rights/isNumExists",
                         type: "get",
                         data: {
-                            name: function() {
-                                var old_name = '${rights.rightsNum}';
-                                var new_name = $("input[rightsNum='rightsNum']").val();
-                                if(old_name == new_name){
-                                    return old_name + 'no check';
+                        	rightsNum: function() {
+                                var old_rightsNum = '${right.rightsNum}';
+                                var new_rightsNum = $("input[name='rightsNum']").val();
+                                if(old_rightsNum == new_rightsNum){
+                                    return old_rightsNum + 'no check';
                                 }else {
-                                    return new_name;
+                                    return new_rightsNum;
                                 }
                             }
-                        }
-                    }
+                          }
+                      }
             	},
                 name: {
                     required: true

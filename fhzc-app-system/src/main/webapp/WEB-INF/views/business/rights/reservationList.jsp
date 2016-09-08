@@ -47,18 +47,15 @@
                 </div>
             </div>
 
-            <div class="row-fluid" style="display: none">
-                <form name="searchForm" class="form-inline" action="/business/activity/registers">
+            <div class="row-fluid">
+                <form name="searchForm" class="form-inline" action="/business/rights/find">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">活动名称:</label>
-                        <input class="form-control" id="activityName" name="activityName" value="${param.activityName}">
-
-                        <label class="col-sm-2 control-label">身份证号:</label>
-                        <input class="form-control" id="identityId" name="identityId" value="${param.identityId}">
+                        <label class="col-sm-2 control-label">权益名称:</label>
+                        <input class="form-control" id="rightsName" name="rightsName" value="${param.rightsName}">
                         <label class="col-sm-2 control-label">预约时间:</label>
-                        <input class="form-control" id="startTime" name="startTime" style="width: 180px" value="${param.startTime}">
+                        <input class="form-control" id="startTime" name="startTime" placeholder="yyyy-MM-dd" style="width: 180px" value="${param.startTime}">
                         ~
-                        <input class="form-control" id="endTime" name="endTime" style="width: 180px" value="${param.endTime}">
+                        <input class="form-control" id="endTime" name="endTime" placeholder="yyyy-MM-dd" style="width: 180px" value="${param.endTime}">
                         <button type="submit">查找</button>
                     </div>
                 </form>
@@ -73,7 +70,7 @@
                             <h4><i class="icon-reorder"></i></h4>
                         </div>
                         <div class="portlet-body">
-                            <table class="table table-bordered table-hover">
+                            <table id="example" class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
                                     <td>预约时间</td>
@@ -82,6 +79,7 @@
                                     <td>供应商联系方式</td>
                                     <td>客户姓名</td>
                                     <td>客户电话</td>
+                                    <td>消费时间</td>
                                     <td>消耗积分</td>
                                     <td>预约状态</td>
                                     <td>操作</td>
@@ -90,12 +88,13 @@
                                 <tbody>
                                 <c:forEach items="${reservations}" var="reservation">
                                     <tr>
-                                        <td><fmt:formatDate value="${reservation.markDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+                                        <td><fmt:formatDate value="${reservation.ctime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                                         <td>${reservation.rightName}</td>
                                         <td>${reservation.supply}</td>
                                         <td>${reservation.supplyPhone}</td>
                                         <td>${reservation.customerName}</td>
                                         <td>${reservation.customerMobile}</td>
+                                        <td><fmt:formatDate value="${reservation.markDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                                         <td>${reservation.scoreCost}</td>
                                         <td>
                                             <c:choose>
@@ -195,5 +194,34 @@ $(document).ready(function () {
     });
 });
 </script>
+<script type="text/javascript" charset="utf-8">
+        	
+        	
+            $('#example').DataTable({
+            	"aoColumnDefs": [ { "bSortable": false, "aTargets": [2,3,4,5,6,7,8 ]}] ,
+            	"bAutoWidth" : false,
+            	"bFilter": false, //过滤功能
+                "oLanguage": {
+                        "sProcessing":   "处理中...",
+                        "sLengthMenu":   "_MENU_ 记录/页",
+                        "sZeroRecords":  "没有匹配的记录",
+                        "sInfo":         "显示第 _START_ 至 _END_ 项记录，共 _TOTAL_ 项",
+                        "sInfoEmpty":    "显示第 0 至 0 项记录，共 0 项",
+                        "sInfoFiltered": "(由 _MAX_ 项记录过滤)",
+                        "sInfoPostFix":  "",
+                        "sSearch":       "搜索:",
+                        "sUrl":          "",
+                        "oPaginate": {
+                            "sFirst":    "首页",
+                            "sPrevious": "上页",
+                            "sNext":     "下页",
+                            "sLast":     "末页"
+                        }
+                    }
+                
+            });
+            
+
+</script>  
 
 <jsp:include page="../../include/footer.jsp"/>

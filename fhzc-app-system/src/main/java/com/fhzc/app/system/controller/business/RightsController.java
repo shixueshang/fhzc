@@ -269,6 +269,43 @@ public class RightsController extends BaseController{
         return mav;
     }
 
+    @RequestMapping(value = "/find", method = RequestMethod.GET)
+    @SystemControllerLog(description = "查看权益预约列表")
+    public ModelAndView listRightsReservation(String rightsName, Date startTime, Date endTime){
+        ModelAndView mav = new ModelAndView("business/rights/reservationList");
+        RightsReserQuery query = new RightsReserQuery();
+        if(StringUtils.isNotBlank(rightsName)){
+            Rights rights = rightsService.getRightsByName(rightsName.trim());
+            if(rights != null){
+            	query.setRightsId(rights.getId());
+            }else{
+            	return mav;
+            }
+        }
+        if (startTime != null){
+            query.setStartDate(startTime);
+        }
+        if (endTime != null){
+            query.setEndDate(endTime);
+        }
+        PageableResult<RightsReservation> pageableResult = rightsService.findPageRightsReservations(query, page, size);
+        List<RightsReservation> list = new ArrayList<RightsReservation>();
+        for(RightsReservation reservation : pageableResult.getItems()){
+        	Customer customer = customerService.getCustomer(reservation.getCustomerId());
+        	Rights rights = rightsService.getRights(reservation.getRightsId());
+        	reservation.setRightName(rightsService.getRights(reservation.getRightsId()).getName());
+            reservation.setCustomerName(userService.getUser(customer.getUid()).getRealname());
+            reservation.setCustomerMobile(userService.getUser(customer.getUid()).getMobile());
+            reservation.setSupply(rights.getSupply());
+            reservation.setSupplyPhone(rights.getSupplyPhone());
+            list.add(reservation);
+        }
+        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
+        mav.addObject("reservations", list);
+        mav.addObject("url", "business/rights");
+        return mav;
+    }
+    
     @RequestMapping(value = "/reservation/status", method = RequestMethod.GET)
     @ResponseBody
     public AjaxJson reserStatus(){

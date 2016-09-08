@@ -4,9 +4,11 @@ import com.fhzc.app.dao.mybatis.inter.RightsMapper;
 import com.fhzc.app.dao.mybatis.inter.RightsReservationMapper;
 import com.fhzc.app.dao.mybatis.model.Rights;
 import com.fhzc.app.dao.mybatis.model.RightsExample;
+import com.fhzc.app.dao.mybatis.model.RightsReserQuery;
 import com.fhzc.app.dao.mybatis.model.RightsReservation;
 import com.fhzc.app.dao.mybatis.model.RightsReservationExample;
 import com.fhzc.app.dao.mybatis.page.PageableResult;
+import com.fhzc.app.system.commons.util.DateUtil;
 import com.fhzc.app.system.service.RightsService;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
@@ -104,5 +106,37 @@ public class RightsServiceImpl implements RightsService {
             return true;
         }
         return false;
+    }
+
+	@Override
+	public Rights getRightsByName(String rightsName) {
+		RightsExample example = new RightsExample();
+		RightsExample.Criteria criteria = example.createCriteria();
+	    criteria.andNameLike(rightsName);
+	    if(rightsMapper.countByExample(example) > 0){
+	    	 return rightsMapper.selectByExample(example).get(0);
+	    }
+	   return null;
+	}
+	
+    @Override
+    public PageableResult<RightsReservation> findPageRightsReservations(RightsReserQuery query, int page, int size) {
+    	RightsReservationExample example = new RightsReservationExample();
+    	RightsReservationExample.Criteria criteria = example.createCriteria();
+        if(null != query.getRightsId()){
+        	criteria.andRightsIdEqualTo(query.getRightsId());
+        }
+        if(query.getStartDate() != null && query.getEndDate() != null){
+            criteria.andCtimeBetween(DateUtil.getStartTimeOfDate(query.getStartDate()), DateUtil.getEndTimeOfDate(query.getEndDate()));
+        }
+        if(query.getStartDate() != null && query.getEndDate() == null){
+        	criteria.andCtimeGreaterThanOrEqualTo(DateUtil.getStartTimeOfDate(query.getStartDate()));
+        }
+        if(query.getStartDate() == null && query.getEndDate() != null){
+        	criteria.andCtimeLessThanOrEqualTo(DateUtil.getEndTimeOfDate(query.getEndDate()));
+        }
+        RowBounds rowBounds = new RowBounds((page - 1) * size, size);
+        List<RightsReservation> list = rightsReservationMapper.selectByExampleWithRowbounds(example, rowBounds);
+        return new PageableResult<RightsReservation>(page, size, rightsReservationMapper.countByExample(example), list);
     }
 }
