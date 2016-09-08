@@ -49,4 +49,6 @@ public interface UserService {
      * @return
      */
     User getUserByMobile(String mobile);
+
+    User decryptUser(User user);
 }

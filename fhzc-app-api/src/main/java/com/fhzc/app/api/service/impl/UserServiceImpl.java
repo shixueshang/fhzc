@@ -130,7 +130,8 @@ public class UserServiceImpl implements UserService {
      * @param user
      * @return
      */
-    private User decryptUser(User user){
+    @Override
+    public User decryptUser(User user){
         String key = user.getSalt();
         if(key == null){
             return user;

@@ -347,7 +347,7 @@ public class UserController extends BaseController {
 
             Subject subject = SecurityUtils.getSubject();
             Session session = subject.getSession();
-            session.setAttribute("user", user);
+            session.setAttribute("user", userService.decryptUser(user));
 
             return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, imageFile);
         }
