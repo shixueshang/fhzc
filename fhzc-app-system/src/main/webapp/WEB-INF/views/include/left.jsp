@@ -172,7 +172,7 @@
 
                         </ul>
                     </li></shiro:hasPermission>
-
+<!--  
                     <shiro:hasPermission name="/organization/department"><li class="has-sub">
                         <a href="javascript:;">
                             <i class="icon-sitemap"></i>
@@ -187,7 +187,7 @@
                             </li></shiro:hasPermission>
                         </ul>
                     </li></shiro:hasPermission>
-
+-->
                     <shiro:hasPermission name="/business/assets"><li class="has-sub">
                         <a href="javascript:;">
                             <i class="icon-shopping-cart"></i>

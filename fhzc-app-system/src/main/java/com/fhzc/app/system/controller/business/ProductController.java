@@ -155,12 +155,6 @@ public class ProductController extends BaseController {
         if (product.getInvestThreshold() != null && product.getInvestThreshold().compareTo(new BigDecimal(0)) == 1) {
             product.setInvestThreshold(product.getInvestThreshold().multiply(new BigDecimal(10000)));
         }
-        if(product.getScoreFactor() == null){
-        	 product.setScoreFactor(new BigDecimal(1));
-        }else{
-        	product.setScoreFactor(product.getScoreFactor().divide(new BigDecimal(100)));
-        }
-        product.setScoreFactor(product.getScoreFactor().divide(new BigDecimal(100)));
         product.setCtime(new Date());
         productService.addOrUpdateProduct(product);
         product.setDisplayOrder(product.getPid());
@@ -179,7 +173,6 @@ public class ProductController extends BaseController {
     public ModelAndView detail(@PathVariable(value = "pid") Integer pid) {
         ModelAndView mav = new ModelAndView("business/product/add");
         Product product = productService.getProduct(pid);
-        product.setScoreFactor(product.getScoreFactor().multiply(new BigDecimal(100)));
         mav.addObject("product", product);
         mav.addObject("productTypes", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_TYPE)));
         mav.addObject("productStatus", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.PRODUCT_STATUS)));
