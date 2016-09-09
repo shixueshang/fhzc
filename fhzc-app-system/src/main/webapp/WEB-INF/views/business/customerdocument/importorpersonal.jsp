@@ -87,7 +87,8 @@
                                             </div>
 
                                             <div class="form-actions">
-                                                <button type="submit" id="add" class="btn blue"><i class="icon-ok"></i> 添加</button>
+                                                <button type="submit" id="add" class="btn blue"><i class="icon-ok"></i>导入文档</button>
+						                        <button type="button" class="btn blue" id="approvalScorePersonal"><i class="icon-ok"></i> 执行计算待审批积分</button>
                                             </div>
                                         </form>
                                         <!-- END FORM-->
@@ -164,4 +165,26 @@
 	    	return true; 
 	    }
 	}); 
+	
+	$("#approvalScorePersonal").click(function(){
+		$.ajax({
+			type: "GET",
+			contentType: "application/json; charset=utf-8",
+			url: "/business/customerdocument/approvalScorePersonal",
+			dataType: "json",
+			success: function(data) {
+				if(data.result){
+					BootstrapDialog.show({
+			            title: '提示',
+			            message: '执行成功！'
+			        });
+				}else{
+					BootstrapDialog.show({
+			            title: '提示',
+			            message: '执行失败！'
+			        });
+				}
+			}
+		});
+	});
 </script>
