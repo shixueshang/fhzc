@@ -20,7 +20,7 @@ public interface UserService {
      * @param size
      * @return
      */
-    PageableResult<User> findPageUsers(String name, int page, int size);
+    PageableResult<User> findPageUsers(String name, String mobile, int page, int size);
 
     /**
      * 添加用户
