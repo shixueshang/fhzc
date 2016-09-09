@@ -199,22 +199,24 @@ public class AssetsController extends BaseController {
 
         List<CurrentHistoryHoldings> result = new ArrayList<CurrentHistoryHoldings>();
         for(AssetsHistory assetsHistory : assetsHistories){
-            CurrentHistoryHoldings holdings = new CurrentHistoryHoldings();
-            Product product = productService.getProduct(assetsHistory.getProductId());
-            holdings.setProductName(product.getName());
-            holdings.setAmount(new BigDecimal(assetsHistory.getAmount()));
-            holdings.setInvestTerm(assetsHistory.getPeriod());
-            holdings.setBuyDay(product.getBuyDay());
-            holdings.setDividendDay(product.getDividendDay());
-            holdings.setPaymentDay(assetsHistory.getPaymentDate());
-            holdings.setPayment(assetsHistory.getPayment());
-            holdings.setBank(assetsHistory.getBank());
-            holdings.setBankAccount(assetsHistory.getBankAccount());
-            holdings.setEarningRate(assetsHistory.getEarningRate());
-            holdings.setFoundDay(product.getFoundDay());
-            holdings.setLot(assetsHistory.getLot());
-           // holdings.setTotalAmount();
-            result.add(holdings);
+            if(!assetsHistory.getType().equals(Const.ASSETS_TYPE.REDEMPTION)){
+                CurrentHistoryHoldings holdings = new CurrentHistoryHoldings();
+                Product product = productService.getProduct(assetsHistory.getProductId());
+                holdings.setProductName(product.getName());
+                holdings.setAmount(new BigDecimal(assetsHistory.getAmount()));
+                holdings.setInvestTerm(assetsHistory.getPeriod());
+                holdings.setBuyDay(product.getBuyDay());
+                holdings.setDividendDay(product.getDividendDay());
+                holdings.setPaymentDay(assetsHistory.getPaymentDate());
+                holdings.setPayment(assetsHistory.getPayment());
+                holdings.setBank(assetsHistory.getBank());
+                holdings.setBankAccount(assetsHistory.getBankAccount());
+                holdings.setEarningRate(assetsHistory.getEarningRate());
+                holdings.setFoundDay(product.getFoundDay());
+                holdings.setLot(assetsHistory.getLot());
+                // holdings.setTotalAmount();
+                result.add(holdings);
+            }
         }
 
         return new AjaxJson(true, result);

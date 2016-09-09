@@ -40,7 +40,7 @@ public class ProductOrderApiController extends BaseController{
 
         Product product = productService.getProduct(productReservation.getProductId());
         if(product.getStatus() != Const.PRODUCT_STATUS.PREHEAT || product.getStatus() != Const.PRODUCT_STATUS.COLLECTING){
-            throw new BadRequestException("产品不在募集期");
+            return  new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST, "产品不在募集期");
         }
 
         productReservation.setApplyTime(new Date());
