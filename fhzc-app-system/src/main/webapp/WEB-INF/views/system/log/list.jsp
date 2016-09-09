@@ -48,15 +48,15 @@
                 </div>
             </div>
 
-            <div class="row-fluid">
-                <form  class="form-inline" action="<%=contextPath%>/system/log/find" method="GET">
-                    <div class="form-group">
-                        <label class="control-label" style="margin-left: 20px">操作日期</label>
-                        <input type="text" class="form-control date-picker"  id="operationDate"  name="operationDate" style="width:180px;"/>
-                        <button type="submit" class="btn blue"><i class="icon-search"></i> 查询</button>
-                    </div>
-                </form>
-            </div>
+                <div class="row-fluid">
+                    <form  class="form-inline" action="<%=contextPath%>/system/log/find" method="GET">
+                        <div class="form-group">
+                            <label class="control-label" style="margin-left: 20px">操作日期</label>
+                            <input type="text" class="form-control date-picker"  id="operationDate"  name="operationDate" style="width:180px;"/>
+                            <button type="submit" class="btn blue"><i class="icon-search"></i> 查询</button>
+                        </div>
+                    </form>
+                </div>
 
             <!--页面操作详细内容 开始-->
             <div class="row-fluid">

@@ -62,12 +62,12 @@ public class LoginController extends BaseController {
     public ApiJsonResult loginWithoutPwd(Integer identity, String identityNum, String phoneNum, String verifyCode){
 
         if(!verifyCodeService.checkVerifyCode(phoneNum, verifyCode)){
-            throw new BadRequestException("验证码输入错误");
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"验证码输入错误");
         }
 
         User user = userService.checkUserExists(identity, identityNum);
         if(user == null){
-            throw new BadRequestException("没有找到用户信息");
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"没有找到用户信息");
         }
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, identityNum);
     }
@@ -155,7 +155,7 @@ public class LoginController extends BaseController {
         User user = getCurrentUser();
         String md5Pwd = DigestUtils.md5Hex(password);
         if(!user.getPassword().equals(md5Pwd)){
-            throw new BadRequestException("密码输入错误");
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"密码输入错误");
         }
 
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
@@ -175,7 +175,7 @@ public class LoginController extends BaseController {
 
         User user = userService.getUser(userId);
         if(!newPwd.equals(confirmPwd)){
-            throw new BadRequestException("两次输入的密码不一致");
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"两次输入的密码不一致");
         }
         user.setPassword(DigestUtils.md5Hex(newPwd));
         userService.updateUser(user);
@@ -196,7 +196,7 @@ public class LoginController extends BaseController {
         User user = userService.getUserByMobile(mobile);
 
         if(!newPwd.equals(confirmPwd)){
-            throw new BadRequestException("两次输入的密码不一致");
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"两次输入的密码不一致");
         }
         user.setPassword(DigestUtils.md5Hex(newPwd));
         userService.updateUser(user);
@@ -245,17 +245,17 @@ public class LoginController extends BaseController {
 
         User user = getCurrentUser();
         if(mobile == null || mobile.length() == 0){
-            throw new BadRequestException("手机号不能为空");
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST, "手机号不能为空");
         }
 
         if(user != null){
             if(!userService.checkMobileExists(mobile, user)){
-                throw new BadRequestException("该手机号不存在");
+                return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"该手机号不存在");
             }
         }else{
             User u = userService.getUserByMobile(mobile);
             if(u == null){
-                throw new BadRequestException("该手机号不存在");
+                return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"该手机号不存在");
             }
         }
 
