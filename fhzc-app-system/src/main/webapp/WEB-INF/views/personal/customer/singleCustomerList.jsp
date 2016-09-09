@@ -52,8 +52,10 @@
             <div class="row-fluid">
                 <form  class="form-inline" action="/personal/customer/single/find" method="GET">
                     <div class="form-group">
+                     	<label class="control-label" style="margin-left: 20px">客户姓名</label>
                         <input class="form-control" id="name" placeholder="输入客户姓名" name="name" >
-
+						<label class="control-label" style="margin-left: 20px">手机号码</label>
+                        <input class="form-control" id="mobile" placeholder="输入手机号码" name="mobile" >
                         <button type="submit" class="btn blue"><i class="icon-search"></i> 查询</button>
                     </div>
                 </form>

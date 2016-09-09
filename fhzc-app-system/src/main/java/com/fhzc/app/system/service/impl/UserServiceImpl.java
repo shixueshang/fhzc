@@ -10,6 +10,7 @@ import com.fhzc.app.system.commons.util.excel.ImportCallBack;
 import com.fhzc.app.system.commons.util.excel.ImportConfig;
 import com.fhzc.app.dao.mybatis.inter.UserMapper;
 import com.fhzc.app.system.service.UserService;
+
 import org.apache.ibatis.session.RowBounds;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -39,13 +40,30 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public PageableResult<User> findPageUsers(String name, int page, int size) {
+    public PageableResult<User> findPageUsers(String name, String mobile, int page, int size) {
         UserExample example = new UserExample();
         UserExample.Criteria criteria = example.createCriteria();
         if(!"".equals(name)){
             criteria.andRealnameEqualTo(name);
         }
-
+        if(!"".equals(mobile)){
+        	 List<User> users = findAllUsers();
+        	 if(users.size() > 2){
+        		users.remove(0);
+    		    for (User user : users) {
+         			if(user.getMobile().equals(mobile)){
+         				try {
+         					mobile = EncryptUtils.encryptToDES(user.getSalt(), mobile);
+         					criteria.andMobileEqualTo(mobile);
+         					break;
+         				} catch (Exception e) {
+         					e.printStackTrace();
+         				}	
+         			}
+         		}
+        	 }
+         
+        }
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<User> list = decryptUser(userMapper.selectByExampleWithRowbounds(example, rowBounds));
 

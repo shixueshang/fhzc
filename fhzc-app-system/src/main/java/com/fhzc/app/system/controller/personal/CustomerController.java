@@ -11,6 +11,8 @@ import com.fhzc.app.system.commons.util.TextUtils;
 import com.fhzc.app.system.controller.AjaxJson;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.*;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -66,13 +68,14 @@ public class CustomerController extends BaseController {
     /**
      * 根据姓名查询客户
      * @param name
+     * @param mobile
      * @return
      */
     @RequestMapping(value = "/single/find", method = RequestMethod.GET)
     @SystemControllerLog(description = "查看个人客户列表")
-    public ModelAndView findSingleCustomers(String name){
+    public ModelAndView findSingleCustomers(String name, String mobile){
         ModelAndView mav = new ModelAndView("personal/customer/singleCustomerList");
-        PageableResult<User> pageableResult = userService.findPageUsers(name, page, size);
+        PageableResult<User> pageableResult = userService.findPageUsers(name.trim(), mobile.trim(), page, size);
         List<Customer> customerList = new ArrayList<Customer>();
         List<Map<String, Object>> scores = new ArrayList<Map<String, Object>>();
 
@@ -80,25 +83,30 @@ public class CustomerController extends BaseController {
         List<Integer> departments = departmentService.findAllChildrenIds(admin.getOrgan());
 
         for(User user : pageableResult.getItems()){
-            Customer customer = customerService.getCustomerByUid(user.getUid(), Const.CUSTOMER_TYPE.SINGLE_CUSTOMER);
-            if(customer != null){
+        	if((StringUtils.isNotBlank(mobile)) && (user.getLoginRole().equals(Const.USER_ROLE.PLANNER))){
+        		return mav;
+        	}else{
+        		Customer customer = customerService.getCustomerByUid(user.getUid(), Const.CUSTOMER_TYPE.SINGLE_CUSTOMER);
+                if(customer != null){
 
-                PlannerCustomer pc = customerService.getPlannerByCustomerId(customer.getCustomerId(), null);
-                if(pc != null){
-                  Planner planner = plannerService.getPlanner(pc.getPlannerId());
-                    if(planner.getStatus().equals(Const.PLANNER_STATUS.ON)){
-                        if(departments.contains(customer.getDepartmentId())){
-                            customerList.add(customer);
+                    PlannerCustomer pc = customerService.getPlannerByCustomerId(customer.getCustomerId(), null);
+                    if(pc != null){
+                      Planner planner = plannerService.getPlanner(pc.getPlannerId());
+                        if(planner.getStatus().equals(Const.PLANNER_STATUS.ON)){
+                            if(departments.contains(customer.getDepartmentId())){
+                                customerList.add(customer);
+                            }
                         }
                     }
-                }
 
-                Map<String, Object> scoreMap = new HashMap<String, Object>();
-                scoreMap.put("customerId", customer.getCustomerId());
-                scoreMap.put("availableScore", scoreService.getAvailableScore(customer.getUid()));
-                scoreMap.put("frozenScore", scoreService.getFrozenScore(customer.getUid()));
-                scores.add(scoreMap);
-            }
+                    Map<String, Object> scoreMap = new HashMap<String, Object>();
+                    scoreMap.put("customerId", customer.getCustomerId());
+                    scoreMap.put("availableScore", scoreService.getAvailableScore(customer.getUid()));
+                    scoreMap.put("frozenScore", scoreService.getFrozenScore(customer.getUid()));
+                    scores.add(scoreMap);
+                }
+        	}
+            
         }
 
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
@@ -132,7 +140,6 @@ public class CustomerController extends BaseController {
 
     @RequestMapping(value = "/single/update", method = RequestMethod.POST)
     public String update(Customer customer, User user){
-        ModelAndView mav = new ModelAndView("personal/customer/singleCustomerList");
         customerService.addOrUpdateCustomer(customer);
         userService.addOrUpdateUser(user);
         return "redirect:/personal/customer/single/list";
@@ -152,38 +159,42 @@ public class CustomerController extends BaseController {
     /**
      * 根据姓名查询客户
      * @param name
+     * @param mobile
      * @return
      */
     @RequestMapping(value = "/organ/find", method = RequestMethod.GET)
     @SystemControllerLog(description = "查看机构客户列表")
-    public ModelAndView findOrganCustomers(String name){
+    public ModelAndView findOrganCustomers(String name, String mobile){
         ModelAndView mav = new ModelAndView("personal/customer/organCustomerList");
-        PageableResult<User> pageableResult = userService.findPageUsers(name, page, size);
+        PageableResult<User> pageableResult = userService.findPageUsers(name.trim(), mobile.trim(), page, size);
         List<Customer> customerList = new ArrayList<Customer>();
         List<Map<String, Object>> scores = new ArrayList<Map<String, Object>>();
 
         Admin admin = super.getCurrentUser();
         List<Integer> departments = departmentService.findAllChildrenIds(admin.getOrgan());
         for(User user : pageableResult.getItems()){
-            Customer customer = customerService.getCustomerByUid(user.getUid(), Const.CUSTOMER_TYPE.ORGAN_CUSTOMER);
-            if(customer != null){
-                PlannerCustomer pc = customerService.getPlannerByCustomerId(customer.getCustomerId(), null);
-                if(pc != null){
-                    Planner planner = plannerService.getPlanner(pc.getPlannerId());
-                    if(planner.getStatus().equals(Const.PLANNER_STATUS.ON)){
-                        if(departments.contains(customer.getDepartmentId())){
-                            customerList.add(customer);
+        	if((StringUtils.isNotBlank(mobile)) && (user.getLoginRole().equals(Const.USER_ROLE.PLANNER))){
+        		return mav;
+        	}else{
+                Customer customer = customerService.getCustomerByUid(user.getUid(), Const.CUSTOMER_TYPE.ORGAN_CUSTOMER);
+                if(customer != null){
+                    PlannerCustomer pc = customerService.getPlannerByCustomerId(customer.getCustomerId(), null);
+                    if(pc != null){
+                        Planner planner = plannerService.getPlanner(pc.getPlannerId());
+                        if(planner.getStatus().equals(Const.PLANNER_STATUS.ON)){
+                            if(departments.contains(customer.getDepartmentId())){
+                                customerList.add(customer);
+                            }
                         }
                     }
+
+                    Map<String, Object> scoreMap = new HashMap<String, Object>();
+                    scoreMap.put("customerId", customer.getCustomerId());
+                    scoreMap.put("availableScore", scoreService.getAvailableScore(customer.getUid()));
+                    scoreMap.put("frozenScore", scoreService.getFrozenScore(customer.getUid()));
+                    scores.add(scoreMap);
                 }
-
-                Map<String, Object> scoreMap = new HashMap<String, Object>();
-                scoreMap.put("customerId", customer.getCustomerId());
-                scoreMap.put("availableScore", scoreService.getAvailableScore(customer.getUid()));
-                scoreMap.put("frozenScore", scoreService.getFrozenScore(customer.getUid()));
-                scores.add(scoreMap);
-            }
-
+        	}
         }
 
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
@@ -321,7 +332,7 @@ public class CustomerController extends BaseController {
     @SystemControllerLog(description = "查看缺位客户列表")
     public ModelAndView findCustomersWithoutPlanner(String name){
         ModelAndView mav = new ModelAndView("personal/customer/missPlanner");
-        PageableResult<User> pageableResult = userService.findPageUsers(name, page, size);
+        PageableResult<User> pageableResult = userService.findPageUsers(name, "", page, size);
 
         Admin admin = super.getCurrentUser();
         List<Integer> departments = departmentService.findAllChildrenIds(admin.getOrgan());
