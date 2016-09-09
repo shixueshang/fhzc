@@ -55,6 +55,7 @@ public class UserServiceImpl implements UserService {
          				try {
          					mobile = EncryptUtils.encryptToDES(user.getSalt(), mobile);
          					criteria.andMobileEqualTo(mobile);
+         					break;
          				} catch (Exception e) {
          					e.printStackTrace();
          				}	
