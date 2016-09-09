@@ -4,22 +4,22 @@
 	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!--每日任务计算待审批积分-->
-    <bean id="scoreTaskJob" class="com.fhzc.app.system.job.ScoreTaskJob" />
-    <bean id="scoreTaskBean"
-          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-        <!-- 调用的类 -->
-        <property name="targetObject" ref="scoreTaskJob"/>
-        <!-- 调用类中的方法 -->
-        <property name="targetMethod" value="execute"/>
-        <property name="concurrent" value="false"/>
-    </bean>
-    <!-- 定义触发时间 -->
-    <bean id="doScoreTaskTime"
-          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-        <property name="jobDetail" ref="expireScoreTaskBean" />
-        <!-- cron表达式 -->
-        <property name="cronExpression" value="0 30 23 * * ?" />
-    </bean>
+<!--     <bean id="scoreTaskJob" class="com.fhzc.app.system.job.ScoreTaskJob" /> -->
+<!--     <bean id="scoreTaskBean" -->
+<!--           class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"> -->
+<!--         调用的类 -->
+<!--         <property name="targetObject" ref="scoreTaskJob"/> -->
+<!--         调用类中的方法 -->
+<!--         <property name="targetMethod" value="execute"/> -->
+<!--         <property name="concurrent" value="false"/> -->
+<!--     </bean> -->
+<!--     定义触发时间 -->
+<!--     <bean id="doScoreTaskTime" -->
+<!--           class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"> -->
+<!--         <property name="jobDetail" ref="expireScoreTaskBean" /> -->
+<!--         cron表达式 -->
+<!--         <property name="cronExpression" value="0 30 23 * * ?" /> -->
+<!--     </bean> -->
 
     <!--每日任务计算过期积分-->
     <bean id="expireScoreTaskJob" class="com.fhzc.app.system.job.ScoreTaskJob" />
@@ -45,7 +45,7 @@
           class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="triggers">
             <list>
-                <ref bean="doScoreTaskTime" />
+<!--                 <ref bean="doScoreTaskTime" /> -->
                 <ref bean="doExpireScoreTaskTime" />
             </list>
         </property>
