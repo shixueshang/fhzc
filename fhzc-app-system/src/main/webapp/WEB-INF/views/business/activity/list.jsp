@@ -73,7 +73,7 @@
                                     <td>是否推荐</td>
                                     <td>关注人数</td>
                                     <td>预约人数</td>
-                                    <td style="width: 80px;" >操作</td>
+                                    <td style="width: 120px;" >操作</td>
                                 </tr>
                                 </thead>
                                 <tbody>

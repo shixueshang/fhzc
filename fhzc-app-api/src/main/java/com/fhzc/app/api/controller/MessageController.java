@@ -127,6 +127,7 @@ public class MessageController extends BaseController {
         //找出有多少组,数据格式 sessionId=List<ImMessage>
         Map<String, List<ImMessage>> sessionMap = new ConcurrentHashMap<String, List<ImMessage>>();
         for(ImMessage message : messages){
+            message.setContent(TextUtils.delHTMLTag(message.getContent()));
             if(message.getMessageType().equals(APIConstants.Message_Type.Audio)){
                 message.setContent("");
             }else{

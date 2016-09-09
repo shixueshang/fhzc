@@ -191,11 +191,6 @@
 <script>
     $(function(){
 
-        CKEDITOR.replace('detail_url', {
-            filebrowserBrowseUrl:'',
-            filebrowserImageUploadUrl: ''
-        });
-
         var reportId =  '${report.id}';
         if(reportId != null && reportId != ''){
             $('#report_title').text('编辑报告');
