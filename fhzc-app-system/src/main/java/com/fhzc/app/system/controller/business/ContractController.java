@@ -55,6 +55,7 @@ public class ContractController extends BaseController {
     @RequestMapping(value = "/importor", method = RequestMethod.GET)
     public ModelAndView importorContract(){
         ModelAndView mav = new ModelAndView("business/contract/importor");
+        mav.addObject("url","business/contract/importor");
         return mav;
     }
     
@@ -80,6 +81,7 @@ public class ContractController extends BaseController {
             mav.addAllObjects(result);
             e.printStackTrace();
         }
+        mav.addObject("url", "business/contract");
         return mav;
     }
     
@@ -168,7 +170,7 @@ public class ContractController extends BaseController {
         }
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("contracts", contracts);
-        mav.addObject("url", "/business/contract");
+        mav.addObject("url", "business/contract");
         return mav;
     }
 }

@@ -120,6 +120,7 @@ public class PlannerController extends BaseController {
     @RequestMapping(value = "/importor", method = RequestMethod.GET)
     public ModelAndView importPlanner(){
         ModelAndView mav = new ModelAndView("personal/planner/importor");
+        mav.addObject("url", "personal/planner/importor");
         return mav;
     }
 
@@ -145,6 +146,7 @@ public class PlannerController extends BaseController {
             result.put("error_message", e.getMessage());
             mav.addAllObjects(result);
         }
+        mav.addObject("url","personal/planner");
         return mav;
     }
 
@@ -155,6 +157,7 @@ public class PlannerController extends BaseController {
     @RequestMapping(value = "/importoroff", method = RequestMethod.GET)
     public ModelAndView importOffPlanner(){
         ModelAndView mav = new ModelAndView("personal/planner/importoroff");
+        mav.addObject("url", "personal/planner/importoroff");
         return mav;
     }
 
@@ -179,6 +182,7 @@ public class PlannerController extends BaseController {
             result.put("error_message", e.getMessage());
             mav.addAllObjects(result);
         }
+        mav.addObject("url","personal/planner");
         return mav;
     }
 
@@ -197,6 +201,7 @@ public class PlannerController extends BaseController {
             mav.addObject("company", JSON.toJSON(departmentService.getDepartment(admin.getOrgan())));
         }
         mav.addObject("area", JSON.toJSON(areas));
+        mav.addObject("url","personal/planner");
         return mav;
     }
 

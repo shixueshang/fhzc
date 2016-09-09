@@ -32,12 +32,13 @@ public class PlannerAchivementsMonthlyController   extends BaseController  {
     private PlannerAchivementsMonthlyService plannerAchivementsMonthlyService;
 
     /**
-     * 业绩日报导入页面
+     * 业绩月报导入页面
      * @return
      */
     @RequestMapping(value = "/importor", method = RequestMethod.GET)
     public ModelAndView importorProduct(){
         ModelAndView mav = new ModelAndView("business/plannerachivementsmonthly/importor");
+        mav.addObject("url","business/plannerachivementsmonthly/importor");
         return mav;
     }
     
@@ -56,15 +57,14 @@ public class PlannerAchivementsMonthlyController   extends BaseController  {
             result = plannerAchivementsMonthlyService.importDailyExcelFile(multiFile);
             result.put("success", true);
             mav.addAllObjects(result);
-            return mav;
 
         } catch (Exception e) {
             logger.error("导入失败" + e.getMessage() );
             result.put("success", false);
             result.put("error_message", e.getMessage());
             mav.addAllObjects(result);
-            return mav;
         }
-
+        mav.addObject("url","business/plannerachivementsmonthly");
+        return mav;
     }
 }

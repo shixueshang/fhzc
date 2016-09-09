@@ -62,6 +62,7 @@ public class ScoreHistoryController extends BaseController {
     @RequestMapping(value = "/importoradd", method = RequestMethod.GET)
     public ModelAndView importorAddScore(){
         ModelAndView mav = new ModelAndView("business/addscorehistory/importor");
+        mav.addObject("url","business/score/importoradd");
         return mav;
     }
     
@@ -86,6 +87,7 @@ public class ScoreHistoryController extends BaseController {
             result.put("error_message", e.getMessage());
             mav.addAllObjects(result);
         }
+        mav.addObject("url","business/addscorehistory");
         return mav;
     }
     
@@ -96,6 +98,7 @@ public class ScoreHistoryController extends BaseController {
     @RequestMapping(value = "/importorconsume", method = RequestMethod.GET)
     public ModelAndView importorConsumeScore(){
         ModelAndView mav = new ModelAndView("business/consumescorehistory/importor");
+        mav.addObject("url","business/score/importorconsume");
         return mav;
     }
     
@@ -120,6 +123,7 @@ public class ScoreHistoryController extends BaseController {
             result.put("error_message", e.getMessage());
             mav.addAllObjects(result);
         }
+        mav.addObject("url","business/consumescorehistory");
         return mav;
     }
 

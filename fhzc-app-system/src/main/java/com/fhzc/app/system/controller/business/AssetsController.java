@@ -56,8 +56,10 @@ public class AssetsController extends BaseController {
 
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String listOrder(){
-        return "business/assets/list";
+    public ModelAndView listOrder(){
+        ModelAndView mav = new ModelAndView("business/assets/list");
+        mav.addObject("url", "business/assets");
+        return mav;
     }
 
     /**

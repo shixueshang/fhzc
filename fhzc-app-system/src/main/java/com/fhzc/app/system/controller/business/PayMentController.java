@@ -30,6 +30,7 @@ public class PayMentController extends BaseController {
     @RequestMapping(value = "/importor", method = RequestMethod.GET)
     public ModelAndView importorPayMent(){
         ModelAndView mav = new ModelAndView("business/payment/importor");
+        mav.addObject("url","business/payment/importor");
         return mav;
     }
     
@@ -54,6 +55,7 @@ public class PayMentController extends BaseController {
             mav.addAllObjects(result);
             return mav;
         }
+        mav.addObject("url","/business/payment");
         return mav;
     }
     
@@ -64,6 +66,7 @@ public class PayMentController extends BaseController {
     @RequestMapping(value = "/importorspecial", method = RequestMethod.GET)
     public ModelAndView importorSpecialPayMent(){
         ModelAndView mav = new ModelAndView("business/payment/importorspecial");
+        mav.addObject("url","business/payment/importorspecial");
         return mav;
     }
     
@@ -81,14 +84,13 @@ public class PayMentController extends BaseController {
             result = payMentService.importExcelFileSpecial(multiFile);
             result.put("success", true);
             mav.addAllObjects(result);
-            return mav;
         } catch (Exception e) {
             logger.error("导入失败" + e.getMessage() );
             result.put("success", false);
             result.put("error_message", e.getMessage());
             mav.addAllObjects(result);
-            return mav;
         }
- 
+        mav.addObject("url","/business/payment");
+        return mav;
     }
 }

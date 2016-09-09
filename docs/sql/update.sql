@@ -20,3 +20,7 @@ ADD COLUMN `push_time` DATETIME NULL COMMENT '推送时间' AFTER `push_channel`
  alter table product add column annual_interval varchar(50) NULL COMMENT '参考业绩标准区间(%)'
  alter table product modify column fund_manager varchar(200) ;
 
+#2016-09-09 
+alter table product alter column score_factor drop default; 
+alter table product alter column score_factor set default 1.00;
+

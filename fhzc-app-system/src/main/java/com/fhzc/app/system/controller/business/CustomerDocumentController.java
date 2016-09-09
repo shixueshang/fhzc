@@ -30,6 +30,7 @@ public class CustomerDocumentController extends BaseController {
     @RequestMapping(value = "/importorpersonal", method = RequestMethod.GET)
     public ModelAndView importorPersonalCustomerDocument(){
         ModelAndView mav = new ModelAndView("business/customerdocument/importorpersonal");
+        mav.addObject("url", "business/customerdocument/importorpersonal");
         return mav;
     }
     
@@ -53,6 +54,7 @@ public class CustomerDocumentController extends BaseController {
             result.put("error_message", e.getMessage());
             mav.addAllObjects(result);
         }
+        mav.addObject("url","business/customerdocument");
         return mav;
     }
     
@@ -63,6 +65,7 @@ public class CustomerDocumentController extends BaseController {
     @RequestMapping(value = "/importoragent", method = RequestMethod.GET)
     public ModelAndView importorAgentCustomerDocument(){
         ModelAndView mav = new ModelAndView("business/customerdocument/importoragent");
+        mav.addObject("url", "business/customerdocument/importoragent");
         return mav;
     }
     
@@ -86,6 +89,7 @@ public class CustomerDocumentController extends BaseController {
             result.put("error_message", e.getMessage());
             mav.addAllObjects(result);
         }
+        mav.addObject("url","business/customerdocument");
         return mav;
     }
 }

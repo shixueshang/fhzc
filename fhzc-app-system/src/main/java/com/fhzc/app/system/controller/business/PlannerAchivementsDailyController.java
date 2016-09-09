@@ -37,6 +37,7 @@ public class PlannerAchivementsDailyController  extends BaseController  {
     @RequestMapping(value = "/importor", method = RequestMethod.GET)
     public ModelAndView importorProduct(){
         ModelAndView mav = new ModelAndView("business/plannerachivementsdaily/importor");
+        mav.addObject("url","business/plannerachivementsdaily/importor");
         return mav;
 
     }
@@ -56,15 +57,14 @@ public class PlannerAchivementsDailyController  extends BaseController  {
             result = plannerAchivementsDailyService.importDailyExcelFile(multiFile);
             result.put("success", true);
             mav.addAllObjects(result);
-            return mav;
 
         } catch (Exception e) {
             logger.error("导入失败" + e.getMessage() );
             result.put("success", false);
             result.put("error_message", e.getMessage());
             mav.addAllObjects(result);
-            return mav;
         }
-
+        mav.addObject("url","business/plannerachivementsdaily");
+        return mav;
     }
 }
