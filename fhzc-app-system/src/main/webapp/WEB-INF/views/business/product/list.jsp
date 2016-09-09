@@ -125,7 +125,9 @@
                                         </td>
                                         <td>
                                             <a href="<%=contextPath%>/business/product/detail/${product.pid}" class="btn mini purple"><i class="icon-edit"></i> 编辑</a>
+                                            <!--  
                                             <a href="<%=contextPath%>/business/product/order/${product.pid}" class="btn mini purple"><i class="icon-share"></i> 预约</a>
+                                            -->
                                             <a href="#modal_edit" role="button" data-toggle="modal" data-id="${product.pid}" class="btn mini purple product_push"><i class="icon-signin"></i> 推送</a>
                                         </td>
                                     </tr>
