@@ -25,8 +25,6 @@ public class UploadController extends BaseController {
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
     public String upload(MultipartFile upload,HttpServletResponse response) {
-        //HttpServletResponse response = ServletActionContext.getResponse();  
-		response.reset();
 		response.setCharacterEncoding("GBK");  
         PrintWriter out;
         String callback = request.getParameter("CKEditorFuncNum");
@@ -35,8 +33,8 @@ public class UploadController extends BaseController {
 				String coverName = FileUtil.generatePictureName(upload);
 				String coverPath = TextUtils.getConfig(Const.CONFIG_KEY_SYSTEM_IMAGE_SAVE_PATH, this);
 				FileUtil.transferFile(coverPath, coverName, upload);
-				response.reset();
 				out = response.getWriter();
+				response.reset();
 				out.println("<script type=\"text/javascript\">"); 
 				out.println("window.parent.CKEDITOR.tools.callFunction("
 	                        + callback + ",'" + coverPath+coverName+"',''" + ")"); // 相对路径用于显示图片  
