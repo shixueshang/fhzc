@@ -180,6 +180,7 @@ INSERT INTO `bank`.`areas` (`area_name`) VALUES ('杭州');
 INSERT INTO `bank`.`areas` (`area_name`) VALUES ('苏州');
 INSERT INTO `bank`.`areas` (`area_name`) VALUES ('成都');
 INSERT INTO `bank`.`areas` (`area_name`) VALUES ('重庆');
+INSERT INTO `bank`.`areas` (`area_name`) VALUES ('武汉');
 
 TRUNCATE TABLE `user_role`;
 INSERT INTO `bank`.`user_role` (`role_name`) VALUES ('总经理');
