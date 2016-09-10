@@ -118,15 +118,30 @@
                                                  Safari ,Internet Explorer 10
                                                  </span>
                                                 </div>
+                                                <div class="control-group">
+                                                <label class="control-label">跳转页面类型</label>
+                                                <div class="controls">
+                                                   <select name="fromType" id="from_type" class="m-wrap large">
+                                                       <option></option>
+                                                   </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <label class="control-label">跳转页面</label>
+                                                <div class="controls">
+                                                    <select name="fromId" id="from_id" class="m-wrap large"></select>
+                                                </div>
+                                            </div>
                                             </div>
 
                                             <div class="control-group" style="display: none" id="banner_text">
                                                 <label class="control-label">banner文字</label>
                                                 <div class="controls">
-                                                    <input type="text" name="text" value="${banner.text}" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="text" maxlength='18' value="${banner.text}" placeholder="最大长度18个汉字或18个字母、数字" class="m-wrap large">
                                                 </div>
                                             </div>
-
+<!--  
                                             <div class="control-group">
                                                 <label class="control-label">跳转页面类型</label>
                                                 <div class="controls">
@@ -142,7 +157,7 @@
                                                     <select name="fromId" id="from_id" class="m-wrap large"></select>
                                                 </div>
                                             </div>
-
+-->
                                             <div class="form-actions">
                                                 <input name="id" type="hidden" value="${banner.id}" id="bannerId"/>
                                                 <button type="submit" class="btn blue"><i class="icon-ok"></i> 保存</button>

@@ -47,7 +47,7 @@ public class ActivityServiceImpl implements ActivityService {
         if(id == null){
             activityMapper.insert(activity);
         }else{
-            activityMapper.updateByPrimaryKey(activity);
+            activityMapper.updateByPrimaryKeySelective(activity);
         }
     }
 

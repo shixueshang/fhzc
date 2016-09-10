@@ -80,6 +80,7 @@
                                     <td>客户姓名</td>
                                     <td>客户等级</td>
                                     <td>客户手机号码</td>
+                                    <td>报名人数</td>
                                     <td>是否参加</td>
                                 </tr>
                                 </thead>
@@ -91,6 +92,7 @@
                                         <td>${activityApply.personName}</td>
                                         <td>${activityApply.level}</td>
                                         <td>${activityApply.mobile}</td>
+                                        <td>${activityApply.personNum}</td>
                                         <td>
                                             <c:choose>
                                                 <c:when test="${activityApply.result == '1'}">

@@ -48,8 +48,18 @@ public class Activity {
     private Integer focusNum;
 
     private Integer orderNum;
+    
+    private String departmentName;
 
-    public Integer getFocusNum() {
+	public String getDepartmentName() {
+		return departmentName;
+	}
+
+	public void setDepartmentName(String departmentName) {
+		this.departmentName = departmentName;
+	}
+
+	public Integer getFocusNum() {
         return focusNum;
     }
 
