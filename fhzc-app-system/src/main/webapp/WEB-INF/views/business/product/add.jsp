@@ -158,7 +158,7 @@
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">存续期限(月)</label>
+                                                <label class="control-label">存续期限</label>
                                                 <div class="controls">
                                                     <input type="text" name="renewDeadline" value="${product.renewDeadline}" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
@@ -615,10 +615,10 @@ $(function(){
                 number: true,
                 min:0
             },
-            renewDeadline: {
-                number: true,
-                min:0
-            },
+            //renewDeadline: {
+              //  number: true,
+                //min:0
+            //},
             productType: {
                 required: true
             },

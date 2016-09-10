@@ -191,10 +191,10 @@
                                             <div class="control-group">
                                                 <label class="control-label">活动内容</label>
                                                 <div class="controls">
-                                                    <textarea id="content" name="content"  class="span6 m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;">${activity.content}</textarea>
+                                                    <textarea id="content" name="content"  class="span12 ckeditor m-wrap" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;">${activity.content}</textarea>
                                                 </div>
                                             </div>
-
+<!--  
                                             <div class="control-group">
                                                 <label class="control-label">注意事项</label>
                                                 <div class="controls">
@@ -213,7 +213,7 @@
                                                     <textarea name="summary" class="span6 m-wrap" maxlength="250" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 298px;">${activity.summary}</textarea>
                                                 </div>
                                             </div>
-
+-->
                                             <div class="control-group">
                                                 <label class="control-label">详情链接</label>
                                                 <div class="controls">
@@ -275,6 +275,7 @@
 <script type="text/javascript" src="<%=contextPath%>/assets/custom_datepicker/jquery-ui-timepicker-addon.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/assets/custom_datepicker/i18n/jquery-ui-timepicker-addon-i18n.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/assets/custom_datepicker/jquery-ui-sliderAccess.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/assets/ckeditor/ckeditor.js"></script>
 
 
 

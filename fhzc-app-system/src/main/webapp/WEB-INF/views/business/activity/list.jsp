@@ -68,7 +68,7 @@
                                     <td>活动地点</td>
                                     <td>活动开始时间</td>
                                     <td>活动结束时间</td>
-                                    <td style="width:18%">活动主办方</td>
+                                    <td style="width:18%">举办公司</td>
                                     <td>是否显示</td>
                                     <td>是否推荐</td>
                                     <td>关注人数</td>
@@ -101,7 +101,7 @@
                                         <td>${activity.address}</td>
                                         <td><fmt:formatDate value="${activity.beginTime}" pattern="yyyy-MM-dd HH:mm"/></td>
                                         <td><fmt:formatDate value="${activity.endTime}" pattern="yyyy-MM-dd HH:mm" /></td>
-                                        <td>${activity.sponsor}</td>
+                                        <td>${activity.departmentName}</td>
                                         <td>
                                             <c:choose>
                                                 <c:when test="${activity.isDisplay == '0'}">

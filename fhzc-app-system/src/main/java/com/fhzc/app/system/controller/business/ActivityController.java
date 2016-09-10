@@ -59,7 +59,6 @@ public class ActivityController extends BaseController {
         ModelAndView mav = new ModelAndView("business/activity/list");
         Admin admin = super.getCurrentUser();
         List<Integer> departments = new ArrayList<Integer>();
-
         departments.add(Const.ROOT_DEPT_ID);
         departments.add(admin.getOrgan());
         PageableResult<Activity> pageableResult = activityService.findPageActivies(departments, page, size);
@@ -74,6 +73,7 @@ public class ActivityController extends BaseController {
     			}
         	}
         	activity.setOrderNum(personNum > 0 ? personNum : 0);
+        	activity.setDepartmentName(departmentService.getDepartment(activity.getDepartmentId()).getTitle());
 		}
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
         mav.addObject("activities", pageableResult.getItems());
