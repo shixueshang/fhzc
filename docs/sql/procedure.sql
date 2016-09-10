@@ -681,7 +681,7 @@ BEGIN
 	   and (department_id=_dept1_id 
 		 or department_id in(select department_id from department where parent_dept_id =_dept1_id)
 		 or department_id in(select department_id from department where parent_dept_id in(select department_id from department where parent_dept_id =_dept1_id))
-		);
+		) LIMIT 1;
 
 	   if _planner_id > 0 then 
 		update department set leader_uid = _planner_id where department_id=_dept1_id;
@@ -695,7 +695,7 @@ BEGIN
 	   and (department_id=_dept1_id 
 		 or department_id in(select department_id from department where parent_dept_id =_dept1_id)
 		 or department_id in(select department_id from department where parent_dept_id in(select department_id from department where parent_dept_id =_dept1_id))
-		);
+		) LIMIT 1;
 
 		if _planner_id > 0 then 
 			update department set leader_uid = _planner_id where department_id=_dept2_id;
@@ -711,7 +711,7 @@ BEGIN
 	   and (department_id=_dept1_id 
 		 or department_id in(select department_id from department where parent_dept_id =_dept1_id)
 		 or department_id in(select department_id from department where parent_dept_id in(select department_id from department where parent_dept_id =_dept1_id))
-		);
+		) LIMIT 1;
 
 		if _planner_id > 0 then 
 			update department set leader_uid = _planner_id where department_id=_dept3_id;
@@ -722,7 +722,7 @@ BEGIN
 	-- 四级部门负责人找 对应的三，四部门的人
 	if p_dept4_leader <> '' and p_dept4_leader <> '-' then 
 	   set _planner_id = -1;
-	   select id into _planner_id from user,planner where user.uid =planner.uid and user.realname=p_dept4_leader and user.login_role='planner' and department_id in(_dept3_id,_dept4_id);
+	   select id into _planner_id from user,planner where user.uid =planner.uid and user.realname=p_dept4_leader and user.login_role='planner' and department_id in(_dept3_id,_dept4_id) LIMIT 1;
 	   if _planner_id > 0 then 
 			update department set leader_uid = _planner_id where department_id=_dept4_id;
 	   end if;
