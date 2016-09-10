@@ -24,3 +24,7 @@ ADD COLUMN `push_time` DATETIME NULL COMMENT '推送时间' AFTER `push_channel`
 alter table product alter column score_factor drop default; 
 alter table product alter column score_factor set default 1.00;
 
+#2016-09-10
+alter table planner_achivements_monthly modify column customer_name varchar(200) ;
+alter table product modify column renew_deadline varchar(500) ;
+
