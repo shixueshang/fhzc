@@ -64,7 +64,7 @@ public class RightsController extends BaseController{
     @SystemControllerLog(description = "查看权益列表")
     public ModelAndView listRights(){
         ModelAndView mav = new ModelAndView("business/rights/list");
-        PageableResult<Rights> pageableResult = rightsService.findPageRights(page, 300);
+        PageableResult<Rights> pageableResult = rightsService.findPageRights(page, size);
         for(Rights rights : pageableResult.getItems() ){
         	List<Focus> focuses = focusService.findFocusByType(Const.FOCUS_TYPE.RIGHTS, rights.getId());
         	rights.setFocusNum(focuses.size() > 0 ? focuses.size() : 0);
@@ -105,7 +105,7 @@ public class RightsController extends BaseController{
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @SystemControllerLog(description = "新增或修改权益")
-    public String addRight(Rights rights, MultipartFile coverFile){
+    public String addRight(Rights rights, MultipartFile coverFile, String page){
         if(!coverFile.isEmpty()){
             String coverName = FileUtil.generatePictureName(coverFile);
             String coverPath = TextUtils.getConfig(Const.CONFIG_KEY_SYSTEM_IMAGE_SAVE_PATH, this);
@@ -115,8 +115,10 @@ public class RightsController extends BaseController{
         rights.setCtime(new Date());
         rights.setNotice("需提前"+rights.getAdvanceDay()+"天报名");
         rightsService.addOrUpdateRights(rights);
-
-        return "redirect:/business/rights/list";
+        if(!(StringUtils.isNotBlank(page))){
+        	page = "1";
+        }
+        return "redirect:/business/rights/list?page="+page;
     }
 
     /**
@@ -124,12 +126,13 @@ public class RightsController extends BaseController{
      * @param id
      * @return
      */
-    @RequestMapping(value="/detail/{id}", method = RequestMethod.GET)
-    public ModelAndView detail(@PathVariable(value = "id") Integer id){
+    @RequestMapping(value="/detail/{id}/{pageNum}", method = RequestMethod.GET)
+    public ModelAndView detail(@PathVariable(value = "id") Integer id, @PathVariable(value = "pageNum")String page){
         ModelAndView mav = new ModelAndView("business/rights/add");
         mav.addObject("right", rightsService.getRights(id));
         mav.addObject("customerLevel", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL)));
         mav.addObject("rightsCategory", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.RIGHTS_CATEGORY)));
+        mav.addObject("page",page);
         return mav;
     }
 

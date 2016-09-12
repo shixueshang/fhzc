@@ -111,7 +111,7 @@
                                         </td>
                                         <td>${right.focusNum}</td>
                                         <td>${right.orderNum}</td>
-                                        <td><a href="<%=contextPath%>/business/rights/detail/${right.id}" class="btn mini purple"><i class="icon-edit"></i> 编辑</a>
+                                        <td><a href="<%=contextPath%>/business/rights/detail/${right.id}/${page.pageNum}" class="btn mini purple"><i class="icon-edit"></i> 编辑</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -127,8 +127,11 @@
         	
         	
             $('#example').DataTable({
+            	"bPaginate": false,
+            	"bLengthChange": false,
             	"bAutoWidth" : false,
             	"bFilter": true, //过滤功能
+            	 "bInfo" : false,
                 "oLanguage": {
                         "sProcessing":   "处理中...",
                         "sLengthMenu":   "_MENU_ 记录/页",
