@@ -176,7 +176,7 @@ public class AssetsController extends BaseController {
             holdings.setAmount(new BigDecimal(assetsHistory.getAmount()));
             holdings.setInvestTerm(assetsHistory.getPeriod());
             holdings.setBuyDay(product.getBuyDay());
-            holdings.setDividendDay(product.getDividendDay());
+            holdings.setDividendDay(product.getDividendDay() == null ? "" : product.getDividendDay());
             holdings.setPaymentDay(assetsHistory.getPaymentDate());
             holdings.setBank(assetsHistory.getBank());
             holdings.setBankAccount(assetsHistory.getBankAccount());

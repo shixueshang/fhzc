@@ -755,7 +755,7 @@ BEGIN
 	Declare _level int; 	-- 部门级别
 	
 	
-	select department_id,id into _department_id,_planner_id from planner where work_num =p_work_num;
+	select department_id,uid into _department_id,_planner_id from planner where work_num =p_work_num;
 	select parent_dept_id,`level` into _parent_department_id,_level from department where department_id=_department_id;
 
 	-- 本身属于一级部门
@@ -801,8 +801,8 @@ BEGIN
 	End if;
 	
 	-- delete history data of current month
-	#delete from planner_achivements_daily where ctime<DATE_SUB(now(), INTERVAL 1 HOUR) and YEAR(transfer_date) =YEAR(p_transfer_date) and  MONTH(transfer_date)=  MONTH(p_transfer_date);
-	delete from planner_achivements_daily where  YEAR(transfer_date) =YEAR(p_transfer_date) and  MONTH(transfer_date)=  MONTH(p_transfer_date);
+	delete from planner_achivements_daily where ctime < DATE_SUB(now(), INTERVAL 1 MINUTE) and YEAR(transfer_date) =YEAR(p_transfer_date) and  MONTH(transfer_date)=  MONTH(p_transfer_date);
+	#delete from planner_achivements_daily where  YEAR(transfer_date) =YEAR(p_transfer_date) and  MONTH(transfer_date)=  MONTH(p_transfer_date);
 	
 	insert into `planner_achivements_daily` (`transfer_date`, `area_id`, `planner_uid`, 
        `product_id`, `annualised`, `contract_amount`,`period`, `product_type`, `memo`, `ctime`, `root_dept`, `area`,`company`, `team`, `department_id`) 
@@ -835,7 +835,7 @@ BEGIN
 	Declare _level int; 	-- 部门级别
 	
 	
-	select department_id,id into _department_id,_planner_id from planner where work_num =p_planner_wornum;
+	select department_id,uid into _department_id,_planner_id from planner where work_num =p_planner_wornum;
 	select id into _mannager_id from planner where work_num =p_mannager_wornum;
 	select parent_dept_id,`level` into _parent_department_id,_level from department where department_id=_department_id;
 
@@ -881,7 +881,7 @@ BEGIN
 		set _root_dept_id = _parent_department_id;
 	End if;
 	
-	delete from planner_achivements_monthly where  YEAR(transfer_date) =YEAR(p_transfer_date) and  MONTH(transfer_date)=  MONTH(p_transfer_date);
+	delete from planner_achivements_monthly where  ctime < DATE_SUB(now(), INTERVAL 1 MINUTE) and YEAR(transfer_date) =YEAR(p_transfer_date) and  MONTH(transfer_date)=  MONTH(p_transfer_date);
 	
 	insert into `planner_achivements_monthly` (`planner_uid`, `planner_percent`, `manager_uid`,`mannager_percent`, 
 	   `product_id`, `product_type`,`customer_uid`, `customer_name`,`customer_buy`, `annualised`, `product_cycle`, `transfer_date`, `memo`, `ctime`, `area_id`, `root_dept`, `area`, `company`, `team`, `department_id`) 
