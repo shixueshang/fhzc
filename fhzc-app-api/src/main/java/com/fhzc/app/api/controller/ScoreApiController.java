@@ -72,10 +72,10 @@ public class ScoreApiController extends BaseController {
         }
         switch (type){
             case "all":
-                scoreHistory = scoreService.getAllScoreList(uid,scoreStart,scoreEnd);
+                scoreHistory = scoreService.getAvailableScore(uid,scoreStart,scoreEnd);
                 break;
             case "available":
-                scoreHistory = scoreService.getAvailableScore(uid,scoreStart,scoreEnd);
+            	scoreHistory = scoreService.getAllScoreList(uid,scoreStart,scoreEnd);
                 break;
             case "frozen":
                 scoreHistory = scoreService.getFrozenScore(uid,scoreStart,scoreEnd);
