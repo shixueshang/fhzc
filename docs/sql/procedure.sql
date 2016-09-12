@@ -801,7 +801,8 @@ BEGIN
 	End if;
 	
 	-- delete history data of current month
-	delete from planner_achivements_daily where ctime<DATE_SUB(now(), INTERVAL 1 HOUR) and YEAR(transfer_date) =YEAR(p_transfer_date) and  MONTH(transfer_date)=  MONTH(p_transfer_date);
+	#delete from planner_achivements_daily where ctime<DATE_SUB(now(), INTERVAL 1 HOUR) and YEAR(transfer_date) =YEAR(p_transfer_date) and  MONTH(transfer_date)=  MONTH(p_transfer_date);
+	delete from planner_achivements_daily where  YEAR(transfer_date) =YEAR(p_transfer_date) and  MONTH(transfer_date)=  MONTH(p_transfer_date);
 	
 	insert into `planner_achivements_daily` (`transfer_date`, `area_id`, `planner_uid`, 
        `product_id`, `annualised`, `contract_amount`,`period`, `product_type`, `memo`, `ctime`, `root_dept`, `area`,`company`, `team`, `department_id`) 
@@ -879,7 +880,9 @@ BEGIN
 		select parent_dept_id,`level` into _parent_department_id,_level from department where department_id=_area;
 		set _root_dept_id = _parent_department_id;
 	End if;
-
+	
+	delete from planner_achivements_monthly where  YEAR(transfer_date) =YEAR(p_transfer_date) and  MONTH(transfer_date)=  MONTH(p_transfer_date);
+	
 	insert into `planner_achivements_monthly` (`planner_uid`, `planner_percent`, `manager_uid`,`mannager_percent`, 
 	   `product_id`, `product_type`,`customer_uid`, `customer_name`,`customer_buy`, `annualised`, `product_cycle`, `transfer_date`, `memo`, `ctime`, `area_id`, `root_dept`, `area`, `company`, `team`, `department_id`) 
 		select _planner_id,p_planner_percent,_mannager_id,p_mannager_percent,p.pid,p.product_type,-1,p_realname,p_customer_buy,p_annualised,p_product_cycle,p_transfer_date,p_memo,NOW(),null,_root_dept_id,_area
