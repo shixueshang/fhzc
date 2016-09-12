@@ -205,15 +205,12 @@
                         if(earningRate == null){
                             earningRate = '';
                         }
-
-                        var dividendDay = val.dividendDay;
-                        if(dividendDay == null){
-                            dividendDay = '';
+                        var paymentDay = val.paymentDay;
+                        if(paymentDay == null){
+                        	paymentDay = '';
                         }
-
-                        tBody += "<tr> <td>"+val.productName+"</td> <td>"+val.amount / 10000+"</td> <td>"+getFormatDate(new Date(val.foundDay))+"</td> <td>"+dividendDay+"</td> <td>"+buyDay+"</td> " +
-                        "<td>"+getFormatDate(new Date(val.paymentDay))+"</td> <td>"+val.serial+"</td> <td>"+val.bank+"</td> <td>"+val.bankAccount+"</td> <td>"+val.lot+"</td> <td>"+val.investTerm+"</td> <td>"+earningRate+"</td></tr>";
-
+                        tBody += "<tr> <td>"+val.productName+"</td> <td>"+val.amount / 10000+"</td> <td>"+getFormatDate(new Date(val.foundDay))+"</td> <td>"+val.dividendDay+"</td> <td>"+buyDay+"</td> " +
+                        "<td>"+paymentDay+"</td> <td>"+val.serial+"</td> <td>"+val.bank+"</td> <td>"+val.bankAccount+"</td> <td>"+val.lot+"</td> <td>"+val.investTerm+"</td> <td>"+earningRate+"</td></tr>";
                     });
 
                     $("#current_holdings tbody").html(tBody);
