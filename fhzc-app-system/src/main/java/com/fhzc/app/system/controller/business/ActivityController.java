@@ -165,7 +165,7 @@ public class ActivityController extends BaseController {
     }
     
     /**
-     * 产品关注列表
+     * 活动关注列表
      * @return
      */
     @RequestMapping(value = "/focusFind", method = RequestMethod.GET)
@@ -188,7 +188,7 @@ public class ActivityController extends BaseController {
         PageableResult<Focus> presult = focusService.getFocusByType(Const.FOCUS_TYPE.ACTIVITY, aids, page, size);
         mav.addObject("page", PageHelper.getPageModel(request, presult));
         mav.addObject("focuses", getFocusVos(presult));
-        mav.addObject("url", "business/product");
+        mav.addObject("url", "business/activity");
         return mav;
     }
     
