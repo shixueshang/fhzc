@@ -64,8 +64,8 @@ public class ScoreServiceImpl implements ScoreService {
         List<ScoreHistory> scoreHistories = this.getScoreList(uid, Const.Score.ADD);
         List<ScoreHistory> result = new ArrayList<>();
         for(ScoreHistory score : scoreHistories){
-            long diff = score.getVaildTime().getTime() - System.currentTimeMillis();
-            if(diff > 0 && Const.Score.LONGDAY > (diff / (1000 * 60 * 60 * 24))){
+            long diff = score.getVaildTime().getTime() - (System.currentTimeMillis()+ Const.Score.LONGDAY * (1000 * 60 * 60 * 24));
+            if(diff <= 0 ){
                 result.add(score);
             }
         }
@@ -73,7 +73,9 @@ public class ScoreServiceImpl implements ScoreService {
         Integer willExpire = this.sumScore(result);
         //获得累计消费的积分
         Integer consume = this.getConsumeScore(uid);
-        if(Math.abs(consume) > willExpire){ //如果累计消费积分大于即将过期的，根据优先消费原则没有即将过期积分
+        Integer frozen = this.getFrozenScore(uid);
+        Integer expire = this.getExpiredScore(uid);
+        if((Math.abs(consume)+Math.abs(frozen)+Math.abs(expire)) > willExpire){ //如果累计消费积分大于即将过期的，根据优先消费原则没有即将过期积分
             return 0;
         }else{
             //按有效日期升序
@@ -83,12 +85,7 @@ public class ScoreServiceImpl implements ScoreService {
                 }
             });*/
 
-            Integer scoreCount = 0;
-           for(ScoreHistory sh : result){
-               scoreCount += sh.getScore();
-           }
-
-            willExpire = scoreCount - Math.abs(consume);
+            willExpire = willExpire - Math.abs(consume)- Math.abs(frozen) - Math.abs(expire);
         }
 
         return willExpire;

@@ -205,9 +205,12 @@
                         if(earningRate == null){
                             earningRate = '';
                         }
+                        var paymentDay = val.paymentDay;
+                        if(paymentDay == null){
+                        	paymentDay = '';
+                        }
                         tBody += "<tr> <td>"+val.productName+"</td> <td>"+val.amount / 10000+"</td> <td>"+getFormatDate(new Date(val.foundDay))+"</td> <td>"+val.dividendDay+"</td> <td>"+buyDay+"</td> " +
-                        "<td>"+getFormatDate(new Date(val.paymentDay))+"</td> <td>"+val.serial+"</td> <td>"+val.bank+"</td> <td>"+val.bankAccount+"</td> <td>"+val.lot+"</td> <td>"+val.investTerm+"</td> <td>"+earningRate+"</td></tr>";
-
+                        "<td>"+paymentDay+"</td> <td>"+val.serial+"</td> <td>"+val.bank+"</td> <td>"+val.bankAccount+"</td> <td>"+val.lot+"</td> <td>"+val.investTerm+"</td> <td>"+earningRate+"</td></tr>";
                     });
 
                     $("#current_holdings tbody").html(tBody);
@@ -238,8 +241,12 @@
                         if(earningRate == null){
                             earningRate = '';
                         }
+                        var paymentDay = val.paymentDay;
+                        if(paymentDay == null){
+                        	paymentDay = '';
+                        }
                         tBody += "<tr> <td>"+val.productName+"</td> <td>"+val.amount / 10000+"</td> <td>"+getFormatDate(new Date(val.foundDay))+"</td> <td>"+val.dividendDay+"</td> <td>"+buyDay+"</td> " +
-                        "<td>"+getFormatDate(new Date(val.paymentDay))+"</td> <td>"+val.payment+"</td> <td>"+val.bank+"</td> <td>"+val.bankAccount+"</td> <td>"+val.lot+"</td> <td>"+val.investTerm+"</td> <td>"+earningRate+"</td></tr>";
+                        "<td>"+paymentDay+"</td> <td>"+val.payment+"</td> <td>"+val.bank+"</td> <td>"+val.bankAccount+"</td> <td>"+val.lot+"</td> <td>"+val.investTerm+"</td> <td>"+earningRate+"</td></tr>";
 
                     });
 

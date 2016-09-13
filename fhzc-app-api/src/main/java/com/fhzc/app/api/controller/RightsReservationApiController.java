@@ -93,7 +93,7 @@ public class RightsReservationApiController extends BaseController {
         if (LONGHOUR < (diff / (1000 * 60 * 60))) {
             rightsReservation.setStatus(Const.RIGHTS_STATUS.ORDER_CANCEL);
             //取消后恢复积分冻结状态,即删除冻结记录
-            scoreService.delete(uid, id, Const.FROM_TYPE.RIGHTS);
+            scoreService.delete(uid, rightsReservation.getRightsId(), Const.FROM_TYPE.RIGHTS);
         } else {
             return new ApiJsonResult(APIConstants.API_JSON_RESULT.FAILED, LESS_THEN_LONGHOUR_MESSAGE);
         }

@@ -38,7 +38,7 @@ public class ScoreApiController extends BaseController {
         map.put("available", scoreService.getAvailableScore(user.getUid()));
         map.put("frozen", scoreService.getFrozenScore(user.getUid()));
         map.put("expired", scoreService.getExpiredScore(user.getUid()));
-
+        map.put("willExpired", scoreService.getWillExpiredScore(user.getUid()));
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, map);
     }
 
@@ -59,9 +59,11 @@ public class ScoreApiController extends BaseController {
         switch (type){
             case "all":
                 scoreHistory = scoreService.getAllScoreList(uid, start, end);
+                scoreHistory = scoreService.getAvailableScore(uid,scoreStart,scoreEnd);
                 break;
             case "available":
                 scoreHistory = scoreService.getAvailableScore(uid, start, end);
+            	scoreHistory = scoreService.getAllScoreList(uid,scoreStart,scoreEnd);
                 break;
             case "frozen":
                 scoreHistory = scoreService.getFrozenScore(uid,start,end);
