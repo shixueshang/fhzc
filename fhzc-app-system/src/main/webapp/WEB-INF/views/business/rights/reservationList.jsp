@@ -197,7 +197,7 @@ $(document).ready(function () {
 <script type="text/javascript" charset="utf-8">
         	
         	
-            $('#example').DataTable({
+            /*$('#example').DataTable({
             	"aoColumnDefs": [ { "bSortable": false, "aTargets": [2,3,4,5,6,7,8 ]}] ,
             	"bAutoWidth" : false,
             	"bFilter": false, //过滤功能
@@ -219,7 +219,7 @@ $(document).ready(function () {
                         }
                     }
                 
-            });
+            });*/
             
 
 </script>  

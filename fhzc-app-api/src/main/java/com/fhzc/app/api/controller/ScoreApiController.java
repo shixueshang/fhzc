@@ -8,12 +8,9 @@ import com.fhzc.app.dao.mybatis.model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -54,34 +51,23 @@ public class ScoreApiController extends BaseController {
      */
     @RequestMapping(value = "/api/personal/score/detail",method = RequestMethod.GET)
     @ResponseBody
-    public ApiJsonResult personalScoreDetail(@RequestParam String type,
-                                             @RequestParam String start,
-                                             @RequestParam String end){
+    public ApiJsonResult personalScoreDetail(String type, Date start, Date end){
         User user = super.getCurrentUser();
         Integer uid = user.getUid();
         List<ScoreHistory>  scoreHistory = null;
 
-        SimpleDateFormat sbf=new SimpleDateFormat("yyyy-MM-dd");
-        Date scoreStart=null;
-        Date scoreEnd=null;
-        try {
-            scoreStart=sbf.parse(start);
-            scoreEnd=sbf.parse(end);
-        } catch (ParseException e) {
-
-        }
         switch (type){
             case "all":
-                scoreHistory = scoreService.getAllScoreList(uid,scoreStart,scoreEnd);
+                scoreHistory = scoreService.getAllScoreList(uid, start, end);
                 break;
             case "available":
-                scoreHistory = scoreService.getAvailableScore(uid,scoreStart,scoreEnd);
+                scoreHistory = scoreService.getAvailableScore(uid, start, end);
                 break;
             case "frozen":
-                scoreHistory = scoreService.getFrozenScore(uid,scoreStart,scoreEnd);
+                scoreHistory = scoreService.getFrozenScore(uid,start,end);
                 break;
             case "will":
-                scoreHistory = scoreService.getWillExpiredScore(uid,scoreStart,scoreEnd);
+                scoreHistory = scoreService.getWillExpiredScore(uid, start, end);
                 break;
             default:
                 break;

@@ -39,7 +39,7 @@ public class ReportServiceImpl implements ReportService {
         criteria.andIsDisplayEqualTo(Const.YES_OR_NO.YES);
         criteria.andIsRecommendEqualTo(Const.YES_OR_NO.YES);
 
-        return reportMapper.selectByExample(example);
+        return reportMapper.selectByExampleWithBLOBs(example);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.fhzc.app.api.service.impl;
 
 import com.fhzc.app.api.service.ScoreService;
+import com.fhzc.app.api.tools.DateUtil;
 import com.fhzc.app.dao.mybatis.inter.ScoreHistoryMapper;
 import com.fhzc.app.dao.mybatis.model.ScoreHistory;
 import com.fhzc.app.dao.mybatis.model.ScoreHistoryExample;
@@ -155,7 +156,7 @@ public class ScoreServiceImpl implements ScoreService{
         ScoreHistoryExample.Criteria criteria = example.createCriteria();
 
         if(start != null && end != null){
-            criteria.andCtimeBetween(start, end);
+            criteria.andCtimeBetween(DateUtil.getStartTimeOfDate(start), DateUtil.getEndTimeOfDate(end));
         }
 
         criteria.andUidEqualTo(uid);
