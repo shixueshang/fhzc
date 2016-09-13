@@ -224,6 +224,6 @@ public class CustomerDocumentController extends BaseController {
         }else{
             termFactor = term / 12 ;
         }
-        return new BigDecimal(amount).divide(new BigDecimal(500)).multiply(product.getScoreFactor().divide(new BigDecimal(100))).multiply(new BigDecimal(termFactor)).setScale(0, RoundingMode.HALF_EVEN).intValue();
+        return new BigDecimal(amount).divide(new BigDecimal(500)).multiply(product.getScoreFactor()).multiply(new BigDecimal(termFactor)).setScale(0, RoundingMode.HALF_EVEN).intValue();
     }
 }

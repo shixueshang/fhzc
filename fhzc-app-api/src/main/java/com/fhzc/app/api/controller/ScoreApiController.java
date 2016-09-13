@@ -41,7 +41,7 @@ public class ScoreApiController extends BaseController {
         map.put("available", scoreService.getAvailableScore(user.getUid()));
         map.put("frozen", scoreService.getFrozenScore(user.getUid()));
         map.put("expired", scoreService.getExpiredScore(user.getUid()));
-
+        map.put("willExpired", scoreService.getWillExpiredScore(user.getUid()));
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, map);
     }
 
