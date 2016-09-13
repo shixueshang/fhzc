@@ -15,14 +15,15 @@ import java.util.Map;
  */
 public interface PlannerAchivementsMonthlyService {
 
-	
-	   /**
-     * 理财师业绩日报导入
+
+    /**
+     * 业绩月报导入
      * @param multipartFile
      * @return
      * @throws Exception
      */
     Map<String, Object> importDailyExcelFile(MultipartFile multipartFile) throws Exception;
+
 
     /**
      * 查询业绩日报列表
