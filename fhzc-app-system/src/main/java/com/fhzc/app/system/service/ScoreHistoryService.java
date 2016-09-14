@@ -48,4 +48,11 @@ public interface ScoreHistoryService {
      * @return
      */
     List<ScoreHistory> findScoreByProduct(Integer userId, Integer productId);
+    
+    /**
+     * 通过权益预约id获取对应的积分记录
+     * @param reservationId
+     * @return
+     */
+    ScoreHistory getSoreHisoryByRerId(Integer reservationId);
 }

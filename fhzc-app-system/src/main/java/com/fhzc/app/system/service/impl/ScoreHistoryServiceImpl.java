@@ -403,4 +403,16 @@ public class ScoreHistoryServiceImpl implements ScoreHistoryService {
         criteria.andEventIdEqualTo(productId);
         return scoreHistoryMapper.selectByExample(example);
     }
+
+	@Override
+	public ScoreHistory getSoreHisoryByRerId(Integer reservationId) {
+		ScoreHistoryExample example = new ScoreHistoryExample();
+		ScoreHistoryExample.Criteria criteria = example.createCriteria();
+		criteria.andReservationIdEqualTo(reservationId);
+		if(scoreHistoryMapper.countByExample(example) > 0){
+			return  scoreHistoryMapper.selectByExample(example).get(0);
+		}
+		
+		return null;
+	}
 }

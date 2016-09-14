@@ -28,6 +28,8 @@ public class ScoreHistory {
     private Integer isVaild;
 
     private Integer isApprove;
+
+    private Integer reservationId;
     
     private String customerName;
     
@@ -38,13 +40,13 @@ public class ScoreHistory {
     private Integer amount;
     
     private String productType;
-    
-    public String getProductType() {
-		return productType;
+
+    public String getCustomerName() {
+		return customerName;
 	}
 
-	public void setProductType(String productType) {
-		this.productType = productType;
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
 	}
 
 	public String getProductName() {
@@ -71,15 +73,15 @@ public class ScoreHistory {
 		this.amount = amount;
 	}
 
-	public String getCustomerName() {
-        return customerName;
-    }
+	public String getProductType() {
+		return productType;
+	}
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-    
-    public Integer getId() {
+	public void setProductType(String productType) {
+		this.productType = productType;
+	}
+
+	public Integer getId() {
         return id;
     }
 
@@ -181,5 +183,13 @@ public class ScoreHistory {
 
     public void setIsApprove(Integer isApprove) {
         this.isApprove = isApprove;
+    }
+
+    public Integer getReservationId() {
+        return reservationId;
+    }
+
+    public void setReservationId(Integer reservationId) {
+        this.reservationId = reservationId;
     }
 }
