@@ -116,7 +116,7 @@ public class ExcelImporter {
 			importConfig.getImportCallBack().postOperation(sqlSessionTemplate, batchArgs);
 		}
         importMap.put("successRows", success.length);
-        importMap.put("failRows", preExecution.size() - success.length);
+        importMap.put("failRows", (preExecution.size() - success.length) < 0 ? 0 : (preExecution.size() - success.length));
         return importMap;
 	}
 

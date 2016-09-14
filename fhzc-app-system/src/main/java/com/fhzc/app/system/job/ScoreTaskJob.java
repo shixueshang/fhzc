@@ -1,9 +1,11 @@
 package com.fhzc.app.system.job;
 
+import com.fhzc.app.dao.mybatis.inter.ScoreHistoryMapper;
 import com.fhzc.app.dao.mybatis.model.AssetsHistory;
 import com.fhzc.app.dao.mybatis.model.Customer;
 import com.fhzc.app.dao.mybatis.model.Product;
 import com.fhzc.app.dao.mybatis.model.ScoreHistory;
+import com.fhzc.app.dao.mybatis.model.ScoreHistoryExample;
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.commons.util.DateUtil;
 import com.fhzc.app.system.service.*;
@@ -41,6 +43,9 @@ public class ScoreTaskJob {
 
     @Resource
     private ScoreService scoreService;
+    
+    @Resource
+    private ScoreHistoryMapper scoreHistoryMapper;
 
     /**
      * 定时查询投资人档案表的信息，插入到积分表
@@ -94,7 +99,7 @@ public class ScoreTaskJob {
         }else{
             termFactor = term / 12 ;
         }
-        return new BigDecimal(amount).divide(new BigDecimal(500)).multiply(product.getScoreFactor().divide(new BigDecimal(100))).multiply(new BigDecimal(termFactor)).setScale(0, RoundingMode.HALF_EVEN).intValue();
+        return new BigDecimal(amount).divide(new BigDecimal(500)).multiply(product.getScoreFactor()).multiply(new BigDecimal(termFactor)).setScale(0, RoundingMode.HALF_EVEN).intValue();
     }
 
 
@@ -103,7 +108,7 @@ public class ScoreTaskJob {
      */
     public void run(){
         try{
-            //查询当天过期的积分列表
+            //查询当天过期的积分列表,即所有截至今天为止的add记录
             List<ScoreHistory> expires = scoreService.getExpiredScore();
             //获得存在过期积分的用户
             List<Integer> userIds = new ArrayList<Integer>();
@@ -116,14 +121,23 @@ public class ScoreTaskJob {
             for(Integer userId : userIds){
                 Integer consume = Math.abs(scoreService.getConsumeScore(userId));
                 Integer frozen = Math.abs(scoreService.getFrozenScore(userId));
-                Integer expire = 0;  //客户当天的过期积分
-                for(ScoreHistory sh : expires){
-                    if(sh.getUid() == userId){
-                        expire += sh.getScore();
+                Integer expire = Math.abs(scoreService.getExpiredScore(userId));
+                List<ScoreHistory> scoreHistories = this.getScoreList(userId, Const.Score.ADD);
+                List<ScoreHistory> result = new ArrayList<>();
+                for(ScoreHistory score : scoreHistories){
+                    long diff = score.getVaildTime().getTime() - System.currentTimeMillis();
+                    if(diff <= 0 ){
+                        result.add(score);
                     }
                 }
-                if((consume + frozen) < expire){ //有过期积分, 需要向积分记录表插入一条过期积分
-                    Integer score = consume + frozen - expire;
+                
+                Integer addScore = 0;  //客户截至当天的add积分
+                for(ScoreHistory s : result){
+                	addScore += s.getScore();
+                }
+                
+                if((consume + frozen + expire) < addScore){ //有过期积分, 需要向积分记录表插入一条过期积分
+                    Integer score = addScore-( consume + frozen + expire);
                     ScoreHistory scoreHistory = new ScoreHistory();
                     scoreHistory.setUid(userId);
                     scoreHistory.setStatus(Const.Score.EXPIRE);
@@ -137,12 +151,25 @@ public class ScoreTaskJob {
                 }
 
             }
-
+            
             logger.info("task execute success");
         }catch (Exception e){
             e.printStackTrace();
             logger.error("task execute failure", e.getMessage());
         }
+
+    }
+    
+    private List<ScoreHistory> getScoreList(Integer uid, String type){
+        ScoreHistoryExample example = new ScoreHistoryExample();
+        ScoreHistoryExample.Criteria criteria = example.createCriteria();
+
+        criteria.andUidEqualTo(uid);
+        criteria.andStatusEqualTo(type);
+        criteria.andIsVaildEqualTo(Const.SCORE_VAILD.IS_VAILD);
+        criteria.andIsApproveEqualTo(Const.Score.IS_APPROVE);
+
+        return scoreHistoryMapper.selectByExample(example);
 
     }
 }
