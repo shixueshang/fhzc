@@ -52,7 +52,7 @@ public class ReportApiController extends BaseController{
     @ResponseBody
     public  ApiJsonResult reportDetail(Integer reportId) throws Exception {
         Report report = reportService.getReport(reportId);
-        report.setUrl(TextUtils.delHTMLTag(report.getUrl()));
+        report.setUrl(report.getUrl());
         Map result = ObjUtils.objectToMap(report);
         User user = super.getCurrentUser();
         Focus focus = focusService.getFocusByCond(user.getUid(),reportId,APIConstants.FocusType.Product);

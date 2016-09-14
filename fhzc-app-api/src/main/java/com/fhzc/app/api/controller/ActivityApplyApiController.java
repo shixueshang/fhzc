@@ -54,7 +54,7 @@ public class ActivityApplyApiController extends BaseController {
         }
 
         Integer plannerId = activityApply.getPlannerId();
-        if(plannerId == 0){
+        /*if(plannerId == 0){
 
             if(activityApply.getPhone() == null || activityApply.getPhone().length() == 0){
                 throw new BadRequestException("手机号不能为空");
@@ -63,7 +63,7 @@ public class ActivityApplyApiController extends BaseController {
             if(!verifyCodeService.checkVerifyCode(activityApply.getPhone(), activityApply.getVerifyCode())){
                 throw new BadRequestException("验证码输入错误");
             }
-        }
+        }*/
         Activity activity = activityService.getActivity(activityApply.getActivityId());
         Integer status = activityService.getActivityStatus(activity);
         if (status.equals(Const.ACTIVITY_STATUS.GOING)) {

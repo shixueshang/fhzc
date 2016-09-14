@@ -126,7 +126,7 @@
 <script type="text/javascript" charset="utf-8">
         	
         	
-            $('#example').DataTable({
+           /* $('#example').DataTable({
             	"bPaginate": false,
             	"bLengthChange": false,
             	"bAutoWidth" : false,
@@ -151,7 +151,7 @@
                     }
                 
             });
-            
+            */
 
      </script>    
 

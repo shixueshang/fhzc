@@ -224,7 +224,7 @@
 			     }
 			   });
 	}
-	$('#example').DataTable({
+	/*$('#example').DataTable({
     	"bAutoWidth" : false,
     	"bFilter": true, //过滤功能
     	"bSort": false, //排序功能
@@ -246,7 +246,7 @@
                 }
             }
         
-    });
+    });*/
 
     $(function(){
 

@@ -189,7 +189,7 @@ public class UserController extends BaseController {
         if(user.getLoginRole() == Const.USER_ROLE.CUSTOMER){
             return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"非理财师用户请求");
         }
-        PlannerCustomer plannerCustomer = plannerCustomerService.getRow(id);
+        PlannerCustomer plannerCustomer = plannerCustomerService.getRecordByCustomerId(id);
         plannerCustomer.setMemo(memo);
         plannerCustomerService.updatePlannerCustomer(plannerCustomer);
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK);
@@ -241,6 +241,9 @@ public class UserController extends BaseController {
             User customerUser = userService.getUser(customer.getUid());
             Map<String, Object> result = new HashMap<String, Object>();
             result.put("name", customerUser.getRealname());
+
+            PlannerCustomer pc = plannerCustomerService.getRecordByCustomerId(customerId);
+            result.put("memo", pc.getMemo());
 
             if (customer.getCustomerType().equals(Const.CUSTOMER_TYPE.ORGAN_CUSTOMER)) {
                 result.put("type", Const.CUSTOMER_TYPE.ORGAN_CUSTOMER_ZH);

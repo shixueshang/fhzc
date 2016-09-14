@@ -80,12 +80,11 @@ public class RightsReservationApiController extends BaseController {
     /**
      * 取消权益兑换
      * @param id
-     * @param response
      * @return
      */
     @RequestMapping(value = "/api/rights/exchange/cancel",method = RequestMethod.POST)
     @ResponseBody
-    public ApiJsonResult rightsReservationExchange(Integer id, HttpServletResponse response) {
+    public ApiJsonResult rightsReservationExchange(Integer id) {
         Integer uid = getCurrentUser().getUid();
         RightsReservation rightsReservation = rightsReservationService.getRightsReservation(id);
 
