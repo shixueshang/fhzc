@@ -75,14 +75,33 @@ public class CustomerController extends BaseController {
     @SystemControllerLog(description = "查看个人客户列表")
     public ModelAndView findSingleCustomers(String name, String mobile){
         ModelAndView mav = new ModelAndView("personal/customer/singleCustomerList");
-        PageableResult<User> pageableResult = userService.findPageUsers(name.trim(), mobile.trim(), page, size);
+        //PageableResult<User> pageableResult = userService.findPageUsers(name.trim(), mobile.trim(), page, size);
         List<Customer> customerList = new ArrayList<Customer>();
         List<Map<String, Object>> scores = new ArrayList<Map<String, Object>>();
+        List<User> users = null;
 
         Admin admin = super.getCurrentUser();
         List<Integer> departments = departmentService.findAllChildrenIds(admin.getOrgan());
 
-        for(User user : pageableResult.getItems()){
+        PageableResult<Integer> customerIds = customerService.findPageCustomersByDepartments(departments, page, size);
+        if (customerIds != null && customerIds.getItems() != null){
+            users = new ArrayList<>(customerIds.getItems().size());
+
+            for (Integer customerId : customerIds.getItems()){
+                Customer customer = customerService.getCustomer(customerId);
+                customerList.add(customer);
+
+                Map<String, Object> scoreMap = new HashMap<String, Object>();
+                scoreMap.put("customerId", customer.getCustomerId());
+                scoreMap.put("availableScore", scoreService.getAvailableScore(customer.getUid()));
+                scoreMap.put("frozenScore", scoreService.getFrozenScore(customer.getUid()));
+                scores.add(scoreMap);
+
+                users.add(userService.getUser(customer.getUid()));
+            }
+        }
+
+        /*for(User user : pageableResult.getItems()){
         	if((StringUtils.isNotBlank(mobile)) && (user.getLoginRole().equals(Const.USER_ROLE.PLANNER))){
         		return mav;
         	}else{
@@ -107,11 +126,11 @@ public class CustomerController extends BaseController {
                 }
         	}
             
-        }
+        }*/
 
-        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
+        mav.addObject("page", PageHelper.getPageModel(request, customerIds));
         mav.addObject("customers", customerList);
-        mav.addObject("users", pageableResult.getItems());
+        mav.addObject("users", users);
         mav.addObject("customerLevel", dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL));
         mav.addObject("passports", dictionaryService.findDicByType(Const.DIC_CAT.PASSPORT));
         mav.addObject("scores", scores);

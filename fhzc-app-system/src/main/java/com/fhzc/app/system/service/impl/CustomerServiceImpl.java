@@ -184,4 +184,11 @@ public class CustomerServiceImpl implements CustomerService {
     public void updatePlannerCustomer(PlannerCustomer pc) {
        plannerCustomerMapper.updateByPrimaryKey(pc);
     }
+
+    @Override
+    public PageableResult<Integer> findPageCustomersByDepartments(List<Integer> departments, int page, int size) {
+        RowBounds rowBounds = new RowBounds((page - 1) * size, size);
+        List<Integer> list = customerMapper.selectDepartmentsCusomers(departments, rowBounds);
+        return new PageableResult<Integer>(page, size, customerMapper.countByDepartments(departments), list);
+    }
 }

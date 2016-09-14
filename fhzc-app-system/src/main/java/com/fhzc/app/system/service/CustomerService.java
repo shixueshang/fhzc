@@ -100,4 +100,12 @@ public interface CustomerService {
      * @return
      */
     void updatePlannerCustomer(PlannerCustomer pc);
+
+    /**
+     * 根据部门id列表查询对应的客户列表
+     * @param page
+     * @param size
+     * @return customerIds
+     */
+    PageableResult<Integer> findPageCustomersByDepartments(List<Integer> departments,int page, int size);
 }

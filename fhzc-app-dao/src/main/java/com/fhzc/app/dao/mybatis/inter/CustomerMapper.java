@@ -30,4 +30,7 @@ public interface CustomerMapper {
     int updateByPrimaryKeySelective(Customer record);
 
     int updateByPrimaryKey(Customer record);
+
+    List<Integer> selectDepartmentsCusomers(List<Integer> departments, RowBounds rowBounds);
+    int countByDepartments(List<Integer> departments);
 }

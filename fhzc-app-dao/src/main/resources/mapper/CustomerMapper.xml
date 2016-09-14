@@ -93,6 +93,16 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectDepartmentsCusomers" resultType="java.lang.Integer" parameterType="java.util.List">
+    select distinct c.customer_Id from planner_customer c, planner p where p.department_id in <foreach collection="list" item="listItem" open="(" close=")" separator="," >
+    #{listItem}
+  </foreach> and c.planner_id = p.id
+  </select>
+  <select id="countByDepartments" resultType="java.lang.Integer" parameterType="java.util.List">
+    select count(*) from (select distinct c.customer_Id from planner_customer c, planner p where p.department_id in <foreach collection="list" item="listItem" open="(" close=")" separator="," >
+    #{listItem}
+  </foreach> and c.planner_id = p.id) r
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
