@@ -56,8 +56,11 @@ public class PlannerCustomerServiceImpl implements PlannerCustomerService {
     }
 
     @Override
-    public PlannerCustomer getRow(Integer id){
-       return plannerCustomerMapper.selectByPrimaryKey(id);
+    public PlannerCustomer getRecordByCustomerId(Integer id){
+        PlannerCustomerExample example = new PlannerCustomerExample();
+        PlannerCustomerExample.Criteria criteria = example.createCriteria();
+        criteria.andCustomerIdEqualTo(id);
+        return plannerCustomerMapper.selectByExample(example).get(0);
     }
 
 }

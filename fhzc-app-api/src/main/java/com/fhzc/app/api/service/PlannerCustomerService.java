@@ -14,5 +14,5 @@ public interface PlannerCustomerService {
 
     int updatePlannerCustomer(PlannerCustomer plannerCustomer);
 
-    PlannerCustomer getRow(Integer id);
+    PlannerCustomer getRecordByCustomerId(Integer id);
 }
