@@ -22,9 +22,11 @@ public class Report {
     private Integer isRecommend;
 
     private String summary;
+
+    private String desc;
     
     private Integer focusNum;
-    
+
     public Integer getFocusNum() {
         return focusNum;
     }
@@ -32,7 +34,7 @@ public class Report {
     public void setFocusNum(Integer focusNum) {
         this.focusNum = focusNum;
     }
-
+    
     public Integer getId() {
         return id;
     }
@@ -111,5 +113,13 @@ public class Report {
 
     public void setSummary(String summary) {
         this.summary = summary == null ? null : summary.trim();
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc == null ? null : desc.trim();
     }
 }

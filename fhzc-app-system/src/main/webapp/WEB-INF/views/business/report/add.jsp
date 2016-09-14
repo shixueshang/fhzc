@@ -131,12 +131,20 @@
                                               </div>
                                            </div>
                                             <div class="control-group">
-                                                <label class="control-label">详情链接</label>
+                                                <label class="control-label">报告正文</label>
                                                 <div class="controls">
-                                                    <textarea name="url" id="detail_url" class="span12 ckeditor m-wrap" rows="3">${report.url}</textarea>
+                                                    <textarea name="desc"  class="span12 ckeditor m-wrap" rows="3">${report.desc}</textarea>
                                                 </div>
                                             </div>
 
+      										<div class="control-group">
+                                                <label class="control-label">详情链接</label>
+                                                <div class="controls">
+                                                    <input type="text" name="url" data-required="1" placeholder="" class="m-wrap large" value="${report.url}">
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
+                                            
                                             <div class="control-group">
                                                 <label class="control-label">是否显示</label>
                                                 <div class="controls">
@@ -239,7 +247,7 @@
                     required: true
                 },
                 url: {
-                    required: true
+                    url: true
                 }
             },
 
