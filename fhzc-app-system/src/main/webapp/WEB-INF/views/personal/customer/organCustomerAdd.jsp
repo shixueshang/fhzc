@@ -179,7 +179,13 @@
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
-
+											<div class="control-group">
+                                                <label class="control-label">风险等级</label>
+                                                <div class="controls">
+                                                    <select name="risk" id="risk" class="large m-wrap"  tabindex="1">
+                                                    </select>
+                                                </div>
+                                            </div>
                                             <div class="control-group">
                                                 <label class="control-label">理财师工号</label>
                                                 <div class="controls">
@@ -358,6 +364,16 @@
             }
         });
 
+        var level = '${customer.risk}';
+        var riskLevels = '${riskLevels}';
+        var levelJson= $.parseJSON(riskLevels);
+        $.each(levelJson, function(i,val){
+            $("#risk").append("<option value='"+val.value+"'>"+val.key+"</option>");
+            if(level == val.value){
+                $("#risk").val(level);
+            }
+        });
+        
         var department = '${customer.departmentId}';
         var treeNodes = '${departments}';
         treeNodes = $.parseJSON(treeNodes);

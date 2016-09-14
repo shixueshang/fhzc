@@ -61,14 +61,14 @@
                             <table class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <td>活动id</td>
-                                    <td style="width:18%">活动名</td>
-                                    <td>活动类型</td>
-                                    <td>活动状态</td>
+                                    <td style="width:6%;">活动id</td>
+                                    <td style="width:16%;">活动名</td>
+                                    <td style="width:9%;">活动类型</td>
+                                    <td style="width:6%;">活动状态</td>
                                     <td>活动地点</td>
                                     <td>活动开始时间</td>
                                     <td>活动结束时间</td>
-                                    <td style="width:18%">举办公司</td>
+                                    <td style="width:10%">举办公司</td>
                                     <td>是否显示</td>
                                     <td>是否推荐</td>
                                     <td>关注人数</td>

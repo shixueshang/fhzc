@@ -146,6 +146,7 @@ public class CustomerController extends BaseController {
         mav.addObject("user", JSON.toJSON(userService.getUser(customer.getUid())));
         mav.addObject("passports", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.PASSPORT)));
         mav.addObject("customerLevels", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL)));
+        mav.addObject("riskLevels", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.RISK_LEVEL)));
         mav.addObject("availableScore", JSON.toJSON(scoreService.getAvailableScore(customer.getUid())));
         mav.addObject("frozenScore", JSON.toJSON(scoreService.getFrozenScore(customer.getUid())));
 
@@ -261,6 +262,7 @@ public class CustomerController extends BaseController {
         mav.addObject("user", JSON.toJSON(userService.getUser(customer.getUid())));
         mav.addObject("passports", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.PASSPORT)));
         mav.addObject("customerLevels", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL)));
+        mav.addObject("riskLevels", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.RISK_LEVEL)));
         mav.addObject("availableScore", JSON.toJSON(scoreService.getAvailableScore(customer.getUid())));
         mav.addObject("frozenScore", JSON.toJSON(scoreService.getFrozenScore(customer.getUid())));
         mav.addObject("departments", JSON.toJSON(departmentService.getDepartmentTree()));
