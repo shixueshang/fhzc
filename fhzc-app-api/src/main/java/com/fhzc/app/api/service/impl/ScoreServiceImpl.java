@@ -125,6 +125,17 @@ public class ScoreServiceImpl implements ScoreService{
         scoreHistoryMapper.updateByPrimaryKey(history);
     }
 
+    
+    @Override
+    public void delete(Integer reservationId) {
+        ScoreHistoryExample example = new ScoreHistoryExample();
+        ScoreHistoryExample.Criteria criteria = example.createCriteria();
+        criteria.andReservationIdEqualTo(reservationId);
+        ScoreHistory history = scoreHistoryMapper.selectByExample(example).get(0);
+        history.setIsVaild(Const.SCORE_VAILD.NOT_VAILD);
+        scoreHistoryMapper.updateByPrimaryKey(history);
+    }
+    
     private Integer sumScore(List<ScoreHistory> scoreHistories){
         Integer sum = 0;
         for(ScoreHistory score : scoreHistories){

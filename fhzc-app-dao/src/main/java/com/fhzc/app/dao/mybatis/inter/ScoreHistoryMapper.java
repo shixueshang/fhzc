@@ -30,5 +30,4 @@ public interface ScoreHistoryMapper {
     int updateByPrimaryKeySelective(ScoreHistory record);
 
     int updateByPrimaryKey(ScoreHistory record);
-
 }

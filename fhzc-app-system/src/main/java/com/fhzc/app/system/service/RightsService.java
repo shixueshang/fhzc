@@ -105,4 +105,13 @@ public interface RightsService {
      * @return
      */
     PageableResult<RightsReservation> findPageRightsReservations(RightsReserQuery query, int page, int size);
+    
+    /**
+     * 获取权益预约
+     * @param customerId
+     * @param rightsId
+     * @param status
+     * @return
+     */
+    List<RightsReservation> getRightsReservations(Integer customerId, Integer rightsId, List<Integer> status);
 }

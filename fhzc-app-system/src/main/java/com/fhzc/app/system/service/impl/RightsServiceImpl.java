@@ -139,4 +139,14 @@ public class RightsServiceImpl implements RightsService {
         List<RightsReservation> list = rightsReservationMapper.selectByExampleWithRowbounds(example, rowBounds);
         return new PageableResult<RightsReservation>(page, size, rightsReservationMapper.countByExample(example), list);
     }
+
+	@Override
+	public List<RightsReservation> getRightsReservations(Integer customerId, Integer rightsId, List<Integer> status) {
+		RightsReservationExample example = new RightsReservationExample();
+		RightsReservationExample.Criteria criteria = example.createCriteria();
+		criteria.andCustomerIdEqualTo(customerId);
+		criteria.andRightsIdEqualTo(rightsId);
+		criteria.andStatusIn(status);
+		return rightsReservationMapper.selectByExample(example);
+	}
 }

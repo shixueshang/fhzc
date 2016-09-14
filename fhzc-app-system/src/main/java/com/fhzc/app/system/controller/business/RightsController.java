@@ -24,11 +24,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.annotation.Resource;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -142,10 +142,11 @@ public class RightsController extends BaseController{
      */
     @RequestMapping(value = "/reservation/pub", method = RequestMethod.GET)
     @SystemControllerLog(description = "新增权益预约")
-    public ModelAndView preReservationAdd(){
+    public ModelAndView preReservationAdd(String flag){
         ModelAndView mav = new ModelAndView("business/rights/addRightReservation");
         mav.addObject("rights", rightsService.getAllRights());
         mav.addObject("url", "business/rights");
+        mav.addObject("flag", flag);
         return mav;
     }
 
@@ -190,35 +191,73 @@ public class RightsController extends BaseController{
      */
     @RequestMapping(value = "/reservation/add", method = RequestMethod.GET)
     @SystemControllerLog(description = "权益预约")
-    public String addReservation(Integer reservationRight, Integer customerId, Integer exchangeScore, Date markDate) throws ParseException{
-        RightsReservation reservation = new RightsReservation();
-        reservation.setCtime(new Date());
-        reservation.setRightsId(reservationRight);
-        reservation.setCustomerId(customerId);
-        reservation.setScoreCost(exchangeScore);
-        reservation.setMarkDate(markDate);
-        reservation.setStatus(Const.RIGHTS_STATUS.ORDER_ING);
-        rightsService.addRightsReservation(reservation);
-
-        //添加一条冻结积分记录
-        ScoreHistory history = new ScoreHistory();
-        history.setUid(customerService.getCustomer(customerId).getUid());
-        history.setScore(exchangeScore * -1);
-        history.setFromType(Const.FROM_TYPE.RIGHTS);
-        history.setEventId(reservationRight);
-        history.setDetail("管理员帮忙预约权益");
-        history.setOperatorType("admin");
-        history.setOperatorId(super.getCurrentUser().getId());
-        history.setStatus(Const.Score.FROZEN);
-        history.setCtime(new Date());
-        history.setIsVaild(Const.SCORE_VAILD.IS_VAILD);
-        history.setIsApprove(Const.APPROVE_STATUS.APPROVED);
-        scoreService.addSCoreRecord(history);
-
-        return "redirect:/business/rights/reservations";
-    }
+//    public String addReservation(Integer reservationRight, Integer customerId, Integer exchangeScore, Date markDate) throws ParseException{
+//        RightsReservation reservation = new RightsReservation();
+//        reservation.setCtime(new Date());
+//        reservation.setRightsId(reservationRight);
+//        reservation.setCustomerId(customerId);
+//        reservation.setScoreCost(exchangeScore);
+//        reservation.setMarkDate(markDate);
+//        reservation.setStatus(Const.RIGHTS_STATUS.ORDER_ING);
+//        rightsService.addRightsReservation(reservation);
+//
+//        //添加一条冻结积分记录
+//        ScoreHistory history = new ScoreHistory();
+//        history.setUid(customerService.getCustomer(customerId).getUid());
+//        history.setScore(exchangeScore * -1);
+//        history.setFromType(Const.FROM_TYPE.RIGHTS);
+//        history.setEventId(reservationRight);
+//        history.setDetail("管理员帮忙预约权益");
+//        history.setOperatorType("admin");
+//        history.setOperatorId(super.getCurrentUser().getId());
+//        history.setStatus(Const.Score.FROZEN);
+//        history.setCtime(new Date());
+//        history.setIsVaild(Const.SCORE_VAILD.IS_VAILD);
+//        history.setIsApprove(Const.APPROVE_STATUS.APPROVED);
+//        history.setReservationId(reservationRight);
+//        scoreService.addSCoreRecord(history);
+//
+//        return "redirect:/business/rights/reservations";
+//    }
     
+    public ModelAndView addReservation(Integer reservationRight, Integer customerId, Integer exchangeScore, Date markDate){
+    	 RightsReservation reservation = new RightsReservation();
+		 List<Integer> status = new ArrayList<Integer>();
+    	 status.add(Const.RIGHTS_STATUS.ORDER_ING);
+    	 status.add(Const.RIGHTS_STATUS.ORDER_SUCCESS);
+         List<RightsReservation> temreservations = rightsService.getRightsReservations(customerId, reservationRight, status);
+         if(!(temreservations.isEmpty())){
+			RedirectView rview = new RedirectView("/business/rights/reservation/pub");
+			ModelAndView mav = new ModelAndView(rview);
+			mav.addObject("flag", "yes");
+			return mav;
+         }
+         reservation.setCtime(new Date());
+         reservation.setRightsId(reservationRight);
+         reservation.setCustomerId(customerId);
+         reservation.setScoreCost(exchangeScore);
+         reservation.setMarkDate(markDate);
+         reservation.setStatus(Const.RIGHTS_STATUS.ORDER_ING);
+         rightsService.addRightsReservation(reservation);
 
+         //添加一条冻结积分记录
+         ScoreHistory history = new ScoreHistory();
+         history.setUid(customerService.getCustomer(customerId).getUid());
+         history.setScore(exchangeScore * -1);
+         history.setFromType(Const.FROM_TYPE.RIGHTS);
+         history.setEventId(reservationRight);
+         history.setDetail("管理员帮忙预约权益");
+         history.setOperatorType("admin");
+         history.setOperatorId(super.getCurrentUser().getId());
+         history.setStatus(Const.Score.FROZEN);
+         history.setCtime(new Date());
+         history.setIsVaild(Const.SCORE_VAILD.IS_VAILD);
+         history.setIsApprove(Const.APPROVE_STATUS.APPROVED);
+         history.setReservationId(reservation.getId());
+         scoreService.addSCoreRecord(history);
+         
+         return new ModelAndView(new RedirectView("/business/rights/reservations"));
+    }
     
     /**
      * 判断是否已预约过
@@ -230,15 +269,14 @@ public class RightsController extends BaseController{
      */
     @RequestMapping(value = "/isReserved", method = RequestMethod.GET)
     @ResponseBody
-    public String isReserved(String rightsId, String customerId, String markDate) throws ParseException{
-        List<RightsReservation> temreservations = rightsService.findSuccessOrdersById(Integer.parseInt(rightsId), Const.FOCUS_STATUS.ON);
+    public String isReserved(Integer rightsId, Integer customerId, String markDate) throws ParseException{
+    	List<Integer> status = new ArrayList<Integer>();
+    	status.add(Const.RIGHTS_STATUS.ORDER_ING);
+    	status.add(Const.RIGHTS_STATUS.ORDER_SUCCESS);
+        List<RightsReservation> temreservations = rightsService.getRightsReservations(customerId, rightsId, status);
         if(!(temreservations.isEmpty())){
-        	for (RightsReservation rightsReservation : temreservations) {
-				if((rightsReservation.getCustomerId() == Integer.parseInt(customerId)) && (rightsReservation.getMarkDate().getTime() == new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(markDate).getTime())){
-					return "YES";
-				}
+				return "YES";
 			}
-        }
     	return "NO";
     }
 
@@ -329,10 +367,8 @@ public class RightsController extends BaseController{
         RightsReservation reservation = rightsService.getReservationById(reserId);
 
         if(status == Const.RIGHTS_STATUS.ORDER_CANCEL  || status == Const.RIGHTS_STATUS.ORDER_FAILED){
-            Customer customer = customerService.getCustomer(reservation.getCustomerId());
-            scoreService.delete(customer.getUid(), reservation.getRightsId(), Const.FROM_TYPE.RIGHTS);
+            scoreService.delete(reserId);
         }
-
         reservation.setStatus(status);
         rightsService.updateReservation(reservation);
         return new AjaxJson(true);

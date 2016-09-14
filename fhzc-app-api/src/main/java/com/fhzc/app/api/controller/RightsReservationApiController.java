@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 /**
@@ -70,7 +69,7 @@ public class RightsReservationApiController extends BaseController {
         scoreHistory.setCtime(new Date());
         scoreHistory.setIsVaild(Const.SCORE_VAILD.IS_VAILD);
         scoreHistory.setIsApprove(Const.APPROVE_STATUS.APPROVED);
-
+        scoreHistory.setReservationId(rightsReservation.getId());
 
         scoreService.add(scoreHistory);
 
@@ -85,7 +84,7 @@ public class RightsReservationApiController extends BaseController {
     @RequestMapping(value = "/api/rights/exchange/cancel",method = RequestMethod.POST)
     @ResponseBody
     public ApiJsonResult rightsReservationExchange(Integer id) {
-        Integer uid = getCurrentUser().getUid();
+  
         RightsReservation rightsReservation = rightsReservationService.getRightsReservation(id);
 
         //在指定预约时间24小时之内不允许取消
@@ -93,7 +92,7 @@ public class RightsReservationApiController extends BaseController {
         if (LONGHOUR < (diff / (1000 * 60 * 60))) {
             rightsReservation.setStatus(Const.RIGHTS_STATUS.ORDER_CANCEL);
             //取消后恢复积分冻结状态,即删除冻结记录
-            scoreService.delete(uid, rightsReservation.getRightsId(), Const.FROM_TYPE.RIGHTS);
+            scoreService.delete(id);
         } else {
             return new ApiJsonResult(APIConstants.API_JSON_RESULT.FAILED, LESS_THEN_LONGHOUR_MESSAGE);
         }

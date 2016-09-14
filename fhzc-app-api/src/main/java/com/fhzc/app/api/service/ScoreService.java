@@ -70,4 +70,6 @@ public interface ScoreService {
      * @return
      */
     void delete(Integer uid, Integer eventId, String fromType);
+    
+    void delete(Integer reservationId);
 }

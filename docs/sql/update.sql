@@ -28,3 +28,6 @@ alter table product alter column score_factor set default 1.00;
 alter table planner_achivements_monthly modify column customer_name varchar(200) ;
 alter table product modify column renew_deadline varchar(500) ;
 
+#2016-09-14
+alter table score_history add column reservation_id int(11) ;
+alter table report add column desc text ;

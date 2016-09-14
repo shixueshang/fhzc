@@ -162,6 +162,7 @@
                                             <div class="form-actions">
                                                 <input name="id" type="hidden" value="${right.id}" />
                                                 <button type="submit" id="submit_btn" class="btn blue"><i class="icon-ok"></i> 添加</button>
+                                                <input name="flag" id="flag" type="hidden" value="${flag}" />
                                             </div>
                                         </form>
                                         <!-- END FORM-->
@@ -188,7 +189,11 @@
 
 <script>
     $(function(){
-
+    	
+    	if($("#flag").val() == "yes"){
+    		alert("当前客户预约的该权益尚未消费");
+    	}
+    	
         $('#markDate').datetimepicker({
             timeFormat: "HH:mm",
             dateFormat: "yy-mm-dd"

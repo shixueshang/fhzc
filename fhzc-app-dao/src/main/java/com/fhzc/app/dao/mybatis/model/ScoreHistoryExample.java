@@ -951,6 +951,66 @@ public class ScoreHistoryExample {
             addCriterion("`is_approve` not between", value1, value2, "isApprove");
             return (Criteria) this;
         }
+
+        public Criteria andReservationIdIsNull() {
+            addCriterion("`reservation_id` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReservationIdIsNotNull() {
+            addCriterion("`reservation_id` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReservationIdEqualTo(Integer value) {
+            addCriterion("`reservation_id` =", value, "reservationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andReservationIdNotEqualTo(Integer value) {
+            addCriterion("`reservation_id` <>", value, "reservationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andReservationIdGreaterThan(Integer value) {
+            addCriterion("`reservation_id` >", value, "reservationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andReservationIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("`reservation_id` >=", value, "reservationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andReservationIdLessThan(Integer value) {
+            addCriterion("`reservation_id` <", value, "reservationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andReservationIdLessThanOrEqualTo(Integer value) {
+            addCriterion("`reservation_id` <=", value, "reservationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andReservationIdIn(List<Integer> values) {
+            addCriterion("`reservation_id` in", values, "reservationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andReservationIdNotIn(List<Integer> values) {
+            addCriterion("`reservation_id` not in", values, "reservationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andReservationIdBetween(Integer value1, Integer value2) {
+            addCriterion("`reservation_id` between", value1, value2, "reservationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andReservationIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("`reservation_id` not between", value1, value2, "reservationId");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
