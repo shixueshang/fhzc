@@ -108,27 +108,38 @@ $(function(){
     $("#startDate").datepicker({ dateFormat: 'yy-mm',startView: 3, minView: 3, autoclose: true });
 
         var area = '${area}';
+        var companies = '${companies}';
         var company = '${company}';
         var json= $.parseJSON(area);
         if(json.length == 1){
-            var companyJson = $.parseJSON(company);
-            $("#area").append("<option value='"+json[0].departmentId+"'>"+json[0].title+"</option>");
-            $("#subCompany").append("<option value='"+companyJson.departmentId+"'>"+companyJson.title+"</option>");
-            $.ajax({
-                type: "GET",
-                url: "<%=contextPath%>/personal/planner/achivement/getDepartment",
-                dataType: "json",
-                data: { "departmentId": companyJson.departmentId },
-                success: function(req) {
-                    $.each(req.children, function(i,val){
-                        $("#team").append("<option value='"+val.departmentId+"'>"+val.title+"</option>");
-                    });
+            if (companies != ''){
+                $("#area").append("<option value='"+json[0].departmentId+"'>"+json[0].title+"</option>");
 
-                },
-                error: function() {
-
+                var companiesJson = $.parseJSON(companies);
+                $("#subCompany").append("<option value='0'>全部</option>");
+                for (var i = 0; i < companiesJson.length; i++){
+                    $("#subCompany").append("<option value='"+companiesJson[i].departmentId+"'>"+companiesJson[i].title+"</option>");
                 }
-            });
+            } else {
+                var companyJson = $.parseJSON(company);
+                $("#area").append("<option value='"+json[0].departmentId+"'>"+json[0].title+"</option>");
+                $("#subCompany").append("<option value='"+companyJson.departmentId+"'>"+companyJson.title+"</option>");
+                $.ajax({
+                    type: "GET",
+                    url: "<%=contextPath%>/personal/planner/achivement/getDepartment",
+                    dataType: "json",
+                    data: { "departmentId": companyJson.departmentId },
+                    success: function(req) {
+                        $.each(req.children, function(i,val){
+                            $("#team").append("<option value='"+val.departmentId+"'>"+val.title+"</option>");
+                        });
+
+                    },
+                    error: function() {
+
+                    }
+                });
+            }
         }else{
             $("#area").append("<option value='0'>全部</option>");
             $.each(json, function(i,val){

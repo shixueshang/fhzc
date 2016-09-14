@@ -198,6 +198,10 @@ public class PlannerController extends BaseController {
             areas = departmentService.findChildren(Const.ROOT_DEPT_ID);
         }else if(department.getLevel() == 2){
             areas.add(departmentService.getDepartment(department.getDepartmentId()));
+            List<Department> departs = departmentService.findChildren(department.getDepartmentId());
+            if (departs != null && departs.size() > 0){
+                mav.addObject("companies", JSON.toJSON(departs));
+            }
         }else{
             areas.add(departmentService.getDepartment(department.getParentDeptId()));
             mav.addObject("company", JSON.toJSON(departmentService.getDepartment(admin.getOrgan())));
