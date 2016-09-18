@@ -182,7 +182,7 @@ public class AssetsController extends BaseController {
             holdings.setBankAccount(assetsHistory.getBankAccount());
             holdings.setEarningRate(assetsHistory.getEarningRate());
             holdings.setFoundDay(assetsHistory.getProductFoundDay());
-            holdings.setLot(assetsHistory.getLot());
+            holdings.setLot(assetsHistory.getLot() == null ? "" : assetsHistory.getLot());
             holdings.setSerial(assetsHistory.getSerial());
             result.add(holdings);
         }
@@ -199,7 +199,7 @@ public class AssetsController extends BaseController {
 
         List<CurrentHistoryHoldings> result = new ArrayList<CurrentHistoryHoldings>();
         for(AssetsHistory assetsHistory : assetsHistories){
-            if(!assetsHistory.getType().equals(Const.ASSETS_TYPE.REDEMPTION)){
+            if(assetsHistory.getType().equals(Const.ASSETS_TYPE.REDEMPTION)){
                 CurrentHistoryHoldings holdings = new CurrentHistoryHoldings();
                 Product product = productService.getProduct(assetsHistory.getProductId());
                 holdings.setProductName(product.getName());
@@ -213,8 +213,7 @@ public class AssetsController extends BaseController {
                 holdings.setBankAccount(assetsHistory.getBankAccount());
                 holdings.setEarningRate(assetsHistory.getEarningRate());
                 holdings.setFoundDay(product.getFoundDay());
-                holdings.setLot(assetsHistory.getLot());
-                // holdings.setTotalAmount();
+                holdings.setLot(assetsHistory.getLot() == null ? "" : assetsHistory.getLot());
                 result.add(holdings);
             }
         }

@@ -66,12 +66,14 @@ public class AssetsServiceImpl implements AssetsService {
         AssetsHistoryExample example = new AssetsHistoryExample();
         AssetsHistoryExample.Criteria criteria = example.createCriteria();
         criteria.andCustomerIdEqualTo(customerId);
-        criteria.andExpireDayGreaterThan(new Date());
-
-        AssetsHistoryExample.Criteria criteria1 = example.createCriteria();
-        criteria1.andCustomerIdEqualTo(customerId);
-        criteria1.andPaymentDateIsNull();
-        example.or(criteria1);
+        criteria.andTypeEqualTo(Const.ASSETS_TYPE.PURCHASE);
+        criteria.andExpireDayGreaterThanOrEqualTo(new Date());
+        criteria.andPaymentDateIsNull();
+        
+//        AssetsHistoryExample.Criteria criteria1 = example.createCriteria();
+//        criteria1.andCustomerIdEqualTo(customerId);
+//        criteria1.andPaymentDateIsNull();
+//        example.or(criteria1);
 
         return assetsHistoryMapper.selectByExample(example);
     }
@@ -81,10 +83,13 @@ public class AssetsServiceImpl implements AssetsService {
         AssetsHistoryExample example = new AssetsHistoryExample();
         AssetsHistoryExample.Criteria criteria = example.createCriteria();
         criteria.andCustomerIdEqualTo(customerId);
-        criteria.andPaymentDateLessThanOrEqualTo(new Date());
+//        criteria.andPaymentDateLessThanOrEqualTo(new Date());
 //        criteria.andExpireDayLessThanOrEqualTo(new Date());
         criteria.andTypeEqualTo(Const.ASSETS_TYPE.REDEMPTION);
 //        criteria.andPaymentDateIsNull();
+//        criteria.andDeadDateLessThan(new Date());
+//        criteria.andPaymentDateIsNotNull();
+//        criteria.andDeadDateIsNotNull();
         return assetsHistoryMapper.selectByExample(example);
     }
 
