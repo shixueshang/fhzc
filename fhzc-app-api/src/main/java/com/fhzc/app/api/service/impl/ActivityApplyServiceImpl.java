@@ -53,10 +53,25 @@ public class ActivityApplyServiceImpl implements ActivityApplyService {
         example.setOrderByClause("id desc");
         criteria.andCustomerIdEqualTo(customerId);
         criteria.andActivityIdEqualTo(activityId);
+        criteria.andTypeEqualTo(Const.APPLYTYPE.SELF);
         if(activityApplyMapper.countByExample(example) > 0){
             return activityApplyMapper.selectByExample(example).get(0);
         }else{
             return null;
         }
     }
+
+	@Override
+	public ActivityApply getActivityIdByPersonName(String phone, String personName) {
+		ActivityApplyExample example = new ActivityApplyExample();
+        ActivityApplyExample.Criteria criteria = example.createCriteria();
+        example.setOrderByClause("id desc");
+        criteria.andPhoneEqualTo(phone);
+        criteria.andPersonNameEqualTo(personName);
+        if(activityApplyMapper.countByExample(example) > 0){
+            return activityApplyMapper.selectByExample(example).get(0);
+        }else{
+            return null;
+        }
+	}
 }
