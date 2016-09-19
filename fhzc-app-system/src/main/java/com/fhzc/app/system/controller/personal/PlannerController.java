@@ -60,10 +60,8 @@ public class PlannerController extends BaseController {
         Admin admin = super.getCurrentUser();
         List<Integer> departments = departmentService.findAllChildrenIds(admin.getOrgan());
         PageableResult<Planner> pageableResult = plannerService.findPagePlanners(departments, page, size);
-//        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
-//        mav.addObject("planners", pageableResult.getItems());
-        mav.addObject("page", 0);
-        mav.addObject("planners", null);
+        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
+        mav.addObject("planners", pageableResult.getItems());
 
         //查询用户表的理财师信息
         List<Planner> planners = pageableResult.getItems();
@@ -73,12 +71,9 @@ public class PlannerController extends BaseController {
             users.add(user);
         }
 
-//        mav.addObject("users", users);
-//        mav.addObject("departments", departmentService.findDeptByParent(Const.ROOT_DEPT_ID));
-//        mav.addObject("areas", areasService.getAllAreas());
-        mav.addObject("users", null);
-        mav.addObject("departments", null);
-        mav.addObject("areas", null);
+        mav.addObject("users", users);
+        mav.addObject("departments", departmentService.findDeptByParent(Const.ROOT_DEPT_ID));
+        mav.addObject("areas", areasService.getAllAreas());
         mav.addObject("url", "personal/planner");
         return mav;
     }
