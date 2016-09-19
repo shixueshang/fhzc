@@ -71,8 +71,8 @@
                                     <td>关注人数</td>
                                     <td>预约人数</td>
                                     <td>预约金额(万元)</td>
-                                    <td>排序</td>
-                                    <td>操作</td>
+                                    <td style="width:60px">排序</td>
+                                    <td style="width:122px">操作</td>
                                 </tr>
                                 </thead>
                                 <tbody>
