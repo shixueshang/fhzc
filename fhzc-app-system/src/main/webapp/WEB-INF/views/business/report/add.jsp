@@ -101,7 +101,7 @@
                                             </div>
 
                                             <div class="control-group">
-                                              <label class="control-label">报告封面</label>
+                                              <label class="control-label">报告封面<span class="required">*</span></label>
                                               <div class="controls">
                                                  <div class="fileupload fileupload-new" data-provides="fileupload">
                                                     <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
@@ -118,8 +118,8 @@
                                                     <div>
                                                        <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
                                                        <span class="fileupload-exists">更换</span>
-                                                       <input type="file" name="coverFile" id="cover_img" class="default" /></span>
-                                                        <input type="hidden" name="cover" value="${report.cover}" class="default" />
+                                                       <input type="file" name="coverFile" id="coverFile" class="default" /></span>
+                                                        <input type="hidden" name="cover" id = "cover" value="${report.cover}" class="default" />
                                                        <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
                                                     </div>
                                                  </div>
@@ -233,6 +233,11 @@
             $.uniform.update($("input[name='isRecommend'][value='0']").attr("checked", true));
         }
 
+        var coverFile = '${report.cover}';
+        if(coverFile != null && coverFile !=''){
+        	 $('#coverFile').val(coverFile);
+        }
+        
         var form1 = $('#form_sample_1');
         var error1 = $('.alert-error', form1);
         var success1 = $('.alert-success', form1);
@@ -248,6 +253,9 @@
                 },
                 url: {
                     url: true
+                },
+                coverFile:{
+                	required: true
                 }
             },
 

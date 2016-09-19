@@ -25,7 +25,8 @@
 
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/custom_datepicker/jquery-ui-1.11.min.css" />
 <link rel="stylesheet" type="text/css" href="<%=contextPath%>/assets/custom_datepicker/jquery-ui-timepicker-addon.css" />
-
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/static/zTree/css/zTreeStyle.css">
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/static/zTree/css/demo.css">
 
 <!-- BEGIN CONTAINER -->
 <div class="page-container row-fluid">
@@ -152,13 +153,20 @@
                                             <div class="control-group">
                                                 <label class="control-label">投放分公司<span class="required">*</span></label>
                                                 <div class="controls">
-                                                    <input type="text" id="department" readonly  class="large m-wrap"/>
+                                                    <input type="text" id="department" readonly onclick="showTreeData(); return false;" class="large m-wrap"/>
                                                     <input type="hidden" name="departmentId" id="department_value" />
+                                                </div>
+                                            </div>
+                                                 
+                                            <div class="control-group">
+                                                <label class="control-label">活动主办方</label>
+                                                <div class="controls">
+                                                    <input type="text" id="sponsor" name="sponsor"  class="large m-wrap" value="${activity.sponsor}"/>
                                                 </div>
                                             </div>
 
                                             <div class="control-group">
-                                                <label class="control-label">活动封面</label>
+                                                <label class="control-label">活动封面<span class="required">*</span></label>
                                                 <div class="controls">
                                                     <div class="fileupload fileupload-new" data-provides="fileupload">
                                                         <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
@@ -175,8 +183,8 @@
                                                         <div>
                                                        <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
                                                        <span class="fileupload-exists">更换</span>
-                                                       <input type="file" name="coverFile" class="default" /></span>
-                                                       <input type="hidden" name="cover" value="${activity.cover}" />
+                                                       <input type="file" name="coverFile"  id = "coverFile" class="default" /></span>
+                                                       <input type="hidden" name="cover" id="cover" value="${activity.cover}" />
                                                             <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
                                                         </div>
                                                     </div>
@@ -262,6 +270,9 @@
                         </div>
                     </div>
                     <!-- END SAMPLE FORM PORTLET-->
+                    <div id="treeContent" class="treeContent" style="display:none; position: absolute;">
+                    <ul id="treeDemo" class="ztree" style="margin-top:0;"></ul>
+                    </div>
                 </div>
             </div>
             <!--页面操作详细内容 开始-->
@@ -276,7 +287,8 @@
 <script type="text/javascript" src="<%=contextPath%>/assets/custom_datepicker/i18n/jquery-ui-timepicker-addon-i18n.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/assets/custom_datepicker/jquery-ui-sliderAccess.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/assets/ckeditor/ckeditor.js"></script>
-
+<script type="text/javascript" src="<%=contextPath%>/static/zTree/js/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/static/zTree/js/tree.js"></script>
 
 
 
@@ -289,16 +301,23 @@
         });
 
         var activityId =  '${activity.id}';
-
+		
         if(activityId != null && activityId != ''){
             $('#activity_title').text('活动编辑');
         }
-
+		
+    
+        //var department = '${activity.departmentId}';
+       // var dept = '${department}';
+       // var deptJson= $.parseJSON(dept);
+       // $('#department').val(deptJson.title);
+       // $('#department_value').val(deptJson.departmentId);
+        
         var department = '${activity.departmentId}';
-        var dept = '${department}';
-        var deptJson= $.parseJSON(dept);
-        $('#department').val(deptJson.title);
-        $('#department_value').val(deptJson.departmentId);
+        var treeNodes = '${departments}';
+        treeNodes = $.parseJSON(treeNodes);
+        setOrganValue(department, treeNodes);
+        $.fn.zTree.init($("#treeDemo"), setting, treeNodes);
 
         var activityTypesVal = '${activity.cid}';
         var activityTypes = '${activityTypes}';
@@ -337,6 +356,11 @@
             $.uniform.update($("input[name='isRecommend'][value='0']").attr("checked", true));
         }
         
+        var coverFile = '${activity.cover}';
+        if(coverFile != null && coverFile !=''){
+        	 $('#coverFile').val(coverFile);
+        }
+        
         var form1 = $('#form_sample_1');
         var error1 = $('.alert-error', form1);
         var success1 = $('.alert-success', form1);
@@ -370,8 +394,10 @@
                 },
                 endTime:{
                 	required: true
+                },
+                coverFile:{
+                	required: true
                 }
-                
             },
           
             invalidHandler: function (event, validator) { //display error alert on form submit

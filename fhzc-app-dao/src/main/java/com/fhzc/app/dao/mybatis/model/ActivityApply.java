@@ -26,7 +26,7 @@ public class ActivityApply {
     private Integer isSure;
 
     private String personName;
-
+    
     private String verifyCode;
 
     private String activityName;
@@ -34,40 +34,40 @@ public class ActivityApply {
     private String level;
 
     private String mobile;
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public String getLevel() {
-        return level;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
-    }
-
-    public String getActivityName() {
-        return activityName;
-    }
-
-    public void setActivityName(String activityName) {
-        this.activityName = activityName;
-    }
-
+    
     public String getVerifyCode() {
-        return verifyCode;
-    }
+		return verifyCode;
+	}
 
-    public void setVerifyCode(String verifyCode) {
-        this.verifyCode = verifyCode;
-    }
+	public void setVerifyCode(String verifyCode) {
+		this.verifyCode = verifyCode;
+	}
 
-    public Integer getId() {
+	public String getActivityName() {
+		return activityName;
+	}
+
+	public void setActivityName(String activityName) {
+		this.activityName = activityName;
+	}
+
+	public String getLevel() {
+		return level;
+	}
+
+	public void setLevel(String level) {
+		this.level = level;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public Integer getId() {
         return id;
     }
 

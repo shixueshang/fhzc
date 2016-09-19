@@ -59,9 +59,19 @@ public class ActivityController extends BaseController {
         ModelAndView mav = new ModelAndView("business/activity/list");
         Admin admin = super.getCurrentUser();
         List<Integer> departments = new ArrayList<Integer>();
-        departments.add(Const.ROOT_DEPT_ID);
-        departments.add(admin.getOrgan());
-        PageableResult<Activity> pageableResult = activityService.findPageActivies(departments, page, size);
+        List<Department> dps = departmentService.findAllDepartment();
+        PageableResult<Activity> pageableResult;
+        if(admin.getOrgan() == 1){
+        	 for (Department department : dps) {
+        		 departments.add(department.getDepartmentId());
+             }
+        	 pageableResult = activityService.findPageActivies(departments, page, size);
+        }else{
+        	 departments.add(Const.ROOT_DEPT_ID);
+             departments.add(admin.getOrgan());
+             pageableResult = activityService.findPageActivies(departments, page, size);
+        }
+         
         for (Activity activity : pageableResult.getItems()) {
         	List<Focus> focuses = focusService.findFocusByType(Const.FOCUS_TYPE.ACTIVITY, activity.getId());
         	activity.setFocusNum(focuses.size() > 0 ? focuses.size() : 0);
@@ -88,6 +98,7 @@ public class ActivityController extends BaseController {
         mav.addObject("activityTypes", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.ACTIVITY_CATEGORY)));
         Admin admin = super.getCurrentUser();
         mav.addObject("department", JSON.toJSON(departmentService.getDepartment(admin.getOrgan())));
+        mav.addObject("departments", JSON.toJSON(departmentService.findDeptByParent(Const.ROOT_DEPT_ID)));
         mav.addObject("url", "business/activity");
         return mav;
     }
@@ -113,6 +124,7 @@ public class ActivityController extends BaseController {
         mav.addObject("activity", activity);
         mav.addObject("activityTypes", JSON.toJSON(dictionaryService.findDicByType(Const.DIC_CAT.ACTIVITY_CATEGORY)));
         mav.addObject("department", JSON.toJSON(departmentService.getDepartment(activity.getDepartmentId())));
+        mav.addObject("departments", JSON.toJSON(departmentService.findDeptByParent(Const.ROOT_DEPT_ID)));
         mav.addObject("url", "business/activity");
         return mav;
     }
@@ -142,8 +154,13 @@ public class ActivityController extends BaseController {
             apply.setActivityName(activityService.getActivity(apply.getActivityId()).getName());
             Customer customer = customerService.getCustomer(apply.getCustomerId());
             apply.setLevel(super.getDicName(customer.getLevelId(), Const.DIC_CAT.CUSTOMER_LEVEL));
-            apply.setPersonName(userService.getUser(customer.getUid()).getRealname());
-            apply.setMobile(userService.getUser(customer.getUid()).getMobile());
+            if(apply.getType().equals(Const.APPLYTYPE.SELF)){
+            	apply.setPersonName(userService.getUser(customer.getUid()).getRealname());
+                apply.setMobile(userService.getUser(customer.getUid()).getMobile());
+            }else{
+            	apply.setPersonName(apply.getPersonName());
+            	apply.setMobile(apply.getPhone());
+            }
             list.add(apply);
         }
         mav.addObject("page", PageHelper.getPageModel(request, pageableResult));

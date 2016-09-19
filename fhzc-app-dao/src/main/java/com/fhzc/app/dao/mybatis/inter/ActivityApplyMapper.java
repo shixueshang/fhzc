@@ -3,7 +3,6 @@ package com.fhzc.app.dao.mybatis.inter;
 import com.fhzc.app.dao.mybatis.model.ActivityApply;
 import com.fhzc.app.dao.mybatis.model.ActivityApplyExample;
 import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
@@ -31,5 +30,4 @@ public interface ActivityApplyMapper {
     int updateByPrimaryKeySelective(ActivityApply record);
 
     int updateByPrimaryKey(ActivityApply record);
-
 }

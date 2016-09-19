@@ -309,7 +309,7 @@
                                             </div>
                                             
                                             <div class="control-group">
-                                                <label class="control-label">产品封面</label>
+                                                <label class="control-label">产品封面<span class="required">*</span></label>
                                                 <div class="controls">
                                                     <div class="fileupload fileupload-new" data-provides="fileupload">
                                                         <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
@@ -326,8 +326,8 @@
                                                         <div>
                                                        <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
                                                        <span class="fileupload-exists">更换</span>
-                                                       <input type="file" name="coverFile"  class="default" accept="image/gif,image/jpeg,image/jpg,image/png,"/></span>
-                                                       <input type="hidden" name="cover" value="${product.cover}" />
+                                                       <input type="file" name="coverFile" id = "coverFile" class="default" accept="image/gif,image/jpeg,image/jpg,image/png,"/></span>
+                                                       <input type="hidden" name="cover" id = "cover" value="${product.cover}" />
                                                             <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
                                                         </div>
                                                     </div>
@@ -556,6 +556,11 @@ $(function(){
         });
     });
 
+    var coverFile = '${product.cover}';
+    if(coverFile != null && coverFile !=''){
+    	 $('#coverFile').val(coverFile);
+    }
+    
     var form1 = $('#form_sample_1');
     var error1 = $('.alert-error', form1);
     var success1 = $('.alert-success', form1);
@@ -644,6 +649,9 @@ $(function(){
             },
             custodian: {
                 required: true
+            },
+            coverFile:{
+            	required: true
             }
         },
 
