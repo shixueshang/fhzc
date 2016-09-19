@@ -229,7 +229,11 @@ public class ActivityController extends BaseController {
                 }
                 vo.setUserName(user.getRealname());
                 Activity a = activityService.getActivity(focus.getFid());
-                vo.setContentName(a.getName());
+                if(a == null){
+                	continue;
+                }else{
+                	vo.setContentName(a.getName());
+                }
                 if ("customer".equalsIgnoreCase(user.getLoginRole().trim().toLowerCase())){
                     Customer customer = customerService.getCustomerByUid(user.getUid(), null);
                     if (customer == null){
