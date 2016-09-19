@@ -325,7 +325,7 @@
             return false;
         }
 
-        if($('#csore').val() < $('#exchangeScore').val()){
+        if(parseInt($('#csore').val(),10)< parseInt($('#exchangeScore').val(),10)){
             validateRightsError("您的积分不够");
             return false;
         }
