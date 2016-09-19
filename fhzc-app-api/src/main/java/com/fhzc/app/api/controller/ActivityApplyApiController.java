@@ -44,26 +44,30 @@ public class ActivityApplyApiController extends BaseController {
      */
     @RequestMapping(value = "/api/activity/join",method = RequestMethod.POST)
     @ResponseBody
-    public ApiJsonResult activityApplyJoin(ActivityApply activityApply){
+    public ApiJsonResult activityApplyJoin(ActivityApply activityApply, String isOther){
 
         Map<String, Object> result = new HashMap<String, Object>();
-        //判断该客户是否已经报名
-        ActivityApply apply = activityApplyService.getActivityIdByCustomerId(activityApply.getCustomerId(), activityApply.getActivityId());
-        if(apply != null){
-            activityApply.setId(apply.getId());
-        }
-
+        ActivityApply apply = new ActivityApply();
         Integer plannerId = activityApply.getPlannerId();
-        /*if(plannerId == 0){
-
-            if(activityApply.getPhone() == null || activityApply.getPhone().length() == 0){
-                throw new BadRequestException("手机号不能为空");
+        //判断该客户是否已经报名,0自己报名，1他人报名
+        if(isOther.equals("0")){
+        	apply = activityApplyService.getActivityIdByCustomerId(activityApply.getCustomerId(), activityApply.getActivityId());
+        }else{
+        	apply = activityApplyService.getActivityIdByPersonName(activityApply.getPhone(), activityApply.getPersonName());
+            if(plannerId == 0){
+                if(activityApply.getPhone() == null || activityApply.getPhone().length() == 0){
+                	return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"手机号不能为空");
+                }
+                if(!verifyCodeService.checkVerifyCode(activityApply.getPhone(), activityApply.getVerifyCode())){
+                    return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST,"验证码输入错误");
+                }
             }
+        }
+        
+        if(apply != null){
+	          activityApply.setId(apply.getId());
+	    }
 
-            if(!verifyCodeService.checkVerifyCode(activityApply.getPhone(), activityApply.getVerifyCode())){
-                throw new BadRequestException("验证码输入错误");
-            }
-        }*/
         Activity activity = activityService.getActivity(activityApply.getActivityId());
         Integer status = activityService.getActivityStatus(activity);
         if (status.equals(Const.ACTIVITY_STATUS.GOING)) {
@@ -72,7 +76,13 @@ public class ActivityApplyApiController extends BaseController {
             activityApply.setCtime(new Date());
             activityApply.setPersonNum(activityApply.getPersonNum());
             Customer customer = customerService.getCustomer(activityApply.getCustomerId());
-            activityApply.setPersonName(userService.getUser(customer.getUid()).getRealname());
+            if(isOther.equals("0")){
+            	activityApply.setPersonName(userService.getUser(customer.getUid()).getRealname());
+            }else{
+            	activityApply.setPersonName(activityApply.getPersonName());
+            }
+            
+            activityApply.setPhone(activityApply.getPhone());
             activityApply.setResult(APIConstants.ActivityApply.RESULT_YES);
             activityApplyService.addOrUpdateActivityApply(activityApply);
 

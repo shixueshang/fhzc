@@ -266,6 +266,30 @@ public class LoginController extends BaseController {
         return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, verifyCode.getCodeValue());
     }
 
+    
+    /**
+     * 发送短信验证码
+     * @param mobile
+     * @return
+     */
+    @RequestMapping(value="/api/auth/smswithoutcheck",method =  RequestMethod.POST )
+    @ResponseBody
+    public ApiJsonResult sendSmsCode1(String mobile)  {
+
+        User user = getCurrentUser();
+        if(mobile == null || mobile.length() == 0){
+            return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST, "手机号不能为空");
+        }
+
+       
+
+        VerifyCode verifyCode = verifyCodeService.sendNewVerifyCode(mobile);
+
+        logger.debug("mobile=" + mobile + " verifyCode=" + verifyCode.getCodeValue());
+
+        return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, verifyCode.getCodeValue());
+    }
+    
     /**
      * 获得设备信息
      * @return

@@ -617,5 +617,20 @@ public class Const {
         public static final Integer EARLY_END = 7;
 
     }
+    
+    /**
+     * 活动报名类型
+     */
+    public static class APPLYTYPE{
+        /**
+         * 自己
+         */
+        public static final String SELF = "self";
+
+        /**
+         * 他人
+         */
+        public static final String INVITE = "invite";
+    }
 }
 
