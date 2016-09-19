@@ -7,6 +7,9 @@ import com.fhzc.app.system.commons.util.excel.ExcelImporter;
 import com.fhzc.app.system.commons.util.excel.ImportCallBack;
 import com.fhzc.app.system.commons.util.excel.ImportConfig;
 import com.fhzc.app.system.service.CustomerService;
+import com.fhzc.app.system.service.UserService;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -35,6 +38,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Resource
     private CustomerOrganMapper customerOrganMapper;
+    
+    @Resource
+    private UserService userService;
 
 
     @Override
@@ -186,9 +192,30 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public PageableResult<Integer> findPageCustomersByDepartments(List<Integer> departments, int page, int size) {
-        RowBounds rowBounds = new RowBounds((page - 1) * size, size);
+    public PageableResult<Integer> findPageCustomersByDepartments(List<Integer> departments, String name, String mobile, String type, int page, int size) {
+    	RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<Integer> list = customerMapper.selectDepartmentsCusomers(departments, rowBounds);
-        return new PageableResult<Integer>(page, size, customerMapper.countByDepartments(departments), list);
+        List<Integer> temList = new ArrayList<Integer>();
+        for (Integer cid : list) {
+        	Customer customer = customerMapper.selectByPrimaryKey(cid);
+        	User user = userService.getUser(customer.getUid());
+        	if((StringUtils.isNotBlank(name)) && (!StringUtils.isNotBlank(mobile))){
+        		if((customer.getCustomerType().equals(type)) && (user.getRealname().equals(name))){
+	        		temList.add(cid);
+	        	}
+        	}
+        	if((!StringUtils.isNotBlank(name)) && (StringUtils.isNotBlank(mobile))){
+        		if((customer.getCustomerType().equals(type)) && (user.getMobile().equals(mobile)) ){
+	        		temList.add(cid);
+	        	}
+        	}
+        	if((StringUtils.isNotBlank(name)) && (StringUtils.isNotBlank(mobile))){
+	    		if((customer.getCustomerType().equals(type)) && (user.getRealname().equals(name)) && (user.getMobile().equals(mobile)) ){
+	        		temList.add(cid);
+	        	}
+        	}
+        	
+		}
+        return new PageableResult<Integer>(page, size, customerMapper.countByDepartments(departments), temList);
     }
 }

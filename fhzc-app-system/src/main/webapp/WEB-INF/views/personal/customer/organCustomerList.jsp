@@ -143,7 +143,10 @@
                                                 </c:if>
                                             </c:forEach>
                                         </td>
-                                        <td><a href="<%=contextPath%>/personal/customer/organ/detail/${customer.customerId}" class="btn mini purple"><i class="icon-edit"></i>编辑</a>
+                                        <td>
+                                        	<!--  
+                                        	<a href="<%=contextPath%>/personal/customer/organ/detail/${customer.customerId}" class="btn mini purple"><i class="icon-edit"></i>编辑</a>
+                                        	-->
                                             <a href="<%=contextPath%>/personal/customer/organ/enjoy/list/${customer.customerId}"  class="btn mini purple" ><i class="icon-share-alt"></i>权益享用人</a>
                                         </td>
                                     </tr>

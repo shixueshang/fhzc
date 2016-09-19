@@ -75,15 +75,16 @@ public class CustomerController extends BaseController {
     @SystemControllerLog(description = "查看个人客户列表")
     public ModelAndView findSingleCustomers(String name, String mobile){
         ModelAndView mav = new ModelAndView("personal/customer/singleCustomerList");
-        //PageableResult<User> pageableResult = userService.findPageUsers(name.trim(), mobile.trim(), page, size);
         List<Customer> customerList = new ArrayList<Customer>();
         List<Map<String, Object>> scores = new ArrayList<Map<String, Object>>();
         List<User> users = null;
 
         Admin admin = super.getCurrentUser();
         List<Integer> departments = departmentService.findAllChildrenIds(admin.getOrgan());
-
-        PageableResult<Integer> customerIds = customerService.findPageCustomersByDepartments(departments, page, size);
+        if((StringUtils.isNotBlank(name)) && (StringUtils.isNotBlank(mobile))){
+        	return mav;
+        }
+        PageableResult<Integer> customerIds = customerService.findPageCustomersByDepartments(departments, name.trim(), mobile.trim(), Const.CUSTOMER_TYPE.SINGLE_CUSTOMER, page, size);
         if (customerIds != null && customerIds.getItems() != null){
             users = new ArrayList<>(customerIds.getItems().size());
 
@@ -100,33 +101,6 @@ public class CustomerController extends BaseController {
                 users.add(userService.getUser(customer.getUid()));
             }
         }
-
-        /*for(User user : pageableResult.getItems()){
-        	if((StringUtils.isNotBlank(mobile)) && (user.getLoginRole().equals(Const.USER_ROLE.PLANNER))){
-        		return mav;
-        	}else{
-        		Customer customer = customerService.getCustomerByUid(user.getUid(), Const.CUSTOMER_TYPE.SINGLE_CUSTOMER);
-                if(customer != null){
-
-                    PlannerCustomer pc = customerService.getPlannerByCustomerId(customer.getCustomerId(), null);
-                    if(pc != null){
-                      Planner planner = plannerService.getPlanner(pc.getPlannerId());
-                        if(planner.getStatus().equals(Const.PLANNER_STATUS.ON)){
-                            if(departments.contains(customer.getDepartmentId())){
-                                customerList.add(customer);
-                            }
-                        }
-                    }
-
-                    Map<String, Object> scoreMap = new HashMap<String, Object>();
-                    scoreMap.put("customerId", customer.getCustomerId());
-                    scoreMap.put("availableScore", scoreService.getAvailableScore(customer.getUid()));
-                    scoreMap.put("frozenScore", scoreService.getFrozenScore(customer.getUid()));
-                    scores.add(scoreMap);
-                }
-        	}
-            
-        }*/
 
         mav.addObject("page", PageHelper.getPageModel(request, customerIds));
         mav.addObject("customers", customerList);
@@ -186,40 +160,35 @@ public class CustomerController extends BaseController {
     @SystemControllerLog(description = "查看机构客户列表")
     public ModelAndView findOrganCustomers(String name, String mobile){
         ModelAndView mav = new ModelAndView("personal/customer/organCustomerList");
-        PageableResult<User> pageableResult = userService.findPageUsers(name.trim(), mobile.trim(), page, size);
         List<Customer> customerList = new ArrayList<Customer>();
         List<Map<String, Object>> scores = new ArrayList<Map<String, Object>>();
-
+        List<User> users = null;
+        
         Admin admin = super.getCurrentUser();
         List<Integer> departments = departmentService.findAllChildrenIds(admin.getOrgan());
-        for(User user : pageableResult.getItems()){
-        	if((StringUtils.isNotBlank(mobile)) && (user.getLoginRole().equals(Const.USER_ROLE.PLANNER))){
-        		return mav;
-        	}else{
-                Customer customer = customerService.getCustomerByUid(user.getUid(), Const.CUSTOMER_TYPE.ORGAN_CUSTOMER);
-                if(customer != null){
-                    PlannerCustomer pc = customerService.getPlannerByCustomerId(customer.getCustomerId(), null);
-                    if(pc != null){
-                        Planner planner = plannerService.getPlanner(pc.getPlannerId());
-                        if(planner.getStatus().equals(Const.PLANNER_STATUS.ON)){
-                            if(departments.contains(customer.getDepartmentId())){
-                                customerList.add(customer);
-                            }
-                        }
-                    }
-
-                    Map<String, Object> scoreMap = new HashMap<String, Object>();
-                    scoreMap.put("customerId", customer.getCustomerId());
-                    scoreMap.put("availableScore", scoreService.getAvailableScore(customer.getUid()));
-                    scoreMap.put("frozenScore", scoreService.getFrozenScore(customer.getUid()));
-                    scores.add(scoreMap);
-                }
-        	}
+        if((StringUtils.isNotBlank(name)) && (StringUtils.isNotBlank(mobile))){
+        	return mav;
         }
+        PageableResult<Integer> customerIds = customerService.findPageCustomersByDepartments(departments, name.trim(), mobile.trim(), Const.CUSTOMER_TYPE.ORGAN_CUSTOMER, page, size);
+        if (customerIds != null && customerIds.getItems() != null){
+            users = new ArrayList<>(customerIds.getItems().size());
 
-        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
+            for (Integer customerId : customerIds.getItems()){
+                Customer customer = customerService.getCustomer(customerId);
+                customerList.add(customer);
+
+                Map<String, Object> scoreMap = new HashMap<String, Object>();
+                scoreMap.put("customerId", customer.getCustomerId());
+                scoreMap.put("availableScore", scoreService.getAvailableScore(customer.getUid()));
+                scoreMap.put("frozenScore", scoreService.getFrozenScore(customer.getUid()));
+                scores.add(scoreMap);
+
+                users.add(userService.getUser(customer.getUid()));
+            }
+        }
+        mav.addObject("page", PageHelper.getPageModel(request, customerIds));
         mav.addObject("customers", customerList);
-        mav.addObject("users", pageableResult.getItems());
+        mav.addObject("users", users);
         mav.addObject("customerLevel", dictionaryService.findDicByType(Const.DIC_CAT.CUSTOMER_LEVEL));
         mav.addObject("passports", dictionaryService.findDicByType(Const.DIC_CAT.PASSPORT));
         mav.addObject("scores", scores);

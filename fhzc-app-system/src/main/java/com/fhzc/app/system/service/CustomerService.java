@@ -107,5 +107,5 @@ public interface CustomerService {
      * @param size
      * @return customerIds
      */
-    PageableResult<Integer> findPageCustomersByDepartments(List<Integer> departments,int page, int size);
+    PageableResult<Integer> findPageCustomersByDepartments(List<Integer> departments, String name, String mobile, String type, int page, int size);
 }

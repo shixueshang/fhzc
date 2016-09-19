@@ -32,5 +32,6 @@ public interface CustomerMapper {
     int updateByPrimaryKey(Customer record);
 
     List<Integer> selectDepartmentsCusomers(List<Integer> departments, RowBounds rowBounds);
+    
     int countByDepartments(List<Integer> departments);
 }
