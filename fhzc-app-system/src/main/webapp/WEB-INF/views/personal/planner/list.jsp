@@ -53,8 +53,8 @@
 			<div class="row-fluid">
                 <form  class="form-inline" action="<%=contextPath%>/personal/planner/find" method="GET">
                     <div class="form-group">
-                        <label class="control-label" style="margin-left: 20px">理财师工号</label>
-                        <input class="form-control" name="workNum" placeholder="输入理财师工号"  >
+                        <label class="control-label" style="margin-left: 20px">理财师名字</label>
+                        <input class="form-control" name="realName" placeholder="输入理财师工名字"  >
                         <button type="submit" class="btn blue"><i class="icon-search"></i> 查询</button>
                     </div>
                 </form>

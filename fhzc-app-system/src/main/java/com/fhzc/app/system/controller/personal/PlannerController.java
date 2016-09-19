@@ -60,8 +60,10 @@ public class PlannerController extends BaseController {
         Admin admin = super.getCurrentUser();
         List<Integer> departments = departmentService.findAllChildrenIds(admin.getOrgan());
         PageableResult<Planner> pageableResult = plannerService.findPagePlanners(departments, page, size);
-        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
-        mav.addObject("planners", pageableResult.getItems());
+//        mav.addObject("page", PageHelper.getPageModel(request, pageableResult));
+//        mav.addObject("planners", pageableResult.getItems());
+        mav.addObject("page", 0);
+        mav.addObject("planners", null);
 
         //查询用户表的理财师信息
         List<Planner> planners = pageableResult.getItems();
@@ -71,9 +73,12 @@ public class PlannerController extends BaseController {
             users.add(user);
         }
 
-        mav.addObject("users", users);
-        mav.addObject("departments", departmentService.findDeptByParent(Const.ROOT_DEPT_ID));
-        mav.addObject("areas", areasService.getAllAreas());
+//        mav.addObject("users", users);
+//        mav.addObject("departments", departmentService.findDeptByParent(Const.ROOT_DEPT_ID));
+//        mav.addObject("areas", areasService.getAllAreas());
+        mav.addObject("users", null);
+        mav.addObject("departments", null);
+        mav.addObject("areas", null);
         mav.addObject("url", "personal/planner");
         return mav;
     }
@@ -85,7 +90,7 @@ public class PlannerController extends BaseController {
      */
     @RequestMapping(value = "/find", method = RequestMethod.GET)
     @SystemControllerLog(description = "查看理财师列表")
-    public ModelAndView findSingleCustomers(String workNum){
+    public ModelAndView findSingleCustomers(String realName){
         ModelAndView mav = new ModelAndView("personal/planner/list");
         Admin admin = super.getCurrentUser();
         List<Integer> departments = departmentService.findAllChildrenIds(admin.getOrgan());
@@ -99,19 +104,25 @@ public class PlannerController extends BaseController {
 	    if(planners.isEmpty()){
 	    	 return mav;
 	     }else{
-	    	  for (Planner planner : planners) {
-	    		  if(planner.getWorkNum().equals(workNum.trim())){
-	    			  User user = userService.getUser(planner.getUid());
-	    			  temPlanners.add(planner);
-	    			  users.add(user);
-	    		  }
-	    	  }
-	    	  mav.addObject("planners", temPlanners);
-			  mav.addObject("users", users);
-		      mav.addObject("departments", departmentService.findDeptByParent(Const.ROOT_DEPT_ID));
-		      mav.addObject("areas", areasService.getAllAreas());
-		      mav.addObject("url", "personal/planner");
-		      return mav;
+	    	 if(realName.isEmpty()){
+	    		 return mav;
+	    	 }else{
+	    		 for (Planner planner : planners) {
+	    			 //if(planner.getWorkNum().equals(workNum.trim())){
+	    			 User user = userService.getUser(planner.getUid());
+	    			 if(user.getRealname().contains(realName.trim())){
+	    				 temPlanners.add(planner);
+	    				 users.add(user);
+	    			 }
+	    			 //}
+	    		 }
+	    		 mav.addObject("planners", temPlanners);
+	    		 mav.addObject("users", users);
+	    		 mav.addObject("departments", departmentService.findDeptByParent(Const.ROOT_DEPT_ID));
+	    		 mav.addObject("areas", areasService.getAllAreas());
+	    		 mav.addObject("url", "personal/planner");
+	    		 return mav;
+	    	 }
 	     }
     }
     
