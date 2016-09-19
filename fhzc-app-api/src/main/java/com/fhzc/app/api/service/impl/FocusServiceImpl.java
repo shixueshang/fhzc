@@ -49,12 +49,12 @@ public class FocusServiceImpl implements FocusService{
     }
 
     @Override
-    public List<Focus> getFocusList(Integer customer_id){
+    public List<Focus> getFocusList(Integer userId){
         FocusExample example = new FocusExample();
         FocusExample.Criteria criteria = example.createCriteria();
         example.setOrderByClause("ctime desc");
         criteria.andStatusEqualTo(APIConstants.FocusStatus.On);
-        criteria.andUidEqualTo(customer_id);
+        criteria.andUidEqualTo(userId);
         return focusMapper.selectByExample(example);
     }
 }

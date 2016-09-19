@@ -427,7 +427,7 @@ public class PlannerController extends BaseController {
                 map.put("name", department.getTitle());
             }
             if(type.equals("planner")){
-                User user = userService.getUser(plannerService.getPlanner(achivementsMonthly.getPlannerUid()).getUid());
+                User user = userService.getUser(plannerService.getPlannerByUid(achivementsMonthly.getPlannerUid()).getUid());
                 map.put("name", user.getRealname());
             }
             result.add(map);

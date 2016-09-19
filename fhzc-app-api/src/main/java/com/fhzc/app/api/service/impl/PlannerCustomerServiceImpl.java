@@ -60,7 +60,7 @@ public class PlannerCustomerServiceImpl implements PlannerCustomerService {
         PlannerCustomerExample example = new PlannerCustomerExample();
         PlannerCustomerExample.Criteria criteria = example.createCriteria();
         criteria.andCustomerIdEqualTo(id);
-        return plannerCustomerMapper.selectByExample(example).get(0);
+        return plannerCustomerMapper.selectByExampleWithBLOBs(example).get(0);
     }
 
 }

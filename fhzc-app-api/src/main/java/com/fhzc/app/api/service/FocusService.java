@@ -14,5 +14,5 @@ public interface FocusService {
 
     Focus getFocusByCond(Integer uid, Integer fid, String ftype);
 
-    List<Focus> getFocusList(Integer customer_id);
+    List<Focus> getFocusList(Integer userId);
 }

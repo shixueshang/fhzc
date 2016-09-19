@@ -180,27 +180,33 @@ public class FocusApiController extends BaseController {
             switch (ftype){
                 case "product":
                     Product product = productService.getProduct(fid);
-                    map.put("name",product.getName());
-                    map.put("renew_deadline",product.getRenewDeadline());
-                    map.put("invest_threshold",product.getInvestThreshold());
-                    map.put("collect_start",product.getCollectStart());
-                    map.put("collect_end",product.getCollectEnd());
-                    map.put("cover",product.getCover());
-                    map.put("status",product.getStatus());
-                    map.put("incomeDistributionType", product.getIncomeDistributionType());
-                    map.put("annualYield",product.getAnnualYield());
-                    map.put("investTerm",product.getInvestTerm());
-                    map.put("foundDay",product.getFoundDay());
-                    map.put("expiryDay",product.getExpiryDay());
-                    productList.add(map);
-                    break;
+                    if(product != null){
+                        map.put("name",product.getName());
+                        map.put("renew_deadline",product.getRenewDeadline());
+                        map.put("invest_threshold",product.getInvestThreshold());
+                        map.put("collect_start",product.getCollectStart());
+                        map.put("collect_end",product.getCollectEnd());
+                        map.put("cover",product.getCover());
+                        map.put("status",product.getStatus());
+                        map.put("incomeDistributionType", product.getIncomeDistributionType());
+                        map.put("annualYield",product.getAnnualYield());
+                        map.put("investTerm",product.getInvestTerm());
+                        map.put("foundDay",product.getFoundDay());
+                        map.put("expiryDay",product.getExpiryDay());
+                        productList.add(map);
+                        break;
+                    }
+
                 case "report":
                     Report report = reportService.getReport(fid);
-                    map.put("name",report.getName());
-                    map.put("cover",report.getCover());
-                    map.put("summary",report.getSummary());
-                    reportList.add(map);
-                    break;
+                    if(report != null){
+                        map.put("name",report.getName());
+                        map.put("cover",report.getCover());
+                        map.put("summary",report.getSummary());
+                        reportList.add(map);
+                        break;
+                    }
+
                 case "activity":
                     Activity activity = activityService.getActivity(fid);
                     if(activity == null) continue;
@@ -212,19 +218,22 @@ public class FocusApiController extends BaseController {
                     break;
                 case "rights":
                     Rights rights = rightsService.getRights(fid);
-                    map.put("name",rights.getName());
-                    map.put("cover",rights.getCover());
-                    map.put("summary",rights.getSummary());
-                    map.put("spend_score",rights.getSpendScore());
-                    map.put("level",rights.getLevel());
-                    List<Dictionary> dictionary = dictionaryService.findDicByType("customer_level");
-                    for(Dictionary dic : dictionary){
-                        if(dic.getValue().equals(rights.getLevel())){
-                            map.put("level_name",dic.getKey());
+                    if(rights != null){
+                        map.put("name",rights.getName());
+                        map.put("cover",rights.getCover());
+                        map.put("summary",rights.getSummary());
+                        map.put("spend_score",rights.getSpendScore());
+                        map.put("level",rights.getLevel());
+                        List<Dictionary> dictionary = dictionaryService.findDicByType("customer_level");
+                        for(Dictionary dic : dictionary){
+                            if(dic.getValue().equals(rights.getLevel())){
+                                map.put("level_name",dic.getKey());
+                            }
                         }
+                        rightsList.add(map);
+                        break;
                     }
-                    rightsList.add(map);
-                    break;
+
             }
         }
         list.put("product",productList);
