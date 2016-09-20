@@ -115,5 +115,37 @@ public class DateUtil {
         cal.add(Calendar.DAY_OF_MONTH, num);
         return cal.getTime();
     }
+    
+    /**
+     * 获得指定日期的起始时间后几天日期
+     * @param date
+     * @return
+     */
+    public static Date getStartTimeOfNextDate(Date date,int num){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_MONTH, num);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTime();
+    }
+
+    /**
+     * 获得滴定日期的结束日期后几天日期
+     * @param date
+     * @return
+     */
+    public static Date getEndTimeOfNextDate(Date date,int num){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_MONTH, num);
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        calendar.set(Calendar.MILLISECOND, 999);
+        return calendar.getTime();
+    }
 
 }

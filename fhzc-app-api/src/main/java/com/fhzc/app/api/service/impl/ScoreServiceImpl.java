@@ -179,12 +179,15 @@ public class ScoreServiceImpl implements ScoreService{
     public List<ScoreHistory> getAllScoreList(Integer userId, Date start, Date end){
         ScoreHistoryExample example = new ScoreHistoryExample();
         ScoreHistoryExample.Criteria criteria = example.createCriteria();
+        
+        if(start != null && end != null){
+            criteria.andCtimeBetween(DateUtil.getStartTimeOfNextDate(start,1), DateUtil.getEndTimeOfNextDate(end,1));
+        }
 
         criteria.andUidEqualTo(userId);
         criteria.andIsVaildEqualTo(Const.SCORE_VAILD.IS_VAILD);
         criteria.andIsApproveEqualTo(Const.Score.IS_APPROVE);
-        criteria.andCtimeBetween(start,end);
-
+        
         return scoreHistoryMapper.selectByExample(example);
     }
 
