@@ -354,7 +354,11 @@ public class ProductController extends BaseController {
                 }
                 vo.setUserName(user.getRealname());
                 Product p = productService.getProduct(focus.getFid());
-                vo.setContentName(p.getName());
+                if(p == null){
+                	continue;
+                }else{
+                	vo.setContentName(p.getName());
+                }
                 if ("customer".equalsIgnoreCase(user.getLoginRole().trim().toLowerCase())) {
                     Customer customer = customerService.getCustomerByUid(user.getUid(), null);
                     if (customer == null) {

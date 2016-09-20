@@ -81,7 +81,7 @@
                                     <td>积分详情</td>
                                     <td>所属理财师</td>
                                     <td>所属部门</td>
-                                    <td>操作</td>
+                                    <td style="width:174px">操作</td>
                                 </tr>
                                 </thead>
                                 <tbody>

@@ -332,11 +332,12 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                
+                                                </div>
+                                                <div class="control-group" >
                                                  <label class="control-label">成立公告</label>
                                                 <div class="controls">
                                                     <div class="fileupload fileupload-new" data-provides="fileupload">
-                                                        <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                                        <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;margin-top:-20px;">
                                                             <c:choose>
                                                                 <c:when test="${product.notice == null}" >
                                                                     <img src="/static/image/no-image.png" alt=""  />
@@ -661,8 +662,8 @@ $(function(){
             App.scrollTo(error1, -200);
         },
 
-        highlight: function (element) { // hightlight error inputs
-            $(element)
+       highlight: function (element) { // hightlight error inputs
+           $(element)
                     .closest('.help-inline').removeClass('ok'); // display OK icon
             $(element)
                     .closest('.control-group').removeClass('success').addClass('error'); // set error class to the control group

@@ -70,7 +70,7 @@
                                     <td>是否显示</td>
                                     <td>是否推荐</td>
                                     <td>关注人数</td>
-                                    <td>操作</td>
+                                    <td style="width:60px">操作</td>
                                 </tr>
                                 </thead>
                                 <tbody>

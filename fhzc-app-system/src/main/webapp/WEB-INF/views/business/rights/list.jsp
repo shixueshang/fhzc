@@ -72,7 +72,7 @@
                                     <td>是否精选</td>
                                     <td>关注人数</td>
                                     <td>预约人数</td>
-                                    <td>操作</td>
+                                    <td style = "width : 60px">操作</td>
                                 </tr>
                                 </thead>
                                 <tbody>

@@ -155,7 +155,7 @@
                                     <td>购买期限</td>
                                     <td>有效时间</td>
                                     <td>审批状态</td>
-                                    <td>操作</td>
+                                    <td style="width:122px">操作</td>
                                 </tr>
                                 </thead>
                                 <tbody>

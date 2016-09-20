@@ -174,7 +174,12 @@ public class ReportController extends BaseController {
                 }
                 vo.setUserName(user.getRealname());
                 Report r = reportService.getReport(focus.getFid());
-                vo.setContentName(r.getName());
+                if(r == null){
+                	continue;
+                }else{
+                	vo.setContentName(r.getName());
+                }
+                
                 if ("customer".equalsIgnoreCase(user.getLoginRole().trim().toLowerCase())){
                     Customer customer = customerService.getCustomerByUid(user.getUid(), null);
                     if (customer == null){
