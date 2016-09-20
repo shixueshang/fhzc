@@ -76,4 +76,13 @@ public interface AssetsService {
      * @param type
      */
    void delRecommend(Integer id);
+   
+   /**
+    * 根据客户和产品获取投资者档案表导入的资产记录
+    * @param customerId
+    * @param productId
+    * @param type
+    * @return
+    */
+   List<AssetsHistory> findAssetsByProduct(Integer customerId, Integer productId, String type);
 }

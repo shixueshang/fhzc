@@ -10,6 +10,8 @@ import com.fhzc.app.dao.mybatis.page.PageableResult;
 import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.commons.util.DateUtil;
 import com.fhzc.app.system.service.AssetsService;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
@@ -134,5 +136,21 @@ public class AssetsServiceImpl implements AssetsService {
 	@Override
 	public void delRecommend(Integer id) {
 		assetsRecommendMapper.deleteByPrimaryKey(id);
+	}
+
+	@Override
+	public List<AssetsHistory> findAssetsByProduct(Integer customerId, Integer productId, String type) {
+		AssetsHistoryExample example = new AssetsHistoryExample();
+        AssetsHistoryExample.Criteria criteria = example.createCriteria();
+        if(customerId != null){
+        	criteria.andCustomerIdEqualTo(customerId);
+        }
+        if(productId != null){
+        	criteria.andProductIdEqualTo(productId);
+        }
+        if(StringUtils.isNotBlank(type)){
+        	criteria.andTypeEqualTo(type);
+        }
+		return assetsHistoryMapper.selectByExample(example);
 	}
 }
