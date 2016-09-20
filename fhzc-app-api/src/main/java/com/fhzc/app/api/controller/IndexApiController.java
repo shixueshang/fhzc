@@ -138,7 +138,7 @@ public class IndexApiController extends BaseController {
         suggest.setType(type);
         suggest.setMobile(mobile);
         suggest.setContent(content);
-        String savePath = TextUtils.getConfig(Const.CONFIG_KEY_IMAGE_SAVE_PATH, this);
+        String savePath = TextUtils.getConfig(Const.CONFIG_KEY_SYSTEM_IMAGE_SAVE_PATH, this);
         String imgs = "";
         List<String> imageList = FileUtils.saveFilesToDisk(request, savePath);
         if (imageList.size() > 0) {

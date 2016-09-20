@@ -379,23 +379,24 @@ public class PlannerController extends BaseController {
             }
         }
         if(team == 0){
-            List<Planner> planners = plannerService.findPlannerByDepartment(team);
+            List<Department> departments = departmentService.findAllChildren(subCompany);
             List<Integer> teams = new ArrayList<Integer>();
-            for(Planner planner : planners){
-                teams.add(planner.getId());
+            for(Department dept : departments){
+                teams.add(dept.getDepartmentId());
             }
             if(teams.size() > 0){
                 List<PlannerAchivementsMonthly> achivementsMonthly = plannerAchivementsMonthlyService.findAchiveMonthlyByTeam(teams, startDate);
                 result = this.buildMonthlyResult(totalAmount, achivementsMonthly, startDate, result, "team");
             }
         }else{
-            List<Department> departments = departmentService.findChildren(subCompany);
-            List<Integer> planners = new ArrayList<Integer>();
-            for(Department department : departments){
-                planners.add(department.getDepartmentId());
+            List<Integer> departments = departmentService.findAllChildrenIds(team);
+            List<Integer> puIds = new ArrayList<Integer>();
+            List<Integer> plannerIds = plannerService.findPlannerByDepartment(departments);
+            for(Integer plannerId : plannerIds){
+                puIds.add(plannerService.getPlanner(plannerId).getUid());
             }
-            if(planners.size() > 0) {
-                List<PlannerAchivementsMonthly> achivementsMonthly = plannerAchivementsMonthlyService.findAchiveMonthlyByPlanner(planners, startDate);
+            if(puIds.size() > 0) {
+                List<PlannerAchivementsMonthly> achivementsMonthly = plannerAchivementsMonthlyService.findAchiveMonthlyByPlanner(puIds, startDate);
                 result = this.buildMonthlyResult(totalAmount, achivementsMonthly, startDate, result, "planner");
             }
         }

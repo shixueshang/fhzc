@@ -507,7 +507,7 @@
 
     <select id="findAchiveMonthlyByTeam" resultMap="BaseResultMap" parameterType="Map">
         SELECT transfer_date,team, sum(annualised) as annualised FROM bank.planner_achivements_monthly where DATE_FORMAT(transfer_date,'%Y-%m') = #{month} and team in
-        <foreach item="item" index="index" collection="planners" open="(" separator="," close=")">
+        <foreach item="item" index="index" collection="team" open="(" separator="," close=")">
             #{item}
         </foreach>
         group by team;
