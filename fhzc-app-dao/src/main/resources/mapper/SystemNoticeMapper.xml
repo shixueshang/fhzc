@@ -7,6 +7,7 @@
     <result column="push_status" property="pushStatus" jdbcType="INTEGER" />
     <result column="push_channel" property="pushChannel" jdbcType="VARCHAR" />
     <result column="publish_time" property="publishTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.fhzc.app.dao.mybatis.model.SystemNotice" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
@@ -70,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    `id`, `title`, `push_status`, `push_channel`, `publish_time`
+    `id`, `title`, `push_status`, `push_channel`, `publish_time`, `status`
   </sql>
   <sql id="Blob_Column_List" >
     `content`
@@ -128,9 +129,11 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into `system_notice` (`title`, `push_status`, `push_channel`, 
-      `publish_time`, `content`)
+      `publish_time`, `status`, `content`
+      )
     values (#{title,jdbcType=VARCHAR}, #{pushStatus,jdbcType=INTEGER}, #{pushChannel,jdbcType=VARCHAR}, 
-      #{publishTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
+      #{publishTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.SystemNotice" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
@@ -150,6 +153,9 @@
       <if test="publishTime != null" >
         `publish_time`,
       </if>
+      <if test="status != null" >
+        `status`,
+      </if>
       <if test="content != null" >
         `content`,
       </if>
@@ -166,6 +172,9 @@
       </if>
       <if test="publishTime != null" >
         #{publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
       </if>
       <if test="content != null" >
         #{content,jdbcType=LONGVARCHAR},
@@ -196,6 +205,9 @@
       <if test="record.publishTime != null" >
         `publish_time` = #{record.publishTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.status != null" >
+        `status` = #{record.status,jdbcType=INTEGER},
+      </if>
       <if test="record.content != null" >
         `content` = #{record.content,jdbcType=LONGVARCHAR},
       </if>
@@ -211,6 +223,7 @@
       `push_status` = #{record.pushStatus,jdbcType=INTEGER},
       `push_channel` = #{record.pushChannel,jdbcType=VARCHAR},
       `publish_time` = #{record.publishTime,jdbcType=TIMESTAMP},
+      `status` = #{record.status,jdbcType=INTEGER},
       `content` = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -222,7 +235,8 @@
       `title` = #{record.title,jdbcType=VARCHAR},
       `push_status` = #{record.pushStatus,jdbcType=INTEGER},
       `push_channel` = #{record.pushChannel,jdbcType=VARCHAR},
-      `publish_time` = #{record.publishTime,jdbcType=TIMESTAMP}
+      `publish_time` = #{record.publishTime,jdbcType=TIMESTAMP},
+      `status` = #{record.status,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -242,6 +256,9 @@
       <if test="publishTime != null" >
         `publish_time` = #{publishTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="status != null" >
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
       <if test="content != null" >
         `content` = #{content,jdbcType=LONGVARCHAR},
       </if>
@@ -254,6 +271,7 @@
       `push_status` = #{pushStatus,jdbcType=INTEGER},
       `push_channel` = #{pushChannel,jdbcType=VARCHAR},
       `publish_time` = #{publishTime,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=INTEGER},
       `content` = #{content,jdbcType=LONGVARCHAR}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
@@ -262,7 +280,8 @@
     set `title` = #{title,jdbcType=VARCHAR},
       `push_status` = #{pushStatus,jdbcType=INTEGER},
       `push_channel` = #{pushChannel,jdbcType=VARCHAR},
-      `publish_time` = #{publishTime,jdbcType=TIMESTAMP}
+      `publish_time` = #{publishTime,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=INTEGER}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
   <select resultMap="ResultMapWithBLOBs" parameterType="com.fhzc.app.dao.mybatis.model.SystemNoticeExample" id="selectByExampleWithBLOBsWithRowbounds" >

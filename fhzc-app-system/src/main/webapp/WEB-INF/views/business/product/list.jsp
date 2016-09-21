@@ -152,9 +152,9 @@
                         <label class="control-label" style="display: inline-block">消息标题</label>
                         <div class="controls" style="display: inline-block;margin-top: 10px;margin-left: 20px;">
                             <select name="title"  class="m-wrap medium">
-                                <option value="1">产品成立</option>
-                                <option value="2">产品派息</option>
-                                <option value="3">产品兑付</option>
+                                <option value="found">产品成立</option>
+                                <option value="dividend">产品派息</option>
+                                <option value="redemption">产品兑付</option>
                             </select>
                         </div>
                     </div>

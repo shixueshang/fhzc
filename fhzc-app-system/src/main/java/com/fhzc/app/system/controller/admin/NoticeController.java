@@ -150,6 +150,7 @@ public class NoticeController extends BaseController {
         record.setContent(systemNotice.getContent());
         record.setPushChannel(channel);
         record.setPushStatus(systemNotice.getPushStatus());
+        record.setPushTime(new Date());
         noticeService.addOrUpdateNoticeRecord(record);
     }
 

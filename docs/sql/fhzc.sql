@@ -890,6 +890,7 @@ CREATE TABLE IF NOT EXISTS `bank`.`system_notice` (
   `push_status` INT(1) NULL DEFAULT NULL COMMENT '推送状态0未推送1、待推送2、已推送',
   `push_channel` VARCHAR(45) NULL DEFAULT NULL COMMENT '推送途径1、系统2、短信3、推送4、邮件',
   `publish_time` DATETIME NULL DEFAULT NULL COMMENT '发布时间',
+  `status` INT(1) NULL DEFAULT 1 COMMENT '状态(0不可用1可用)',
   PRIMARY KEY (`id`))
   ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8

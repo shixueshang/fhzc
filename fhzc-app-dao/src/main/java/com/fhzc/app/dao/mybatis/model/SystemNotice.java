@@ -13,6 +13,8 @@ public class SystemNotice {
 
     private Date publishTime;
 
+    private Integer status;
+
     private String content;
 
     public Integer getId() {
@@ -53,6 +55,14 @@ public class SystemNotice {
 
     public void setPublishTime(Date publishTime) {
         this.publishTime = publishTime;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public String getContent() {

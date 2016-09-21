@@ -62,6 +62,10 @@ public class ProductController extends BaseController {
     @Resource
     private PushTokenService pushTokenService;
 
+    @Resource
+    private NoticeService noticeService;
+
+
     /**
      * 产品列表
      *
@@ -609,15 +613,53 @@ public class ProductController extends BaseController {
     }
 
     private void preHandle(SystemNotice systemNotice, List<Integer> pushUsers){
+
         String channel = systemNotice.getPushChannel();
         String[] channelArr = channel.split(",");
         for(String cha : channelArr){
             if(cha.equals(Const.PUSH_CHANNEL.SYSTEM.toString())){
-                continue;
+                //向notice表中添加一条不可用记录
+                SystemNotice notice = new SystemNotice();
+                String noticeTitle = "";
+                String title = systemNotice.getTitle();
+                if(title.equals(Const.ASSETS_TYPE.FOUND)){
+                    noticeTitle = "产品成立";
+                }else if(title.equals(Const.ASSETS_TYPE.DIVIDEND)){
+                    noticeTitle = "产品派息";
+                }else{
+                    noticeTitle = "产品兑付";
+                }
+                notice.setTitle(noticeTitle);
+                notice.setContent(systemNotice.getContent());
+                notice.setPushStatus(Const.PUSH_STATUS.PUSHED);
+                notice.setPushChannel(Const.PUSH_CHANNEL.SYSTEM.toString());
+                notice.setPublishTime(new Date());
+                notice.setStatus(Const.YES_OR_NO.NO);
+                noticeService.addOrUpdate(notice);
+                this.doHandleSystemNotice(notice, Const.PUSH_CHANNEL.SYSTEM);
             }
             if(cha.equals(Const.PUSH_CHANNEL.MESSAGE.toString())){
                 this.doHandleSystemMessage(systemNotice, pushUsers);
             }
+        }
+    }
+
+    /**
+     * 处理系统通知
+     * @param systemNotice
+     * @param channel
+     */
+    private void doHandleSystemNotice(SystemNotice systemNotice, Integer channel){
+        List<PushToken> list = pushTokenService.getAllTokens();
+        for(PushToken pushToken : list){
+            SystemNoticeRecord record = new SystemNoticeRecord();
+            record.setNoticeId(systemNotice.getId());
+            record.setUserId(pushToken.getUserId());
+            record.setContent(systemNotice.getContent());
+            record.setPushChannel(channel);
+            record.setPushStatus(systemNotice.getPushStatus());
+            record.setPushTime(new Date());
+            noticeService.addOrUpdateNoticeRecord(record);
         }
     }
 
