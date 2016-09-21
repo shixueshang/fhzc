@@ -29,6 +29,7 @@
                                 <i class="icon-angle-down"></i>
                             </a>
                             <ul class="dropdown-menu">
+                            	<li id ="btnLogin"><a href="#"><i class="icon-key"></i>修改密码</a></li>
                                 <li><a href="/logout"><i class="icon-key"></i> 退出</a></li>
                             </ul>
                         </li>
@@ -39,3 +40,103 @@
             </div>
             <!-- END TOP NAVIGATION BAR -->
         </div>
+        
+<script>
+    $("#btnLogin").click(function () {
+    BootstrapDialog.show({
+        title: '修改密码',
+        closable: false,
+        message: $(
+        '<div>用户名：&nbsp;&nbsp;&nbsp;<input type="text" id="name" value = "<shiro:principal property='login'></shiro:principal>" disabled="disabled"/></div>'
+        +'<input type="hidden" id="id" name="id" value = "<shiro:principal property='id'></shiro:principal>"/>'		
+        +'<div>原密码：&nbsp;&nbsp;&nbsp;<input type="password" id="oldpassword" value="" name="oldpassword"/></div>'
+        +'<div>新密码：&nbsp;&nbsp;&nbsp;<input type="password" id="password"/></div>'
+        +'<div>确认密码：<input type="password" value="" id="repassword" name="repassword"/></div>'
+        +' <span id = "errmsg" style="color:red"></span>'
+        ),
+        buttons: [{
+            label: '确定',
+            cssClass: 'btn blue',
+            hotkey: 13, // Enter.
+            action: function(dialog) {
+            	var id = $('#id').val();
+            	var oldpassword = $('#oldpassword').val();
+	    		var password = $('#password').val();
+	    		var repassword = $('#repassword').val();
+	    		if(oldpassword == "" || oldpassword == null){
+	    			$("#errmsg").html("原密码不能为空！");
+	    			return false;
+	    		}else{
+	    			$("#errmsg").html("");
+	    		}
+	    		if(password == "" || password == null){
+	    			$("#errmsg").html("密码不能为空！");
+	    			return false;
+	    		}else{
+	    			$("#errmsg").html("");
+	    		}
+	    		if(repassword == "" || repassword == null){
+	    			$("#errmsg").html("确认密码不能为空！");
+	    			return false;
+	    		}else{
+	    			$("#errmsg").html("");
+	    		}
+	    		if(password != repassword){
+	    			$("#errmsg").html("两次密码不一致！");
+	    			return false;
+	    		}else{
+	    			$("#errmsg").html("");
+	    		}
+	    		$.ajax({
+	                type: "GET",
+	                url: "<%=contextPath%>/system/admin/checkPassword",
+	                dataType: "json",
+	                data: { "id":id, "oldpassword":oldpassword},
+	                success: function(data) {
+	                   if(!data.children){
+	                	   $("#errmsg").html("原密码不正确！");
+	   	    				return false;
+	                   }else{
+	                	   $.ajax({
+	       	                type: "GET",
+	       	                url: "<%=contextPath%>/system/admin/update",
+	       	                dataType: "json",
+	       	                data: { "id":id, "password":password},
+	       	                success: function(data) {
+	       	                   if(data.children){
+	       	                	   dialog.close();
+	       	                	   BootstrapDialog.alert({
+	       	                           title: '提示',
+	       	                           message: '修改成功！'
+	       	                       });
+	       	                   }else{
+	       	                	   BootstrapDialog.alert({
+	       	                           title: '提示',
+	       	                           message: '修改失败，请重试！'
+	       	                       });
+	       	                	   $("#oldpassword").val("");
+	       	                	   $("#password").val("");
+	                                  $("#repassword").val("")
+	       	                   }
+	       	                },
+	       	                error: function() {
+
+	       	                }
+	       	            });          
+	                   }
+	                },
+	                error: function() {
+
+	                }
+	            }); 
+	    	   
+	    	}},
+	    	{	label: '取消',
+	    		action: function(dialog){
+	    		  	dialog.close();
+	    		}
+        }]
+    });
+    });
+    
+</script>

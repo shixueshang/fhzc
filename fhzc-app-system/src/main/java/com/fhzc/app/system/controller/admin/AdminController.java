@@ -93,4 +93,39 @@ public class AdminController extends BaseController {
         adminService.delete(id);
         return new AjaxJson(true);
     }
+    
+    @RequestMapping(value = "/update", method = RequestMethod.GET)
+    @ResponseBody
+    @SystemControllerLog(description = "修改密码")
+    public AjaxJson update(Integer id, String password){
+      Admin admin = adminService.findAdminById(id);
+      admin.setPassword(DigestUtils.md5Hex(password));
+      boolean flag = false;
+      try {
+    	  adminService.addOrUpdateAdmin(admin); 
+    	  flag = true;
+    	  return new AjaxJson(true, (Object)flag);
+      } catch (Exception e) {
+    	  return new AjaxJson(true, (Object)flag);
+      }
+    }
+    
+    @RequestMapping(value = "/checkPassword", method = RequestMethod.GET)
+    @ResponseBody
+    @SystemControllerLog(description = "检验原密码")
+    public AjaxJson checkPassword(Integer id, String oldpassword){
+      Admin admin = adminService.findAdminById(id);
+      boolean flag = false;
+      if(admin != null){
+    	  if(DigestUtils.md5Hex(oldpassword).equals(admin.getPassword())){
+    		  flag = true;
+        	  return new AjaxJson(true, (Object)flag);
+    	  }else{
+    		  return new AjaxJson(true, (Object)flag);
+    	  }
+      }else{
+    	  return new AjaxJson(true, (Object)flag);
+      }
+    }
+    
 }
