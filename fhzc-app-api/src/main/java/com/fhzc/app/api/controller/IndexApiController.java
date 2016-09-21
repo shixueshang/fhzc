@@ -142,7 +142,7 @@ public class IndexApiController extends BaseController {
         String imgs = "";
         List<String> imageList = FileUtils.saveFilesToDisk(request, savePath);
         if (imageList.size() > 0) {
-            imgs = ListUtil.listToString(imageList, Const.SEPRATOR);
+            imgs = ListUtil.listToString(imageList, ",");
         }
         suggest.setImgs(imgs);
         Integer result = suggestService.add(suggest);
