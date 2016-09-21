@@ -367,7 +367,10 @@ public class RightsController extends BaseController{
         RightsReservation reservation = rightsService.getReservationById(reserId);
 
         if(status == Const.RIGHTS_STATUS.ORDER_CANCEL  || status == Const.RIGHTS_STATUS.ORDER_FAILED){
-            scoreService.delete(reserId);
+            scoreService.delete(reserId,"");
+        }
+        if(status == Const.RIGHTS_STATUS.CUSTOMER_SPAEND  || status == Const.RIGHTS_STATUS.CUSTOMER_ABSEND){
+        	scoreService.delete(reserId, Const.Score.CONSUME);
         }
         reservation.setStatus(status);
         rightsService.updateReservation(reservation);

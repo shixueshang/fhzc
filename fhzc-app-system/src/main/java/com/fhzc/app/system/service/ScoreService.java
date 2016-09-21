@@ -99,11 +99,10 @@ public interface ScoreService {
     
     /**
      * 权益取消或者预约失败时把该条冻结的积分设置为无效
-     * @param uid
-     * @param eventId
-     * @param fromType
+     * @param reservationId
+     * @param status
      * @return
      */
-    void delete(Integer reservationId);
+    void delete(Integer reservationId, String status);
 
 }

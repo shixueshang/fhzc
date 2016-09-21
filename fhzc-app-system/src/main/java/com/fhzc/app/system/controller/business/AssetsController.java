@@ -184,7 +184,7 @@ public class AssetsController extends BaseController {
             holdings.setPaymentDay(assetsHistory.getPaymentDate());
             holdings.setBank(assetsHistory.getBank());
             holdings.setBankAccount(assetsHistory.getBankAccount());
-            holdings.setEarningRate(assetsHistory.getEarningRate());
+            holdings.setEarningRate(productService.getProduct(assetsHistory.getProductId()).getAnnualInterval());
             holdings.setFoundDay(assetsHistory.getProductFoundDay());
             holdings.setLot(assetsHistory.getLot() == null ? "" : assetsHistory.getLot());
             holdings.setSerial(assetsHistory.getSerial());

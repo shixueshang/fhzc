@@ -200,9 +200,11 @@
                             <shiro:hasPermission name="/business/assets/list"><li>
                                 <a href="<%=contextPath%>/business/assets/list">订单列表</a>
                             </li></shiro:hasPermission>
+                            <!--  财务部暂时无法提供
                             <shiro:hasPermission name="/business/contract/list"><li>
                                 <a href="<%=contextPath%>/business/contract/list">财务日报列表</a>
                             </li></shiro:hasPermission>
+                            -->
                             <shiro:hasPermission name="/business/assets/holdings/find"><li>
                                 <a href="<%=contextPath%>/business/assets/holdings/find">客户持仓</a>
                             </li></shiro:hasPermission>
@@ -309,9 +311,11 @@
                             <shiro:hasPermission name="/business/plannerachivementsmonthly/importor"><li>
                                 <a href="<%=contextPath%>/business/plannerachivementsmonthly/importor">理财师月业绩导入</a>
                             </li></shiro:hasPermission>
+                            <!--  财务部暂时无法提供
                             <shiro:hasPermission name="/business/contract/importor"><li>
                                 <a href="<%=contextPath%>/business/contract/importor">财务日表导入</a>
                             </li></shiro:hasPermission>
+                            -->
                             <shiro:hasPermission name="/business/payment/importor"><li>
                                 <a href="<%=contextPath%>/business/payment/importor">兑付记录导入</a>
                             </li></shiro:hasPermission>

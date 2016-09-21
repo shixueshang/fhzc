@@ -119,17 +119,17 @@
                         <thead>
                         <tr>
                             <td width="15%">持有产品名称</td>
-                            <td>持仓金额(万元)</td>
-                            <td>成立日</td>
-                            <td>派息日</td>
+                            <td style="width:5%">持仓金额(万元)</td>
+                            <td style="width:8.5%">成立日</td>
+                            <td style="width:12.037037%">派息日</td>
                             <td>开放日</td>
-                            <td>兑付日</td>
+                            <td style="width:8.5%">兑付日</td>
                             <td>合同编号</td>
                             <td>开户行</td>
                             <td>银行账号</td>
                             <td>基金份额</td>
                             <td>投资期限(月)</td>
-                            <td>收益率(%)</td>
+                            <td>收益率</td>
                         </tr>
                         </thead>
                         <tbody >
@@ -250,7 +250,7 @@
                         	paymentDay = getFormatDate(new Date(paymentDay));
                         }
                         tBody += "<tr> <td>"+val.productName+"</td> <td>"+val.amount / 10000+"</td> <td>"+getFormatDate(new Date(val.foundDay))+"</td> <td>"+val.dividendDay+"</td> <td>"+buyDay+"</td> " +
-                        "<td>"+paymentDay+"</td> <td>"+val.payment+"</td> <td>"+val.bank+"</td> <td>"+val.bankAccount+"</td> <td>"+val.lot+"</td> <td>"+val.investTerm+"</td> <td>"+earningRate+"</td></tr>";
+                        "<td>"+paymentDay+"</td> <td>"+val.payment+"</td> <td>"+val.bank+"</td> <td>"+val.bankAccount+"</td> <td>"+val.lot+"</td> <td>"+val.investTerm+"</td> <td>"+earningRate*100+"</td></tr>";
 
                     });
 
