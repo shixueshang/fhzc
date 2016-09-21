@@ -123,6 +123,10 @@ public class AssetsController extends BaseController {
     @RequestMapping(value = "/holdings/find", method = RequestMethod.GET)
     public ModelAndView holdings(@RequestParam( required = false) String name){
         ModelAndView mav = new ModelAndView("business/assets/holdings");
+        if(name == null || "".equals(name)){
+        	 mav.addObject("url", "business/assets");
+             return mav;
+        }
         PageableResult<Customer> pageableResult = customerService.findPageCustomers(page, size);
 
         List<CustomerHolding> list = new ArrayList<CustomerHolding>();
@@ -180,7 +184,7 @@ public class AssetsController extends BaseController {
             holdings.setPaymentDay(assetsHistory.getPaymentDate());
             holdings.setBank(assetsHistory.getBank());
             holdings.setBankAccount(assetsHistory.getBankAccount());
-            holdings.setEarningRate(assetsHistory.getEarningRate());
+            holdings.setEarningRate(productService.getProduct(assetsHistory.getProductId()).getAnnualInterval());
             holdings.setFoundDay(assetsHistory.getProductFoundDay());
             holdings.setLot(assetsHistory.getLot() == null ? "" : assetsHistory.getLot());
             holdings.setSerial(assetsHistory.getSerial());

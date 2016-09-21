@@ -8,6 +8,7 @@ import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.commons.util.DateUtil;
 import com.fhzc.app.system.service.ScoreService;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
@@ -193,12 +194,17 @@ public class ScoreServiceImpl implements ScoreService {
     }
     
     @Override
-    public void delete(Integer reservationId) {
+    public void delete(Integer reservationId, String status) {
         ScoreHistoryExample example = new ScoreHistoryExample();
         ScoreHistoryExample.Criteria criteria = example.createCriteria();
         criteria.andReservationIdEqualTo(reservationId);
+       
         ScoreHistory history = scoreHistoryMapper.selectByExample(example).get(0);
-        history.setIsVaild(Const.SCORE_VAILD.NOT_VAILD);
+        if(StringUtils.isNotBlank(status) && Const.Score.CONSUME.equals(status)){
+       	 	history.setStatus(Const.Score.CONSUME);
+        }else{
+        	history.setIsVaild(Const.SCORE_VAILD.NOT_VAILD);
+        }
         scoreHistoryMapper.updateByPrimaryKey(history);
     }
 

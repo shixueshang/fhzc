@@ -146,7 +146,7 @@
                     <h3 id="myModalLabel2">消息推送</h3>
                 </div>
                 <form id="push_form">
-                <div class="modal-body" style="height: 300px;width: 600px;">
+                <div class="modal-body" style="height: 300px;width: 320px;">
 
                     <div class="control-group">
                         <label class="control-label" style="display: inline-block">消息标题</label>
@@ -160,8 +160,10 @@
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label" style="display: inline-block">消息内容</label>
-                        <div class="controls" style="width:250px;display: inline-block;margin-top: 10px;margin-left: 20px;">
+                    	<div>
+                        	<label class="control-label" style="display: inline-block">消息内容</label>
+                        </div>
+                        <div class="controls" style="width:250px;display: inline-block;margin-top: 10px;margin-left: 10px;">
                             <textarea  name="content" maxlength="500" style="width: 300px; height: 100px;"  data-required="1" ></textarea>
                         </div>
                     </div>
