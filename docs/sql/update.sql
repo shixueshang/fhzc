@@ -31,3 +31,6 @@ alter table product modify column renew_deadline varchar(500) ;
 #2016-09-14
 alter table score_history add column reservation_id int(11) ;
 alter table report add column desc text ;
+
+#2016-09-22
+alter table product_reservation modify column amount bigint(50);

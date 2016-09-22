@@ -1,6 +1,7 @@
 package com.fhzc.app.system.controller.admin;
 
 import com.fhzc.app.dao.mybatis.model.Admin;
+import com.fhzc.app.dao.mybatis.util.Const;
 import com.fhzc.app.system.controller.BaseController;
 import com.fhzc.app.system.service.AdminService;
 import com.fhzc.app.system.service.SystemLogService;
@@ -54,6 +55,13 @@ public class LoginController extends BaseController {
         try {
             subject.login(token);
             Admin admin = adminService.findAdminByLoginName(username);
+            if(admin != null){
+            	if(admin.getStatus().equals(Const.SCORE_VAILD.NOT_VAILD)){
+        		   mav.setViewName("index");
+                   mav.addObject("error", "账号被冻结，请联系管理员");
+                   return mav;
+            	}
+            }
             Session session = subject.getSession(true);
             session.setAttribute("admin", admin);
             mav.setViewName("system/home");

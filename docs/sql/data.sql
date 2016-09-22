@@ -8,7 +8,7 @@ TRUNCATE TABLE `system_module`;
 -- Query: SELECT * FROM bank.admin
 -- Date: 2016-07-08 16:31
 */
-INSERT INTO `admin` (`id`,`login`,`password`,`realname`,`role`,`login_ip`,`organ`) VALUES (1,'admin','098f6bcd4621d373cade4e832627b4f6','管理员',1,NULL,'1');
+INSERT INTO `admin` (`id`,`login`,`password`,`realname`,`role`,`login_ip`,`status`,`organ`) VALUES (1,'admin','098f6bcd4621d373cade4e832627b4f6','管理员',1,NULL,'1','1');
 
 /*
 -- Query: SELECT * FROM bank.system_module

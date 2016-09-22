@@ -82,8 +82,8 @@ public class PlannerController extends BaseController {
     }
 
     /**
-     * 根据工号查询客户
-     * @param workNum
+     * 根据姓名查询客户
+     * @param realName
      * @return
      */
     @RequestMapping(value = "/find", method = RequestMethod.GET)

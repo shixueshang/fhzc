@@ -31,7 +31,7 @@ public class NoticeServiceImpl implements NoticeService {
     public PageableResult<SystemNotice> findPageNotices(int page, int size) {
         SystemNoticeExample example = new SystemNoticeExample();
         SystemNoticeExample.Criteria criteria = example.createCriteria();
-        criteria.andPushStatusEqualTo(Const.YES_OR_NO.YES);
+//        criteria.andPushStatusEqualTo(Const.YES_OR_NO.YES);
         RowBounds rowBounds = new RowBounds((page - 1) * size, size);
         List<SystemNotice> list = systemNoticeMapper.selectByExampleWithBLOBsWithRowbounds(example, rowBounds);
         return new PageableResult<SystemNotice>(page, size, systemNoticeMapper.countByExample(example), list);
