@@ -17,7 +17,7 @@ public class ProductReservation {
 
     private String result;
 
-    private Integer amount;
+    private Long amount;
 
     private String productName;
 
@@ -135,11 +135,11 @@ public class ProductReservation {
         this.result = result == null ? null : result.trim();
     }
 
-    public Integer getAmount() {
+    public Long getAmount() {
         return amount;
     }
 
-    public void setAmount(Integer amount) {
+    public void setAmount(Long amount) {
         this.amount = amount;
     }
 }

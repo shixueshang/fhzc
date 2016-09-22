@@ -480,7 +480,7 @@ public class ProductController extends BaseController {
         Planner planner = plannerService.getPlannerByWorkNum(workNum, Const.PLANNER_STATUS.ON);
         ProductReservation productReservation = new ProductReservation();
         productReservation.setCtime(new Date());
-        productReservation.setAmount((int) reservationAmount);
+        productReservation.setAmount((Long) reservationAmount);
         productReservation.setCustomerId((int) customerId);
         productReservation.setApplyTime(reservationTime);
         productReservation.setPlannerId(planner.getId());
