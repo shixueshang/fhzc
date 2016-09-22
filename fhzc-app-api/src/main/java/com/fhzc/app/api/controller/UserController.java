@@ -170,12 +170,37 @@ public class UserController extends BaseController {
 
                 result.add(map);
             }
+            try {
+				listSort(result);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
             return new ApiJsonResult(APIConstants.API_JSON_RESULT.OK, result);
         }else{
             return new ApiJsonResult(APIConstants.API_JSON_RESULT.BAD_REQUEST, "查询的理财师没有客户");
         }
     }
+    
+    //根据资产对客户进行排序
+    public void listSort(List<Map<String,Object>> resultList) throws Exception{  
+        // resultList是需要排序的list，其内放的是Map  
+        // 返回的结果集  
+        Collections.sort(resultList,new Comparator<Map<String,Object>>() {  
+         public int compare(Map<String, Object> o1,Map<String, Object> o2) {  
+        	 //o1，o2是list中的Map，可以在其内取得值，按其排序，此例为升序，s1和s2是排序字段值 
+        	 
+             Integer s1 = (Integer) o1.get("assetsSum");  
+             Integer s2 = (Integer) o2.get("assetsSum");  
 
+	          if(s1 < s2) {  
+	        	  return 1;  
+	          }else {  
+	        	  return -1;  
+	          }  
+         }  
+        });  
+     } 
+    
     /**
      * 更新理财师对客户的备注
      * @param id
