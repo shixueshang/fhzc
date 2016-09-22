@@ -3,6 +3,8 @@ package com.fhzc.app.dao.mybatis.model;
 public class AdminRole {
     private Integer roleId;
 
+    private String roleCode;
+
     private String roleName;
 
     private String description;
@@ -15,6 +17,14 @@ public class AdminRole {
 
     public void setRoleId(Integer roleId) {
         this.roleId = roleId;
+    }
+
+    public String getRoleCode() {
+        return roleCode;
+    }
+
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode == null ? null : roleCode.trim();
     }
 
     public String getRoleName() {

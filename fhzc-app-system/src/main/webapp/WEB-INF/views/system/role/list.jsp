@@ -81,6 +81,7 @@
                             <table class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
+                                    <td>角色代码</td>
                                     <td>角色名称</td>
                                     <td>描述</td>
                                     <td>状态</td>
@@ -90,6 +91,7 @@
                                 <tbody>
                                 <c:forEach items="${roles}" var="role">
                                     <tr>
+                                        <td>${role.roleCode}</td>
                                         <td>${role.roleName}</td>
                                         <td>${role.description}</td>
                                         <td>

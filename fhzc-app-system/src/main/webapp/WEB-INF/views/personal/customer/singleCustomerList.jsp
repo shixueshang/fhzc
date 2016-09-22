@@ -95,7 +95,9 @@
                                         <td>
                                             <c:forEach items="${users}" var="user">
                                                 <c:if test="${customer.uid == user.uid}">
-                                                    ${user.realname}
+                                                    <c:set var="before" value="${fn:substring(user.realname, 1, user.realname.length())}"/>
+                                                    <c:set var="after" value="${fn:replace(user.realname, before, '**')}"/>
+                                                    ${after}
                                                 </c:if>
                                             </c:forEach>
                                         </td>

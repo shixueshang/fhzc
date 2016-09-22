@@ -76,16 +76,23 @@
                                             <div class="control-group">
                                             </div>
                                             <div class="control-group">
+                                                <label class="control-label">角色代码</label>
+                                                <div class="controls">
+                                                    <input type="text" name="roleCode" maxlength="45" value="${role.roleCode}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
                                                 <label class="control-label">角色名称</label>
                                                 <div class="controls">
-                                                    <input type="text" name="roleName" value="${role.roleName}" data-required="1" placeholder="" class="m-wrap large">
+                                                    <input type="text" name="roleName" maxlength="200" value="${role.roleName}" data-required="1" placeholder="" class="m-wrap large">
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
                                             <div class="control-group">
                                                 <label class="control-label">描述</label>
                                                 <div class="controls">
-                                                    <textarea name="description" id="description" class="span3 m-wrap" rows="2" style="margin-top: 0px; margin-bottom: 0px; height: 100px;">${role.description}</textarea>
+                                                    <textarea name="description" maxlength="500" id="description" class="span3 m-wrap" rows="2" style="margin-top: 0px; margin-bottom: 0px; height: 100px;">${role.description}</textarea>
                                                 </div>
                                             </div>
 
@@ -170,6 +177,9 @@
                              	}
                          	}
                      }
+                },
+                roleCode :{
+                    required: true
                 }
             },
 

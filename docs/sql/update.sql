@@ -34,3 +34,8 @@ alter table report add column desc text ;
 
 #2016-09-22
 alter table product_reservation modify column amount bigint(50);
+
+
+
+ALTER TABLE `bank`.`admin_role`
+ADD COLUMN `role_code` VARCHAR(45) NULL COMMENT '角色代码' AFTER `role_id`;
