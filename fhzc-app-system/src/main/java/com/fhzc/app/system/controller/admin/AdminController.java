@@ -68,7 +68,16 @@ public class AdminController extends BaseController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @SystemControllerLog(description = "新增或修改管理员")
     public String add(Admin admin){
-        admin.setPassword(DigestUtils.md5Hex(admin.getPassword()));
+    	if(admin.getId() != null){
+    		String password = adminService.findAdminById(admin.getId()).getPassword();
+    		if(password != null && password.equals(admin.getPassword())){
+    			admin.setPassword(admin.getPassword());
+    		}else{
+    			admin.setPassword(DigestUtils.md5Hex(admin.getPassword()));
+    		}
+    	}else{
+    		admin.setPassword(DigestUtils.md5Hex(admin.getPassword()));
+    	}
         admin.setLoginIp(request.getRemoteAddr());
         adminService.addOrUpdateAdmin(admin);
 
