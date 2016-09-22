@@ -49,6 +49,9 @@ public class PlannerController extends BaseController {
     @Resource
     private PlannerAchivementsMonthlyService plannerAchivementsMonthlyService;
 
+    @Resource
+    private CustomerService customerService;
+
     /**
      * 理财师列表
      * @return
@@ -313,8 +316,9 @@ public class PlannerController extends BaseController {
         for(PlannerAchivementsDaily achivementsDaily : achivementsDailies){
             Map<String, Object> map = new HashMap<String, Object>();
             DecimalFormat format = new DecimalFormat("#0.00");
+            DecimalFormat format1 = new DecimalFormat("#0.00");
             String percent = format.format(achivementsDaily.getContractAmount().doubleValue() / totalAmount.doubleValue() * 100);
-            map.put("value", achivementsDaily.getContractAmount() / 10000);
+            map.put("value", format.format(achivementsDaily.getContractAmount() / 10000));
             map.put("percent", percent);
             map.put("date", achivementsDaily.getTransferDate());
             if(type.equals("area")){
@@ -406,8 +410,9 @@ public class PlannerController extends BaseController {
         for(PlannerAchivementsMonthly achivementsMonthly : achivementsMonthlies){
             Map<String, Object> map = new HashMap<String, Object>();
             DecimalFormat format = new DecimalFormat("#0.00");
+            DecimalFormat format1 = new DecimalFormat("#0.0000");
             String percent = format.format(achivementsMonthly.getAnnualised().doubleValue() / totalAmount.doubleValue() * 100);
-            map.put("value", achivementsMonthly.getAnnualised() / 10000);
+            map.put("value", format1.format(achivementsMonthly.getAnnualised() / 10000));
             map.put("percent", percent);
             map.put("date", achivementsMonthly.getTransferDate());
             if(type.equals("area")){
@@ -438,19 +443,16 @@ public class PlannerController extends BaseController {
      */
     @RequestMapping(value = "/getPlanner", method = RequestMethod.GET)
     @ResponseBody
-    public AjaxJson getPlanners(){
-        Admin admin = super.getCurrentUser();
-        List<Department> departments = departmentService.findAllChildren(admin.getOrgan());
-        List<Integer> deptIds = new ArrayList<Integer>();
-        for(Department department : departments){
-            deptIds.add(department.getDepartmentId());
-        }
-        List<Integer> plannersIds = plannerService.findPlannerByDepartment(deptIds);
+    public AjaxJson getPlanners(Integer customerId){
+        Customer customer = customerService.getCustomer(customerId);
+        List<Integer> departments = departmentService.findAllChildrenIds(customer.getDepartmentId());
+
+        List<Integer> plannersIds = plannerService.findPlannerByDepartment(departments);
         List<Planner> planners = new ArrayList<Planner>();
         for(Integer plannerId : plannersIds){
             Planner planner = plannerService.getPlanner(plannerId);
             User user = userService.getUser(planner.getUid());
-            planner.setPlannerName(user.getRealname());
+            planner.setPlannerName(user.getRealname() + "(" +planner.getWorkNum()+ ")");
             planners.add(planner);
         }
         return new AjaxJson(true, planners);

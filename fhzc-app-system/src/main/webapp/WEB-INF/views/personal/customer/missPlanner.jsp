@@ -134,7 +134,7 @@
             $('#change_planner').empty();
             $('#change_planner').append("<option value=''>--请选择理财师--</option>");
             $.ajax({
-                url: "<%=contextPath%>/personal/planner/getPlanner",
+                url: "<%=contextPath%>/personal/planner/getPlanner?customerId=" + $(this).data('id'),
                 type: "get",
                 dataType: "json",
                 contentType: 'application/json;charset=utf-8',
