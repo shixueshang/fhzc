@@ -72,6 +72,7 @@
                                 <thead>
                                 <tr>
                                     <td>客户编号</td>
+                                    <td>客户姓名</td>
                                     <td>会员等级</td>
                                     <td>原理财师</td>
                                     <td>操作</td>
@@ -81,6 +82,7 @@
                                 <c:forEach items="${customers}" var="customer">
                                     <tr>
                                         <td>${customer.cbId}</td>
+                                        <td>${customer.customerName}</td>
                                         <td>
                                             <c:forEach items="${users}" var="user">
                                                 <c:if test="${customer.uid == user.uid}">

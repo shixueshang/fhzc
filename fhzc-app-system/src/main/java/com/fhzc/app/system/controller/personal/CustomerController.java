@@ -340,6 +340,7 @@ public class CustomerController extends BaseController {
                     if(planner.getStatus().equals(Const.PLANNER_STATUS.OFF)){
                         if(departments.contains(customer.getDepartmentId())){
                             customer.setOldPlanner(userService.getUser(planner.getUid()).getRealname());
+                            customer.setCustomerName(userService.getUser(customer.getUid()).getRealname());
                             customerList.add(customer);
                         }
                     }
