@@ -54,7 +54,7 @@ public class ScoreServiceImpl implements ScoreService{
         Integer consume = this.getConsumeScore(uid);
         Integer expire = this.getExpiredScore(uid);
         Integer frozen = this.getFrozenScore(uid);
-        Integer available = total + consume - expire + frozen;
+        Integer available = total + consume - Math.abs(expire) + frozen;//当前系统生成的expire为负值，所以加绝对值
         return available;
     }
 
