@@ -15,6 +15,7 @@ import com.fhzc.app.system.service.AreasService;
 import com.fhzc.app.system.service.PlannerService;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -409,11 +410,13 @@ public class PlannerServiceImpl implements PlannerService {
     }
 
     @Override
-    public List<Integer> findPlannerByDepartment(List<Integer> depts) {
+    public List<Integer> findPlannerByDepartment(List<Integer> depts, String status) {
         PlannerExample example = new PlannerExample();
         PlannerExample.Criteria criteria = example.createCriteria();
         criteria.andDepartmentIdIn(depts);
-        criteria.andStatusEqualTo(Const.PLANNER_STATUS.ON);
+        if(StringUtils.isNotBlank(status) && (status != null)){
+        	criteria.andStatusEqualTo(status);
+        }
         List<Planner> planners = plannerMapper.selectByExample(example);
         List<Integer> plannerIds = new ArrayList<Integer>();
         for(Planner planner : planners){

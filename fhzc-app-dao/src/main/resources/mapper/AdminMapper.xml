@@ -13,6 +13,7 @@
     <result column="mobile" property="mobile" jdbcType="VARCHAR" />
     <result column="organ" property="organ" jdbcType="INTEGER" />
     <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="work_num" property="workNum" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -74,7 +75,7 @@
   </sql>
   <sql id="Base_Column_List" >
     `id`, `login`, `password`, `realname`, `login_ip`, `last_login_time`, `role`, `status`, 
-    `mobile`, `organ`, `area`
+    `mobile`, `organ`, `area`, `work_num`
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.AdminExample" >
     select
@@ -113,11 +114,11 @@
     insert into `admin` (`login`, `password`, `realname`, 
       `login_ip`, `last_login_time`, `role`, 
       `status`, `mobile`, `organ`, 
-      `area`)
+      `area`, `work_num`)
     values (#{login,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR}, 
       #{loginIp,jdbcType=VARCHAR}, #{lastLoginTime,jdbcType=TIMESTAMP}, #{role,jdbcType=INTEGER}, 
       #{status,jdbcType=INTEGER}, #{mobile,jdbcType=VARCHAR}, #{organ,jdbcType=INTEGER}, 
-      #{area,jdbcType=VARCHAR})
+      #{area,jdbcType=VARCHAR}, #{workNum,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.fhzc.app.dao.mybatis.model.Admin" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
@@ -155,6 +156,9 @@
       <if test="area != null" >
         `area`,
       </if>
+      <if test="workNum != null" >
+        `work_num`,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="login != null" >
@@ -186,6 +190,9 @@
       </if>
       <if test="area != null" >
         #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="workNum != null" >
+        #{workNum,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -231,6 +238,9 @@
       <if test="record.area != null" >
         `area` = #{record.area,jdbcType=VARCHAR},
       </if>
+      <if test="record.workNum != null" >
+        `work_num` = #{record.workNum,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -248,7 +258,8 @@
       `status` = #{record.status,jdbcType=INTEGER},
       `mobile` = #{record.mobile,jdbcType=VARCHAR},
       `organ` = #{record.organ,jdbcType=INTEGER},
-      `area` = #{record.area,jdbcType=VARCHAR}
+      `area` = #{record.area,jdbcType=VARCHAR},
+      `work_num` = #{record.workNum,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -286,6 +297,9 @@
       <if test="area != null" >
         `area` = #{area,jdbcType=VARCHAR},
       </if>
+      <if test="workNum != null" >
+        `work_num` = #{workNum,jdbcType=VARCHAR},
+      </if>
     </set>
     where `id` = #{id,jdbcType=INTEGER}
   </update>
@@ -300,7 +314,8 @@
       `status` = #{status,jdbcType=INTEGER},
       `mobile` = #{mobile,jdbcType=VARCHAR},
       `organ` = #{organ,jdbcType=INTEGER},
-      `area` = #{area,jdbcType=VARCHAR}
+      `area` = #{area,jdbcType=VARCHAR},
+      `work_num` = #{workNum,jdbcType=VARCHAR}
     where `id` = #{id,jdbcType=INTEGER}
   </update>
   <select resultMap="BaseResultMap" parameterType="com.fhzc.app.dao.mybatis.model.AdminExample" id="selectByExampleWithRowbounds" >

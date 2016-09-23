@@ -39,3 +39,6 @@ alter table product_reservation modify column amount bigint(50);
 
 ALTER TABLE `bank`.`admin_role`
 ADD COLUMN `role_code` VARCHAR(45) NULL COMMENT '角色代码' AFTER `role_id`;
+
+#2016-09-23
+alter table admin add column work_num varchar(45);

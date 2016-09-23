@@ -824,6 +824,76 @@ public class AdminExample {
             addCriterion("`area` not between", value1, value2, "area");
             return (Criteria) this;
         }
+
+        public Criteria andWorkNumIsNull() {
+            addCriterion("`work_num` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkNumIsNotNull() {
+            addCriterion("`work_num` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkNumEqualTo(String value) {
+            addCriterion("`work_num` =", value, "workNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkNumNotEqualTo(String value) {
+            addCriterion("`work_num` <>", value, "workNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkNumGreaterThan(String value) {
+            addCriterion("`work_num` >", value, "workNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkNumGreaterThanOrEqualTo(String value) {
+            addCriterion("`work_num` >=", value, "workNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkNumLessThan(String value) {
+            addCriterion("`work_num` <", value, "workNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkNumLessThanOrEqualTo(String value) {
+            addCriterion("`work_num` <=", value, "workNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkNumLike(String value) {
+            addCriterion("`work_num` like", value, "workNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkNumNotLike(String value) {
+            addCriterion("`work_num` not like", value, "workNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkNumIn(List<String> values) {
+            addCriterion("`work_num` in", values, "workNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkNumNotIn(List<String> values) {
+            addCriterion("`work_num` not in", values, "workNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkNumBetween(String value1, String value2) {
+            addCriterion("`work_num` between", value1, value2, "workNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkNumNotBetween(String value1, String value2) {
+            addCriterion("`work_num` not between", value1, value2, "workNum");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

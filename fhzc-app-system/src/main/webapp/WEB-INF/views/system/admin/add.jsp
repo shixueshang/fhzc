@@ -92,7 +92,13 @@
                                                     <span class="help-inline"></span>
                                                 </div>
                                             </div>
-
+       										<div class="control-group">
+                                                <label class="control-label">工号<span class="required">*</span></label>
+                                                <div class="controls">
+                                                    <input type="text" name="workNum" id="workNum"  data-required="1" placeholder="请填写工号" class="m-wrap large">
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </div>
                                             <div class="control-group">
                                                 <label class="control-label">用户真实姓名<span class="required">*</span></label>
                                                 <div class="controls">
@@ -103,7 +109,7 @@
 
 
                                             <div class="control-group">
-                                                <label class="control-label">所属角色<span class="required">*</span></label>
+                                                <label class="control-label">所属角色</label>
                                                 <div class="controls">
                                                     <select name="role" required="1" id="belongRole" class="large m-wrap"  tabindex="1">
                                                     </select>
@@ -188,6 +194,7 @@
             $('#password').val('${adminUser.password}');
             $('#realname').val('${adminUser.realname}');
             $('#mobile').val('${adminUser.mobile}');
+            $('#workNum').val('${adminUser.workNum}');
         }
 
         var role = '${adminUser.role}';
@@ -241,6 +248,9 @@
                 url: {
                     required: true,
                     url: true
+                },
+                workNum:{
+                	required: true
                 }
             },
 

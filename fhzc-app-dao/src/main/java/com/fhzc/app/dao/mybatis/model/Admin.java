@@ -1,9 +1,8 @@
 package com.fhzc.app.dao.mybatis.model;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class Admin implements Serializable{
+public class Admin {
     private Integer id;
 
     private String login;
@@ -25,6 +24,8 @@ public class Admin implements Serializable{
     private Integer organ;
 
     private String area;
+
+    private String workNum;
 
     public Integer getId() {
         return id;
@@ -112,5 +113,13 @@ public class Admin implements Serializable{
 
     public void setArea(String area) {
         this.area = area == null ? null : area.trim();
+    }
+
+    public String getWorkNum() {
+        return workNum;
+    }
+
+    public void setWorkNum(String workNum) {
+        this.workNum = workNum == null ? null : workNum.trim();
     }
 }

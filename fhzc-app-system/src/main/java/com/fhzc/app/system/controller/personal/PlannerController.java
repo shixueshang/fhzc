@@ -91,8 +91,13 @@ public class PlannerController extends BaseController {
     public ModelAndView findSingleCustomers(String realName){
         ModelAndView mav = new ModelAndView("personal/planner/list");
         Admin admin = super.getCurrentUser();
-        List<Integer> departments = departmentService.findAllChildrenIds(admin.getOrgan());
-        List<Integer> plannerIds = plannerService.findPlannerByDepartment(departments);
+        List<Department> departments =  departmentService.getDeparent(plannerService.getPlannerByWorkNum(admin.getWorkNum(), null).getId());
+//        List<Integer> departments = departmentService.findAllChildrenIds(admin.getOrgan());
+        List<Integer> departmentIds = new ArrayList<Integer>();
+        for (Department department : departments) {
+        	departmentIds.add(department.getDepartmentId());
+		}
+         List<Integer> plannerIds = plannerService.findPlannerByDepartment(departmentIds, null);
         List<Planner> planners = new LinkedList<Planner>();
         for (Integer id : plannerIds) {
 			planners.add(plannerService.getPlanner(id));
@@ -390,7 +395,7 @@ public class PlannerController extends BaseController {
         }else{
             List<Integer> departments = departmentService.findAllChildrenIds(team);
             List<Integer> puIds = new ArrayList<Integer>();
-            List<Integer> plannerIds = plannerService.findPlannerByDepartment(departments);
+            List<Integer> plannerIds = plannerService.findPlannerByDepartment(departments, Const.PLANNER_STATUS.ON);
             for(Integer plannerId : plannerIds){
                 puIds.add(plannerService.getPlanner(plannerId).getUid());
             }
@@ -447,7 +452,7 @@ public class PlannerController extends BaseController {
         Customer customer = customerService.getCustomer(customerId);
         List<Integer> departments = departmentService.findAllChildrenIds(customer.getDepartmentId());
 
-        List<Integer> plannersIds = plannerService.findPlannerByDepartment(departments);
+        List<Integer> plannersIds = plannerService.findPlannerByDepartment(departments,Const.PLANNER_STATUS.ON);
         List<Planner> planners = new ArrayList<Planner>();
         for(Integer plannerId : plannersIds){
             Planner planner = plannerService.getPlanner(plannerId);

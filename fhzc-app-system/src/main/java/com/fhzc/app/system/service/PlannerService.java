@@ -90,7 +90,7 @@ public interface PlannerService {
      * @param depts
      * @return
      */
-    List<Integer> findPlannerByDepartment(List<Integer> depts);
+    List<Integer> findPlannerByDepartment(List<Integer> depts, String status);
     
     /**
      * 获得所有理财师

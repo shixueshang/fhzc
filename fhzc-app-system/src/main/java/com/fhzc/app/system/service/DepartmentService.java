@@ -87,4 +87,11 @@ public interface DepartmentService {
      * @return
      */
     List<Department> findAllDepartment();
+    
+    /**
+     * 获得部门by leader-uid
+     * @param name
+     * @return
+     */
+    List<Department> getDeparent(Integer uid);
 }

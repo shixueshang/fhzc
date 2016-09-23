@@ -180,4 +180,12 @@ public class DepartmentServiceImpl implements DepartmentService{
 
         return trees;
     }
+
+	@Override
+	public List<Department> getDeparent(Integer uid) {
+	    DepartmentExample example = new DepartmentExample();
+        DepartmentExample.Criteria criteria = example.createCriteria();
+        criteria.andLeaderUidEqualTo(uid);
+        return departmentMapper.selectByExample(example);
+	}
 }
